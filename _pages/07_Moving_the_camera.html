@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Moving the camera &#8212; Computer Graphics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"model": ["M\\!odel"], "view": ["V\\!iew"], "mvp": ["MV\\!P"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_pages/07_Moving_the_camera';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Lighting" href="08_Lighting.html" />
+    <link rel="prev" title="6. 3D Worlds" href="06_3D_worlds.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Computer Graphics
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_to_cpp.html">1. Introduction to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_basic_shapes_in_OpenGL.html">2. Basic Shapes in OpenGL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_textures.html">3. Textures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_vectors_and_matrices.html">4. Vectors and Matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_transformations.html">5. Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_3D_worlds.html">6. 3D Worlds</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Moving the camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">8. Lighting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">9. Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">10. Quaternions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A_Complex_numbers_and_quaternions.html">A. Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Code.html">B. Code and Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">C Glossary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jonshiach/graphics-labs" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jonshiach/graphics-labs/issues/new?title=Issue%20on%20page%20%2F_pages/07_Moving_the_camera.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/_pages/07_Moving_the_camera.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Moving the camera</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-keyboard-input-to-move-the-camera">7.1. Using keyboard input to move the camera</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-keyboard-input">7.1.1. Getting the keyboard input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-speed-of-the-camera">7.2. Controlling the speed of the camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-mouse-to-point-the-camera">7.3. Using the mouse to point the camera</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yaw-pitch-and-roll">7.3.1. Yaw, pitch and roll</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-mouse-input">7.3.2. Getting the mouse input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-face-culling">7.4. Back face culling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">7.5. Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="moving-the-camera">
+<span id="moving-the-camera-section"></span><h1><span class="section-number">7. </span>Moving the camera<a class="headerlink" href="#moving-the-camera" title="Permalink to this heading">#</a></h1>
+<p>In the <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">previous lab</span></a> we saw how we use transformations to build a 3D world, align the world to the camera position and project the view space onto the screen space. We also created a Camera class to contains functions to perform these calculations. The next step is to modify the Camera class to by able to move and direct the camera around the 3D world.</p>
+<p>Compile and run the <strong>Lab07_Moving_the_camera</strong> project and you will see the multiple cube example we created at the end of the last lab.</p>
+<figure class="align-default" id="moving-the-camera-figure">
+<a class="reference internal image-reference" href="../_images/07_Moving_the_camera.png"><img alt="../_images/07_Moving_the_camera.png" src="../_images/07_Moving_the_camera.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.1 </span><span class="caption-text">Multiple cubes from <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D Worlds</span></a>.</span><a class="headerlink" href="#moving-the-camera-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="using-keyboard-input-to-move-the-camera">
+<h2><span class="section-number">7.1. </span>Using keyboard input to move the camera<a class="headerlink" href="#using-keyboard-input-to-move-the-camera" title="Permalink to this heading">#</a></h2>
+<p>The first thing we need to do is add a method to our <code class="docutils literal notranslate"><span class="pre">Camera</span></code> class to move the camera in the world space. We want to be able to move the camera forward and backwards, left and right, up and down. Recall the view matrix from the previous lab on <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">3D Worlds</span></a> where we introduced the camera vectors seen in <a class="reference internal" href="#camera-vectors-figure"><span class="std std-numref">Fig. 7.2</span></a>.</p>
+<figure class="align-default" id="camera-vectors-figure">
+<a class="reference internal image-reference" href="../_images/06_View_space_alignment.svg"><img alt="../_images/06_View_space_alignment.svg" src="../_images/06_View_space_alignment.svg" width="400" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.2 </span><span class="caption-text">Camera vectors</span><a class="headerlink" href="#camera-vectors-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Since these three vectors point to the right, up and to the front of the camera we can use these to move the camera in those directions. For example, to move the camera forwards and backwards we simply add and subtract the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector to the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector (<a class="reference internal" href="#camera-movement-figure"><span class="std std-numref">Fig. 7.3</span></a>).</p>
+<figure class="align-default" id="camera-movement-figure">
+<a class="reference internal image-reference" href="../_images/07_camera_movement.svg"><img alt="../_images/07_camera_movement.svg" src="../_images/07_camera_movement.svg" width="500" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.3 </span><span class="caption-text">Moving the camera forwards and backwards.</span><a class="headerlink" href="#camera-movement-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Add the following camera vectors to the class definition in the <strong>camera.hpp</strong> file so they can be accessed outside of the <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> function</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">right</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">);</span>
+<span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">up</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">);</span>
+<span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">front</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.0f</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here we have specified that the camera is pointing straight down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p>
+<section id="getting-the-keyboard-input">
+<h3><span class="section-number">7.1.1. </span>Getting the keyboard input<a class="headerlink" href="#getting-the-keyboard-input" title="Permalink to this heading">#</a></h3>
+<p>We now need to get keyboard input from the user and use it to move the camera. If you take a look at the <strong>Lab07_Moving_the_camera.cpp</strong> file at the bottom we have the function <code class="docutils literal notranslate"><span class="pre">keyboardInput()</span></code> which currently contains a single if statement that uses the function <code class="docutils literal notranslate"><span class="pre">glfwGetKey()</span></code> to detect whether the escape key has been pressed. This is called in the render loop so that at each frame the program is checking for keyboard inputs. Add the following code to the <code class="docutils literal notranslate"><span class="pre">keyboardInput()</span></code> function.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Move the camera using WSAD keys</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_W</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="p">)</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">front</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_S</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="p">)</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">front</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_A</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="p">)</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">right</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_D</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="p">)</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">right</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here we’ve used the classic WSAD key combination to control the movement of the camera by adding and subtracting the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> vectors to the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector. We also need to change the <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> vector so that the camera is looking in the direction of the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector. Edit the code where we calculate the view and projection matrices so that is looks like the following</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate view and projection matrices</span>
+<span class="n">camera</span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">front</span><span class="p">;</span>
+<span class="n">camera</span><span class="p">.</span><span class="n">calculateMatrices</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Run your program and experiment with moving the camera. Run your program and you should see that the camera always points down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p>
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/07_keyboard_2.mp4" type="video/mp4">
+</video>
+</center>
+</section>
+</section>
+<section id="controlling-the-speed-of-the-camera">
+<h2><span class="section-number">7.2. </span>Controlling the speed of the camera<a class="headerlink" href="#controlling-the-speed-of-the-camera" title="Permalink to this heading">#</a></h2>
+<p>Playing around with the camera movement you will also notice that the controls are quite sensitive and not very satisfying to use. To fix this we can control the speed at which the camera moves in the world space. Speed is distance divided by time so to ensure that the camera moves at a chosen speed we need to calculate the time that has elapsed since the previous frame was rendered. We saw when we applied animations to the rectangle in the lab <a class="reference internal" href="05_transformations.html#animating-objects-section"><span class="std std-ref">05 Transformations</span></a> that we could use the <code class="docutils literal notranslate"><span class="pre">glfwGetTime()</span></code> function to get the current time since the application was started. So to calculate the time since the previous frame was rendered we simply use a variable to store the time and subtract its value from the current time.</p>
+<p>Before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, declare a variable for storing the time of the previous frame</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Frame timer</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">previousTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span><span class="w">    </span><span class="c1">// time of previous iteration of the loop</span>
+</pre></div>
+</div>
+<p>Then at the beginning of the render loop add the following code</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update timer</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetTime</span><span class="p">();</span>
+<span class="n">deltaTime</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">previousTime</span><span class="p">;</span>
+<span class="n">previousTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>So <code class="docutils literal notranslate"><span class="pre">deltaTime</span></code> is the time elapsed since the previous frame was rendered and we can now use it to control the speed of our camera movement. In the <code class="docutils literal notranslate"><span class="pre">keyboardInputs()</span></code> function, edit the code so that is looks like the following</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_W</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="p">)</span>
+<span class="w">        </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">5.0f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">deltaTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">front</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and do similar for the other three directions. Here we have chosen to move the camera at a speed of 5 units per second. This is of course arbitrary and we can change this to suit our needs, e.g., simulating a character sprinting in a first person shooter game. Compile and run your program and you should have a much more satisfying result.</p>
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/07_keyboard_3.mp4" type="video/mp4">
+</video>
+</center>
+</section>
+<hr class="docutils" />
+<section id="using-the-mouse-to-point-the-camera">
+<h2><span class="section-number">7.3. </span>Using the mouse to point the camera<a class="headerlink" href="#using-the-mouse-to-point-the-camera" title="Permalink to this heading">#</a></h2>
+<p>We can now move the camera position using keyboard inputs but we cannot yet point the camera in a different direction. This is usually done using mouse inputs but can also done using keyboard or game controllers.</p>
+<p>First we need to capture the mouse inputs. Take a look at the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, just after the window is created we call the <code class="docutils literal notranslate"><span class="pre">glfwSetInputMode()</span></code> which enables use to capture the keyboard inputs. So to capture the mouse input we need to do similar. Enter the following code just after we capture the keyboard inputs.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Capture mouse inputs</span>
+<span class="n">glfwSetInputMode</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_CURSOR</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_CURSOR_DISABLED</span><span class="p">);</span>
+<span class="n">glfwPollEvents</span><span class="p">();</span>
+<span class="n">glfwSetCursorPos</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">768</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>These functions are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">glfwSetInputMode()</span></code> captures the mouse input (in addition to the earlier call to the same function to capture the keyboard inputs) and hides the mouse cursor</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glfwPollEvents()</span></code> processes any events in the event queue, in other words it checks for a mouse input right away</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glfwSetCursorPos()</span></code> specifies the position of the mouse cursor in the window, here we have set this to the centre of the window</p></li>
+</ul>
+<section id="yaw-pitch-and-roll">
+<h3><span class="section-number">7.3.1. </span>Yaw, pitch and roll<a class="headerlink" href="#yaw-pitch-and-roll" title="Permalink to this heading">#</a></h3>
+<p>The direction which the camera is pointing is governed by three angles called <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank"><strong>Euler angles</strong></a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its <span class="math notranslate nohighlight">\(yaw\)</span> angle. Then on take off it can point its nose upwards in the vertical direction by changing its <span class="math notranslate nohighlight">\(pitch\)</span> angle. Once airborne the plane can move its wingtips up and down thus changing its <span class="math notranslate nohighlight">\(roll\)</span> angle. Our camera is analogous to the plane (<a class="reference internal" href="#yaw-pitch-roll-figure"><span class="std std-numref">Fig. 7.4</span></a>).</p>
+<figure class="align-default" id="yaw-pitch-roll-figure">
+<a class="reference internal image-reference" href="../_images/07_yaw_pitch_roll.svg"><img alt="../_images/07_yaw_pitch_roll.svg" src="../_images/07_yaw_pitch_roll.svg" width="300" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.4 </span><span class="caption-text">Yaw, pitch and roll</span><a class="headerlink" href="#yaw-pitch-roll-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To point our camera we only need the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles which we are going to change using mouse inputs such that when the mouse is moved left and right the <span class="math notranslate nohighlight">\(yaw\)</span> angle changes and when the mouse is moved up and down the <span class="math notranslate nohighlight">\(pitch\)</span> angle changes. The problem we have is that our <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> function uses the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector to calculate the view matrix so we need some way of calculating the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector from the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles.</p>
+<figure class="align-default" id="yaw-figure">
+<a class="reference internal image-reference" href="../_images/07_yaw.svg"><img alt="../_images/07_yaw.svg" src="../_images/07_yaw.svg" width="250" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.5 </span><span class="caption-text">Rotating the vector <span class="math notranslate nohighlight">\((1,0,0)\)</span> about the <span class="math notranslate nohighlight">\(y\)</span>-axis by the <span class="math notranslate nohighlight">\(yaw\)</span> angle.</span><a class="headerlink" href="#yaw-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Consider (<a class="reference internal" href="#yaw-figure"><span class="std std-numref">Fig. 7.5</span></a>) that shows the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector initially pointing along the <span class="math notranslate nohighlight">\(x\)</span>-axis rotated about the <span class="math notranslate nohighlight">\(y\)</span>-axis by the <span class="math notranslate nohighlight">\(yaw\)</span> angle. The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the rotated vector are the adjacent and opposite sides of the right-angled triangle. Remembering that <span class="math notranslate nohighlight">\(\cos(\theta) = adjacent/hypotenuse\)</span> and <span class="math notranslate nohighlight">\(\sin(\theta) = opposite/hypotenuse\)</span>, if <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> is a unit vector then <span class="math notranslate nohighlight">\(hypotenuse=1\)</span> and  <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the rotated vector are</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    \mathbf{front}_x &amp;= \cos(yaw), \\
+    \mathbf{front}_z &amp;= \sin(yaw).
+\end{align*} \end{split}\]</div>
+<figure class="align-default" id="pitch-figure">
+<a class="reference internal image-reference" href="../_images/07_pitch.svg"><img alt="../_images/07_pitch.svg" src="../_images/07_pitch.svg" width="250" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.6 </span><span class="caption-text">Rotating the vector <span class="math notranslate nohighlight">\((\cos(yaw), 0, \sin(yaw))\)</span> upwards by the <span class="math notranslate nohighlight">\(pitch\)</span> angle.</span><a class="headerlink" href="#pitch-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We now do the same for rotating the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector, which lies on the horizontal plane, upwards by the <span class="math notranslate nohighlight">\(pitch\)</span> angle. The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components of the rotated vector are the adjacent side and the <span class="math notranslate nohighlight">\(y\)</span> component is the opposite side. Once again if <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> is a unit vector then the components of the rotated vector are</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    \mathbf{front}_x &amp;= \cos(pitch), \\
+    \mathbf{front}_y &amp;= \sin(pitch), \\
+    \mathbf{front}_z &amp;= \cos(pitch).
+\end{align*} \end{split}\]</div>
+<p>Combining this with the <span class="math notranslate nohighlight">\(yaw\)</span> rotation gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    \mathbf{front}_x &amp;= \cos(yaw) \cos(pitch), \\
+    \mathbf{front}_y &amp;= \sin(pitch), \\
+    \mathbf{front}_z &amp;= \sin(yaw) \cos(pitch).
+\end{align*} \end{split}\]</div>
+<p>So now we can calculate the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector from the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> Euler angles. To apply this to our <code class="docutils literal notranslate"><span class="pre">Camera</span></code> class we need to add attributes for the <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles (we don’t really need the <span class="math notranslate nohighlight">\(roll\)</span> angle for now but we may wish to add the facility to roll the camera in the future). Add the following code to the camera parameters in the <code class="docutils literal notranslate"><span class="pre">Camera</span></code> class declaration.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">radians</span><span class="p">(</span><span class="mf">-90.0f</span><span class="p">);</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Since our rotation of the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector assumes it is initially pointing along the <span class="math notranslate nohighlight">\(x\)</span>-axis we use an initial <span class="math notranslate nohighlight">\(yaw\)</span> angle of <span class="math notranslate nohighlight">\(-90^\circ\)</span> to rotate it so it is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. We now need to add a method to the <code class="docutils literal notranslate"><span class="pre">Camera</span></code> class to calculate the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> camera vectors from the Euler angles. In the <strong>camera.hpp</strong> file add the following method declaration.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">calculateCameraVectors</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Then in the <strong>camera.cpp</strong> define the method using the following code.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Camera::calculateCameraVectors</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">pitch</span><span class="p">),</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">pitch</span><span class="p">),</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">pitch</span><span class="p">));</span>
+<span class="w">    </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">normalize</span><span class="p">(</span><span class="n">front</span><span class="p">);</span>
+<span class="w">    </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">normalize</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">cross</span><span class="p">(</span><span class="n">front</span><span class="p">,</span><span class="w"> </span><span class="n">worldUp</span><span class="p">));</span>
+<span class="w">    </span><span class="n">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">cross</span><span class="p">(</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">front</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here we have calculated the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> vectors in the same way we did for the <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">view matrix</span></a>.</p>
+</section>
+<section id="getting-the-mouse-input">
+<h3><span class="section-number">7.3.2. </span>Getting the mouse input<a class="headerlink" href="#getting-the-mouse-input" title="Permalink to this heading">#</a></h3>
+<p>We need a way of recording the input from the mouse and adjusting the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. To do this we are going to write a function called <code class="docutils literal notranslate"><span class="pre">mouseInput()</span></code> that is similar to the one already used for the keyboard inputs. In the <strong>Lab07_Moving_the_camera.cpp</strong> file add the following function prototype near the top of the file where we have one for the <code class="docutils literal notranslate"><span class="pre">keyboardInputs()</span></code> function.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">mouseInput</span><span class="p">(</span><span class="n">GLFWwindow</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Then at the very bottom of the file define the function by entering the following code.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">mouseInput</span><span class="p">(</span><span class="n">GLFWwindow</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Get mouse cursor position and reset to centre</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">xPos</span><span class="p">,</span><span class="w"> </span><span class="n">yPos</span><span class="p">;</span>
+<span class="w">    </span><span class="n">glfwGetCursorPos</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">xPos</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">yPos</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetCursorPos</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">768</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Update yaw and pitch angles</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">yaw</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.005f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">xPos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">pitch</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.005f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="mi">768</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yPos</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Calculate camera vectors from the yaw and pitch angles</span>
+<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">calculateCameraVectors</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here we use the function <code class="docutils literal notranslate"><span class="pre">glfwGetCursorPos()</span></code> to get the pixel co-ordinates of the mouse pointer and then we reset this to the window centre using the <code class="docutils literal notranslate"><span class="pre">glfwSetCursorPos()</span></code> function. This is so that the mouse cursor does not eventually move out of the window. The <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles are then adjusted based on the number of pixels that the mouse cursor moves the centre of the window (note that we subtract <code class="docutils literal notranslate"><span class="pre">yPos</span></code> from the centre co-ordinates since pixel co-ordinates assume <span class="math notranslate nohighlight">\((0,0)\)</span> is the top-left hand corder of the display). The distances that the mouse cursor moves is multiplied by a factor of <code class="docutils literal notranslate"><span class="pre">0.005f</span></code> to limit the speed that the camera rotates, you may need to make adjustments this value depending on the machine you are using. Finally, the camera vectors are then calculated using the new <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles.</p>
+<p>Running the program and we can now move around our world space and point the camera in any direction we want.</p>
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/07_mouse.mp4" type="video/mp4">
+</video>
+</center>
+</section>
+</section>
+<hr class="docutils" />
+<section id="back-face-culling">
+<h2><span class="section-number">7.4. </span>Back face culling<a class="headerlink" href="#back-face-culling" title="Permalink to this heading">#</a></h2>
+<p>Whilst moving your camera around your 3D world you may notice that we can move through objects and view them from the inside. All surfaces of the cubes are rendered, including those not visible from the camera because they are on the far side of the cubes. This is a waste of resources as OpenGL is calculating the vertex and fragment shaders for objects that won’t be shown in the frame. To overcome this we can cull (omit) any surface of an object that is <strong>back facing</strong> the camera in a method called <strong>back face culling</strong>.</p>
+<p id="normal-vector-section">A <strong>normal vector</strong> (often just referred to as a <strong>normal</strong>) is a vector denoted by <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> that is perpendicular to a surface at a given point (<a class="reference internal" href="#normal-vector-figure"><span class="std std-numref">Fig. 7.7</span></a>).</p>
+<figure class="align-default" id="normal-vector-figure">
+<a class="reference internal image-reference" href="../_images/07_normal_vector.svg"><img alt="../_images/07_normal_vector.svg" src="../_images/07_normal_vector.svg" width="250" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.7 </span><span class="caption-text">The surface normal vector.</span><a class="headerlink" href="#normal-vector-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Since in computer graphics are surfaces are triangles, we can easily calculate a normal vector using a <a class="reference internal" href="04_vectors_and_matrices.html#cross-product-section"><span class="std std-ref">cross product</span></a>. If a triangle has vertices <span class="math notranslate nohighlight">\(\mathbf{v}_0\)</span>, <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_2\)</span> then the normal vector can be calculated using</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{n} = (\mathbf{v}_1 - \mathbf{v}_0) \times (\mathbf{v}_2 - \mathbf{v}_1). \]</div>
+<p>A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference and we have halved the number of surfaces the shader has to deal with (<a class="reference internal" href="#backface-culling-figure"><span class="std std-numref">Fig. 7.8</span></a>).</p>
+<figure class="align-default" id="backface-culling-figure">
+<a class="reference internal image-reference" href="../_images/07_backface_culling.svg"><img alt="../_images/07_backface_culling.svg" src="../_images/07_backface_culling.svg" width="300" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.8 </span><span class="caption-text">Back face culling removes surfaces with vectors pointing away from the camera.</span><a class="headerlink" href="#backface-culling-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>But how do we know if a surface is back facing? Consider <a class="reference internal" href="#back-facing-figure"><span class="std std-numref">Fig. 7.9</span></a> which shows a back facing surface.</p>
+<figure class="align-default" id="back-facing-figure">
+<a class="reference internal image-reference" href="../_images/07_Back_facing.svg"><img alt="../_images/07_Back_facing.svg" src="../_images/07_Back_facing.svg" width="400" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.9 </span><span class="caption-text">A back facing surface.</span><a class="headerlink" href="#back-facing-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Here <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is a vector pointing from the camera to a point on the surface. Recall that the <a class="reference internal" href="04_vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> is related to the angle between two vectors, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{n} \cdot \mathbf{v} = \| \mathbf{n} \| \| \mathbf{v} \| \cos(\theta). \]</div>
+<p>If we have a back facing surface then <span class="math notranslate nohighlight">\(\theta\)</span> is less than 90<span class="math notranslate nohighlight">\(^\circ\)</span> and <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is a positive number so</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+  \mathbf{n} \cdot \mathbf{v} &gt; 0.
+\end{align*}\]</div>
+<p>So to apply back face culling the vertex shader just has to calculate the dot product between the <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> vectors and if it is a positive number it ignores the surface from then on. To apply back face culling in OpenGL all we need to do is add the following code to the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function near where we invoke the depth testing.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Enable back face culling</span>
+<span class="n">glEnable</span><span class="p">(</span><span class="n">GL_CULL_FACE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Compile and run your program and use the keyboard and mouse to put the camera inside a cube. You will now see that the back faces haven’t been rendered.</p>
+</section>
+<hr class="docutils" />
+<section id="exercises">
+<h2><span class="section-number">7.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Change the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class method so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> co-ordinate of 0, i.e., like a first person shooter game where the player cannot fly around the world.</p></li>
+<li><p>Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function <span class="math notranslate nohighlight">\(y = h \sin(\pi t)\)</span> produces values of <span class="math notranslate nohighlight">\(y=0\)</span> when <span class="math notranslate nohighlight">\(t = 0\)</span> or <span class="math notranslate nohighlight">\(t = 1\)</span> and <span class="math notranslate nohighlight">\(y = h\)</span> when <span class="math notranslate nohighlight">\(t = 0.5\)</span>.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./_pages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06_3D_worlds.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>3D Worlds</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="08_Lighting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Lighting</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-keyboard-input-to-move-the-camera">7.1. Using keyboard input to move the camera</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-keyboard-input">7.1.1. Getting the keyboard input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-speed-of-the-camera">7.2. Controlling the speed of the camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-mouse-to-point-the-camera">7.3. Using the mouse to point the camera</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yaw-pitch-and-roll">7.3.1. Yaw, pitch and roll</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-mouse-input">7.3.2. Getting the mouse input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-face-culling">7.4. Back face culling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">7.5. Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr Jon Shiach
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
