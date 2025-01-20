@@ -1,0 +1,12 @@
+standalone: true
+
+html-math-method:
+  method: mathjax
+
+include-in-header: style.css
+
+slide-level: 2
+
+highlight-style: zenburn
+
+# revealjs-url: https://unpkg.com/reveal.js/

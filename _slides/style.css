@@ -1,0 +1,31 @@
+<style>
+.reveal .slides {
+    font-size: 0.6em;
+    margin: 0;
+}
+
+.reveal p { text-align: left; }
+    .reveal h6 {
+        text-transform: none;
+        font-weight: 400;
+}
+
+.reveal h1 {
+    text-transform: none;
+    font-size: 50px;
+}
+
+.reveal h2 {
+    text-transform: none;
+    font-size: 40px;
+}
+
+.reveal ul {
+    display: block;
+}
+
+.reveal ol {
+    display: block;
+}
+
+</style>

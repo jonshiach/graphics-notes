@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dr Jon Shiach">
+  <title>Textures</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style>
+  .reveal .slides {
+      font-size: 0.6em;
+      margin: 0;
+  }
+
+  .reveal p { text-align: left; }
+      .reveal h6 {
+          text-transform: none;
+          font-weight: 400;
+  }
+
+  .reveal h1 {
+      text-transform: none;
+      font-size: 50px;
+  }
+
+  .reveal h2 {
+      text-transform: none;
+      font-size: 40px;
+  }
+
+  .reveal ul {
+      display: block;
+  }
+
+  .reveal ol {
+      display: block;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Textures</h1>
+  <p class="subtitle">6G5Z0025 Computer Graphics</p>
+  <p class="author">Dr Jon Shiach</p>
+  <p class="institute">Department of Computing and Mathematics</p>
+  <p class="date">Week 3</p>
+</section>
+
+<section id="textures" class="title-slide slide level1">
+<h1>Textures</h1>
+<p>A <strong>texture</strong> is a 2D image applied to a surface of an
+object to give colour, detail and visual complexity</p>
+<p>The process of applying a texture to an object is called
+<strong>texture mapping</strong></p>
+<p>Textures are typically stored as image files, e.g., BMP (BitMap),
+JPEG (Joint Photographic Experts Group), PNG (Portable Network
+Graphics), DDS (Direct Draw Surface)</p>
+</section>
+
+<section id="texture-co-ordinates" class="title-slide slide level1">
+<h1>Texture Co-ordinates</h1>
+<center>
+<img src="../_images/03_texture_mapping.svg" width="700">
+</center>
+<p>A <strong>textel</strong> is an individual pixel in a texture is
+referenced by its <strong>texture coordinates</strong> <span
+class="math inline">\((u, v)\)</span> that are in the range 0 to 1</p>
+<p>For each vertex of an object with co-ordinates <span
+class="math inline">\((x, y)\)</span>, we specify the corresponding
+texture co-ordinates <span class="math inline">\((u,v)\)</span></p>
+<p>For each fragment of the object, OpenGL calculates the corresponding
+texture co-ordinates of the textels by interpolation and the colour of
+the textel is used for the colour of the fragment</p>
+</section>
+
+<section id="creating-a-texture" class="title-slide slide level1">
+<h1>Creating a Texture</h1>
+<p>We need to create an OpenGL texture in our C++ program</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> texture<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>glGenTextures<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">&amp;</span>texture<span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>glBindTexture<span class="op">(</span>GL_TEXTURE_2D<span class="op">,</span> texture<span class="op">);</span></span></code></pre></div>
+<ul>
+<li><p><code>texture</code> — an integer value used to refer to the
+texture</p></li>
+<li><p><code>glGenTextures</code> — generates an OpenGL texture</p></li>
+<li><p><code>glBindTexture</code> — binds the texture integer to a 2D
+OpenGL texture</p></li>
+</ul>
+</section>
+
+<section id="load-texture-map" class="title-slide slide level1">
+<h1>Load Texture Map</h1>
+<p>The texture map is loaded from an external image file</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">char</span> <span class="op">*</span>path <span class="op">=</span> <span class="st">&quot;../assets/crate.jpeg&quot;</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> width<span class="op">,</span> height<span class="op">,</span> nChannels<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>stbi_set_flip_vertically_on_load<span class="op">(</span><span class="kw">true</span><span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">char</span> <span class="op">*</span>data <span class="op">=</span> stbi_load<span class="op">(</span>path<span class="op">,</span> <span class="op">&amp;</span>width<span class="op">,</span> <span class="op">&amp;</span>height<span class="op">,</span> <span class="op">&amp;</span>nChannels<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div>
+<ul>
+<li><p><code>path</code> — a string containing the path and filename of
+the texture file</p></li>
+<li><p><code>width</code>, <code>height</code>, <code>nChannels</code> —
+the dimensions of the texture and number of colour channels (e.g., 3 for
+RGB)</p></li>
+<li><p><code>stbi_set_flip_vertically_on_load(true)</code> — flips the
+texture vertically (so the origin is the bottom-left corner instead of
+the top-left corner)</p></li>
+<li><p><code>stbi_load()</code> — a function from the <a
+href="https://github.com/nothings/stb/tree/master"
+target="_blank">stb_image</a> library that loads an image file and
+stores the data in <code>data</code></p></li>
+</ul>
+</section>
+
+<section id="the-crate-texture" class="title-slide slide level1">
+<h1>The Crate Texture</h1>
+<center>
+<img src="../_images/03_crate.jpeg" width="500">
+</center>
+</section>
+
+<section id="tell-opengl-about-the-texture"
+class="title-slide slide level1">
+<h1>Tell OpenGL about the texture</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glTexImage2D<span class="op">(</span>GL_TEXTURE_2D<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> GL_RGB<span class="op">,</span> width<span class="op">,</span> height<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> GL_RGB<span class="op">,</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                GL_UNSIGNED_BYTE<span class="op">,</span> data<span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>glGenerateMipmap<span class="op">(</span>GL_TEXTURE_2D<span class="op">);</span></span></code></pre></div>
+<ul>
+<li><p><code>glTexImage2D()</code> — gives OpenGL the information about
+our texture</p></li>
+<li><p><code>glGenerateMipmaps()</code> — generates the mipmaps for the
+texture (see later)</p></li>
+</ul>
+</section>
+
+<section id="define-the-texture-co-ordinates"
+class="title-slide slide level1">
+<h1>Define the Texture Co-ordinates</h1>
+<p>For each of the vertex co-ordinates of our triangle we need a buffer
+to store the <span class="math inline">\((u,v)\)</span> texture
+co-ordinates</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">float</span> uv<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// u   v</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p>Here were are defining the following mapping</p>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 36%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Vertex</th>
+<th style="text-align: center;">Vertex co-ordinates <span
+class="math inline">\((x,y,z)\)</span></th>
+<th style="text-align: center;">Texture co-ordinates <span
+class="math inline">\((u,v)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bottom-left</td>
+<td style="text-align: center;"><span class="math inline">\((-0.5, -0.5,
+0)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\((0,0)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bottom-right</td>
+<td style="text-align: center;"><span class="math inline">\((0.5, -0.5,
+0)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\((1,0)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Top</td>
+<td style="text-align: center;"><span class="math inline">\((0, 0.5,
+0)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((0.5,
+1)\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="texture-buffer" class="title-slide slide level1">
+<h1>Texture Buffer</h1>
+<p>When we drew our triangle last week we used a Vertex Buffer Object
+(VBO) to store the vertex co-ordinates, we need to do similar for the
+texture co-ordinates.</p>
+<p>First create the texture buffer (similar to the VBO)</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> uvBuffer<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>glGenBuffers<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">&amp;</span>uvBuffer<span class="op">);</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>glBindBuffer<span class="op">(</span>GL_ARRAY_BUFFER<span class="op">,</span> uvBuffer<span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>glBufferData<span class="op">(</span>GL_ARRAY_BUFFER<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>uv<span class="op">),</span> uv<span class="op">,</span> GL_STATIC_DRAW<span class="op">);</span></span></code></pre></div>
+<p>Then tell OpenGL where to find it</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>glEnableVertexAttribArray<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>glBindBuffer<span class="op">(</span>GL_ARRAY_BUFFER<span class="op">,</span> uvBuffer<span class="op">);</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>glVertexAttribPointer<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> GL_FLOAT<span class="op">,</span> GL_FALSE<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="op">(</span><span class="dt">void</span><span class="op">*)</span><span class="dv">0</span><span class="op">);</span></span></code></pre></div>
+<p>See last week’s slides, or the lab sheets, for an explanation of
+these functions</p>
+</section>
+
+<section id="vertex-shader" class="title-slide slide level1">
+<h1>Vertex Shader</h1>
+<p>We need to make changes to the vertex shader to pass the texture
+co-ordinates to the fragment shader.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#</span><span class="er">version 330 core</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>layout<span class="op">(</span>location <span class="op">=</span> <span class="dv">0</span><span class="op">)</span> in vec3 position<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>layout<span class="op">(</span>location <span class="op">=</span> <span class="dv">1</span><span class="op">)</span> in vec2 texCoord<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>out vec2 texCoord<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> main<span class="op">()</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Output vertex position</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    gl_Position <span class="op">=</span> vec4<span class="op">(</span>position<span class="op">,</span> <span class="fl">1.0</span><span class="op">);</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Output texture co-ordinates</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    uv <span class="op">=</span> texCoord<span class="op">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Note that the texture co-ordinates are inputted as a
+<code>vec2</code> object from <code>location=1</code> which was
+specified using the <code>glVertexAttribPointer()</code> function on the
+previous slide</p>
+</section>
+
+<section id="fragment-shader" class="title-slide slide level1">
+<h1>Fragment Shader</h1>
+<p>We also need to change the fragment shader so that it retrieves the
+fragment colour from the texture</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#</span><span class="er">version 330 core</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>in vec2 texCoord<span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>out vec3 colour<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>uniform sampler2D textureMap<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> main<span class="op">()</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    colour <span class="op">=</span> vec3<span class="op">(</span>texture<span class="op">(</span>textureMap<span class="op">,</span> uv<span class="op">));</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>The input <code>uv</code> is the interpolated texture co-ordinate for
+the current fragment</p>
+<p>We have also used a <strong>uniform</strong> to pass the texture into
+the fragment shader (more on this in a bit)</p>
+</section>
+
+<section id="texture-triangle" class="title-slide slide level1">
+<h1>Texture Triangle</h1>
+<center>
+<img src="../_images/03_texture_triangle.png" width="800">
+</center>
+</section>
+
+<section id="texture-rectangle" class="title-slide slide level1">
+<h1>Texture Rectangle</h1>
+<p>A rectangle object can be constructed using two triangles</p>
+<center>
+<img src="../_images/03_rectangle.svg" width="600">
+</center>
+</section>
+
+<section id="texture-rectangle-co-ordinates"
+class="title-slide slide level1">
+<h1>Texture Rectangle Co-ordinates</h1>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Define vertex positions</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">float</span> vertices<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>    <span class="co">// triangle 1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>     <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>    <span class="co">// triangle 2</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>     <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Define texture co-ordinates</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">float</span> uv<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// u    v</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>    <span class="co">// triangle 1</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>    <span class="co">// triangle 2</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">1.0</span><span class="bu">f</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</section>
+
+<section id="texture-rectangle-result" class="title-slide slide level1">
+<h1>Texture Rectangle Result</h1>
+<center>
+<img src="../_images/03_texture_rectangle.png" width="800">
+</center>
+</section>
+
+<section id="indexing-vertex-co-ordinates"
+class="title-slide slide level1">
+<h1>Indexing Vertex Co-ordinates</h1>
+<p>Our rectangle is defined using six sets of co-ordinates but two of
+the co-ordinates are the same</p>
+<p>To avoid duplication we can define the four vertices of a rectangle
+and use indexing to link the vertices of the triangle to the list</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Define vertex positions</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">float</span> vertices<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// x     y     z      index</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 0       3 -- 2</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 1       |  / |  </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 2       | /  |</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span>   <span class="co">// 3       0 -- 1</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Define texture co-ordinates</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">float</span> uv<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// u    v      index</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 0</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 1</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 2</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span>  <span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span>  <span class="co">// 3</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Define indices</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">unsigned</span> <span class="dt">int</span> indices<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span>  <span class="co">// lower-right triangle</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>   <span class="co">// upper-left triangle</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</section>
+
+<section id="element-buffer-object" class="title-slide slide level1">
+<h1>Element Buffer Object</h1>
+<p>The indices that link the triangle vertices to the co-ordinate list
+are stored in an <strong>Element Buffer Object (EBO)</strong> which are
+created in the same way as the VBO</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Create Element Buffer Object (EBO)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> EBO<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>glGenBuffers<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">&amp;</span>EBO<span class="op">);</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>glBindBuffer<span class="op">(</span>GL_ELEMENT_ARRAY_BUFFER<span class="op">,</span> EBO<span class="op">);</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>glBufferData<span class="op">(</span>GL_ELEMENT_ARRAY_BUFFER<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>indices<span class="op">),</span> indices<span class="op">,</span> GL_STATIC_DRAW<span class="op">);</span></span></code></pre></div>
+<p>We also need to tell OpenGL that we have an EBO so we change the
+drawing function</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>glDrawElements<span class="op">(</span>GL_TRIANGLES<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>indices<span class="op">)</span> <span class="op">/</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">unsigned</span> <span class="dt">int</span><span class="op">),</span> GL_UNSIGNED_INT<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div>
+<p>This now draws the same rectangle as before but avoids duplication of
+vertices</p>
+</section>
+
+<section id="texture-wrapping" class="title-slide slide level1">
+<h1>Texture Wrapping</h1>
+<p>When the texture co-ordinates fall outside of the range 0 to 1 OpenGL
+applies <strong>texture wrapping</strong></p>
+<p>For example if we use 2 instead of 1 in the texture co-ordinates for
+the two triangles</p>
+<center>
+<img src="../_images/03_GL_REPEAT.png" width="500">
+</center>
+<p>Here OpenGL has ‘wrapped’ the texture to fill the rectangle</p>
+</section>
+
+<section id="texture-wrapping-types" class="title-slide slide level1">
+<h1>Texture Wrapping Types</h1>
+<p>OpenGL offers other options for texture wrapping;</p>
+<ul>
+<li><p><code>GL_REPEAT</code> — the texture repeats over the fragment
+(default)</p></li>
+<li><p><code>GL_MIRRORED_REPEAT</code> — same as <code>GL_REPEAT</code>
+but the texture is mirrored with each repeat</p></li>
+<li><p><code>GL_CLAMP_TO_EDGE</code> — clamps the texture co-ordinates
+to between 0 and 1, co-ordinates outside of this range are clamped to
+the edge so that the textels on the edge are stretched to the edge of
+the fragment</p></li>
+<li><p><code>GL_CLAMP_TO_BORDER</code> — co-ordinates outside of the
+range <span class="math inline">\((0,0)\)</span> to <span
+class="math inline">\((1,1)\)</span> are given a used defined border
+colour</p></li>
+</ul>
+<p>We can specify the texture wrapping using the
+<code>glTexParameteri()</code> function. To apply
+<code>GL_MIRRORED_REPEAT</code> add the following code after the texture
+as been specified.</p>
+</section>
+
+<section id="gl_repeat" class="title-slide slide level1">
+<h1><code>GL_REPEAT</code></h1>
+<center>
+<img src="../_images/03_GL_REPEAT.png" width="500">
+</center>
+</section>
+
+<section id="gl_mirrored_repeat" class="title-slide slide level1">
+<h1><code>GL_MIRRORED_REPEAT</code></h1>
+<center>
+<img src="../_images/03_GL_MIRRORED_REPEAT.png" width="500">
+</center>
+</section>
+
+<section id="gl_clamp_to_edge" class="title-slide slide level1">
+<h1><code>GL_CLAMP_TO_EDGE</code></h1>
+<center>
+<img src="../_images/03_GL_CLAMP_TO_EDGE.png" width="500">
+</center>
+</section>
+
+<section id="gl_clamp_to_border" class="title-slide slide level1">
+<h1><code>GL_CLAMP_TO_BORDER</code></h1>
+<center>
+<img src="../_images/03_GL_CLAMP_TO_BORDER.png" width="500">
+</center>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/math/math.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

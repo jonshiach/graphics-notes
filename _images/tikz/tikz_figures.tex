@@ -1,0 +1,1666 @@
+% sips -s format png your_pdf_file.pdf --out your_png_file.png
+
+\documentclass[tikz,border=0mm]{standalone}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\renewcommand\familydefault{\sfdefault} 
+
+\usetikzlibrary{arrows,shapes,calc,math,decorations.fractals,patterns,backgrounds,decorations.markings,decorations.pathmorphing,decorations.pathreplacing}
+
+\definecolor{mygreen}{rgb}{0,0.5,0}
+\tikzset{point/.style={fill,circle,inner sep=1.5pt}}
+\tikzset{vector/.style={-triangle 45, line width=1pt}}
+\tikzset{dblarrow/.style={latex'-latex'}}
+\tikzset{partial ellipse/.style args={#1:#2:#3}{insert path={+ (#1:#3) arc (#1:#2:#3)}}}
+\tikzset{axis/.style={-stealth',line width=1pt}}
+\renewcommand{\vec}{\mathbf}
+
+\tikzstyle{every picture}+=[font=\sffamily]
+
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+    \path #1;%
+    \edef#2{ \strip@pt\pgf@x }%
+    \edef#3{ \strip@pt\pgf@y }%
+}
+\makeatother
+
+% Command to draw one textured triangle
+% #1-#3 are coordinates of the triangle
+% #4-#6 are texture coordinates in [0,1]^2 of the image
+%       where (0,0) is bottom left
+% #7 is the name of the image
+\newcommand\texturedtriangle[7]{%
+    % Decode all the coordinates into nice single numbers
+    \gettikzxy{#1}{\ax}{\ay}
+    \gettikzxy{#2}{\bx}{\by}
+    \gettikzxy{#3}{\cx}{\cy}
+    \gettikzxy{#4}{\tax}{\tay}
+    \gettikzxy{#5}{\tbx}{\tby}
+    \gettikzxy{#6}{\tcx}{\tcy}
+    \gettikzxy{(1,1)}{\ux}{\uy}
+    % Compute the required affine transformation
+    \pgfmathsetmacro\det{\tax*(\tcy-\tby) + \tay*(\tbx-\tcx) - \tbx*\tcy + \tby*\tcx}
+    \pgfmathsetmacro\aa{(\ax*(\tcy-\tby) + \tay*(\bx-\cx) - \bx*\tcy + \tby*\cx)/\det}
+    \pgfmathsetmacro\ba{(\ax*(\tbx-\tcx) + \tax*(\cx-\bx) - \tbx*\cx + \bx*\tcx)/\det}
+    \pgfmathsetmacro\ab{(\ay*(\tcy-\tby) + \tay*(\by-\cy) - \by*\tcy + \tby*\cy)/\det}
+    \pgfmathsetmacro\bb{(\ay*(\tbx-\tcx) + \tax*(\cy-\by) - \tbx*\cy + \by*\tcx)/\det}
+    \pgfmathsetmacro\tx{\ax - (\tax*\aa + \tay*\ba)}
+    \pgfmathsetmacro\ty{\ay - (\tax*\ab + \tay*\bb)}
+    \pgflowlevelobj{
+        \pgfsettransformentries{\aa}{\ab}{\ba}{\bb}{\tx pt}{\ty pt}
+    }{
+        % We are inside the texture space here...
+        \clip #4 -- #5 -- #6 -- cycle;
+        % Draw a unit sized image (from (0,0) to (1,1) if no scale)
+        \node [opacity=0.5] at (0.5,0.5) {\includegraphics[width=\ux pt, height=\uy pt]{#7}};
+    }
+}
+
+% Command to draw one textured triangle (lighter)
+\newcommand\texturedtrianglelight[7]{%
+    % Decode all the coordinates into nice single numbers
+    \gettikzxy{#1}{\ax}{\ay}
+    \gettikzxy{#2}{\bx}{\by}
+    \gettikzxy{#3}{\cx}{\cy}
+    \gettikzxy{#4}{\tax}{\tay}
+    \gettikzxy{#5}{\tbx}{\tby}
+    \gettikzxy{#6}{\tcx}{\tcy}
+    \gettikzxy{(1,1)}{\ux}{\uy}
+    % Compute the required affine transformation
+    \pgfmathsetmacro\det{\tax*(\tcy-\tby) + \tay*(\tbx-\tcx) - \tbx*\tcy + \tby*\tcx}
+    \pgfmathsetmacro\aa{(\ax*(\tcy-\tby) + \tay*(\bx-\cx) - \bx*\tcy + \tby*\cx)/\det}
+    \pgfmathsetmacro\ba{(\ax*(\tbx-\tcx) + \tax*(\cx-\bx) - \tbx*\cx + \bx*\tcx)/\det}
+    \pgfmathsetmacro\ab{(\ay*(\tcy-\tby) + \tay*(\by-\cy) - \by*\tcy + \tby*\cy)/\det}
+    \pgfmathsetmacro\bb{(\ay*(\tbx-\tcx) + \tax*(\cy-\by) - \tbx*\cy + \by*\tcx)/\det}
+    \pgfmathsetmacro\tx{\ax - (\tax*\aa + \tay*\ba)}
+    \pgfmathsetmacro\ty{\ay - (\tax*\ab + \tay*\bb)}
+    \pgflowlevelobj{
+        \pgfsettransformentries{\aa}{\ab}{\ba}{\bb}{\tx pt}{\ty pt}
+    }{
+        % We are inside the texture space here...
+        \clip #4 -- #5 -- #6 -- cycle;
+        % Draw a unit sized image (from (0,0) to (1,1) if no scale)
+        \node [opacity=0.5] at (0.5,0.5) {\includegraphics[width=\ux pt, height=\uy pt]{#7}};
+    }
+}
+
+\begin{document}
+
+% Book logo
+% \begin{tikzpicture}
+%     % \fill (-1.5,-0.25) rectangle ++(7,2.5);
+%     % \draw [line width=3pt,white] (0,0) -- ++(5:3) -- ++(90:1.5) -- ++(175:3) -- cycle;
+%     % \node [fill=black,text width=4cm] at (2.5,1) {\color{white} \LARGE \bf COMPUTER\\[4pt]GRAPHICS};
+%     \fill [white] (-1.5,-0.25) rectangle ++(7,2.5);
+%     \draw [line width=3pt] (0,0) -- ++(5:3) -- ++(90:1.5) -- ++(175:3) -- cycle;
+%     \node [text width=4cm,fill=white] at (2.5,1) {\LARGE \bf COMPUTER\\[4pt]GRAPHICS};
+% \end{tikzpicture}
+
+% OpenGL window
+% \begin{tikzpicture}
+%     \draw [fill=red] (-1.5,-1) coordinate (P1) 
+%     -- (1.5,-1) coordinate (P2)  
+%     -- (0,1) coordinate (P3) -- cycle;
+%     \draw [line width=1pt] (-3,-2) -- ++(6, 0) -- ++(0, 4) -- ++(-6, 0) -- cycle;
+%     \draw [-stealth'] (-4, 0) -- ++(8, 0) node [right] {$x$};
+%     \draw [-stealth'] (0, -3) -- ++(0, 6) node [above] {$y$};
+%     \node [below left] at (-3, 0) {-1};
+%     \node [below right] at (3,0) {1};
+%     \node [below left] at (0,-2) {-1};
+%     \node [above left] at (0,2) {1};
+%     \node [point] at (P1) {};
+%     \node [point] at (P2) {};
+%     \node [point] at (P3) {};
+%     \node [below] at (P1) {$(-0.5,-0.5)$};
+%     \node [below] at (P2) {$(0.5,-0.5)$};
+%     \node [above right] at (P3) {$(0,0.5)$};
+% \end{tikzpicture}
+
+% Vector
+% \begin{tikzpicture}
+%     \tikzmath{\x=-30;\y=90;\z=210;\xl=1;\yl=1;\zl=1;\a=30;\m=2;\w=2;\d=1.5;\h=1.25;}
+%     \coordinate (1) at ($(\x:1)+(\z:-1)$);
+%     \draw [axis] (0,0) -- ++(\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (0,0) -- ++(\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [axis] (0,0) -- ++(\z:\zl) node at (\z:\zl+0.2) {$z$};
+%     \draw [help lines] (1) -- ++(\x:\w) coordinate (2) -- ++(\z:-\d) coordinate (3) -- ++(\x:-\w) coordinate (4) -- ++(\z:\d)
+%         ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d)
+%         (1) -- ++(\y:\h) (2) -- ++(\y:\h) (3) -- ++(\y:\h) (4) -- ++(\y:\h);
+%     \draw [vector,blue] (1) -- ($(3)+(\y:\h)$) node [above right] {$\mathbf{a} = (a_x,a_y,a_z)$};
+%     \draw [<->] ($(1)+(0,-0.2)$) -- ++(\x:\w) node [pos=0.5,below] {$a_x$};
+%     \draw [<->] ($(2)+(\z+90:0.2)$) -- ++(\z:-\d) node [pos=0.5,below right] {$a_z$};
+%     \draw [<->] ($(3)+(\x:0.2)$) -- ++(\y:\h) node [pos=0.5,right] {$a_y$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \node [point,blue,label=left:{$A$}] (a) {};
+%     \node [point,blue,label=right:{$B$}] at ($(a)+(15:3)$) (b) {};
+%     \draw [vector] (a) -- (b) node [pos=0.5,below] {$\mathbf{a}$};
+% \end{tikzpicture}
+
+% Vector magnitude
+% \begin{tikzpicture}
+%     \tikzmath{\a=20;\l=3;};
+%     \draw [vector,blue] (0,0) -- ++(\a:\l) node [pos=0.5,above left] {$\mathbf{a}$};
+%     \draw [<->] (\a-90:0.4) -- ++(\a:\l) node [pos=0.5,below,rotate=\a] {$\|\mathbf{a}\|$};
+% \end{tikzpicture}
+
+% Vector multiplication by a scalar
+% \begin{tikzpicture}
+%     \draw [vector,blue] (0,0) -- ++(2,2) node [pos=0.5,above left] {$\mathbf{a}$};
+%     \draw [vector,red] (2,0) -- ++(3,3) node [pos=0.5,above left] {$2\mathbf{a}$};
+%     \draw [vector,green!50!black] (6,2) -- ++(-2,-2) node [pos=0.5,above left] {$-\mathbf{a}$};
+% \end{tikzpicture}
+
+% Vector addition
+% \begin{tikzpicture}
+%     \draw [vector,blue] (0,0) coordinate (a1) -- ++(2,2) coordinate (a2) node [pos=0.5,above left] {$\mathbf{a}$};
+%     \draw [vector,red,shorten >= 2pt] (a2) -- ++(2,-1) coordinate (b2) node [pos=0.5,above right] {$\mathbf{b}$};
+%     \draw [vector,blue!50!red,shorten >= 2pt] (a1) -- (b2) node [pos=0.5,below right] {$\mathbf{a} + \mathbf{b}$};
+%     % \draw [vector,black] (a2) -- ++(-2,1) coordinate (b3) node [pos=0.5,above right] {$-\mathbf{b}$};
+%     % \draw [vector,green!50!black,shorten >= 2pt] (a1) -- (b3) node [pos=0.5,left] {$\mathbf{a} - \mathbf{b}$};
+% \end{tikzpicture}
+
+% Vector subtraction
+% \begin{tikzpicture}
+%     \draw [vector,blue] (0,0) coordinate (a1) -- ++(2,2) coordinate (a2) node [pos=0.5,above left] {$\mathbf{a}$};
+%     \draw [vector,red!20,shorten >= 2pt] (a2) -- ++(2,-1) coordinate (b2) node [pos=0.5,above right] {$\mathbf{b}$};
+%     \draw [vector,red] (a2) -- ++(-2,1) coordinate (b3) node [pos=0.5,above right] {$-\mathbf{b}$};
+%     \draw [vector,blue!50!red,shorten >= 2pt] (a1) -- (b3) node [pos=0.5,left] {$\mathbf{a} - \mathbf{b}$};
+% \end{tikzpicture}
+
+% Dot product
+% \begin{tikzpicture}
+%     \draw [vector, blue] (0,0) -- (-20:3) node [pos=0.5,below left] {$\mathbf{a}$};
+%     \draw [vector, red] (0,0) -- (20:3) node [pos=0.5,above left] {$\mathbf{b}$};
+%     \draw (-20:1) arc (-20:20:1);
+%     \node at (0:0.67) {$\theta$};
+% \end{tikzpicture}
+
+% Cross product
+% \begin{tikzpicture}[auto]
+%     \draw [vector, blue] (0,0) -- (-20:3) node [pos=0.5,below left] {$\mathbf{a}$};
+%     \draw [vector, red] (0,0) -- (20:3) node [pos=0.5,above left] {$\mathbf{b}$};
+%     \draw [vector, mygreen] (0,0) -- (90:2) node [above] {$\mathbf{a} \times \mathbf{b}$};
+%     \draw [blue,thin] (-20:0.25) -- ++(90:0.25) -- ++(160:0.25);
+%     \draw [red,thin] (20:0.25) -- ++(90:0.25) -- ++(200:0.25);
+% \end{tikzpicture}
+
+% Column major order
+% \begin{tikzpicture}
+%     \tikzmath{\w=0.75;};
+%     \foreach \i in {0, ..., 15} {
+%         \draw (-0.5*\w+\w*\i,-0.5*\w) rectangle ++(\w,\w);
+%     }
+%     \node at (0*\w, 0) {$a$};
+%     \node at (1*\w, 0) {$e$};
+%     \node at (2*\w, 0) {$i$};
+%     \node at (3*\w, 0) {$m$};
+%     \node at (4*\w, 0) {$b$};
+%     \node at (5*\w, 0) {$f$};
+%     \node at (6*\w, 0) {$j$};
+%     \node at (7*\w, 0) {$n$};
+%     \node at (8*\w, 0) {$c$};
+%     \node at (9*\w, 0) {$g$};
+%     \node at (10*\w, 0) {$k$};
+%     \node at (11*\w, 0) {$o$};
+%     \node at (12*\w, 0) {$d$};
+%     \node at (13*\w, 0) {$h$};
+%     \node at (14*\w, 0) {$l$};
+%     \node at (15*\w, 0) {$p$};
+%     \foreach \i in {1, ..., 4}{
+%         \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=4ex}]
+%     (-4.5*\w+\i*4*\w,0) -- ++(4*\w,0) node[midway,yshift=-3em]{column \i};
+%     }
+% \end{tikzpicture} 
+
+% Row major order
+% \begin{tikzpicture}
+%     \tikzmath{\w=0.75;};
+%     \foreach \i in {0, ..., 15} {
+%         \draw (-0.5*\w+\w*\i,-0.5*\w) rectangle ++(\w,\w);
+%     }
+%     \node at (0*\w, 0) {$a$};
+%     \node at (1*\w, 0) {$b$};
+%     \node at (2*\w, 0) {$c$};
+%     \node at (3*\w, 0) {$d$};
+%     \node at (4*\w, 0) {$e$};
+%     \node at (5*\w, 0) {$f$};
+%     \node at (6*\w, 0) {$g$};
+%     \node at (7*\w, 0) {$h$};
+%     \node at (8*\w, 0) {$i$};
+%     \node at (9*\w, 0) {$j$};
+%     \node at (10*\w, 0) {$k$};
+%     \node at (11*\w, 0) {$l$};
+%     \node at (12*\w, 0) {$n$};
+%     \node at (13*\w, 0) {$n$};
+%     \node at (14*\w, 0) {$o$};
+%     \node at (15*\w, 0) {$p$};
+%     \foreach \i in {1, ..., 4}{
+%         \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=4ex}]
+%     (-4.5*\w+\i*4*\w,0) -- ++(4*\w,0) node[midway,yshift=-3em]{row \i};
+%     }
+% \end{tikzpicture} 
+
+% Translation
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\xl=8;\yl=5;\tx=3;\ty=1.5;}
+%     \coordinate (p1) at (1, 1);
+%     \coordinate (p2) at (3, 1);
+%     \coordinate (p3) at (2,3);
+%     \coordinate (q1) at ($(p1)+(\tx,\ty)$);
+%     \coordinate (q2) at ($(p2)+(\tx,\ty)$);
+%     \coordinate (q3) at ($(p3)+(\tx,\ty)$);
+%     \draw [axis] (0,0) -- ++(\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (0,0) -- ++(\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [line width=1pt] (p1) -- (p2) -- (p3) -- cycle;
+%     \draw [line width=1pt] (q1) -- (q2) -- (q3) -- cycle;
+%     \node [point,label=below:{$(x_0,y_0,z_0)$}] at (p1) {};
+%     \node [point,label=below:{$(x_1,y_1,z_1)$}] at (p2) {};
+%     \node [point,label=above:{$(x_2,y_2,z_2)$}] at (p3) {};
+%     \node [point] at (q1) {};
+%     \node [point] at (q2) {};
+%     \node [right] at (q2) {$(x_1+t_x,y_1+t_y,z_1+t_z)$};
+%     \node (q1label) at ($(q1)+(1,-1)$) {$(x_0+t_x,y_0+t_y,z_0+t_z)$};
+%     \draw [->,shorten >= 4pt] (q1label) -- (q1);
+%     \node [point,label=above:{$(x_2+t_x,y_2+t_y,z_2+t_z)$}] at (q3) {};
+%     \draw [vector,blue] (2,5/3) -- (2+\tx, 5/3+\ty) node [pos=0.5,above,rotate={atan(\ty/\tx)}] {$\mathbf{t}= (t_x, t_y, t_z)$};
+% \end{tikzpicture}
+
+% Scaling
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\xl=8;\yl=6;\sx=3;\sy=2;}
+%     \coordinate (p1) at (-1, -0.67);
+%     \coordinate (p2) at (1, -0.67);
+%     \coordinate (p3) at (0, 1.33);
+%     \coordinate (q1) at (-1*\sx, -0.67*\sy);
+%     \coordinate (q2) at (1*\sx, -0.67*\sy);
+%     \coordinate (q3) at (0*\sx, 1.33*\sy);
+%     \draw [axis] (\x:-0.5*\xl) -- ++(\x:\xl) node at (\x:0.5*\xl+0.2) {$x$};
+%     \draw [axis] (\y:-2.5) -- ++(\y:\yl) node [above] {$y$};
+%     \draw [line width=1pt] (p1) -- (p2) -- (p3) -- cycle;
+%     \draw [line width=1pt] (q1) -- (q2) -- (q3) -- cycle;
+%     \node [point,label=below:{$(x_0,y_0,z_0)$}] at (p1) {};
+%     \node [point,label=below:{$(x_1,y_1,y_1)$}] at (p2) {};
+%     \node [point,label=above right:{$(x_2,y_2,z_2)$}] at (p3) {};
+%     \node [point,label=below:{$(s_xx_0,s_yy_0,s_zz_0)$}] (q1) at (q1) {};
+%     \node [point,label=below:{$(s_xx_1,s_yy_1,s_zz_1)$}] (q2) at (q2) {};
+%     \node [point,label=above right:{$(s_xx_2,s_yy_2,s_zz_2)$}] (q3) at (q3) {};
+%     \draw [vector,blue,shorten <= 4pt,shorten >= 2pt] (p1) -- (q1);
+%     \draw [vector,blue,shorten <= 4pt,shorten >= 2pt] (p2) -- (q2);
+%     \draw [vector,blue,shorten <= 4pt,shorten >= 2pt] (p3) -- (q3);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}[every node/.style={node distance=0.4cm}]
+%     \tikzmath{\x=0;\y=90;\xl=10;\yl=6;\sx=4;\sy=2;}
+%     \tikzmath{\vx0=1;\vx1=2;\vx2=1.5;\vy0=1.5;\vy1=1.5;\vy2=2.5;}    
+%     \draw [axis] (\x:0) -- ++(\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (\y:0) -- ++(\y:\yl) node [above] {$y$};
+%     \node [point] (p0) at (\vx0,\vy0) {};
+%     \node [point] (p1) at (\vx1,\vy1) {};
+%     \node [point] (p2) at (\vx2,\vy2) {};
+%     \node [point] (q0) at (\vx0*\sx,\vy0*\sy) {};
+%     \node [point] (q1) at (\vx1*\sx,\vy1*\sy) {};
+%     \node [point] (q2) at (\vx2*\sx,\vy2*\sy) {};
+%     \draw [vector,blue,shorten >= 2pt,shorten <= 2pt] (p0) -- (q0);
+%     \draw [vector,blue,shorten >= 2pt,shorten <= 2pt] (p1) -- (q1);
+%     \draw [vector,blue,shorten >= 2pt,shorten <= 2pt] (p2) -- (q2);
+%     \node [below of=p0] {$(x_0,y_0,z_0)$};
+%     \node [below of=p1,yshift=-0.5cm] (p1label) {$(x_1,y_1,z_1)$};
+%     \node [above of=p2] {$(x_2,y_2,z_2)$};
+%     \node [below of=q0] {$(s_xx_0,s_yy_0,s_zz_0)$};
+%     \node [below of=q1] {$(s_xx_1,s_yy_1,s_zz_1)$};
+%     \node [above of=q2] {$(s_xx_2,s_yy_2,s_zz_2)$};
+%     \draw [line width=1pt] (p0) -- (p1) -- (p2) -- (p0);
+%     \draw [line width=1pt] (q0) -- (q1) -- (q2) -- (q0);
+%     \draw [->,shorten >= 2pt] (p1label) -- (p1);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\xl=3;\yl=3;}
+%     \coordinate (O1) at (0,0);
+%     \coordinate (O2) at (\x:\xl+2);
+%     \coordinate (O3) at (\x:2*\xl+4);
+%     \draw [axis] (O1) -- ++(\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (O1) -- ++(\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [axis] (O2) -- ++(\x:\xl) node at ($(O2)+(\x:\xl+0.2)$) {$x$};
+%     \draw [axis] (O2) -- ++(\y:\yl) node at ($(O2)+(\y:\yl+0.2)$) {$y$};
+%     \draw [axis] (O3) -- ++(\x:\xl) node at ($(O3)+(\x:\xl+0.2)$) {$x$};
+%     \draw [axis] (O3) -- ++(\y:\yl) node at ($(O3)+(\y:\yl+0.2)$) {$y$};
+%     \draw [line width=1pt] (1,1) -- ++(1,0) -- ++(-0.5,1) -- cycle;
+%     \draw [line width=1pt] ($(O2)+(-0.5,-0.33)$) -- ++(1,0) -- ++(-0.5,1) -- cycle;
+%     \draw [line width=1pt] ($(O2)+(-1,-0.67)$) -- ++(2,0) -- ++(-1,2) -- cycle;
+%     \draw [line width=1pt] ($(O3)+(-1,-0.67)$) -- ++(2,0) -- ++(-1,2) -- cycle;
+%     \draw [line width=1pt] ($(O3)+(0.5,0.67)$) -- ++(2,0) -- ++(-1,2) -- cycle;
+%     \draw [gray!50,line width=1pt] ($(O2)+(1,1)$) -- ++(1,0) -- ++(-0.5,1) -- cycle;
+%     \draw [gray!50,line width=1pt] ($(O3)+(1,1)$) -- ++(1,0) -- ++(-0.5,1) -- cycle;
+%     \draw [vector,blue] (1.5,1.33) -- (0,0);
+%     \draw [vector,blue] (O3) -- ++(1.5,1.33);
+%     \draw [vector,blue] ($(O2)+(-0.5,-0.33)$) -- ($(O2)+(-1,-0.67)$);
+%     \draw [vector,blue] ($(O2)+(0.5,-0.33)$) -- ($(O2)+(1,-0.67)$);
+%     \draw [vector,blue] ($(O2)+(0,0.67)$) -- ($(O2)+(0,1.33)$);
+%     \node at ($(O1)+(0.5*\xl,-1.5)$) {translate to $(0,0,0$)};
+%     \node at ($(O2)+(0.5*\xl,-1.5)$) {scale};
+%     \node at ($(O3)+(0.5*\xl,-1.5)$) {translate to original centre};
+% \end{tikzpicture}
+
+% OpenGL co-ordinate axes
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\xl=2;\yl=2;\zl=2;}
+%     \draw ($(\x:-0.75*\xl)+(\y:-0.75*\yl)$) -- ++(\x:1.5*\xl) -- ++(\y:1.5*\yl) -- ++(\x:-1.5*\xl) node [pos=0.25,above,rotate=\x] {screen} -- cycle;
+%     \draw [axis] (\x:0) -- (\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (\y:0) -- (\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [axis] (\z:0) -- (\z:\zl) node at (\z:\zl+0.2) {$z$};
+%     \node [rotate=\z] at (\z:\zl+1) {\includegraphics[width=1cm]{eye.png}};
+%     \node at ($(\z:\zl+1)+(0,-0.5)$) {user};
+% \end{tikzpicture}
+
+% 3D Rotation 
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\xl=3;\yl=3;\zl=3;}
+%     \draw [axis] (\x:-\xl) -- (\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (\y:-\yl) -- (\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [axis] (\z:-\zl) -- (\z:\zl) node at (\z:\zl+0.2) {$z$};
+%     \node [rotate=\x] at (\x:\xl+1) {\includegraphics[width=1cm]{eye.png}};
+%     \node [rotate=\y] at (\y:\yl+1) {\includegraphics[width=1cm]{eye.png}};
+%     \node [rotate=\z] at (\z:\zl+1) {\includegraphics[width=1cm]{eye.png}};
+%     \draw[line width=1pt,->,rotate around={\x:(\x:2)},red] (\x:2) [partial ellipse=20:340:0.33cm and 0.67cm];
+%     \draw[line width=1pt,->,rotate around={\y:(\y:2)},mygreen] (\y:2) [partial ellipse=20:340:0.33cm and 0.67cm];
+%     \draw[line width=1pt,->,rotate around={\z:(\z:2)},blue] (\z:2) [partial ellipse=20:340:0.33cm and 0.67cm];
+% \end{tikzpicture}
+
+% Rotation derivation
+% \begin{tikzpicture}
+%     \tikzmath{\a1=30; \a2=60; \l1=4; \l2=1;}
+%     \draw [-stealth] (0, 0) -- ++(5, 0) node at (0:5.2) {$x$};
+%     \draw [-stealth] (0, 0) -- ++(0, 4) node at (90:4.2) {$y$};
+%     \node [point, blue] at (\a1:\l1) (1) {};
+%     \node [point, red] at (\a2:\l1) (2) {};
+%     \draw [vector, blue] (0, 0) -- (1) node [right] {$\mathbf{a}=(a_x,b_y)$};
+%     \draw [vector, red] (0, 0) -- (2) node [right] {$\mathbf{b}=(b_x,b_y)$};
+%     \draw [vector, mygreen] (0, 0) -- (0:\l1) node [pos=0.6,below] {$\mathbf{c}$};
+%     \draw [-latex',red] (\a1:\l2) arc (\a1 : \a2 : \l2);
+%     \draw [-latex',blue] (0:{\l2+0.5}) arc (0 : \a1 : {\l2+0.5});
+%     \node [red] at ({0.5 * (\a1+\a2)}: {0.75*\l2}) {$\theta$};
+%     \node [blue] at ({0.5 * \a1}: {1.2*\l2}) {$\phi$};
+%     \draw [blue] (1) -- ({\l1 * cos(\a1)}, 0);
+%     \draw [red] (2) -- ({\l1 * cos(\a2)}, 0);
+%     \draw [blue] ({\l1 * cos(\a1)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
+%     \draw [red] ({\l1 * cos(\a2)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
+% \end{tikzpicture}
+
+% Axis-angle rotation
+% \begin{tikzpicture}
+%     \tikzmath{\x=-30;\y=90;\z=210;\al=2;\l=1.5;\a=42;};
+%     \tikzmath{\vx=1.25;\vy=2;\vz=-1.5;}
+%     \coordinate (1) at (\x:\vx);
+%     \coordinate (2) at ($(1)+(\z:\vz)$);
+%     \coordinate (3) at ($(2)+(\x:-\vx)$);
+%     \coordinate (4) at ($(0,0)+(\y:\vy)$);
+%     \coordinate (5) at ($(1)+(\y:\vy)$);
+%     \coordinate (6) at ($(2)+(\y:\vy)$);
+%     \coordinate (7) at ($(3)+(\y:\vy)$);
+%     \coordinate (8) at ($(4)+(\y:\vy)$);
+%     \draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+%     \draw [axis] (0,0) -- ++(\y:\al+1) node [above] {$y$};
+%     \draw [axis] (0,0) -- ++(\z:\al) node [below left] {$z$};
+%     \draw [->,line width=1pt,rotate around={\a:(\a:1.5)}] (\a:1.5) [partial ellipse=20:340:0.2cm and 0.5cm];
+%     \draw [help lines] (1) -- (2) -- (3) -- (0,0) (4) -- (5) -- (6) -- (7) -- (4) (1) -- (5) (2) -- (6) (3) -- (7);
+%     \draw [help lines] (1) -- (0,0);
+%     \draw [vector,blue] (0,0) -- (6) node [right] {$\hat{\mathbf{v}}$};;
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\al=3.5;\vx=3;\vy=3;\vz=2;}
+%     \coordinate (1) at ($(\x:\vx)+(\y:\vy)+(\z:\vz)$);
+%     \coordinate (2) at ($(\x:\vx)+(\y:0)+(\z:\vz)$);
+%     \coordinate (3) at ($(\x:0)+(\y:0)+(\z:\vz)$);
+%     \coordinate (4) at ($(\x:0)+(\y:\vz)+(\z:\vz)$);
+%     \draw [axis] (0,0) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (0,0) -- (\y:\al-1) node at (\y:\al-1+0.2) {$y$};
+%     \draw [axis] (0,0) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+%     \draw [vector,blue] (0,0) -- (1) node [above] {$\hat{\mathbf{v}}$};
+%     \draw [blue] (1) -- (2) -- (0,0) (2) -- (3) (2) -- (\x:\vx);
+%     \draw [blue,dashed] (3) -- (4) -- (0,0);
+%     \draw [blue] ($(3)+(\z:-0.2)$) -- ++(\y:0.2) -- ++(\z:0.2);
+%     \draw [->,bend right,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(4)$) to (\z:1);
+%     \node at (180:0.67) {$\theta$};
+%     \node [below,blue] at ($(0,0)!0.5!(3)$) {$v_z$};
+%     \node [left,blue] at ($(3)!0.5!(4)$) {$v_y$};
+%     \node [above,blue,rotate=-35] at ($(0,0)!0.6!(4)$) {$\sqrt{v_y^2+v_z^2}$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\al=3.5;\vx=2;\vy=0;\vz=3;}
+%     \coordinate (1) at ($(\x:\vx)+(\y:\vy)+(\z:\vz)$);
+%     \coordinate (2) at ($(\x:\vx)+(\y:0)+(\z:\vz)$);
+%     \coordinate (3) at ($(\x:0)+(\y:0)+(\z:\vz)$);
+%     \coordinate (4) at ($(\x:0)+(\y:\vz)+(\z:\vz)$);
+%     \draw [axis] (0,0) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (0,0) -- (\y:\al-1) node at (\y:\al-1+0.2) {$y$};
+%     \draw [axis] (0,0) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+%     \draw [vector,blue] (0,0) -- (1);
+%     \draw [blue] (1) -- (2) -- (0,0) (2) -- (3) (2) -- (\x:\vx);
+%     \draw [blue] ($(3)+(\z:-0.2)$) -- ++(\x:0.2) -- ++(\z:0.2);
+%     \draw [->,bend left,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(2)$) to (\z:1);
+%     \node at (220:0.67) {$\theta$};
+%     \node [below,blue] at ($(2)!0.5!(3)$) {$v_x$};
+%     \node [right,blue] at ($(0,0)!0.5!(2)$) {$1$};
+%     \node [above,blue,rotate=-\x] at ($(0,0)!0.5!(3)$) {$\sqrt{v_y^2+v_z^2}$};
+% \end{tikzpicture}
+
+% Shaders
+% \begin{tikzpicture}
+%     \tikzmath{\x1=1;\y1=1;\x2=3;\y2=1;\x3=3;\y3=3;}
+%     \coordinate (1) at (0,0);
+%     \coordinate (2) at ($(1)+(6,0)$);
+%     \coordinate (3) at ($(2)+(6,0)$);
+%     \draw [fill=blue!10,rounded corners] (0,0) rectangle ++(4,4);
+%     % \draw [thick] ($(1)+(\x1,\y1)$) -- ($(1)+(\x2,\y2)$) -- ($(1)+(\x3,\y3)$) -- cycle;
+%     \draw [fill] ($(1)+(\x1,\y1)$) circle (2pt);
+%     \draw [fill] ($(1)+(\x2,\y2)$) circle (2pt);
+%     \draw [fill] ($(1)+(\x3,\y3)$) circle (2pt);
+%     \draw [rounded corners,fill=blue!10,] (2) rectangle ++(4,4);
+%     \foreach \i in {0, ..., 10} {
+%         \foreach \j in {\i ,..., 10} {
+%             \draw [gray,fill=white] ($(2)+(\x1-0.1,\y1-0.1)+(\j*0.2,\i*0.2)$) rectangle ++(0.2, 0.2);
+%         }
+%     }
+%     \draw [thick] ($(2)+(\x1,\y1)$) -- ($(2)+(\x2,\y2)$) -- ($(2)+(\x3,\y3)$) -- cycle;
+%     \draw [rounded corners,fill=blue!10] (3) rectangle ++(4,4);
+%     \foreach \i in {0, ..., 10} {
+%         \foreach \j in {\i ,..., 10} {
+%             \draw [gray,fill=white] ($(3)+(\x1-0.1,\y1-0.1)+(\j*0.2,\i*0.2)$) rectangle ++(0.2, 0.2);
+%         }
+%     }
+%     \fill [red] ($(3)+(\x1,\y1)+(1.1, 0.5)$) rectangle ++(0.2,0.2);
+%     \node at ($(1)+(2,-0.5)$) {Vertex Shader};
+%     \node at ($(2)+(2,-0.5)$) {Rasterisation};
+%     \node at ($(3)+(2,-0.5)$) {Fragment Shader};
+%     \draw [-stealth', gray,line width=3pt] ($(1)+(4.1,2)$) -- ++(1.8, 0);
+%     \draw [-stealth', gray,line width=3pt] ($(2)+(4.1,2)$) -- ++(1.8, 0);
+% \end{tikzpicture}
+
+% Texture mapping
+\renewcommand\texturedtriangle[7]{%
+    % Decode all the coordinates into nice single numbers
+    \gettikzxy{#1}{\ax}{\ay}
+    \gettikzxy{#2}{\bx}{\by}
+    \gettikzxy{#3}{\cx}{\cy}
+    \gettikzxy{#4}{\tax}{\tay}
+    \gettikzxy{#5}{\tbx}{\tby}
+    \gettikzxy{#6}{\tcx}{\tcy}
+    \gettikzxy{(1,1)}{\ux}{\uy}
+    % Compute the required affine transformation
+    \pgfmathsetmacro\det{\tax*(\tcy-\tby) + \tay*(\tbx-\tcx) - \tbx*\tcy + \tby*\tcx}
+    \pgfmathsetmacro\aa{(\ax*(\tcy-\tby) + \tay*(\bx-\cx) - \bx*\tcy + \tby*\cx)/\det}
+    \pgfmathsetmacro\ba{(\ax*(\tbx-\tcx) + \tax*(\cx-\bx) - \tbx*\cx + \bx*\tcx)/\det}
+    \pgfmathsetmacro\ab{(\ay*(\tcy-\tby) + \tay*(\by-\cy) - \by*\tcy + \tby*\cy)/\det}
+    \pgfmathsetmacro\bb{(\ay*(\tbx-\tcx) + \tax*(\cy-\by) - \tbx*\cy + \by*\tcx)/\det}
+    \pgfmathsetmacro\tx{\ax - (\tax*\aa + \tay*\ba)}
+    \pgfmathsetmacro\ty{\ay - (\tax*\ab + \tay*\bb)}
+    \pgflowlevelobj{
+        \pgfsettransformentries{\aa}{\ab}{\ba}{\bb}{\tx pt}{\ty pt}
+    }{
+        % We are inside the texture space here...
+        \clip #4 -- #5 -- #6 -- cycle;
+        % Draw a unit sized image (from (0,0) to (1,1) if no scale)
+        \node [opacity=1] at (0.5,0.5) {\includegraphics[width=\ux pt, height=\uy pt]{#7}};
+    }
+}
+
+% \begin{tikzpicture}
+%     \tikzmath{\u0=0.2;\u1=0.9;\u2=0.5;\v0=0.2;\v1=0.5;\v2=0.9;}
+%     \tikzmath{\x0=1;\x1=5;\x2=3;\y0=1;\y1=2;\y2=3;}
+%     \tikzmath{\w=6;\h=4;};
+%     \coordinate (O1) at (0,0);
+%     \coordinate (O2) at (6,0);
+%     \coordinate (0) at (4*\u0,4*\v0);
+%     \coordinate (1) at (4*\u1,4*\v1);
+%     \coordinate (2) at (4*\u2,4*\v2);
+%     \coordinate (4) at ($(O2)+(\x0,\y0)$);
+%     \coordinate (5) at ($(O2)+(\x1,\y1)$);
+%     \coordinate (6) at ($(O2)+(\x2,\y2)$);
+%     \draw (O1) rectangle ++(4,4);
+%     \draw [fill=gray] (O2) rectangle ++(\w,\h);
+%     \texturedtriangle{(0,0)}{(4,0)}{(4,4)} {(0,0)}{(1,0)}{(1,1)} {mario.jpg}
+%     \texturedtriangle{(0,0)}{(4,4)}{(0,4)} {(0,0)}{(1,1)}{(0,1)} {mario.jpg}
+%     \texturedtriangle{(4)}{(5)}{(6)} {(\u0,\v0)}{(\u1,\v1)}{(\u2,\v2)} {mario.jpg}
+%     \draw [yellow,line width=2pt] (0) -- (1) -- (2) -- (0);
+%     \draw [axis] (O1) -- ++(4.3,0) node [right] {$u$};
+%     \draw [axis] (O1) -- ++(0,4.3) node [above] {$v$};
+%     \draw [axis] (O2) -- ++(\w+0.3,0) node [right] {$x$};
+%     \draw [axis] (O2) -- ++(0,\h+0.3) node [above] {$y$};
+%     \node [below] at (0,0) {0};
+%     \node [below] at (4,0) {1};
+%     \node [left] at (0,0) {0};
+%     \node [left] at (0,4) {1};
+%     \node at (2,-0.5) {texture};
+%     \node at ($(O2)+(0.5*\w,-0.5)$) {window};
+%     \draw [-latex',shorten >= 2pt, shorten <= 2pt,line width=1pt] (0) to [bend right=20] (4);
+%     \draw [-latex',shorten >= 2pt, shorten <= 2pt,line width=1pt] (1) to [bend left=10] (5);
+%     \draw [-latex',shorten >= 2pt, shorten <= 2pt,line width=1pt] (2) to [bend left=10] (6);
+% \end{tikzpicture}
+
+% Rectangle
+% \begin{tikzpicture}
+%     \tikzmath{\w=6;\h=\w/(4/3);};
+%     \coordinate (0) at (-0.25*\w,-0.25*\h);
+%     \coordinate (1) at (0.25*\w,-0.25*\h);
+%     \coordinate (2) at (0.25*\w,0.25*\h);
+%     \coordinate (3) at (-0.25*\w,0.25*\h);
+%     \draw [line width=1pt] (-0.5*\w,-0.5*\h) rectangle ++(\w,\h);
+%     \draw [blue,fill=blue!50,line width=1pt] (0) -- (1) -- (2) -- (0);
+%     \draw [red,fill=red!50,line width=1pt] (0) -- (2) -- (3) -- (0);
+%     \draw [axis] (-0.5*\w-1,0) -- ++(\w+2, 0) node [right] {$x$};
+%     \draw [axis] (0,-0.5*\h-1) -- ++(0,\h+2) node [above] {$y$};
+%     \node [below left] at (-0.5*\w, 0) {$-1$};
+%     \node [below right] at (0.5*\w,0) {$1$};
+%     \node [below left] at (0,-0.5*\h) {$-1$};
+%     \node [above left] at (0,0.5*\h) {$1$};
+%     \node [point] at (0) {};
+%     \node [point] at (1) {};
+%     \node [point] at (2) {};
+%     \node [point] at (3) {};
+%     \node [below] at (0) {$(-0.5,-0.5)$};
+%     \node [below] at (1) {$(0.5,-0.5)$};
+%     \node [above] at (2) {$(0.5,0.5)$};
+%     \node [above] at (3) {$(-0.5,0.5)$};
+% \end{tikzpicture}
+
+% EBO
+% \begin{tikzpicture}
+%     \tikzmath{\w=6;\h=\w/(4/3);};
+%     \coordinate (0) at (-0.25*\w,-0.25*\h);
+%     \coordinate (1) at (0.25*\w,-0.25*\h);
+%     \coordinate (2) at (0.25*\w,0.25*\h);
+%     \coordinate (3) at (-0.25*\w,0.25*\h);
+%     \draw [line width=1pt] (0) -- (1) -- (2) -- (0);
+%     \draw [line width=1pt] (0) -- (2) -- (3) -- (0);
+%     \node [point] at (0) {};
+%     \node [point] at (1) {};
+%     \node [point] at (2) {};
+%     \node [point] at (3) {};
+%     \node [below left] at (0) {0};
+%     \node [below right] at (1) {1};
+%     \node [above right] at (2) {2};
+%     \node [above left] at (3) {3};
+% \end{tikzpicture}
+
+% Linear filtering
+% \begin{tikzpicture}
+%     \tikzmath{\x=1.5;\y=2.5;};
+%     \tikzmath{\c1 =0.8; \c2=0.6; \c3=0.6;};
+%     \tikzmath{\c4 =0.8; \c5=0.6; \c6=0.8;};
+%     \tikzmath{\c7 =0.6; \c8=0.8; \c9=0.6;};
+%     \tikzmath{\c10=0.8;\c11=0.8;\c12=0.8;};
+%     \definecolor{tl}{rgb}{\c1,\c2,\c3};
+%     \definecolor{tr}{rgb}{\c4,\c5,\c6};
+%     \definecolor{bl}{rgb}{\c7,\c8,\c9};
+%     \definecolor{br}{rgb}{\c10,\c11,\c12};
+%     \fill [tl] (0,2) rectangle ++(2,2);    
+%     \fill [tr] (2,2) rectangle ++(2,2);    
+%     \fill [bl] (0,0) rectangle ++(2,2);    
+%     \fill [br] (2,0) rectangle ++(2,2);  
+%     \draw [->,line width=4pt] (4.5, 2) -- ++(1,0);
+%     \fill [tl] (6,1) rectangle ++(2,2);
+%     \node [below] at (7,1) {colour sample};
+%     \draw (0.9,3) -- ++(0.2,0) (1,2.9) -- ++(0,0.2);
+%     \draw (2.9,3) -- ++(0.2,0) (3,2.9) -- ++(0,0.2);
+%     \draw (0.9,1) -- ++(0.2,0) (1,0.9) -- ++(0,0.2);
+%     \draw (2.9,1) -- ++(0.2,0) (3,0.9) -- ++(0,0.2);
+%     \draw [fill] (\x,\y) circle (2pt) node [below] {$(u,v)$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\x=1.5;\y=2.5;};
+%     \tikzmath{\c1 =0.8; \c2=0.6; \c3=0.6;};
+%     \tikzmath{\c4 =0.8; \c5=0.6; \c6=0.8;};
+%     \tikzmath{\c7 =0.6; \c8=0.8; \c9=0.6;};
+%     \tikzmath{\c10=0.8;\c11=0.8;\c12=0.8;};
+%     \tikzmath{\r=(3*\c1+\c4+\c7+5*\c10)/10;};
+%     \tikzmath{\g=(3*\c2+\c5+\c8+5*\c11)/10;};
+%     \tikzmath{\b=(3*\c3+\c6+\c9+5*\c12)/10;};
+%     \definecolor{tl}{rgb}{\c1,\c2,\c3};
+%     \definecolor{tr}{rgb}{\c4,\c5,\c6};
+%     \definecolor{bl}{rgb}{\c7,\c8,\c9};
+%     \definecolor{br}{rgb}{\c10,\c11,\c12};
+%     \definecolor{p}{rgb}{\r,\g,\b};
+%     \fill [tl] (0,2) rectangle ++(2,2);    
+%     \fill [tr] (2,2) rectangle ++(2,2);    
+%     \fill [bl] (0,0) rectangle ++(2,2);    
+%     \fill [br] (2,0) rectangle ++(2,2);  
+%     \draw [->,line width=4pt] (4.5, 2) -- ++(1,0);
+%     \fill [p] (6,1) rectangle ++(2,2);
+%     \node [below] at (7,1) {colour sample};
+%     \draw (0.9,3) -- ++(0.2,0) (1,2.9) -- ++(0,0.2);
+%     \draw (2.9,3) -- ++(0.2,0) (3,2.9) -- ++(0,0.2);
+%     \draw (0.9,1) -- ++(0.2,0) (1,0.9) -- ++(0,0.2);
+%     \draw (2.9,1) -- ++(0.2,0) (3,0.9) -- ++(0,0.2); 
+%     \node [point,label=below right:{$(u,v)$}] (pixel) at (\x,\y) {};
+%     \draw [<->,line width=1pt] (pixel) -- (\x,3);
+%     \draw [<->,line width=1pt] (pixel) -- (\x,1);
+%     \draw [<->,line width=1pt] (pixel) -- (1,\y);
+%     \draw [<->,line width=1pt] (pixel) -- (3,\y);
+% \end{tikzpicture}
+
+% Mipmaps
+% \begin{tikzpicture}
+%     \tikzmath{\w=4;}
+%     \coordinate (O) at (0,0);
+%     \node at ($(O)+(2,2)$) {\includegraphics[width=\w cm]{mario.jpg}};
+%     \draw (O) rectangle ++(\w,\w);
+%     \foreach \w in {0.0625, 0.125, 0.25, 0.5, 1, 2}{
+%         \coordinate (O) at (4,\w);
+%         \node at ($(O)+(\w*0.5,\w*0.5)$) {\includegraphics[width=\w cm]{mario.jpg}};
+%         \draw (O) rectangle ++(\w,\w);
+%     }
+% \end{tikzpicture}
+
+% Camera
+% \begin{tikzpicture}
+%     \draw [rounded corners,line width=5pt,fill=gray] (0,0) -- ++(2,0) -- ++(0,0.5) -- ++(0.5,-0.5) -- ++(0,1.5) -- ++(-0.5,-0.5) -- ++(0,0.5) -- ++(-2,0) -- cycle;
+% \end{tikzpicture}
+
+% Model-View-Projection
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\z=45;\l=1.8;\w=1;\d=0.67;}
+%     \coordinate (origin) at (0,0);
+%     \coordinate (c) at ($(origin)+(2,2)$);
+%     \draw [fill=blue!10,rounded corners] (origin) -- ++(4,0) -- ++(0,4) -- ++(-4,0) -- cycle;
+%     \draw [axis] ($(c)+(\x:-\l)$) -- ++(\x:2*\l) node [below] {$x$};
+%     \draw [axis] ($(c)+(\y:-\l)$) -- ++(\y:2*\l) node [left] {$y$};
+%     \draw [axis] ($(c)+(\z:\l)$) -- ++(\z:-2*\l) node [left] {$z$};
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:-0.6*\w)+(\y:-0.5*\w)+(\z:-0.5*\d)$) coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\y:\w) coordinate (3) -- ++(\x:-\w) coordinate (4) -- cycle;
+%     \draw [fill=white,opacity=0.75] (2) -- ++(\z:\d) -- ++(\y:\w) -- ++(\z:-\d) -- cycle;
+%     \draw [fill=white,opacity=0.75] (3) -- ++(\z:\d) -- ++(\x:-\w) -- ++(\z:-\d) -- cycle;
+%     \node [below] at ($(c)+(0,-2)$) {Model space};
+%     \draw [->,line width=2pt,shorten >= 4pt, shorten <= 4pt] ($(origin)+(4,2)$) -- ++(2,0) node [above,pos=0.5,text width=1cm] {Model matrix};
+
+%     \tikzmath{\x=0;\y=90;\z=45;\l=1.8;\w=0.5;\d=0.33;}
+%     \coordinate (origin) at (6,0);
+%     \coordinate (c) at ($(origin)+(2,2)$);
+%     \draw [fill=blue!10,rounded corners] (origin) -- ++(4,0) -- ++(0,4) -- ++(-4,0) -- cycle;   
+%     \node [rotate=-90] at ($(c)+(0,1.5)$) {\includegraphics[width=0.5cm]{camera.pdf}};
+%     \draw [axis] ($(c)+(\x:-\l)$) -- ++(\x:2*\l) node [below] {$x$};
+%     \draw [axis] ($(c)+(\y:-\l)$) -- ++(\y:2*\l) node [left] {$y$};
+%     \draw [axis] ($(c)+(\z:\l)$) -- ++(\z:-2*\l) node [left] {$z$};
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:-2.5*\w)+(\y:-0.5*\w)+(\z:-1.5*\d)$) coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\y:\w) coordinate (3) -- ++(\x:-\w) coordinate (4) -- cycle;
+%     \draw [fill=white,opacity=0.75] (2) -- ++(\z:\d) -- ++(\y:\w) -- ++(\z:-\d) -- cycle;
+%     \draw [fill=white,opacity=0.75] (3) -- ++(\z:\d) -- ++(\x:-\w) -- ++(\z:-\d) -- cycle;
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:\w)+(\z:\w)$)  coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\z:\d) -- ($(c)+(\x:1.33*\w)+(\z:1.5*\w)+(\y:\d)$) coordinate (3) -- cycle;
+%     \draw  (2) -- (3);
+%     \node [below] at ($(c)+(0,-2)$) {World space};
+%     \draw [->,line width=2pt,shorten >= 4pt, shorten <= 4pt] ($(origin)+(0,0)$) -- (4,-1.5) node [above,pos=0.5,text width=3cm,align=center,rotate=37] {View matrix};
+
+%     \tikzmath{\x=0;\y=90;\z=45;\l=1.8;\w=0.7;\d=0.33;}
+%     \coordinate (origin) at (0,-5.5);
+%     \coordinate (c) at ($(origin)+(2,2)$);
+%     \draw [fill=blue!10,rounded corners] (origin) -- ++(4,0) -- ++(0,4) -- ++(-4,0) -- cycle;
+%     \node [below] at ($(c)+(0,-2)$) {View space};
+%     \draw [axis] ($(c)+(\x:-\l)$) -- ++(\x:2*\l) node [below] {$x$};
+%     \draw [axis] ($(c)+(\y:-\l)$) -- ++(\y:2*\l) node [left] {$y$};
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:-2*\w)+(\y:-2*\w)$) -- ++(\x:\w) -- ++(\y:\w) -- ++(\x:-\w) -- cycle; 
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:\w)+(\y:\w)$) -- ++(\x:\w) -- ++(\y:\w) -- ++(\x:-\w) -- cycle; 
+%     \draw ($(c)+(\x:\w)+(\y:\w)$) -- ++($(\x:\w)+(\y:\w)$);
+%     \draw ($(c)+(\x:\w)+(\y:2*\w)$) -- ++($(\x:\w)+(\y:-\w)$);
+%     \draw [->,line width=2pt,shorten >= 4pt, shorten <= 4pt] ($(origin)+(4,2)$) -- ++(2,0) node [above,pos=0.45,text width=1.5cm,align=center] {Projection matrix};
+
+%     \tikzmath{\x=0;\y=90;\z=45;\l=1.8;\w=0.7;\d=0.33;}
+%     \coordinate (origin) at (6,-5.5);
+%     \coordinate (c) at ($(origin)+(2,2)$);
+%     \draw [fill=blue!10,rounded corners] (origin) -- ++(4,0) -- ++(0,4) -- ++(-4,0) -- cycle;
+%     \node [below] at ($(c)+(0,-2)$) {Screen space};
+%     \draw [axis] ($(c)+(\x:-\l)$) -- ++(\x:2*\l) node [below] {$x$};
+%     \draw [axis] ($(c)+(\y:-\l)$) -- ++(\y:2*\l) node [left] {$y$};
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:-2*\w)+(\y:-2*\w)$) -- ++(\x:\w) coordinate (1) -- ++(\y:\w) coordinate (2) -- ++(\x:-\w) coordinate (3) -- cycle; 
+%     \draw [fill=white,opacity=0.75] (1) -- ($(1)!0.25!(c)$) -- ($(2)!0.25!(c)$) -- (2);
+%     \draw [fill=white,opacity=0.75] (3) -- ($(3)!0.25!(c)$) -- ($(2)!0.25!(c)$) -- (2);
+%     \draw [fill=white,opacity=0.75] ($(c)+(\x:\w)+(\y:\w)$) coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\y:\w) coordinate (3) -- ++(\x:-\w) coordinate (4) -- cycle; 
+%     \draw (1) -- ($(3)!0.15!(c)$) coordinate (5) (2) -- (5) (3) -- (5) (4) -- (5);
+% \end{tikzpicture}
+
+% Normalise Device Co-ordinates
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=1;\w=4;\d=\w+0.4;\h=\w;};
+%     \coordinate (origin) at (0,0);
+%     \coordinate (0) at ($(origin)+(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
+%     \coordinate (1) at ($(0)+(\x:\w)$);
+%     \coordinate (2) at ($(1)+(\z:-\d)$);
+%     \coordinate (3) at ($(0)+(\z:-\d)$);
+%     \coordinate (4) at ($(0)+(\y:\h)$);
+%     \coordinate (5) at ($(1)+(\y:\h)$);
+%     \coordinate (6) at ($(2)+(\y:\h)$);
+%     \coordinate (7) at ($(3)+(\y:\h)$);
+%     \node (3label)[xshift=2cm,yshift=0.5cm] at (3) {$(-1,-1,-1)$};
+%     \draw [->,shorten >= 4pt,bend right=10] (3label) to (3);
+%     \draw [line width=1pt] (0) -- (1) -- (2) -- (3) -- (0) 
+%         (0) -- (3) -- (7) -- (4) -- (0) 
+%         (2) -- (3) -- (7) -- (6) -- (2);
+%     \draw [vector,blue] (origin) -- ++(\z:-2) node [right,text width=1.5cm] {camera direction};
+%     \node [rotate=\z-180] at (origin) {\includegraphics[width=0.75cm]{camera.pdf}};
+%     \draw [axis] (origin) -- ++(\x:\l) node at ($(origin)+(\x:\l+0.2)$) {$x$};
+%     \draw [axis] (origin) -- ++(\y:\l) node at ($(origin)+(\y:\l+0.2)$) {$y$};;
+%     \draw [axis] (origin) -- ++(\z:\l) node at ($(origin)+(\z:\l+0.2)$) {$z$};;
+%     \draw [line width=1pt] (0) -- (1) -- (5) -- (4) -- (0) 
+%         (1) -- (2) -- (6) -- (5) -- (1) 
+%         (4) -- (5) -- (6) -- (7);
+%     \node at (0) [below left] {$(-1,-1,1)$};
+%     \node at (1) [below] {$(1,-1,1)$};
+%     \node at (2) [right] {$(1,-1,-1)$};
+%     \node at (4) [left] {$(-1,1,1)$};
+%     \node at (5) [below left,xshift=-0.5cm] (5label) {$(1,1,1)$};
+%     \draw [->,shorten >= 4pt,bend right=10] (5label) to (5);
+%     \node at (6) [right] {$(1,1,-1)$};
+%     \node at (7) [above] {$(-1,1,-1)$};
+% \end{tikzpicture}
+
+% View space
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\xl=1.5;\yl=1.5;\zl=1.5;\w=1;\d=1;}
+%     \node at (\z:0.5) [rotate=\z-180] {\includegraphics[width=1cm]{camera.pdf}};
+%     \draw [axis] (\x:0) -- (\x:\xl) node at (\x:\xl+0.2) {$x$};
+%     \draw [axis] (\y:0) -- (\y:\yl) node at (\y:\yl+0.2) {$y$};
+%     \draw [axis] (\z:0) -- (\z:\zl) node at (\z:\zl+0.2) {$z$};
+%     \draw [fill=white,opacity=0.75,line width=1pt] (2,0.5) coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\y:\w) coordinate (3) -- ++(\x:-\w) coordinate (4) -- cycle;  
+%     \draw [fill=white,opacity=0.75,line width=1pt] (2) -- ++(\z:-\d) -- ++(\y:\w) -- ++(\z:\d) -- cycle;
+%     \draw [fill=white,opacity=0.75,line width=1pt] (3) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d) -- cycle;
+% \end{tikzpicture}
+
+% View matrix
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=1;\w=1;\d=1;\v=200;\vl=1;};
+%     \coordinate (origin) at (8,1);
+%     \node [rotate=\v] at (origin) {\includegraphics[width=0.8cm]{camera.pdf}};
+%     \draw [fill=white,opacity=0.75,line width=1pt] (2,-1) coordinate (1) -- ++(\x:\w) coordinate (2) -- ++(\y:\w) coordinate (3) -- ++(\x:-\w) coordinate (4) -- cycle;
+%     \draw [fill=white,opacity=0.75,line width=1pt] (2) -- ++(\z:-\d) -- ++(\y:\w) -- ++(\z:\d) -- cycle;
+%     \draw [fill=white,opacity=0.75,line width=1pt] (3) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d) -- cycle;
+%     \node [point,label=below:$\mathbf{target}$] at ($(origin)+(\v:3)$) {};
+%     \draw [vector,red,line width=1pt] (origin) -- ++(70:1.25) node [right] {$\mathbf{right}$};
+%     \draw [vector,green!80!black,line width=1pt] (origin) -- ++(\v-90:1.5) node [left] {$\mathbf{up}$};
+%     \draw [vector,blue,line width=1pt] (origin) -- ++(\v:1.5) node [below] {$\mathbf{front}$};
+%     \draw [vector,line width=1pt] (origin) -- ++(90:2) node [above] {$\mathbf{worldUp}$};
+%     \node [point] at (origin) {};
+%     \node [below of=origin,node distance=0.5cm] {$\mathbf{eye}$};
+% \end{tikzpicture}
+
+% Unit cube
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\al=3;\w=3;\d=3.5;\h=3;};
+%     \coordinate (O) at (0,0);
+%     \coordinate (0) at ($(O)+(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
+%     \coordinate (1) at ($(0)+(\x:\w)$);
+%     \coordinate (2) at ($(1)+(\z:-\d)$);
+%     \coordinate (3) at ($(0)+(\z:-\d)$);
+%     \coordinate (4) at ($(0)+(\y:\h)$);
+%     \coordinate (5) at ($(1)+(\y:\h)$);
+%     \coordinate (6) at ($(2)+(\y:\h)$);
+%     \coordinate (7) at ($(3)+(\y:\h)$);
+%     \draw [line width=1pt] (O) -- ++(\x:0.5*\w);
+%     \draw [line width=1pt] (O) -- ++(\y:0.5*\h);
+%     \draw [line width=1pt] (O) -- ++(\z:0.5*\d);
+%     \draw [blue,line width=1pt] (0) -- (3) -- (2) (3) -- (7) (1) -- (3) (3) -- (4) (2) -- (7);
+%     \draw [blue,line width=1pt,fill=white,opacity=0.75] (0) -- (1) -- (2) -- (6) -- (7) -- (4) -- (0);
+%     \draw [blue,line width=1pt] (0) -- (5) -- (4) -- (6) -- (5) -- (1) -- (6);
+%     \draw [axis] ($(O)+(\x:0.5*\w)$) -- ++(\x:\al) node at (\x:0.5*\w+\al+0.2) {$x$};
+%     \draw [axis] ($(O)+(\y:0.5*\h)$) -- ++(\y:\al) node at (\y:0.5*\h+\al+0.2) {$y$};
+%     \draw [axis] ($(O)+(\z:0.5*\d)$) -- ++(\z:\al) node at (\z:0.5*\d+\al+0.2) {$z$};
+%     \node [below left] at (0) {$(-1,-1,1)$};
+%     \node [below] at (1) {$(1,-1,1)$};
+%     \node [below] at (2) {$(1,-1,-1)$};
+%     \node [left] at (4) {$(-1,1,1)$};
+%     \node [above] at (5) {$(1,1,1)$};
+%     \node [right] at (6) {$(1,1,-1)$};
+%     \node [above right] at (7) {$(-1,1,-1)$};
+% \end{tikzpicture}
+
+% Indexing
+% \begin{tikzpicture}
+%     \tikzmath{\w=3;\h=3;}
+%     \coordinate (0) at (0,0);
+%     \coordinate (1) at ($(0)+(\w,0)$);
+%     \coordinate (2) at ($(1)+(0,\h)$);
+%     \coordinate (3) at ($(2)+(-\w,0)$);
+%     \coordinate (4) at ($(0)+(2+\w,0)$);
+%     \coordinate (5) at ($(4)+(\w,0)$);
+%     \coordinate (6) at ($(5)+(0,\h)$);
+%     \coordinate (7) at ($(6)+(-\w,0)$);
+%     \draw (0) -- (1) -- (2) -- (3) -- (0) -- (2);
+%     \draw (4) -- (5) -- (6) -- (7) -- (4) -- (6);
+%     \node [below] at (0) {\tt v0};
+%     \node [below right] at (1) {\tt v1};
+%     \node [right] at (2) {\tt v2};
+%     \node [left] at (0) {\tt v3};
+%     \node [above] at (2) {\tt v4};
+%     \node [above left] at (3) {\tt v5};
+%     \node [below] at (4) {\tt v0};
+%     \node [below right] at (5) {\tt v1};
+%     \node [right] at (6) {\tt v2};
+%     \node [left] at (4) {\tt v0};
+%     \node [above] at (6) {\tt v2};
+%     \node [above left] at (7) {\tt v3};
+%     \node at ($(0)+(0.5*\w,-1)$) {without indexing};
+%     \node at ($(4)+(0.5*\w,-1)$) {with indexing};
+%     \draw [->] ($(0)+(0.67*\w,0.33*\h)+(180:0.5)$) arc (180:450:0.5); 
+% \end{tikzpicture}
+
+% Depth test
+% \begin{tikzpicture}
+%     \tikzmath{\l1=4;\l2=3;};
+%     \coordinate (origin) at (0,0);
+%     \draw [red, fill=red] ($(origin)+(-1,1)$) -- ++(\l2, 0) -- ++(-0.5*\l2, {sqrt(0.75*\l2*\l2)}) -- cycle;
+%     \draw [blue, fill=blue] (origin) -- ++(\l1, 0) -- ++(-0.5*\l1, {sqrt(0.75*\l1*\l1)}) -- cycle;
+%     \node at ($(origin)+(0.5*\l1,0.5)$) {near};
+%     \node at ($(origin)+(-1,1)+(0.5*\l2,0.5)$) {far};
+% \end{tikzpicture}
+
+% orthographic projection
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=1;\w=1.2;\d=1;}
+%     \tikzmath{\scrwidth=4;\scrheight=3;}
+%     \coordinate (O) at (0,0);
+%     \node [rotate=-\x] at ($(O)+(\z:0.5)$) {\includegraphics*[width=1cm]{camera.pdf}};
+%     \draw [axis] (O) -- ++(\x:\l) node at ($(O)+(\x:\l+0.2)$) {$x$};
+%     \draw [axis] (O) -- ++(\y:\l) node at ($(O)+(\y:\l+0.2)$) {$y$};
+%     \draw [axis] (O) -- ++(\z:\l+0.5) node at ($(O)+(\z:\l+0.7)$) {$z$};
+%     \draw [fill=green!20,opacity=0.75] ($(O)+(\x:-0.5*\scrwidth)+(\y:-0.5*\scrheight)+(\z:-9)$) coordinate (lb) 
+%         -- ++(\x:\scrwidth) coordinate (rb) 
+%         -- ++(\y:\scrheight) coordinate (rt) 
+%         -- ++(\x:-\scrwidth) coordinate (lt) -- cycle;
+%     \node [point] at (lb) {};
+%     \node [point] at (rb) {};
+%     \node [point] at (rt) {};
+%     \node [point] at (lt) {};
+%     \node [below,rotate=\x] at ($(lt)!0.5!(rt)$) {far plane};
+%     \draw (lb) -- ++(\z:5) (lt) -- ++(\z:5);
+%     \coordinate (1) at ($(O)+(\z:-4.5)+(\x:0*\w)+(\y:-0.75*\w)$);
+%     \coordinate (2) at ($(1)+(\x:\w)$);
+%     \coordinate (3) at ($(2)+(\z:-\d)$);
+%     \coordinate (4) at ($(1)+(\z:-\d)$);
+%     \coordinate (5) at ($(1)+(\y:\w)$);
+%     \coordinate (6) at ($(2)+(\y:\w)$);
+%     \coordinate (7) at ($(3)+(\y:\w)$);
+%     \coordinate (8) at ($(4)+(\y:\w)$);
+%     \node [left,rotate=\x] (lbf) at ($(lb)+(0,0.75)$) {$(left,bottom,far)$}; 
+%     \draw [->,bend right=5,shorten >= 2pt]  (lbf) to (lb);
+%     \node [right,rotate=\x] at (rb) {$(right,bottom,far)$};
+%     \node [above,rotate=\x] at (rt) {$(right,top,far)$};
+%     \node [above,rotate=\x] at (lt) {$(left,top,far)$};
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (2) -- (3) -- (4) -- (1);
+%     \draw [fill=blue!10,opacity=0.75] (3) -- (4) -- (8) -- (7) -- (3);
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (5) -- (8) -- (4) -- (1);
+%     \draw [fill=blue!10,opacity=0.75] (5) -- (6) -- (7) -- (8) -- (5);
+%     \draw [fill=blue!10,opacity=0.75] (2) -- (3) -- (7) -- (6) -- (2);
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (2) -- (6) -- (5) -- (1);
+%     \draw (rb) -- ++(\z:5) (rt) -- ++(\z:5);
+%     \draw [fill=yellow!20,opacity=0.75] ($(lb)+(\z:5)$) coordinate (lb)
+%         -- ++(\x:\scrwidth) coordinate (rb)
+%         -- ++(\y:\scrheight) coordinate (rt) 
+%         -- ++(\x:-\scrwidth) coordinate (lt) -- cycle;
+%     \node [below,rotate=\x] at ($(lt)!0.5!(rt)$) {near plane};
+%     \node [below,rotate=\x] at (lb) {$(left,bottom,near)$};
+%     \node [below,rotate=\x] at (rb) {$(right,bottom,near)$};
+%     \node [above,rotate=\x] at (lt) {$(left,top,near)$};
+%     \node [above,rotate=\x] (label) at (rt) {$(right,top,near)$};
+%     \coordinate (1) at ($(O)+(\z:-3.5)+(\x:4.5)+(\y:-0.5*\w)$);
+%     \coordinate (2) at ($(1)+(\x:\w)$);
+%     \coordinate (3) at ($(2)+(\z:-\d)$);
+%     \coordinate (4) at ($(1)+(\z:-\d)$);
+%     \coordinate (5) at ($(1)+(\y:\w)$);
+%     \coordinate (6) at ($(2)+(\y:\w)$);
+%     \coordinate (7) at ($(3)+(\y:\w)$);
+%     \coordinate (8) at ($(4)+(\y:\w)$);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (2) -- (3) -- (4) -- (1);
+%     \draw [fill=red!10,opacity=0.75] (3) -- (4) -- (8) -- (7) -- (3);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (5) -- (8) -- (4) -- (1);
+%     \draw [fill=red!10,opacity=0.75] (5) -- (6) -- (7) -- (8) -- (5);
+%     \draw [fill=red!10,opacity=0.75] (2) -- (3) -- (7) -- (6) -- (2);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (2) -- (6) -- (5) -- (1);
+%     \node (label) at ($(O)+(\z:-3.5)+(\x:4.5)+(\y:-0.5*\w)+(3.5,0)$) {clipped};
+%     \draw[->] (label) -- ++(-1.25,0);
+%     \node [point] at (lb) {};
+%     \node [point] at (rb) {};
+%     \node [point] at (rt) {};
+%     \node [point] at (lt) {};
+% \end{tikzpicture}
+
+% perspective projection
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=1;\w=1.2;\d=1;\scrwidth=2;\scrheight=1.5;\znear=3.5;\zfar=8;\ax=1.2;\ay=1.2;}
+%     \coordinate (O) at (0,0);
+%     \node [rotate=-\x] at ($(O)+(\z:0.5)$) {\includegraphics*[width=1cm]{camera.pdf}};
+%     \draw [axis] (O) -- ++(\x:\l) node at ($(O)+(\x:\l+0.2)$) {$x$};
+%     \draw [axis] (O) -- ++(\y:\l-0.2) node at ($(O)+(\y:\l)$) {$y$};
+%     \draw [axis] (O) -- ++(\z:\l+0.5) node at ($(O)+(\z:\l+0.7)$) {$z$};
+%     \coordinate (lb) at ($(\z:-\znear)+(\x:-0.5*\scrwidth)+(\y:-0.5*\scrheight)$);
+%     \coordinate (rb) at ($(lb)+(\x:\scrwidth)$);
+%     \coordinate (rt) at ($(rb)+(\y:\scrheight)$);
+%     \coordinate (lt) at ($(lb)+(\y:\scrheight)$);
+%     \coordinate (farlb) at ($(\z:-\zfar)+(\x:-\ax*\scrwidth)+(\y:-\ay*\scrheight)$);
+%     \coordinate (farlt) at ($(farlb)+(\y:3.4)$);
+%     \coordinate (farrb) at ($(farlb)+(\x:4.5)$);
+%     \coordinate (farrt) at ($(farrb)+(\y:3.4)$);
+%     \draw [fill=green!20,opacity=0.75]  (O) -- (farlb) (lb) -- (rb) -- (rt) -- (lt) -- cycle;
+%     \draw [fill=yellow!20,opacity=0.75] (farlb) -- (farrb) -- (farrt) -- (farlt) -- cycle;
+%     \node [below,rotate=\x] at ($(lt)!0.5!(rt)$) {near plane};
+%     \node [below,rotate=\x] at ($(farlt)!0.5!(farrt)$) {far plane};
+%     \coordinate (1) at ($(O)+(\z:-4.7)+(\x:0.5*\w)+(\y:-0.5*\w)$);
+%     \coordinate (2) at ($(1)+(\x:\w)$);
+%     \coordinate (3) at ($(2)+(\z:-\d)$);
+%     \coordinate (4) at ($(1)+(\z:-\d)$);
+%     \coordinate (5) at ($(1)+(\y:\w)$);
+%     \coordinate (6) at ($(2)+(\y:\w)$);
+%     \coordinate (7) at ($(3)+(\y:\w)$);
+%     \coordinate (8) at ($(4)+(\y:\w)$);
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (2) -- (3) -- (4) -- (1);
+%     \draw [fill=blue!10,opacity=0.75] (3) -- (4) -- (8) -- (7) -- (3);
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (5) -- (8) -- (4) -- (1);
+%     \draw [fill=blue!10,opacity=0.75] (5) -- (6) -- (7) -- (8) -- (5);
+%     \draw [fill=blue!10,opacity=0.75] (2) -- (3) -- (7) -- (6) -- (2);
+%     \draw [fill=blue!10,opacity=0.75] (1) -- (2) -- (6) -- (5) -- (1);
+%     \draw [help lines] (O) -- (farlt) (O) -- (farrb) (O) -- (farrt);
+%     \coordinate (1) at ($(O)+(\z:-2.5)+(\x:4.5)+(\y:-0.5*\w)$);
+%     \coordinate (2) at ($(1)+(\x:\w)$);
+%     \coordinate (3) at ($(2)+(\z:-\d)$);
+%     \coordinate (4) at ($(1)+(\z:-\d)$);
+%     \coordinate (5) at ($(1)+(\y:\w)$);
+%     \coordinate (6) at ($(2)+(\y:\w)$);
+%     \coordinate (7) at ($(3)+(\y:\w)$);
+%     \coordinate (8) at ($(4)+(\y:\w)$);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (2) -- (3) -- (4) -- (1);
+%     \draw [fill=red!10,opacity=0.75] (3) -- (4) -- (8) -- (7) -- (3);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (5) -- (8) -- (4) -- (1);
+%     \draw [fill=red!10,opacity=0.75] (5) -- (6) -- (7) -- (8) -- (5);
+%     \draw [fill=red!10,opacity=0.75] (2) -- (3) -- (7) -- (6) -- (2);
+%     \draw [fill=red!10,opacity=0.75] (1) -- (2) -- (6) -- (5) -- (1);
+%     \node [left,rotate=\x] at (lt) {$(left,top,near)$};
+%     \node [right,rotate=\x] at (rt) {$(right,top,near)$};
+%     \node [right,rotate=\x] at (rb) {$(right,bottom,near)$};
+%     \node [left,rotate=\x] at (lb) {$(left,bottom,near)$};
+%     \draw [<->,line width=1pt] (2:3) arc (1:19:3);
+%     \node (fov) at (2,-1) {field of view};
+%     \draw [->,shorten >= 2pt,bend left] (fov.north) to (10:3);
+%     \node (label) at ($(3)+(1.25,0)$) {clipped};
+%     \draw[->] (label) -- ++(-1,0.2);
+%     \node [point] at (lb) {};
+%     \node [point] at (rb) {};
+%     \node [point] at (rt) {};
+%     \node [point] at (lt) {};
+% \end{tikzpicture}
+
+% Perspective projection
+% \begin{tikzpicture}
+%     \draw [axis] (8,0) -- (-0.5,0) node [left] {$z$};
+%     \draw [axis] (0,0) -- ++(0,3) node [above] {$x$};
+%     \node at (-1.5,0) {\includegraphics*[width=1cm]{camera.pdf}} ;
+%     \draw [dashed] (3, 0) -- (3, 3) node [above] {near plane};
+%     \node [point,label=above:{$(x, y, z)$}] (p) at (6, 2) {};
+%     \draw [line width=1pt] (0,0) -- (p);
+%     \node [point,label=above left:{$(x',y',-near)$}] (q) at (3,1) {};
+%     \draw [<->,shorten >= 2pt,shorten <= 2pt] (0,-0.25) -- (3,-0.25) node [pos=0.5,below] {$near$};
+%     \draw [<->,shorten >= 2pt,shorten <= 2pt] (0,-0.75) -- (6,-0.75) node [pos=0.5,below] {$-z$};
+%     \draw [<->,shorten >= 2pt,shorten <= 2pt] (3.25, 0) -- ++(0,1) node [pos=0.5,right] {$x'$}; 
+%     \draw [<->,shorten >= 2pt,shorten <= 2pt] (6.25, 0) -- ++(0,2) node [pos=0.5,right] {$x$}; 
+% \end{tikzpicture}
+
+% Moving the camera
+% \begin{tikzpicture}
+%     \node (camera) {\includegraphics[width=1cm]{camera.pdf}};
+%     \node [opacity=0.5] at ($(camera)+(4,0)$) {\includegraphics[width=1cm]{camera.pdf}};
+%     \node [opacity=0.5] at ($(camera)+(-4,0)$) {\includegraphics[width=1cm]{camera.pdf}};
+%     \node at (0,-0.6) {$\mathbf{eye}$};
+%     \node at (4,-0.6) {$\mathbf{eye} + \mathbf{fromt}$};
+%     \node at (-4,-0.6) {$\mathbf{eye} - \mathbf{front}$};
+%     \draw [vector,blue] (camera) -- ++(3.5,0) node [pos=0.5,above] {$\mathbf{front}$};
+%     \draw [vector,blue] (camera) -- ++(-3.5,0) node [pos=0.5,above] {$-\mathbf{front}$};
+% \end{tikzpicture}
+
+% Offset values
+% \begin{tikzpicture}
+%     \tikzmath{\w=6;\h=4;\off=0.25;}
+%     \draw [line width=1pt] (-0.5*\w,-0.5*\h) rectangle ++(\w,\h);
+%     \node at (0,0.6*\h) {window};
+%     \draw (-0.5*\w,0) -- ++(\w,0) (0,-0.5*\h) -- ++(0,\h);
+%     \node [point] (1) at (-\off*\w,-\off*\h) {};
+%     \node (label) at (-\off*\w-0.75,-\off*\h-0.75) {cursor};
+%     \draw [->,shorten >= 2pt,shorten <= 2pt,bend left] (label) to (1);
+%     \draw [->,shorten >= 2pt,shorten <= 2pt] (-\off*\w,0) -- (1) node [pos=0.5,left] {$y$ offset};
+%     \draw [->,shorten >= 2pt,shorten <= 2pt] (0,-\off*\h) -- (1) node [pos=0.5,below] {$x$ offset};
+% \end{tikzpicture}
+
+% Normal vector
+% \begin{tikzpicture}
+%     \node [point] (0) at (0,0) {};
+%     \node [point] (1) at ($(0)+(-20:3)$) {};
+%     \node [point] (2) at ($(1)+(70:3)$) {};
+%     \coordinate (c) at ($(0)+(5:2)$);
+%     \draw (0) node [left] {$\mathbf{v}_0$} -- (1) node [below] {$\mathbf{v}_1$} -- (2) node [right] {$\mathbf{v}_2$} -- (0);
+%     \draw [vector, blue] (0) -- (1) node [pos=0.5,below left] {$\mathbf{v}_1 - \mathbf{v}_0$};
+%     \draw [vector, red] (1) -- (2) node [pos=0.5,right] {$\mathbf{v}_2 - \mathbf{v}_1$};
+%     \draw [vector,mygreen,line width=1pt] (c) -- ++(120:2) node [above] {$\mathbf{n}$};
+%     \draw ($(c)+(120:0.2)$) -- ++(40:0.2) -- ++(300:0.2);
+% \end{tikzpicture}
+
+% Backface culling
+% \begin{tikzpicture}
+%     \node {\includegraphics[width=1.5cm]{camera.pdf}};
+%     \coordinate (0) at (3,0);
+%     \coordinate (1) at ($(0)+(45:2)$);
+%     \coordinate (2) at ($(1)+(315:2)$);
+%     \coordinate (3) at ($(2)+(225:2)$);
+%     \draw [line width=1pt] (3) -- (0) -- (1);
+%     \draw [gray!50, dashed, line width=1pt] (1) -- (2) -- (3);
+%     \draw [vector] ($(0)!0.5!(1)$) -- ++(135:1);
+%     \draw [vector] ($(1)!0.5!(2)$) -- ++(45:1);
+%     \draw [vector] ($(2)!0.5!(3)$) -- ++(315:1);
+%     \draw [vector] ($(3)!0.5!(0)$) -- ++(225:1);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \node (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
+%     \node at (0,-0.75) {$\mathbf{eye}$};
+%     \coordinate (0) at (3,-1);
+%     \coordinate (1) at ($(0)+(2,2)$);
+%     \draw [line width=1pt,blue] (0) -- (1);
+%     \draw [vector,line width=1pt] ($(0)!0.5!(1)$) -- ++(-45:2) node [below] {$\mathbf{n}$};
+%     \draw [vector,line width=1pt] (camera) -- ++(0:6) node [right] {$\mathbf{v}$};
+%     \draw (5,0) arc (0:-45:1);
+%     \node (angle) at ($(0)+(1,1)+(-22.5:0.67)$) {$\theta$};
+% \end{tikzpicture}
+
+% Yaw - Pitch - Roll
+% \begin{tikzpicture}
+%     \tikzmath{\f=0;\r=240;\p=0;\y=90;\l=2;}
+%     \coordinate (O) at (0,0);
+%     \node [rotate=\f] at (O) {\includegraphics[width=1.5cm]{camera.pdf}};
+%     \draw [vector] ($(O)+(\f:0.75)$) -- ++(\f:\l) node [right,black] {$\mathbf{front}$};
+%     \draw [vector] ($(O)+(\y:0.5)$) -- ++(\y:\l) node [above,black] {$\mathbf{up}$};
+%     \draw [vector] ($(O)+(\r:0.25)$) -- ++(\r:\l) node at (\r:2.5) [black] {$\mathbf{right}$};
+%     \draw[line width=1pt,<-,rotate around={\p:(\p,2)},blue] (\p:2) [partial ellipse=160:-160:0.25cm and 0.5cm] node [above,pos=0.25] {$roll$};
+%     \draw[line width=1pt,<-,rotate around={90:(\r:1.25)}, red] (\r:1.25) [partial ellipse=130:-180:0.4cm and 0.5cm] node [right,pos=0.7] {$pitch$};
+%     \draw[line width=1pt,<-,rotate around={\y:(\y:1.5)},mygreen] (\y:1.5) [partial ellipse=340:20:0.25cm and 0.5cm] node [right,pos=0.25] {$yaw$};
+% \end{tikzpicture}
+
+% Yaw and pitch to direction vector
+% \begin{tikzpicture}
+%     \tikzmath{\l=3;}
+%     \draw [axis] (0,0) -- (4,0) node [right] {$x$};
+%     \draw [axis] (0,0) -- (0,3) node [above] {$z$};
+%     \draw [vector,blue] (0,0) -- (0:\l) node [pos=1,below] {$\mathbf{front}$};
+%     \draw [vector,red] (0,0) -- (45:\l) node [above] {};
+%     \draw (45:3) -- ({\l*sin(45)},0) (0:{\l*cos(45)-0.2}) -- ++(0,0.2) -- ++(0.2,0);
+%     \draw [->,shorten >= 1pt,shorten <= 1pt] (0:0.75) arc (0:45:0.75);
+%     \node at (22.5:1.25) {$yaw$};
+%     \node at ({0.5*\l*cos(45)},0) [below] {$\cos(yaw)$};
+%     \node [right] at ({\l*cos(45)}, {0.5*\l*sin(45)}) {$\sin(yaw)$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\l=3;}
+%     \draw [axis] (0,0) -- (4,0) node [right] {$xz$};
+%     \draw [axis] (0,0) -- (0,3) node [above] {$y$};
+%     \draw [vector,blue] (0,0) -- (0:\l) node [pos=1,below] {$\mathbf{front}$};
+%     \draw [vector,red] (0,0) -- (45:\l) node [above] {};
+%     \draw (45:3) -- ({\l*sin(45)},0) (0:{\l*cos(45)-0.2}) -- ++(0,0.2) -- ++(0.2,0);
+%     \draw [->,shorten >= 1pt,shorten <= 1pt] (0:0.75) arc (0:45:0.75);
+%     \node at (22.5:1.25) {$pitch$};
+%     \node at ({0.5*\l*cos(45)},0) [below] {$\cos(pitch)$};
+%     \node [right] at ({\l*cos(45)}, {0.5*\l*sin(45)}) {$\sin(pitch)$};
+% \end{tikzpicture}
+
+% Local/global illumination
+% \begin{tikzpicture}[background rectangle/.style={fill=black}, show background rectangle]
+%     \tikzmath{\angle=25;\h=0.5;};
+%     \coordinate (1) at ($(270-\angle:1)$);
+%     \draw [line width=4pt,rounded corners,cap=round,gray,fill=yellow](1) arc (270-\angle:-90+\angle:1) coordinate (2) -- ++(270:\h) -- ($(1)+(270:\h)$) -- (1);
+%     \draw [line width=4pt,cap=round,gray] 
+%         ($(1)+(270:\h+0.2)+(0:0.1)$) -- ($(2)+(270:\h+0.2)+(0:-0.1)$) 
+%         ($(1)+(270:\h+0.4)+(0:0.15)$) -- ($(2)+(270:\h+0.4)+(0:-0.15)$)
+%         ($(1)+(270:\h+0.6)+(0:0.3)$) -- ($(2)+(270:\h+0.6)+(0:-0.3)$);
+%     \foreach \i in {-45, 0, ..., 225}
+%     {
+%         \draw [line width=4pt,cap=round,yellow] (\i:1.25) -- ++(\i:0.4);
+%     }
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \draw [vector,yellow] (-2,-2) -- (0,-2) coordinate (1);
+%     \draw [vector,blue] (1) -- ++(0,1.5);
+%     \draw [vector,red!50!blue] (3,-0.25) coordinate (2) -- ++(-2.75,0);
+%     \draw [vector,blue] ($(2)+(0,-1.75)$) coordinate (3) -- (2);
+%     \draw [vector,yellow] ($(3)+(2,0)$) coordinate (4) -- (3);
+%     \node at (-0.25,0) [rotate=135] {\includegraphics[width=1cm]{eye.png}};
+%     \node [left] at ($(1)+(-2,0)$) {\includegraphics[width=0.8cm]{lightbulb.pdf}};
+%     \node [right] at (4) {\includegraphics[width=0.8cm]{lightbulb.pdf}};
+%     \draw [blue,line width=2pt] ($(1)+(225:1)$) -- ++(45:2);
+%     \draw [blue,line width=2pt] ($(3)+(315:1)$) -- ++(135:2);
+%     \draw [red,line width=2pt] ($(2)+(315:1)$) -- ++(135:2);
+%     \node at (-2,-1) {local illumination};
+%     \node at (5,0) {global illumination};
+% \end{tikzpicture}
+
+% Reflection vector
+% \begin{tikzpicture}
+%     \coordinate (1) at (3,0);
+%     \fill [blue] (0,0) rectangle ++(6,-0.25);
+%     \node at ($(1)+(135:3.75)$) {\includegraphics[width=0.8cm]{lightbulb.pdf}};
+%     \draw [vector] (1) -- ++(135:3) node [below left] {$\mathbf{L}$};
+%     \draw [vector] (1) -- ++(45:3) node [below right] {$\mathbf{R}$};
+%     \draw [vector] (1) -- ++(90:2.5) node [above] {$\mathbf{n}$};
+%     \draw [line width=1pt] ($(1)+(45:0.75)$) arc (45:135:0.75);
+%     \node at ($(1)+(112.5:0.5)$) {$\theta$};
+%     \node at ($(1)+(67.5:0.5)$) {$\theta$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\b=15;\a=45;\bl=4;\al=3;}
+%     \coordinate (1) at (\b:{\al * cos(\a-\b)});
+%     \draw [vector,blue] (0,0) -- ++(\a:\al) node [right] {$\mathbf{a}$};
+%     \draw [vector,red]  (0,0) -- ++(\b:\bl) node [right] {$\mathbf{b}$};
+%     \draw [vector] (0,0) -- ++(\b:1) node [pos=0.5,below] {$\hat{\mathbf{b}}$};
+%     \draw (1) -- (\a:\al);
+%     \draw [vector,mygreen] (\b:1) -- (1);
+%     \draw [<->] (\b-90:0.67) -- ++(\b:{\al * cos(\a - \b)}) node [pos=0.5,below,rotate=\b] {$\|\mathbf{a}\|\cos(\theta)$};
+%     \draw (\b:1.2) arc(\b:\a:1.2);
+%     \node at ({0.5*(\b+\a)}:1) {$\theta$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\a=0;\n=\a+90;\l=\n+45;\len=3;}
+%     \fill [blue,rotate=\a] (-3,0) rectangle ++(6,-0.25);
+%     \draw [vector] (0,0) -- ++(\a+90:\len) node [above] {$\mathbf{n}$};
+%     \draw [vector] (0,0) -- ++(\l:\len) node [above left] {$\mathbf{L}$};
+%     \draw [vector,red] (0,0) -- ++(\l:-\len) node [pos=0.5,below left] {$-\mathbf{L}$};
+%     \draw [vector,red] (\l:-\len) -- ++(\a+90:{3*cos(45)}) coordinate (1) node [pos=0.5,right] {$(\mathbf{L} \cdot \mathbf{n}) \mathbf{n}$};
+%     \draw [vector,red] (1) -- ++(\a+90:{3*cos(45)}) node [pos=0.5,right] {$(\mathbf{L} \cdot \mathbf{n}) \mathbf{n}$};
+%     \draw [vector,red] (0,0) -- ++(\a+90:{3*cos(45)}) node [pos=0.8,right] {$(\mathbf{L} \cdot \mathbf{n}) \mathbf{n}$};;
+%     \draw [vector,mygreen] (0,0) -- ++(45:\len) node [above right] {$\mathbf{R}$};
+% \end{tikzpicture}
+
+% Diffuse reflection
+% \begin{tikzpicture}
+%     \fill [blue] (-1,0) rectangle ++(8,-0.25);
+%     \foreach \i/\j in {0/40, 1/70, 2/20, 3/110, 4/60} {
+%         \draw [vector] ($(2,0)+(0.5*\i,0)+(135:3)$) -- ++(315:3);
+%         \draw [vector,red] ($(2,0)+(0.5*\i,0)$) -- ++(\j:3);
+%     }
+%     \node [above] at ($(3,0)+(135:3)$) {light rays};
+%     \node [above,yshift=0.5cm] at ($(3,0)+(45:3)$) {reflected rays};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \coordinate (1) at (3,0);
+%     \fill [blue] (0,0) rectangle ++(6,-0.25);
+%     \foreach \i in {0, 15, ..., 180} {
+%         \draw [vector,red,line width=1pt] (1) -- ++(\i:1.75);
+%     }
+%     \node at ($(1)+(135:3.75)$) {\includegraphics[width=0.8cm]{lightbulb.pdf}};
+%     \draw [vector] (1) -- ++(135:3) node [below left] {$\mathbf{L}$};
+%     \draw [fill=white, line width=1pt] ($(1)+(90:1)$) arc (90:135:1) -- (3,0) -- cycle;
+%     \draw [vector] (1) -- ++(90:3) node [above] {$\mathbf{n}$};
+%     \node (theta) at ($(1)+(112.5:0.67)$) {$\theta$};
+%     % \draw [->,white,line width=1pt] (theta) -- ($(1)+(112.5:0.75)$);
+%     \node (2) at (5,2) {reflected light};
+%     \draw [->,line width=1pt] (2) -- ++(230:1);
+% \end{tikzpicture}
+
+% Specular reflection
+% \begin{tikzpicture}
+%     \fill [blue] (-1,0) rectangle ++(8,-0.25);
+%     \foreach \i in {0, ..., 4} {
+%         \draw [vector] ($(2,0)+(0.5*\i,0)+(135:3)$) -- ++(315:3);
+%         \draw [vector, red] ($(2,0)+(0.5*\i,0)$) -- ++(45:3);
+%     }
+%     \node [above] at ($(3,0)+(135:3)$) {light rays};
+%     \node [above] at ($(3,0)+(45:3)$) {reflected rays};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \coordinate (1) at (3,0);
+%     \fill [blue] (0,0) rectangle ++(6,-0.25);
+%     \draw [white,line width=1pt] ($(1)+(30:1.2)$) arc (30:45:1.2);
+%     \node at ($(1)+(135:3.5)$) {\includegraphics[width=1cm]{lightbulb.pdf}};
+%     \draw [vector] (1) -- ++(135:3) node [below left,pos=0.8] {$\mathbf{L}$};
+%     \draw [vector] (1) -- ++(90:3) node [above] {$\mathbf{n}$};
+%     \draw [vector] (1) -- ++(45:3) node [above right] {$\mathbf{R}$};
+%     \draw [vector] (1) -- ++(30:3) node [below right] {$\mathbf{camera}$};
+%     \node [white] (theta) at ($(1)+(37.5:1.5)$) {$\alpha$};
+%     % \draw [->,white,line width=1pt] (theta) -- ($(1)+(37.5:1.2)$);
+%     \node [white] at ($(1)+(112.5:0.67)$) {$\theta$};
+%     \node [white] at ($(1)+(67.5:0.67)$) {$\theta$};
+%     \draw [line width=1pt] ($(1)+(90:1)$) arc (90:135:1);    
+%     \foreach \i in {15, 30, ..., 75} {
+%         \draw [vector,red] (1) -- ++(\i:{2.25*cos(\i - 45)^5});
+%     }
+%     \node at ($(1)+(112.5:0.67)$) {$\theta$};
+%     \draw [line width=1pt] ($(1)+(30:1)$) arc (30:45:1);
+%     \node at ($(1)+(37.5:1.25)$) {$\alpha$};
+%     \node [rotate=-150] at ($(1)+(30:3.5)$) {\includegraphics[width=0.75cm]{camera.pdf}};
+% \end{tikzpicture}
+
+% Attenuation
+% \begin{tikzpicture}[domain = 0:10,samples=100]
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:10.5) node [pos=0.5,below] {distance};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4.5) node [pos=0.5,above,rotate=90] {attenuation};
+%     \draw [line width=1pt] plot (\x, {4 * (1 / (1 + \x + 0.1 * \x + 0.05 * \x * \x))});
+%     \node [left] at (-0.2,0) {0};
+%     \node [left] at (-0.2,4) {1};
+% \end{tikzpicture}
+
+% View space normal 
+% \begin{tikzpicture}
+%     \coordinate (v0) at (2.5,0);
+%     \coordinate (v1) at (0,2.5);
+%     \coordinate (w0) at ($(v0)!0.5!(v1)$);
+%     \coordinate (w1) at ($(v0)!0.5!(v1)+(45:1.5)$);
+%     \draw [line width=1pt] (v0) -- (v1);
+%     \node [below right] at (v0) {$\mathbf{v}_0$};
+%     \node [above left] at (v1) {$\mathbf{v}_1$};
+%     \draw [vector,red,line width=1pt] (w0) -- ($(w0)!0.75!(v1)$) node [pos=0.5,below left] {$\mathbf{T}$};
+%     \draw [vector,blue,line width=1pt] (w0) -- (w1) node [above right] {$\mathbf{n}$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \coordinate (v0) at (-2.5,0);
+%     \coordinate (v1) at (0,2.5);
+%     \coordinate (w0) at ($(v0)!0.5!(v1)$);
+%     \coordinate (w1) at ($(v0)!0.5!(v1)+(80:1.5)$);
+%     \draw [line width=1pt] (v0) -- (v1);
+%     \node [below left] at (v0) {$\mathbf{v}_0$};
+%     \node [above right] at (v1) {$\mathbf{v}_1$};
+%     \draw [vector,red,line width=1pt] (w0) -- ($(w0)!0.75!(v1)$) node [pos=0.5,below right] {$\mathbf{T}_{view}$};
+%     \draw [vector,blue,line width=1pt] (w0) -- (w1) node [above] {$\mathbf{n}_{view}$};
+% \end{tikzpicture}
+
+% Spotlight
+% \begin{tikzpicture}
+%     \tikzmath{\w=1;\h=0.4*\w;\t=0.25*\w;};
+%     \fill [yellow] (0,0) arc (220:320:0.66);
+%     \draw [gray,line width=2pt,cap = round] (0,0) -- ++(0:\w) arc (0:80:0.4*\w) -- ++(90:\h) coordinate (1) -- ++(180:\t) (0,0) arc (180:100:\h) -- ++(90:\h) coordinate (2) -- (1);
+%     \fill [gray] (0,0) -- ++(0:\w) arc (0:80:0.4*\w) -- (1) -- (2) -- ++ (270:\h) arc (100:180:\h);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \coordinate (1) at (3,0);
+%     \coordinate (2) at ($(1)+(0,3)$);
+%     \node (spotlight) at ($(2)+(0,0.5)$) {\includegraphics[width=1cm]{./spotlight.pdf}};
+%     \node [right] at ($(2)+(0.5,0.5)$) {light position} ;
+%     \fill [blue!50!black] (0,0) rectangle ++(6,-0.25);
+%     \fill [blue!50] (1,0) rectangle ++(4, -0.25);
+%     \fill [yellow!50,line width=1pt] ($(1)+(-2,0)$) -- (2) -- ($(1)+(2,0)$);
+%     \draw [vector] (2) -- (1) node [pos=0.8,right] {$\mathbf{d}$};
+%     \draw [vector] (2) -- ($(1)+(-1,0)$) coordinate (3) node [pos=0.8,left] {$\mathbf{L}$};
+%     \draw [line width=1pt] ($(2)+(270:1.25)$) arc (270:{270-atan(1/3)}:1.25);
+%     \node at ($(2)+({270-atan(0.5/3)}:1)$) {$\theta$};
+%     \draw [line width=1pt] ($(2)+(270:1.5)$) arc (270:{270+atan(2/3)}:1.5);
+%     \node at ($(2)+({270+atan(1/3)}:1)$) {$\phi$};
+%     \node (fragment) at ($(1)+(-1,-1)$) {fragment position};
+%     \draw [->,line width=1pt,shorten >= 2pt] (fragment) -- ($(1)+(-1,0)$);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}[domain=0:10,samples=200]
+%     \tikzmath{\p=8;\w=0.2*\p;\yl=3;};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:10.5) node [right] {$\theta$};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
+%     \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
+%     \node [left] at (-0.1,\yl) {1};
+%     \node [left] at (-0.1,0) {0};
+%     \node [below] at (-0.1,-0.1) {0};
+%     \node [below] at (8,-0.1) {$\phi$};
+%     \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
+%     \draw [<->] (\p-\w,3.2) -- ++(\w,0) node [pos=0.5,above] {$\delta$};
+% \end{tikzpicture}
+
+% Directional light
+% \begin{tikzpicture}
+%     \foreach \i in {0, ..., 3} {
+%         \node at (\i*1.5,0) {\includegraphics[width=1cm]{teapot.png}};
+%     }
+%     \foreach \i in {0,...,10}{
+%         \draw [vector] ($(-0.5+\i*0.5,0.5)+(120:2)$) -- (-0.5+\i*0.5,0.5);
+%     }
+%     \node at (1,2.5) {directional light vectors};
+% \end{tikzpicture}
+
+% Normal map
+% \begin{tikzpicture}
+% 	\tikzmath{\a1=-20;\a2=90;\a3=200;\l=2;}
+% 	\coordinate (1) at (\a1:\l);
+% 	\coordinate (2) at ($(1)+(\a2:\l)$);
+% 	\coordinate (3) at ($(2)+(\a1:-\l)$);
+% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
+% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
+% 	\draw [vector,red] (0,0) -- (1);
+% 	\draw [vector,mygreen] (0,0) -- (3);
+% 	\draw [vector,blue] (0,0) -- (\a3:\l);
+% \end{tikzpicture}
+
+% Normal mapping
+% \begin{tikzpicture}
+% 	\tikzmath{\l=9;\a1=90;\a2=110;\a3=90;\a4=70;\a5=90;\a6=110;\a7=90;\a8=70;\a9=90;};
+%     \draw [line width=2pt] (0, 0) -- ++(\l,0) node [pos=0.5,below] {surface normals};
+% 	\node (surface) at (0,-0.5) {actual surface};
+% 	\draw [->,bend right,shorten >= 4pt] (surface.east) to (2,0);
+%     \draw [line width=2pt] (0, -2.5) -- ++(\l,0) node [pos=0.5,below] {fragment normals};
+% 	\draw [line width=2pt,dashed,red] (0,0.4) -- ++(\l,0) node [pos=0,left,align=right] {perceived surface};
+% 	\node (surface) at (0,-3) {actual surface};
+% 	\draw [->,bend right,shorten >= 4pt] (surface.east) to (2,-2.5);
+% 	\draw [line width=2pt,dashed,red] (0,-2.3) 
+% 		-- ++(\a1-90:{1/cos(\a1-90)}) node [pos=0,left,align=right] {perceived surface}
+% 		-- ++(\a2-90:{1/cos(\a2-90)}) 
+% 		-- ++(\a3-90:{1/cos(\a3-90)}) 
+% 		-- ++(\a4-90:{1/cos(\a4-90)}) 
+% 		-- ++(\a5-90:{1/cos(\a5-90)}) 
+% 		-- ++(\a6-90:{1/cos(\a6-90)}) 
+% 		-- ++(\a7-90:{1/cos(\a7-90)}) 
+% 		-- ++(\a8-90:{1/cos(\a8-90)}) 
+% 		-- ++(\a9-90:{1/cos(\a9-90)}) ;
+%     \foreach \i/\j in {0/\a1, 1/\a2, 2/\a3, 3/\a4, 4/\a5, 5/\a6, 6/\a7, 7/\a8, 8/\a9} {
+% 		\draw [vector] (\i+0.5,0) -- ++(90:1.5);
+% 		\draw [vector] (\i+0.5,-2.5) -- ++(\j:1.5);
+%     }
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	\tikzmath{\N=45;\T=5;\B=\T+90;\l=2.5;\w=1.5;};
+% 	\coordinate (O) at (\N:0.5);
+% 	\draw [ball color=gray!50] circle (2);
+% 	\draw [fill=yellow,opacity=0.5] ($(O)+(\T:-0.5*\w)+(\B:-0.5*\w)$) -- ++(\T:\w) -- ++(\B:\w) -- ++(\T:-\w) -- cycle;
+% 	\draw [vector,blue,line width=2pt] (O) -- ++(\N:\l) node [above right] {$\mathbf{n}$};
+% 	\draw [vector,red,line width=2pt,opacity=1] (O) -- ++(\T:\l) node [right] {$\mathbf{t}$};
+% 	\draw [vector,mygreen,line width=2pt,opacity=1] (O) -- ++(\B:\l) node [above] {$\mathbf{b}$};
+% \end{tikzpicture}
+
+% T, B, N vectors
+% \begin{tikzpicture}
+% 	\tikzmath{\a1=20;\a2=150;\w=3;\h=3;}
+% 	\coordinate (1) at (\a1:\w);
+% 	\coordinate (2) at ($(1)+(\a2:\h)$);
+% 	\coordinate (3) at (\a2:\h);
+% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
+% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
+% 	\draw [vector,red,line width=2pt] (0,0) -- (1) node [below right,pos=0.5] {$\mathbf{t}$};
+% 	\draw [vector,mygreen,line width=2pt] (0,0) -- (3) node [below left,pos=0.5] {$\mathbf{b}$};
+% 	\draw [vector,blue,line width=2pt] (0,0) -- (85:3.2) node [above] {$\mathbf{n}$};
+% \end{tikzpicture}
+
+% UV deltas
+% \begin{tikzpicture}
+% 	\tikzmath{\a1=0;\a2=90;\l=5;\h=5;}
+% 	\coordinate (1) at (\a1:\l);
+% 	\coordinate (2) at ($(1)+(\a2:\h)$);
+% 	\coordinate (3) at (\a2:\h);
+% 	\coordinate (P2) at (2.5,1);
+% 	\coordinate (P3) at (4,4);
+% 	\coordinate (P1) at (1,3);
+% 	\texturedtrianglelight{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
+% 	\texturedtrianglelight{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
+% 	\draw [vector,red] (0,0) -- (\a1:\l) node [right] {$\mathbf{t}$};
+% 	\draw [vector,mygreen] (0,0) -- (\a2:\h) node [left] {$\mathbf{b}$};
+% 	\draw [line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
+% 	\node [above,xshift=-0.4cm] at (P1) {$(u_0, v_0)$}; 
+% 	\node [below] at (P2) {$(u_1, v_1)$}; 
+% 	\node [above] at (P3) {$(u_2, v_2)$}; 
+% 	\draw [<->] ($(0:1)+(90:-0.25)$) -- ++(\a1:0.5*\l-1) node [pos=0.5,below] {$\Delta u_1$};
+% 	\draw [<->] ($(\a2:-0.25)+(\a1:0.5*\l)$) -- ++(1.5,0) node [pos=0.5,below] {$\Delta u_2$};
+% 	\draw [<->] ($(\a2:0.2*\h)+(\a1:-0.25)$) -- ++(\a2:2) node [pos=0.5,left] {$\Delta v_1$};
+% 	\draw [<->] ($(\a1:5.25)+(\a2:1)$) -- ++(\a2:3) node [pos=0.5,right] {$\Delta v_2$};
+% 	\draw [vector,blue] (P1) -- (P2) node [pos=0.5,below left] {$E_1$};
+% 	\draw [vector,blue] (P2) -- (P3) node [pos=0.5,below right] {$E_2$};
+% 	\node at (2.5,-1) {tangent space};
+
+% 	\coordinate (O) at (7,0);
+% 	\draw [axis] (O) -- ++(6,0) node [right] {$x$};
+% 	\draw [axis] (O) -- ++(0,5) node [above] {$y$};
+% 	\draw [line width=1pt] ($(O)+(2,3)$) coordinate (1) -- ++(2,-2) coordinate (2) -- ++(1,3) coordinate(3) -- cycle;
+% 	\node [left] at (1) {$(x_0,y_0,z_0)$};
+% 	\node [below] at (2) {$(x_1,y_1,z_1)$};
+% 	\node [above] at (3) {$(x_2,y_2,z_2)$};
+% 	\node at (9.5,-1) {model space};
+% \end{tikzpicture}
+
+% Reorthogonising
+% \begin{tikzpicture}
+% 	\tikzmath{\r=150;\g=70;\b=30;}
+% 	\coordinate (0) at (0,0);
+% 	\coordinate (1) at (225:2);
+% 	\coordinate (2) at ($(1)+(315:2)$);
+% 	\coordinate (3) at (315:3);
+% 	\draw [line width=1pt,dashed] (1) -- (3);
+% 	\fill [red,opacity=0.25] (0) -- (1) -- (2);
+% 	\fill [blue,opacity=0.25] (0) -- (2) -- (3);
+% 	\draw [line width=1pt] (0) -- (1) -- (2) -- cycle (0) -- (3) -- (2);
+% 	\draw [vector,red] (0) -- ++(\r:1);
+% 	\draw [vector,red] (1) -- ++(\r:1);
+% 	\draw [vector,red] (2) -- ++(\r:1);
+% 	\draw [vector] (0) -- ++(\b:1);
+% 	\draw [vector] (2) -- ++(\b:1);
+% 	\draw [vector] (3) -- ++(\b:1);
+% 	\draw [vector,green] (0) -- ++(\g:0.75);
+% 	\draw [vector,green] (1) -- ++(\g:0.75);
+% 	\draw [vector,green] (3) -- ++(\g:0.75);
+% 	\draw [vector,red!50!green!50!blue] (0) -- ++(100:1.5) node [above] {averaged normal};
+% 	\node [text width=1.5cm,align=right] (normals) at (-2.5,1) {surface normals};
+% 	% \draw [->,shorten >= 4pt] (normals) to ($(0)+(\b:1)$);
+% 	\draw [->,shorten >= 4pt] (normals) to ($(0)+(\r:1)$);
+% 	\draw [->,shorten >= 4pt] (normals) to ($(1)+(\g:0.75)$);
+% 	\draw [->,shorten >= 4pt] (normals) to ($(1)+(\r:1)$);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	\tikzmath{\N=20;\T=70;\l=3;}
+% 	\draw [vector] (0,0) -- ++(\N:\l) node [right] {$\mathbf{n}$};
+% 	\draw [vector,blue] (0,0) -- ++(\T:\l) node [above] {$\mathbf{t}$}; 
+% 	\draw [vector,blue] (0,0) -- ++(\N+90:{\l*cos(\N+90-\T)}) node [below left] {$\mathbf{t}_{new}$}; 
+% 	\draw [vector,red] (0,0) -- ++(\N:{\l*cos(\T-\N)}) node [pos=0.5,below,rotate=\N,red] {$(\mathbf{t} \cdot \mathbf{n}) \mathbf{n}$};
+% 	\draw [vector,red] (\T:\l) -- ++(\N:{-\l*cos(\T-\N)}) node [pos=0.5,above,rotate=\N] {$-(\mathbf{t} \cdot \mathbf{n}) \mathbf{n}$};
+% 	\draw (\N:0.2) -- ++(\N+90:0.2) -- ++(\N:-0.2);
+% \end{tikzpicture}
+
+% Complex plane
+% \begin{tikzpicture}
+% 	\tikzmath{\w=4;\h=3;\a=3;\b=2;};
+% 	\draw [help lines] (0,0) grid (\w,\h);
+% 	\draw [axis,black] (0,0) -- (\w+0.5,0) node [right] {real part};
+% 	\draw [axis,black] (0,0) -- (0,\h+0.5) node [above] {imaginary part};
+% 	\node [point,blue,label=above:\textcolor{blue}{$x+yi$}] at (3,2) {};
+% 	\draw [vector,shorten >= 2pt] (0,0) -- (3,2) node [pos=0.5,below,rotate={atan(2/3)}] {$\sqrt{x^2 + y^2}$};
+% 	\node [below] at (\a,0) {$x$};
+% 	\node [left] at (0,\b) {$y$};
+% 	\draw [dashed,blue,line width=1pt] (\a,0) -- (\a,\b) -- (0,\b);
+% \end{tikzpicture}
+
+% Complex plane rotation
+% \begin{tikzpicture}
+% 	\tikzmath{\w=6;\h=6;\a=2;\b=1;};
+% 	\draw [help lines] (-0.5*\w,-0.5*\h) grid ++(\w,\h);
+% 	\draw [axis,black] (-0.5*\w,0) -- (0.5*\w,0) node [pos=0.95,below] {Re};
+% 	\draw [axis,black] (0,-0.5*\h) -- (0,0.5*\h) node [pos=0.95,left] {Im};
+% 	\draw [red,line width=1pt] circle ({sqrt(\a^2 + \b^2)});
+% 	\node [point,blue,label=above right:\textcolor{blue}{$2+i$}] (1) at (\a,\b) {};
+% 	\node [point,blue,label=above left:\textcolor{blue}{$-1+2i$}] (2) at (-\b,\a) {};
+% 	\node [point,blue,label=below left:\textcolor{blue}{$-2-i$}] (3) at (-\a,-\b) {};
+% 	\node [point,blue,label=below right:\textcolor{blue}{$1-2i$}] (4) at (\b,-\a) {};
+% 	\draw [vector,blue] (0,0) -- (1);
+% 	\draw [vector,blue] (0,0) -- (2);
+% 	\draw [vector,blue] (0,0) -- (3);
+% 	\draw [vector,blue] (0,0) -- (4);
+% 	\draw [->,shorten >= 2pt, shorten <= 2pt,line width=1pt] ({atan(\b/\a)}:1) arc (atan(\b/\a):atan(\b/\a)+90:1) node [pos=0.5,above right] {$90^\circ$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\adj=3;\opp=2;\hyp=sqrt(\adj*\adj + \opp*\opp);\th=atan(\opp / \adj);}
+%     \draw [axis,black] (0,0) -- (4,0) node [below] {Re};
+%     \draw [axis,black] (0,0) -- (0,3) node [left] {Im};
+%     \draw [vector,blue] (0,0) -- (\adj,\opp) node [pos=1,above right] {$z$};
+%     \draw (3,0) -- (3,2) (2.8,0) -- ++(0,0.2) -- ++(0.2,0);
+%     \draw [<->] (0,-0.25) -- ++(3,0) node [pos=0.5,below] {$\cos(\theta)$};
+%     \draw [<->] (3.25,0) -- ++(0,2) node [pos=0.5,right] {$\sin(\theta)$};
+%     \draw [<->] (90+\th:0.25) -- ($(\adj,\opp)+(90+\th:0.25)$) node [pos=0.5,above,rotate=\th] {$1$};
+%     \node at ({0.5*atan(2/3)}:0.67) {$\theta$};
+%     \draw [->,shorten <= 2pt, shorten >= 2pt] (0:1) arc (0:{atan(2/3)}:1);
+% \end{tikzpicture}
+
+% Complex conjugate
+% \begin{tikzpicture}
+% 	\tikzmath{\w=4;\h=6;\a=3;\b=2;};
+% 	\draw [help lines] (0,-0.5*\h) grid ++(\w,\h);
+% 	\draw [axis,black] (0,0) -- ++(\w+0.5,0) node [below] {Re};
+% 	\draw [axis,black] (0,-0.5*\h) -- ++(0,\h+0.5) node [left] {Im};
+% 	\node [point,blue,label=above:\textcolor{blue}{$x+yi$}] at (\a,\b) {};
+% 	\node [point,red,label=below:\textcolor{red}{$x-yi$}] at (\a,-\b) {};
+% 	\draw [vector,shorten >= 2pt] (0,0) -- (\a,\b);
+% 	\draw [vector,shorten >= 2pt,red] (0,0) -- (\a,-\b);
+% \end{tikzpicture}
+
+% Euler angles
+% \begin{tikzpicture}
+% 	\tikzmath{\x=-15;\y=90;\z=210;\al=3;\c=1.5;}
+% 	\draw[axis] (0,0) -- ++(\x:\al) node at (\x:\al+0.2) {$x$};
+% 	\draw[axis] (0,0) -- ++(\y:\al) node at (\y:\al+0.2) {$y$};
+% 	\draw[axis] (0,0) -- ++(\z:\al) node at (\z:\al+0.2) {$z$};
+%     \node [rotate=\z+180] {\includegraphics[width=1cm] {camera.pdf}};
+% 	\draw [->,line width=1pt,rotate around={\x:(\x:\c)}, red] (\x:\c) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.25,above] {pitch};
+% 	\draw [->,line width=1pt,rotate around={\z:(\z:\c)}, blue] (\z:\c) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,above] {roll};
+% 	\draw [->,line width=1pt,rotate around={\y:(\y:\c)}, mygreen] (\y:\c) [partial ellipse=20:340:0.33cm and 0.67cm] node [left,pos=0.25] {yaw};
+% \end{tikzpicture}
+
+% Axis-angle rotation
+% \begin{tikzpicture}
+%     \tikzmath{\x=-30;\y=90;\z=210;\al=2;\l=1.5;\a=42;};
+%     \tikzmath{\vx=1.25;\vy=2;\vz=-1.5;}
+%     \coordinate (1) at (\x:\vx);
+%     \coordinate (2) at ($(1)+(\z:\vz)$);
+%     \coordinate (3) at ($(2)+(\x:-\vx)$);
+%     \coordinate (4) at ($(0,0)+(\y:\vy)$);
+%     \coordinate (5) at ($(1)+(\y:\vy)$);
+%     \coordinate (6) at ($(2)+(\y:\vy)$);
+%     \coordinate (7) at ($(3)+(\y:\vy)$);
+%     \coordinate (8) at ($(4)+(\y:\vy)$);
+%     \draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+%     \draw [axis] (0,0) -- ++(\y:\al+1) node [above] {$y$};
+%     \draw [axis] (0,0) -- ++(\z:\al) node [below left] {$z$};
+%     \draw [->,line width=1pt,rotate around={\a:(\a:1.5)}] (\a:1.5) [partial ellipse=20:340:0.2cm and 0.5cm];
+%     % \draw [help lines] (1) -- (2) -- (3) -- (0,0) (4) -- (5) -- (6) -- (7) -- (4) (1) -- (5) (2) -- (6) (3) -- (7);
+%     % \draw [help lines] (1) -- (0,0);
+%     \draw [vector,blue] (0,0) -- (6) node [right] {$\hat{\mathbf{v}}$};;
+% \end{tikzpicture}
+
+% Quaternion rotation
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=4;\l=1.5;\r=0.5*(\z+360);};
+% 	\fill [blue!20,opacity=0.5] ($(\x:-1.25)+(\y:-1)$) -- ++(\x:2.5) -- ++(\y:2) -- ++(\x:-2.5) -- cycle;
+% 	\draw (180:-1.25) -- ++(180:2.5);
+% 	\fill [blue!20] (0,0) -- (\x:1) arc (\x:\x+45:1);
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:0.75*\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:0.75*\al) node [below left] {$z$};
+% 	\draw [vector,blue] (0,0) -- ++(\x:2*\l) node [pos=1,below] {$p = (2, 0, 0)$};
+% 	\draw [vector,green!50!black] (0,0) -- ++(\z:{1+sqrt(2)/2*\l}) node [pos=0.9,below right] {$q = [\frac{\sqrt2}{2}, (0, 0, \frac{\sqrt{2}}{2})]$};
+% 	\draw [vector,red] (0,0) -- ($(\x:{sqrt(2)*\l})+(\y:{sqrt(2)*\l})$) node [pos=1,above] {$qp = [0, (\sqrt{2}, \sqrt{2}, 0)]$};
+% 	\draw [->,shorten >= 2pt,shorten <= 2pt,line width=1pt] (\x:1) arc (\x:45:1);
+% 	\node at (22.5:0.67) {$45^\circ$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=4;\l=1.5;\r=0.5*(\z+360);};
+% 	\fill [blue!20,opacity=0.5] ($(\r+80:-1.25)+(\y:-1.25)$) -- ++(\r+80:2.5) -- ++(\y:2.5) -- ++(\r+80:-2.5);
+% 	\draw (\r+80:-1.25) -- ++(\r+80:2.5);
+% 	\fill [blue!20] (0,0) -- (\r-280:1) arc (\r-280:\r-225:1);
+% 	\draw [->,line width=1pt] (\r-280:1) arc (\r-280:\r-225:1);
+% 	\node at (\r-247.5:0.67) {$45^\circ$};
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:0.75*\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:0.75*\al) node [below left] {$z$};\draw [vector,blue] (0,0) -- ++(\x:2*\l) node [below] {$p = (2, 0, 0)$};
+% 	\draw [vector,green!50!black] (0,0) -- (\r:2) node [right] {$q = [\frac{\sqrt2}{2}, (\frac{1}{2}, 0, \frac{1}{2})]$};
+% 	\draw [vector,red] (0,0) -- ($(\x:2*\l)+(\y:\l)$) coordinate (1) node [pos=1,above] {$qp = [-1, (\sqrt{2}, 1, 0)]$};
+% 	\draw [dashed] (0,0) -- ++(\r-225:3);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=4;\l=1.5;\r=0.5*(\z+360);};
+% 	\fill [blue!20,opacity=0.5] ($(\r+80:-1.25)+(\y:-1.25)$) -- ++(\r+80:2.5) -- ++(\y:2.5) -- ++(\r+80:-2.5);
+% 	\draw (\r+80:-1.25) -- ++(\r+80:2.5);
+% 	\fill [blue!20] (0,0) -- (\r-280:1) arc (\r-280:\r-190:1);
+% 	\draw [->,line width=1pt] (\r-280:1) arc (\r-280:\r-190:1);
+% 	\node at (\r-245:0.67) {$90^\circ$};
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:0.75*\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:0.75*\al) node [below left] {$z$};\draw [vector,blue] (0,0) -- ++(\x:2*\l) node [below] {$p = (2, 0, 0)$};
+% 	\draw [vector,green!50!black] (0,0) -- (\r:2) node (r) [right] {$q = [\frac{\sqrt2}{2}, (\frac{1}{2}, 0, \frac{1}{2})]$};
+% 	\draw [vector,red] (0,0) -- ($(\x:\l)+(\y:2*\l)+(\z:\l)$) coordinate (r) node [pos=1,right] {$qpq^* = [0, (1, \sqrt{2}, 1)]$};
+% 	\draw [dashed] (0,0) -- ++(\r-190:2);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=4;\l=1.5;\r=0.5*(\z+360);};
+% 	\fill [blue!20,opacity=0.5] ($(\r+80:-1.25)+(\y:-1.25)$) -- ++(\r+80:2.5) -- ++(\y:2.5) -- ++(\r+80:-2.5);
+% 	\draw (\r+80:-1.25) -- ++(\r+80:2.5);
+% 	\fill [blue!20] (0,0) -- (\r-280:1) arc (\r-280:\r-225:1);
+% 	\draw [->,line width=1pt] (\r-280:1) arc (\r-280:\r-225:1);
+% 	\node at (\r-250:0.67) {$45^\circ$};
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:0.75*\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:0.75*\al) node [below left] {$z$};\draw [vector,blue] (0,0) -- ++(\x:2*\l) node [below] {$p = (2, 0, 0)$};
+% 	\draw [vector] (0,0) -- (\r:2) node (r) [below,xshift=1cm] {$q = [\cos(\frac{45}{2}), \sin(\frac{45}{2})(\frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2})]$};
+% 	\draw [vector,red] (0,0) -- ($(\x:1.7071*\l)+(\y:1.2*\l)+(\z:0.2929*\l)$) coordinate (r) node [pos=1,above,xshift=0.5cm] {$R\mathbf{p} = (1.707, 1, 0.293)$};
+% 	\draw [dashed] (0,0) -- ++(\r-225:2.5);
+% \end{tikzpicture}
+
+% Linear interpolation
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=2;}
+% 	\coordinate (p0) at (1,1);
+% 	\coordinate (p1) at (4, 2);
+% 	\coordinate (pt) at ($(p0)!0.5!(p1)$);
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:\al) node [below right] {$z$};
+% 	\node [point,label=below:$\mathbf{p}_1$] at (p0) {};
+% 	\node [point,label=above:$\mathbf{p}_2$] at (p1) {};
+% 	\draw (p0) -- (p1);
+% 	\node [point,blue,label=below right:{\color{blue}$\mathbf{p}_1 + t(\mathbf{p}_2 - \mathbf{p}_1)$}] at (pt) {};
+% \end{tikzpicture}
+
+% SLERP
+% \begin{tikzpicture}
+% 	\tikzmath{\x=0;\y=90;\z=225;\al=3.5;\r=2.5;\q0=310;\q1=415;\ql=0.7;};
+% 	\coordinate (q0) at (\q0:\ql*\r);
+% 	\coordinate (q1) at (\q1:\ql*\r);
+% 	\coordinate (qt) at ({\q0+0.4*(\q1-\q0)}:0.8*\ql*\r);
+% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	\draw [axis] (0,0) -- ++(\y:\al) node [above] {$y$};
+% 	\draw [axis] (0,0) -- ++(\z:\al) node [below left] {$z$};
+% 	\shade [ball color=gray!40,opacity=0.4] circle (\r);
+% 	\draw [->,line width=1pt,bend right=20,shorten >= 4pt, shorten <= 4pt] (q0) to (q1);
+% 	\draw [->,line width=1pt,bend right=20,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(q0)$) to ($(0,0)!0.4!(q1)$);
+% 	\node [point,label=right:$q_1$] (q0) at (q0) {};
+% 	\node [point,label=right:$q_2$] (q1) at (q1) {};
+% 	\node [point,blue,label=right:$\textcolor{blue}{q_t}$] (qt) at (qt) {};
+% 	\draw [vector,black] (0,0) -- (q0);
+% 	\draw [vector,black] (0,0) -- (q1);
+% 	\draw [vector] (0,0) -- (qt);
+% 	\node at (352.5:0.33) {$\theta$}; 
+% 	\draw (-\r,0) arc (180:360:2.5 and 0.6);
+% 	\draw[dashed] (\r,0) arc (0:180:2.5 and 0.6);
+% \end{tikzpicture}
+
+% Third person camera
+\begin{tikzpicture}
+    \tikzmath{\a=-20;};
+    \coordinate (head) at (0,0);
+    \coordinate (camera) at ($(head)+(-3,2)$);
+	\node [xscale=-1] {\includegraphics[width=1cm]{head.pdf}};
+	\node [rotate=\a] at (camera) {\includegraphics[width=1cm]{camera.pdf}};
+    \node [above of=camera,yshift=-0.25cm] {$\mathbf{eye} = \mathbf{position} + \mathbf{offset}$};
+	\draw [vector,blue] (head) -- (camera) node [pos=0.5,below left] {$\mathbf{offset}$};
+    \draw [vector,red] (0.5,0) -- ++(2,0) node [pos=1,above] {$\mathbf{character\,direction}$};
+	\node at (0,-0.8) {$\mathbf{position}$};
+    \draw [vector,mygreen] (camera) -- ++(\a:2) node [pos=1,above right] {$\mathbf{direction}$};
+\end{tikzpicture}
+
+
+\end{document}
