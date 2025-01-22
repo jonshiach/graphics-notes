@@ -590,11 +590,11 @@ float attenuation = 1.0 / (constant + linear * distance + quadratic * distance *
 fragmentColour = (ambient + diffuse + specular) * attenuation;
 ```
 
-To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned a different distances from the light source. In your **Lab08_Lighting.cpp** file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from [Lab06 3D Worlds](multiple-objects-section)).
+To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned a different distances from the light source. In your **Lab08_Lighting.cpp** file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from [6. 3D Worlds](multiple-objects-section)).
 
 ```cpp
 // Teapot positions
-glm::vec3 teapotPositions[] = {
+glm::vec3 positions[] = {
     glm::vec3( 0.0f,  0.0f,  0.0f),
     glm::vec3( 2.0f,  5.0f, -10.0f),
     glm::vec3(-3.0f, -2.0f, -3.0f),
@@ -607,10 +607,18 @@ glm::vec3 teapotPositions[] = {
     glm::vec3(-1.0f,  1.0f, -2.0f)
 };
 
-// Teapot rotation angles
-float teapotAngles[10];
+// Add teapots to objects vector
+std::vector<Object> objects;
+Object object;
+object.name = "teapot";
 for (unsigned int i = 0 ; i < 10 ; i++)
-    teapotAngles[i] = Maths::radians(20.0f * i);
+{
+    object.position = positions[i];
+    object.rotation = glm::vec3(1.0f, 1.0f, 1.0f);
+    object.scale    = glm::vec3(0.75f, 0.75f, 0.75f);
+    object.angle    = Maths::radians(20.0f * i);
+    objects.push_back(object);
+}
 ```
 
 Replace the code used to calculate the model, $MVP$ and $MV$ matrices as well as drawing the teapot with the following.
@@ -620,12 +628,12 @@ Replace the code used to calculate the model, $MVP$ and $MV$ matrices as well as
 glUniformMatrix4fv(glGetUniformLocation(shaderID, "V"), 1, GL_FALSE, &camera.view[0][0]);
 
 // Loop through objects
-for (unsigned int i = 0; i < 10; i++)
+for (int i = 0; i < static_cast<unsigned int>(objects.size()); i++)
 {
     // Calculate model matrix
-    glm::mat4 translate = Maths::translate(teapotPositions[i]);
-    glm::mat4 scale     = Maths::scale(glm::vec3(0.75f));
-    glm::mat4 rotate    = Maths::rotate(teapotAngles[i], glm::vec3(1.0f));
+    glm::mat4 translate = Maths::translate(objects[i].position);
+    glm::mat4 scale     = Maths::scale(objects[i].scale);
+    glm::mat4 rotate    = Maths::rotate(objects[i].angle, objects[i].rotation);
     glm::mat4 model     = translate * rotate * scale;
     
     // Send the MVP and MV matrices to the vertex shader
@@ -677,16 +685,15 @@ The affects of applying attenuation.
 
 ## Multiple light sources
 
-To add another light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for the additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the three light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.
+To add another light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for the additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.
 
-A data structure in C++ and GLSL is defined in a similar way using the <a href="https://cplusplus.com/doc/tutorial/structures/" target="_blank">struct</a> declaration.
+A data structure in GLSL is defined in a similar way to C++.
 
 ```glsl
 struct Light
 {
     vec3 position;
     vec3 colour;
-    vec3 direction;
     float constant;
     float linear;
     float quadratic;
@@ -697,11 +704,10 @@ struct Light
 This defines a data structure called `Light` that contains the information required to calculate the lighting model for a single light source. In the fragment shader we can create a uniform for an array of `Light` data structures.
 
 ```cpp
-uniform int numLights;
-uniform Light lightSources[10];
+uniform Light lightSources[maxLights];
 ```
 
-This defines a 10 element array of `Light` data structures (assuming we have a maximum of 10 light sources) and the actual number of lights sources we have is passed in using the `numLights` uniform. Then all we need to do is loop through each of the light sources, calculate the fragment colour for the current source and add it to the total fragment colour. Open the file **multipleLightsFragmentShader.glsl** in the **Lab08_Lighting/** folder and you should see the following.
+This defines an array of `Light` data structures. Then all we need to do is loop through this array, calculate the fragment colour for the current source and add it to the total fragment colour. Open the file **multipleLightsFragmentShader.glsl** in the **Lab08_Lighting/** folder and you should see the following.
 
 ```glsl
 #version 330 core
@@ -721,7 +727,6 @@ struct Light
 {
     vec3 position;
     vec3 colour;
-    vec3 direction;
     float constant;
     float linear;
     float quadratic;
@@ -737,26 +742,23 @@ uniform float Ns;
 uniform Light lightSources[maxLights];
 
 // Function prototypes
-vec3 pointLight(vec3 lightPosition, vec3 lightColour,
-                float constant, float linear, float quadratic);
+vec3 pointLight(vec3 lightPosition, vec3 lightColour, float constant, float linear, float quadratic);
 
 void main ()
 {
     fragmentColour = vec3(0.0, 0.0, 0.0);
-    for (int i = 0; i < numLights; i++)
+    for (int i = 0; i < maxLights; i++)
     {
         // Determine light properties for current light source
         vec3 lightPosition  = lightSources[i].position;
         vec3 lightColour    = lightSources[i].colour;
-        vec3 lightDirection = lightSources[i].direction;
         float constant      = lightSources[i].constant;
         float linear        = lightSources[i].linear;
         float quadratic     = lightSources[i].quadratic;
         
         // Calculate point light
         if (lightSources[i].type == 1)
-            fragmentColour += pointLight(lightPosition, lightColour,
-                                         constant, linear, quadratic);
+            fragmentColour += pointLight(lightPosition, lightColour, constant, linear, quadratic);
     }
 }
 
@@ -792,9 +794,9 @@ vec3 pointLight(vec3 lightPosition, vec3 lightColour,
 }
 ```
 
-Here we have defined a function prototype for the function `pointLight()` that contains the commands used to calculate the fragment colour for a single point light source. In the `main()` function we have a for loop to loop through each light source, perform the light calculations for the current light source and add it to the fragment colour.
+Here we have defined a function `pointLight()` that contains the commands used to calculate the fragment colour for a single point light source. In the `main()` function we have a for loop to loop through each light source, perform the light calculations for the current light source and add it to the fragment colour.
 
-We also need to make changes to the **Lab08_Lighting.cpp** file. Add the `Light` data structure before the `main()` function declaration
+We need to make changes to the **Lab08_Lighting.cpp** file so that we define multiple light sources and use the appropriate fragment shader. Add a data structure for the light source information where we did similar for the object data structure and declare a vector to contain the light source objects.
 
 ```cpp
 // Light struct
@@ -802,27 +804,26 @@ struct Light
 {
     glm::vec3 position;
     glm::vec3 colour;
-    glm::vec3 direction;
     float constant;
     float linear;
     float quadratic;
     unsigned int type;
 };
+
+// Create vector of light sources
+std::vector<Light> lightSources;
 ```
 
 Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader which it compiles the shader program.
 
 ```cpp
 // Compile shader programs
-shaderID      = LoadShaders("vertexShader.glsl", "multipleLightsFragmentShader.glsl");
+unsigned int shaderID      = LoadShaders("vertexShader.glsl", "multipleLightsFragmentShader.glsl");
 ```
 
-We now define the lighting properties for multiple lights sources using our `Light` structure in a C++ <a href="https://en.cppreference.com/w/cpp/container/vector" target="_blank">vector</a>. Where we defined the colour and position of the single light source, replace the code with the following
+We now define the lighting properties for multiple lights sources using our `Light` structure. Comment out the code used to define the colour and position of our single light source and add the following.
 
 ```cpp
-// Create vector of light sources
-std::vector<Light> lightSources;
-
 // Add first point light source
 Light light;
 light.position  = glm::vec3(2.0f, 2.0f, 2.0f);
@@ -835,21 +836,14 @@ lightSources.push_back(light);
 
 // Add second point light source
 light.position  = glm::vec3(1.0f, 1.0f, -8.0f);
-light.colour    = glm::vec3(1.0f, 1.0f, 1.0f);
-light.constant  = 1.0f;
-light.linear    = 0.1f;
-light.quadratic = 0.02f;
-light.type      = 1;
 lightSources.push_back(light);
 ```
 
-This code creates two light sources, defines the values of the data structures and stores then in the `lightSources` vector. The `lightSources.push_back(light)` command adds the current light source to the end of the `lightSources` vector. Now we need to send the light and material values to the shader using uniforms, comment out the code used to send the light properties to the shader and add the code below.
+This code creates two light sources, defines the values of the data structures and stores then in the `lightSources` vector. Note that the second light source shares some of the same colour, attenuation coefficients and type as the first so we didn't need to define these again. Now we need to send the light and material values to the shader using uniforms, comment out the code used to send the light properties to the shader and add the code below.
 
 ```cpp
 // Send multiple light source properties to the shader
-unsigned int numLights = static_cast<unsigned int>(lightSources.size());
-glUniform1i(glGetUniformLocation(shaderID, "numLights"), numLights);
-for (unsigned int i = 0; i < numLights; i++)
+for (unsigned int i = 0; i < static_cast<unsigned int>(lightSources.size()); i++)
 {
     glm::vec3 viewSpaceLightPosition = glm::vec3(camera.view * glm::vec4(lightSources[i].position, 1.0f));
     std::string idx = std::to_string(i);
@@ -870,10 +864,10 @@ glUniform1f(glGetUniformLocation(shaderID, "Ns"), teapot.Ns);
 
 Here we simply loop through the vector of light sources and send the values for each individual light to the shader (unfortunately we can't send a vector of structs using a uniform, we could use <a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)" target="_blank">GLSL interface blocks</a> but I wanted to keep things simple here).
 
-Finally to draw each light source we loop through each of the light sources and change the translation matrix and light source colour uniform for the current light. Comment out the exist code used to calculate the model matrix and draw the light source and add the following.
+Finally to draw each light source we loop through each of the light sources and change the translation matrix and light source colour uniform for the current light. Comment out the existing code used to calculate the model matrix and draw the light source and add the following.
 
 ```cpp
-for (unsigned int i = 0; i < numLights; i++)
+for (unsigned int i = 0; i < static_cast<unsigned int>(lightSources.size()); i++)
 {
     // Calculate model matrix
     glm::mat4 translate = Maths::translate(lightSources[i].position);
@@ -918,26 +912,31 @@ A spotlight only illuminates fragments where $\theta < \phi$.
 
 Consider {numref}`spot-light-figure` that shows a spotlight emitting light in the direction given by the $\mathbf{d}$ vector. The $\mathbf{L}$ vector points from the light source position to the position of the fragment and the angle $\phi$ determines the spread of the light. If the angle $\theta$ between $\mathbf{L}$ and $\mathbf{d}$ is less than $\phi$ then the fragment is illuminated by the spotlight.
 
-To add spotlights to our scene we need to add attributes to the `Light` data structure for the direction vector $\mathbf{d}$ and the value of $\cos(\phi)$ in the fragment shader
+To add spotlights to our scene we need to add attributes to the `Light` data structure in the **multipleLightsFragmentShader.glsl** file for the direction vector $\mathbf{d}$ and the value of $\cos(\phi)$ in the fragment shader
 
-```cpp
+```glsl
 vec3 direction;
 float cosPhi;
 ```
 
+Also, to extract the light source direction vector and value of $\cos(\phi)$ from the `Light` data structure, add the following to where we did this for the other light source properties.
+
+```glsl
+vec3 lightDirection = lightSources[i].direction;
+float cosPhi        = lightSources[i].cosPhi;
+```
+
 We will be defining a function called `spotLight()` to calculate our spotlight but first we need to declare the function prototype before the `main()` function
 
-```cpp
-vec3 spotLight(vec3 lightPosition, vec3 direction, vec3 lightColour,
-               float cosPhi, float constant, float linear, float quadratic);
+```glsl
+vec3 spotLight(vec3 lightPosition, vec3 direction, vec3 lightColour, float cosPhi, float constant, float linear, float quadratic);
 ```
 
 The `spotLight()` function is below, copy and paste this (or type if out) after the `pointLight()` function.
 
 ```glsl
 // Calculate spotlight
-vec3 spotLight(vec3 lightPosition, vec3 lightDirection, vec3 lightColour,
-               float cosPhi, float constant, float linear, float quadratic)
+vec3 spotLight(vec3 lightPosition, vec3 lightDirection, vec3 lightColour, float cosPhi, float constant, float linear, float quadratic)
 {
     // Object colour
     vec3 objectColour = vec3(texture(diffuseMap, UV));
@@ -981,8 +980,7 @@ In the `main()` function of the fragment shader, add the following to the for lo
 ```cpp
 // Calculate spotlight
 if (lightSources[i].type == 2)
-    fragmentColour += spotLight(lightPosition, lightDirection, lightColour, 
-                                cosPhi, constant, linear, quadratic);
+    fragmentColour += spotLight(lightPosition, lightDirection, lightColour, cosPhi, constant, linear, quadratic);
 ```
 
 So here we are using a `type` value of 1 to specify a point light source and a value of 2 to specify a spotlight source.
@@ -994,22 +992,18 @@ glm::vec3 direction;
 float cosPhi;
 ```
 
-and after we defined our point light sources add the following code to add a single spotlight source.
+Turn off the two point light sources by commenting out the two `lightSources.pushback(light)` commands add the following code to add a single spotlight source to our scene.
 
 ```cpp
 // Add spotlight
 light.position  = glm::vec3(0.0f, 3.0f, 0.0f);
 light.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-light.colour    = glm::vec3(1.0f, 1.0f, 0.0f);
-light.constant  = 1.0f;
-light.linear    = 0.1f;
-light.quadratic = 0.02f;
 light.cosPhi    = std::cos(Maths::radians(45.0f));
 light.type      = 2;
 lightSources.push_back(light);
 ```
 
-Here we have defined a single spotlight which is positioned above the first teapot at $(0, 3, 0)$ and with a direction vector pointing straight down so $\mathbf{d} = (0, -1, 0)$. The colour of the spotlight is yellow since the RGB values are $(1, 1, 0)$ and the spread angle of the light is $\phi = 45^\circ$. We have also specified that this light source has a `type` value of 2 for a spotlight. Note that we are only going to use one spotlight for now but have the ability to add more if we want.
+Here we have defined a single spotlight which is positioned above the first teapot at $(0, 3, 0)$, a direction vector pointing straight down so $\mathbf{d} = (0, -1, 0)$ and a light spread angle of $\phi = 45^\circ$. We have also specified that this light source has a `type` value of 2 for a spotlight. Note that we are only going to use one spotlight for now but have the ability to add more if we want.
 
 We need to send the additional `direction` and `cosPhi` values to the shader so where we send the other light properties, add the following code.
 
@@ -1039,9 +1033,9 @@ Intensity value over a range of $\theta$.
 
 Replace the `intensity` calculation with the following to soften the edge of the spotlight.
 
-```cpp
+```glsl
 float delta     = radians(2.0);
-float intensity = clamp((cosTheta - lightSource.cosPhi) / delta, 0.0, 1.0);
+float intensity = clamp((cosTheta - cosPhi) / delta, 0.0, 1.0);
 ```
 
 The `clamp(x, a, b)` limits the value of `x` so that is is not less than `a` and not greater than `b`.
@@ -1068,7 +1062,7 @@ Directional lighting
 
 The lighting calculations are the same as for the other light sources seen above with the exception that we do not need the light source position and we do not apply the attenuation. The light vector $\mathbf{L}$ is simply the direction vector $\mathbf{d}$ negated.
 
-We are going to use a function to calculate the directional lighting, add the function prototype before the `main()` function
+We are going to use a function to calculate the directional lighting, add the function prototype before the `main()` function in the **multipleLightsFragmentShader.glsl** file
 
 ```cpp
 vec3 directionalLight(vec3 lightDirection, vec3 lightColour);
@@ -1116,14 +1110,14 @@ Now we need to define a directional light source in the **Lab08_Lighting.cpp** f
 ```cpp
 // Add directional light
 light.direction = glm::vec3(1.0f, -1.0f, 0.0f);
-light.colour    = glm::vec3(1.0f, 0.0f, 0.0f);
+light.colour    = glm::vec3(1.0f, 1.0f, 0.0f);
 light.type      = 3;
 lightSources.push_back(light);
 ```
 
-Here we define a directional light source with rays coming down from the top left as we look down the $z$-axis. We have also specified that our directional light source is red since the RBG values are $(1, 0, 0)$.
+Here we define a directional light source with rays coming down from the top left as we look down the $z$-axis. We have also specified that our directional light source is yellow since the RBG values are $(1, 1, 0)$.
 
-Run your program and you should see something similar to the following
+Put back the two point light sources by uncommenting the `lightSources.push_back(light)` commands and run your program.
 
 ```{figure} ../_images/08_teapot_directional_light.png
 :width: 500
@@ -1132,7 +1126,7 @@ Run your program and you should see something similar to the following
 Directional and point light sources.
 ```
 
-We can see that the teapots have been illuminated from a directional light source from the left hand side in addition to the two point light sources and the spotlight.
+We can see that the teapots have been illuminated from a directional light source from the left-hand side in addition to the two point light sources and the spotlight.
 
 ---
 
@@ -1140,11 +1134,11 @@ We can see that the teapots have been illuminated from a directional light sourc
 
 1. Experiment with the positions, colours and material properties of the various light sources to see what effects they have.
 
-2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at `camera.position`, is pointing in the same direction as `camera.direction` and has a spread of $\phi = 20^\circ$. Turn off all other light sources (either by commenting out code or setting the colours to zero) for extra spookiness.
+2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at `camera.position`, is pointing in the same direction as `camera.direction` and has a spread of $\phi = 15^\circ$. Turn off all other light sources for extra spookiness.
    
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/10_exercise_2.mp4" type="video/mp4">
+    <source src="../_static/08_flash_light.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -1152,19 +1146,20 @@ We can see that the teapots have been illuminated from a directional light sourc
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/10_exercise_3.mp4" type="video/mp4">
+    <source src="../_static/08_rotating_light.mp4" type="video/mp4">
 </video>
 </center>
 
-4. The planet Narkov has a red sun and a single day lasts for just 5 of our seconds. Use directional lighting to model the illumination of the sun as it passes through the sky and also beneath the horizon (fortunately Narkovians like tea so using our teapots would not seem unusual). The background colour can also be changed to match the colour of the light source.
+4. Add the ability to turn the lights off and on using keyboard input.
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/10_exercise_4.mp4" type="video/mp4">
+    <source src="../_static/08_lights_on_off.mp4" type="video/mp4">
 </video>
 </center>
 
 ---
+
 (blender-section)=
 ## Creating an .obj file in Blender
 
@@ -1190,11 +1185,3 @@ To create an .obj file we can use the popular open source application <a href="h
 ```{note}
 The Model class that we are using here is very simple and will only work with simple models. 
 ```
-
----
-
-## Video walkthrough
-
-The video below walks you through these lab materials.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/v9e_557Wl_U?si=6fLfaMWJL5s3P5Qs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

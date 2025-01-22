@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>A. Complex Numbers and Quaternions &#8212; Computer Graphics</title>
+    <title>Complex Numbers and Quaternions &#8212; Computer Graphics</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/A_Complex_numbers_and_quaternions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="B. Code and Assets" href="B_Code.html" />
+    <link rel="next" title="Glossary" href="C_Glossary.html" />
     <link rel="prev" title="10. Quaternions" href="10_Quaternions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -172,9 +172,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">A. Complex Numbers and Quaternions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="B_Code.html">B. Code and Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">C Glossary</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
 </ul>
 
     </div>
@@ -358,7 +357,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>A. Complex Numbers and Quaternions</h1>
+    <h1>Complex Numbers and Quaternions</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -406,9 +405,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="a-complex-numbers-and-quaternions">
-<span id="appendix-quaternions-section"></span><h1>A. Complex Numbers and Quaternions<a class="headerlink" href="#a-complex-numbers-and-quaternions" title="Permalink to this heading">#</a></h1>
-<p>In <a class="reference internal" href="10_Quaternions.html#quaternions-section"><span class="std std-ref">Lab 10</span></a> we explored how we can make use of quaternions to perform rotation calculations. You don’t need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="complex-numbers-and-quaternions">
+<span id="appendix-quaternions-section"></span><h1>Complex Numbers and Quaternions<a class="headerlink" href="#complex-numbers-and-quaternions" title="Permalink to this heading">#</a></h1>
+<p>In <a class="reference internal" href="10_Quaternions.html#quaternions-section"><span class="std std-ref">10. Quaternions</span></a> we explored how we can make use of quaternions to perform rotation calculations. You don’t need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.</p>
 <section id="a-1-complex-numbers">
 <h2>A.1 Complex numbers<a class="headerlink" href="#a-1-complex-numbers" title="Permalink to this heading">#</a></h2>
 <p>The <strong>imaginary number</strong> <span class="math notranslate nohighlight">\(i\)</span> is defined as <span class="math notranslate nohighlight">\(i^2 = -1\)</span>. A <strong>complex number</strong> is a real number plus a multiple of an imaginary number</p>
@@ -703,7 +702,7 @@ document.write(`
 </section>
 <section id="a-3-quaternion-rotation">
 <span id="appendix-quaternion-rotation-section"></span><h2>A.3 Quaternion rotation<a class="headerlink" href="#a-3-quaternion-rotation" title="Permalink to this heading">#</a></h2>
-<p>In <a class="reference internal" href="05_transformations.html#axis-angle-rotation-section"><span class="std std-ref">Lab 4 on transformations</span></a> we saw that we can rotate about a vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> by an angle <span class="math notranslate nohighlight">\(\theta\)</span> using a combination of a translation and rotations about the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes. The resulting matrix shown in equation <a class="reference internal" href="05_transformations.html#equation-eq-axis-angle-rotation-matrix">(5.3)</a> is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.</p>
+<p>In <a class="reference internal" href="05_transformations.html#axis-angle-rotation-section"><span class="std std-ref">4. Transformations</span></a> we saw that we can rotate about a vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> by an angle <span class="math notranslate nohighlight">\(\theta\)</span> using a combination of a translation and rotations about the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes. The resulting matrix shown in equation <a class="reference internal" href="05_transformations.html#equation-eq-axis-angle-rotation-matrix">(5.3)</a> is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.</p>
 <figure class="align-default" id="axis-angle-rotation-figure-3">
 <a class="reference internal image-reference" href="../_images/10_Axis_angle_rotation.svg"><img alt="../_images/10_Axis_angle_rotation.svg" src="../_images/10_Axis_angle_rotation.svg" width="350" /></a>
 <figcaption>
@@ -913,12 +912,12 @@ document.write(`
 </section>
 <section id="a-3-1-euler-angles-to-quaternion">
 <span id="euler-to-quaternion-derivation-section"></span><h3>A.3.1 Euler angles to quaternion<a class="headerlink" href="#a-3-1-euler-angles-to-quaternion" title="Permalink to this heading">#</a></h3>
-<p>Euler angles are the rotations around the three co-ordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(4)</a> can be used to give three quaternions for pitch, yaw and roll rotations. Let <span class="math notranslate nohighlight">\(c_p = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_p =\sin(\frac{1}{2}\theta)\)</span> and <span class="math notranslate nohighlight">\(q_p\)</span> be the cosine, sine and rotation quaternion for rotating about the <span class="math notranslate nohighlight">\(x\)</span>-axis by the pitch angle, and similar for yaw and roll then</p>
+<p>Euler angles are the rotations around the three co-ordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(4)</a> can be used to give three quaternions for pitch, yaw and roll rotations. Let <span class="math notranslate nohighlight">\(c_y = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_y = \sin(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(c_p = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_p =\sin(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(c_r = \cos(\frac{1}{2}\theta)\)</span> and <span class="math notranslate nohighlight">\(s_r = \sin(\frac{1}{2}\theta)\)</span> then the quaternions that rotate using the pitch, roll and yaw angles then</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    q_p &amp;= [c_p, s_p  \mathbf{i}], \\
-    q_y &amp;= [c_y, s_y  \mathbf{j}], \\
-    q_r &amp;= [c_r, s_r  \mathbf{k}].
+    q_y &amp;= [c_y, s_y \mathbf{i}], \\
+    q_p &amp;= [c_p, s_p \mathbf{j}], \\
+    q_r &amp;= [c_r, s_r \mathbf{k}].
 \end{align*} \end{split}\]</div>
 <p>The combined rotation <span class="math notranslate nohighlight">\(q_pq_yq_r\)</span> is</p>
 <div class="math notranslate nohighlight">
@@ -973,11 +972,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="B_Code.html"
+       href="C_Glossary.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">B. Code and Assets</p>
+        <p class="prev-next-title">Glossary</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

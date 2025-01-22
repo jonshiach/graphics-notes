@@ -22,7 +22,7 @@ You can terminate your application by pressing the escape key or simply closing 
 As you will probably agree, creating a plain grey window isn't the most interesting of applications. What would make it much more exciting is to draw simple shapes in the window. The simplest shape, and one which we use extensively in computer graphics, is a triangle. We are going to draw the triangle from {numref}`red-triangle-figure`.
 
 ```{figure} ../_images/02_opengl_window.svg
-:width: 400
+:width: 500
 :name: red-triangle-figure
 
 The vertices of our triangle.
@@ -42,11 +42,27 @@ const float vertices[] = {
 };
 ```
 
+### Vertex Array Object (VAO)
+
+OpenGL uses **Buffer Objects (BO)** to store information about the objects that we are going to draw in our application. The main buffer object we use is a <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object" target="_blank">**Vertex Array Object (VAO)**</a> which is a container for the attributes of a vertex. The VAO itself does not actually contain any data, instead it contains references to other buffer objects, e.g., the VBO (see below). To create a VAO enter the following into your **Lab02_Basic_shapes.cpp** file after the `vertices` array.
+
+```cpp
+// Create the Vertex Array Object (VAO)
+unsigned int VAO;
+glGenVertexArrays(1, &VAO);
+glBindVertexArray(VAO);
+```
+
+The functions used here are:
+
+- `glGenVertexArrays()` generates a VAO with the name `VAO`
+- `glBindVertexArray()` binds the VAO (so that OpenGL knows that we are working with this current VAO)
+
 (vbo-section)=
 
 ### Vertex Buffer Object (VBO)
 
-OpenGL uses **Buffer Objects (BO)** so store data, so to store the vertex co-ordinates of our triangle we need to create a <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object" target="_blank">**Vertex Buffer Object (VBO)**</a> and copy the contents of the `vertices` array into it. Enter the following after we've created the VAO.
+The next buffer object we need is the <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object" target="_blank">**Vertex Buffer Object (VBO)**</a> which is used to store the vertex co-ordinates of our triangle which are currently stored in the `vertices` array. Enter the following after we've created and bound the VAO.
 
 ```cpp
 // Create Vertex Buffer Object (VBO)
@@ -61,22 +77,6 @@ The functions used here are:
 - `glGenBuffers()` generates a buffer object with the name `VBO`
 - `glBindBuffer()` binds the VBO to `GL_ARRAY_BUFFER` which tells OpenGL that the VBO contains vertex attributes
 - `glBufferData()` creates a new data store for the VBO, tells OpenGL where to find the data that is to be stored in the VBO and what it is to be used for (`GL_STATIC_DRAW` means the data is not going to be modified)
-
-### Vertex Array Object (VAO)
-
-In addition to the VBO we also need to create a <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object" target="_blank">**Vertex Array Object (VAO)**</a> which is a container object for the vertex attributes. The VAO does not contain any data, instead it references other buffer objects, e.g., the VBO. To create a VAO enter the following into your `Lab02_Basic_shapes.cpp` file after the `vertices` array.
-
-```cpp
-// Create the Vertex Array Object (VAO)
-unsigned int VAO;
-glGenVertexArrays(1, &VAO);
-glBindVertexArray(VAO);
-```
-
-The functions used here are:
-
-- `glGenVertexArrays()` generates a VAO with the name `VAO`
-- `glBindVertexArray()` binds the VAO
 
 ---
 
@@ -98,7 +98,7 @@ The shaders are compiled by the application at runtime, we need to write the ver
 
 ### Vertex shader
 
-Open the file `vertexShader.glsl` in the `Lab02_Basic_shapes` project in the project explorer. At the moment this is a blank file so enter the following program in this. 
+Open the file **vertexShader.glsl** in the **Lab02_Basic_shapes** project in the project explorer. At the moment this is a blank file so enter the following program in this. 
 
 ```glsl
 #version 330 core
@@ -115,17 +115,11 @@ void main()
 
 ```
 
-This is the GLSL program for a simple vertex shader. It takes in a single 3-element vector `position` that contains the $(x,y,z)$ co-ordinates of a vertex and outputs the 4-element vector `gl_Position` containing the these co-ordinates. Note that the individual elements of a vector in GLSL can be accessed using `vector.x`, `vector.y` and `vector.z` so we could have used the following instead.
-
-```cpp
-gl_Position = vec4(position.x, position.y, position.z, 1.0)
-```
-
-You may be wondering why `gl_Position` is a 4-element vector with an additional 1 and not a 3-element vector, don't worry about this for now it will be explained [later on](translation-section).
+This is the GLSL program for a simple vertex shader. It takes in a single 3-element vector `position` that contains the $(x,y,z)$ co-ordinates of a vertex and outputs the 4-element vector `gl_Position` containing the these co-ordinates. You may be wondering why `gl_Position` is a 4-element vector with an additional 1 and not a 3-element vector, don't worry about this for now it will be explained [later on](translation-section).
 
 ### Fragment shader
 
-Open the file `fragmentShader.glsl` from the project explorer and enter the following program.
+Open the file **fragmentShader.glsl** from the project explorer and enter the following program.
 
 ```glsl
 #version 330 core
@@ -143,7 +137,7 @@ This fragment shader outputs a single 3-element vector called `colour` which def
 
 ### Shader program
 
-We now need to combine the vertex and fragment shaders into a single shader program. To do this we are going use the function `LoadShaders()` written by contributors of <a href = "https://www.opengl-tutorial.org" target="_blank">opengl-tutorial.org</a>. In the `Lab02_Basic_shapes.cpp` file enter the following after you have created the VBO.
+We now need to combine the vertex and fragment shaders into a single shader program. To do this we are going use the function `LoadShaders()` written by contributors of <a href = "https://www.opengl-tutorial.org" target="_blank">opengl-tutorial.org</a>. In the **Lab02_Basic_shapes.cpp** file enter the following after you have created the VAO.
 
 ```cpp
 // Compile shader program
@@ -162,7 +156,7 @@ glUseProgram(shaderID);
 
 ## Draw the triangle
 
-So we have created the VAO and VBO, and written the shaders we can now draw the triangle. The commands used to render a frame are contained in a while loop known as a **render loop**. This loop will continue until the window is closed or the escape key is pressed.
+So we have created the VAO and VBO, written the shaders qand compiled the shader program, so we can now draw our triangle. The commands used to render a frame are contained in a while loop known as a **render loop**. This loop will continue until the window is closed or the escape key is pressed.
 
 We need to bind the VBO to the VAO and tell OpenGL where to find this data. To do this add the following code after clearing the window
 
@@ -200,7 +194,6 @@ Now we instruct OpenGL to draw the triangle, add the following code.
 ```cpp
 // Draw the triangle
 glDrawArrays(GL_TRIANGLES, 0, 3);
-
 glDisableVertexAttribArray(0);
 ```
 
@@ -387,7 +380,7 @@ Now that you've got to the stage where you can draw triangles to the screen and 
 :width: 400
 ```
 
-3. Draw the Umbrella Corporation logo using 8 triangles.
+3. Draw the Umbrella Corporation logo (from the <a href="https://en.wikipedia.org/wiki/Resident_Evil" target="_blank">Resident Evil</a> game series) using 8 triangles.
 
 ```{figure} ../_images/02_Ex3.png
 :width: 400

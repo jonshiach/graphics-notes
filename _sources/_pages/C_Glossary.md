@@ -1,4 +1,4 @@
-# C Glossary
+# Glossary
 
 ```{glossary}
 

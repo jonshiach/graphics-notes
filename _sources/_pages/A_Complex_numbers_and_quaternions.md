@@ -1,8 +1,8 @@
 (appendix-quaternions-section)=
 
-# A. Complex Numbers and Quaternions
+# Complex Numbers and Quaternions
 
-In [Lab 10](quaternions-section) we explored how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here. 
+In [10. Quaternions](quaternions-section) we explored how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here. 
 
 ## A.1 Complex numbers
 
@@ -339,7 +339,7 @@ $$ q^{-1} = q^*. $$
 
 ## A.3 Quaternion rotation
 
-In [Lab 4 on transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\mathbf{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
+In [4. Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\mathbf{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
 
 ```{figure} ../_images/10_Axis_angle_rotation.svg
 :width: 350
@@ -585,12 +585,12 @@ The rotation of the vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about th
 
 ### A.3.1 Euler angles to quaternion
 
-Euler angles are the rotations around the three co-ordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$ and $q_p$ be the cosine, sine and rotation quaternion for rotating about the $x$-axis by the pitch angle, and similar for yaw and roll then
+Euler angles are the rotations around the three co-ordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_y = \cos(\frac{1}{2}\theta)$, $s_y = \sin(\frac{1}{2}\theta)$, $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$, $c_r = \cos(\frac{1}{2}\theta)$ and $s_r = \sin(\frac{1}{2}\theta)$ then the quaternions that rotate using the pitch, roll and yaw angles then
 
 $$ \begin{align*}
-    q_p &= [c_p, s_p  \mathbf{i}], \\
-    q_y &= [c_y, s_y  \mathbf{j}], \\
-    q_r &= [c_r, s_r  \mathbf{k}].
+    q_y &= [c_y, s_y \mathbf{i}], \\
+    q_p &= [c_p, s_p \mathbf{j}], \\
+    q_r &= [c_r, s_r \mathbf{k}].
 \end{align*} $$
 
 The combined rotation $q_pq_yq_r$ is

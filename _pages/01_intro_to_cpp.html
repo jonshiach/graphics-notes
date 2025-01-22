@@ -172,9 +172,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A_Complex_numbers_and_quaternions.html">A. Complex Numbers and Quaternions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="B_Code.html">B. Code and Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">C Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
 </ul>
 
     </div>
@@ -368,11 +367,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-studio-windows">1.1.1. Visual Studio (Windows)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xcode-macos">1.1.2. Xcode (macOS)</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-basics">1.2. C++ basics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">1.2.1. hello world</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">1.2.2. Variables</a></li>
@@ -400,7 +395,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">1.5. Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">1.6. Source code</a></li>
 </ul>
             </nav>
         </div>
@@ -418,40 +412,16 @@ document.write(`
 <p>In this semester we will be using OpenGL to create graphics applications. OpenGL uses C++ so its important you are comfortable with the syntax and the use of classes.</p>
 <section id="ides">
 <h2><span class="section-number">1.1. </span>IDEs<a class="headerlink" href="#ides" title="Permalink to this heading">#</a></h2>
-<p>A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler and you have a text editor program you get program away to your hearts content. However, as your programs start to become increasingly sophisticated and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is and we can use an Integrated Development Environment (IDE).</p>
-<p>An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will look at the most common ones for Windows and macOS which are Visual Studio and Xcode respectively (I haven’t covered Linux here but I figure if you prefer to work with Linux you are able to find a suitable IDE yourself).</p>
-<hr class="docutils" />
-<section id="visual-studio-windows">
-<h3><span class="section-number">1.1.1. </span>Visual Studio (Windows)<a class="headerlink" href="#visual-studio-windows" title="Permalink to this heading">#</a></h3>
-<p>The latest version of Visual Studio can be installed via the App Store and this has been installed on PCs in the Dalton Building.</p>
-<ol class="arabic simple">
-<li><p>Open <strong>Visual Studio</strong> and click on ‘Create a new project’ (or File &gt; New &gt; New Project if you are already in Visual Studio). Select <strong>Empty Project</strong> and click on <strong>Next</strong>.</p></li>
-<li><p>Give your project a suitable name like <code class="docutils literal notranslate"><span class="pre">Lab01_Intro_to_cpp</span></code>, select a directory in your OneDrive area and click on <strong>Create</strong>.
-This will create a folder with the name of your project within which there will be a file with the extension <code class="docutils literal notranslate"><span class="pre">.sln</span></code> (along with some other files). This is your project file and double clicking on this will open your project in Visual Studio.</p></li>
-<li><p>We need to add a file which will contain code to our project. Right-click on <strong>Source Files</strong> in the Solution Explorer and <strong>Add &gt; New Item…</strong> Make sure <strong>C++ File (.cpp)</strong> is highlighted, give the file a suitable name like <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> and click <strong>Add</strong>.</p></li>
-</ol>
-</section>
-<section id="xcode-macos">
-<h3><span class="section-number">1.1.2. </span>Xcode (macOS)<a class="headerlink" href="#xcode-macos" title="Permalink to this heading">#</a></h3>
-<p>The latest version of Xcode can be installed via the Mac App Store.</p>
-<ol class="arabic">
-<li><p>Open Xcode and click on <strong>Create a new Xcode project</strong> (or if you are already in Xcode click File &gt; New &gt; Project or press ⇧⌘N), choose <strong>Command Line Tool</strong> and click <strong>Next</strong>.</p></li>
-<li><p>Give your project a suitable name like <code class="docutils literal notranslate"><span class="pre">Lab01_Intro_to_cpp</span></code> and click <strong>Next</strong>, select a directory in your OneDrive area and click on <strong>Create</strong>.</p>
-<p>This will create a folder with the name of your project within which there will be a file with the extension <code class="docutils literal notranslate"><span class="pre">.xcodeproj</span></code>. This is your project file and double clicking on this will open your project in Xcode.</p>
-</li>
-<li><p>Xcode has already given you a <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> file with a basic hello world example program.</p></li>
-</ol>
-</section>
+<p>A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler and you have a text editor program you can program away to your hearts content. However, as your programs start to become increasingly sophisticated and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is and we can use an Integrated Development Environment (IDE).</p>
+<p>An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will be using Visual Studio for Windows, although you can use Xcode for macOS.</p>
 </section>
 <hr class="docutils" />
 <section id="c-basics">
 <h2><span class="section-number">1.2. </span>C++ basics<a class="headerlink" href="#c-basics" title="Permalink to this heading">#</a></h2>
 <section id="hello-world">
 <h3><span class="section-number">1.2.1. </span>hello world<a class="headerlink" href="#hello-world" title="Permalink to this heading">#</a></h3>
-<p>We will start with the classic hello world example. In your <strong>.cpp</strong> source file, enter the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Lab01 - Introduction to C++</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<p>We will start with the classic hello world example. Open the file <strong>Lab01_Intro_to_c++.cpp</strong> and edit it so that it looks like following.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span>
 <span class="p">{</span>
@@ -460,11 +430,15 @@ This will create a folder with the name of your project within which there will 
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copies and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as development your coding skills.</p>
+</div>
 <p>Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world
 </pre></div>
 </div>
-<p>Lets run through the code and see what each line does</p>
+<p>Let’s run through the code and see what each line does</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><div style="width:250px">Code</div></p></th>
@@ -526,14 +500,13 @@ This will create a folder with the name of your project within which there will 
 </tr>
 </tbody>
 </table>
-<p>A variable must be identified by a unique names which are called <strong>identifiers</strong>. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don’t use an identifier that conflicts with a C++ keyword (e.g., <code class="docutils literal notranslate"><span class="pre">char</span></code>) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., <code class="docutils literal notranslate"><span class="pre">position</span></code>, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., <code class="docutils literal notranslate"><span class="pre">framesPerSecond</span></code>.</p>
-<p>Let’s write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your program.</p>
+<p>Variables must be identified by unique names which are called <strong>identifiers</strong>. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don’t use an identifier that conflicts with a C++ keyword (e.g., <code class="docutils literal notranslate"><span class="pre">char</span></code>) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., <code class="docutils literal notranslate"><span class="pre">position</span></code>, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., <code class="docutils literal notranslate"><span class="pre">framesPerSecond</span></code>.</p>
+<p>Let’s write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function before the <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">0;</span></code> command.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Degrees to radians conversion</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">45.0f</span><span class="p">;</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">angleInRadians</span><span class="p">;</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.1415927f</span><span class="p">;</span>
 
-<span class="n">angleInRadians</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">angleInRadians</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span>
 
 <span class="c1">// Output result</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; degrees is equal to &quot;</span>
@@ -544,7 +517,7 @@ This will create a folder with the name of your project within which there will 
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>45 degrees is equal to 0.785398 radians.
 </pre></div>
 </div>
-<p>When working with variables we first need to define the variable types. For example <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">angleInDegrees;</span></code> defined a variable with the identifier <code class="docutils literal notranslate"><span class="pre">angleInDegrees</span></code> as a float. We could then store the value inputted by the user into this variable using the <code class="docutils literal notranslate"><span class="pre">std::cin</span> <span class="pre">&gt;&gt;</span></code> command.</p>
+<p>When working with variables we first need to define the variable types. For example <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">angleInDegrees;</span></code> defined a variable with the identifier <code class="docutils literal notranslate"><span class="pre">angleInDegrees</span></code> as a float.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When declaring float variables we should use the syntax <code class="docutils literal notranslate"><span class="pre">1.0f</span></code> instead of <code class="docutils literal notranslate"><span class="pre">1</span></code>. For example</p>
@@ -577,13 +550,10 @@ This will create a folder with the name of your project within which there will 
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; degrees is an &quot;</span><span class="p">;</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">90</span><span class="p">)</span>
-<span class="p">{</span>
 <span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;acute angle.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
+
 <span class="k">else</span>
-<span class="p">{</span>
 <span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;obtuse angle.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>Output:</p>
@@ -591,6 +561,10 @@ This will create a folder with the name of your project within which there will 
 -------------
 45 degrees is an acute angle.
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may notice that in the above example we did not use curly brackets <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> for the commands following the <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span></code> statements. This is because these commands only consisted of a single line, if we had multiple lines of code then curly brackets would be necessary.</p>
 </div>
 </section>
 <section id="for-loop">
@@ -603,19 +577,19 @@ This will create a folder with the name of your project within which there will 
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">before</span> <span class="pre">statement</span></code> contains code to be executed before the for loop, the <code class="docutils literal notranslate"><span class="pre">condition</span></code> is a logical check to see whether code within the for loop is executed and the <code class="docutils literal notranslate"><span class="pre">after</span> <span class="pre">statement</span></code> is executed after the code within the for loop.</p>
-<p>Lets add a for loop to our program to output the first 10 powers of 2.</p>
+<p>Let’s add a for loop to our program to output the first 10 powers of 2.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output the first 10 powers of 2</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">For loop</span><span class="se">\n</span><span class="s">--------&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">powerOfTwo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">  </span><span class="n">powerOfTwo</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;2^&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">powerOfTwo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">powerOfTwo</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;2^&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">powerOfTwo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Compile and run your program, and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>For loop
 --------
 2^1 = 2
@@ -630,6 +604,7 @@ This will create a folder with the name of your project within which there will 
 2^10 = 1024
 </pre></div>
 </div>
+<p>Note that the operator <code class="docutils literal notranslate"><span class="pre">i++</span></code> increments the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> by 1. This shorthand is what gives C++ its name, i.e., it is C but improved.</p>
 </section>
 <section id="while-loop">
 <h3><span class="section-number">1.2.5. </span>While loop<a class="headerlink" href="#while-loop" title="Permalink to this heading">#</a></h3>
@@ -640,92 +615,89 @@ This will create a folder with the name of your project within which there will 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Lets add a while loop to our program calculate how many times the following expression is calculated until we get <span class="math notranslate nohighlight">\(n = 1\)</span> (known as the <a href="https://en.wikipedia.org/wiki/Collatz_conjecture" target="_blank">Collatz conjecture</a>).</p>
+<p>Let’s add a while loop to our program calculate how many times the following expression is calculated until we get <span class="math notranslate nohighlight">\(n = 1\)</span> (known as the <a href="https://en.wikipedia.org/wiki/Collatz_conjecture" target="_blank">Collatz conjecture</a>).</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} n = \begin{cases} n / 2, &amp; \text{if $n$ is even}, \\ 3n + 1, &amp; \text{if $n$ is odd}.\end{cases} \end{split}\]</div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Count the number of steps the Collatz sequence takes for n = 10 to reach 1</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">step</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Count the number of steps the Collatz sequence takes to reach 1</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">step</span><span class="p">,</span><span class="w"> </span><span class="n">nsave</span><span class="p">;</span>
 <span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 <span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">nsave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">While loop</span><span class="se">\n</span><span class="s">----------</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
 
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">      </span><span class="n">n</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">else</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">      </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">step</span><span class="o">++</span><span class="p">;</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; -&gt; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">step</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; -&gt; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">The Collatz sequence took &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; steps to reach 1.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">The Collatz sequence starting at &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">nsave</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; took &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; steps to reach 1.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Note the <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> operator returns the remainder when <code class="docutils literal notranslate"><span class="pre">x</span></code> is divided by <code class="docutils literal notranslate"><span class="pre">y</span></code> so <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">%</span> <span class="pre">2</span></code> is 0 when <code class="docutils literal notranslate"><span class="pre">n</span></code> is an even number or 1 when <code class="docutils literal notranslate"><span class="pre">n</span></code> is an odd number.</p>
-<p>Output:</p>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> operator returns the remainder when <code class="docutils literal notranslate"><span class="pre">x</span></code> is divided by <code class="docutils literal notranslate"><span class="pre">y</span></code> so <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">%</span> <span class="pre">2</span></code> is 0 when <code class="docutils literal notranslate"><span class="pre">n</span></code> is an even number or 1 when <code class="docutils literal notranslate"><span class="pre">n</span></code> is an odd number. Run your program and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>While loop
 ----------
 10 -&gt; 5 -&gt; 16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1
 
-The Collatz sequence took 6 steps to reach 1.
+The Collatz sequence starting at 10 took 6 steps to reach 1.
 </pre></div>
 </div>
+<p>Experiment with changing the starting values to see that the Collatz sequence starting with any positive integer should eventually reach 1 (we’re pretty sure this applies to all positive integers but this has yet to be proven).</p>
 <hr class="docutils" />
 </section>
 <section id="arrays">
 <span id="arrays-section"></span><h3><span class="section-number">1.2.6. </span>Arrays<a class="headerlink" href="#arrays" title="Permalink to this heading">#</a></h3>
-<p>An <strong>array</strong> is a collection of multiple values of the same type that can be stored in a single variable. For example, we could store the co-ordinates of multiple points in an array and access all of the co-ordinates at once instead of creating separate variables for each one. The values of an array are stored in consecutive memory locations. The C++ syntax for declaring an array is to use square brackets after the array name, the values of each element in the array is then written in curly brackets. For example, define an array called <code class="docutils literal notranslate"><span class="pre">indices</span></code> with the following.</p>
+<p>An <strong>array</strong> is a collection of multiple values of the same type that can be stored in a single variable. For example, we could store the co-ordinates of multiple points in an array and access all of the co-ordinates at once instead of creating separate variables for each one. The values of an array are stored in consecutive memory locations. The C++ syntax for declaring an array is to use square brackets after the array name, the values of each element in the array is then written in curly brackets. For example, define an array called <code class="docutils literal notranslate"><span class="pre">myArray</span></code> using the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Arrays</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">myArray</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
-<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span>
-<span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span>
+<span class="w">    </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span>
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>To access individual <strong>elements</strong> in an array we specify the <strong>index</strong> which is a positive integer value where the first element has the index 0, the second has the index 1 and so on. For example, add the following code to your program to print the elements of the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array.</p>
+<p>To access individual <strong>elements</strong> in an array we specify the <strong>index</strong> which is a positive integer value where the first element has the index 0, the second has the index 1 and so on. For example, add the following code to your program to print the elements of the array.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Arrays</span><span class="se">\n</span><span class="s">------&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;vertices[&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;myArray[&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">myArray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Compile and run your program and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Arrays
 ------
-vertices[0] = -0.5
-vertices[1] = -0.5
-vertices[2] = 0
-vertices[3] = 0.5
-vertices[4] = -0.5
-vertices[5] = 0
-vertices[6] = 0
-vertices[7] = 0.5
-vertices[8] = 0
+myArray[0] = 3
+myArray[1] = 1
+myArray[2] = 4
+myArray[3] = 1
+myArray[4] = 5
+myArray[5] = 9
+myArray[6] = 2
+myArray[7] = 6
+myArray[8] = 5
 </pre></div>
 </div>
-<p>The size of the memory used to store an array can be determined using the <code class="docutils literal notranslate"><span class="pre">sizeof</span></code> command. Add the following to your program to output the number of bytes used to story the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">size of vertices = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<p>The size of the memory used to store an array can be determined using the <code class="docutils literal notranslate"><span class="pre">sizeof</span></code> command. Add the following to your program to output the number of bytes used to store the <code class="docutils literal notranslate"><span class="pre">myArray</span></code> array.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">size of myArray = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">myArray</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Output:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>size of vertices = 36
+<p>Compile and run your program and you should see the following outputted to the terminal.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>size of myArray = 36
 </pre></div>
 </div>
-<p>So 36 bytes are used to store the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array. We can use the <code class="docutils literal notranslate"><span class="pre">sizeof</span></code> command to return the number of bytes used to store different variable types, so a useful way to determine the number of elements in an array is to divide the memory used to store the array by the memory used for each element. For example, add the following to your program.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">number of elements = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<p>So 36 bytes are used to store the <code class="docutils literal notranslate"><span class="pre">myArray</span></code> array. We can use the <code class="docutils literal notranslate"><span class="pre">sizeof</span></code> command to return the number of bytes used to store different variable types, so a useful way to determine the number of elements in an array is to divide the memory used to store the array by the memory used for each element. For example, add the following to your program.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">number of elements = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">myArray</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Compile and run your program and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>number of elements = 9
 </pre></div>
 </div>
@@ -734,11 +706,11 @@ vertices[8] = 0
 </section>
 <section id="functions">
 <span id="functions-section"></span><h2><span class="section-number">1.3. </span>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h2>
-<p>A <strong>function</strong> is a block of code that is used to perform a (usually) single action. They are useful for when we need to use similar code multiple times, instead of writing the code each time, we can define a function just once and call it to perform the action. You’ve already declared the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function which all C++ programs must have so lets add another function that raises a floating point number to a power. Add the following code to the top of your program (before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function is declared).</p>
+<p>A <strong>function</strong> is a block of code that is used to perform a (usually) single action. They are useful for when we need to use similar code multiple times, instead of writing the code each time, we can define a function just once and call it to perform the action. You’ve already declared the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function which all C++ programs must have so let’s add another function that raises a floating point number to a power. Add the following code to the top of your program (before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function is declared).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">power</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">xPowerY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">xPowerY</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
@@ -748,7 +720,7 @@ vertices[8] = 0
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The C++ compiler reads source code from top to bottom so functions that are defined in the <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> file need to appear above the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
+<p>The C++ compiler reads source code from top to bottom so functions that are defined in the <strong>Lab01_Intro_to_c++.cpp</strong> file need to appear above the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
 </div>
 <p>Here we have declared the function called <code class="docutils literal notranslate"><span class="pre">power()</span></code> that takes in inputs of a floating point variable <code class="docutils literal notranslate"><span class="pre">x</span></code> and an integer variable <code class="docutils literal notranslate"><span class="pre">y</span></code> and outputs a floating point variable. The values of our inputs will not change during the execution of the function so we specify them as constants using the <code class="docutils literal notranslate"><span class="pre">const</span></code> keyword which makes the compiled code more efficient. We can call the function to calculate <span class="math notranslate nohighlight">\(\text{2}^\text{10}\)</span> by adding the following inside the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Call the power function</span>
@@ -758,7 +730,7 @@ vertices[8] = 0
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;2^10 = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">twoPowerTen</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Output:</p>
+<p>Compile and run your program and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Functions
 ---------
 2^10 = 1024
@@ -766,14 +738,14 @@ vertices[8] = 0
 </div>
 <section id="function-parameters">
 <h3><span class="section-number">1.3.1. </span>Function parameters<a class="headerlink" href="#function-parameters" title="Permalink to this heading">#</a></h3>
-<p>A function <strong>parameter</strong> is information that is passed into a function, for example, in our function above we passed in the parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. The code within a function only knows about the information passed into it via its input parameters and any <strong>global variables</strong> that are declared outside of all functions. Lets write a function that converts an angle in degrees to radians</p>
+<p>A function <strong>parameter</strong> is information that is passed into a function, for example, in our function above we passed in the parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. The code within a function only knows about the information passed into it via its input parameters and any <strong>global variables</strong> that are declared outside of all functions. Let’s write a function that converts an angle in degrees to radians</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">radians</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here our function called <code class="docutils literal notranslate"><span class="pre">radians()</span></code> converts the float parameter <code class="docutils literal notranslate"><span class="pre">angle</span></code> to radians by multiplying it by <span class="math notranslate nohighlight">\(\pi / 180\)</span> and returns it. If you attempt to compile your program you will get a compiler error that <code class="docutils literal notranslate"><span class="pre">pi</span></code> is undefined. This is because <code class="docutils literal notranslate"><span class="pre">pi</span></code> is a <strong>local variable</strong> for the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function. We can correct this using the following:</p>
+<p>Here our function called <code class="docutils literal notranslate"><span class="pre">radians()</span></code> converts the float parameter <code class="docutils literal notranslate"><span class="pre">angle</span></code> to radians by multiplying it by <span class="math notranslate nohighlight">\(\pi / 180\)</span> and returns the result. If you attempt to compile your program you will get a compiler error that <code class="docutils literal notranslate"><span class="pre">pi</span></code> is undefined. This is because <code class="docutils literal notranslate"><span class="pre">pi</span></code> is a <strong>local variable</strong> for the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function. We can correct this using the following:</p>
 <ul class="simple">
 <li><p>declare <code class="docutils literal notranslate"><span class="pre">pi</span></code> to be a local variable within the <code class="docutils literal notranslate"><span class="pre">radians</span></code> function (preferred if we are unlikely to be using <code class="docutils literal notranslate"><span class="pre">pi</span></code> elsewhere in the program);</p></li>
 <li><p>declare <code class="docutils literal notranslate"><span class="pre">pi</span></code> to be a global variable outside of all functions (preferred if <code class="docutils literal notranslate"><span class="pre">pi</span></code> is likely to be used elsewhere in the program);</p></li>
@@ -805,6 +777,7 @@ vertices[8] = 0
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; degrees is equal to &quot;</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; radians.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>Note how after calling the <code class="docutils literal notranslate"><span class="pre">radians()</span></code> function the value of the <code class="docutils literal notranslate"><span class="pre">angle</span></code> variable has been changed.</p>
 <hr class="docutils" />
 </section>
 </section>
@@ -813,8 +786,8 @@ vertices[8] = 0
 <p>The main difference between C++ and its predecessor C is that C++ has <strong>classes</strong> which allow us to use <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank"><strong>Object Orientated Programming (OOP)</strong></a>. Procedural programming requires use to write code that performs operations on data whereas object orientated programming allows us to create objects that include both data and code. Object orientated programming makes code easier to write and modify and is often faster than procedural programming.</p>
 <section id="classes-objects">
 <h3><span class="section-number">1.4.1. </span>Classes/objects<a class="headerlink" href="#classes-objects" title="Permalink to this heading">#</a></h3>
-<p>A <strong>class</strong> defines the <strong>attributes</strong> (like variables) and <strong>methods</strong> (like functions) that the objects within the class will possess. For example, lets create <code class="docutils literal notranslate"><span class="pre">Car</span></code> class which has the attributes for the <code class="docutils literal notranslate"><span class="pre">make</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">speed</span></code> of a car. The methods that apply to objects in our class may include <code class="docutils literal notranslate"><span class="pre">accelerate()</span></code>, <code class="docutils literal notranslate"><span class="pre">brake()</span></code> etc.</p>
-<p>Add the following code to your program outside of any functions.</p>
+<p>A <strong>class</strong> defines the <strong>attributes</strong> (like variables) and <strong>methods</strong> (like functions) that the objects within the class will possess. For example, Let’s create <code class="docutils literal notranslate"><span class="pre">Car</span></code> class which has the attributes for the <code class="docutils literal notranslate"><span class="pre">make</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">speed</span></code> of a car. The methods that apply to objects in our class may include <code class="docutils literal notranslate"><span class="pre">accelerate()</span></code>, <code class="docutils literal notranslate"><span class="pre">brake()</span></code> etc.</p>
+<p>Add the following code to your program outside any of the functions previously defined.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="w"> </span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">make</span><span class="p">;</span>
@@ -842,7 +815,7 @@ vertices[8] = 0
 </tr>
 </tbody>
 </table>
-<p>We can then create an object from our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class and set its attributes. Lets create an object called <code class="docutils literal notranslate"><span class="pre">delorean</span></code> for a 1981 DeLorean DMC-12. In your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function add the following code.</p>
+<p>We can then create an object from our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class and set its attributes. Let’s create an object called <code class="docutils literal notranslate"><span class="pre">delorean</span></code> for a 1981 DeLorean DMC-12. In your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function add the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define car object</span>
 <span class="n">Car</span><span class="w"> </span><span class="n">delorean</span><span class="p">;</span>
 <span class="n">delorean</span><span class="p">.</span><span class="n">make</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Delorean&quot;</span><span class="p">;</span>
@@ -854,7 +827,7 @@ vertices[8] = 0
 </section>
 <section id="class-methods">
 <h3><span class="section-number">1.4.2. </span>Class methods<a class="headerlink" href="#class-methods" title="Permalink to this heading">#</a></h3>
-<p>The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don’t have a way of seeing what the make, model or year of the object are. Lets create a method to print out the attributes. Inside the Car class definition add the following code.</p>
+<p>The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don’t have a way of seeing what the make, model or year of the object are. Let’s create a method to print out the attributes. Inside the Car class definition add the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Methods</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">outputDetails</span><span class="p">();</span>
 </pre></div>
@@ -869,9 +842,9 @@ vertices[8] = 0
 <p>So to define the <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> method add the following code outside of the Car class.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Car::outputDetails</span><span class="p">()</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
+<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
+<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -887,7 +860,7 @@ Model: DMC-12
 Year: 1981
 </pre></div>
 </div>
-<p>Our <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> method does not require any inputs because the attributes are known to all objects of the class. Lets define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.</p>
+<p>Our <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> method does not require any inputs because the attributes are known to all objects of the class. Let’s define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -899,19 +872,24 @@ Year: 1981
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the <code class="docutils literal notranslate"><span class="pre">acceleration()</span></code> method lets accelerate our car to 88 mph.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Call accelerate method</span>
+<p>Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the <code class="docutils literal notranslate"><span class="pre">acceleration()</span></code> method Let’s accelerate our car to 88 mph.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Accelerate the Delorean up to 88 mph</span>
 <span class="n">delorean</span><span class="p">.</span><span class="n">accelerate</span><span class="p">(</span><span class="mf">88.0f</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Output</p>
+<p>Compile and run your program and you should see the following outputted to the terminal.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>The car has accelerated to 88 mph.
 </pre></div>
 </div>
 </section>
 <section id="constructors">
 <h3><span class="section-number">1.4.3. </span>Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">#</a></h3>
-<p>A <strong>constructor</strong> is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class we declare the constructor using <code class="docutils literal notranslate"><span class="pre">Car();</span></code>. Now lets define the constructor so that a message is printed to the terminal.</p>
+<p>A <strong>constructor</strong> is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class we declare the constructor using <code class="docutils literal notranslate"><span class="pre">Car();</span></code> inside the <code class="docutils literal notranslate"><span class="pre">Car</span></code> class.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constructor</span>
+<span class="n">Car</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Now Let’s define the constructor so that a message is printed to the terminal.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">()</span><span class="w"> </span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -922,11 +900,11 @@ Year: 1981
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Car object created
 </pre></div>
 </div>
-<p>Constructors are more useful when we use parameters to set the values of the class attributes. Modify the constructor declaration to include the parameters</p>
+<p>Constructors are more useful when we use parameters to set the values of the class attributes. Declare another constructor to include input parameters</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>and modify the constructor definition so that the attributes are specified.</p>
+<p>and add the following constructor definition so that the attributes are specified.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">makeInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">yearInput</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeInput</span><span class="p">;</span>
@@ -936,10 +914,11 @@ Year: 1981
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now we can define the object attributes by creating the object using the following code.</p>
+<p>Now we can define the object attributes when we create the object. Comment out the code used to create the <code class="docutils literal notranslate"><span class="pre">delorean</span></code> object and define the make, model and year and enter the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="w"> </span><span class="n">delorean</span><span class="p">(</span><span class="s">&quot;DeLorean&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DMC-12&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1981</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Compiling and running the code you should see nothing changes.</p>
 </section>
 <section id="static-member-functions">
 <h3><span class="section-number">1.4.4. </span>Static member functions<a class="headerlink" href="#static-member-functions" title="Permalink to this heading">#</a></h3>
@@ -964,12 +943,12 @@ Year: 1981
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>88 mph is equivalent to 141.622 kph.
 </pre></div>
 </div>
-<p>“141.622 kilometers per hour!” doesn’t quite have the same ring to it as “88 miles per hour!” does it.</p>
+<p>“<em>141.622 kilometers per hour!</em>” doesn’t quite have the same ring to it as “<em>88 miles per hour!</em>” does it.</p>
 </section>
 <section id="header-files">
 <h3><span class="section-number">1.4.5. </span>Header files<a class="headerlink" href="#header-files" title="Permalink to this heading">#</a></h3>
 <p>When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a <strong>header file</strong> which usually have the extension <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> (this isn’t a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension <code class="docutils literal notranslate"><span class="pre">.cpp</span></code>.</p>
-<p>Lets create a header file for our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class.</p>
+<p>Let’s create a header file for our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class. Depending on the IDE you are using you will need to do the following.</p>
 <hr class="docutils" />
 <section id="visual-studio">
 <h4><span class="section-number">1.4.5.1. </span>Visual Studio<a class="headerlink" href="#visual-studio" title="Permalink to this heading">#</a></h4>
@@ -991,9 +970,10 @@ Year: 1981
 <section id="xcode">
 <h4><span class="section-number">1.4.5.2. </span>Xcode<a class="headerlink" href="#xcode" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
-<li><p>Click on <strong>File &gt; New &gt; File…</strong> (or just press ⌘N) and select <strong>C++ File</strong>, make sure the checkbox next to <strong>Also create header file</strong> is selected and click on <strong>Next</strong>.</p></li>
-<li><p>Enter <code class="docutils literal notranslate"><span class="pre">Car</span></code> in the <strong>Save As</strong> field and click on <strong>Next</strong>, make sure the folder where your <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> is selected and click on <strong>Create</strong>.</p></li>
-<li><p>This creates the header file <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> and the code file <code class="docutils literal notranslate"><span class="pre">Car.cpp</span></code> in your Xcode project.</p></li>
+<li><p>Click on <strong>File &gt; New &gt; File from Template…</strong> (or just press ⌘N) and select <strong>C++ File</strong>.</p></li>
+<li><p>Enter <code class="docutils literal notranslate"><span class="pre">Car</span></code> in the Name field, make sure the checkbox next to <strong>Also create header file</strong> is selected and click on <strong>Next</strong>.</p></li>
+<li><p>Select the <strong>Lab01_Intro_to_c++/</strong> folder and click on <strong>Create</strong>.</p></li>
+<li><p>This creates the header file <strong>Car.hpp</strong> and the code file <strong>Car.cpp</strong> in your Xcode project.</p></li>
 </ol>
 <p>The header file we have created contains the following code. Xcode uses <a href="https://en.wikipedia.org/wiki/Include_guard" target="_blank">include guards</a> which perform the same function as <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">once</span></code>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef Car_hpp</span>
@@ -1005,7 +985,7 @@ Year: 1981
 </pre></div>
 </div>
 <hr class="docutils" />
-<p>Cut and paste the <code class="docutils literal notranslate"><span class="pre">Car</span></code> class from <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> into our <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> header file so that it looks like the following.</p>
+<p>Cut and paste the <code class="docutils literal notranslate"><span class="pre">Car</span></code> class from the <strong>Lab01_Intro_to_c++.cpp</strong> file into our new <strong>Car.hpp</strong> header file so that it looks like the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -1028,9 +1008,26 @@ Year: 1981
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>Note that we also need the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> library so we can use strings and input/output commands. The methods are defined in the <code class="docutils literal notranslate"><span class="pre">Car.cpp</span></code> source file. Cut and paste your <code class="docutils literal notranslate"><span class="pre">Car</span></code> class methods from <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> and so it looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Car.hpp&quot;</span>
+<p>Note that we also need the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> library so we can use strings and input/output commands. The methods are defined in the <code class="docutils literal notranslate"><span class="pre">Car.cpp</span></code> source file. Cut and paste your <code class="docutils literal notranslate"><span class="pre">Car</span></code> class methods from <strong>Lab01_Intro_to_c++.cpp</strong> and so it looks like the following.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Car.hpp&quot;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Car::outputDetails</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Car::accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">increment</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="n">increment</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">The car has accelerated to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; mph.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
 
 <span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">makeInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">yearInput</span><span class="p">)</span>
 <span class="p">{</span>
@@ -1040,26 +1037,13 @@ Year: 1981
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="n">Car</span><span class="o">::</span><span class="n">outputDetails</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="n">Car</span><span class="o">::</span><span class="n">accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">increment</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="n">increment</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">The car has accelerated to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; mph.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
 <span class="kt">float</span><span class="w"> </span><span class="n">Car</span><span class="o">::</span><span class="n">mph2kph</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.60934f</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we have also included the <code class="docutils literal notranslate"><span class="pre">iostream</span></code> library as well as our <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> header file. We also need to make sure we include the <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> header file in <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code>. Compile and run the program to check everything works ok.</p>
+<p>Here we have included the <strong>Car.hpp</strong> header file so that the compiler knows where the class is defined. Make sure you also include this in the <strong>Lab01_Intro_to_c++.cpp</strong> file, compile and run the program to check everything works ok.</p>
 </section>
 </section>
 </section>
@@ -1148,15 +1132,6 @@ Level 5: 68, 62, 74, 70
 </pre></div>
 </div>
 </section>
-<section id="source-code">
-<h2><span class="section-number">1.6. </span>Source code<a class="headerlink" href="#source-code" title="Permalink to this heading">#</a></h2>
-<p>The source code for this lab, including the exercise solutions, can be downloaded using the links below.</p>
-<ul class="simple">
-<li><p>Main source code file: <a class="reference download internal" download="" href="../_downloads/c073b72ce07f2f7587e8d7da92c427c6/main.cpp"><span class="xref download myst">main.cpp</span></a></p></li>
-<li><p>Car class: <a class="reference download internal" download="" href="../_downloads/bfd356e62077fbc3348b25523a25d46b/Car.hpp"><span class="xref download myst">Car.hpp</span></a>, <a class="reference download internal" download="" href="../_downloads/21b29628fe697307b39cb99f90ca0cd8/Car.cpp"><span class="xref download myst">Car.cpp</span></a></p></li>
-<li><p>Student class: <a class="reference download internal" download="" href="../_downloads/f51b67c851b8d97ae1f03be082d79887/Student.hpp"><span class="xref download myst">Student.hpp</span></a>, <a class="reference download internal" download="" href="../_downloads/de5cfa7204b7596b9b2ee9ffcfabba17/Student.cpp"><span class="xref download myst">Student.cpp</span></a></p></li>
-</ul>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1226,11 +1201,7 @@ Level 5: 68, 62, 74, 70
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-studio-windows">1.1.1. Visual Studio (Windows)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xcode-macos">1.1.2. Xcode (macOS)</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-basics">1.2. C++ basics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">1.2.1. hello world</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">1.2.2. Variables</a></li>
@@ -1258,7 +1229,6 @@ Level 5: 68, 62, 74, 70
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">1.5. Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">1.6. Source code</a></li>
 </ul>
   </nav></div>
 

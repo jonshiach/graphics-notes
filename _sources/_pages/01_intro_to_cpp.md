@@ -8,34 +8,9 @@ In this semester we will be using OpenGL to create graphics applications. OpenGL
 
 ## IDEs
 
-A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler and you have a text editor program you get program away to your hearts content. However, as your programs start to become increasingly sophisticated and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is and we can use an Integrated Development Environment (IDE).
+A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler and you have a text editor program you can program away to your hearts content. However, as your programs start to become increasingly sophisticated and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is and we can use an Integrated Development Environment (IDE).
 
-An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will look at the most common ones for Windows and macOS which are Visual Studio and Xcode respectively (I haven't covered Linux here but I figure if you prefer to work with Linux you are able to find a suitable IDE yourself).
-
----
-
-### Visual Studio (Windows)
-
-The latest version of Visual Studio can be installed via the App Store and this has been installed on PCs in the Dalton Building.
-
-1. Open **Visual Studio** and click on 'Create a new project' (or File > New > New Project if you are already in Visual Studio). Select **Empty Project** and click on **Next**.
-
-2. Give your project a suitable name like `Lab01_Intro_to_cpp`, select a directory in your OneDrive area and click on **Create**.
-   This will create a folder with the name of your project within which there will be a file with the extension `.sln` (along with some other files). This is your project file and double clicking on this will open your project in Visual Studio.
-
-3. We need to add a file which will contain code to our project. Right-click on **Source Files** in the Solution Explorer and **Add > New Item...** Make sure **C++ File (.cpp)** is highlighted, give the file a suitable name like `main.cpp` and click **Add**.
-
-### Xcode (macOS)
-
-The latest version of Xcode can be installed via the Mac App Store.
-
-1. Open Xcode and click on **Create a new Xcode project** (or if you are already in Xcode click File > New > Project or press ⇧⌘N), choose **Command Line Tool** and click **Next**.
-
-2. Give your project a suitable name like `Lab01_Intro_to_cpp` and click **Next**, select a directory in your OneDrive area and click on **Create**.
-
-    This will create a folder with the name of your project within which there will be a file with the extension `.xcodeproj`. This is your project file and double clicking on this will open your project in Xcode.
-
-3. Xcode has already given you a `main.cpp` file with a basic hello world example program.
+An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will be using Visual Studio for Windows, although you can use Xcode for macOS.
 
 ---
 
@@ -43,11 +18,9 @@ The latest version of Xcode can be installed via the Mac App Store.
 
 ### hello world
 
-We will start with the classic hello world example. In your **.cpp** source file, enter the following code.
+We will start with the classic hello world example. Open the file **Lab01_Intro_to_c++.cpp** and edit it so that it looks like following.
 
 ```cpp
-// Lab01 - Introduction to C++
-
 #include <iostream>
 
 int main() 
@@ -57,13 +30,17 @@ int main()
 }
 ```
 
+```{important}
+As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copies and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as development your coding skills.
+```
+
 Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.
 
 ```text
 hello world
 ```
 
-Lets run through the code and see what each line does
+Let's run through the code and see what each line does
 
 | <div style="width:250px">Code</div> | Explanation |
 |:--|:--|
@@ -88,17 +65,16 @@ A variable is a portion of memory used to store a value. C++ uses the following 
 | `string` | text consisting of multiple characters, e.g., "hello world" (strings are surrounded by double quotes). |
 | `bool` | Boolean values, e.g., true or false. |
 
-A variable must be identified by a unique names which are called **identifiers**. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don't use an identifier that conflicts with a C++ keyword (e.g., `char`) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., `position`, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., `framesPerSecond`.
+Variables must be identified by unique names which are called **identifiers**. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don't use an identifier that conflicts with a C++ keyword (e.g., `char`) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., `position`, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., `framesPerSecond`.
 
-Let's write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your program.
+Let's write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your `main()` function before the `return 0;` command.
 
 ```cpp
 // Degrees to radians conversion
 float angleInDegrees = 45.0f;
-float angleInRadians;
 float pi = 3.1415927f;
 
-angleInRadians = angleInDegrees * pi / 180.0f;
+float angleInRadians = angleInDegrees * pi / 180.0f;
 
 // Output result
 std::cout << angleInDegrees << " degrees is equal to "
@@ -111,7 +87,7 @@ Output:
 45 degrees is equal to 0.785398 radians.
 ```
 
-When working with variables we first need to define the variable types. For example `float angleInDegrees;` defined a variable with the identifier `angleInDegrees` as a float. We could then store the value inputted by the user into this variable using the `std::cin >>` command.
+When working with variables we first need to define the variable types. For example `float angleInDegrees;` defined a variable with the identifier `angleInDegrees` as a float.
 
 ````{note}
 When declaring float variables we should use the syntax `1.0f` instead of `1`. For example
@@ -150,13 +126,10 @@ std::cout << "\nIf statements\n-------------" << std::endl;
 std::cout << angleInDegrees << " degrees is an ";
 
 if (angleInDegrees < 90)
-{
   std::cout << "acute angle." << std::endl;
-}
+
 else
-{
   std::cout << "obtuse angle." << std::endl;
-}
 ```
 
 Output:
@@ -165,6 +138,10 @@ Output:
 If statements
 -------------
 45 degrees is an acute angle.
+```
+
+```{note}
+You may notice that in the above example we did not use curly brackets `{ ... }` for the commands following the `if` and `else` statements. This is because these commands only consisted of a single line, if we had multiple lines of code then curly brackets would be necessary.
 ```
 
 ### For loop
@@ -180,21 +157,21 @@ for (before statement ; condition ; after statement)
 
 The `before statement` contains code to be executed before the for loop, the `condition` is a logical check to see whether code within the for loop is executed and the `after statement` is executed after the code within the for loop.
 
-Lets add a for loop to our program to output the first 10 powers of 2.
+Let's add a for loop to our program to output the first 10 powers of 2.
 
 ```cpp
 // Output the first 10 powers of 2
 std::cout << "\nFor loop\n--------" << std::endl;
 int powerOfTwo = 1;
 
-for (int i = 0; i < 10; i++)
+for (unsigned int i = 0; i < 10; i++)
 {
-  powerOfTwo *= 2;
-  std::cout << "2^" << i + 1 << " = " << powerOfTwo << std::endl;
+    powerOfTwo *= 2;
+    std::cout << "2^" << i + 1 << " = " << powerOfTwo << std::endl;
 }
 ```
 
-Output:
+Compile and run your program, and you should see the following outputted to the terminal.
 
 ```text
 For loop
@@ -211,6 +188,8 @@ For loop
 2^10 = 1024
 ```
 
+Note that the operator `i++` increments the value of `i` by 1. This shorthand is what gives C++ its name, i.e., it is C but improved.
+
 ### While loop
 
 A while loop is used to repeat a block of code as long as a specified condition(s) is reached and used when we do not know how many times a block of code is repeated (if we did a for loop would be used). The C++ syntax for a while loop is as follows.
@@ -222,111 +201,108 @@ while (condition)
 }
 ```
 
-Lets add a while loop to our program calculate how many times the following expression is calculated until we get $n = 1$ (known as the <a href="https://en.wikipedia.org/wiki/Collatz_conjecture" target="_blank">Collatz conjecture</a>).
+Let's add a while loop to our program calculate how many times the following expression is calculated until we get $n = 1$ (known as the <a href="https://en.wikipedia.org/wiki/Collatz_conjecture" target="_blank">Collatz conjecture</a>).
 
 $$ n = \begin{cases} n / 2, & \text{if $n$ is even}, \\ 3n + 1, & \text{if $n$ is odd}.\end{cases} $$
 
 ```cpp
- // Count the number of steps the Collatz sequence takes for n = 10 to reach 1
-int n, step;
+// Count the number of steps the Collatz sequence takes to reach 1
+int n, step, nsave;
 n = 10;
 step = 0;
+nsave = n;
 std::cout << "\nWhile loop\n----------\n" << n;
 
 while (n > 1)
 {
-  if (n % 2 == 0)
-  {
-      n /= 2;
-  }
-  else
-  {
-      n = 3 * n + 1;
-  }
+    if (n % 2 == 0)
+        n /= 2;
 
-  step++;
-  std::cout << " -> " << n;
+    else
+        n = 3 * n + 1;
+
+    step++;
+    std::cout << " -> " << n;
 }
 
-std::cout << "\n\nThe Collatz sequence took " << step << " steps to reach 1." << std::endl;
+std::cout << "\n\nThe Collatz sequence starting at " << nsave
+            << " took " << step << " steps to reach 1." << std::endl;
 ```
 
-Note the `x % y` operator returns the remainder when `x` is divided by `y` so `n % 2` is 0 when `n` is an even number or 1 when `n` is an odd number.
-
-Output:
+Note the `x % y` operator returns the remainder when `x` is divided by `y` so `n % 2` is 0 when `n` is an even number or 1 when `n` is an odd number. Run your program and you should see the following outputted to the terminal.
 
 ```text
 While loop
 ----------
 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
 
-The Collatz sequence took 6 steps to reach 1.
+The Collatz sequence starting at 10 took 6 steps to reach 1.
 ```
+
+Experiment with changing the starting values to see that the Collatz sequence starting with any positive integer should eventually reach 1 (we're pretty sure this applies to all positive integers but this has yet to be proven).
 
 ---
 
-(arrays-section)= 
+(arrays-section)=
 
 ### Arrays
 
-An **array** is a collection of multiple values of the same type that can be stored in a single variable. For example, we could store the co-ordinates of multiple points in an array and access all of the co-ordinates at once instead of creating separate variables for each one. The values of an array are stored in consecutive memory locations. The C++ syntax for declaring an array is to use square brackets after the array name, the values of each element in the array is then written in curly brackets. For example, define an array called `indices` with the following.
+An **array** is a collection of multiple values of the same type that can be stored in a single variable. For example, we could store the co-ordinates of multiple points in an array and access all of the co-ordinates at once instead of creating separate variables for each one. The values of an array are stored in consecutive memory locations. The C++ syntax for declaring an array is to use square brackets after the array name, the values of each element in the array is then written in curly brackets. For example, define an array called `myArray` using the following code.
 
 ```cpp
 // Arrays
-float vertices[] = 
+unsigned int myArray[] =
 {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f, 
-     0.0f,  0.5f, 0.0f
+    3, 1, 4, 1, 5, 9, 2, 6, 5
 };
 ```
 
-To access individual **elements** in an array we specify the **index** which is a positive integer value where the first element has the index 0, the second has the index 1 and so on. For example, add the following code to your program to print the elements of the `vertices` array.
+To access individual **elements** in an array we specify the **index** which is a positive integer value where the first element has the index 0, the second has the index 1 and so on. For example, add the following code to your program to print the elements of the array.
 
 ```cpp
 std::cout << "\nArrays\n------" << std::endl;
 
-for (int i = 0; i < 9; i++)
+for (unsigned int i = 0; i < 9; i++)
 {
-  std::cout << "vertices[" << i << "] = " << vertices[i] << std::endl;
+    std::cout << "myArray[" << i << "] = " << myArray[i] << std::endl;
 }
 ```
 
-Output:
+Compile and run your program and you should see the following outputted to the terminal.
 
 ```text
 Arrays
 ------
-vertices[0] = -0.5
-vertices[1] = -0.5
-vertices[2] = 0
-vertices[3] = 0.5
-vertices[4] = -0.5
-vertices[5] = 0
-vertices[6] = 0
-vertices[7] = 0.5
-vertices[8] = 0
+myArray[0] = 3
+myArray[1] = 1
+myArray[2] = 4
+myArray[3] = 1
+myArray[4] = 5
+myArray[5] = 9
+myArray[6] = 2
+myArray[7] = 6
+myArray[8] = 5
 ```
 
-The size of the memory used to store an array can be determined using the `sizeof` command. Add the following to your program to output the number of bytes used to story the `vertices` array.
+The size of the memory used to store an array can be determined using the `sizeof` command. Add the following to your program to output the number of bytes used to store the `myArray` array.
 
 ```cpp
-std::cout << "\nsize of vertices = " << sizeof(vertices) << std::endl;
+std::cout << "\nsize of myArray = " << sizeof(myArray) << std::endl;
 ```
 
-Output:
+Compile and run your program and you should see the following outputted to the terminal.
 
 ```text
-size of vertices = 36
+size of myArray = 36
 ```
 
-So 36 bytes are used to store the `vertices` array. We can use the `sizeof` command to return the number of bytes used to store different variable types, so a useful way to determine the number of elements in an array is to divide the memory used to store the array by the memory used for each element. For example, add the following to your program.
+So 36 bytes are used to store the `myArray` array. We can use the `sizeof` command to return the number of bytes used to store different variable types, so a useful way to determine the number of elements in an array is to divide the memory used to store the array by the memory used for each element. For example, add the following to your program.
 
 ```cpp
-std::cout << "\nnumber of elements = " << sizeof(vertices) / sizeof(float) << std::endl;
+std::cout << "\nnumber of elements = " << sizeof(myArray) / sizeof(unsigned int) << std::endl;
 ```
 
-Output:
+Compile and run your program and you should see the following outputted to the terminal.
 
 ```text
 number of elements = 9
@@ -338,13 +314,13 @@ number of elements = 9
 
 ## Functions
 
-A **function** is a block of code that is used to perform a (usually) single action. They are useful for when we need to use similar code multiple times, instead of writing the code each time, we can define a function just once and call it to perform the action. You've already declared the `main()` function which all C++ programs must have so lets add another function that raises a floating point number to a power. Add the following code to the top of your program (before the `main()` function is declared).
+A **function** is a block of code that is used to perform a (usually) single action. They are useful for when we need to use similar code multiple times, instead of writing the code each time, we can define a function just once and call it to perform the action. You've already declared the `main()` function which all C++ programs must have so let's add another function that raises a floating point number to a power. Add the following code to the top of your program (before the `main()` function is declared).
 
 ```cpp
 float power(const float x, const int y)
 {
     float xPowerY = 1.0f;
-    for (int i = 0; i < y; i++)
+    for (unsigned int i = 0; i < y; i++)
     {
         xPowerY *= x;
     }
@@ -353,7 +329,7 @@ float power(const float x, const int y)
 ```
 
 ```{important}
-The C++ compiler reads source code from top to bottom so functions that are defined in the `main.cpp` file need to appear above the `main()` function.
+The C++ compiler reads source code from top to bottom so functions that are defined in the **Lab01_Intro_to_c++.cpp** file need to appear above the `main()` function.
 ```
 
 Here we have declared the function called `power()` that takes in inputs of a floating point variable `x` and an integer variable `y` and outputs a floating point variable. The values of our inputs will not change during the execution of the function so we specify them as constants using the `const` keyword which makes the compiled code more efficient. We can call the function to calculate $\text{2}^\text{10}$ by adding the following inside the `main()` function.
@@ -366,7 +342,7 @@ std::cout << "\nFunctions\n---------" << std::endl;
 std::cout << "2^10 = " << twoPowerTen << std::endl;
 ```
 
-Output:
+Compile and run your program and you should see the following outputted to the terminal.
 
 ```text
 Functions
@@ -376,7 +352,7 @@ Functions
 
 ### Function parameters
 
-A function **parameter** is information that is passed into a function, for example, in our function above we passed in the parameters `x` and `y`. The code within a function only knows about the information passed into it via its input parameters and any **global variables** that are declared outside of all functions. Lets write a function that converts an angle in degrees to radians
+A function **parameter** is information that is passed into a function, for example, in our function above we passed in the parameters `x` and `y`. The code within a function only knows about the information passed into it via its input parameters and any **global variables** that are declared outside of all functions. Let's write a function that converts an angle in degrees to radians
 
 ```cpp
 float radians(const float angle)
@@ -385,7 +361,7 @@ float radians(const float angle)
 }
 ```
 
-Here our function called `radians()` converts the float parameter `angle` to radians by multiplying it by $\pi / 180$ and returns it. If you attempt to compile your program you will get a compiler error that `pi` is undefined. This is because `pi` is a **local variable** for the `main()` function. We can correct this using the following:
+Here our function called `radians()` converts the float parameter `angle` to radians by multiplying it by $\pi / 180$ and returns the result. If you attempt to compile your program you will get a compiler error that `pi` is undefined. This is because `pi` is a **local variable** for the `main()` function. We can correct this using the following:
 
 - declare `pi` to be a local variable within the `radians` function (preferred if we are unlikely to be using `pi` elsewhere in the program);
 - declare `pi` to be a global variable outside of all functions (preferred if `pi` is likely to be used elsewhere in the program);
@@ -422,18 +398,21 @@ radians(angle);
 std::cout << "\n" << angleInDegrees << " degrees is equal to "<< angle << " radians." << std::endl;
 ```
 
+Note how after calling the `radians()` function the value of the `angle` variable has been changed.
+
 ---
 
 (oop-section)=
+
 ## Object orientated programming
 
 The main difference between C++ and its predecessor C is that C++ has **classes** which allow us to use <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank">**Object Orientated Programming (OOP)**</a>. Procedural programming requires use to write code that performs operations on data whereas object orientated programming allows us to create objects that include both data and code. Object orientated programming makes code easier to write and modify and is often faster than procedural programming.
 
 ### Classes/objects
 
-A **class** defines the **attributes** (like variables) and **methods** (like functions) that the objects within the class will possess. For example, lets create `Car` class which has the attributes for the `make`, `model`, `year` and `speed` of a car. The methods that apply to objects in our class may include `accelerate()`, `brake()` etc.
+A **class** defines the **attributes** (like variables) and **methods** (like functions) that the objects within the class will possess. For example, Let's create `Car` class which has the attributes for the `make`, `model`, `year` and `speed` of a car. The methods that apply to objects in our class may include `accelerate()`, `brake()` etc.
 
-Add the following code to your program outside of any functions.
+Add the following code to your program outside any of the functions previously defined.
 
 ```cpp
 class Car {
@@ -451,7 +430,7 @@ public:
 | `public:` | An **access specifier** that specifies which attributes and methods can be accessed outside of the class. |
 | `std::string make;` | Defines the attribute `make` which is a string. The other attributes are the string `model`, the integer `year` and the floating point number `speed` which is initially set to zero for any new object which is created. |
 
-We can then create an object from our `Car` class and set its attributes. Lets create an object called `delorean` for a 1981 DeLorean DMC-12. In your `main()` function add the following code.
+We can then create an object from our `Car` class and set its attributes. Let's create an object called `delorean` for a 1981 DeLorean DMC-12. In your `main()` function add the following code.
 
 ```cpp
 // Define car object
@@ -465,7 +444,7 @@ Here to create the object we specified the class name and the name of our object
 
 ### Class methods
 
-The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don't have a way of seeing what the make, model or year of the object are. Lets create a method to print out the attributes. Inside the Car class definition add the following code.
+The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don't have a way of seeing what the make, model or year of the object are. Let's create a method to print out the attributes. Inside the Car class definition add the following code.
 
 ```cpp
 // Methods
@@ -486,9 +465,9 @@ So to define the `outputDetails()` method add the following code outside of the 
 ```cpp
 void Car::outputDetails()
 {
-    std::cout << "\nMake: " << make
-              << "\nModel: " << model
-              << "\nYear: " << year << std::endl;
+std::cout << "\nMake: " << make
+          << "\nModel: " << model
+          << "\nYear: " << year << std::endl;
 }
 ```
 
@@ -509,7 +488,7 @@ Model: DMC-12
 Year: 1981
 ```
 
-Our `outputDetails()` method does not require any inputs because the attributes are known to all objects of the class. Lets define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.
+Our `outputDetails()` method does not require any inputs because the attributes are known to all objects of the class. Let's define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.
 
 ```cpp
 void accelerate(const float);
@@ -525,14 +504,14 @@ void Car::accelerate(const float increment)
 }
 ```
 
-Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the `acceleration()` method lets accelerate our car to 88 mph.
+Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the `acceleration()` method Let's accelerate our car to 88 mph.
 
 ```cpp
-// Call accelerate method
+// Accelerate the Delorean up to 88 mph
 delorean.accelerate(88.0f);
 ```
 
-Output
+Compile and run your program and you should see the following outputted to the terminal.
 
 ```text
 The car has accelerated to 88 mph.
@@ -540,7 +519,14 @@ The car has accelerated to 88 mph.
 
 ### Constructors
 
-A **constructor** is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our `Car` class we declare the constructor using `Car();`. Now lets define the constructor so that a message is printed to the terminal.
+A **constructor** is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our `Car` class we declare the constructor using `Car();` inside the `Car` class.
+
+```cpp
+// Constructor
+Car();
+```
+
+Now Let's define the constructor so that a message is printed to the terminal.
 
 ```cpp
 Car::Car() 
@@ -555,13 +541,13 @@ When we create our `delorean` object the following is outputted
 Car object created
 ```
 
-Constructors are more useful when we use parameters to set the values of the class attributes. Modify the constructor declaration to include the parameters
+Constructors are more useful when we use parameters to set the values of the class attributes. Declare another constructor to include input parameters
 
 ```cpp
 Car(const std::string, const std::string, const int);
 ```
 
-and modify the constructor definition so that the attributes are specified.
+and add the following constructor definition so that the attributes are specified.
 
 ```cpp
 Car::Car(const std::string makeInput, const std::string modelInput, const int yearInput)
@@ -573,11 +559,13 @@ Car::Car(const std::string makeInput, const std::string modelInput, const int ye
 }
 ```
 
-Now we can define the object attributes by creating the object using the following code.
+Now we can define the object attributes when we create the object. Comment out the code used to create the `delorean` object and define the make, model and year and enter the following.
 
 ```cpp
 Car delorean("DeLorean", "DMC-12", 1981);
 ```
+
+Compiling and running the code you should see nothing changes.
 
 ### Static member functions
 
@@ -611,13 +599,13 @@ Which gives the output
 88 mph is equivalent to 141.622 kph.
 ```
 
-"141.622 kilometers per hour!" doesn't quite have the same ring to it as "88 miles per hour!" does it.
+"*141.622 kilometers per hour!*" doesn't quite have the same ring to it as "*88 miles per hour!*" does it.
 
 ### Header files
 
 When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a **header file** which usually have the extension `.hpp` (this isn't a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension `.cpp`.
 
-Lets create a header file for our `Car` class.
+Let's create a header file for our `Car` class. Depending on the IDE you are using you will need to do the following.
 
 ---
 #### Visual Studio
@@ -640,9 +628,10 @@ The command `#pragma once` is used to prevent multiple header files of the same 
 
 #### Xcode
 
-1. Click on **File > New > File...** (or just press ⌘N) and select **C++ File**, make sure the checkbox next to **Also create header file** is selected and click on **Next**.
-2. Enter `Car` in the **Save As** field and click on **Next**, make sure the folder where your `main.cpp` is selected and click on **Create**.
-3. This creates the header file `Car.hpp` and the code file `Car.cpp` in your Xcode project.
+1. Click on **File > New > File from Template...** (or just press ⌘N) and select **C++ File**.
+2. Enter `Car` in the Name field, make sure the checkbox next to **Also create header file** is selected and click on **Next**.
+3. Select the **Lab01_Intro_to_c++/** folder and click on **Create**.
+4. This creates the header file **Car.hpp** and the code file **Car.cpp** in your Xcode project.
 
 The header file we have created contains the following code. Xcode uses <a href="https://en.wikipedia.org/wiki/Include_guard" target="_blank">include guards</a> which perform the same function as `#pragma once`.
 
@@ -654,9 +643,10 @@ The header file we have created contains the following code. Xcode uses <a href=
 
 #endif /* Car_hpp */
 ```
+
 ---
 
-Cut and paste the `Car` class from `main.cpp` into our `Car.hpp` header file so that it looks like the following.
+Cut and paste the `Car` class from the **Lab01_Intro_to_c++.cpp** file into our new **Car.hpp** header file so that it looks like the following.
 
 ```cpp
 #pragma once
@@ -681,19 +671,10 @@ public:
 };
 ```
 
-Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. The methods are defined in the `Car.cpp` source file. Cut and paste your `Car` class methods from `main.cpp` and so it looks like the following.
+Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. The methods are defined in the `Car.cpp` source file. Cut and paste your `Car` class methods from **Lab01_Intro_to_c++.cpp** and so it looks like the following.
 
 ```cpp
-#include <iostream>
 #include "Car.hpp"
-
-Car::Car(const std::string makeInput, const std::string modelInput, const int yearInput)
-{
-    make = makeInput;
-    model = modelInput;
-    year = yearInput;
-    std::cout << "\nCar object created" << std::endl;
-}
 
 void Car::outputDetails()
 {
@@ -708,14 +689,26 @@ void Car::accelerate(const float increment)
     std::cout << "\nThe car has accelerated to " << speed << " mph." << std::endl;
 }
 
+Car::Car()
+{
+    std::cout << "\nCar object created" << std::endl;
+}
+
+Car::Car(const std::string makeInput, const std::string modelInput, const int yearInput)
+{
+    make = makeInput;
+    model = modelInput;
+    year = yearInput;
+    std::cout << "\nCar object created" << std::endl;
+}
+
 float Car::mph2kph(const float speed)
 {
     return speed * 1.60934f;
 }
-
 ```
 
-Here we have also included the `iostream` library as well as our `Car.hpp` header file. We also need to make sure we include the `Car.hpp` header file in `main.cpp`. Compile and run the program to check everything works ok.
+Here we have included the **Car.hpp** header file so that the compiler knows where the class is defined. Make sure you also include this in the **Lab01_Intro_to_c++.cpp** file, compile and run the program to check everything works ok.
 
 ---
 
@@ -785,11 +778,3 @@ Level 6: 72, 68, 76, 65
 
 Classification: xxxx (weighted average = xx).
 ```
-
-## Source code
-
-The source code for this lab, including the exercise solutions, can be downloaded using the links below.
-
-- Main source code file: [main.cpp](../code/Lab01/main.cpp)
-- Car class: [Car.hpp](../code/Lab01/Car.hpp), [Car.cpp](../code/Lab01/Car.cpp)
-- Student class: [Student.hpp](../code/Lab01/Student.hpp), [Student.cpp](../code/Lab01/Student.cpp)
