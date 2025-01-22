@@ -341,7 +341,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -357,6 +359,19 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-the-lab-files">Downloading the lab files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-github-desktop">Using GitHub desktop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-terminal-command-line">Using the terminal/command line</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-instructions">Build instructions</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -368,7 +383,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computer-graphics">
 <h1>Computer Graphics<a class="headerlink" href="#computer-graphics" title="Permalink to this heading">#</a></h1>
-<p>This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses to what you have learned from the preceding labs so it is important that you make sure you keep up with these.</p>
+<p>This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses code from the preceding labs, so you will need to make sure you have completed each lab before moving onto the next one.</p>
 <p>These materials are based upon the excellent OpenGL tutorials <a href="https://learnopengl.com/" target="_blank">learnOpenGL</a> by Joey de Vries and <a href="https://www.opengl-tutorial.org/" target="_blank">open-gl-tutorial</a>.</p>
 <table class="table">
 <thead>
@@ -410,10 +425,48 @@ document.write(`
 </tbody>
 </table>
 <hr class="docutils" />
+<section id="downloading-the-lab-files">
+<h2>Downloading the lab files<a class="headerlink" href="#downloading-the-lab-files" title="Permalink to this heading">#</a></h2>
+<p>You will need to download template files from <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> to use these materials.</p>
+<section id="using-github-desktop">
+<h3>Using GitHub desktop<a class="headerlink" href="#using-github-desktop" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Click on <strong>Clone a Repository from the Internet..</strong></p></li>
+<li><p>Select the <strong>URL</strong> tab and paste the URL <code class="docutils literal notranslate"><span class="pre">https://github.com/jonshiach/Computer-Graphics-Labs</span></code></p></li>
+<li><p>Change <strong>Local path</strong> to a folder on your machine where you want to store the files.</p></li>
+<li><p>Click <strong>Clone</strong></p></li>
+</ol>
+</section>
+<section id="using-the-terminal-command-line">
+<h3>Using the terminal/command line<a class="headerlink" href="#using-the-terminal-command-line" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Open the command line in Windows (press the Windows key and search for ‘cmd’) or the terminal in macOS.</p></li>
+<li><p>Navigate to the parent folder on your machine where you want to store the files.</p></li>
+<li><p>Enter the following command and press the enter key.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="build-instructions">
+<h2>Build instructions<a class="headerlink" href="#build-instructions" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Download, install and run <a href="https://www.cmake.org" target="_blank">CMake</a>.</p></li>
+<li><p>In the <strong>Computer-Graphics-Labs</strong> folder create a folder and call it <strong>build/</strong>.</p></li>
+<li><p>Click on <strong>Browse Source…</strong> next to ‘Where is the source code?’ and select the <strong>Computer-Graphics-Labs/</strong> folder.</p></li>
+<li><p>Do the same for ‘Where to build the binaries?’ and select the <strong>Computer-Graphics-Labs/build/</strong> folder.</p></li>
+<li><p>Click <strong>Configure</strong> and select Visual Studio (Windows) or Xcode (macOS) and click <strong>Done</strong>. Once the configuration is complete click <strong>Configure</strong> again.</p></li>
+<li><p>Click <strong>Generate</strong>.</p></li>
+</ol>
+<p>This will create a Visual Studio or Xcode project file in the <strong>Computer-Graphics-Labs/build/</strong> folder. Double-click on it to open the project and edit the source code.</p>
+<hr class="docutils" />
 <a class="reference internal image-reference" href="_images/jon_Shiach.jpeg"><img alt="Jon Shiach" class="align-left" src="_images/jon_Shiach.jpeg" style="width: 125px;" /></a>
 <p>Dr Jon Shiach <br>
 Homepage: <a href="https://jonshiach.github.io/" target="_blank">jonshiach.github.io</a> <br>
 Email: <a href="mailto:j.shiach@mmu.ac.uk">j.shiach&#64;mmu.ac.uk</a> <br></p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -469,6 +522,25 @@ Email: <a href="mailto:j.shiach@mmu.ac.uk">j.shiach&#64;mmu.ac.uk</a> <br></p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-the-lab-files">Downloading the lab files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-github-desktop">Using GitHub desktop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-terminal-command-line">Using the terminal/command line</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-instructions">Build instructions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

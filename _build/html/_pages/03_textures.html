@@ -446,6 +446,11 @@ document.write(`
 <span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">nChannels</span><span class="p">;</span>
 <span class="n">stbi_set_flip_vertically_on_load</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stbi_load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">nChannels</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Texture loaded.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Texture not loaded. Check the path.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The functions used here are:</p>
@@ -504,6 +509,12 @@ document.write(`
 </pre></div>
 </div>
 <p>Note that since each texture co-ordinates requires just 2 floats for <span class="math notranslate nohighlight">\((u,v)\)</span> instead of 3 for the vertex co-ordinates <span class="math notranslate nohighlight">\((x,y,z)\)</span> the second argument in the <code class="docutils literal notranslate"><span class="pre">glVertexAttribPointer()</span></code> function is <code class="docutils literal notranslate"><span class="pre">2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<p>The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the <span class="math notranslate nohighlight">\((u, v)\)</span> co-ordinates to the shader enter the following code.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind the texture to the VAO</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">);</span>
+<span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">VAO</span><span class="p">);</span>
+</pre></div>
+</div>
 </section>
 <section id="shaders">
 <h3><span class="section-number">3.1.3. </span>Shaders<a class="headerlink" href="#shaders" title="Permalink to this heading">#</a></h3>
@@ -544,11 +555,11 @@ document.write(`
 <span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
 
 <span class="c1">// Uniforms</span>
-<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">textureMap</span><span class="p">;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">));</span>
+<span class="w">    </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">textureMap</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -573,13 +584,14 @@ document.write(`
 <p>So the lower-right (blue) triangle has vertex co-ordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and the upper-left (red) triangle has vertex co-ordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((-0.5, 0.5, 0)\)</span>. Change the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code> arrays to the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertex positions</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// x     y     z      index</span>
-<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="c1">// 0     3 -- 2</span>
-<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="c1">// 1     |  / |</span>
-<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="c1">// 2     | /  |</span>
-<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="w">   </span><span class="c1">// 3     0 -- 1</span>
+<span class="w">    </span><span class="c1">// x     y     z</span>
+<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span>
 <span class="p">};</span>
-
 
 <span class="c1">// Define texture co-ordinates</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uv</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -641,14 +653,16 @@ document.write(`
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">EBO</span><span class="p">;</span>
 <span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">EBO</span><span class="p">);</span>
 <span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ELEMENT_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">EBO</span><span class="p">);</span>
-<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ELEMENT_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span><span class="w"> </span><span class="n">indices</span><span class="p">,</span><span class="w"> </span>
-<span class="w">                </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
+<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ELEMENT_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span><span class="w"> </span><span class="n">indices</span><span class="p">,</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This is similar to the code used to create the other buffer objects with the exception we are creating an <code class="docutils literal notranslate"><span class="pre">GL_ELEMENT_ARRAY_BUFFER</span></code> instead of an <code class="docutils literal notranslate"><span class="pre">GL_ARRAY_BUFFER</span></code>. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from <code class="docutils literal notranslate"><span class="pre">glDrawArrays()</span></code> to <code class="docutils literal notranslate"><span class="pre">glDrawElements()</span></code></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw the triangle</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw the triangles</span>
 <span class="n">glDrawElements</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">),</span><span class="w"> </span>
 <span class="w">                </span><span class="n">GL_UNSIGNED_INT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="n">glDisableVertexAttribArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">glDisableVertexAttribArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Make this change, compile and run the program and you should see the window from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>. You may be thinking you’ve gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array and we can now use EBOs to draw more sophisticated shapes and 3D models.</p>
@@ -666,8 +680,7 @@ document.write(`
 </div>
 <p>PNG (Portable Network Graphics) files use the RGBA colour model which is the standard RGB model with an addition Alpha value that determines the opacity of the colours. We need to let OpenGL know that our texture is defined using RGBA so change instances <code class="docutils literal notranslate"><span class="pre">GL_RGB</span></code> in the <code class="docutils literal notranslate"><span class="pre">glTexImage2D()</span></code> function to <code class="docutils literal notranslate"><span class="pre">GL_RGBA</span></code>, i.e.,</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Specify 2D texture</span>
-<span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span>
-<span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
+<span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Compile and run the program and you should be presented with a (hopefully) familiar face.</p>
@@ -745,12 +758,12 @@ document.write(`
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE_MIN_FILTER</span></code> and <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE_MAG_FILTER</span></code> arguments refer to <strong>minification</strong> and <strong>magnification</strong>. Minification is where the texture is larger than the polygon it is being mapped to so a fragment covers multiple textels. Magnification is the opposite where the texture is smaller than the polygon so that a single textel takes up multiple fragments. We can set different interpolation for magnification and minification.</p>
-<p>To demonstrate the affects of minification lets use a low resolution texture. Change the <code class="docutils literal notranslate"><span class="pre">path</span></code> variable to the following.</p>
+<p>To demonstrate the affects of minification lets use a low resolution texture. Change the <code class="docutils literal notranslate"><span class="pre">path</span></code> variable to the following</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture image from file</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;../assets/mario_small.png&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-nearest-figure"><span class="std std-numref">Fig. 3.13</span></a>.</p>
+<p>and change the <span class="math notranslate nohighlight">\((u, v)\)</span> co-ordinates back so that the texture fills the rectangle. Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-nearest-figure"><span class="std std-numref">Fig. 3.13</span></a>.</p>
 <figure class="align-default" id="gl-nearest-figure">
 <a class="reference internal image-reference" href="../_images/03_GL_NEAREST.png"><img alt="../_images/03_GL_NEAREST.png" src="../_images/03_GL_NEAREST.png" style="width: 500px;" /></a>
 <figcaption>
@@ -808,11 +821,10 @@ document.write(`
 <section id="multiple-textures">
 <h2><span class="section-number">3.5. </span>Multiple textures<a class="headerlink" href="#multiple-textures" title="Permalink to this heading">#</a></h2>
 <p>OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all of the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the <strong>Lab03_Textures</strong> project, hidden away in the <strong>Header files</strong> folder is the file <strong>texture.hpp</strong> that contains a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that does all of the hard work for us (so why did I get you to do all of that coding above - I’m just evil I suppose <em>mwahahahahaaa</em>).</p>
-<p>Comment out all of the code from the <strong>Lab03_Textures.cpp</strong> file you’ve written so far in this lab (or delete it if you are feeling a but annoyed) and enter the following code before the render loop.</p>
+<p>Comment out the code used to load the texture and specify the texture options (or delete it if you are feeling a bit annoyed) and enter the following code before the render loop.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load the textures</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">texture2</span><span class="p">;</span>
-<span class="n">texture1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/crate.jpg&quot;</span><span class="p">);</span>
-<span class="n">texture2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/mario.png&quot;</span><span class="p">);</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/crate.jpg&quot;</span><span class="p">);</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/mario.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This loads the two textures we have been using which can be accessed using their targets <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code>. Compile and run the program and you should see the image from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>.</p>
@@ -823,14 +835,11 @@ document.write(`
 <p>Add the following code to your program before the render loop (since the textures are the same for every frame).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send the texture uniforms to the fragment shader</span>
 <span class="n">glUseProgram</span><span class="p">(</span><span class="n">shaderID</span><span class="p">);</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture1ID</span><span class="p">,</span><span class="w"> </span><span class="n">texture2ID</span><span class="p">;</span>
-<span class="n">texture1ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;texture1&quot;</span><span class="p">);</span>
-<span class="n">texture2ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;texture2&quot;</span><span class="p">);</span>
-<span class="n">glUniform1i</span><span class="p">(</span><span class="n">texture1ID</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="n">glUniform1i</span><span class="p">(</span><span class="n">texture2ID</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">glUniform1i</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;texture1&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="n">glUniform1i</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;texture2&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Here we let OpenGL know we are using our shader program with the <code class="docutils literal notranslate"><span class="pre">glUseProgram()</span></code> function. We then get the location of two uniforms, called <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code> respectively, and then assign the values of <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> to these uniforms using the <code class="docutils literal notranslate"><span class="pre">glUniform1i()</span></code> function. These values are the texture units that OpenGL uses to distinguish between the different textures in the fragment shader.</p>
+<p>Here we let OpenGL know we are using our shader program with the <code class="docutils literal notranslate"><span class="pre">glUseProgram()</span></code> function. We then create uniforms for the two texture and assign them values of <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> using the <code class="docutils literal notranslate"><span class="pre">glUniform1i()</span></code> function. These values are the texture units that OpenGL uses to distinguish between the different textures in the fragment shader.</p>
 </section>
 <section id="texture-units">
 <h3><span class="section-number">3.5.2. </span>Texture units<a class="headerlink" href="#texture-units" title="Permalink to this heading">#</a></h3>
@@ -843,26 +852,26 @@ document.write(`
 <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture2</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">glActiveTexture()</span></code> function lets OpenGL know what texture unit we are currently dealing with and then we bind the texture to that unit using then <code class="docutils literal notranslate"><span class="pre">glBindTexture()</span></code> function.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">glActiveTexture()</span></code> function lets OpenGL know what texture unit we are currently dealing with, and then we bind the texture to that unit using then <code class="docutils literal notranslate"><span class="pre">glBindTexture()</span></code> function.</p>
 </section>
 <section id="id1">
 <h3><span class="section-number">3.5.3. </span>Fragment shader<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>The last thing we need to do is update the fragment shader so that it uses both textures. Modify <strong>fragmentShader.glsl</strong> so that is looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
 
 <span class="c1">// Input</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">UV</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">UV</span><span class="p">;</span>
 
 <span class="c1">// Output</span>
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
 
 <span class="c1">// Uniforms</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">texture1</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">texture2</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture1</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture2</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">mix</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">),</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture2</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">),</span><span class="w"> </span><span class="mf">0.7</span><span class="p">));</span>
+<span class="w">    </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">mix</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">),</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture2</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">),</span><span class="w"> </span><span class="mf">0.7</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>

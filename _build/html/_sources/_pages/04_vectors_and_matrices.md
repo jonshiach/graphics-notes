@@ -718,7 +718,7 @@ invB * B =
 
 ## Exercises
 
-1. Three points have the co-ordinates $P = (5, 1, 3)$, $Q = (10, 7, 4)$ and $R = (0, 5, -3)$. Use your maths library to output the following:
+1. Three points have the co-ordinates $P = (5, 1, 3)$, $Q = (10, 7, 4)$ and $R = (0, 5, -3)$. Use pen and paper to calculate the following:
 
     (a) The vector $\mathbf{p}$ that points from P to Q;<br>
     (b) The vector $\mathbf{q}$ that points from Q to R;<br>

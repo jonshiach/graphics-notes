@@ -585,12 +585,12 @@ The rotation of the vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about th
 
 ### A.3.1 Euler angles to quaternion
 
-Euler angles are the rotations around the three co-ordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$ and $q_p$ be the cosine, sine and rotation quaternion for rotating about the $x$-axis by the pitch angle, and similar for yaw and roll then
+Euler angles are the rotations around the three co-ordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_y = \cos(\frac{1}{2}\theta)$, $s_y = \sin(\frac{1}{2}\theta)$, $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$, $c_r = \cos(\frac{1}{2}\theta)$ and $s_r = \sin(\frac{1}{2}\theta)$ then the quaternions that rotate using the pitch, roll and yaw angles then
 
 $$ \begin{align*}
-    q_p &= [c_p, s_p  \mathbf{i}], \\
-    q_y &= [c_y, s_y  \mathbf{j}], \\
-    q_r &= [c_r, s_r  \mathbf{k}].
+    q_y &= [c_y, s_y \mathbf{i}], \\
+    q_p &= [c_p, s_p \mathbf{j}], \\
+    q_r &= [c_r, s_r \mathbf{k}].
 \end{align*} $$
 
 The combined rotation $q_pq_yq_r$ is

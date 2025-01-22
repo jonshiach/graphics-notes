@@ -15,7 +15,7 @@ Multiple cubes from [6. 3D Worlds](3D-worlds-section).
 
 ## Using keyboard input to move the camera
 
-The first thing we need to do is add a method to our `Camera` class to move the camera in the world space. We want to be able to move the camera forward and backwards, left and right, up and down. Recall the view matrix from the previous lab on [3D Worlds](3D-worlds-section) where we introduced the camera vectors seen in {numref}`camera-vectors-figure`.
+The first thing we need to do is add a method to our Camera class to move the camera in the world space. We want to be able to move the camera forward and backwards, left and right, up and down. Recall the view matrix from the previous lab on [3D Worlds](3D-worlds-section) where we introduced the camera vectors seen in {numref}`camera-vectors-figure`.
 
 ```{figure} ../_images/06_View_space_alignment.svg
 :width: 400
@@ -41,7 +41,7 @@ glm::vec3 up      = glm::vec3(0.0f, 1.0f,  0.0f);
 glm::vec3 front   = glm::vec3(0.0f, 0.0f, -1.0f);
 ```
 
-Here we have specified that the camera is pointing straight down the $z$-axis. 
+Here we have specified that the camera is pointing straight down the $z$-axis.
 
 ### Getting the keyboard input
 
@@ -87,6 +87,7 @@ Before the `main()` function, declare a variable for storing the time of the pre
 ```cpp
 // Frame timer
 float previousTime = 0.0f;    // time of previous iteration of the loop
+float deltaTime    = 0.0f;    // time elapsed since last iteration of the loop
 ```
 
 Then at the beginning of the render loop add the following code
@@ -184,15 +185,16 @@ $$ \begin{align*}
     \mathbf{front}_z &= \sin(yaw) \cos(pitch).
 \end{align*} $$
 
-So now we can calculate the $\mathbf{front}$ vector from the $yaw$ and $pitch$ Euler angles. To apply this to our `Camera` class we need to add attributes for the $yaw$, $pitch$ and $roll$ Euler angles (we don't really need the $roll$ angle for now but we may wish to add the facility to roll the camera in the future). Add the following code to the camera parameters in the `Camera` class declaration.
+So now we can calculate the $\mathbf{front}$ vector from the $yaw$ and $pitch$ Euler angles. To apply this to our Camera class we need to add attributes for the $yaw$, $pitch$ and $roll$ Euler angles (we don't really need the $roll$ angle for now but we may wish to add the facility to roll the camera in the future). Add the following code to the Camera class declaration.
 
 ```cpp
+// Camera Euler angles
 float yaw   = Maths::radians(-90.0f);
 float pitch = 0.0f;
 float roll  = 0.0f;
 ```
 
-Since our rotation of the $\mathbf{front}$ vector assumes it is initially pointing along the $x$-axis we use an initial $yaw$ angle of $-90^\circ$ to rotate it so it is pointing down the $z$-axis. We now need to add a method to the `Camera` class to calculate the $\mathbf{front}$, $\mathbf{right}$ and $\mathbf{up}$ camera vectors from the Euler angles. In the **camera.hpp** file add the following method declaration.
+Since our rotation of the $\mathbf{front}$ vector assumes it is initially pointing along the $x$-axis we use an initial $yaw$ angle of $-90^\circ$ to rotate it so it is pointing down the $z$-axis. We now need to add a method to the Camera class to calculate the $\mathbf{front}$, $\mathbf{right}$ and $\mathbf{up}$ camera vectors from the Euler angles. In the **camera.hpp** file add the following method declaration.
 
 ```cpp
 void calculateCameraVectors();
@@ -210,7 +212,7 @@ void Camera::calculateCameraVectors()
 }
 ```
 
-Here we have calculated the $\mathbf{right}$ and $\mathbf{up}$ vectors in the same way we did for the [view matrix](view-matrix-section).
+Here we have calculated the $\mathbf{front}$, $\mathbf{right}$ and $\mathbf{up}$ camera vectors in the same way used for the [view matrix](view-matrix-section).
 
 ### Getting the mouse input
 
@@ -229,17 +231,23 @@ void mouseInput(GLFWwindow *window)
     double xPos, yPos;
     glfwGetCursorPos(window, &xPos, &yPos);
     glfwSetCursorPos(window, 1024 / 2, 768 / 2);
-    
+
     // Update yaw and pitch angles
-    camera.yaw   += 0.005f * float(xPos - 1024 / 2);
-    camera.pitch += 0.005f * float(768 / 2 - yPos);
-    
+    camera.yaw   += 0.5f * deltaTime * float(xPos - 1024 / 2);
+    camera.pitch += 0.5f * deltaTime * float(768 / 2 - yPos);
+
     // Calculate camera vectors from the yaw and pitch angles
     camera.calculateCameraVectors();
 }
 ```
 
-Here we use the function `glfwGetCursorPos()` to get the pixel co-ordinates of the mouse pointer and then we reset this to the window centre using the `glfwSetCursorPos()` function. This is so that the mouse cursor does not eventually move out of the window. The $yaw$ and $pitch$ angles are then adjusted based on the number of pixels that the mouse cursor moves the centre of the window (note that we subtract `yPos` from the centre co-ordinates since pixel co-ordinates assume $(0,0)$ is the top-left hand corder of the display). The distances that the mouse cursor moves is multiplied by a factor of `0.005f` to limit the speed that the camera rotates, you may need to make adjustments this value depending on the machine you are using. Finally, the camera vectors are then calculated using the new $yaw$ and $pitch$ angles.
+Here we use the function `glfwGetCursorPos()` to get the pixel co-ordinates of the mouse pointer and then we reset this to the window centre using the `glfwSetCursorPos()` function. This is so that the mouse cursor does not eventually move out of the window. The $yaw$ and $pitch$ angles are then adjusted based on the number of pixels that the mouse cursor moves the centre of the window (note that we subtract `yPos` from the centre co-ordinates since pixel co-ordinates assume $(0,0)$ is the top-left hand corder of the display). The distances that the mouse cursor moves is multiplied by a factor of `0.5f * deltaTime` to limit the speed that the camera rotates, you may need to make adjustments this value depending on the machine you are using. Finally, the camera vectors are then calculated using the new $yaw$ and $pitch$ angles.
+
+We now need to invoke our mouse input function for each iteration of the render loop. Add the following code beneath where the `keyboardInput()` function is called.
+
+```cpp
+mouseInput(window);
+```
 
 Running the program and we can now move around our world space and point the camera in any direction we want.
 

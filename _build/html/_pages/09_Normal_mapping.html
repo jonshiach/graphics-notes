@@ -410,7 +410,7 @@ document.write(`
 </figcaption>
 </figure>
 <p>Note that since the OpenGL co-ordinate system has the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance.</p>
-<p>Compile and run the project <span class="math notranslate nohighlight">\(Lab09_Normal_maps\)</span> and you will see that we have the scene used at the end of <a class="reference internal" href="08_Lighting.html#lighting-section"><span class="std std-ref">last lab on Lighting</span></a> with the teapots lit using two point lights, a spotlight and a directional light.</p>
+<p>Compile and run the project <strong>Lab09_Normal_maps</strong> and you will see that we have the scene used at the end of <a class="reference internal" href="08_Lighting.html#lighting-section"><span class="std std-ref">8. Lighting</span></a> with the teapots lit using two point lights, a spotlight and a directional light.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/09_teapots.png"><img alt="../_images/09_teapots.png" src="../_images/09_teapots.png" style="width: 500px;" /></a>
 </figure>
@@ -466,8 +466,8 @@ document.write(`
 <p>The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors can then be calculated using</p>
 <div class="math notranslate nohighlight" id="equation-tb-equation">
 <span class="eqno">(9.1)<a class="headerlink" href="#equation-tb-equation" title="Permalink to this equation">#</a></span>\[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2), \\
-    \mathsf{b} &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1).
+    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} \end{split}\]</div>
 <p>To see the derivation of these equations click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -512,8 +512,8 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <p class="sd-card-text">Writing the out for the <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> vectors we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2), \\
-    \mathbf{b} &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1).
+    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} \end{split}\]</div>
 </div>
 </details><p>Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to an arbitrary space (e.g., the view space). The matrix that achieves this a 3 <span class="math notranslate nohighlight">\(\times\)</span> 3 matrix known as the <span class="math notranslate nohighlight">\(TBN\)</span> matrix</p>
@@ -616,7 +616,31 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">bitangent</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>We need to transform the fragment position, light position and direction vector to the tangent space and to do so we calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Before the view space fragment position and normal vector are calculated add the following code.</p>
+<p>We need to transform the fragment position, and the positions and direction vectors of each light source, to the tangent space. For the light source positions and directions we will be outputting an array of vectors to the fragment shader, so add the following to the output list.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>We also need to declare the Light data structure here so add the following before the uniforms are declared</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Light struct</span>
+<span class="k">struct</span><span class="w"> </span><span class="n">Light</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cosPhi</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>and add a uniform for the light sources.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="n">lightSources</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>We need to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix to transform from the view space to the tangent space. Before the view space fragment position and normal vector are calculated add the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the TBN matrix that transforms view space to tangent space</span>
 <span class="n">mat3</span><span class="w"> </span><span class="n">invMV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">MV</span><span class="p">)));</span>
 <span class="n">vec3</span><span class="w"> </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tangent</span><span class="p">);</span>
@@ -630,12 +654,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <p class="admonition-title">Note</p>
 <p>Some people transform the vectors to the world space instead of the view space, however, this means that we need to also calculate the tangent space position of the camera for the eye vector calculation in the fragment shader. Doing this would mean we have additional uniforms and vector calculations. Since the camera position in the view space is <span class="math notranslate nohighlight">\((0,0,0)\)</span> then it is also <span class="math notranslate nohighlight">\((0,0,0)\)</span> in the tangent space so by transforming the vectors to the view space we don’t need to worry about this.</p>
 </div>
-<p>We also have to calculate the tangent space fragment position, light position and direction vector using the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Since we have multiple light sources we need to output an array of vectors for the position and direction of each light source. Add the following to the outputs of the vertex shader</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-</pre></div>
-</div>
-<p>Then replace the code used to calculate the view space vectors with the following code.</p>
+<p>So now we can calculate the tangent space fragment position, light position and direction vector using the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output tangent space fragment position, light positions and directions</span>
 <span class="n">fragmentPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">MV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">));</span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">maxLights</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
@@ -663,11 +682,16 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <div class="math notranslate nohighlight">
 \[ \mathbf{n} = 2 \times \mathbf{normal\,map} - 1. \]</div>
 <p>Before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function add the following code</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the normal vector from the normal map</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">Normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the normal vector from the normal map</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">Normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then in the <strong>Lab09_Normal_maps.cpp</strong> file add the normal map texture to the <code class="docutils literal notranslate"><span class="pre">teapot</span></code> object where we added the diffuse map.</p>
+<p>and replace the code used to extract the light position and direction from the <code class="docutils literal notranslate"><span class="pre">lightSources</span></code> array with the following</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec3</span><span class="w"> </span><span class="n">lightPosition</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">lightDirection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>In the <strong>Lab09_Normal_maps.cpp</strong> file add the normal map texture to the <code class="docutils literal notranslate"><span class="pre">teapot</span></code> object where we added the diffuse map.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">teapot</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../objects/diamond_normal.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;normal&quot;</span><span class="p">);</span>
 </pre></div>
 </div>

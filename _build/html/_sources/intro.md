@@ -1,6 +1,6 @@
 # Computer Graphics
 
-This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses to what you have learned from the preceding labs so it is important that you make sure you keep up with these. 
+This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses code from the preceding labs, so you will need to make sure you have completed each lab before moving onto the next one.
 
 These materials are based upon the excellent OpenGL tutorials <a href="https://learnopengl.com/" target="_blank">learnOpenGL</a> by Joey de Vries and <a href="https://www.opengl-tutorial.org/" target="_blank">open-gl-tutorial</a>.
 
@@ -18,6 +18,43 @@ These materials are based upon the excellent OpenGL tutorials <a href="https://l
 | 10 | [Quaternions](quaternions-section): complex numbers and quaternions, rotations, SLERP |
 
 ---
+
+## Downloading the lab files
+
+You will need to download template files from <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> to use these materials. 
+
+### Using GitHub desktop
+
+1. Click on **Clone a Repository from the Internet..**
+2. Select the **URL** tab and paste the URL `https://github.com/jonshiach/Computer-Graphics-Labs`
+3. Change **Local path** to a folder on your machine where you want to store the files.
+4. Click **Clone**
+
+### Using the terminal/command line
+
+1. Open the command line in Windows (press the Windows key and search for 'cmd') or the terminal in macOS.
+2. Navigate to the parent folder on your machine where you want to store the files.
+3. Enter the following command and press the enter key.
+
+```text
+git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
+```
+
+---
+
+## Build instructions
+
+1. Download, install and run <a href="https://www.cmake.org" target="_blank">CMake</a>.
+2. In the **Computer-Graphics-Labs** folder create a folder and call it **build/**.
+3. Click on **Browse Source...** next to 'Where is the source code?' and select the **Computer-Graphics-Labs/** folder.
+4. Do the same for 'Where to build the binaries?' and select the **Computer-Graphics-Labs/build/** folder.
+5. Click **Configure** and select Visual Studio (Windows) or Xcode (macOS) and click **Done**. Once the configuration is complete click **Configure** again.
+6. Click **Generate**.
+
+This will create a Visual Studio or Xcode project file in the **Computer-Graphics-Labs/build/** folder. Double-click on it to open the project and edit the source code.
+
+---
+
 :::{image} ./_images/jon_Shiach.jpeg
 :width: 125px
 :align: left

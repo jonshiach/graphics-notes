@@ -30,6 +30,10 @@ int main()
 }
 ```
 
+```{important}
+As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copies and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as development your coding skills.
+```
+
 Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.
 
 ```text

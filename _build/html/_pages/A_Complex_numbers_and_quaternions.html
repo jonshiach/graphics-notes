@@ -912,12 +912,12 @@ document.write(`
 </section>
 <section id="a-3-1-euler-angles-to-quaternion">
 <span id="euler-to-quaternion-derivation-section"></span><h3>A.3.1 Euler angles to quaternion<a class="headerlink" href="#a-3-1-euler-angles-to-quaternion" title="Permalink to this heading">#</a></h3>
-<p>Euler angles are the rotations around the three co-ordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(4)</a> can be used to give three quaternions for pitch, yaw and roll rotations. Let <span class="math notranslate nohighlight">\(c_p = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_p =\sin(\frac{1}{2}\theta)\)</span> and <span class="math notranslate nohighlight">\(q_p\)</span> be the cosine, sine and rotation quaternion for rotating about the <span class="math notranslate nohighlight">\(x\)</span>-axis by the pitch angle, and similar for yaw and roll then</p>
+<p>Euler angles are the rotations around the three co-ordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(4)</a> can be used to give three quaternions for pitch, yaw and roll rotations. Let <span class="math notranslate nohighlight">\(c_y = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_y = \sin(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(c_p = \cos(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(s_p =\sin(\frac{1}{2}\theta)\)</span>, <span class="math notranslate nohighlight">\(c_r = \cos(\frac{1}{2}\theta)\)</span> and <span class="math notranslate nohighlight">\(s_r = \sin(\frac{1}{2}\theta)\)</span> then the quaternions that rotate using the pitch, roll and yaw angles then</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    q_p &amp;= [c_p, s_p  \mathbf{i}], \\
-    q_y &amp;= [c_y, s_y  \mathbf{j}], \\
-    q_r &amp;= [c_r, s_r  \mathbf{k}].
+    q_y &amp;= [c_y, s_y \mathbf{i}], \\
+    q_p &amp;= [c_p, s_p \mathbf{j}], \\
+    q_r &amp;= [c_r, s_r \mathbf{k}].
 \end{align*} \end{split}\]</div>
 <p>The combined rotation <span class="math notranslate nohighlight">\(q_pq_yq_r\)</span> is</p>
 <div class="math notranslate nohighlight">

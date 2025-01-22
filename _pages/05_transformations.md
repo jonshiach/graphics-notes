@@ -731,7 +731,7 @@ Scaling, rotation and translation applied to the textured rectangle.
 
 It may appear that our application is displaying a static image of the textured rectangle but what is actually happening is that the window is constantly being updated with new frame buffers as and when they have been calculated. We can animate our rectangle by applying the transformations within the render loop.
 
-We are going to animate our rectangle so that is rotates around its own centre. To do this we are going to use the time the has elapsed since the application was started to calculate the rotation angle. Enter the following code just before the transformation matrix is sent to the shader
+We are going to animate our rectangle, so that is rotates around its own centre. To do this we are going to use the time the has elapsed since the application was started to calculate the rotation angle. Comment out the code used to define the translation, scaling and rotation matrices and enter the following code just before the transformation matrix is sent to the shader
 
 ```cpp
 // Animate rectangle

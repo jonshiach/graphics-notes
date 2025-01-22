@@ -48,6 +48,11 @@ const char *path = "../assets/crate.jpeg";
 int width, height, nChannels;
 stbi_set_flip_vertically_on_load(true);
 unsigned char *data = stbi_load(path, &width, &height, &nChannels, 0);
+
+if (data)
+    std::cout << "Texture loaded." << std::endl;
+else
+    std::cout << "Texture not loaded. Check the path." << std::endl;
 ```
 
 The functions used here are:
@@ -120,6 +125,14 @@ glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 Note that since each texture co-ordinates requires just 2 floats for $(u,v)$ instead of 3 for the vertex co-ordinates $(x,y,z)$ the second argument in the `glVertexAttribPointer()` function is `2` instead of `3`.
 
+The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the $(u, v)$ co-ordinates to the shader enter the following code.
+
+```cpp
+// Bind the texture to the VAO
+glBindTexture(GL_TEXTURE_2D, texture);
+glBindVertexArray(VAO);
+```
+
 ### Shaders
 
 #### Vertex shader
@@ -165,11 +178,11 @@ in vec2 UV;
 out vec3 colour;
 
 // Uniforms
-uniform sampler2D texture;
+uniform sampler2D textureMap;
 
 void main()
 {
-    colour = vec3(texture(texture, UV));
+    colour = vec3(texture(textureMap, UV));
 }
 
 ```
@@ -199,13 +212,14 @@ So the lower-right (blue) triangle has vertex co-ordinates $(-0.5, -0.5, 0)$, $(
 ```cpp
 // Define vertex positions
 static const float vertices[] = {
-    // x     y     z      index
-    -0.5f, -0.5f, 0.0f,  // 0     3 -- 2
-     0.5f, -0.5f, 0.0f,  // 1     |  / |
-     0.5f,  0.5f, 0.0f,  // 2     | /  |
-    -0.5f,  0.5f, 0.0f   // 3     0 -- 1
+    // x     y     z
+    -0.5f, -0.5f, 0.0f, 
+     0.5f, -0.5f, 0.0f,
+     0.5f,  0.5f, 0.0f, 
+    -0.5f, -0.5f, 0.0f,
+     0.5f,  0.5f, 0.0f,
+    -0.5f,  0.5f, 0.0f
 };
-
 
 // Define texture co-ordinates
 static const float uv[] = {
@@ -276,16 +290,18 @@ As with the other buffer objects we need to create a buffer for the indices, bin
 unsigned int EBO;
 glGenBuffers(1, &EBO);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, 
-                GL_STATIC_DRAW);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 ```
 
 This is similar to the code used to create the other buffer objects with the exception we are creating an `GL_ELEMENT_ARRAY_BUFFER` instead of an `GL_ARRAY_BUFFER`. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from `glDrawArrays()` to `glDrawElements()`
 
 ```cpp
-// Draw the triangle
+// Draw the triangles
 glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), 
                 GL_UNSIGNED_INT, 0);
+
+glDisableVertexAttribArray(0);
+glDisableVertexAttribArray(1);
 ```
 
 Make this change, compile and run the program and you should see the window from {numref}`texture-rectangle-figure`. You may be thinking you've gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the `vertices` array and we can now use EBOs to draw more sophisticated shapes and 3D models.
@@ -307,8 +323,7 @@ PNG (Portable Network Graphics) files use the RGBA colour model which is the sta
 
 ```cpp
 // Specify 2D texture
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-GL_UNSIGNED_BYTE, data);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 ```
 
 Compile and run the program and you should be presented with a (hopefully) familiar face.
@@ -398,14 +413,14 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 The `GL_TEXTURE_MIN_FILTER` and `GL_TEXTURE_MAG_FILTER` arguments refer to **minification** and **magnification**. Minification is where the texture is larger than the polygon it is being mapped to so a fragment covers multiple textels. Magnification is the opposite where the texture is smaller than the polygon so that a single textel takes up multiple fragments. We can set different interpolation for magnification and minification. 
 
-To demonstrate the affects of minification lets use a low resolution texture. Change the `path` variable to the following.
+To demonstrate the affects of minification lets use a low resolution texture. Change the `path` variable to the following
 
 ```cpp
 // Load texture image from file
 const char *path = "../assets/mario_small.png";
 ```
 
-Compile and run the program and you should see the image shown in {numref}`GL_NEAREST-figure`.
+and change the $(u, v)$ co-ordinates back so that the texture fills the rectangle. Compile and run the program and you should see the image shown in {numref}`GL_NEAREST-figure`.
 
 ```{figure} ../_images/03_GL_NEAREST.png
 :width: 500
@@ -475,13 +490,12 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all of the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the **Lab03_Textures** project, hidden away in the **Header files** folder is the file **texture.hpp** that contains a function `loadTexture()` that does all of the hard work for us (so why did I get you to do all of that coding above - I'm just evil I suppose *mwahahahahaaa*).
 
-Comment out all of the code from the **Lab03_Textures.cpp** file you've written so far in this lab (or delete it if you are feeling a but annoyed) and enter the following code before the render loop.
+Comment out the code used to load the texture and specify the texture options (or delete it if you are feeling a bit annoyed) and enter the following code before the render loop.
 
 ```cpp
 // Load the textures
-unsigned int texture1, texture2;
-texture1 = loadTexture("../assets/crate.jpg");
-texture2 = loadTexture("../assets/mario.png");
+unsigned int texture1 = loadTexture("../assets/crate.jpg");
+unsigned int texture2 = loadTexture("../assets/mario.png");
 ```
 
 This loads the two textures we have been using which can be accessed using their targets `texture1` and `texture2`. Compile and run the program and you should see the image from {numref}`texture-rectangle-figure`.
@@ -499,14 +513,11 @@ Add the following code to your program before the render loop (since the texture
 ```cpp
 // Send the texture uniforms to the fragment shader
 glUseProgram(shaderID);
-unsigned int texture1ID, texture2ID;
-texture1ID = glGetUniformLocation(shaderID, "texture1");
-texture2ID = glGetUniformLocation(shaderID, "texture2");
-glUniform1i(texture1ID, 0);
-glUniform1i(texture2ID, 1);
+glUniform1i(glGetUniformLocation(shaderID, "texture1"), 0);
+glUniform1i(glGetUniformLocation(shaderID, "texture2"), 1);
 ```
 
-Here we let OpenGL know we are using our shader program with the `glUseProgram()` function. We then get the location of two uniforms, called `texture1` and `texture2` respectively, and then assign the values of `0` and `1` to these uniforms using the `glUniform1i()` function. These values are the texture units that OpenGL uses to distinguish between the different textures in the fragment shader. 
+Here we let OpenGL know we are using our shader program with the `glUseProgram()` function. We then create uniforms for the two texture and assign them values of `0` and `1` using the `glUniform1i()` function. These values are the texture units that OpenGL uses to distinguish between the different textures in the fragment shader.
 
 ### Texture units
 
@@ -522,13 +533,13 @@ glActiveTexture(GL_TEXTURE1);
 glBindTexture(GL_TEXTURE_2D, texture2);
 ```
 
-The `glActiveTexture()` function lets OpenGL know what texture unit we are currently dealing with and then we bind the texture to that unit using then `glBindTexture()` function.
+The `glActiveTexture()` function lets OpenGL know what texture unit we are currently dealing with, and then we bind the texture to that unit using then `glBindTexture()` function.
 
 ### Fragment shader
 
 The last thing we need to do is update the fragment shader so that it uses both textures. Modify **fragmentShader.glsl** so that is looks like the following.
 
-```cpp
+```glsl
 #version 330 core
 
 // Input

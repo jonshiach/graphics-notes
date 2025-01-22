@@ -19,9 +19,9 @@ A **normal map** is a texture where the RGB colour values of each textel is used
 The RBG values of a normal map give the values of the normal vectors.
 ```
 
-Note that since the OpenGL co-ordinate system has the $z$-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance. 
+Note that since the OpenGL co-ordinate system has the $z$-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance.
 
-Compile and run the project $Lab09_Normal_maps$ and you will see that we have the scene used at the end of [last lab on Lighting](lighting-section) with the teapots lit using two point lights, a spotlight and a directional light.
+Compile and run the project **Lab09_Normal_maps** and you will see that we have the scene used at the end of [8. Lighting](lighting-section) with the teapots lit using two point lights, a spotlight and a directional light.
 
 ```{figure} ../_images/09_teapots.png
 :width: 500
@@ -87,8 +87,8 @@ $$ \begin{align*}
 The tangent, $\mathbf{t}$, and bitangent, $\mathbf{b}$, vectors can then be calculated using
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2), \\
-    \mathsf{b} &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1).
+    \mathbf{t} &= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$(TB-equation)
 
 To see the derivation of these equations click on the dropdown below.
@@ -133,8 +133,8 @@ $$ \begin{align*}
 Writing the out for the $\mathbf{t}$ and $\mathbf{b}$ vectors we have
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2), \\
-    \mathbf{b} &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}(\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1).
+    \mathbf{t} &= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$
 ````
 
@@ -255,7 +255,37 @@ layout(location = 3) in vec3 tangent;
 layout(location = 4) in vec3 bitangent;
 ```
 
-We need to transform the fragment position, light position and direction vector to the tangent space and to do so we calculate the $TBN$ matrix. Before the view space fragment position and normal vector are calculated add the following code.
+We need to transform the fragment position, and the positions and direction vectors of each light source, to the tangent space. For the light source positions and directions we will be outputting an array of vectors to the fragment shader, so add the following to the output list.
+
+```glsl
+out vec3 tangentSpaceLightPosition[maxLights];
+out vec3 tangentSpaceLightDirection[maxLights];
+```
+
+We also need to declare the Light data structure here so add the following before the uniforms are declared
+
+```glsl
+// Light struct
+struct Light
+{
+    vec3 position;
+    vec3 colour;
+    vec3 direction;
+    float constant;
+    float linear;
+    float quadratic;
+    float cosPhi;
+    int type;
+};
+```
+
+and add a uniform for the light sources.
+
+```glsl
+uniform Light lightSources[maxLights];
+```
+
+We need to calculate the $TBN$ matrix to transform from the view space to the tangent space. Before the view space fragment position and normal vector are calculated add the following code.
 
 ```cpp
 // Calculate the TBN matrix that transforms view space to tangent space
@@ -272,14 +302,7 @@ Here we transform the tangent, bitangent and normal vectors to the view space us
 Some people transform the vectors to the world space instead of the view space, however, this means that we need to also calculate the tangent space position of the camera for the eye vector calculation in the fragment shader. Doing this would mean we have additional uniforms and vector calculations. Since the camera position in the view space is $(0,0,0)$ then it is also $(0,0,0)$ in the tangent space so by transforming the vectors to the view space we don't need to worry about this.
 ```
 
-We also have to calculate the tangent space fragment position, light position and direction vector using the $TBN$ matrix. Since we have multiple light sources we need to output an array of vectors for the position and direction of each light source. Add the following to the outputs of the vertex shader
-
-```glsl
-out vec3 tangentSpaceLightPosition[maxLights];
-out vec3 tangentSpaceLightDirection[maxLights];
-```
-
-Then replace the code used to calculate the view space vectors with the following code.
+So now we can calculate the tangent space fragment position, light position and direction vector using the $TBN$ matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.
 
 ```cpp
 // Output tangent space fragment position, light positions and directions
@@ -315,12 +338,19 @@ $$ \mathbf{n} = 2 \times \mathbf{normal\,map} - 1. $$
 
 Before the `main()` function add the following code
 
-```cpp
+```glsl
 // Get the normal vector from the normal map
 vec3 Normal = normalize(2.0 * vec3(texture(normalMap, UV)) - 1.0);
 ```
 
-Then in the **Lab09_Normal_maps.cpp** file add the normal map texture to the `teapot` object where we added the diffuse map.
+and replace the code used to extract the light position and direction from the `lightSources` array with the following
+
+```glsl
+vec3 lightPosition  = tangentSpaceLightPosition[i];
+vec3 lightDirection = tangentSpaceLightDirection[i];
+```
+
+In the **Lab09_Normal_maps.cpp** file add the normal map texture to the `teapot` object where we added the diffuse map.
 
 ```cpp
 teapot.addTexture("../objects/diamond_normal.png", "normal");
