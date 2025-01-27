@@ -19,29 +19,6 @@ These materials are based upon the excellent OpenGL tutorials <a href="https://l
 
 ---
 
-## Downloading the lab files
-
-You will need to download template files from <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> to use these materials. 
-
-### Using GitHub desktop
-
-1. Click on **Clone a Repository from the Internet..**
-2. Select the **URL** tab and paste the URL `https://github.com/jonshiach/Computer-Graphics-Labs`
-3. Change **Local path** to a folder on your machine where you want to store the files.
-4. Click **Clone**
-
-### Using the terminal/command line
-
-1. Open the command line in Windows (press the Windows key and search for 'cmd') or the terminal in macOS.
-2. Navigate to the parent folder on your machine where you want to store the files.
-3. Enter the following command and press the enter key.
-
-```text
-git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
-```
-
----
-
 ## Build instructions
 
 1. Download, install and run <a href="https://www.cmake.org" target="_blank">CMake</a>.

@@ -28,4 +28,15 @@
     display: block;
 }
 
+.container{
+    display: flex;
+}
+.col{
+    flex: 1;
+}
+
+.reveal pre.sourceCode {
+    font-size: 20px;
+}
+
 </style>

@@ -353,7 +353,7 @@ vec3 lightDirection = tangentSpaceLightDirection[i];
 In the **Lab09_Normal_maps.cpp** file add the normal map texture to the `teapot` object where we added the diffuse map.
 
 ```cpp
-teapot.addTexture("../objects/diamond_normal.png", "normal");
+teapot.addTexture("../assets/diamond_normal.png", "normal");
 ```
 
 Compile and run the program and you should see the following.
@@ -479,6 +479,13 @@ object.name     = "floor";
 objects.push_back(object);
 ```
 
+We also need to draw the floor object so add the following after we have drawn the teapot objects.
+
+```cpp
+if (objects[i].name == "floor")
+    floor.draw(shaderID);
+```
+
 Compile and run the program and you should see a scene resembling the following.
 
 ```{figure} ../_images/09_floor_no_specular.png
@@ -505,7 +512,7 @@ uniform sampler2D specularMap;
 Then, whenever we calculate the specular lighting in the `calculatePointLight()`, `calculateSpotlight()` and `calculateDirectionalLight()` functions multiply by the colour of the textel from the specular map.
 
 ```cpp
-vec3 specular = ks * light.colour * pow(cosAlpha, Ns) * texture(specularMap, UV).rgb;
+vec3 specular   = ks * lightColour * pow(cosAlpha, Ns) * vec3(texture(specularMap, UV));
 ```
 
 Compile and run the program and now you will notice that the mortar between the stones no longer have specular highlights.
@@ -554,19 +561,19 @@ A neutral specular map applied to the teapot.
 ---
 ## Exercises
 
-1. Add another object using the .obj model `../objects/wall.obj` to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90$^\circ$ about the x axis. Apply the diffuse map `../objects/bricks_diffuse.png`.
+1. Add another object using the .obj model `../assets/wall.obj` to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90$^\circ$ about the x axis. Apply the diffuse map `../assets/bricks_diffuse.png`.
 
 ```{figure} ../_images/09_ex1.png
 :width: 500
 ```
 
-2. Apply the normal map `../objects/bricks_normal.png` to the wall object.
+2. Apply the normal map `../assets/bricks_normal.png` to the wall object.
 
 ```{figure} ../_images/09_ex2.png
 :width: 500
 ```
 
-3. Apply the specular map `../objects/bricks_specular.png` to the wall object.
+3. Apply the specular map `../assets/bricks_specular.png` to the wall object.
 
 ```{figure} ../_images/09_ex3.png
 :width: 500
