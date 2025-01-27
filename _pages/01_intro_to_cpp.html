@@ -368,9 +368,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-the-lab-files">1.2. Downloading the lab files</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-lab-files">1.2. Getting the lab files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-github-desktop">1.2.1. Using GitHub desktop</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-terminal-command-line">1.2.2. Using the terminal/command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-project-files">1.2.3. Build the project files</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-basics">1.3. C++ basics</a><ul class="nav section-nav flex-column">
@@ -421,14 +422,20 @@ document.write(`
 <p>An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will be using Visual Studio for Windows, although you can use Xcode for macOS.</p>
 </section>
 <hr class="docutils" />
-<section id="downloading-the-lab-files">
-<h2><span class="section-number">1.2. </span>Downloading the lab files<a class="headerlink" href="#downloading-the-lab-files" title="Permalink to this heading">#</a></h2>
-<p>You will need to download template files from <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> to use these materials.</p>
+<section id="getting-the-lab-files">
+<h2><span class="section-number">1.2. </span>Getting the lab files<a class="headerlink" href="#getting-the-lab-files" title="Permalink to this heading">#</a></h2>
+<p>To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.</p>
 <section id="using-github-desktop">
 <h3><span class="section-number">1.2.1. </span>Using GitHub desktop<a class="headerlink" href="#using-github-desktop" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
+<li><p>Run GitHub Desktop (if you don’t have it installed you can download it from <a href="https://desktop.github.com/download/" target="_blank">here</a>).</p></li>
 <li><p>Click on <strong>Clone a Repository from the Internet..</strong></p></li>
-<li><p>Select the <strong>URL</strong> tab and paste the URL <code class="docutils literal notranslate"><span class="pre">https://github.com/jonshiach/Computer-Graphics-Labs</span></code></p></li>
+<li><p>Select the <strong>URL</strong> tab and paste in the following URL</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>https://github.com/jonshiach/Computer-Graphics-Labs
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
 <li><p>Change <strong>Local path</strong> to a folder on your machine where you want to store the files.</p></li>
 <li><p>Click <strong>Clone</strong></p></li>
 </ol>
@@ -443,6 +450,28 @@ document.write(`
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
 </pre></div>
 </div>
+</section>
+<section id="build-the-project-files">
+<h3><span class="section-number">1.2.3. </span>Build the project files<a class="headerlink" href="#build-the-project-files" title="Permalink to this heading">#</a></h3>
+<p>After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the <strong>Computer-Graphics-Lab/</strong> folder you have just downloaded you will see a file called <strong>CMakeLists.txt</strong> which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.</p>
+<ol class="arabic simple">
+<li><p>In the <strong>Computer-Graphics-Labs</strong> folder create a folder and call it <strong>build/</strong>.</p></li>
+<li><p>Run <strong>Cmake</strong> (if you don’t have Cmake installed on your machine your can download it from <a href="https://www.cmake.org" target="_blank">here</a>)</p></li>
+<li><p>Click on <strong>Browse Source…</strong> next to ‘Where is the source code?’ and select the <strong>Computer-Graphics-Labs/</strong> folder.</p></li>
+<li><p>Do the same for ‘Where to build the binaries?’ and select the <strong>Computer-Graphics-Labs/build/</strong> folder.</p></li>
+<li><p>Click <strong>Configure</strong> and select Visual Studio (Windows) or Xcode (macOS) and click <strong>Done</strong>. Once the configuration is complete click <strong>Configure</strong> again.</p></li>
+<li><p>Click <strong>Generate</strong>.</p></li>
+</ol>
+<p>This will create a Visual Studio (extension <strong>.sln</strong>) or Xcode project (extension <strong>.xcodeproj</strong>) file in the <strong>Computer-Graphics-Labs/build/</strong> folder. Double-click on it to open the project and edit the source code.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Since different hardware requires different compilers and libraries, the build folder that you create on one machine will not work on another. If you are syncing your code between machines, e.g., using GitHub, you will need to build the project files into a different folder. The name of the folder <strong>build/</strong> is not special, you can name this anything you like, e.g., <strong>build_homePC/</strong>, <strong>build_uniPC/</strong>, <strong>fred/</strong> etc.</p>
+</div>
+<p>When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select <strong>Lab01_Intro_to_c++</strong> as the project we will be working on, depending on your IDE this is slightly different.</p>
+<ul class="simple">
+<li><p><strong>Visual Studio</strong> – right click on the <strong>Lab01_Intro_to_c++</strong> in the project viewer on the right-hand side of the window and select ‘Set as Startup Project…’.</p></li>
+<li><p><strong>Xcode</strong> – click on the project select dropdown at the top of the window and select <strong>Lab01_Intro_to_c++</strong> from the list of projects (there are quite a few to choose from but it’s there).</p></li>
+</ul>
 </section>
 </section>
 <hr class="docutils" />
@@ -462,7 +491,7 @@ document.write(`
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copies and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as development your coding skills.</p>
+<p>As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copied and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as developing your coding skills.</p>
 </div>
 <p>Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world
@@ -1232,9 +1261,10 @@ Level 5: 68, 62, 74, 70
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides">1.1. IDEs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-the-lab-files">1.2. Downloading the lab files</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-lab-files">1.2. Getting the lab files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-github-desktop">1.2.1. Using GitHub desktop</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-terminal-command-line">1.2.2. Using the terminal/command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-project-files">1.2.3. Build the project files</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-basics">1.3. C++ basics</a><ul class="nav section-nav flex-column">

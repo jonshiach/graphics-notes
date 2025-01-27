@@ -14,16 +14,22 @@ An IDE provides a way of writing and organising your code files as well as a num
 
 ---
 
-## Downloading the lab files
+## Getting the lab files
 
-You will need to download template files from <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> to use these materials. 
+To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
 
 ### Using GitHub desktop
 
-1. Click on **Clone a Repository from the Internet..**
-2. Select the **URL** tab and paste the URL `https://github.com/jonshiach/Computer-Graphics-Labs`
-3. Change **Local path** to a folder on your machine where you want to store the files.
-4. Click **Clone**
+1. Run GitHub Desktop (if you don't have it installed you can download it from <a href="https://desktop.github.com/download/" target="_blank">here</a>).
+2. Click on **Clone a Repository from the Internet..**
+3. Select the **URL** tab and paste in the following URL
+
+```text
+https://github.com/jonshiach/Computer-Graphics-Labs
+```
+
+4. Change **Local path** to a folder on your machine where you want to store the files.
+5. Click **Clone**
 
 ### Using the terminal/command line
 
@@ -34,6 +40,29 @@ You will need to download template files from <a href="https://github.com/jonshi
 ```text
 git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
 ```
+
+### Build the project files
+
+After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the **Computer-Graphics-Lab/** folder you have just downloaded you will see a file called **CMakeLists.txt** which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.
+
+1. In the **Computer-Graphics-Labs** folder create a folder and call it **build/**.
+2. Run **Cmake** (if you don't have Cmake installed on your machine your can download it from <a href="https://www.cmake.org" target="_blank">here</a>)
+3. Click on **Browse Source...** next to 'Where is the source code?' and select the **Computer-Graphics-Labs/** folder.
+4. Do the same for 'Where to build the binaries?' and select the **Computer-Graphics-Labs/build/** folder.
+5. Click **Configure** and select Visual Studio (Windows) or Xcode (macOS) and click **Done**. Once the configuration is complete click **Configure** again.
+6. Click **Generate**.
+
+This will create a Visual Studio (extension **.sln**) or Xcode project (extension **.xcodeproj**) file in the **Computer-Graphics-Labs/build/** folder. Double-click on it to open the project and edit the source code.
+
+```{important}
+Since different hardware requires different compilers and libraries, the build folder that you create on one machine will not work on another. If you are syncing your code between machines, e.g., using GitHub, you will need to build the project files into a different folder. The name of the folder **build/** is not special, you can name this anything you like, e.g., **build_homePC/**, **build_uniPC/**, **fred/** etc.
+```
+
+
+When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select **Lab01_Intro_to_c++** as the project we will be working on, depending on your IDE this is slightly different.
+
+- **Visual Studio** -- right click on the **Lab01_Intro_to_c++** in the project viewer on the right-hand side of the window and select 'Set as Startup Project...'.
+- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from but it's there).
 
 ---
 
@@ -54,7 +83,7 @@ int main()
 ```
 
 ```{important}
-As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copies and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as development your coding skills.
+As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copied and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as developing your coding skills.
 ```
 
 Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.
