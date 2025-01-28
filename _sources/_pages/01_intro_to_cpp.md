@@ -18,9 +18,9 @@ An IDE provides a way of writing and organising your code files as well as a num
 
 ## Getting the lab files
 
-To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SBwSNu9BVkY?si=ddHD0dU0pN2aBzWm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-### Using GitHub desktop
+To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
 
 1. Run GitHub Desktop (if you don't have it installed you can download it from <a href="https://desktop.github.com/download/" target="_blank">here</a>).
 2. Click on **Clone a Repository from the Internet..**
@@ -60,10 +60,9 @@ This will create a Visual Studio (extension **.sln**) or Xcode project (extensio
 Since different hardware requires different compilers and libraries, the build folder that you create on one machine will not work on another. If you are syncing your code between machines, e.g., using GitHub, you will need to build the project files into a different folder. The name of the folder **build/** is not special, you can name this anything you like, e.g., **build_homePC/**, **build_uniPC/**, **fred/** etc.
 ```
 
-
 When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select **Lab01_Intro_to_c++** as the project we will be working on, depending on your IDE this is slightly different.
 
-- **Visual Studio** -- right click on the **Lab01_Intro_to_c++** in the project viewer on the right-hand side of the window and select 'Set as Startup Project...'.
+- **Visual Studio** -- right click on the **Lab01_Intro_to_c++** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
 - **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from but it's there).
 
 ---

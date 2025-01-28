@@ -382,6 +382,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-colours">2.4. More colours</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-triangle">2.5. Adding another triangle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">2.6. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">2.7. Video walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -397,7 +398,7 @@ document.write(`
 <span id="basic-shapes-section"></span><h1><span class="section-number">2. </span>Basic Shapes in OpenGL<a class="headerlink" href="#basic-shapes-in-opengl" title="Permalink to this heading">#</a></h1>
 <p>In this lab we will be creating our first graphics application in OpenGL. If you haven’t already done so, download and build the project files using the instructions given in <a class="reference internal" href="01_intro_to_cpp.html#getting-the-files-section"><span class="std std-ref">1. Introduction to C++</span></a>. Compile and run the project <strong>Lab02_Basic_shapes</strong>:</p>
 <ul class="simple">
-<li><p><strong>Visual Studio</strong> – right click on the <strong>Lab01_Intro_to_c++</strong> in the project viewer on the right-hand side of the window and select ‘Set as Startup Project’.</p></li>
+<li><p><strong>Visual Studio</strong> – right click on the <strong>Lab02_Basic_shapes+</strong> project in the project viewer on the right-hand side of the window and select ‘Set as Startup Project’.</p></li>
 <li><p><strong>Xcode</strong> – click on the project select dropdown at the top of the window and select <strong>Lab01_Intro_to_c++</strong> from the list of projects (there are quite a few to choose from but it’s there).</p></li>
 </ul>
 <p>If all has gone to plan you should be looking at a boring window with a grey background shown in <a class="reference internal" href="#hello-window-figure"><span class="std std-numref">Fig. 2.1</span></a>. Familiarise yourself with the source files. For now, this contains the main C++ program <strong>Lab02_Basic_shapes.cpp</strong> in the <strong>source/</strong> folder, the header file <strong>shader.hpp</strong> in the <strong>headers/</strong> folder and associated code file <strong>shader.cpp</strong> in the <strong>source/</strong> folder.</p>
@@ -478,8 +479,6 @@ document.write(`
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
 
 <span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
-
-<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">Colour</span><span class="p">;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
@@ -637,7 +636,7 @@ document.write(`
 <span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// Output vertex position</span>
-<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="c1">// Output vertex colour</span>
 <span class="w">    </span><span class="n">fragmentColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
@@ -736,13 +735,12 @@ document.write(`
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/02_Ex3.png"><img alt="../_images/02_Ex3.png" src="../_images/02_Ex3.png" style="width: 400px;" /></a>
 </figure>
-<!-- ---
-
-## Video walkthrough
-
-The video below walks you through these lab materials.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tsokaomZfZY?si=zAKqb8nZZ5BGdfW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> --></section>
+</section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2><span class="section-number">2.7. </span>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Permalink to this heading">#</a></h2>
+<p>The video below walks you through these lab materials.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wcuxN9Np-fA?si=fG6DIPo9TH2nOZtV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -827,6 +825,7 @@ The video below walks you through these lab materials.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-colours">2.4. More colours</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-triangle">2.5. Adding another triangle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">2.6. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">2.7. Video walkthrough</a></li>
 </ul>
   </nav></div>
 
