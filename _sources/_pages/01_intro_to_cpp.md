@@ -14,6 +14,8 @@ An IDE provides a way of writing and organising your code files as well as a num
 
 ---
 
+(getting-the-files-section)= 
+
 ## Getting the lab files
 
 To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
@@ -31,7 +33,7 @@ https://github.com/jonshiach/Computer-Graphics-Labs
 4. Change **Local path** to a folder on your machine where you want to store the files.
 5. Click **Clone**
 
-### Using the terminal/command line
+<!-- ### Using the terminal/command line
 
 1. Open the command line in Windows (press the Windows key and search for 'cmd') or the terminal in macOS.
 2. Navigate to the parent folder on your machine where you want to store the files.
@@ -39,7 +41,7 @@ https://github.com/jonshiach/Computer-Graphics-Labs
 
 ```text
 git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
-```
+``` -->
 
 ### Build the project files
 
