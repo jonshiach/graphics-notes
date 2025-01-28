@@ -146,7 +146,7 @@ unsigned int shaderID;
 shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
 ```
 
-This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programmes, we need to instruct OpenGL to use it. To do this enter the following code
+This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programs, we need to instruct OpenGL to use it. To do this enter the following code
 
 ```cpp
 // Use the shader program
