@@ -391,11 +391,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-methods">1.5.2. Class methods</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">1.5.3. Constructors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-member-functions">1.5.4. Static member functions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">1.5.5. Header files</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-studio">1.5.5.1. Visual Studio</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xcode">1.5.5.2. Xcode</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">1.5.5. Header files</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">1.6. Exercises</a></li>
@@ -1001,44 +997,48 @@ Year: 1981
 <section id="header-files">
 <h3><span class="section-number">1.5.5. </span>Header files<a class="headerlink" href="#header-files" title="Permalink to this heading">#</a></h3>
 <p>When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a <strong>header file</strong> which usually have the extension <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> (this isn’t a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension <code class="docutils literal notranslate"><span class="pre">.cpp</span></code>.</p>
-<p>Let’s create a header file for our <code class="docutils literal notranslate"><span class="pre">Car</span></code> class. Depending on the IDE you are using you will need to do the following.</p>
-<hr class="docutils" />
-<section id="visual-studio">
-<h4><span class="section-number">1.5.5.1. </span>Visual Studio<a class="headerlink" href="#visual-studio" title="Permalink to this heading">#</a></h4>
-<ol class="arabic simple">
-<li><p>Right-click on the project name in the <strong>Solution Explorer</strong> and the select <strong>Add &gt; New Item…</strong> (or press Ctrl+Shift+A).</p></li>
-<li><p>Select <strong>C++ Class</strong> and click on <strong>Add</strong>.</p></li>
-<li><p>Enter <strong>Car</strong> in the <strong>Class name</strong> field and change the <strong>.h file</strong> field to <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> (we could have left this as <code class="docutils literal notranslate"><span class="pre">Car.h</span></code> but I’ve always used <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> as the file extension for header files).</p></li>
-<li><p>This creates the header file <code class="docutils literal notranslate"><span class="pre">Car.hpp</span></code> in the <strong>Header files</strong> filter and the source file <code class="docutils literal notranslate"><span class="pre">Car.cpp</span></code> in the <strong>Source Files</strong> filter.</p></li>
-</ol>
-<p>The header file we have created contains the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Car</span>
-<span class="p">{</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<p>The command <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">once</span></code> is used to prevent multiple header files of the same name from being included in the compilation of the program.</p>
-</section>
-<section id="xcode">
-<h4><span class="section-number">1.5.5.2. </span>Xcode<a class="headerlink" href="#xcode" title="Permalink to this heading">#</a></h4>
-<ol class="arabic simple">
-<li><p>Click on <strong>File &gt; New &gt; File from Template…</strong> (or just press ⌘N) and select <strong>C++ File</strong>.</p></li>
-<li><p>Enter <code class="docutils literal notranslate"><span class="pre">Car</span></code> in the Name field, make sure the checkbox next to <strong>Also create header file</strong> is selected and click on <strong>Next</strong>.</p></li>
-<li><p>Select the <strong>Lab01_Intro_to_c++/</strong> folder and click on <strong>Create</strong>.</p></li>
-<li><p>This creates the header file <strong>Car.hpp</strong> and the code file <strong>Car.cpp</strong> in your Xcode project.</p></li>
-</ol>
-<p>The header file we have created contains the following code. Xcode uses <a href="https://en.wikipedia.org/wiki/Include_guard" target="_blank">include guards</a> which perform the same function as <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">once</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef Car_hpp</span>
-<span class="cp">#define Car_hpp</span>
+<!-- 
+Let's create a header file for our `Car` class. Depending on the IDE you are using you will need to do the following.
 
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+---
+#### Visual Studio
 
-<span class="cp">#endif </span><span class="cm">/* Car_hpp */</span>
-</pre></div>
-</div>
-<hr class="docutils" />
-<p>Cut and paste the <code class="docutils literal notranslate"><span class="pre">Car</span></code> class from the <strong>Lab01_Intro_to_c++.cpp</strong> file into our new <strong>Car.hpp</strong> header file so that it looks like the following.</p>
+1. Right-click on the project name in the **Solution Explorer** and the select **Add > New Item...** (or press Ctrl+Shift+A).
+2. Click on **Show all templates** and select **C++ Class**.
+3. Enter **Car** in the **Class name** field and change the location field to the **Computer-Graphics-Labs/Lab01_Intro_to_c++/** folder and click **Add**.
+5. This creates the header file `Car.hpp` in the **Header files** filter and the source file `Car.cpp` in the **Source Files** filter.
+
+The header file we have created contains the following code.
+
+```cpp
+#pragma once
+class Car
+{
+};
+```
+
+The command `#pragma once` is used to prevent multiple header files of the same name from being included in the compilation of the program.
+
+#### Xcode
+
+1. Click on **File > New > File from Template...** (or just press ⌘N) and select **C++ File**.
+2. Enter `Car` in the Name field, make sure the checkbox next to **Also create header file** is selected and click on **Next**.
+3. Select the **Lab01_Intro_to_c++/** folder and click on **Create**.
+4. This creates the header file **Car.hpp** and the code file **Car.cpp** in your Xcode project.
+
+The header file we have created contains the following code. Xcode uses <a href="https://en.wikipedia.org/wiki/Include_guard" target="_blank">include guards</a> which perform the same function as `#pragma once`.
+
+```cpp
+#ifndef Car_hpp
+#define Car_hpp
+
+#include <stdio.h>
+
+#endif /* Car_hpp */
+```
+
+--- -->
+<p>Cut and paste the <code class="docutils literal notranslate"><span class="pre">Car</span></code> class from the <strong>Lab01_Intro_to_c++.cpp</strong> file into the <strong>Car.hpp</strong> header file in the <strong>Lab01_Intro_to_c++/</strong> folder so that it looks like the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -1061,7 +1061,7 @@ Year: 1981
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>Note that we also need the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> library so we can use strings and input/output commands. The methods are defined in the <code class="docutils literal notranslate"><span class="pre">Car.cpp</span></code> source file. Cut and paste your <code class="docutils literal notranslate"><span class="pre">Car</span></code> class methods from <strong>Lab01_Intro_to_c++.cpp</strong> and so it looks like the following.</p>
+<p>Note that we also need the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> library so we can use strings and input/output commands. Cut and paste your <code class="docutils literal notranslate"><span class="pre">Car</span></code> class methods from the <strong>Lab01_Intro_to_c++.cpp</strong> file into the <strong>Car.cpp</strong> file so it looks like the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Car.hpp&quot;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">Car::outputDetails</span><span class="p">()</span>
@@ -1099,12 +1099,11 @@ Year: 1981
 <p>Here we have included the <strong>Car.hpp</strong> header file so that the compiler knows where the class is defined. Make sure you also include this in the <strong>Lab01_Intro_to_c++.cpp</strong> file, compile and run the program to check everything works ok.</p>
 </section>
 </section>
-</section>
 <hr class="docutils" />
 <section id="exercises">
 <h2><span class="section-number">1.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>You are tasked with writing a C++ program to help the university store students’ details (name, ID number, course, marks etc.). Create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> in a header file which has the following attributes:</p>
+<li><p>You are tasked with writing a C++ program to help the university store students’ details (name, ID number, course, marks etc.). Create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> in the header file <strong>Student.hpp</strong> which has the following attributes:</p>
 <ul class="simple">
 <li><p>first name - string;</p></li>
 <li><p>last name - string;</p></li>
@@ -1114,7 +1113,7 @@ Year: 1981
 <li><p>marks - 12-element integer array (marks for four units over the three years);</p></li>
 </ul>
 </li>
-<li><p>Create a constructor for your class with parameters for creating an object. Use your constructor to create an object with the following attribute values.</p>
+<li><p>Declare a constructor for your class with parameters for creating an object and define the constructor in the <strong>Student.cpp</strong> file. Use your constructor to create an object with the following attribute values.</p>
 <ul class="simple">
 <li><p>first name: Ellie</p></li>
 <li><p>last name: Williams</p></li>
@@ -1278,11 +1277,7 @@ Level 5: 68, 62, 74, 70
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-methods">1.5.2. Class methods</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">1.5.3. Constructors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-member-functions">1.5.4. Static member functions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">1.5.5. Header files</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-studio">1.5.5.1. Visual Studio</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xcode">1.5.5.2. Xcode</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">1.5.5. Header files</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">1.6. Exercises</a></li>

@@ -657,16 +657,16 @@ Which gives the output
 ### Header files
 
 When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a **header file** which usually have the extension `.hpp` (this isn't a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension `.cpp`.
-
+<!-- 
 Let's create a header file for our `Car` class. Depending on the IDE you are using you will need to do the following.
 
 ---
 #### Visual Studio
 
 1. Right-click on the project name in the **Solution Explorer** and the select **Add > New Item...** (or press Ctrl+Shift+A).
-2. Select **C++ Class** and click on **Add**.
-3. Enter **Car** in the **Class name** field and change the **.h file** field to `Car.hpp` (we could have left this as `Car.h` but I've always used `.hpp` as the file extension for header files).
-4. This creates the header file `Car.hpp` in the **Header files** filter and the source file `Car.cpp` in the **Source Files** filter.
+2. Click on **Show all templates** and select **C++ Class**.
+3. Enter **Car** in the **Class name** field and change the location field to the **Computer-Graphics-Labs/Lab01_Intro_to_c++/** folder and click **Add**.
+5. This creates the header file `Car.hpp` in the **Header files** filter and the source file `Car.cpp` in the **Source Files** filter.
 
 The header file we have created contains the following code.
 
@@ -697,9 +697,9 @@ The header file we have created contains the following code. Xcode uses <a href=
 #endif /* Car_hpp */
 ```
 
----
+--- -->
 
-Cut and paste the `Car` class from the **Lab01_Intro_to_c++.cpp** file into our new **Car.hpp** header file so that it looks like the following.
+Cut and paste the `Car` class from the **Lab01_Intro_to_c++.cpp** file into the **Car.hpp** header file in the **Lab01_Intro_to_c++/** folder so that it looks like the following.
 
 ```cpp
 #pragma once
@@ -724,7 +724,7 @@ public:
 };
 ```
 
-Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. The methods are defined in the `Car.cpp` source file. Cut and paste your `Car` class methods from **Lab01_Intro_to_c++.cpp** and so it looks like the following.
+Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. Cut and paste your `Car` class methods from the **Lab01_Intro_to_c++.cpp** file into the **Car.cpp** file so it looks like the following.
 
 ```cpp
 #include "Car.hpp"
@@ -767,7 +767,7 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
 
 ## Exercises
 
-1. You are tasked with writing a C++ program to help the university store students' details (name, ID number, course, marks etc.). Create a class called `Student` in a header file which has the following attributes:
+1. You are tasked with writing a C++ program to help the university store students' details (name, ID number, course, marks etc.). Create a class called `Student` in the header file **Student.hpp** which has the following attributes:
 
    - first name - string;
    - last name - string;
@@ -776,7 +776,7 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
    - level - integer;
    - marks - 12-element integer array (marks for four units over the three years);
 
-2. Create a constructor for your class with parameters for creating an object. Use your constructor to create an object with the following attribute values.
+2. Declare a constructor for your class with parameters for creating an object and define the constructor in the **Student.cpp** file. Use your constructor to create an object with the following attribute values.
 
     - first name: Ellie
     - last name: Williams
