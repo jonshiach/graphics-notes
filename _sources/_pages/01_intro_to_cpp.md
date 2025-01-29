@@ -784,7 +784,7 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
     - course: Computer Science
     - level: 5
 
-3. Create a method called `addLevelMarks()` which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the `marks` array for the object. For example, if the level 5 unit marks are `40, 50, 60, 70` then `marks[4] = 40`, `marks[5] = 50` etc. Use your method to updates Ellie's marks with the following.
+3. Create a method called `addLevelMarks()` which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the `marks` array for the object. For example, if the level 4 unit marks are `40, 50, 60, 70` then `marks[0] = 40`, `marks[1] = 50` etc. Use your method to updates Ellie's marks with the following.
 
     - level 4 marks: 55, 60, 72, 64;
     - level 5 marks: 68, 62, 74, 70.
