@@ -2,7 +2,10 @@
 
 # Basic Shapes in OpenGL
 
-In this lab we will be creating our first graphics application in OpenGL.
+In this lab we will be creating our first graphics application in OpenGL. If you haven't already done so, download and build the project files using the instructions given in [1. Introduction to C++](getting-the-files-section). Compile and run the project **Lab02_Basic_shapes**:
+
+- **Visual Studio** -- right click on the **Lab02_Basic_shapes+** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
+- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from but it's there).
 
 If all has gone to plan you should be looking at a boring window with a grey background shown in {numref}`hello-window-figure`. Familiarise yourself with the source files. For now, this contains the main C++ program **Lab02_Basic_shapes.cpp** in the **source/** folder, the header file **shader.hpp** in the **headers/** folder and associated code file **shader.cpp** in the **source/** folder.
 
@@ -105,8 +108,6 @@ Open the file **vertexShader.glsl** in the **Lab02_Basic_shapes** project in the
 
 layout(location = 0) in vec3 position;
 
-out vec3 Colour;
-
 void main()
 {
     // Output vertex position
@@ -145,7 +146,7 @@ unsigned int shaderID;
 shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
 ```
 
-This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programmes, we need to instruct OpenGL to use it. To do this enter the following code
+This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programs, we need to instruct OpenGL to use it. To do this enter the following code
 
 ```cpp
 // Use the shader program
@@ -271,7 +272,7 @@ out vec3 fragmentColour;
 void main()
 {
     // Output vertex position
-    gl_Position = vec4(position.x, position.y, position.z, 1.0);
+    gl_Position = vec4(position, 1.0);
     
     // Output vertex colour
     fragmentColour = colour;
@@ -386,10 +387,10 @@ Now that you've got to the stage where you can draw triangles to the screen and 
 :width: 400
 ```
 
-<!-- ---
+---
 
 ## Video walkthrough
 
 The video below walks you through these lab materials.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tsokaomZfZY?si=zAKqb8nZZ5BGdfW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wcuxN9Np-fA?si=fG6DIPo9TH2nOZtV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

@@ -17,7 +17,7 @@ Multiple cubes from [6. 3D Worlds](3D-worlds-section).
 
 The first thing we need to do is add a method to our Camera class to move the camera in the world space. We want to be able to move the camera forward and backwards, left and right, up and down. Recall the view matrix from the previous lab on [3D Worlds](3D-worlds-section) where we introduced the camera vectors seen in {numref}`camera-vectors-figure`.
 
-```{figure} ../_images/06_View_space_alignment.svg
+```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
 :name: camera-vectors-figure
 

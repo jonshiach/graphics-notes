@@ -19,19 +19,6 @@ These materials are based upon the excellent OpenGL tutorials <a href="https://l
 
 ---
 
-## Build instructions
-
-1. Download, install and run <a href="https://www.cmake.org" target="_blank">CMake</a>.
-2. In the **Computer-Graphics-Labs** folder create a folder and call it **build/**.
-3. Click on **Browse Source...** next to 'Where is the source code?' and select the **Computer-Graphics-Labs/** folder.
-4. Do the same for 'Where to build the binaries?' and select the **Computer-Graphics-Labs/build/** folder.
-5. Click **Configure** and select Visual Studio (Windows) or Xcode (macOS) and click **Done**. Once the configuration is complete click **Configure** again.
-6. Click **Generate**.
-
-This will create a Visual Studio or Xcode project file in the **Computer-Graphics-Labs/build/** folder. Double-click on it to open the project and edit the source code.
-
----
-
 :::{image} ./_images/jon_Shiach.jpeg
 :width: 125px
 :align: left
