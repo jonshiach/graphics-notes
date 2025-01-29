@@ -199,6 +199,10 @@ glm::mat4 translate = Maths::translate(glm::vec3(0.4f, 0.3f, 0.0f));
 
 Running the program you should see no change to the output but we can now easily define translation matrices. Experiment with different values for the translation vector to see the effects it has.
 
+```{note}
+You may have noticed that in our `translate()` function we accessed the first three elements of the glm vector `v` using `v.x`, `v.y` and `v.z` instead of `v[0]`, `v[1]` and `v[2]`. This is called *swizzling* and can also be used in GLSL vector objects.
+```
+
 ---
 
 ## Scaling

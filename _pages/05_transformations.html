@@ -561,6 +561,10 @@ document.write(`
 </pre></div>
 </div>
 <p>Running the program you should see no change to the output but we can now easily define translation matrices. Experiment with different values for the translation vector to see the effects it has.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may have noticed that in our <code class="docutils literal notranslate"><span class="pre">translate()</span></code> function we accessed the first three elements of the glm vector <code class="docutils literal notranslate"><span class="pre">v</span></code> using <code class="docutils literal notranslate"><span class="pre">v.x</span></code>, <code class="docutils literal notranslate"><span class="pre">v.y</span></code> and <code class="docutils literal notranslate"><span class="pre">v.z</span></code> instead of <code class="docutils literal notranslate"><span class="pre">v[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">v[1]</span></code> and <code class="docutils literal notranslate"><span class="pre">v[2]</span></code>. This is called <em>swizzling</em> and can also be used in GLSL vector objects.</p>
+</div>
 </section>
 <hr class="docutils" />
 <section id="scaling">

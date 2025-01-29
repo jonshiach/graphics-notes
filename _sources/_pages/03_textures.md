@@ -44,7 +44,7 @@ We now need to load a image into our texture. To do this we are going to make us
 
 ```cpp
 // Load texture image from file
-const char *path = "../assets/crate.jpeg";
+const char *path = "../assets/crate.jpg";
 int width, height, nChannels;
 stbi_set_flip_vertically_on_load(true);
 unsigned char *data = stbi_load(path, &width, &height, &nChannels, 0);
@@ -60,9 +60,9 @@ The functions used here are:
 - `stbi_set_flip_vertically_on_load()` flips the image vertically since the $(0,0)$ co-ordinate on an images is the top-left corner and OpenGL expects it to be the bottom-right corner
 - `stbi_load()` loads the image specified in the `path` string into the `data` variable and the stores the width, height and number of colour channels into the appropriate variables 
 
-The texture we are using here is **crate.jpeg** which is stored in the **assets/** folder and represents a side of a wooden crate.
+The texture we are using here is **crate.jpg** which is stored in the **assets/** folder and represents a side of a wooden crate.
 
-```{figure} ../_images/03_crate.jpeg
+```{figure} ../_images/03_crate.jpg
 :width: 300
 
 The crate texture.
@@ -72,8 +72,7 @@ After getting the texture data from the image file we tell OpenGL we that have a
 
 ```cpp
 // Specify 2D texture
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-                GL_UNSIGNED_BYTE, data);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 glGenerateMipmap(GL_TEXTURE_2D);
 ```
 
