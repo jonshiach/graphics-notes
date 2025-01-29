@@ -45,7 +45,7 @@ git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
 
 ### Build the project files
 
-After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the **Computer-Graphics-Lab/** folder you have just downloaded you will see a file called **CMakeLists.txt** which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.
+After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the **Computer-Graphics-Labs/** folder you have just downloaded you will see a file called **CMakeLists.txt** which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.
 
 1. In the **Computer-Graphics-Labs** folder create a folder and call it **build/**.
 2. Run **Cmake** (if you don't have Cmake installed on your machine your can download it from <a href="https://www.cmake.org" target="_blank">here</a>)
