@@ -40,7 +40,7 @@ glBindTexture(GL_TEXTURE_2D, texture);
 
 Here we have defined a target called `texture` which is an integer used to refer to the texture. The texture is then generated and bound to this target using the `glGenTextures()` and `glBindTexture()` functions.
 
-We now need to load a image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">`stb_image`</a> library, the header file for which can be found in the **common/** folder. Enter the following code into your program.
+We now need to load a image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">stb_image</a> library, the header file for which can be found in the **common/** folder. Enter the following code into your program.
 
 ```cpp
 // Load texture image from file
