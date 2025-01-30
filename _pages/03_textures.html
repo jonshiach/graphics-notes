@@ -369,7 +369,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-triangle">3.1. Texture triangle</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-texture">3.1.1. Creating a texture</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-co-ordinates">3.1.2. Texture co-ordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-coordinates">3.1.2. Texture coordinates</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">3.1.3. Shaders</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-shader">3.1.3.1. Vertex shader</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-shader">3.1.3.2. Fragment shader</a></li>
@@ -418,11 +418,11 @@ document.write(`
 <p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Mapping a texture to a polygon.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The texture is a 2D image where each pixel within the texture, known as a <strong>textel</strong>, is referenced using the <strong>texture coordinates</strong> given as <span class="math notranslate nohighlight">\((u,v)\)</span> where <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are in the range 0 to 1, i.e., <span class="math notranslate nohighlight">\((0,0)\)</span> corresponds to the textel in the bottom-left corner and <span class="math notranslate nohighlight">\((1,1)\)</span> corresponds to the textel in the top-right corner. When a fragment is created by the shader the corresponding texture co-ordinates are calculated and the sample colour of the textel is used for the fragment. Fortunately we do not need to write a texture mapper functions since these are in OpenGL.</p>
+<p>The texture is a 2D image where each pixel within the texture, known as a <strong>textel</strong>, is referenced using the <strong>texture coordinates</strong> given as <span class="math notranslate nohighlight">\((u,v)\)</span> where <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are in the range 0 to 1, i.e., <span class="math notranslate nohighlight">\((0,0)\)</span> corresponds to the textel in the bottom-left corner and <span class="math notranslate nohighlight">\((1,1)\)</span> corresponds to the textel in the top-right corner. When a fragment is created by the shader the corresponding texture coordinates are calculated and the sample colour of the textel is used for the fragment. Fortunately we do not need to write a texture mapper functions since these are in OpenGL.</p>
 <hr class="docutils" />
 <section id="texture-triangle">
 <h2><span class="section-number">3.1. </span>Texture triangle<a class="headerlink" href="#texture-triangle" title="Permalink to this heading">#</a></h2>
-<p>Compile and run the <strong>Lab03_Textures</strong> project and you should be presented with the image of the red triangle from <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#basic-shapes-section"><span class="std std-ref">2. Basic Shapes in OpenGL</span></a> shown in <a class="reference internal" href="#red-triangle-figure2"><span class="std std-numref">Fig. 3.2</span></a></p>
+<p>Compile and run the <strong>Lab03_Textures</strong> project, and you should be presented with the image of the red triangle from <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#basic-shapes-section"><span class="std std-ref">2. Basic Shapes in OpenGL</span></a> shown in <a class="reference internal" href="#red-triangle-figure2"><span class="std std-numref">Fig. 3.2</span></a></p>
 <figure class="align-default" id="red-triangle-figure2">
 <a class="reference internal image-reference" href="../_images/03_red_triangle.png"><img alt="../_images/03_red_triangle.png" src="../_images/03_red_triangle.png" style="width: 500px;" /></a>
 <figcaption>
@@ -432,7 +432,7 @@ document.write(`
 <p>We will apply a texture to this triangle.</p>
 <section id="creating-a-texture">
 <h3><span class="section-number">3.1.1. </span>Creating a texture<a class="headerlink" href="#creating-a-texture" title="Permalink to this heading">#</a></h3>
-<p>The first thing we need to do is create a texture object and bind it to a target so we can call upon it later. Enter the following code to the <strong>Lab03_Textures.cpp</strong> file after we tell OpenGL to compile the shader program</p>
+<p>The first thing we need to do is create a texture object and bind it to a target, so we can call upon it later. Enter the following code to the <strong>Lab03_Textures.cpp</strong> file after we tell OpenGL to compile the shader program</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create and bind texture</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture</span><span class="p">;</span>
 <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">texture</span><span class="p">);</span>
@@ -440,7 +440,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Here we have defined a target called <code class="docutils literal notranslate"><span class="pre">texture</span></code> which is an integer used to refer to the texture. The texture is then generated and bound to this target using the <code class="docutils literal notranslate"><span class="pre">glGenTextures()</span></code> and <code class="docutils literal notranslate"><span class="pre">glBindTexture()</span></code> functions.</p>
-<p>We now need to load a image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">stb_image</a> library, the header file for which can be found in the <strong>common/</strong> folder. Enter the following code into your program.</p>
+<p>We now need to load an image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">stb_image</a> library, the header file for which can be found in the <strong>common/</strong> folder. Enter the following code into your program.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture image from file</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;../assets/crate.jpg&quot;</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">nChannels</span><span class="p">;</span>
@@ -455,7 +455,7 @@ document.write(`
 </div>
 <p>The functions used here are:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">stbi_set_flip_vertically_on_load()</span></code> flips the image vertically since the <span class="math notranslate nohighlight">\((0,0)\)</span> co-ordinate on an images is the top-left corner and OpenGL expects it to be the bottom-right corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stbi_set_flip_vertically_on_load()</span></code> flips the image vertically since the <span class="math notranslate nohighlight">\((0,0)\)</span> coordinate on an image is the top-left corner and OpenGL expects it to be the bottom-right corner</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stbi_load()</span></code> loads the image specified in the <code class="docutils literal notranslate"><span class="pre">path</span></code> string into the <code class="docutils literal notranslate"><span class="pre">data</span></code> variable and the stores the width, height and number of colour channels into the appropriate variables</p></li>
 </ul>
 <p>The texture we are using here is <strong>crate.jpg</strong> which is stored in the <strong>assets/</strong> folder and represents a side of a wooden crate.</p>
@@ -478,9 +478,9 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<section id="texture-co-ordinates">
-<h3><span class="section-number">3.1.2. </span>Texture co-ordinates<a class="headerlink" href="#texture-co-ordinates" title="Permalink to this heading">#</a></h3>
-<p>So we have created a texture and told OpenGL all about it. Now we need specify how we want to use the texture. To do this for each of the vertices of the triangle we need to define the corresponding <span class="math notranslate nohighlight">\((u, v)\)</span> texture co-ordinates. This is done in a the same way as the triangle vertices, i.e., define an array containing the co-ordinates, create a buffer and copy the co-ordinates to this buffer.</p>
+<section id="texture-coordinates">
+<h3><span class="section-number">3.1.2. </span>Texture coordinates<a class="headerlink" href="#texture-coordinates" title="Permalink to this heading">#</a></h3>
+<p>So we have created a texture and told OpenGL all about it. Now we need to specify how we want to use the texture. To do this for each of the vertices of the triangle we need to define the corresponding <span class="math notranslate nohighlight">\((u, v)\)</span> texture coordinates. This is done in the same way as the triangle vertices, i.e., define an array containing the coordinates, create a buffer and copy the coordinates to this buffer.</p>
 <p>Enter the following code after we defined the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array (you may need to scroll up a bit).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define texture coordinates</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uv</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -491,8 +491,8 @@ document.write(`
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>Here we have defined an array of float values called <code class="docutils literal notranslate"><span class="pre">uv</span></code> and specified the texture co-ordinates so that the bottom-left triangle vertex is mapped to the texture co-ordinate <span class="math notranslate nohighlight">\((0, 0)\)</span> at the bottom-left corner of the texture, the bottom-right vertex is mapped to <span class="math notranslate nohighlight">\((1,0)\)</span> at the bottom-right corner of the texture and the top vertex is mapped to <span class="math notranslate nohighlight">\((0.5, 1)\)</span> in the middle of the top edge of the texture.</p>
-<p>The buffer for the texture co-ordinates is created in the same was as for the triangle vertices. Enter the following code after the VBO was created.</p>
+<p>Here we have defined an array of float values called <code class="docutils literal notranslate"><span class="pre">uv</span></code> and specified the texture coordinates so that the bottom-left triangle vertex is mapped to the texture coordinate <span class="math notranslate nohighlight">\((0, 0)\)</span> in the bottom-left corner of the texture, the bottom-right vertex is mapped to <span class="math notranslate nohighlight">\((1,0)\)</span> in the bottom-right corner of the texture and the top vertex is mapped to <span class="math notranslate nohighlight">\((0.5, 1)\)</span> in the middle of the top edge of the texture.</p>
+<p>The buffer for the texture coordinates is created in the same was as for the triangle vertices. Enter the following code after the VBO was created.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create texture buffer</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">uvBuffer</span><span class="p">;</span>
 <span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uvBuffer</span><span class="p">);</span>
@@ -500,15 +500,15 @@ document.write(`
 <span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">uv</span><span class="p">),</span><span class="w"> </span><span class="n">uv</span><span class="p">,</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Sending the texture co-ordinates to the GPU is done in the same way as for the VBO. Enter the following code after we send the VBO to the GPU (this is in the render loop so scroll down a bit).</p>
+<p>Sending the texture coordinates to the GPU is done in the same way as for the VBO. Enter the following code after we send the VBO to the GPU (this is in the render loop so scroll down a bit).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send the UV buffer to the shaders</span>
 <span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">uvBuffer</span><span class="p">);</span>
 <span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that since each texture co-ordinates requires just 2 floats for <span class="math notranslate nohighlight">\((u,v)\)</span> instead of 3 for the vertex co-ordinates <span class="math notranslate nohighlight">\((x,y,z)\)</span> the second argument in the <code class="docutils literal notranslate"><span class="pre">glVertexAttribPointer()</span></code> function is <code class="docutils literal notranslate"><span class="pre">2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
-<p>The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the <span class="math notranslate nohighlight">\((u, v)\)</span> co-ordinates to the shader enter the following code.</p>
+<p>Note that since each texture coordinates requires just 2 floats for <span class="math notranslate nohighlight">\((u,v)\)</span> instead of 3 for the vertex coordinates <span class="math notranslate nohighlight">\((x,y,z)\)</span> the second argument in the <code class="docutils literal notranslate"><span class="pre">glVertexAttribPointer()</span></code> function is <code class="docutils literal notranslate"><span class="pre">2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<p>The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the <span class="math notranslate nohighlight">\((u, v)\)</span> coordinates to the shader enter the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind the texture to the VAO</span>
 <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">);</span>
 <span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">VAO</span><span class="p">);</span>
@@ -519,7 +519,7 @@ document.write(`
 <h3><span class="section-number">3.1.3. </span>Shaders<a class="headerlink" href="#shaders" title="Permalink to this heading">#</a></h3>
 <section id="vertex-shader">
 <h4><span class="section-number">3.1.3.1. </span>Vertex shader<a class="headerlink" href="#vertex-shader" title="Permalink to this heading">#</a></h4>
-<p>Recall that the <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#vertex-shader-section"><span class="std std-ref">vertex shader</span></a> deals with the vertex co-ordinates and is used by OpenGL to calculate the co-ordinates of the fragment. So in addition to passing the <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates of the vertices we must also pass the <span class="math notranslate nohighlight">\((u, v)\)</span> co-ordinates of the textels that correspond to the triangle vertices.</p>
+<p>Recall that the <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#vertex-shader-section"><span class="std std-ref">vertex shader</span></a> deals with the vertex coordinates and is used by OpenGL to calculate the coordinates of the fragment. So in addition to passing the <span class="math notranslate nohighlight">\((x, y, z)\)</span> coordinates of the vertices we must also pass the <span class="math notranslate nohighlight">\((u, v)\)</span> coordinates of the textels that correspond to the triangle vertices.</p>
 <p>Edit the <strong>vertexShader.glsl</strong> file in the <strong>Lab03_Textures</strong> project so that it looks like the following.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
 
@@ -535,7 +535,7 @@ document.write(`
 <span class="w">    </span><span class="c1">// Output vertex position</span>
 <span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="c1">// Output texture co-ordinates</span>
+<span class="w">    </span><span class="c1">// Output texture coordinates</span>
 <span class="w">    </span><span class="n">UV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uv</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -562,7 +562,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we now have an input of the 2-element vector <code class="docutils literal notranslate"><span class="pre">uv</span></code> which has been outputted from the vertex shader. Since our texture is a 2D image then we use the <a href="https://www.khronos.org/opengl/wiki/Sampler_(GLSL)" target="_blank"><code class="docutils literal notranslate"><span class="pre">sampler2D</span></code></a> GLSL type to declare the uniform <code class="docutils literal notranslate"><span class="pre">textureMap</span></code> (uniforms are explained <a class="reference internal" href="#uniforms-section"><span class="std std-ref">below</span></a>). The colour of the fragment is taken from the texture using the <code class="docutils literal notranslate"><span class="pre">texture()</span></code> function where the first argument is the name of the texture uniform and the second argument is the <span class="math notranslate nohighlight">\((u,v)\)</span> texture co-ordinates of the fragment.</p>
+<p>Here we now have an input of the 2-element vector <code class="docutils literal notranslate"><span class="pre">uv</span></code> which has been outputted from the vertex shader. Since our texture is a 2D image then we use the <a href="https://www.khronos.org/opengl/wiki/Sampler_(GLSL)" target="_blank"><code class="docutils literal notranslate"><span class="pre">sampler2D</span></code></a> GLSL type to declare the uniform <code class="docutils literal notranslate"><span class="pre">textureMap</span></code> (uniforms are explained <a class="reference internal" href="#uniforms-section"><span class="std std-ref">below</span></a>). The colour of the fragment is taken from the texture using the <code class="docutils literal notranslate"><span class="pre">texture()</span></code> function where the first argument is the name of the texture uniform and the second argument is the <span class="math notranslate nohighlight">\((u,v)\)</span> texture coordinates of the fragment.</p>
 <p>Compile and run program and, after sending a prayer to the programming gods, you should be presented with your triangle which has now been textured using the crate texture.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/03_texture_triangle.png"><img alt="../_images/03_texture_triangle.png" src="../_images/03_texture_triangle.png" style="width: 500px;" /></a>
@@ -573,14 +573,14 @@ document.write(`
 <hr class="docutils" />
 <section id="texture-rectangle">
 <h2><span class="section-number">3.2. </span>Texture rectangle<a class="headerlink" href="#texture-rectangle" title="Permalink to this heading">#</a></h2>
-<p>Our texture triangle is great and all but doesn’t really look like a realistic object. Since the original texture is rectangular, lets create a rectangle out of two triangles with the appropriate texture mapping.</p>
+<p>Our texture triangle is great and all but doesn’t really look like a realistic object. Since the original texture is rectangular, let’s create a rectangle out of two triangles with the appropriate texture mapping.</p>
 <figure class="align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/03_rectangle.svg"><img alt="../_images/03_rectangle.svg" src="../_images/03_rectangle.svg" width="450" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">A rectangle constructed using two triangles.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>So the lower-right (blue) triangle has vertex co-ordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and the upper-left (red) triangle has vertex co-ordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((-0.5, 0.5, 0)\)</span>. Change the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code> arrays to the following.</p>
+<p>So the lower-right (blue) triangle has vertex coordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and the upper-left (red) triangle has vertex coordinates <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((-0.5, 0.5, 0)\)</span>. Change the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code> arrays to the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertex positions</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// x     y     z</span>
@@ -592,7 +592,7 @@ document.write(`
 <span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span>
 <span class="p">};</span>
 
-<span class="c1">// Define texture co-ordinates</span>
+<span class="c1">// Define texture coordinates</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uv</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// u    v</span>
 <span class="w">    </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">    </span><span class="c1">// triangle 1</span>
@@ -604,7 +604,7 @@ document.write(`
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>Compile and run the program and you should be presented with the more realistic image in <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>.</p>
+<p>Compile and run the program, and you should be presented with the more realistic image in <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>.</p>
 <figure class="align-default" id="texture-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/03_texture_rectangle.png"><img alt="../_images/03_texture_rectangle.png" src="../_images/03_texture_rectangle.png" style="width: 500px;" /></a>
 <figcaption>
@@ -613,7 +613,7 @@ document.write(`
 </figure>
 <section id="element-buffer-objects-ebo">
 <h3><span class="section-number">3.2.1. </span>Element Buffer Objects (EBO)<a class="headerlink" href="#element-buffer-objects-ebo" title="Permalink to this heading">#</a></h3>
-<p>Our rectangle is defined using 6 sets of <span class="math notranslate nohighlight">\((x,y,z)\)</span> co-ordinates for the 2 triangles but a rectangle only has 4 vertices. This means we are using 2 extra co-ordinates than we really need to as both of the triangles share the vertices at <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span>. This isn’t too bad for our simple rectangle example but for more sophisticated scenes that use thousands of triangles it can be inefficient.</p>
+<p>Our rectangle is defined using 6 sets of <span class="math notranslate nohighlight">\((x,y,z)\)</span> coordinates for the 2 triangles, but a rectangle only has 4 vertices. This means we are using 2 extra coordinates than we really need to as both of the triangles share the vertices at <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span>. This isn’t too bad for our simple rectangle example but for more sophisticated scenes that use thousands of triangles it can be inefficient.</p>
 <p>To improve on this we can use an <strong>Element Buffer Object (EBO)</strong> that contains <strong>indices</strong> that map a vertex of the rectangle to the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array. Consider <a class="reference internal" href="#rectangle-indices-figure"><span class="std std-numref">Fig. 3.6</span></a> that shows a rectangle drawn using two triangles. The lower-right triangle is formed using the vertices with indices 0, 1 and 2 and the upper-left triangle is formed using vertices with indices 0, 2 and 3.</p>
 <figure class="align-default" id="rectangle-indices-figure">
 <a class="reference internal image-reference" href="../_images/03_indices.svg"><img alt="../_images/03_indices.svg" src="../_images/03_indices.svg" width="200" /></a>
@@ -631,7 +631,7 @@ document.write(`
 <span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="w">   </span><span class="c1">// 3       0 -- 1</span>
 <span class="p">};</span>
 
-<span class="c1">// Define texture co-ordinates</span>
+<span class="c1">// Define texture coordinates</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uv</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// u    v      index</span>
 <span class="w">    </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="c1">// 0</span>
@@ -655,7 +655,7 @@ document.write(`
 <span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ELEMENT_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span><span class="w"> </span><span class="n">indices</span><span class="p">,</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This is similar to the code used to create the other buffer objects with the exception we are creating an <code class="docutils literal notranslate"><span class="pre">GL_ELEMENT_ARRAY_BUFFER</span></code> instead of an <code class="docutils literal notranslate"><span class="pre">GL_ARRAY_BUFFER</span></code>. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from <code class="docutils literal notranslate"><span class="pre">glDrawArrays()</span></code> to <code class="docutils literal notranslate"><span class="pre">glDrawElements()</span></code></p>
+<p>This is similar to the code used to create the other buffer objects with the exception we are creating a <code class="docutils literal notranslate"><span class="pre">GL_ELEMENT_ARRAY_BUFFER</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">GL_ARRAY_BUFFER</span></code>. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from <code class="docutils literal notranslate"><span class="pre">glDrawArrays()</span></code> to <code class="docutils literal notranslate"><span class="pre">glDrawElements()</span></code></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw the triangles</span>
 <span class="n">glDrawElements</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">),</span><span class="w"> </span><span class="n">GL_UNSIGNED_INT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
@@ -663,7 +663,7 @@ document.write(`
 <span class="n">glDisableVertexAttribArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Make this change, compile and run the program and you should see the window from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>. You may be thinking you’ve gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array and we can now use EBOs to draw more sophisticated shapes and 3D models.</p>
+<p>Make this change, compile and run the program, and you should see the window from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>. You may be thinking you’ve gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array, and we can now use EBOs to draw more sophisticated shapes and 3D models.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -671,7 +671,7 @@ document.write(`
 <h2><span class="section-number">3.3. </span>Texture wrapping and filtering<a class="headerlink" href="#texture-wrapping-and-filtering" title="Permalink to this heading">#</a></h2>
 <section id="texture-wrapping">
 <h3><span class="section-number">3.3.1. </span>Texture wrapping<a class="headerlink" href="#texture-wrapping" title="Permalink to this heading">#</a></h3>
-<p>In our examples above, all of the texture co-ordinates have been in the range from 0 to 1. What happens if we use textures co-ordinates outside of this range? To test this we are going to change our texture to something less symmetrical (you will see why in a minute). Change the <code class="docutils literal notranslate"><span class="pre">path</span></code> variable to the following</p>
+<p>In our examples above, all the texture coordinates have been in the range from 0 to 1. What happens if we use textures coordinates outside this range? To test this we are going to change our texture to something less symmetrical (you will see why in a minute). Change the <code class="docutils literal notranslate"><span class="pre">path</span></code> variable to the following</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture image from file</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;../assets/mario.png&quot;</span><span class="p">;</span>
 </pre></div>
@@ -681,27 +681,27 @@ document.write(`
 <span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Compile and run the program and you should be presented with a (hopefully) familiar face.</p>
+<p>Compile and run the program, and you should be presented with a (hopefully) familiar face.</p>
 <figure class="align-default" id="mario-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/03_mario_rectangle.png"><img alt="../_images/03_mario_rectangle.png" src="../_images/03_mario_rectangle.png" style="width: 500px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Its a me, Mario!</span><a class="headerlink" href="#mario-rectangle-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Now we can experiment with specifying texture co-ordinates outside of the range 0 to 1. Edit the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to change all of the <code class="docutils literal notranslate"><span class="pre">1.0f</span></code> values to <code class="docutils literal notranslate"><span class="pre">2.0f</span></code>. Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-repeat-figure"><span class="std std-numref">Fig. 3.8</span></a></p>
+<p>Now we can experiment with specifying texture coordinates outside the range 0 to 1. Edit the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to change all the <code class="docutils literal notranslate"><span class="pre">1.0f</span></code> values to <code class="docutils literal notranslate"><span class="pre">2.0f</span></code>. Compile and run the program, and you should see the image shown in <a class="reference internal" href="#gl-repeat-figure"><span class="std std-numref">Fig. 3.8</span></a></p>
 <figure class="align-default" id="gl-repeat-figure">
 <a class="reference internal image-reference" href="../_images/03_GL_REPEAT.png"><img alt="../_images/03_GL_REPEAT.png" src="../_images/03_GL_REPEAT.png" style="width: 500px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>.</span><a class="headerlink" href="#gl-repeat-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>What has happened here as that OpenGL has used <strong>texture wrapping</strong> to repeated the texture over the rectangle (or more accurately the two triangles). This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself.</p>
+<p>Here OpenGL has used <strong>texture wrapping</strong> to repeat the texture over the rectangle. This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself.</p>
 <p>OpenGL offers other options for texture wrapping;</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code> - the texture repeats over the fragment (default);</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code> - same as <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code> but the texture is mirrored with each repeat;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code> - clamps the texture co-ordinates to between 0 and 1, co-ordinates outside of this range are clamped to the edge so that the textels on the edge are stretched to the edge of the fragment;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_BORDER</span></code> - co-ordinates outside of the range <span class="math notranslate nohighlight">\((0,0)\)</span> to <span class="math notranslate nohighlight">\((1,1)\)</span> are given a used defined border colour.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code> - clamps the texture coordinates to between 0 and 1, coordinates outside this range are clamped to the edge so that the textels on the edge are stretched to the edge of the fragment;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_BORDER</span></code> - coordinates outside the range <span class="math notranslate nohighlight">\((0,0)\)</span> to <span class="math notranslate nohighlight">\((1,1)\)</span> are given a used defined border colour.</p></li>
 </ul>
 <p>We can specify the texture wrapping using the <code class="docutils literal notranslate"><span class="pre">glTexParameteri()</span></code> function. To apply <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code> add the following code after the texture as been specified.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set texture wrapping options</span>
@@ -709,7 +709,7 @@ document.write(`
 <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_WRAP_T</span><span class="p">,</span><span class="w"> </span><span class="n">GL_MIRRORED_REPEAT</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Here we have specified the wrapping in the horizontal (<code class="docutils literal notranslate"><span class="pre">S</span></code>) and vertical (<code class="docutils literal notranslate"><span class="pre">T</span></code>) directions (some people, including as it seems the contributors to OpenGL, use <span class="math notranslate nohighlight">\((s,t)\)</span> for the vertex co-ordinates instead of the standard <span class="math notranslate nohighlight">\((u,v)\)</span>) to <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>. Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-mirrored-repeat-figure"><span class="std std-numref">Fig. 3.9</span></a>.</p>
+<p>Here we have specified the wrapping in the horizontal (<code class="docutils literal notranslate"><span class="pre">S</span></code>) and vertical (<code class="docutils literal notranslate"><span class="pre">T</span></code>) directions (some people, including as it seems the contributors to OpenGL, use <span class="math notranslate nohighlight">\((s,t)\)</span> for the vertex coordinates instead of the standard <span class="math notranslate nohighlight">\((u,v)\)</span>) to <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>. Compile and run the program, and you should see the image shown in <a class="reference internal" href="#gl-mirrored-repeat-figure"><span class="std std-numref">Fig. 3.9</span></a>.</p>
 <figure class="align-default" id="gl-mirrored-repeat-figure">
 <a class="reference internal image-reference" href="../_images/03_GL_MIRRORED_REPEAT.png"><img alt="../_images/03_GL_MIRRORED_REPEAT.png" src="../_images/03_GL_MIRRORED_REPEAT.png" style="width: 500px;" /></a>
 <figcaption>
@@ -740,10 +740,10 @@ document.write(`
 </section>
 <section id="texture-filtering">
 <h3><span class="section-number">3.3.2. </span>Texture filtering<a class="headerlink" href="#texture-filtering" title="Permalink to this heading">#</a></h3>
-<p><strong>Texture filtering</strong> is method of determining the colour of the fragment, known as the <strong>colour sample</strong>, from the texture. OpenGL maps the co-ordinates of the fragment to the texture co-ordinates and in most cases this will not align exactly to a textel centre, so what does OpenGL do? OpenGL provides two main options : nearest-neighbour interpolation and bilinear interpolation.</p>
+<p><strong>Texture filtering</strong> is method of determining the colour of the fragment, known as the <strong>colour sample</strong>, from the texture. OpenGL maps the coordinates of the fragment to the texture coordinates and in most cases this will not align exactly to a textel centre, so what does OpenGL do? OpenGL provides two main options : nearest-neighbour interpolation and bilinear interpolation.</p>
 <section id="nearest-neighbour-interpolation">
 <h4><span class="section-number">3.3.2.1. </span>Nearest neighbour interpolation<a class="headerlink" href="#nearest-neighbour-interpolation" title="Permalink to this heading">#</a></h4>
-<p><strong>Nearest neighbour interpolation</strong> is the default in OpenGL uses the colour of the nearest textel to the texture co-ordinates as the colour sample. This is illustrated in the diagram shown in <a class="reference internal" href="#nearest-neighbour-interpolation-figure"><span class="std std-numref">Fig. 3.12</span></a> where the texture co-ordinates represented by the black circle is mapped in a region on the texture with four neighbouring textels with the textel centres represented by the crosses. The texture co-ordinates are closest to the centre of the textel in the top-left so the colour of that textel is used for the colour sample.</p>
+<p><strong>Nearest neighbour interpolation</strong> is the default in OpenGL uses the colour of the nearest textel to the texture coordinates as the colour sample. This is illustrated in the diagram shown in <a class="reference internal" href="#nearest-neighbour-interpolation-figure"><span class="std std-numref">Fig. 3.12</span></a> where the texture coordinates represented by the black circle is mapped in a region on the texture with four neighbouring textels with the textel centres represented by the crosses. The texture coordinates are closest to the centre of the textel in the top-left so the colour of that textel is used for the colour sample.</p>
 <figure class="align-default" id="nearest-neighbour-interpolation-figure">
 <a class="reference internal image-reference" href="../_images/03_nearest_neighbour.svg"><img alt="../_images/03_nearest_neighbour.svg" src="../_images/03_nearest_neighbour.svg" width="500" /></a>
 <figcaption>
@@ -761,7 +761,7 @@ document.write(`
 <span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;../assets/mario_small.png&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>and change the <span class="math notranslate nohighlight">\((u, v)\)</span> co-ordinates back so that the texture fills the rectangle. Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-nearest-figure"><span class="std std-numref">Fig. 3.13</span></a>.</p>
+<p>And change the <span class="math notranslate nohighlight">\((u, v)\)</span> coordinates back so that the texture fills the rectangle. Compile and run the program, and you should see the image shown in <a class="reference internal" href="#gl-nearest-figure"><span class="std std-numref">Fig. 3.13</span></a>.</p>
 <figure class="align-default" id="gl-nearest-figure">
 <a class="reference internal image-reference" href="../_images/03_GL_NEAREST.png"><img alt="../_images/03_GL_NEAREST.png" src="../_images/03_GL_NEAREST.png" style="width: 500px;" /></a>
 <figcaption>
@@ -772,14 +772,14 @@ document.write(`
 </section>
 <section id="bilinear-interpolation">
 <h4><span class="section-number">3.3.2.2. </span>Bilinear interpolation<a class="headerlink" href="#bilinear-interpolation" title="Permalink to this heading">#</a></h4>
-<p>Another method is to calculate the sample colour using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation" target="_blank"><strong>bilinear interpolation</strong></a> where the distance between <span class="math notranslate nohighlight">\((u,v)\)</span> co-ordinate and the centre of a textel determines how much that textel contributes to the sample colour, i.e., the closer the textel the more of the textel colour is contained in the colour sample.</p>
+<p>Another method is to calculate the sample colour using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation" target="_blank"><strong>bilinear interpolation</strong></a> where the distance between <span class="math notranslate nohighlight">\((u,v)\)</span> coordinate and the centre of a textel determines how much that textel contributes to the sample colour, i.e., the closer the textel the more of the textel colour is contained in the colour sample.</p>
 <figure class="align-default" id="bilinear-interpolation-figure">
 <a class="reference internal image-reference" href="../_images/03_bilinear.svg"><img alt="../_images/03_bilinear.svg" src="../_images/03_bilinear.svg" width="500" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 3.14 </span><span class="caption-text">Bilinear interpolation.</span><a class="headerlink" href="#bilinear-interpolation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To see the affects of bilinear interpolation, change <code class="docutils literal notranslate"><span class="pre">GL_NEAREST</span></code> to <code class="docutils literal notranslate"><span class="pre">GL_LINEAR</span></code> in the <code class="docutils literal notranslate"><span class="pre">glTexParameteri()</span></code> functions. Compile and run the program and you should see the image shown in <a class="reference internal" href="#gl-linear-figure"><span class="std std-numref">Fig. 3.15</span></a>.</p>
+<p>To see the affects of bilinear interpolation, change <code class="docutils literal notranslate"><span class="pre">GL_NEAREST</span></code> to <code class="docutils literal notranslate"><span class="pre">GL_LINEAR</span></code> in the <code class="docutils literal notranslate"><span class="pre">glTexParameteri()</span></code> functions. Compile and run the program, and you should see the image shown in <a class="reference internal" href="#gl-linear-figure"><span class="std std-numref">Fig. 3.15</span></a>.</p>
 <figure class="align-default" id="gl-linear-figure">
 <a class="reference internal image-reference" href="../_images/03_GL_LINEAR.png"><img alt="../_images/03_GL_LINEAR.png" src="../_images/03_GL_LINEAR.png" style="width: 500px;" /></a>
 <figcaption>
@@ -794,7 +794,7 @@ document.write(`
 <section id="mipmaps">
 <span id="mipmaps-section"></span><h2><span class="section-number">3.4. </span>Mipmaps<a class="headerlink" href="#mipmaps" title="Permalink to this heading">#</a></h2>
 <p>Another issue that may occur is when the fragment is a lot smaller than the texture which can happen when an object that is far away from the viewer. In these cases OpenGL will struggle to get the colour sample from a high resolution texture since a single fragment covers a large part of the texture.</p>
-<p>To solve this issue OpenGL uses <a href="https://www.khronos.org/opengl/wiki/Texture#Mip_maps" target="_blank"><strong>mipmaps</strong></a> (mip is short for the latin phrase <em>“multum in parvo”</em> or “much in little”) which are a series of textures, each one half the size of the previous one. OpenGL will use a mipmap texture most suitable based on the distance of the fragment from the viewer. This way the fragment does not span a large part of the texture and it also cuts down on memory.</p>
+<p>To solve this issue OpenGL uses <a href="https://www.khronos.org/opengl/wiki/Texture#Mip_maps" target="_blank"><strong>mipmaps</strong></a> (mip is short for the latin phrase <em>“multum in parvo”</em> or “much in little”) which are a series of textures, each one half the size of the previous one. OpenGL will use a mipmap texture most suitable based on the distance of the fragment from the viewer. This way the fragment does not span a large part of the texture, and it also cuts down on memory.</p>
 <figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/03_mipmaps.svg"><img alt="../_images/03_mipmaps.svg" src="../_images/03_mipmaps.svg" width="500" /></a>
 <figcaption>
@@ -818,18 +818,18 @@ document.write(`
 <hr class="docutils" />
 <section id="multiple-textures">
 <h2><span class="section-number">3.5. </span>Multiple textures<a class="headerlink" href="#multiple-textures" title="Permalink to this heading">#</a></h2>
-<p>OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all of the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the <strong>Lab03_Textures</strong> project, hidden away in the <strong>Header files</strong> folder is the file <strong>texture.hpp</strong> that contains a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that does all of the hard work for us (so why did I get you to do all of that coding above - I’m just evil I suppose <em>mwahahahahaaa</em>).</p>
+<p>OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the <strong>Lab03_Textures</strong> project, hidden away in the <strong>Header files</strong> folder is the file <strong>texture.hpp</strong> that contains a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that does all the hard work for us.</p>
 <p>Comment out the code used to load the texture and specify the texture options (or delete it if you are feeling a bit annoyed) and enter the following code before the render loop.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load the textures</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/crate.jpg&quot;</span><span class="p">);</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadTexture</span><span class="p">(</span><span class="s">&quot;../assets/mario.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This loads the two textures we have been using which can be accessed using their targets <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code>. Compile and run the program and you should see the image from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>.</p>
-<p>We now want to deal with two textures in the fragment shader so we need a way of telling OpenGL which texture is which, we do this using uniforms.</p>
+<p>This loads the two textures we have been using which can be accessed using their targets <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code>. Compile and run the program, and you should see the image from <a class="reference internal" href="#texture-rectangle-figure"><span class="std std-numref">Fig. 3.5</span></a>.</p>
+<p>We now want to deal with two textures in the fragment shader, so we need a way of telling OpenGL which texture is which, we do this using uniforms.</p>
 <section id="uniforms">
 <span id="uniforms-section"></span><h3><span class="section-number">3.5.1. </span>Uniforms<a class="headerlink" href="#uniforms" title="Permalink to this heading">#</a></h3>
-<p>A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank"><strong>uniform</strong></a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders so we will use one for passing the texture target to the fragment shader.</p>
+<p>A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank"><strong>uniform</strong></a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders, so we will use one for passing the texture target to the fragment shader.</p>
 <p>Add the following code to your program before the render loop (since the textures are the same for every frame).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send the texture uniforms to the fragment shader</span>
 <span class="n">glUseProgram</span><span class="p">(</span><span class="n">shaderID</span><span class="p">);</span>
@@ -854,7 +854,7 @@ document.write(`
 </section>
 <section id="id1">
 <h3><span class="section-number">3.5.3. </span>Fragment shader<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>The last thing we need to do is update the fragment shader so that it uses both textures. Modify <strong>fragmentShader.glsl</strong> so that is looks like the following.</p>
+<p>The last thing we need to do is update the fragment shader so that it uses both textures. Modify <strong>fragmentShader.glsl</strong>, so that is looks like the following.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
 
 <span class="c1">// Input</span>
@@ -873,7 +873,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we have defined the two <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> uniforms <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code>, these need to be the same as what we called them in the <code class="docutils literal notranslate"><span class="pre">glGetUniformLocation()</span></code> functions. We then use the <code class="docutils literal notranslate"><span class="pre">mix()</span></code> function to combine the two textures so that 30% of the fragment colour is from the first texture (the crate) and the remaining 70% is from the second texture (Mario). Compile and run the program and you should see the image shown in <a class="reference internal" href="#two-textures-figure"><span class="std std-numref">Fig. 3.17</span></a>.</p>
+<p>Here we have defined the two <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> uniforms <code class="docutils literal notranslate"><span class="pre">texture1</span></code> and <code class="docutils literal notranslate"><span class="pre">texture2</span></code>, these need to be the same as what we called them in the <code class="docutils literal notranslate"><span class="pre">glGetUniformLocation()</span></code> functions. We then use the <code class="docutils literal notranslate"><span class="pre">mix()</span></code> function to combine the two textures so that 30% of the fragment colour is from the first texture (the crate) and the remaining 70% is from the second texture (Mario). Compile and run the program, and you should see the image shown in <a class="reference internal" href="#two-textures-figure"><span class="std std-numref">Fig. 3.17</span></a>.</p>
 <figure class="align-default" id="two-textures-figure">
 <a class="reference internal image-reference" href="../_images/03_two_textures.png"><img alt="../_images/03_two_textures.png" src="../_images/03_two_textures.png" style="width: 500px;" /></a>
 <figcaption>
@@ -886,7 +886,7 @@ document.write(`
 <section id="exercises">
 <h2><span class="section-number">3.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Change the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to create a texture rectangle consisting of a 6 by 4 grid of Marios.</p></li>
+<li><p>Change the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to create a texture rectangle consisting of a 6 by 4 grid of Mario’s.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/03_Ex1.png"><img alt="../_images/03_Ex1.png" src="../_images/03_Ex1.png" style="width: 400px;" /></a>
@@ -904,7 +904,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/03_Ex3.png"><img alt="../_images/03_Ex3.png" src="../_images/03_Ex3.png" style="width: 400px;" /></a>
 </figure>
 <ol class="arabic simple" start="4">
-<li><p>Change the <span class="math notranslate nohighlight">\((u,v)\)</span> co-ordinates so that the textured rectangle shows a zoomed in image of Mario’s eye.</p></li>
+<li><p>Change the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates so that the textured rectangle shows a zoomed in image of Mario’s eye.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/03_Ex4.png"><img alt="../_images/03_Ex4.png" src="../_images/03_Ex4.png" style="width: 400px;" /></a>
@@ -987,7 +987,7 @@ The video below walks you through these lab materials.
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-triangle">3.1. Texture triangle</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-texture">3.1.1. Creating a texture</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-co-ordinates">3.1.2. Texture co-ordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-coordinates">3.1.2. Texture coordinates</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">3.1.3. Shaders</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-shader">3.1.3.1. Vertex shader</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-shader">3.1.3.2. Fragment shader</a></li>
