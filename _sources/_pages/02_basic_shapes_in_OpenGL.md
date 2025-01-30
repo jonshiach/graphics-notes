@@ -142,8 +142,7 @@ We now need to combine the vertex and fragment shaders into a single shader prog
 
 ```cpp
 // Compile shader program
-unsigned int shaderID;
-shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
+unsigned int shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
 ```
 
 This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programs, we need to instruct OpenGL to use it. To do this enter the following code
