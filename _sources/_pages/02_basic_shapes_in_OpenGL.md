@@ -183,11 +183,11 @@ The input arguments for the `glVertexAttribPointer()` function are explained bel
 | Argument | Explanation |
 |:--|:--|
 | Attribute | A number that defines which vertex attribute we want to configure. In the vertex shader we used `location = 0` for the vertex co-ordinates and since we are passing vertex co-ordinates, we set the attribute to 0. |
-| Size | How many values does the vertex attribute have. Here we have (x,y,z) co-ordinates so this is 3. |
+| Size | How many values does the vertex attribute have. Here we have $(x,y,z)$ co-ordinates, so this is 3. |
 | Type | Our co-ordinates are floats. |
-| Normalise | We have already set out vertex co-ordinates in NDC (i.e., in the range -1 to 1) so we set this to false. |
+| Normalise | We have already set out vertex co-ordinates in NDC (i.e., in the range $-1$ to $1$) so we set this to false. |
 | Stride | The space between consecutive vertex attributes. Here one vertex immediately follows the next, so this is zero. |
-| Offset | Where does the first data point appear in the buffer? For us this is at the beginning, so we set it to 0. |
+| Offset | Where does the first data point appear in the buffer? For us this is at the beginning, so we set it to $0$. |
 
 Now we instruct OpenGL to draw the triangle, add the following code.
 
