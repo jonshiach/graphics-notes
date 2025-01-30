@@ -129,7 +129,7 @@ out vec3 colour;
 
 void main()
 {
-    colour = vec3(1.0f, 0.0f, 0.0f); // RGB
+    colour = vec3(1.0, 0.0, 0.0); // RGB
 }
 
 ```
