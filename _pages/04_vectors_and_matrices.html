@@ -406,11 +406,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="vectors-and-matrices">
 <span id="vectors-and-matrices-section"></span><h1><span class="section-number">4. </span>Vectors and Matrices<a class="headerlink" href="#vectors-and-matrices" title="Permalink to this heading">#</a></h1>
-<p>Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations. Will will be using this library in the upcoming labs so it is important that you know how it works.</p>
+<p>Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations. Will will be using this library in the upcoming labs, so it is important that you know how it works.</p>
 <hr class="docutils" />
 <section id="the-glm-library">
 <h2><span class="section-number">4.1. </span>The glm library<a class="headerlink" href="#the-glm-library" title="Permalink to this heading">#</a></h2>
-<p>The glm (<a href="https://github.com/g-truc/glm" target="_blank">OpenGL Mathematics</a>) library is a popular C++ mathematics library designed to provide classes and functions for mathematical operations, specifically tailored for graphics programming using OpenGL. We will be using functions from glm to perform calculations for us. Open the <strong>Lab04_Vectors_and_matrices.cpp</strong> file and in addition to the <strong>iostream</strong> library (for standard I/O operations) we have additional code that imports the glm library.</p>
+<p>The glm (<a href="https://github.com/g-truc/glm" target="_blank">OpenGL Mathematics</a>) library is a popular C++ mathematics library designed to provide classes and functions for mathematical operations, specifically tailored for graphics programming using OpenGL. Open the <strong>Lab04_Vectors_and_matrices.cpp</strong> file and in addition to the <strong>iostream</strong> library (for standard I/O operations) we have additional code that imports the glm library.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Include the glm library</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;glm/glm.hpp&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;glm/gtx/io.hpp&gt;</span>
@@ -425,12 +425,16 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ \mathbf{a} = (a_x, a_y, a_z). \]</div>
 <p>Here <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> has 3 elements so is a vector in 3D space where <span class="math notranslate nohighlight">\(a_x\)</span>, <span class="math notranslate nohighlight">\(a_y\)</span> and <span class="math notranslate nohighlight">\(a_z\)</span> are the lengths of the vector in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span> directions.</p>
-<figure class="align-default" id="id1">
+<figure class="align-default" id="vector-figure">
 <a class="reference internal image-reference" href="../_images/04_Vector.svg"><img alt="../_images/04_Vector.svg" height="200" src="../_images/04_Vector.svg" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">The vector <span class="math notranslate nohighlight">\(\mathbf{a} = (a_x, a_y, a_z)\)</span>.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">The vector <span class="math notranslate nohighlight">\(\mathbf{a} = (a_x, a_y, a_z)\)</span>.</span><a class="headerlink" href="#vector-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The reason the diagram in <a class="reference internal" href="#vector-figure"><span class="std std-numref">Fig. 4.1</span></a> has the <span class="math notranslate nohighlight">\(y\)</span>-axis pointing upwards and the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">5. Transformations</span></a> for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent.</p>
+</div>
 <p>Lets create the following 3D vector objects in C++.</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
@@ -452,7 +456,7 @@ document.write(`
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;b = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Here we have declared two vectors <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> using the <code class="docutils literal notranslate"><span class="pre">glm::vec3</span></code> type (for vectors in 2D we would use <code class="docutils literal notranslate"><span class="pre">glm::vec2</span></code>). The elements of the vectors <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> have been defined using two different methods: <code class="docutils literal notranslate"><span class="pre">a</span></code> has been defined using the <code class="docutils literal notranslate"><span class="pre">glm::vec3(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code> constructor and <code class="docutils literal notranslate"><span class="pre">b</span></code> by accessing the individual elements using <a class="reference internal" href="01_intro_to_cpp.html#arrays-section"><span class="std std-ref">array indexing</span></a>. The vectors have been printed to the console using <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> commands (glm vectors cannot be printed using the <code class="docutils literal notranslate"><span class="pre">printf()</span></code> function). Compile and run the <strong>Lab04_Vectors_and_matrices</strong> project and you should see the following outputted to the console.</p>
+<p>Here we have declared two vectors <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> using the <code class="docutils literal notranslate"><span class="pre">glm::vec3</span></code> type (for vectors in 2D we would use <code class="docutils literal notranslate"><span class="pre">glm::vec2</span></code>). The elements of the vectors <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> have been defined using two different methods: <code class="docutils literal notranslate"><span class="pre">a</span></code> has been defined using the <code class="docutils literal notranslate"><span class="pre">glm::vec3(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code> constructor and <code class="docutils literal notranslate"><span class="pre">b</span></code> by accessing the individual elements using <a class="reference internal" href="01_intro_to_cpp.html#arrays-section"><span class="std std-ref">array indexing</span></a>. The vectors have been printed to the console using <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> commands (glm vectors cannot be printed using the <code class="docutils literal notranslate"><span class="pre">printf()</span></code> function). Compile and run the <strong>Lab04_Vectors_and_matrices</strong> project, and you should see the following outputted to the console.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Vectors and Matrices
 --------------------------------------------------
 Defining vectors:
@@ -463,10 +467,10 @@ b = [    1.000,    2.000,    3.000]
 <section id="vector-magnitude">
 <span id="vector-magnitude-section"></span><h3><span class="section-number">4.2.1. </span>Vector magnitude<a class="headerlink" href="#vector-magnitude" title="Permalink to this heading">#</a></h3>
 <p>The <strong>magnitude</strong> of a vector <span class="math notranslate nohighlight">\(\mathbf{a} = (a_x, a_y, a_z)\)</span> is denoted by <span class="math notranslate nohighlight">\(\|\mathbf{a}\|\)</span> is the length from the tail of the vector to the head.</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/04_Vector_magnitude.svg"><img alt="../_images/04_Vector_magnitude.svg" height="100" src="../_images/04_Vector_magnitude.svg" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">The magnitude of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> is the length of the vector.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">The magnitude of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> is the length of the vector.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The magnitude is calculated using an extension of Pythagoras’ theorem, for example for 3D vectors the magnitude is</p>
@@ -554,13 +558,13 @@ length(bHat) = 1.000
 </figcaption>
 </figure>
 <p>The subtraction of the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> does similar, but since <span class="math notranslate nohighlight">\(\mathbf{a} - \mathbf{b} = \mathbf{a} + (-1)\mathbf{b}\)</span> then the direction of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> is reversed so <span class="math notranslate nohighlight">\(\mathbf{a} - \mathbf{b}\)</span> is the same as placing the tail of <span class="math notranslate nohighlight">\(-\mathbf{b}\)</span> at the head of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span>.</p>
-<figure class="align-default" id="vector-subraction-figure">
+<figure class="align-default" id="vector-subtraction-figure">
 <a class="reference internal image-reference" href="../_images/04_Vector_subtraction.svg"><img alt="../_images/04_Vector_subtraction.svg" height="180" src="../_images/04_Vector_subtraction.svg" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Vector subtraction.</span><a class="headerlink" href="#vector-subraction-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Vector subtraction.</span><a class="headerlink" href="#vector-subtraction-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To calculate the addition and subraction of our vectors add the following code to your program.</p>
+<p>To calculate the addition and subtraction of our vectors add the following code to your program.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Arithmetic operations on vectors</span>
 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Arithmetic operations on vectors:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;a + b = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -589,7 +593,7 @@ a - b = [    2.000,   -2.000,    1.000]
 <p>For example, multiplying the vector <span class="math notranslate nohighlight">\(\mathbf{a} = (3, 0, 4)\)</span> by the scalar 2 gives</p>
 <div class="math notranslate nohighlight">
 \[ 2\mathbf{a} = 2(3,0,4) = (6, 0, 8), \]</div>
-<p>which has the magnitude</p>
+<p>Which has the magnitude</p>
 <div class="math notranslate nohighlight">
 \[ \|2 \mathbf{a} \| = \sqrt{6^2 + 0^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10 = 2 \|\mathbf{a}\|. \]</div>
 <p>To perform scalar multiplication or division on a glm vector we simply use the <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> operators. To demonstrate this add the following code to your program.</p>
@@ -633,7 +637,7 @@ b / 3 = [    0.333,    0.667,    1.000]
 <p>A useful result for computer graphics is that if <span class="math notranslate nohighlight">\(\theta=90^\circ\)</span> then <span class="math notranslate nohighlight">\(\cos(\theta) = 0\)</span> and equation <a class="reference internal" href="#equation-eq-dot-product-geometric">(4.5)</a> becomes</p>
 <div class="math notranslate nohighlight">
 \[ \mathbf{a} \cdot \mathbf{b} = 0. \]</div>
-<p>In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors <span class="math notranslate nohighlight">\(\mathbf{a} = (3, 0, 4)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} = (1, 2, 3)\)</span> the dot product between these is</p>
+<p>In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors <span class="math notranslate nohighlight">\(\mathbf{a} = (3, 0, 4)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} = (1, 2, 3)\)</span> the dot product between these are</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     \mathbf{a} \cdot \mathbf{b} &amp;= (3, 0, 4) \cdot (1, 2, 3)
@@ -707,7 +711,7 @@ b . (a x b) = 0.000
     \end{pmatrix}
 \end{align*} \end{split}\]</div>
 <p>It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an <strong>index</strong> which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so <span class="math notranslate nohighlight">\(a_{ij}\)</span> is the element in row <span class="math notranslate nohighlight">\(i\)</span> and column <span class="math notranslate nohighlight">\(j\)</span> of the matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
-<p>We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix <span class="math notranslate nohighlight">\(A\)</span> has <span class="math notranslate nohighlight">\(m\)</span> rows and <span class="math notranslate nohighlight">\(n\)</span> columns so we call this matrix a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix.</p>
+<p>We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix <span class="math notranslate nohighlight">\(A\)</span> has <span class="math notranslate nohighlight">\(m\)</span> rows and <span class="math notranslate nohighlight">\(n\)</span> columns, so we call this matrix a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix.</p>
 <p>To declare a <span class="math notranslate nohighlight">\(2 \times 2\)</span> glm matrix object we use the <code class="docutils literal notranslate"><span class="pre">glm::mat2()</span></code> function (a <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix object is declared using <code class="docutils literal notranslate"><span class="pre">glm::mat4()</span></code>)
 Lets create some glm matrix objects for the following matrices</p>
 <div class="math notranslate nohighlight">
@@ -732,11 +736,11 @@ Lets create some glm matrix objects for the following matrices</p>
 <p>Here we have declared two <span class="math notranslate nohighlight">\(2 \times 2\)</span> matrices <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>. The elements of <code class="docutils literal notranslate"><span class="pre">A</span></code> are defined using matrix indexing and the elements of <code class="docutils literal notranslate"><span class="pre">B</span></code> are defined using the <code class="docutils literal notranslate"><span class="pre">glm::mat2()</span></code> function. Note how the elements of the 2D matrix are indexed using <code class="docutils literal notranslate"><span class="pre">[row][col]</span></code></p>
 <p>Run your program and the following should be printed to the console.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Defining matrices:
-A = 
+A =
 [[    1.000,    3.000]
  [    2.000,    4.000]]
 
-B = 
+B =
 [[    5.000,    7.000]
  [    6.000,    8.000]]
 </pre></div>
@@ -777,18 +781,18 @@ B =
 \[\begin{split} \begin{align*}
     A^\mathsf{T} = \begin{pmatrix} 1 &amp; 3 \\ 2 &amp; 4 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p>Edit the code in your programme so that the transpose of <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are outputted to the console instead.</p>
+<p>Edit the code in your program so that the transpose of <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are outputted to the console instead.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;A = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;B = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">transpose</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Running the program should change the output to</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Defining matrices:
-A = 
+A =
 [[    1.000,    2.000]
  [    3.000,    4.000]]
 
-B = 
+B =
 [[    5.000,    6.000]
  [    7.000,    8.000]]
 </pre></div>
@@ -799,7 +803,7 @@ B =
 <section id="arithmetic-operations-on-matrices">
 <h2><span class="section-number">4.5. </span>Arithmetic operations on matrices<a class="headerlink" href="#arithmetic-operations-on-matrices" title="Permalink to this heading">#</a></h2>
 <p>The arithmetic operations on matrices for addition and subtraction of two matrices and multiplying and dividing by a scalar are the same as for vectors using the <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> operators. To show these add the following code to your program.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Aritmetic operations on matrices</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Arithmetic operations on matrices</span>
 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Arithmetic operations on matrices:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;A + B = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;A - B = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -809,19 +813,19 @@ B =
 </div>
 <p>Running the program should output the following to the console.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Arithmetic operations on matrices:
-A + B = 
+A + B =
 [[    6.000,    8.000]
  [   10.000,   12.000]]
 
-A - B = 
+A - B =
 [[   -4.000,   -4.000]
  [   -4.000,   -4.000]]
 
-2A    = 
+2A    =
 [[    2.000,    4.000]
  [    6.000,    8.000]]
 
-A / 3 = 
+A / 3 =
 [[    0.333,    0.667]
  [    1.000,    1.333]]
 </pre></div>
@@ -831,7 +835,7 @@ A / 3 =
 <p>So multiplication of a matrix by a scalar is the same for matrices as it is for vectors. However, the multiplication of two matrices <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> is defined in a very specific way. If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are two matrices then the element in row <span class="math notranslate nohighlight">\(i\)</span> and column <span class="math notranslate nohighlight">\(j\)</span> of the matrix <span class="math notranslate nohighlight">\(AB\)</span> is calculated using</p>
 <div class="math notranslate nohighlight" id="equation-eq-matrix-multiplication">
 <span class="eqno">(4.7)<a class="headerlink" href="#equation-eq-matrix-multiplication" title="Permalink to this equation">#</a></span>\[ [AB]_{ij} = \mathbf{a}_i \cdot \mathbf{b}_j, \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{a}_i\)</span> is the vector formed from row <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_j\)</span> is the vector formed from column <span class="math notranslate nohighlight">\(j\)</span> of <span class="math notranslate nohighlight">\(B\)</span>. For example, given the <span class="math notranslate nohighlight">\(2\times 2\)</span> matrices <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> defined earlier</p>
+<p>Where <span class="math notranslate nohighlight">\(\mathbf{a}_i\)</span> is the vector formed from row <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_j\)</span> is the vector formed from column <span class="math notranslate nohighlight">\(j\)</span> of <span class="math notranslate nohighlight">\(B\)</span>. For example, given the <span class="math notranslate nohighlight">\(2\times 2\)</span> matrices <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> defined earlier</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     A &amp;= \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}, &amp;
@@ -876,11 +880,11 @@ A / 3 =
 </pre></div>
 </div>
 <p>Run the program and the following should be outputted to the console.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A * B = 
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A * B =
 [[   19.000,   22.000]
  [   43.000,   50.000]]
 
-B * A = 
+B * A =
 [[   23.000,   34.000]
  [   31.000,   46.000]]
 </pre></div>
@@ -916,7 +920,7 @@ B * A =
 </div>
 <p>Run your program and you should see the following outputted to the console.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>The identity matrix:
-I = 
+I =
 [[    1.000,    0.000,    0.000,    0.000]
  [    0.000,    1.000,    0.000,    0.000]
  [    0.000,    0.000,    1.000,    0.000]
@@ -941,15 +945,15 @@ I =
 <p>We can check whether this is the inverse of <span class="math notranslate nohighlight">\(A\)</span> by calculating <span class="math notranslate nohighlight">\(A^{-1}A\)</span> (or <span class="math notranslate nohighlight">\(A A^{-1}\)</span>)</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    A^{-1} A &amp;= 
+    A^{-1} A &amp;=
     \begin{pmatrix} -2 &amp; 1 \\ \frac{3}{2} &amp; -\frac{1}{2} \end{pmatrix}
     \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix} \\
     &amp;=
-    \begin{pmatrix} 
+    \begin{pmatrix}
         -2 \times 1 + 1 \times 3 &amp; -2 \times 2 + 1 \times 4 \\ 
         \frac{3}{2} \times 1 + (-\frac{1}{2}) \times 3 &amp; \frac{3}{2} \times 2 + (-\frac{1}{2}) \times 4
     \end{pmatrix} \\
-    &amp;= 
+    &amp;=
     \begin{pmatrix}
         -2 + 3 &amp; -4 + 4 \\
         \frac{3}{2} - \frac{3}{2} &amp; 3 - 2
@@ -969,19 +973,19 @@ I =
 </div>
 <p>Run your program and the following should be outputted to the console.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Inverse matrices:
-invA = 
+invA =
 [[   -2.000,    1.000]
  [    1.500,   -0.500]]
 
-invB = 
+invB =
 [[   -4.000,    3.000]
  [    3.500,   -2.500]]
 
-invA * A = 
+invA * A =
 [[    1.000,    0.000]
  [    0.000,    1.000]]
 
-invB * B = 
+invB * B =
 [[    1.000,    0.000]
  [    0.000,    1.000]]
 </pre></div>
@@ -1001,6 +1005,7 @@ invB * B =
 (f) The dot product <span class="math notranslate nohighlight">\(\mathbf{p} \cdot \mathbf{q}\)</span>;<br>
 (g) The cross product <span class="math notranslate nohighlight">\(\mathbf{q} \times \mathbf{r}\)</span>.</p>
 </li>
+<li><p>Repeat exercise 1 using C++ and the glm library.</p></li>
 <li><p>The three matrices <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(C\)</span> are defined as</p></li>
 </ol>
 <div class="math notranslate nohighlight">

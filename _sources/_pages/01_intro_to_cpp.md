@@ -2,13 +2,13 @@
 
 # Introduction to C++
 
-In this first lab we will be introducing/revisiting the fundamentals of the C++ language. C++ (pronounced "C-plus-plus") is a general purpose high performance programming language developed by Bjarne Stroustrup in 1979. It's an extension of the C programming language with added classes (the original name for C++ was "C with classes") so it shares the same syntax as C. It is also similar to Java so it won't be too difficult to make the switch from Java to C++.
+In this first lab we will be introducing/revisiting the fundamentals of the C++ language. C++ (pronounced "C-plus-plus") is a general purpose high performance programming language developed by Bjarne Stroustrup in 1979. It's an extension of the C programming language with added classes (the original name for C++ was "C with classes") so it shares the same syntax as C. It is also similar to Java, so it won't be too difficult to make the switch from Java to C++.
 
 In this semester we will be using OpenGL to create graphics applications. OpenGL uses C++ so its important you are comfortable with the syntax and the use of classes.
 
 ## IDEs
 
-A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler and you have a text editor program you can program away to your hearts content. However, as your programs start to become increasingly sophisticated and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is and we can use an Integrated Development Environment (IDE).
+A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler, and you have a text editor program you can program away to your hearts content. However, as your programs start to become increasingly sophisticated, and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is, and we can use an Integrated Development Environment (IDE).
 
 An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will be using Visual Studio for Windows, although you can use Xcode for macOS.
 
@@ -23,15 +23,15 @@ An IDE provides a way of writing and organising your code files as well as a num
 To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
 
 1. Run GitHub Desktop (if you don't have it installed you can download it from <a href="https://desktop.github.com/download/" target="_blank">here</a>).
-2. Click on **Clone a Repository from the Internet..**
-3. Select the **URL** tab and paste in the following URL
+1. Click on **Clone a Repository from the Internet..**
+1. Select the **URL** tab and paste in the following URL
 
 ```text
 https://github.com/jonshiach/Computer-Graphics-Labs
 ```
 
-4. Change **Local path** to a folder on your machine where you want to store the files.
-5. Click **Clone**
+1. Change **Local path** to a folder on your machine where you want to store the files.
+1. Click **Clone**
 
 <!-- ### Using the terminal/command line
 
@@ -62,8 +62,8 @@ Since different hardware requires different compilers and libraries, the build f
 
 When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select **Lab01_Intro_to_c++** as the project we will be working on, depending on your IDE this is slightly different.
 
-- **Visual Studio** -- right click on the **Lab01_Intro_to_c++** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
-- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from but it's there).
+- **Visual Studio** -- right-click on the **Lab01_Intro_to_c++** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
+- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from, but it's there).
 
 ---
 
@@ -95,15 +95,13 @@ hello world
 
 Let's run through the code and see what each line does
 
-| <div style="width:250px">Code</div> | Explanation |
-|:--|:--|
-|`// Lab01 - Introduction to C++` | Any text between `//` and the end of the current line is a comment and is ignored by the compiler. For multiline comments, any text between ``/*`` and `*/` is considered a comment. |
-| `#include <iostream>` | Imports the `iostream` library allowing us to input and output data to the terminal. |
-| `int main() {}` | Defines a [function](functions-section) called `main` which has no inputs and will output an integer value. All C++ programs must contain a function called `main` which is the designated entry point to a program. |
-| `std::cout` | Calls the `cout` (pronounced "see-out") object from the `iostream` library. This is used to output text. |
-| `<< "hello world\n"` | Sends the text string `hello world` to the `cout` object for printing. `\n`is the newline character which inserts a newline. |
-| `<< std::endl;` | Sends the end line character to the `cout` object so the line is printed. Note that every C++ statement must end in a semi-colon `;` (get used to doing this). |
-| `return 0;` | Returns the integer `0`. This is because in the function definition we specified that the function `main` would return a `0`. The convention is that a `0` is returned if the program has executed successfully and a `1` is returned if not. |
+- `// Lab01 - Introduction to C++` -- Any text between `//` and the end of the current line is a comment and is ignored by the compiler. For multiline comments, any text between ``/*`` and `*/` is considered a comment.
+- `#include <iostream>` -- Imports the iostream library allowing us to input and output data to the terminal.
+- `int main() {}` -- Defines a [function](functions-section) called `main` which has no inputs and will output an integer value. All C++ programs must contain a function called `main` which is the designated entry point to a program.
+- `std::cout` -- Calls the `cout` (pronounced "see-out") object from the iostream library. This is used to output text.
+- `<< "hello world\n"` -- Sends the text string "hello world" to the `cout` object for printing. `\n` is the newline character which inserts a newline.
+- `<< std::endl;` -- Sends the end line character to the `cout` object, so the line is printed. Note that every C++ statement must end in a semicolon `;` (get used to doing this).
+- `return 0;` -- Returns the integer 0. This is because in the function definition we specified that the function `main` would return a 0. The convention is that a 0 is returned if the program has executed successfully and a 1 is returned if not.
 
 ### Variables
 
@@ -418,7 +416,7 @@ Here our function called `radians()` converts the float parameter `angle` to rad
 
 - declare `pi` to be a local variable within the `radians` function (preferred if we are unlikely to be using `pi` elsewhere in the program);
 - declare `pi` to be a global variable outside of all functions (preferred if `pi` is likely to be used elsewhere in the program);
-- delcare `pi` to be a parameter of the `radians` function.
+- declare `pi` to be a parameter of the `radians` function.
 
 Fix your program by defining `pi` to be a global variable so that it compiles. Call your function using the following code.
 
@@ -463,7 +461,7 @@ The main difference between C++ and its predecessor C is that C++ has **classes*
 
 ### Classes/objects
 
-A **class** defines the **attributes** (like variables) and **methods** (like functions) that the objects within the class will possess. For example, Let's create `Car` class which has the attributes for the `make`, `model`, `year` and `speed` of a car. The methods that apply to objects in our class may include `accelerate()`, `brake()` etc.
+A **class** defines the **attributes** (like variables) and **methods** (like functions) that the objects within the class will possess. For example, Let's create Car class which has the attributes for the `make`, `model`, `year` and `speed` of a car. The methods that apply to objects in our class may include `accelerate()`, `brake()` etc.
 
 Add the following code to your program outside any of the functions previously defined.
 
@@ -477,13 +475,11 @@ public:
 };
 ```
 
-|  <div style="width:150px">Code</div> | Explanation |
-|:--|:--|
-| `class Car` | Keyword used to create the class `Car`. |
-| `public:` | An **access specifier** that specifies which attributes and methods can be accessed outside of the class. |
-| `std::string make;` | Defines the attribute `make` which is a string. The other attributes are the string `model`, the integer `year` and the floating point number `speed` which is initially set to zero for any new object which is created. |
+- `class Car` -- Keyword used to create the Car class.
+- `public:` -- An **access specifier** that specifies which attributes and methods can be accessed outside of the class.
+- `std::string make;` -- Defines the attribute `make` which is a string. The other attributes are the string `model`, the integer `year` and the floating point number `speed` which is initially set to zero for any new object which is created.
 
-We can then create an object from our `Car` class and set its attributes. Let's create an object called `delorean` for a 1981 DeLorean DMC-12. In your `main()` function add the following code.
+We can then create an object from our Car class and set its attributes. Let's create an object called `delorean` for a 1981 DeLorean DMC-12. In your `main()` function add the following code.
 
 ```cpp
 // Define car object
@@ -524,7 +520,7 @@ std::cout << "\nMake: " << make
 }
 ```
 
-The `Car::` bit tells the compiler that this method belongs to the `Car` class. We could define the method inside of the class where we would not need `Car::` but this is not recommended practice.
+The `Car::` bit tells the compiler that this method belongs to the Car class. We could define the method inside of the class where we would not need `Car::` but this is not recommended practice.
 
 To call a method we use the syntax `<object name> . <method name>(<inputs>)`. We can now print the details of the car object using the following code.
 
@@ -572,7 +568,7 @@ The car has accelerated to 88 mph.
 
 ### Constructors
 
-A **constructor** is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our `Car` class we declare the constructor using `Car();` inside the `Car` class.
+A **constructor** is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our Car class we declare the constructor using `Car();` inside the Car class.
 
 ```cpp
 // Constructor
@@ -624,13 +620,13 @@ Compiling and running the code you should see nothing changes.
 
 A **static member function** is a function that belongs to a class rather than an instance of the class. Static member functions are useful because we can call them without needing an object of that class. Static member functions can be declared simply by prepending the keyword `static` to the function declaration.
 
-Let's say we want to define a function in the `Car` class that converts speed from miles per hour to kilometers per hour. We declare a static member function in the class
+Let's say we want to define a function in the Car class that converts speed from miles per hour to kilometers per hour. We declare a static member function in the class
 
 ```cpp
 static float mph2kph(const float);
 ```
 
-and then define the function outside of the `Car` class
+and then define the function outside of the Car class
 
 ```cpp
 float Car::mph2kph(const float speed)
@@ -639,7 +635,7 @@ float Car::mph2kph(const float speed)
 }
 ```
 
-We can now convert from miles per hour to kilometers per hour without needing to have a `Car` object declared. If Back to the Future had been set in Europe what would the speed be required for time travel? Let's call our static member function `mph2kph()` to find out.
+We can now convert from miles per hour to kilometers per hour without needing to have a Car object declared. If Back to the Future had been set in Europe what would the speed be required for time travel? Let's call our static member function `mph2kph()` to find out.
 
 ```cpp
 // Convert speed from mph to kph
@@ -657,49 +653,8 @@ Which gives the output
 ### Header files
 
 When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a **header file** which usually have the extension `.hpp` (this isn't a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension `.cpp`.
-<!-- 
-Let's create a header file for our `Car` class. Depending on the IDE you are using you will need to do the following.
 
----
-#### Visual Studio
-
-1. Right-click on the project name in the **Solution Explorer** and the select **Add > New Item...** (or press Ctrl+Shift+A).
-2. Click on **Show all templates** and select **C++ Class**.
-3. Enter **Car** in the **Class name** field and change the location field to the **Computer-Graphics-Labs/Lab01_Intro_to_c++/** folder and click **Add**.
-5. This creates the header file `Car.hpp` in the **Header files** filter and the source file `Car.cpp` in the **Source Files** filter.
-
-The header file we have created contains the following code.
-
-```cpp
-#pragma once
-class Car
-{
-};
-```
-
-The command `#pragma once` is used to prevent multiple header files of the same name from being included in the compilation of the program.
-
-#### Xcode
-
-1. Click on **File > New > File from Template...** (or just press ⌘N) and select **C++ File**.
-2. Enter `Car` in the Name field, make sure the checkbox next to **Also create header file** is selected and click on **Next**.
-3. Select the **Lab01_Intro_to_c++/** folder and click on **Create**.
-4. This creates the header file **Car.hpp** and the code file **Car.cpp** in your Xcode project.
-
-The header file we have created contains the following code. Xcode uses <a href="https://en.wikipedia.org/wiki/Include_guard" target="_blank">include guards</a> which perform the same function as `#pragma once`.
-
-```cpp
-#ifndef Car_hpp
-#define Car_hpp
-
-#include <stdio.h>
-
-#endif /* Car_hpp */
-```
-
---- -->
-
-Cut and paste the `Car` class from the **Lab01_Intro_to_c++.cpp** file into the **Car.hpp** header file in the **Lab01_Intro_to_c++/** folder so that it looks like the following.
+Cut and paste the Car class from the **Lab01_Intro_to_c++.cpp** file into the **Car.hpp** header file in the **Lab01_Intro_to_c++/** folder so that it looks like the following.
 
 ```cpp
 #pragma once
@@ -724,7 +679,7 @@ public:
 };
 ```
 
-Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. Cut and paste your `Car` class methods from the **Lab01_Intro_to_c++.cpp** file into the **Car.cpp** file so it looks like the following.
+Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. Cut and paste your Car class methods from the **Lab01_Intro_to_c++.cpp** file into the **Car.cpp** file so it looks like the following.
 
 ```cpp
 #include "Car.hpp"
@@ -769,65 +724,231 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
 
 1. You are tasked with writing a C++ program to help the university store students' details (name, ID number, course, marks etc.). Create a class called `Student` in the header file **Student.hpp** which has the following attributes:
 
-   - first name - string;
-   - last name - string;
-   - ID number - integer;
-   - course - string;
-   - level - integer;
-   - marks - 12-element integer array (marks for four units over the three years);
+- first name - string;
+- last name - string;
+- ID number - integer;
+- course - string;
+- level - integer;
+- marks - 12-element integer array (marks for four units over the three years);
 
-2. Declare a constructor for your class with parameters for creating an object and define the constructor in the **Student.cpp** file. Use your constructor to create an object with the following attribute values.
+2. Create a Student object called `ellie` and assign the following attribute values:
 
-    - first name: Ellie
-    - last name: Williams
-    - ID number: 12345678
-    - course: Computer Science
-    - level: 5
+- first name: Ellie
+- last name: Williams
+- ID number: 12345678
+- course: Computer Science
+- level: 5
 
-3. Create a method called `addLevelMarks()` which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the `marks` array for the object. For example, if the level 4 unit marks are `40, 50, 60, 70` then `marks[0] = 40`, `marks[1] = 50` etc. Use your method to updates Ellie's marks with the following.
+3. Create a method called `print()` that prints a students details. Use your function to print the details of the `ellie` object. Your output should look like the following:
+
+```text
+Student Details
+-----------------------------
+Name   : Ellie Williams
+ID     : 12345678
+Course : Computer Science
+Level  : 5
+```
+
+4. Add a constructor for your class with parameters for creating an object with attribute values specified. Use your constructor to create the `ellie` object from exercise 2 and use the `print()` method to output the student details.
+
+5. Create a method called `addLevelMarks()` which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the `marks` array for the object. For example, if the level 4 unit marks are `40, 50, 60, 70` then `marks[0] = 40`, `marks[1] = 50` etc. Use your method to updates Ellie's marks with the following.
 
     - level 4 marks: 55, 60, 72, 64;
     - level 5 marks: 68, 62, 74, 70.
 
-4. Create a method called `outputMarks()` which outputs unit marks for each level in which a student has been enrolled, i.e.,
+6. Amend the `print()` method so that the module marks for each level which a student has been enrolled are outputted, e.g.,
 
 ```text
-Ellie Williams (12345678)
+Student Details
+-----------------------------
+Name   : Ellie Williams
+ID     : 12345678
+Course : Computer Science
+Level  : 5
+
+Marks
 
 Level 4: 55, 60, 72, 64
 Level 5: 68, 62, 74, 70
 ```
 
-5. Create a static member function called `levelAverage()` which takes in inputs of a 12-element integer array containing unit marks and an integer specifying the level and returns the average mark for that level.
+7. Create a static member function called `levelAverage()` which takes in inputs of an integer specifying a level and the marks for that level and returns the average level mark. Use this method to output the level 4 average mark for the `ellie` object.
 
-6. A student's degree classification is determined by calculating a weighted average of the level 5 and 6 marks such that
+8. A student's degree classification is determined by calculating a weighted average of the level 5 and 6 marks such that
 
-$$\textsf{weighted average} = 0.25 \times \textsf{level 5 average} + 0.75 \times \textsf{level 6 average},$$ 
+$$\textsf{weighted average} = 0.25 \times \textsf{level 5 average} + 0.75 \times \textsf{level 6 average},$$
 
-and then checked against the table below. 
+and then checked against the table below.
 
-| weighted average | Degree classification |
+| Weighted average | Degree classification |
 |:--:|:--|
-| >= 70 | First-class |
-| >= 60 | Upper second-class |
-| >= 50 | Lower second-class |
-| >= 40 | Third-class |
-| < 40 | Fail |
+| $\geq 70$ | First-class |
+| $\geq 60$ | Upper second-class |
+| $\geq 50$ | Lower second-class |
+| $\geq 40$ | Third-class |
+| $< 40$    | Fail |
 
 Create a method called `classification()` which uses your static member function from exercise 5 to calculate the weighted average for a student object and outputs the degree classification and the weighted average to the nearest integer.
 
-```
+```text
 Classification: xxxx (weighted average = xx).
 ```
 
-7. Ellie has evaded the infected and survived another year. In level 6 they achieved marks of 72, 68, 76 and 65 (it is impressive that the university it still functioning during a world wide cordyceps pandemic). Update the object and output their level 4, 5 and 6 marks as well as their degree classification, i.e.,
+9. Ellie has evaded the infected and survived another year. In level 6 they achieved marks of 72, 68, 76 and 65 (it is impressive that the university is still functioning during a worldwide cordyceps pandemic). Update the `ellie` object and output their degree classification.
 
+````{dropdown} Solutions
+**Lab01_Intro_to_c++.cpp**
+
+```cpp
+// ------------------------------------------------------------------------
+std::cout << "\nExercises\n----------------------\n" << std::endl;
+ 
+//    // Exercise 2
+//    Student ellie;
+//    ellie.firstName = "Ellie";
+//    ellie.lastName  = "Williams";
+//    ellie.id        = 12345678;
+//    ellie.course    = "Computer Science";
+//    ellie.level     = 5;
+ 
+// Exercise 3
+ellie.print();
+ 
+// Exercise 4
+Student ellie("Ellie", "Williams", 12345678, "Computer Science", 5);
+
+// Exercise 5
+unsigned int level4Marks[] = {55, 60, 72, 64};
+unsigned int level5Marks[] = {68, 62, 74, 70};
+ellie.addLevelMarks(4, level4Marks);
+ellie.addLevelMarks(5, level5Marks);
+
+// Exercise 6
+ellie.print();
+
+// Exercise 7
+std::cout << "\nLevel 4 mark averge = " << Student::levelAverage(4, ellie.marks) << std::endl;
+
+// Exercise 9
+ellie.level = 6;
+unsigned int level6Marks[] = {72, 68, 76, 65};
+ellie.addLevelMarks(6, level6Marks);
+ellie.classification();
 ```
-Ellie Williams (12345678)
 
-Level 4: 55, 60, 72, 64
-Level 5: 68, 62, 74, 70
-Level 6: 72, 68, 76, 65
+**Student.hpp**
 
-Classification: xxxx (weighted average = xx).
+```cpp
+#pragma once
+
+#include <iostream>
+
+class Student
+{
+public:
+    std::string firstName;
+    std::string lastName;
+    unsigned int id;
+    std::string course;
+    unsigned int level;
+    unsigned int marks[12];
+    
+    // Constructors
+    Student();
+    Student(const std::string,  // firstName
+            const std::string,  // lastName
+            const unsigned int, // id
+            const std::string,  // course
+            unsigned int);      // level
+    
+    // Methods
+    void print();
+    void addLevelMarks(unsigned int,     // level
+                       unsigned int []); // level marks
+    static float levelAverage(unsigned int,     // level
+                              unsigned int []); // level marks
+    void classification();
+};
 ```
+
+**Student.cpp**
+
+```cpp
+#include "Student.hpp"
+
+Student::Student(){};
+
+Student::Student(const std::string inFirstName,
+                 const std::string inLastName,
+                 const unsigned int inId,
+                 const std::string inCourse,
+                 unsigned int inLevel)
+{
+    firstName = inFirstName;
+    lastName  = inLastName;
+    id        = inId;
+    course    = inCourse;
+    level     = inLevel;
+}
+
+void Student::print()
+{
+    std::cout << "\nStudent Details\n-----------------------------" << std::endl;
+    std::cout << "Name   : " << firstName << " " << lastName << std::endl;
+    std::cout << "ID     : " << id << std::endl;
+    std::cout << "Course : " << course << std::endl;
+    std::cout << "Level  : " << level << "\n" << std::endl;
+    std::cout << "Marks\n" << std::endl;
+    
+    for (unsigned int i = 0; i < level - 3; i++)
+    {
+        std::cout << "Level " << i + 4 << ": ";
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            std::cout << marks[4 * i + j] << ", ";
+        }
+        std::cout << "\n";
+    }
+}
+
+void Student::addLevelMarks(unsigned int inLevel, unsigned int levelMarks[])
+{
+    for (unsigned int i = 0; i < 4; i++)
+        marks[4 * (inLevel - 4) + i] = levelMarks[i];
+}
+
+float Student::levelAverage(unsigned int inLevel, unsigned int levelMarks[])
+{
+    float avg = 0;
+    for (unsigned int i = 0; i < 4; i++)
+        avg += levelMarks[4 * (inLevel - 4) + i];
+    
+    return avg / 4;
+}
+
+void Student::classification()
+{
+    if (level < 6)
+    {
+        std::cout << firstName << " " << lastName << " is not a level 6 student.\n";
+        return;
+    }
+    
+    float weightedAvg = 0.25f * levelAverage(5, marks) + 0.75f * levelAverage(6, marks);
+    std::string text;
+    if (weightedAvg >= 70)
+        text = "First class";
+    else if (weightedAvg >= 60)
+        text = "Upper second-class";
+    else if (weightedAvg >= 50)
+        text = "Lower second-class";
+    else if (weightedAvg >= 40)
+        text = "Third class";
+    else
+        text = "Fail";
+    
+    std::cout << "Classification: " << text << " (weighted average = " << weightedAvg << ")\n";
+}
+```
+````

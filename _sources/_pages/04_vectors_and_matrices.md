@@ -2,13 +2,13 @@
 
 # Vectors and Matrices
 
-Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations. Will will be using this library in the upcoming labs so it is important that you know how it works.
+Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations. Will will be using this library in the upcoming labs, so it is important that you know how it works.
 
 ---
 
 ## The glm library
 
-The glm (<a href="https://github.com/g-truc/glm" target="_blank">OpenGL Mathematics</a>) library is a popular C++ mathematics library designed to provide classes and functions for mathematical operations, specifically tailored for graphics programming using OpenGL. We will be using functions from glm to perform calculations for us. Open the **Lab04_Vectors_and_matrices.cpp** file and in addition to the **iostream** library (for standard I/O operations) we have additional code that imports the glm library.
+The glm (<a href="https://github.com/g-truc/glm" target="_blank">OpenGL Mathematics</a>) library is a popular C++ mathematics library designed to provide classes and functions for mathematical operations, specifically tailored for graphics programming using OpenGL. Open the **Lab04_Vectors_and_matrices.cpp** file and in addition to the **iostream** library (for standard I/O operations) we have additional code that imports the glm library.
 
 ```cpp
 // Include the glm library
@@ -30,8 +30,13 @@ Here $\mathbf{a}$ has 3 elements so is a vector in 3D space where $a_x$, $a_y$ a
 
 ```{figure} ../_images/04_Vector.svg
 :height: 200
+:name: vector-figure
 
 The vector $\mathbf{a} = (a_x, a_y, a_z)$.
+```
+
+```{note}
+The reason the diagram in {numref}`vector-figure` has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see [5. Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
 ```
 
 Lets create the following 3D vector objects in C++.
@@ -58,7 +63,7 @@ std::cout << "a = " << a << std::endl;
 std::cout << "b = " << b << std::endl;
 ```
 
-Here we have declared two vectors `a` and `b` using the `glm::vec3` type (for vectors in 2D we would use `glm::vec2`). The elements of the vectors `a` and `b` have been defined using two different methods: `a` has been defined using the `glm::vec3(x, y, z)` constructor and `b` by accessing the individual elements using [array indexing](arrays-section). The vectors have been printed to the console using `std::cout` commands (glm vectors cannot be printed using the `printf()` function). Compile and run the **Lab04_Vectors_and_matrices** project and you should see the following outputted to the console.
+Here we have declared two vectors `a` and `b` using the `glm::vec3` type (for vectors in 2D we would use `glm::vec2`). The elements of the vectors `a` and `b` have been defined using two different methods: `a` has been defined using the `glm::vec3(x, y, z)` constructor and `b` by accessing the individual elements using [array indexing](arrays-section). The vectors have been printed to the console using `std::cout` commands (glm vectors cannot be printed using the `printf()` function). Compile and run the **Lab04_Vectors_and_matrices** project, and you should see the following outputted to the console.
 
 ```text
 Vectors and Matrices
@@ -173,7 +178,7 @@ $$ \begin{align*}
     \mathbf{a} - \mathbf{b} &= (3, 0, 4) - (1, 2, 3) = (3 - 1, 0 - 2, 4 - 3) = (2, -2, 1).
 \end{align*} $$
 
-What is happening in a geometrical sense when we add and subtract vectors? Take a look at {numref}`vector-addition-figure`, here the vector $\mathbf{b}$ has been added to the vector $\mathbf{a}$ where the tail of $\mathbf{b}$ is placed at the head of $\mathbf{a}$. The resulting vector $\mathbf{a} + \mathbf{b}$ points from the tail of $\mathbf{a}$ to the head of $\mathbf{b}$. 
+What is happening in a geometrical sense when we add and subtract vectors? Take a look at {numref}`vector-addition-figure`, here the vector $\mathbf{b}$ has been added to the vector $\mathbf{a}$ where the tail of $\mathbf{b}$ is placed at the head of $\mathbf{a}$. The resulting vector $\mathbf{a} + \mathbf{b}$ points from the tail of $\mathbf{a}$ to the head of $\mathbf{b}$.
 
 ```{figure} ../_images/04_Vector_addition.svg
 :height: 150
@@ -186,12 +191,12 @@ The subtraction of the vector $\mathbf{b}$ does similar, but since $\mathbf{a} -
 
 ```{figure} ../_images/04_Vector_subtraction.svg
 :height: 180
-:name: vector-subraction-figure
+:name: vector-subtraction-figure
 
 Vector subtraction.
 ```
 
-To calculate the addition and subraction of our vectors add the following code to your program.
+To calculate the addition and subtraction of our vectors add the following code to your program.
 
 ```cpp
 // Arithmetic operations on vectors
@@ -227,7 +232,7 @@ For example, multiplying the vector $\mathbf{a} = (3, 0, 4)$ by the scalar 2 giv
 
 $$ 2\mathbf{a} = 2(3,0,4) = (6, 0, 8), $$
 
-which has the magnitude
+Which has the magnitude
 
 $$ \|2 \mathbf{a} \| = \sqrt{6^2 + 0^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10 = 2 \|\mathbf{a}\|. $$
 
@@ -288,7 +293,7 @@ A useful result for computer graphics is that if $\theta=90^\circ$ then $\cos(\t
 
 $$ \mathbf{a} \cdot \mathbf{b} = 0. $$
 
-In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors $\mathbf{a} = (3, 0, 4)$ and $\mathbf{b} = (1, 2, 3)$ the dot product between these is
+In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors $\mathbf{a} = (3, 0, 4)$ and $\mathbf{b} = (1, 2, 3)$ the dot product between these are
 
 $$ \begin{align*}
     \mathbf{a} \cdot \mathbf{b} &= (3, 0, 4) \cdot (1, 2, 3)
@@ -379,7 +384,7 @@ $$ \begin{align*}
 
 It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an **index** which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so $a_{ij}$ is the element in row $i$ and column $j$ of the matrix $A$.  
 
-We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix $A$ has $m$ rows and $n$ columns so we call this matrix a $m \times n$ matrix.
+We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix $A$ has $m$ rows and $n$ columns, so we call this matrix a $m \times n$ matrix.
 
 To declare a $2 \times 2$ glm matrix object we use the `glm::mat2()` function (a $4 \times 4$ matrix object is declared using `glm::mat4()`)
 Lets create some glm matrix objects for the following matrices
@@ -405,17 +410,17 @@ std::cout << "A = " << A << "\n" << std::endl;
 std::cout << "B = " << B << std::endl;
 ```
 
-Here we have declared two $2 \times 2$ matrices `A` and `B`. The elements of `A` are defined using matrix indexing and the elements of `B` are defined using the `glm::mat2()` function. Note how the elements of the 2D matrix are indexed using `[row][col]` 
+Here we have declared two $2 \times 2$ matrices `A` and `B`. The elements of `A` are defined using matrix indexing and the elements of `B` are defined using the `glm::mat2()` function. Note how the elements of the 2D matrix are indexed using `[row][col]`
 
 Run your program and the following should be printed to the console.
 
 ```text
 Defining matrices:
-A = 
+A =
 [[    1.000,    3.000]
  [    2.000,    4.000]]
 
-B = 
+B =
 [[    5.000,    7.000]
  [    6.000,    8.000]]
 ```
@@ -469,7 +474,7 @@ $$ \begin{align*}
     A^\mathsf{T} = \begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}.
 \end{align*} $$
 
-Edit the code in your programme so that the transpose of `A` and `B` are outputted to the console instead.
+Edit the code in your program so that the transpose of `A` and `B` are outputted to the console instead.
 
 ```cpp
 std::cout << "A = " << glm::transpose(A) << "\n" << std::endl;
@@ -480,11 +485,11 @@ Running the program should change the output to
 
 ```text
 Defining matrices:
-A = 
+A =
 [[    1.000,    2.000]
  [    3.000,    4.000]]
 
-B = 
+B =
 [[    5.000,    6.000]
  [    7.000,    8.000]]
 ```
@@ -496,7 +501,7 @@ That's better.
 The arithmetic operations on matrices for addition and subtraction of two matrices and multiplying and dividing by a scalar are the same as for vectors using the `+`, `-`, `*` and `/` operators. To show these add the following code to your program.
 
 ```cpp
-// Aritmetic operations on matrices
+// Arithmetic operations on matrices
 printf("\nArithmetic operations on matrices:\n");
 std::cout << "A + B = " << glm::transpose(A + B) << "\n" << std::endl;
 std::cout << "A - B = " << glm::transpose(A - B) << "\n" << std::endl;
@@ -508,31 +513,32 @@ Running the program should output the following to the console.
 
 ```text
 Arithmetic operations on matrices:
-A + B = 
+A + B =
 [[    6.000,    8.000]
  [   10.000,   12.000]]
 
-A - B = 
+A - B =
 [[   -4.000,   -4.000]
  [   -4.000,   -4.000]]
 
-2A    = 
+2A    =
 [[    2.000,    4.000]
  [    6.000,    8.000]]
 
-A / 3 = 
+A / 3 =
 [[    0.333,    0.667]
  [    1.000,    1.333]]
 ```
 
 (matrix-multiplication-section)=
+
 ### Matrix multiplication
 
 So multiplication of a matrix by a scalar is the same for matrices as it is for vectors. However, the multiplication of two matrices $A$ and $B$ is defined in a very specific way. If $A$ and $B$ are two matrices then the element in row $i$ and column $j$ of the matrix $AB$ is calculated using
 
 $$ [AB]_{ij} = \mathbf{a}_i \cdot \mathbf{b}_j, $$(eq:matrix-multiplication)
 
-where $\mathbf{a}_i$ is the vector formed from row $i$ of $A$ and $\mathbf{b}_j$ is the vector formed from column $j$ of $B$. For example, given the $2\times 2$ matrices $A$ and $B$ defined earlier
+Where $\mathbf{a}_i$ is the vector formed from row $i$ of $A$ and $\mathbf{b}_j$ is the vector formed from column $j$ of $B$. For example, given the $2\times 2$ matrices $A$ and $B$ defined earlier
 
 $$ \begin{align*}
     A &= \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}, &
@@ -585,11 +591,11 @@ std::cout << "B * A = " << glm::transpose(A * B) << "\n" << std::endl;
 Run the program and the following should be outputted to the console.
 
 ```text
-A * B = 
+A * B =
 [[   19.000,   22.000]
  [   43.000,   50.000]]
 
-B * A = 
+B * A =
 [[   23.000,   34.000]
  [   31.000,   46.000]]
 ```
@@ -632,7 +638,7 @@ Run your program and you should see the following outputted to the console.
 
 ```text
 The identity matrix:
-I = 
+I =
 [[    1.000,    0.000,    0.000,    0.000]
  [    0.000,    1.000,    0.000,    0.000]
  [    0.000,    0.000,    1.000,    0.000]
@@ -662,15 +668,15 @@ $$ A^{-1} = \begin{pmatrix} -2 & 1 \\ 3/2 & -1/2 \end{pmatrix}. $$
 We can check whether this is the inverse of $A$ by calculating $A^{-1}A$ (or $A A^{-1}$)
 
 $$ \begin{align*}
-    A^{-1} A &= 
+    A^{-1} A &=
     \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}
     \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \\
     &=
-    \begin{pmatrix} 
+    \begin{pmatrix}
         -2 \times 1 + 1 \times 3 & -2 \times 2 + 1 \times 4 \\ 
         \frac{3}{2} \times 1 + (-\frac{1}{2}) \times 3 & \frac{3}{2} \times 2 + (-\frac{1}{2}) \times 4
     \end{pmatrix} \\
-    &= 
+    &=
     \begin{pmatrix}
         -2 + 3 & -4 + 4 \\
         \frac{3}{2} - \frac{3}{2} & 3 - 2
@@ -695,19 +701,19 @@ Run your program and the following should be outputted to the console.
 
 ```text
 Inverse matrices:
-invA = 
+invA =
 [[   -2.000,    1.000]
  [    1.500,   -0.500]]
 
-invB = 
+invB =
 [[   -4.000,    3.000]
  [    3.500,   -2.500]]
 
-invA * A = 
+invA * A =
 [[    1.000,    0.000]
  [    0.000,    1.000]]
 
-invB * B = 
+invB * B =
 [[    1.000,    0.000]
  [    0.000,    1.000]]
 ```
@@ -728,7 +734,9 @@ invB * B =
     (f) The dot product $\mathbf{p} \cdot \mathbf{q}$;<br>
     (g) The cross product $\mathbf{q} \times \mathbf{r}$.
 
-2. The three matrices $A$, $B$ and $C$ are defined as
+2. Repeat exercise 1 using C++ and the glm library.
+
+3. The three matrices $A$, $B$ and $C$ are defined as
 
 $$ \begin{align*}
     A &= \begin{pmatrix} -1 & 3 \\ 2 & -5 \end{pmatrix}, &
