@@ -359,7 +359,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 ```
 
-Here we have specified the wrapping in the horizontal (`S`) and vertical (`T`) directions (some people, including as it seems the contributors to OpenGL, use $(s,t)$ for the vertex coordinates instead of the standard $(u,v)$) to `GL_MIRRORED_REPEAT`. Compile and run the program, and you should see the image shown in {numref}`GL_MIRRORED_REPEAT-figure`.
+Here we have specified the wrapping in the horizontal (`S`) and vertical (`T`) directions (some people use $(s,t)$ for the vertex coordinates instead of $(u,v)$) to `GL_MIRRORED_REPEAT`. Compile and run the program, and you should see the image shown in {numref}`GL_MIRRORED_REPEAT-figure`.
 
 ```{figure} ../_images/03_GL_MIRRORED_REPEAT.png
 :width: 500
