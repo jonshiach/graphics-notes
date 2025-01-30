@@ -488,7 +488,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the **Lab03_Textures** project, hidden away in the **Header files** folder is the file **texture.hpp** that contains a function `loadTexture()` that does all the hard work for us.
 
-Comment out the code used to load the texture and specify the texture options (or delete it if you are feeling a bit annoyed) and enter the following code before the render loop.
+Comment out the code used to load the texture and specify the texture options and enter the following code before the render loop.
 
 ```cpp
 // Load the textures
