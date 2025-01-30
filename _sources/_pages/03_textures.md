@@ -296,8 +296,7 @@ This is similar to the code used to create the other buffer objects with the exc
 
 ```cpp
 // Draw the triangles
-glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), 
-                GL_UNSIGNED_INT, 0);
+glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
 glDisableVertexAttribArray(0);
 glDisableVertexAttribArray(1);
