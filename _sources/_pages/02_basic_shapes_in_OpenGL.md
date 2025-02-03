@@ -356,7 +356,7 @@ Now that you've got to the stage where you can draw triangles to the screen and 
 
 1. Draw the original triangle but alter the **vertex shader** to achieve the following results:
 
-&emsp;&emsp; (a) the triangle is shifted by 0.5 to the right;
+&emsp;&emsp; (a) the triangle is shifted by 0.5 to the right (hint: we can access individual elements of a glsl vector using *swizzling*, e.g., `vector.x`, `vector.y` and `vector.z`);
 
 ```{figure} ../_images/02_Ex1a.png
 :width: 400
