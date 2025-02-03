@@ -4,7 +4,7 @@
 
 In this lab we will be creating our first graphics application in OpenGL. If you haven't already done so, download and build the project files using the instructions given in [1. Introduction to C++](getting-the-files-section). Compile and run the project **Lab02_Basic_shapes**:
 
-- **Visual Studio** -- right click on the **Lab02_Basic_shapes+** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
+- **Visual Studio** -- right click on the **Lab02_Basic_shapes** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
 - **Xcode** -- click on the project select dropdown at the top of the window and select **Lab02_Basic_shapes** from the list of projects (there are quite a few to choose from but it's there).
 
 If all has gone to plan you should be looking at a boring window with a grey background shown in {numref}`hello-window-figure`. Familiarise yourself with the source files. For now, this contains the main C++ program **Lab02_Basic_shapes.cpp** in the **source/** folder, the header file **shader.hpp** in the **headers/** folder and associated code file **shader.cpp** in the **source/** folder.
