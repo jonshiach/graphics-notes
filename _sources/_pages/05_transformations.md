@@ -811,3 +811,11 @@ What has happened here is the rectangle has been scaled and translated so that i
 </center>
 
 5. Run your program from exercise 4 until the rectangle perfectly hits a corner (just kidding).
+
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bpilOAHsFjY?si=qW1FYc8n2zp4ta8t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
