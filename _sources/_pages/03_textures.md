@@ -113,6 +113,14 @@ glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 ```
 
+After we have created the texture we need to bind it to the VAO by adding the following code.
+
+```cpp
+// Bind the texture to the VAO
+glBindTexture(GL_TEXTURE_2D, texture);
+glBindVertexArray(VAO);
+```
+
 Sending the texture coordinates to the GPU is done in the same way as for the VBO. Enter the following code after we send the VBO to the GPU (this is in the render loop so scroll down a bit).
 
 ```cpp
@@ -123,14 +131,6 @@ glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 ```
 
 Note that since each texture coordinates requires just 2 floats for $(u,v)$ instead of 3 for the vertex coordinates $(x,y,z)$ the second argument in the `glVertexAttribPointer()` function is `2` instead of `3`.
-
-The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the $(u, v)$ coordinates to the shader enter the following code.
-
-```cpp
-// Bind the texture to the VAO
-glBindTexture(GL_TEXTURE_2D, texture);
-glBindVertexArray(VAO);
-```
 
 ### Shaders
 
@@ -492,19 +492,26 @@ Comment out the code used to load the texture and specify the texture options an
 
 ```cpp
 // Load the textures
+unsigned int texture = loadTexture("../assets/crate.jpg");
+```
+
+This creates a texture, loads in the data from the image file into the texture and sets the texture parameters. Compile and run the program, and you should see the image from {numref}`texture-rectangle-figure`.
+
+We want to work with more than one texture so replace the code above with the following.
+
+```cpp
+// Load the textures
 unsigned int texture1 = loadTexture("../assets/crate.jpg");
 unsigned int texture2 = loadTexture("../assets/mario.png");
 ```
 
-This loads the two textures we have been using which can be accessed using their targets `texture1` and `texture2`. Compile and run the program, and you should see the image from {numref}`texture-rectangle-figure`.
-
-We now want to deal with two textures in the fragment shader, so we need a way of telling OpenGL which texture is which, we do this using uniforms. 
+This loads the crate and Mario textures and assigns them to the targets `texture1` and `texture2`. We now want to deal with two textures in the fragment shader, so we need a way of telling OpenGL which texture is which, we do this using uniforms.
 
 (uniforms-section)=
 
 ### Uniforms
 
-A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank">**uniform**</a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders, so we will use one for passing the texture target to the fragment shader. 
+A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank">**uniform**</a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders, so we will use one for passing the texture target to the fragment shader.
 
 Add the following code to your program before the render loop (since the textures are the same for every frame).
 
