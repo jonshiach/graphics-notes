@@ -588,13 +588,19 @@ A rectangle with a mix of two textures applied.
 :width: 400
 ```
 
-3. Apply a texture of your choice to the rectangle (e.g., a selfie).
+3. Modify the fragment shader so that the red and green colour components of the pixel are switched.
+   
+```{figure} ../_images/03_Ex5.png
+:width: 400
+```
+
+4. Apply a texture of your choice to the rectangle (e.g., a selfie).
 
 ```{figure} ../_images/03_Ex3.png
 :width: 400
 ```
 
-4. Change the $(u,v)$ coordinates so that the textured rectangle shows a zoomed in image of Mario's eye.
+5. Change the $(u,v)$ coordinates so that the textured rectangle shows a zoomed in image of Mario's eye.
 
 ```{figure} ../_images/03_Ex4.png
 :width: 400
