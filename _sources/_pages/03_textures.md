@@ -113,7 +113,7 @@ glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 ```
 
-After we have created the texture we need to bind it to the VAO by adding the following code.
+After we have created the texture (just before the render loop), add the following code to bind it to the VAO.
 
 ```cpp
 // Bind the texture to the VAO
