@@ -2,11 +2,11 @@
 
 # 3D Worlds
 
-In the [previous lab](transformations-section) we looked at the transformations can can be applied to the vertex co-ordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
+In the [previous lab](transformations-section) we looked at the transformations can can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
 
 ## 3D models
 
-To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a **unit cube** which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the co-ordinate axes ({numref}`unit-cube-figure`) so the co-ordinates of the 8 corners of the cube are combinations of $-1$ and $1$. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).
+To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a **unit cube** which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes ({numref}`unit-cube-figure`) so the coordinates of the 8 corners of the cube are combinations of $-1$ and $1$. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).
 
 ```{figure} ../_images/06_Unit_cube.svg
 :width: 500
@@ -41,7 +41,7 @@ const float vertices[] = {
 // Define texture coordinates
 const float uv[] = {
     // front
-    0.0f, 0.0f,     // vertex co-ordinates are the same for each side
+    0.0f, 0.0f,     // vertex coordinates are the same for each side
     1.0f, 0.0f,     // of the cube so repeat every six vertices
     1.0f, 1.0f,
     0.0f, 0.0f,
@@ -68,7 +68,7 @@ unsigned int indices[] = {
 };
 ```
 
-If you compile and run this program you will see that the crate texture fills the window (since the co-ordinates of the cube vertices are $-1$ and $1$).
+If you compile and run this program you will see that the crate texture fills the window (since the coordinates of the cube vertices are $-1$ and $1$).
 
 ```{figure} ../_images/06_3D_worlds.png
 :width: 500
@@ -79,43 +79,68 @@ A unit object.
 
 ---
 
-## Co-ordinate systems
+## coordinate systems
 
-OpenGL uses a co-ordinate system with the $x$ axis pointing horizontally to the right, the $y$ axis pointing vertically upwards and the $z$ axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$ so any object outside of this range will not be shown on the display. These are known as **Normalised Device Co-ordinates (NDC)**.
+OpenGL uses a coordinate system with the $x$ axis pointing horizontally to the right, the $y$ axis pointing vertically upwards and the $z$ axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$ so any object outside of this range will not be shown on the display. These are known as **Normalised Device coordinates (NDC)**.
 
 ```{figure} ../_images/06_NDC.svg
 :width: 600
 :name: NDC-figure
 
-Normalised Device Co-ordinates (NDC)
+Normalised Device coordinates (NDC)
 ```
 
-The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate co-ordinate systems:
+The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate coordinate spaces.
 
 - **Model space** -- each individual 3D object that will appear in the 3D world is defined in its own space usually with the volume centre of the object at $(0,0,0)$ to make the transformations easier
-- **World space** -- the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations
-- **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis
-- **Screen space** -- the view space is transformed so that the co-ordinates are expressed using normalised device co-ordinates
 
-```{figure} ../_images/06_mvp.svg
-:width: 500
+```{figure} ../_images/06_Model_space.svg
+:width: 350
+:name: model-space-figure
 
-Transformations between the model, world, view and screen spaces.
+The model space.
+```
+
+- **World space** -- the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations.
+
+```{figure} ../_images/06_World_space.svg
+:width: 350
+:name: world-space-figure
+
+The world space.
+```
+
+- **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis.
+
+```{figure} ../_images/06_View_space.svg
+:width: 350
+:name: view-space-figure
+
+The view space.
+```
+
+- **Screen space** --the 3D view space is projected onto a 2D projection plane.
+
+```{figure} ../_images/06_Screen_space.svg
+:width: 350
+:name: screen-space-figure
+
+The screen space.
 ```
 
 ## Model, view and projection matrices
 
-We saw in [5. Transformations](transformations-section) that we apply a transformation by multiplying the object co-ordinates by a transformation matrix. Since we are transforming between difference co-ordinate spaces we have 3 main transformation matrices
+We saw in [5. Transformations](transformations-section) that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices
 
-- **Model matrix** - transforms the model space co-ordinates for the objects to the world space
-- **View matrix** - transforms the world space co-ordinates to the view space co-ordinates
-- **Projection matrix** - transforms the view space co-ordinates to the screen space NDC co-ordinates
+- **Model matrix** - transforms the model space coordinates for the objects to the world space
+- **View matrix** - transforms the world space coordinates to the view space coordinates
+- **Projection matrix** - transforms the view space coordinates to the screen space NDC coordinates
 
 (model-matrix-section)=
 
 ### The Model matrix
 
-In [5. Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each co-ordinate direction, rotated about the $y$-axis using the time of the current frame as the rotation angle and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. Add the following code inside the rendering loop before we draw the triangles.
+In [5. Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis using the time of the current frame as the rotation angle and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. Add the following code inside the rendering loop before we draw the triangles.
 
 ```cpp
 // Calculate the model matrix
@@ -143,8 +168,8 @@ The view space.
 
 To calculate the world space to view space transformation we require three vectors
 
-- $\mathbf{eye}$ -- the co-ordinates of the camera position
-- $\mathbf{target}$ -- the co-ordinates of the target point that the camera is pointing
+- $\mathbf{eye}$ -- the coordinates of the camera position
+- $\mathbf{target}$ -- the coordinates of the target point that the camera is pointing
 - $\mathbf{worldUp}$ -- a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
 
 ```{figure} ../_images/06_view_space_alignment.svg
@@ -189,7 +214,7 @@ $$ Rotate = \begin{pmatrix}
     0 & 0 & 0 & 1
 \end{pmatrix}.$$
 
-The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space co-ordinates to the view space.
+The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space coordinates to the view space.
 
 $$ \begin{align*}
     \view &= Rotate \cdot Translate \\
@@ -235,7 +260,7 @@ glm::mat4 view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),  // eye
 
 ### The Projection matrix
 
-The next step is to project the view space onto the screen space. The simplest type of projection is **orthographic projection** where the co-ordinates in the view space are transformed to the screen space by simple translation and scaling transformations.
+The next step is to project the view space onto the screen space. The simplest type of projection is **orthographic projection** where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.
 
 The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside of the cuboid are clipped ({numref}`orthographic-projection-figure`).
 
@@ -258,11 +283,11 @@ $$ \begin{align*}
     \end{pmatrix}
 \end{align*}, $$
 
-where $left$, $right$, $bottom$, $top$, $near$ and $far$ are the co-ordinates of the edges of the visible space. You don't really need to know how this matrix is derived but if you are interested click on the dropdown link below.
+where $left$, $right$, $bottom$, $top$, $near$ and $far$ are the coordinates of the edges of the visible space. You don't really need to know how this matrix is derived but if you are interested click on the dropdown link below.
 
 ```{dropdown} Derivation of the orthographic projection matrix
 
-To derive the orthographic projection we first need to translate the co-ordinates so that the centre of the cuboid that represents the clipping volume to $(0,0,0)$. The centre co-ordinates are calculated using the average of the edge co-ordinates, e.g., for the $x$ co-ordinate this would be $\dfrac{right + left}{2}$, so the translation matrix is
+To derive the orthographic projection we first need to translate the coordinates so that the centre of the cuboid that represents the clipping volume to $(0,0,0)$. The centre coordinates are calculated using the average of the edge coordinates, e.g., for the $x$ coordinate this would be $\dfrac{right + left}{2}$, so the translation matrix is
 
 $$ \begin{align*}
     Translate =
@@ -274,7 +299,7 @@ $$ \begin{align*}
     \end{pmatrix}
 \end{align*} $$
 
-The second step is to scale the clipping volume so that the co-ordinates are between $-1$ and $1$. This is done by dividing the distance between the edges of the screen space by the distance between the clipping planes, e.g., for the $x$ co-ordinate this would be $\dfrac{1 - (-1)}{right - left}=\dfrac{2}{right - left}$, so the scaling matrix is
+The second step is to scale the clipping volume so that the coordinates are between $-1$ and $1$. This is done by dividing the distance between the edges of the screen space by the distance between the clipping planes, e.g., for the $x$ coordinate this would be $\dfrac{1 - (-1)}{right - left}=\dfrac{2}{right - left}$, so the scaling matrix is
 
 $$ \begin{align*}
     Scale =
@@ -300,7 +325,7 @@ $$ \begin{align*}
 \end{align*} $$
 ```
 
-The glm function `glm::ortho()` calculates the orthographic projection matrix given inputs of the left, right, bottom, top, near and far bounding co-ordinates. Let's calculate the orthographic projection matrix using $left = -2$, $right = 2$, $bottom = -2$, $top = 2$, $near = 0$, $far = 10$. Add the following code after we have calculated the view matrix.
+The glm function `glm::ortho()` calculates the orthographic projection matrix given inputs of the left, right, bottom, top, near and far bounding coordinates. Let's calculate the orthographic projection matrix using $left = -2$, $right = 2$, $bottom = -2$, $top = 2$, $near = 0$, $far = 10$. Add the following code after we have calculated the view matrix.
 
 ```cpp
 // Calculate orthographic projection matrix
@@ -345,7 +370,7 @@ void main()
     // Output vertex position
     gl_Position = MVP * vec4(position, 1.0);
     
-    // Output texture co-ordinates
+    // Output texture coordinates
     UV = uv;
 }
 ```
@@ -371,7 +396,7 @@ Our rendering of the cube doesn't look quite right. What is happening here is th
 Rendering the far triangle after the near triangle.
 ```
 
-To overcome this issue OpenGL uses a **depth test** when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a **z buffer** (or **depth buffer**) where the $z$ co-ordinate of each pixel in the frame buffer is stored and initialises all the values to $-1$ (the furthest possible $z$ co-ordinate in the screen space). When the fragment shader is called it checks whether the fragment has a $z$ co-ordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its $z$ co-ordinate in the depth-buffer as the current nearest fragment (if the fragment has a $z$ co-ordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.
+To overcome this issue OpenGL uses a **depth test** when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a **z buffer** (or **depth buffer**) where the $z$ coordinate of each pixel in the frame buffer is stored and initialises all the values to $-1$ (the furthest possible $z$ coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a $z$ coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its $z$ coordinate in the depth-buffer as the current nearest fragment (if the fragment has a $z$ coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.
 
 To enable depth testing we simply add the following function before after the creation of the window.
 
@@ -425,15 +450,15 @@ $$ \begin{align*}
         \dfrac{near}{right} & 0 & 0 & 0 \\
         0 & \dfrac{near}{top} & 0 & 0 \\
         0 & 0 & -\dfrac{far + near}{far - near} & -1 \\
-        0 & 0 & - \dfrac{2\times far \times near}{far - near} & 0
+        0 & 0 & - \dfrac{2\cdot far \cdot near}{far - near} & 0
     \end{pmatrix},
 \end{align*} $$
 
-where $top = near \times \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \times top$. You don't really need to know how this is derived but it you are interested click on the dropdown below.
+where $top = near \cdot \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \cdot top$. You don't really need to know how this is derived but it you are interested click on the dropdown below.
 
 ````{dropdown} Derivation of the perspective projection matrix
 
-The mapping of a point in the view space with co-ordinates $(x, y, z)$ onto the near clipping plane to the point $(x', y', -near)$ is shown in {numref}`perspective-mapping-figure`.
+The mapping of a point in the view space with coordinates $(x, y, z)$ onto the near clipping plane to the point $(x', y', -near)$ is shown in {numref}`perspective-mapping-figure`.
 
 ```{figure} ../_images/06_perspective_projection_mapping.svg
 :width: 500
@@ -451,7 +476,7 @@ $$ \begin{align*}
     y' &= -near \frac{y}{z},
 \end{align*} $$
 
-So we are mapping $(x, y)$ to $\left( -near \dfrac{x}{z}, -near \dfrac{y}{z} \right)$. As well as the perspective mapping we also need to ensure that the mapped co-ordinates $(x', y', z')$ are between $-1$ and $1$. Consider the mapping of the $x$ co-ordinate
+So we are mapping $(x, y)$ to $\left( -near \dfrac{x}{z}, -near \dfrac{y}{z} \right)$. As well as the perspective mapping we also need to ensure that the mapped coordinates $(x', y', z')$ are between $-1$ and $1$. Consider the mapping of the $x$ coordinate
 
 $$ \begin{align*}
     left &\leq x' \leq right \\
@@ -471,7 +496,7 @@ $$ \begin{align*}
     -1 &\leq -\frac{near}{top}\frac{y}{z}\leq 1
 \end{align*} $$
 
-If we use [homogeneous co-ordinates](homogeneous-coordinates-section) then this mapping can be represented by the matrix equation
+If we use [homogeneous coordinates](homogeneous-coordinates-section) then this mapping can be represented by the matrix equation
 
 $$ \begin{align*}
     \begin{pmatrix}
@@ -485,7 +510,7 @@ $$ \begin{align*}
     \begin{pmatrix} \dfrac{near}{right}x \\ \dfrac{near}{top}y \\ Az + B \\ -z \end{pmatrix}
 \end{align*} $$
 
-where $A$ and $B$ are placeholder variables for now. Since we divide homogeneous co-ordinates by the fourth element then the projected co-ordinates are
+where $A$ and $B$ are placeholder variables for now. Since we divide homogeneous coordinates by the fourth element then the projected coordinates are
 
 $$ \begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix} =
@@ -504,11 +529,11 @@ $$ \begin{align*}
     \textsf{far plane:} && \frac{Az + B}{-z} &= 1, & \implies Az + B &= -z.
 \end{align*} $$
 
-At the near clipping plane $z = -n$ and at the far clipping plane $z = -f$ so
+At the near clipping plane $z = -near$ and at the far clipping plane $z = -far$ so
 
 $$ \begin{align*}
-    -A \times near + B &= -near, \\
-    -A \times far + B &= far.
+    -A \cdot near + B &= -near, \\
+    -A \cdot far + B &= far.
 \end{align*} $$
 
 Subtracting the first equation from the second gives
@@ -524,7 +549,7 @@ $$ \begin{align*}
     \left(\frac{far + near}{far - near}\right) near + B &= -near \\
     B &= -near \left( 1 +  \frac{far + near}{far - near}\right) \\
     &= -near \left( \frac{far - near + far + near}{far - near}\right) \\
-    &= - \frac{2 \times far \times near}{far - near}.
+    &= - \frac{2 \cdot far \cdot near}{far - near}.
 \end{align*} $$
 
 So the perspective projection matrix is
@@ -534,12 +559,12 @@ $$ \begin{align*}
     \begin{pmatrix}
         \dfrac{near}{right} & 0 & 0 & 0 \\
         0 & \dfrac{near}{top} & 0 & 0 \\
-        0 & 0 & -\dfrac{far + near}{far - near} & - \dfrac{2\times far \times near}{far - near} \\
+        0 & 0 & -\dfrac{far + near}{far - near} & - \dfrac{2\cdot far \cdot near}{far - near} \\
         0 & 0 & -1 & 0
     \end{pmatrix}.
 \end{align*} $$
 
-We now need to calculate the values of $r$ and $t$. The $t$ co-ordinate is the opposite side of a right angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$ so it is easily calculated using trigonometry 
+We now need to calculate the values of $r$ and $t$. The $t$ coordinate is the opposite side of a right angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$ so it is easily calculated using trigonometry 
 
 $$ \begin{align*}
     \tan \left( \frac{fov}{2} \right) 
@@ -550,12 +575,12 @@ $$ \begin{align*}
 Since $aspect$ with the width of the window divided by the height and $l = -r$ and $b = -t$ then
 
 $$ \begin{align*}
-    aspect &= \frac{right - left}{top - bottom} = \frac{2 \times right}{2 \times top} \\
-    \therefore right &= aspect \times top.
+    aspect &= \frac{right - left}{top - bottom} = \frac{2 \cdot right}{2 \cdot top} \\
+    \therefore right &= aspect \cdot top.
 \end{align*} $$
 ````
 
-The glm function `perspective()` calculates the perspective projection matrix given inputs of the field of view angle, width-to-height aspect ratio and the $z$ co-ordinates of the near and far planes. Lets apply perspective projection to our cube using a near and far clipping planes at $n=0.2$ and $f=10$ respectively and a field of view angle of $fov = 45^\circ$. Comment out the code use to calculate the orthogonal projection matrix and add the following code.
+The glm function `perspective()` calculates the perspective projection matrix given inputs of the field of view angle, width-to-height aspect ratio and the $z$ coordinates of the near and far planes. Lets apply perspective projection to our cube using a near and far clipping planes at $n=0.2$ and $f=10$ respectively and a field of view angle of $fov = 45^\circ$. Comment out the code use to calculate the orthogonal projection matrix and add the following code.
 
 ```cpp
 // Calculate perspective projection matrix
@@ -756,7 +781,7 @@ for (int i = 0; i < static_cast<unsigned int>(objects.size()); i++)
 }
 ```
 
-Here we loop through each object and calculate the model matrix using the position, scaling and rotation vectors and rotation angle. We need to change the position of the camera so that we can see all of the cubes. Specify the camera $\mathbf{eye}$ and $\mathbf{target}$ so that the camera is moved backwards along the $z$-axis a bit and looking at the first object.
+Here we loop through each object and calculate the model matrix using the position, scaling and rotation vectors and rotation angle. We need to change the position of the camera so that we can see all the cubes. Specify the camera $\mathbf{eye}$ and $\mathbf{target}$ so that the camera is moved backwards along the $z$-axis a bit and looking at the first object but adding the following code before we loop through the cube objects.
 
 ```cpp
 // Calculate view and projection matrices
@@ -775,7 +800,7 @@ Run your program and you should see the following.
 
 ## Exercises
 
-1. Move the camera position so that it moves in a circle centred at the first cube with radius 10 with a rotation speed such that it completes one full rotation every 5 seconds. Hint: $x = c_x + r\cos(\theta)$ and $z = c_z + r\sin(\theta)$ gives the $x$ and $y$ co-ordinates on a circle centred at $(c_x, c_y, c_z)$ with radius $r$.
+1. Move the camera position so that it moves in a circle centred at the first cube with radius 10 with a rotation speed such that it completes one full rotation every 5 seconds. Hint: $x = c_x + r\cos(\theta)$ and $z = c_z + r\sin(\theta)$ gives the $x$ and $y$ coordinates on a circle centred at $(c_x, c_y, c_z)$ with radius $r$.
 
 <center>
 <video controls muted="true" loop="true" width="400">
@@ -800,3 +825,11 @@ Run your program and you should see the following.
 </center>
 
 5. Add functions called `lookAt()` and `perspective()` to your `Maths` class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.
+
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jVCftc0pojI?si=yC9sx6TlUDkomqvu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

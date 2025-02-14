@@ -373,24 +373,24 @@
 % \end{tikzpicture}
 
 % Rotation derivation
-% \begin{tikzpicture}
-%     \tikzmath{\a1=30; \a2=60; \l1=4; \l2=1;}
-%     \draw [-stealth] (0, 0) -- ++(5, 0) node at (0:5.2) {$x$};
-%     \draw [-stealth] (0, 0) -- ++(0, 4) node at (90:4.2) {$y$};
-%     \node [point, blue] at (\a1:\l1) (1) {};
-%     \node [point, red] at (\a2:\l1) (2) {};
-%     \draw [vector, blue] (0, 0) -- (1) node [right] {$\mathbf{a}=(a_x,b_y)$};
-%     \draw [vector, red] (0, 0) -- (2) node [right] {$\mathbf{b}=(b_x,b_y)$};
-%     \draw [vector, mygreen] (0, 0) -- (0:\l1) node [pos=0.6,below] {$\mathbf{c}$};
-%     \draw [-latex',red] (\a1:\l2) arc (\a1 : \a2 : \l2);
-%     \draw [-latex',blue] (0:{\l2+0.5}) arc (0 : \a1 : {\l2+0.5});
-%     \node [red] at ({0.5 * (\a1+\a2)}: {0.75*\l2}) {$\theta$};
-%     \node [blue] at ({0.5 * \a1}: {1.2*\l2}) {$\phi$};
-%     \draw [blue] (1) -- ({\l1 * cos(\a1)}, 0);
-%     \draw [red] (2) -- ({\l1 * cos(\a2)}, 0);
-%     \draw [blue] ({\l1 * cos(\a1)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
-%     \draw [red] ({\l1 * cos(\a2)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
-% \end{tikzpicture}
+\begin{tikzpicture}
+    \tikzmath{\a1=30; \a2=60; \l1=4; \l2=1;}
+    \draw [-stealth] (0, 0) -- ++(5, 0) node at (0:5.2) {$x$};
+    \draw [-stealth] (0, 0) -- ++(0, 4) node at (90:4.2) {$y$};
+    \node [point, blue] at (\a1:\l1) (1) {};
+    \node [point, red] at (\a2:\l1) (2) {};
+    \draw [vector, blue] (0, 0) -- (1) node [right] {$\mathbf{a}=(a_x,b_y)$};
+    \draw [vector, red] (0, 0) -- (2) node [right] {$\mathbf{b}=(b_x,b_y)$};
+    % \draw [vector, mygreen] (0, 0) -- (0:\l1) node [pos=0.6,below] {$\mathbf{c}$};
+    \draw [-latex',red] (\a1:\l2) arc (\a1 : \a2 : \l2);
+    \draw [-latex',blue] (0:{\l2+0.5}) arc (0 : \a1 : {\l2+0.5});
+    \node [red] at ({0.5 * (\a1+\a2)}: {0.75*\l2}) {$\theta$};
+    \node [blue] at ({0.5 * \a1}: {1.2*\l2}) {$\phi$};
+    \draw [blue] (1) -- ({\l1 * cos(\a1)}, 0) -- (0,0);
+    \draw [red] (2) -- ({\l1 * cos(\a2)}, 0);
+    \draw [blue] ({\l1 * cos(\a1)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
+    \draw [red] ({\l1 * cos(\a2)-0.2}, 0) -- ++(0, 0.2) -- ++(0.2, 0);
+\end{tikzpicture}
 
 % Axis-angle rotation
 % \begin{tikzpicture}
@@ -663,6 +663,60 @@
 % Camera
 % \begin{tikzpicture}
 %     \draw [rounded corners,line width=5pt,fill=gray] (0,0) -- ++(2,0) -- ++(0,0.5) -- ++(0.5,-0.5) -- ++(0,1.5) -- ++(-0.5,-0.5) -- ++(0,0.5) -- ++(-2,0) -- cycle;
+% \end{tikzpicture}
+
+% Model space
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=2;\d=2;\h=2;}
+%     \coordinate (0) at ($(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
+%     \draw [line width=1pt] (\x:-\al) -- (0,0);
+%     \draw [line width=1pt] (\y:-0.75*\al) -- (0,0);
+%     \draw [line width=1pt] (\z:-\al) -- (0,0);
+%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [axis] (\x:1) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (\y:1) -- (\y:0.75*\al) node at (\y:0.75*\al+0.2) {$y$};
+%     \draw [axis] (\z:1) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+% \end{tikzpicture}
+
+% World space with camera
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=0.5;\d=0.5;\h=0.5;}
+%     \draw [axis] (\x:-2) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (\y:-1) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
+%     \draw [axis] (\z:-2) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+%     \coordinate (0) at ($(0,0)+(\x:1)+(\z:1.25)$);
+%     \coordinate (1) at ($(0)+(\z:1)$);
+%     \coordinate (2) at ($(0)+(\x:1)$);
+%     \coordinate (3) at ($(1)+(\x:1)$);
+%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (1) ($(1)+(\x:\w)$) -- ++(\y:\h) ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=blue!10] (2) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (2) ($(2)+(\x:\w)$) -- ++(\y:\h) ($(2)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=red!20] (3) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (3) ($(3)+(\x:\w)$) -- ++(\y:\h) ($(3)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \node [rotate=\x] at ($(\x:-1)+(\z:1.25)$) {\includegraphics[width=0.5cm]{camera.pdf}};
+% \end{tikzpicture}
+
+% View space
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\z=210;\al=4;\w=2;\d=2;\h=2;}
+%     \draw [axis] (\x:-\al) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (\y:-0.5*\al) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
+%     \coordinate (0) at ($(\x:-3)+(\y:-1)$);
+%     \coordinate (1) at ($(\x:1)+(\y:-1)$);
+%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h);
+%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h);
+% \end{tikzpicture}
+
+% Screen space
+% \begin{tikzpicture}
+%     \tikzmath{\x=0;\y=90;\z=210;\al=4;\w=2;\d=2;\h=2;}
+%     \draw [axis] (\x:-\al) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis] (\y:-0.5*\al) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
+%     \coordinate (0) at ($(\x:-3)+(\y:-1)$);
+%     \coordinate (1) at ($(\x:1)+(\y:-1)$);
+%     \draw [fill=blue!10] ($(0)+(\x:\w)+(45:0.8)+(\x:-1)$) -- ++(\x:1) -- ++(45:0.3) -- ($(0)+(\x:\w)+(\y:\h)+(-45:1.1)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) -- ++(\x:-1) ($(0)+(\x:\w)+(45:0.8)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) ;
+%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) ($(0)+(\x:\w)$) -- ++(45:0.4) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.4)$) -- ($(0)+(\x:\w)+(\y:\h)$);
+%     \draw [fill=red!20] ($(1)+(135:0.8)+(\x:1)$) -- ++(\x:-1) -- ++(135:0.3) -- ($(1)+(\y:\h)+(225:1.1)$) -- ++(45:0.3) -- ++(\x:1) ($(1)+(135:0.8)$) -- ($(1)+(\y:\h)+(225:0.8)$);
+%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) (1) -- ++(135:0.4) -- ($(1)+(\y:\h)+(225:0.4)$) -- ($(1)+(\y:\h)$);
 % \end{tikzpicture}
 
 % Model-View-Projection
@@ -1649,18 +1703,18 @@
 % \end{tikzpicture}
 
 % Third person camera
-\begin{tikzpicture}
-    \tikzmath{\a=-20;};
-    \coordinate (head) at (0,0);
-    \coordinate (camera) at ($(head)+(-3,2)$);
-	\node [xscale=-1] {\includegraphics[width=1cm]{head.pdf}};
-	\node [rotate=\a] at (camera) {\includegraphics[width=1cm]{camera.pdf}};
-    \node [above of=camera,yshift=-0.25cm] {$\mathbf{eye} = \mathbf{position} + \mathbf{offset}$};
-	\draw [vector,blue] (head) -- (camera) node [pos=0.5,below left] {$\mathbf{offset}$};
-    \draw [vector,red] (0.5,0) -- ++(2,0) node [pos=1,above] {$\mathbf{character\,direction}$};
-	\node at (0,-0.8) {$\mathbf{position}$};
-    \draw [vector,mygreen] (camera) -- ++(\a:2) node [pos=1,above right] {$\mathbf{direction}$};
-\end{tikzpicture}
+% \begin{tikzpicture}
+%     \tikzmath{\a=-20;};
+%     \coordinate (head) at (0,0);
+%     \coordinate (camera) at ($(head)+(-3,2)$);
+% 	\node [xscale=-1] {\includegraphics[width=1cm]{head.pdf}};
+% 	\node [rotate=\a] at (camera) {\includegraphics[width=1cm]{camera.pdf}};
+%     \node [above of=camera,yshift=-0.25cm] {$\mathbf{eye} = \mathbf{position} + \mathbf{offset}$};
+% 	\draw [vector,blue] (head) -- (camera) node [pos=0.5,below left] {$\mathbf{offset}$};
+%     \draw [vector,red] (0.5,0) -- ++(2,0) node [pos=1,above] {$\mathbf{character\,direction}$};
+% 	\node at (0,-0.8) {$\mathbf{position}$};
+%     \draw [vector,mygreen] (camera) -- ++(\a:2) node [pos=1,above right] {$\mathbf{direction}$};
+% \end{tikzpicture}
 
 
 \end{document}

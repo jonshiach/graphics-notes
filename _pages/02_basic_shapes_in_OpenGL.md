@@ -4,8 +4,8 @@
 
 In this lab we will be creating our first graphics application in OpenGL. If you haven't already done so, download and build the project files using the instructions given in [1. Introduction to C++](getting-the-files-section). Compile and run the project **Lab02_Basic_shapes**:
 
-- **Visual Studio** -- right click on the **Lab02_Basic_shapes+** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
-- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from but it's there).
+- **Visual Studio** -- right click on the **Lab02_Basic_shapes** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
+- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab02_Basic_shapes** from the list of projects (there are quite a few to choose from but it's there).
 
 If all has gone to plan you should be looking at a boring window with a grey background shown in {numref}`hello-window-figure`. Familiarise yourself with the source files. For now, this contains the main C++ program **Lab02_Basic_shapes.cpp** in the **source/** folder, the header file **shader.hpp** in the **headers/** folder and associated code file **shader.cpp** in the **source/** folder.
 
@@ -31,7 +31,7 @@ As you will probably agree, creating a plain grey window isn't the most interest
 The vertices of our triangle.
 ```
 
-OpenGL expects the $x$, $y$ and $z$ co-ordinates of all vertices to be between $-1$ and $1$ where the $x$ and $y$ axes point to the right and up respectively and the $z$-axis points out from the screen. For now we are going to draw a triangle with vertex co-ordinates $(-0.5,-0.5,0)$, $(0.5,-0.5,0)$ and $(0,0.5,0)$ for the bottom-left, bottom-right and top vertices respectively.
+OpenGL expects the $x$, $y$ and $z$ coordinates of all vertices to be between $-1$ and $1$ where the $x$ and $y$ axes point to the right and up respectively and the $z$-axis points out from the screen. For now we are going to draw a triangle with vertex coordinates $(-0.5,-0.5,0)$, $(0.5,-0.5,0)$ and $(0,0.5,0)$ for the bottom-left, bottom-right and top vertices respectively.
 
 The first change we are going to make to our program is to define an array containing the triangle vertices. Enter the following code into the **Lab02_Basic_shapes.cpp** file after the window has been created.
 
@@ -65,7 +65,7 @@ The functions used here are:
 
 ### Vertex Buffer Object (VBO)
 
-The next buffer object we need is the <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object" target="_blank">**Vertex Buffer Object (VBO)**</a> which is used to store the vertex co-ordinates of our triangle which are currently stored in the `vertices` array. Enter the following after we've created and bound the VAO.
+The next buffer object we need is the <a href="https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object" target="_blank">**Vertex Buffer Object (VBO)**</a> which is used to store the vertex coordinates of our triangle which are currently stored in the `vertices` array. Enter the following after we've created and bound the VAO.
 
 ```cpp
 // Create Vertex Buffer Object (VBO)
@@ -116,7 +116,7 @@ void main()
 
 ```
 
-This is the GLSL program for a simple vertex shader. It takes in a single 3-element vector `position` that contains the $(x,y,z)$ co-ordinates of a vertex and outputs the 4-element vector `gl_Position` containing the these co-ordinates. You may be wondering why `gl_Position` is a 4-element vector with an additional 1 and not a 3-element vector, don't worry about this for now it will be explained [later on](translation-section).
+This is the GLSL program for a simple vertex shader. It takes in a single 3-element vector `position` that contains the $(x,y,z)$ coordinates of a vertex and outputs the 4-element vector `gl_Position` containing the these coordinates. You may be wondering why `gl_Position` is a 4-element vector with an additional 1 and not a 3-element vector, don't worry about this for now it will be explained [later on](translation-section).
 
 ### Fragment shader
 
@@ -129,7 +129,7 @@ out vec3 colour;
 
 void main()
 {
-    colour = vec3(1.0f, 0.0f, 0.0f); // RGB
+    colour = vec3(1.0, 0.0, 0.0); // RGB
 }
 
 ```
@@ -142,8 +142,7 @@ We now need to combine the vertex and fragment shaders into a single shader prog
 
 ```cpp
 // Compile shader program
-unsigned int shaderID;
-shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
+unsigned int shaderID = LoadShaders("vertexShader.glsl", "fragmentShader.glsl");
 ```
 
 This code creates a program object which will be referred to by the integer `shaderID`. Now that we have an ID for our shader programs, we need to instruct OpenGL to use it. To do this enter the following code
@@ -183,12 +182,12 @@ The input arguments for the `glVertexAttribPointer()` function are explained bel
 
 | Argument | Explanation |
 |:--|:--|
-| Attribute | A number that defines which vertex attribute we want to configure. In the vertex shader we used `location = 0` for the vertex co-ordinates and since we are passing vertex co-ordinates, we set the attribute to 0. |
-| Size | How many values does the vertex attribute have. Here we have (x,y,z) co-ordinates so this is 3. |
-| Type | Our co-ordinates are floats. |
-| Normalise | We have already set out vertex co-ordinates in NDC (i.e., in the range -1 to 1) so we set this to false. |
+| Attribute | A number that defines which vertex attribute we want to configure. In the vertex shader we used `location = 0` for the vertex coordinates and since we are passing vertex coordinates, we set the attribute to 0. |
+| Size | How many values does the vertex attribute have. Here we have $(x,y,z)$ coordinates, so this is 3. |
+| Type | Our coordinates are floats. |
+| Normalise | We have already set out vertex coordinates in NDC (i.e., in the range $-1$ to $1$) so we set this to false. |
 | Stride | The space between consecutive vertex attributes. Here one vertex immediately follows the next, so this is zero. |
-| Offset | Where does the first data point appear in the buffer? For us this is at the beginning, so we set it to 0. |
+| Offset | Where does the first data point appear in the buffer? For us this is at the beginning, so we set it to $0$. |
 
 Now we instruct OpenGL to draw the triangle, add the following code.
 
@@ -308,7 +307,7 @@ Our snazzy triangle.
 
 ## Adding another triangle
 
-What could be better than one triangle? Well two triangles of course. Fortunately since we have done all of the grunt work in setting up the buffers for a single triangle adding another is a simple matter of defining the vertex co-ordinates and vertex colours for the additional triangle. Modify the `vertices` and `colours` arrays to the following.
+What could be better than one triangle? Well two triangles of course. Fortunately since we have done all of the grunt work in setting up the buffers for a single triangle adding another is a simple matter of defining the vertex coordinates and vertex colours for the additional triangle. Modify the `vertices` and `colours` arrays to the following.
 
 ```cpp
 // Define vertices
@@ -334,7 +333,7 @@ static const float colours[] = {
 
 Here the `vertices` array now defines six vertices for two triangles placed side-by-side. The `colours` array defines the first three vertices red and the second three set of vertices blue.
 
-We also need to instruct OpenGL to draw two triangles instead of one. To do this we change the number of vertices we want to draw from `3` to the number of vertices we have. Since each vertex has 3 co-ordinates $(x, y, z)$ and each co-ordinate is a single `float` then we can calculate the number of vertices we have by dividing `sizeof(vertices)` by `3 * sizeof(float)`.
+We also need to instruct OpenGL to draw two triangles instead of one. To do this we change the number of vertices we want to draw from `3` to the number of vertices we have. Since each vertex has 3 coordinates $(x, y, z)$ and each co-ordinate is a single `float` then we can calculate the number of vertices we have by dividing `sizeof(vertices)` by `3 * sizeof(float)`.
 
 ```cpp
 // Draw the triangles
@@ -357,7 +356,7 @@ Now that you've got to the stage where you can draw triangles to the screen and 
 
 1. Draw the original triangle but alter the **vertex shader** to achieve the following results:
 
-&emsp;&emsp; (a) the triangle is shifted by 0.5 to the right;
+&emsp;&emsp; (a) the triangle is shifted by 0.5 to the right (hint: we can access individual elements of a glsl vector using <a href="https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)#Swizzling" target="_blank">*swizzling*</a>, e.g., `vector.x`, `vector.y` and `vector.z`);
 
 ```{figure} ../_images/02_Ex1a.png
 :width: 400
@@ -369,13 +368,13 @@ Now that you've got to the stage where you can draw triangles to the screen and 
 :width: 400
 ```
 
-&emsp;&emsp; (c) the triangle $x$ and $y$ co-ordinates are swapped.
+&emsp;&emsp; (c) the triangle $x$ and $y$ coordinates are swapped.
 
 ```{figure} ../_images/02_Ex1c.png
 :width: 400
 ```
 
-2. Use two triangles to draw a green rectangle where the lower-left corner has co-ordinates $(-0.5, -0.5, 0.0)$ and the upper-right corner has co-ordinates $(0.5, 0.5, 0.0)$.
+2. Use two triangles to draw a green rectangle where the lower-left corner has coordinates $(-0.5, -0.5, 0.0)$ and the upper-right corner has coordinates $(0.5, 0.5, 0.0)$.
 
 ```{figure} ../_images/02_Ex2.png
 :width: 400

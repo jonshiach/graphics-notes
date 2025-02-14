@@ -10,13 +10,13 @@ Texture mapping is a technique for applying a 2D image known as a **texture** on
 Mapping a texture to a polygon.
 ```
 
-The texture is a 2D image where each pixel within the texture, known as a **textel**, is referenced using the **texture coordinates** given as $(u,v)$ where $u$ and $v$ are in the range 0 to 1, i.e., $(0,0)$ corresponds to the textel in the bottom-left corner and $(1,1)$ corresponds to the textel in the top-right corner. When a fragment is created by the shader the corresponding texture co-ordinates are calculated and the sample colour of the textel is used for the fragment. Fortunately we do not need to write a texture mapper functions since these are in OpenGL.
+The texture is a 2D image where each pixel within the texture, known as a **textel**, is referenced using the **texture coordinates** given as $(u,v)$ where $u$ and $v$ are in the range 0 to 1, i.e., $(0,0)$ corresponds to the textel in the bottom-left corner and $(1,1)$ corresponds to the textel in the top-right corner. When a fragment is created by the shader the corresponding texture coordinates are calculated and the sample colour of the textel is used for the fragment. Fortunately we do not need to write a texture mapper functions since these are in OpenGL.
 
 ---
 
 ## Texture triangle
 
-Compile and run the **Lab03_Textures** project and you should be presented with the image of the red triangle from [2. Basic Shapes in OpenGL](basic-shapes-section) shown in {numref}`red-triangle-figure2`
+Compile and run the **Lab03_Textures** project, and you should be presented with the image of the red triangle from [2. Basic Shapes in OpenGL](basic-shapes-section) shown in {numref}`red-triangle-figure2`
 
 ```{figure} ../_images/03_red_triangle.png
 :width: 500
@@ -29,7 +29,7 @@ We will apply a texture to this triangle.
 
 ### Creating a texture
 
-The first thing we need to do is create a texture object and bind it to a target so we can call upon it later. Enter the following code to the **Lab03_Textures.cpp** file after we tell OpenGL to compile the shader program
+The first thing we need to do is create a texture object and bind it to a target, so we can call upon it later. Enter the following code to the **Lab03_Textures.cpp** file after we tell OpenGL to compile the shader program
 
 ```cpp
 // Create and bind texture
@@ -40,11 +40,11 @@ glBindTexture(GL_TEXTURE_2D, texture);
 
 Here we have defined a target called `texture` which is an integer used to refer to the texture. The texture is then generated and bound to this target using the `glGenTextures()` and `glBindTexture()` functions.
 
-We now need to load a image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">`stb_image`</a> library, the header file for which can be found in the **common/** folder. Enter the following code into your program.
+We now need to load an image into our texture. To do this we are going to make use of the <a href="https://github.com/nothings/stb/tree/master" target="_blank">stb_image</a> library, the header file for which can be found in the **common/** folder. Enter the following code into your program.
 
 ```cpp
 // Load texture image from file
-const char *path = "../assets/crate.jpeg";
+const char *path = "../assets/crate.jpg";
 int width, height, nChannels;
 stbi_set_flip_vertically_on_load(true);
 unsigned char *data = stbi_load(path, &width, &height, &nChannels, 0);
@@ -57,12 +57,12 @@ else
 
 The functions used here are:
 
-- `stbi_set_flip_vertically_on_load()` flips the image vertically since the $(0,0)$ co-ordinate on an images is the top-left corner and OpenGL expects it to be the bottom-right corner
+- `stbi_set_flip_vertically_on_load()` flips the image vertically since the $(0,0)$ coordinate on an image is the top-left corner and OpenGL expects it to be the bottom-right corner
 - `stbi_load()` loads the image specified in the `path` string into the `data` variable and the stores the width, height and number of colour channels into the appropriate variables 
 
-The texture we are using here is **crate.jpeg** which is stored in the **assets/** folder and represents a side of a wooden crate.
+The texture we are using here is **crate.jpg** which is stored in the **assets/** folder and represents a side of a wooden crate.
 
-```{figure} ../_images/03_crate.jpeg
+```{figure} ../_images/03_crate.jpg
 :width: 300
 
 The crate texture.
@@ -72,8 +72,7 @@ After getting the texture data from the image file we tell OpenGL we that have a
 
 ```cpp
 // Specify 2D texture
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-                GL_UNSIGNED_BYTE, data);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 glGenerateMipmap(GL_TEXTURE_2D);
 ```
 
@@ -86,9 +85,9 @@ Now that the texture data has been copied to the GPU we can free up memory by ad
 stbi_image_free(data);
 ```
 
-### Texture co-ordinates
+### Texture coordinates
 
-So we have created a texture and told OpenGL all about it. Now we need specify how we want to use the texture. To do this for each of the vertices of the triangle we need to define the corresponding $(u, v)$ texture co-ordinates. This is done in a the same way as the triangle vertices, i.e., define an array containing the co-ordinates, create a buffer and copy the co-ordinates to this buffer.
+So we have created a texture and told OpenGL all about it. Now we need to specify how we want to use the texture. To do this for each of the vertices of the triangle we need to define the corresponding $(u, v)$ texture coordinates. This is done in the same way as the triangle vertices, i.e., define an array containing the coordinates, create a buffer and copy the coordinates to this buffer.
 
 Enter the following code after we defined the `vertices` array (you may need to scroll up a bit).
 
@@ -102,9 +101,9 @@ const float uv[] = {
 };
 ```
 
-Here we have defined an array of float values called `uv` and specified the texture co-ordinates so that the bottom-left triangle vertex is mapped to the texture co-ordinate $(0, 0)$ at the bottom-left corner of the texture, the bottom-right vertex is mapped to $(1,0)$ at the bottom-right corner of the texture and the top vertex is mapped to $(0.5, 1)$ in the middle of the top edge of the texture.
+Here we have defined an array of float values called `uv` and specified the texture coordinates so that the bottom-left triangle vertex is mapped to the texture coordinate $(0, 0)$ in the bottom-left corner of the texture, the bottom-right vertex is mapped to $(1,0)$ in the bottom-right corner of the texture and the top vertex is mapped to $(0.5, 1)$ in the middle of the top edge of the texture.
 
-The buffer for the texture co-ordinates is created in the same was as for the triangle vertices. Enter the following code after the VBO was created.
+The buffer for the texture coordinates is created in the same was as for the triangle vertices. Enter the following code after the VBO was created.
 
 ```cpp
 // Create texture buffer
@@ -114,7 +113,15 @@ glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 ```
 
-Sending the texture co-ordinates to the GPU is done in the same way as for the VBO. Enter the following code after we send the VBO to the GPU (this is in the render loop so scroll down a bit).
+After we have created the texture (just before the render loop), add the following code to bind it to the VAO.
+
+```cpp
+// Bind the texture to the VAO
+glBindTexture(GL_TEXTURE_2D, texture);
+glBindVertexArray(VAO);
+```
+
+Sending the texture coordinates to the GPU is done in the same way as for the VBO. Enter the following code after we send the VBO to the GPU (this is in the render loop so scroll down a bit).
 
 ```cpp
 // Send the UV buffer to the shaders
@@ -123,21 +130,13 @@ glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 ```
 
-Note that since each texture co-ordinates requires just 2 floats for $(u,v)$ instead of 3 for the vertex co-ordinates $(x,y,z)$ the second argument in the `glVertexAttribPointer()` function is `2` instead of `3`.
-
-The last thing we need to do to the main program is bind our texture to the VAO. After you have sent the $(u, v)$ co-ordinates to the shader enter the following code.
-
-```cpp
-// Bind the texture to the VAO
-glBindTexture(GL_TEXTURE_2D, texture);
-glBindVertexArray(VAO);
-```
+Note that since each texture coordinates requires just 2 floats for $(u,v)$ instead of 3 for the vertex coordinates $(x,y,z)$ the second argument in the `glVertexAttribPointer()` function is `2` instead of `3`.
 
 ### Shaders
 
 #### Vertex shader
 
-Recall that the [vertex shader](vertex-shader-section) deals with the vertex co-ordinates and is used by OpenGL to calculate the co-ordinates of the fragment. So in addition to passing the $(x, y, z)$ co-ordinates of the vertices we must also pass the $(u, v)$ co-ordinates of the textels that correspond to the triangle vertices.
+Recall that the [vertex shader](vertex-shader-section) deals with the vertex coordinates and is used by OpenGL to calculate the coordinates of the fragment. So in addition to passing the $(x, y, z)$ coordinates of the vertices we must also pass the $(u, v)$ coordinates of the textels that correspond to the triangle vertices.
 
 Edit the **vertexShader.glsl** file in the **Lab03_Textures** project so that it looks like the following.
 
@@ -156,7 +155,7 @@ void main()
     // Output vertex position
     gl_Position = vec4(position, 1.0);
     
-    // Output texture co-ordinates
+    // Output texture coordinates
     UV = uv;
 }
 
@@ -187,7 +186,7 @@ void main()
 
 ```
 
-Here we now have an input of the 2-element vector `uv` which has been outputted from the vertex shader. Since our texture is a 2D image then we use the <a href="https://www.khronos.org/opengl/wiki/Sampler_(GLSL)" target="_blank">`sampler2D`</a> GLSL type to declare the uniform `textureMap` (uniforms are explained [below](uniforms-section)). The colour of the fragment is taken from the texture using the `texture()` function where the first argument is the name of the texture uniform and the second argument is the $(u,v)$ texture co-ordinates of the fragment.
+Here we now have an input of the 2-element vector `uv` which has been outputted from the vertex shader. Since our texture is a 2D image then we use the <a href="https://www.khronos.org/opengl/wiki/Sampler_(GLSL)" target="_blank">`sampler2D`</a> GLSL type to declare the uniform `textureMap` (uniforms are explained [below](uniforms-section)). The colour of the fragment is taken from the texture using the `texture()` function where the first argument is the name of the texture uniform and the second argument is the $(u,v)$ texture coordinates of the fragment.
 
 Compile and run program and, after sending a prayer to the programming gods, you should be presented with your triangle which has now been textured using the crate texture.
 
@@ -199,7 +198,7 @@ Compile and run program and, after sending a prayer to the programming gods, you
 
 ## Texture rectangle
 
-Our texture triangle is great and all but doesn't really look like a realistic object. Since the original texture is rectangular, lets create a rectangle out of two triangles with the appropriate texture mapping.
+Our texture triangle is great and all but doesn't really look like a realistic object. Since the original texture is rectangular, let's create a rectangle out of two triangles with the appropriate texture mapping.
 
 ```{figure} ../_images/03_rectangle.svg
 :width: 450
@@ -207,7 +206,7 @@ Our texture triangle is great and all but doesn't really look like a realistic o
 A rectangle constructed using two triangles.
 ```
 
-So the lower-right (blue) triangle has vertex co-ordinates $(-0.5, -0.5, 0)$, $(0.5, -0.5, 0)$ and $(0.5, 0.5, 0)$ and the upper-left (red) triangle has vertex co-ordinates $(-0.5, -0.5, 0)$, $(0.5, 0.5, 0)$ and $(-0.5, 0.5, 0)$. Change the `vertices` and `uv` arrays to the following.
+So the lower-right (blue) triangle has vertex coordinates $(-0.5, -0.5, 0)$, $(0.5, -0.5, 0)$ and $(0.5, 0.5, 0)$ and the upper-left (red) triangle has vertex coordinates $(-0.5, -0.5, 0)$, $(0.5, 0.5, 0)$ and $(-0.5, 0.5, 0)$. Change the `vertices` and `uv` arrays to the following.
 
 ```cpp
 // Define vertex positions
@@ -221,7 +220,7 @@ static const float vertices[] = {
     -0.5f,  0.5f, 0.0f
 };
 
-// Define texture co-ordinates
+// Define texture coordinates
 static const float uv[] = {
     // u    v
     0.0f,  0.0f,    // triangle 1
@@ -233,7 +232,7 @@ static const float uv[] = {
 };
 ```
 
-Compile and run the program and you should be presented with the more realistic image in {numref}`texture-rectangle-figure`.
+Compile and run the program, and you should be presented with the more realistic image in {numref}`texture-rectangle-figure`.
 
 ```{figure} ../_images/03_texture_rectangle.png
 :width: 500
@@ -244,7 +243,7 @@ Texture mapped onto two triangles that form a rectangle.
 
 ### Element Buffer Objects (EBO)
 
-Our rectangle is defined using 6 sets of $(x,y,z)$ co-ordinates for the 2 triangles but a rectangle only has 4 vertices. This means we are using 2 extra co-ordinates than we really need to as both of the triangles share the vertices at $(-0.5, -0.5, 0)$ and $(0.5, 0.5, 0)$. This isn't too bad for our simple rectangle example but for more sophisticated scenes that use thousands of triangles it can be inefficient.
+Our rectangle is defined using 6 sets of $(x,y,z)$ coordinates for the 2 triangles, but a rectangle only has 4 vertices. This means we are using 2 extra coordinates than we really need to as both of the triangles share the vertices at $(-0.5, -0.5, 0)$ and $(0.5, 0.5, 0)$. This isn't too bad for our simple rectangle example but for more sophisticated scenes that use thousands of triangles it can be inefficient.
 
 To improve on this we can use an **Element Buffer Object (EBO)** that contains **indices** that map a vertex of the rectangle to the `vertices` array. Consider {numref}`rectangle-indices-figure` that shows a rectangle drawn using two triangles. The lower-right triangle is formed using the vertices with indices 0, 1 and 2 and the upper-left triangle is formed using vertices with indices 0, 2 and 3.
 
@@ -267,7 +266,7 @@ static const float vertices[] = {
     -0.5f,  0.5f, 0.0f   // 3       0 -- 1
 };
 
-// Define texture co-ordinates
+// Define texture coordinates
 static const float uv[] = {
     // u    v      index
     0.0f,  0.0f,  // 0
@@ -293,18 +292,17 @@ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 ```
 
-This is similar to the code used to create the other buffer objects with the exception we are creating an `GL_ELEMENT_ARRAY_BUFFER` instead of an `GL_ARRAY_BUFFER`. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from `glDrawArrays()` to `glDrawElements()`
+This is similar to the code used to create the other buffer objects with the exception we are creating a `GL_ELEMENT_ARRAY_BUFFER` instead of a `GL_ARRAY_BUFFER`. The last change we need to make in order to use our EBO is to change the function used to draw the triangles from `glDrawArrays()` to `glDrawElements()`
 
 ```cpp
 // Draw the triangles
-glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), 
-                GL_UNSIGNED_INT, 0);
+glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
 glDisableVertexAttribArray(0);
 glDisableVertexAttribArray(1);
 ```
 
-Make this change, compile and run the program and you should see the window from {numref}`texture-rectangle-figure`. You may be thinking you've gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the `vertices` array and we can now use EBOs to draw more sophisticated shapes and 3D models.
+Make this change, compile and run the program, and you should see the window from {numref}`texture-rectangle-figure`. You may be thinking you've gone to all of that trouble only for the rectangle to look exactly the same. Well, now we are using fewer floats in the `vertices` array, and we can now use EBOs to draw more sophisticated shapes and 3D models.
 
 ---
 
@@ -312,7 +310,7 @@ Make this change, compile and run the program and you should see the window from
 
 ### Texture wrapping
 
-In our examples above, all of the texture co-ordinates have been in the range from 0 to 1. What happens if we use textures co-ordinates outside of this range? To test this we are going to change our texture to something less symmetrical (you will see why in a minute). Change the `path` variable to the following
+In our examples above, all the texture coordinates have been in the range from 0 to 1. What happens if we use textures coordinates outside this range? To test this we are going to change our texture to something less symmetrical (you will see why in a minute). Change the `path` variable to the following
 
 ```cpp
 // Load texture image from file
@@ -326,7 +324,7 @@ PNG (Portable Network Graphics) files use the RGBA colour model which is the sta
 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 ```
 
-Compile and run the program and you should be presented with a (hopefully) familiar face.
+Compile and run the program, and you should be presented with a (hopefully) familiar face.
 
 ```{figure} ../_images/03_mario_rectangle.png
 :width: 500
@@ -335,7 +333,7 @@ Compile and run the program and you should be presented with a (hopefully) famil
 Its a me, Mario!
 ```
 
-Now we can experiment with specifying texture co-ordinates outside of the range 0 to 1. Edit the `uv` array to change all of the `1.0f` values to `2.0f`. Compile and run the program and you should see the image shown in {numref}`GL_REPEAT-figure`
+Now we can experiment with specifying texture coordinates outside the range 0 to 1. Edit the `uv` array to change all the `1.0f` values to `2.0f`. Compile and run the program, and you should see the image shown in {numref}`GL_REPEAT-figure`
 
 ```{figure} ../_images/03_GL_REPEAT.png
 :width: 500
@@ -344,14 +342,14 @@ Now we can experiment with specifying texture co-ordinates outside of the range 
 Texture wrapping using `GL_REPEAT`.
 ```
 
-What has happened here as that OpenGL has used **texture wrapping** to repeated the texture over the rectangle (or more accurately the two triangles). This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself.
+Here OpenGL has used **texture wrapping** to repeat the texture over the rectangle. This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself.
 
 OpenGL offers other options for texture wrapping;
 
 - `GL_REPEAT` - the texture repeats over the fragment (default);
 - `GL_MIRRORED_REPEAT` - same as `GL_REPEAT` but the texture is mirrored with each repeat;
-- `GL_CLAMP_TO_EDGE` - clamps the texture co-ordinates to between 0 and 1, co-ordinates outside of this range are clamped to the edge so that the textels on the edge are stretched to the edge of the fragment;
-- `GL_CLAMP_TO_BORDER` - co-ordinates outside of the range $(0,0)$ to $(1,1)$ are given a used defined border colour.
+- `GL_CLAMP_TO_EDGE` - clamps the texture coordinates to between 0 and 1, coordinates outside this range are clamped to the edge so that the textels on the edge are stretched to the edge of the fragment;
+- `GL_CLAMP_TO_BORDER` - coordinates outside the range $(0,0)$ to $(1,1)$ are given a used defined border colour.
 
 We can specify the texture wrapping using the `glTexParameteri()` function. To apply `GL_MIRRORED_REPEAT` add the following code after the texture as been specified.
 
@@ -361,7 +359,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 ```
 
-Here we have specified the wrapping in the horizontal (`S`) and vertical (`T`) directions (some people, including as it seems the contributors to OpenGL, use $(s,t)$ for the vertex co-ordinates instead of the standard $(u,v)$) to `GL_MIRRORED_REPEAT`. Compile and run the program and you should see the image shown in {numref}`GL_MIRRORED_REPEAT-figure`.
+Here we have specified the wrapping in the horizontal (`S`) and vertical (`T`) directions (some people use $(s,t)$ for the vertex coordinates instead of $(u,v)$) to `GL_MIRRORED_REPEAT`. Compile and run the program, and you should see the image shown in {numref}`GL_MIRRORED_REPEAT-figure`.
 
 ```{figure} ../_images/03_GL_MIRRORED_REPEAT.png
 :width: 500
@@ -391,11 +389,11 @@ Texture wrapping using `GL_CLAMP_TO_BORDER`.
 
 ### Texture filtering
 
-**Texture filtering** is method of determining the colour of the fragment, known as the **colour sample**, from the texture. OpenGL maps the co-ordinates of the fragment to the texture co-ordinates and in most cases this will not align exactly to a textel centre, so what does OpenGL do? OpenGL provides two main options : nearest-neighbour interpolation and bilinear interpolation.
+**Texture filtering** is method of determining the colour of the fragment, known as the **colour sample**, from the texture. OpenGL maps the coordinates of the fragment to the texture coordinates and in most cases this will not align exactly to a textel centre, so what does OpenGL do? OpenGL provides two main options : nearest-neighbour interpolation and bilinear interpolation.
 
 #### Nearest neighbour interpolation
 
-**Nearest neighbour interpolation** is the default in OpenGL uses the colour of the nearest textel to the texture co-ordinates as the colour sample. This is illustrated in the diagram shown in {numref}`nearest-neighbour-interpolation-figure` where the texture co-ordinates represented by the black circle is mapped in a region on the texture with four neighbouring textels with the textel centres represented by the crosses. The texture co-ordinates are closest to the centre of the textel in the top-left so the colour of that textel is used for the colour sample.
+**Nearest neighbour interpolation** is the default in OpenGL uses the colour of the nearest textel to the texture coordinates as the colour sample. This is illustrated in the diagram shown in {numref}`nearest-neighbour-interpolation-figure` where the texture coordinates represented by the black circle is mapped in a region on the texture with four neighbouring textels with the textel centres represented by the crosses. The texture coordinates are closest to the centre of the textel in the top-left so the colour of that textel is used for the colour sample.
 
 ```{figure} ../_images/03_nearest_neighbour.svg
 :width: 500
@@ -420,7 +418,7 @@ To demonstrate the affects of minification lets use a low resolution texture. Ch
 const char *path = "../assets/mario_small.png";
 ```
 
-and change the $(u, v)$ co-ordinates back so that the texture fills the rectangle. Compile and run the program and you should see the image shown in {numref}`GL_NEAREST-figure`.
+And change the $(u, v)$ coordinates back so that the texture fills the rectangle. Compile and run the program, and you should see the image shown in {numref}`GL_NEAREST-figure`.
 
 ```{figure} ../_images/03_GL_NEAREST.png
 :width: 500
@@ -433,7 +431,7 @@ As you can see the texture mapped rectangle has a block **aliased** look since m
 
 #### Bilinear interpolation
 
-Another method is to calculate the sample colour using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation" target="_blank">**bilinear interpolation**</a> where the distance between $(u,v)$ co-ordinate and the centre of a textel determines how much that textel contributes to the sample colour, i.e., the closer the textel the more of the textel colour is contained in the colour sample.
+Another method is to calculate the sample colour using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation" target="_blank">**bilinear interpolation**</a> where the distance between $(u,v)$ coordinate and the centre of a textel determines how much that textel contributes to the sample colour, i.e., the closer the textel the more of the textel colour is contained in the colour sample.
 
 ```{figure} ../_images/03_bilinear.svg
 :width: 500
@@ -442,7 +440,7 @@ Another method is to calculate the sample colour using <a href="https://en.wikip
 Bilinear interpolation.
 ```
 
-To see the affects of bilinear interpolation, change `GL_NEAREST` to `GL_LINEAR` in the `glTexParameteri()` functions. Compile and run the program and you should see the image shown in {numref}`GL_LINEAR-figure`.
+To see the affects of bilinear interpolation, change `GL_NEAREST` to `GL_LINEAR` in the `glTexParameteri()` functions. Compile and run the program, and you should see the image shown in {numref}`GL_LINEAR-figure`.
 
 ```{figure} ../_images/03_GL_LINEAR.png
 :width: 500
@@ -460,7 +458,7 @@ Here we have an improved texture mapping where the aliasing is less noticeable.
 
 Another issue that may occur is when the fragment is a lot smaller than the texture which can happen when an object that is far away from the viewer. In these cases OpenGL will struggle to get the colour sample from a high resolution texture since a single fragment covers a large part of the texture.
 
-To solve this issue OpenGL uses <a href="https://www.khronos.org/opengl/wiki/Texture#Mip_maps" target="_blank">**mipmaps**</a> (mip is short for the latin phrase *"multum in parvo"* or "much in little") which are a series of textures, each one half the size of the previous one. OpenGL will use a mipmap texture most suitable based on the distance of the fragment from the viewer. This way the fragment does not span a large part of the texture and it also cuts down on memory.
+To solve this issue OpenGL uses <a href="https://www.khronos.org/opengl/wiki/Texture#Mip_maps" target="_blank">**mipmaps**</a> (mip is short for the latin phrase *"multum in parvo"* or "much in little") which are a series of textures, each one half the size of the previous one. OpenGL will use a mipmap texture most suitable based on the distance of the fragment from the viewer. This way the fragment does not span a large part of the texture, and it also cuts down on memory.
 
 ```{figure} ../_images/03_mipmaps.svg
 :width: 500
@@ -488,9 +486,18 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 ## Multiple textures
 
-OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all of the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the **Lab03_Textures** project, hidden away in the **Header files** folder is the file **texture.hpp** that contains a function `loadTexture()` that does all of the hard work for us (so why did I get you to do all of that coding above - I'm just evil I suppose *mwahahahahaaa*).
+OpenGL allows us to use multiple textures in a single fragment shader (up to 16 in fact). For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options. Rather than copying and pasting all the code we have done for each new texture it makes sense to write a function that does this for us. Well if you look in the **Lab03_Textures** project, hidden away in the **Header files** folder is the file **texture.hpp** that contains a function `loadTexture()` that does all the hard work for us.
 
-Comment out the code used to load the texture and specify the texture options (or delete it if you are feeling a bit annoyed) and enter the following code before the render loop.
+Comment out the code used to load the texture and specify the texture options and enter the following code before the render loop.
+
+```cpp
+// Load the textures
+unsigned int texture = loadTexture("../assets/crate.jpg");
+```
+
+This creates a texture, loads in the data from the image file into the texture and sets the texture parameters. Compile and run the program, and you should see the image from {numref}`texture-rectangle-figure`.
+
+We want to work with more than one texture so replace the code above with the following.
 
 ```cpp
 // Load the textures
@@ -498,15 +505,13 @@ unsigned int texture1 = loadTexture("../assets/crate.jpg");
 unsigned int texture2 = loadTexture("../assets/mario.png");
 ```
 
-This loads the two textures we have been using which can be accessed using their targets `texture1` and `texture2`. Compile and run the program and you should see the image from {numref}`texture-rectangle-figure`.
-
-We now want to deal with two textures in the fragment shader so we need a way of telling OpenGL which texture is which, we do this using uniforms. 
+This loads the crate and Mario textures and assigns them to the targets `texture1` and `texture2`. We now want to deal with two textures in the fragment shader, so we need a way of telling OpenGL which texture is which, we do this using uniforms.
 
 (uniforms-section)=
 
 ### Uniforms
 
-A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank">**uniform**</a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders so we will use one for passing the texture target to the fragment shader. 
+A <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)" target="_blank">**uniform**</a> is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders, so we will use one for passing the texture target to the fragment shader.
 
 Add the following code to your program before the render loop (since the textures are the same for every frame).
 
@@ -537,7 +542,7 @@ The `glActiveTexture()` function lets OpenGL know what texture unit we are curre
 
 ### Fragment shader
 
-The last thing we need to do is update the fragment shader so that it uses both textures. Modify **fragmentShader.glsl** so that is looks like the following.
+The last thing we need to do is update the fragment shader so that it uses both textures. Modify **fragmentShader.glsl**, so that is looks like the following.
 
 ```glsl
 #version 330 core
@@ -558,7 +563,7 @@ void main()
 }
 ```
 
-Here we have defined the two `sampler2D` uniforms `texture1` and `texture2`, these need to be the same as what we called them in the `glGetUniformLocation()` functions. We then use the `mix()` function to combine the two textures so that 30% of the fragment colour is from the first texture (the crate) and the remaining 70% is from the second texture (Mario). Compile and run the program and you should see the image shown in {numref}`two-textures-figure`.
+Here we have defined the two `sampler2D` uniforms `texture1` and `texture2`, these need to be the same as what we called them in the `glGetUniformLocation()` functions. We then use the `mix()` function to combine the two textures so that 30% of the fragment colour is from the first texture (the crate) and the remaining 70% is from the second texture (Mario). Compile and run the program, and you should see the image shown in {numref}`two-textures-figure`.
 
 ```{figure} ../_images/03_two_textures.png
 :width: 500
@@ -571,7 +576,7 @@ A rectangle with a mix of two textures applied.
 
 ## Exercises
 
-1. Change the `uv` array to create a texture rectangle consisting of a 6 by 4 grid of Marios.
+1. Change the `uv` array to create a texture rectangle consisting of a 6 by 4 grid of Mario's.
 
 ```{figure} ../_images/03_Ex1.png
 :width: 400
@@ -583,22 +588,28 @@ A rectangle with a mix of two textures applied.
 :width: 400
 ```
 
-3. Apply a texture of your choice to the rectangle (e.g., a selfie).
+3. Modify the fragment shader so that the red and green colour components of the pixel are switched.
+   
+```{figure} ../_images/03_Ex5.png
+:width: 400
+```
+
+4. Apply a texture of your choice to the rectangle (e.g., a selfie).
 
 ```{figure} ../_images/03_Ex3.png
 :width: 400
 ```
 
-4. Change the $(u,v)$ co-ordinates so that the textured rectangle shows a zoomed in image of Mario's eye.
+5. Change the $(u,v)$ coordinates so that the textured rectangle shows a zoomed in image of Mario's eye.
 
 ```{figure} ../_images/03_Ex4.png
 :width: 400
 ```
 
-<!-- ---
+---
 
 ## Video walkthrough
 
 The video below walks you through these lab materials.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ZSHJsjKycyw?si=Z04BrW1IOjAzZuTB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w0e3H40TsQA?si=OWycaeQlo_6ezT3G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

@@ -419,9 +419,9 @@ document.write(`
 </figure>
 <section id="the-model-class">
 <h2><span class="section-number">8.1. </span>The Model class<a class="headerlink" href="#the-model-class" title="Permalink to this heading">#</a></h2>
-<p>If you take a look at the source code in the <strong>Lab08_Lighting</strong> you will notice that in addition to the classes introduced in previous labs (Texture, Shader and Camera) we have an addition class called Model which is defined in the <strong>model.hpp</strong> and <strong>model.cpp</strong> files. The Model class has been written so that we can load the vertex and texture co-ordinates from external files rather than having to define these in our code. Take a look at the <strong>Lab08_Lighting.cpp</strong> file where the following Model class methods have been called:</p>
+<p>If you take a look at the source code in the <strong>Lab08_Lighting</strong> you will notice that in addition to the classes introduced in previous labs (Texture, Shader and Camera) we have an addition class called Model which is defined in the <strong>model.hpp</strong> and <strong>model.cpp</strong> files. The Model class has been written so that we can load the vertex and texture coordinates from external files rather than having to define these in our code. Take a look at the <strong>Lab08_Lighting.cpp</strong> file where the following Model class methods have been called:</p>
 <ul class="simple">
-<li><p>Line 89: <code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">teapot(&quot;../assets/teapot.obj)</span></code> – this is the constructor for the Model class and creates an object called <code class="docutils literal notranslate"><span class="pre">teapot</span></code>, loads the vertex and texture co-ordinates from an .obj file (see below) and creates the relevant buffers.</p></li>
+<li><p>Line 89: <code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">teapot(&quot;../assets/teapot.obj)</span></code> – this is the constructor for the Model class and creates an object called <code class="docutils literal notranslate"><span class="pre">teapot</span></code>, loads the vertex and texture coordinates from an .obj file (see below) and creates the relevant buffers.</p></li>
 <li><p>Line 92: <code class="docutils literal notranslate"><span class="pre">teapot.addTexture(&quot;../assets/blue.bmp&quot;,</span> <span class="pre">&quot;diffuse&quot;);</span></code> – this method loads a texture map called <code class="docutils literal notranslate"><span class="pre">blue.bmp</span></code> and sets its type to <code class="docutils literal notranslate"><span class="pre">diffuse</span></code>.</p></li>
 <li><p>Line 131: <code class="docutils literal notranslate"><span class="pre">teapot.draw(shaderID)</span></code> - this method binds the buffers objects and instructs OpenGL to draw the model</p></li>
 </ul>
@@ -478,10 +478,10 @@ f 5/12/6 1/3/6 2/9/6
 </div>
 <p>The vertex and face data is given in lines with the following abbreviations:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> – the <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates of a vertex</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> – the <span class="math notranslate nohighlight">\((x, y, z)\)</span> coordinates of a vertex</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vn</span></code> – the <span class="math notranslate nohighlight">\((n_x, n_y, n_z)\)</span> normal vector for the vertex</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vt</span></code> – the <span class="math notranslate nohighlight">\((u, v)\)</span> texture co-ordinates</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> – indices of the vertices of a face. Each face is defined by 3 vertices so we have 3 sets of 3 values. The face vertices are of the form <code class="docutils literal notranslate"><span class="pre">v/vt/vn</span></code> so <code class="docutils literal notranslate"><span class="pre">3/2/1</span></code> refers to a vertex where the co-ordinates are given by the 3rd <code class="docutils literal notranslate"><span class="pre">v</span></code> line, the texture co-ordinates are given by the 2nd <code class="docutils literal notranslate"><span class="pre">vt</span></code> line and the normal vector is given by the 1st <code class="docutils literal notranslate"><span class="pre">vn</span></code> line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vt</span></code> – the <span class="math notranslate nohighlight">\((u, v)\)</span> texture coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> – indices of the vertices of a face. Each face is defined by 3 vertices so we have 3 sets of 3 values. The face vertices are of the form <code class="docutils literal notranslate"><span class="pre">v/vt/vn</span></code> so <code class="docutils literal notranslate"><span class="pre">3/2/1</span></code> refers to a vertex where the coordinates are given by the 3rd <code class="docutils literal notranslate"><span class="pre">v</span></code> line, the texture coordinates are given by the 2nd <code class="docutils literal notranslate"><span class="pre">vt</span></code> line and the normal vector is given by the 1st <code class="docutils literal notranslate"><span class="pre">vn</span></code> line.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -609,7 +609,7 @@ f 5/12/6 1/3/6 2/9/6
 </pre></div>
 </div>
 <p>Here we have defined a point light source positioned at <span class="math notranslate nohighlight">\((2, 2, 2)\)</span> in the world space and has a colour of white since the RGB values are <span class="math notranslate nohighlight">\((1, 1, 1)\)</span>.</p>
-<p>All calculations performed in the fragment shader is done in the screen space so the vertex shader outputs <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> which is the screen space vertex co-ordinates. However, we want to perform lighting calculations in the view space so we also need to calculate the view space co-ordinates of the object vertices and of the light source position. For the vertices we calculate the <span class="math notranslate nohighlight">\(MV\)</span> matrix that transforms from the model space to the view space</p>
+<p>All calculations performed in the fragment shader is done in the screen space so the vertex shader outputs <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> which is the screen space vertex coordinates. However, we want to perform lighting calculations in the view space so we also need to calculate the view space coordinates of the object vertices and of the light source position. For the vertices we calculate the <span class="math notranslate nohighlight">\(MV\)</span> matrix that transforms from the model space to the view space</p>
 <div class="math notranslate nohighlight">
 \[MV = View \cdot Model,\]</div>
 <p>and pass this, along with the view matrix for transforming the light source position to the view space, to the vertex shader using uniforms. Add the following code after the <span class="math notranslate nohighlight">\(MV\!P\)</span> matrix is sent to the shader.</p>
@@ -701,7 +701,7 @@ Derivation of the view space normal transformation<div class="sd-summary-down do
 <span class="w">    </span><span class="c1">// Output vertex position</span>
 <span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MVP</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="c1">// Output texture co-ordinates</span>
+<span class="w">    </span><span class="c1">// Output texture coordinates</span>
 <span class="w">    </span><span class="n">UV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uv</span><span class="p">;</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="c1">// Output view space fragment position and normal vector</span>
@@ -1386,7 +1386,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 </video>
 </center>
 <ol class="arabic simple" start="3">
-<li><p>Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the co-ordinates of points on a circle can be calculated using <span class="math notranslate nohighlight">\((x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))\)</span>.</p></li>
+<li><p>Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the coordinates of points on a circle can be calculated using <span class="math notranslate nohighlight">\((x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))\)</span>.</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -1407,7 +1407,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <span id="blender-section"></span><h2><span class="section-number">8.8. </span>Creating an .obj file in Blender<a class="headerlink" href="#creating-an-obj-file-in-blender" title="Permalink to this heading">#</a></h2>
 <p>To create an .obj file we can use the popular open source application <a href="https://www.blender.org" target="_blank">Blender</a> (this is installed on the machines in the Dalton building).</p>
 <ol class="arabic simple">
-<li><p>Create your object in blender and sort out the material textures, UV co-ordinates etc. (lots of tutorials on youtube to help you with this). Or you can import a model produced by someone else (be sure to give credit if doing this).</p></li>
+<li><p>Create your object in blender and sort out the material textures, UV coordinates etc. (lots of tutorials on youtube to help you with this). Or you can import a model produced by someone else (be sure to give credit if doing this).</p></li>
 <li><p>Click on <strong>File &gt; Export &gt; Wavefront (.obj)</strong></p></li>
 </ol>
 <figure class="align-default">
