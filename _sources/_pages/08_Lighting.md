@@ -31,9 +31,9 @@ The teapot has been rendered as a wire frame model since in the absence of light
 
 ## The Model class
 
-If you take a look at the source code in the **Lab08_Lighting** you will notice that in addition to the classes introduced in previous labs (Texture, Shader and Camera) we have an addition class called Model which is defined in the **model.hpp** and **model.cpp** files. The Model class has been written so that we can load the vertex and texture co-ordinates from external files rather than having to define these in our code. Take a look at the **Lab08_Lighting.cpp** file where the following Model class methods have been called:
+If you take a look at the source code in the **Lab08_Lighting** you will notice that in addition to the classes introduced in previous labs (Texture, Shader and Camera) we have an addition class called Model which is defined in the **model.hpp** and **model.cpp** files. The Model class has been written so that we can load the vertex and texture coordinates from external files rather than having to define these in our code. Take a look at the **Lab08_Lighting.cpp** file where the following Model class methods have been called:
 
-- Line 89: `Model teapot("../assets/teapot.obj)` -- this is the constructor for the Model class and creates an object called `teapot`, loads the vertex and texture co-ordinates from an .obj file (see below) and creates the relevant buffers.
+- Line 89: `Model teapot("../assets/teapot.obj)` -- this is the constructor for the Model class and creates an object called `teapot`, loads the vertex and texture coordinates from an .obj file (see below) and creates the relevant buffers.
 - Line 92: `teapot.addTexture("../assets/blue.bmp", "diffuse");` -- this method loads a texture map called `blue.bmp` and sets its type to `diffuse`.
 - Line 131: `teapot.draw(shaderID)` - this method binds the buffers objects and instructs OpenGL to draw the model
 
@@ -92,10 +92,10 @@ f 5/12/6 1/3/6 2/9/6
 
 The vertex and face data is given in lines with the following abbreviations:
 
-- `v` -- the $(x, y, z)$ co-ordinates of a vertex
+- `v` -- the $(x, y, z)$ coordinates of a vertex
 - `vn` -- the $(n_x, n_y, n_z)$ normal vector for the vertex
-- `vt` -- the $(u, v)$ texture co-ordinates
-- `f` -- indices of the vertices of a face. Each face is defined by 3 vertices so we have 3 sets of 3 values. The face vertices are of the form `v/vt/vn` so `3/2/1` refers to a vertex where the co-ordinates are given by the 3rd `v` line, the texture co-ordinates are given by the 2nd `vt` line and the normal vector is given by the 1st `vn` line.
+- `vt` -- the $(u, v)$ texture coordinates
+- `f` -- indices of the vertices of a face. Each face is defined by 3 vertices so we have 3 sets of 3 values. The face vertices are of the form `v/vt/vn` so `3/2/1` refers to a vertex where the coordinates are given by the 3rd `v` line, the texture coordinates are given by the 2nd `vt` line and the normal vector is given by the 1st `vn` line.
 
 ```{note}
 The `loadObj()` private member function in the Model class is quite simplistic and we need to make sure our .obj file is in the correct form. There are some model loading libraries available such as <a href="http://www.assimp.org" target="_blank">assimp</a> (open ASSet IMPorter library) that can handle most common object formats but use of this requires compiling source code and configuring the IDE which is a bit too fiddly for what we are doing here.
@@ -235,7 +235,7 @@ glm::vec3 lightColour   = glm::vec3(1.0f, 1.0f, 1.0f);
 
 Here we have defined a point light source positioned at $(2, 2, 2)$ in the world space and has a colour of white since the RGB values are $(1, 1, 1)$.
 
-All calculations performed in the fragment shader is done in the screen space so the vertex shader outputs `gl_Position` which is the screen space vertex co-ordinates. However, we want to perform lighting calculations in the view space so we also need to calculate the view space co-ordinates of the object vertices and of the light source position. For the vertices we calculate the $MV$ matrix that transforms from the model space to the view space
+All calculations performed in the fragment shader is done in the screen space so the vertex shader outputs `gl_Position` which is the screen space vertex coordinates. However, we want to perform lighting calculations in the view space so we also need to calculate the view space coordinates of the object vertices and of the light source position. For the vertices we calculate the $MV$ matrix that transforms from the model space to the view space
 
 $$MV = View \cdot Model,$$
 
@@ -341,7 +341,7 @@ void main()
     // Output vertex position
     gl_Position = MVP * vec4(position, 1.0);
     
-    // Output texture co-ordinates
+    // Output texture coordinates
     UV = uv;
     
     // Output view space fragment position and normal vector
@@ -1142,7 +1142,7 @@ We can see that the teapots have been illuminated from a directional light sourc
 </video>
 </center>
 
-3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the co-ordinates of points on a circle can be calculated using $(x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))$.
+3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))$.
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -1165,7 +1165,7 @@ We can see that the teapots have been illuminated from a directional light sourc
 
 To create an .obj file we can use the popular open source application <a href="https://www.blender.org" target="_blank">Blender</a> (this is installed on the machines in the Dalton building).
 
-1. Create your object in blender and sort out the material textures, UV co-ordinates etc. (lots of tutorials on youtube to help you with this). Or you can import a model produced by someone else (be sure to give credit if doing this).
+1. Create your object in blender and sort out the material textures, UV coordinates etc. (lots of tutorials on youtube to help you with this). Or you can import a model produced by someone else (be sure to give credit if doing this).
    
 2. Click on **File > Export > Wavefront (.obj)**
 

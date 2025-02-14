@@ -4,11 +4,11 @@
 
 Computer graphics requires that shapes are manipulated in space by moving the shapes, shrinking or stretching, rotating and reflection to name a few. We call these manipulations **transformations**. We need a convenient way of telling the computer how to apply our transformations and for this we make use of matrices which we covered in the previous lab on [vectors and matrices](vectors-and-matrices-section).
 
-Each transformation has an associated **transformation matrix** which we use to multiply the vertex co-ordinates of a shape to calculate the vertex co-ordinates of the transformed shape. For example if $A$ is a transformation matrix for a particular transformation and $(x,y,z)$ are the co-ordinates of a vertex then we apply the transformation using
+Each transformation has an associated **transformation matrix** which we use to multiply the vertex coordinates of a shape to calculate the vertex coordinates of the transformed shape. For example if $A$ is a transformation matrix for a particular transformation and $(x,y,z)$ are the coordinates of a vertex then we apply the transformation using
 
 $$ \begin{pmatrix} x' \\ y' \\ x' \end{pmatrix} = A \cdot \begin{pmatrix} x \\ y \\ z \end{pmatrix}, $$
 
-where $(x',y',z')$ are the co-ordinates of the transformed point. Note that all vectors and co-ordinates are written as a column vector when multiplying by a matrix.
+where $(x',y',z')$ are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.
 
 
 ````{note}
@@ -35,17 +35,17 @@ The **translation** transformation when applied to a set of points moves each po
 Translation of a triangle by the translation vector $\mathbf{t}= (t_x, t_y, t_z)$.
 ```
 
-A problem we have is that no transformation matrix exists for applying translation to the co-ordinates $(x, y, z)$, i.e., we can't find a matrix $Translate$ such that
+A problem we have is that no transformation matrix exists for applying translation to the coordinates $(x, y, z)$, i.e., we can't find a matrix $Translate$ such that
 
 $$Translate \cdot \begin{pmatrix} x  \\ y \\ z \end{pmatrix} = \begin{pmatrix} x + t_x \\ y + t_y \\ z + t_z \end{pmatrix}.$$
 
 (homogeneous-coordinates-section)=
 
-We can use a trick where we use <a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank">**homogeneous co-ordinates**</a>. Homogeneous co-ordinates add another value, $w$ say, to the $(x, y, z)$ co-ordinates (known as Cartesian co-ordinates) such that when the $x$, $y$ and $z$ values are divided by $w$ we get the Cartesian co-ordinates.
+We can use a trick where we use <a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank">**homogeneous coordinates**</a>. Homogeneous coordinates add another value, $w$ say, to the $(x, y, z)$ coordinates (known as Cartesian coordinates) such that when the $x$, $y$ and $z$ values are divided by $w$ we get the Cartesian coordinates.
 
 $$\underbrace{(x, y, z, w)}_{\textsf{homogeneous}} \equiv \underbrace{\left( \frac{x}{w}, \frac{y}{w}, \frac{z}{w} \right)}_{\textsf{Cartesian}}.$$
 
-So if we choose $w=1$ then we can write the Cartesian co-ordinates $(x, y, z)$ as the homogeneous co-ordinates $(x, y, z, 1)$ (remember that 4-element vector with the additional 1 in our [vertex shader](vertex-shader-section)?). So how does that help us with our elusive translation matrix? Well we can now represent translation as a $4 \times 4$ matrix
+So if we choose $w=1$ then we can write the Cartesian coordinates $(x, y, z)$ as the homogeneous coordinates $(x, y, z, 1)$ (remember that 4-element vector with the additional 1 in our [vertex shader](vertex-shader-section)?). So how does that help us with our elusive translation matrix? Well we can now represent translation as a $4 \times 4$ matrix
 
 $$ \begin{align*}
     \begin{pmatrix}
@@ -90,7 +90,7 @@ Now we know the mathematical theory behind applying a transformation lets apply 
 A textured rectangle from the lab on [textures](textures-section).
 ```
 
-Lets translate the rectangle $0.4$ to the right and $0.3$ upwards (remember we are dealing with normalised device co-ordinates so the window co-ordinates are between $-1$ and $1$). The transposed transformation matrix to perform this translation is
+Lets translate the rectangle $0.4$ to the right and $0.3$ upwards (remember we are dealing with normalised device coordinates so the window coordinates are between $-1$ and $1$). The transposed transformation matrix to perform this translation is
 
 $$ Translate = \begin{pmatrix}
     1 & 0 & 0 & 0 \\
@@ -139,12 +139,12 @@ void main()
     // Output vertex position
     gl_Position = transformation * vec4(position, 1.0);
     
-    // Output texture co-ordinates
+    // Output texture coordinates
     UV = uv;
 }
 ```
 
-The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous co-ordinates of the vertex position by this matrix. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in {numref}`translate-rectangle-figure`.
+The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous coordinates of the vertex position by this matrix. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in {numref}`translate-rectangle-figure`.
 
 ```{figure} ../_images/05_translation.png
 :width: 500
@@ -207,7 +207,7 @@ You may have noticed that in our `translate()` function we accessed the first th
 
 ## Scaling
 
-Scaling is one of the simplest transformation we can apply. Multiplying the $x$, $y$ and $z$ co-ordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in {numref}`scaling-about-origin-figure`. The $x$, $y$ and $z$ co-ordinates of each vertex has been multiplied by $s_x$, $s_y$ and $s_y$ respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because $s_x$, $s_y$ and $s_z$ are all greater than 1).
+Scaling is one of the simplest transformation we can apply. Multiplying the $x$, $y$ and $z$ coordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in {numref}`scaling-about-origin-figure`. The $x$, $y$ and $z$ coordinates of each vertex has been multiplied by $s_x$, $s_y$ and $s_y$ respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because $s_x$, $s_y$ and $s_z$ are all greater than 1).
 
 ```{figure} ../_images/05_scaling.svg
 :height: 350
@@ -216,7 +216,7 @@ Scaling is one of the simplest transformation we can apply. Multiplying the $x$,
 Scaling a triangle centred at the origin.
 ```
 
-Since scaling is simply multiplying the co-ordinates by a number we have
+Since scaling is simply multiplying the coordinates by a number we have
 
 $$ \begin{align*}
     \begin{pmatrix}
@@ -307,7 +307,7 @@ If scaling is applied to a shape that is not centred at $(0,0,0)$ then the trans
 Scaling applied to a triangle not centred at $(0,0,0)$.
 ```
 
-If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex co-ordinates by $-\mathbf{c}$ where $\mathbf{c}$ is the centre of volume for the shape so that it is at $(0,0,0)$. Then we can apply the scaling before translating by $\mathbf{c}$ so that the centre of volume is back at the original position ({numref}`scaling-about-centre-figure`).
+If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex coordinates by $-\mathbf{c}$ where $\mathbf{c}$ is the centre of volume for the shape so that it is at $(0,0,0)$. Then we can apply the scaling before translating by $\mathbf{c}$ so that the centre of volume is back at the original position ({numref}`scaling-about-centre-figure`).
 
 ```{figure} ../_images/05_scaling_about_centre.svg
 :width: 700
@@ -362,7 +362,7 @@ You don't really need to know how these are derived but if you are curious you c
 
 ````{dropdown} Derivation of the rotation matrices (click to show)
 
-We will consider rotation about the $z$-axis and will restrict our co-ordinates to 2D.
+We will consider rotation about the $z$-axis and will restrict our coordinates to 2D.
 
 ```{figure} ../_images/05_rotation.svg
 :height: 300
@@ -371,33 +371,33 @@ We will consider rotation about the $z$-axis and will restrict our co-ordinates 
 Rotating the vector $\mathbf{a}$ anti-clockwise by angle $\theta$ to the vector $\mathbf{b}$.
 ```
 
-Consider {numref}`rotation-figure` where the vector $\mathbf{a}$ is rotated by angle $\theta$ to the vector $\mathbf{b}$. To get this rotation we first consider the rotation of the vector $\mathbf{t}$, which has the same length as $\mathbf{a}$ and points along the $x$-axis, by angle $\phi$ to get to $\mathbf{a}$. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, $|\mathbf{a}|$, and the angle so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)
+Consider {numref}`rotation-figure` where the vector $\mathbf{a}$ is rotated by angle $\theta$ to the vector $\mathbf{b}$. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, $\|\mathbf{a}\|$, and the angle $\theta$ so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)
 
 $$ \begin{align*}
-    \sin(\phi) &= \frac{\textsf{opposite}}{\textsf{hypotenuse}}, &
-    \cos(\phi) &= \frac{\textsf{adjacent}}{\textsf{hypotenuse}}, &
-    \tan(\phi) &= \frac{\textsf{opposite}}{\textsf{adjacent}},
+    \sin(\phi) &= \frac{opposite}{hypotenuse}, &
+    \cos(\phi) &= \frac{adjacent}{hypotenuse}, &
+    \tan(\phi) &= \frac{opposite}{adjacent},
 \end{align*} $$
 
 so the length of the adjacent and opposite sides of the blue triangle is
 
 $$ \begin{align*}
-    \textsf{adjacent} &= \textsf{hypotenuse} \cdot \cos(\phi), \\
-    \textsf{opposite} &= \textsf{hypotenuse} \cdot \sin(\phi).
+    adjacent &= hypotenuse \cdot \cos(\phi), \\
+    opposite &= hypotenuse \cdot \sin(\phi).
 \end{align*} $$
 
-Since $a_x$ and $a_y$ are the lengths of the adjacent and opposite sides respectively and $|\mathbf{a}|$ is the length of the hypotenuse we have
+Since $a_x$ and $a_y$ are the lengths of the adjacent and opposite sides respectively and $\|\mathbf{a}\|$ is the length of the hypotenuse we have
 
 $$ \begin{align*}
-    a_x &= |\mathbf{a}| \cos(\phi), \\
-    a_y &= |\mathbf{a}| \sin(\phi).
+    a_x &= \|\mathbf{a}\| \cos(\phi), \\
+    a_y &= \|\mathbf{a}\| \sin(\phi).
 \end{align*} $$
 
-Now consider the rotation from $\mathbf{c}$ by the angle $\phi + \theta$ to get to $\mathbf{b}$. Using the same method as before we have
+Using the same method for the vector $\mathbf{b}$ we have
 
 $$ \begin{align*}
-    b_x &= |\mathbf{a}| \cos(\phi + \theta), \\
-    b_y &= |\mathbf{a}| \sin(\phi + \theta).
+    b_x &= \|\mathbf{a}\| \cos(\phi + \theta), \\
+    b_y &= \|\mathbf{a}\| \sin(\phi + \theta).
 \end{align*} $$
 
 We can rewrite $\cos(\phi+\theta)$ and $\sin(\phi+\theta)$ using <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#" target="_blank">trigonometric identities</a>
@@ -410,11 +410,11 @@ $$ \begin{align*}
 so
 
 $$ \begin{align*}
-    v_x &= |\mathbf{a}| \cos(\phi) \cos(\theta) - |\mathbf{a}| \sin(\phi) \sin(\theta), \\
-    v_y &= |\mathbf{a}| \sin(\phi) \cos(\theta) + |\mathbf{a}| \cos(\phi) \sin(\theta).
+    v_x &= \|\mathbf{a}\| \cos(\phi) \cos(\theta) - \|\mathbf{a}\| \sin(\phi) \sin(\theta), \\
+    v_y &= \|\mathbf{a}\| \sin(\phi) \cos(\theta) + \|\mathbf{a}\| \cos(\phi) \sin(\theta).
 \end{align*} $$
 
-Since $ a_x = |\mathbf{a}| \cos(\phi)$ and $a_y = |\mathbf{a}| \sin(\phi)$ then
+Since $ a_x = \|\mathbf{a}\| \cos(\phi)$ and $a_y = \|\mathbf{a}\| \sin(\phi)$ then
 
 $$ \begin{align*}
     b_x &= a_x \cos(\theta) - a_y \sin(\theta), \\
@@ -494,23 +494,23 @@ The transposed transformation matrix for rotation around a unit vector $\hat{\ma
 $$ \begin{align*}
     Rotate =
     \begin{pmatrix}
-        v_x^2 (1 - \cos(\theta)) + \cos(\theta) &
-        v_xv_y(1 - \cos(\theta)) + v_z\sin(\theta) &
-        v_xv_z(1 - \cos(\theta)) - v_y\sin(\theta) &
+        v_x^2 (1 - c) + c &
+        v_xv_y(1 - c) + v_zs &
+        v_xv_z(1 - c) - v_ys &
         0 \\
-        v_xv_y(1 - \cos(\theta)) - v_z\sin(\theta) &
-         v_y^2(1 - \cos(\theta)) + \cos(\theta) &
-        v_yv_z(1 - \cos(\theta)) + v_x\sin(\theta) &
+        v_xv_y(1 - c) - v_zs &
+         v_y^2(1 - c) + c &
+        v_yv_z(1 - c) + v_xs &
         0 \\
-        v_xv_z(1 - \cos(\theta)) + v_y\sin(\theta) &
-        v_yv_z(1 - \cos(\theta)) - v_x\sin(\theta) &
-        v_z^2 (1 - \cos(\theta)) + \cos(\theta) &
+        v_xv_z(1 - c) + v_ys &
+        v_yv_z(1 - c) - v_xs &
+        v_z^2 (1 - c) + c &
         0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}.
 \end{align*} $$(eq:axis-angle-rotation-matrix)
 
-Again, you don't really need to know how this is derived but if you are curious click on the dropdown link below.
+Where $c = \cos(\theta)$ and $s = \sin(\theta)$. Again, you don't really need to know how this is derived but if you are curious click on the dropdown link below.
 
 ````{dropdown} Derivation of the axis-angle rotation matrix (click to show)
 
@@ -590,40 +590,37 @@ $$ \begin{align*}
     Rotate &= R_5 \cdot R_4 \cdot R_3 \cdot R_2 \cdot R_1 \\
     &=
     \begin{pmatrix}
-        \dfrac{v_x^2 + (v_y^2 + v_z^2)\cos(\theta)}{\|\mathbf{v}\|^2} &
-        \dfrac{v_xv_y(1 - \cos(\theta))}{\|\mathbf{v}\|^2} + \dfrac{v_z\sin(\theta)}{\|\mathbf{v}\|} &
-        \dfrac{v_xv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_y\sin(\theta)}{\|\mathbf{v}\|} &
+        \dfrac{v_x^2 + (v_y^2 + v_z^2)c}{\|\mathbf{v}\|^2} &
+        \dfrac{v_xv_y(1 - c)}{\|\mathbf{v}\|^2} + \dfrac{v_zs}{\|\mathbf{v}\|} &
+        \dfrac{v_xv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_ys}{\|\mathbf{v}\|} &
         0 \\
-        \dfrac{v_xv_y(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_z\sin(\theta)}{\|\mathbf{v}\|} &
-        \dfrac{v_y^2 + (v_x^2 + v_y^2)\cos(\theta)}{\|\mathbf{v}\|^2} &
-        \dfrac{v_yv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_x\sin(\theta)}{\|\mathbf{v}\|} &
+        \dfrac{v_xv_y(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_zs}{\|\mathbf{v}\|} &
+        \dfrac{v_y^2 + (v_x^2 + v_y^2)c}{\|\mathbf{v}\|^2} &
+        \dfrac{v_yv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_xs}{\|\mathbf{v}\|} &
         0 \\
-        \dfrac{v_xv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} + \dfrac{v_y\sin(\theta)}{\|\mathbf{v}\|} &
-        \dfrac{v_yv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_x\sin(\theta)}{\|\mathbf{v}\|} &
-        \dfrac{v_z^2 + (v_x^2 + v_y^2)\cos(\theta)}{\|\mathbf{v}\|^2} &
+        \dfrac{v_xv_z(1 - c)}{\|\mathbf{v}\|^2} + \dfrac{v_ys}{\|\mathbf{v}\|} &
+        \dfrac{v_yv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_xs}{\|\mathbf{v}\|} &
+        \dfrac{v_z^2 + (v_x^2 + v_y^2)c}{\|\mathbf{v}\|^2} &
         0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}.
 \end{align*} $$
 
-Substituting $v_y^2 + v_z^2 = 1 - v_x^2$ and the matrix simplifies to
+Where $c = \cos(\theta)$ and $s = \sin(\theta)$. Substituting $v_y^2 + v_z^2 = 1 - v_x^2$ and the matrix simplifies to
 
 $$ \begin{align*}
     Rotate &= R_1 \cdot R_2 \cdot R_3 \cdot R_4 \cdot R_5 \\
     &=
     \begin{pmatrix}
-        v_x^2 (1 - \cos(\theta)) + \cos(\theta) & 11
-        v_xv_y(1 - \cos(\theta)) - v_z\sin(\theta) & 12
-        v_xv_z(1 - \cos(\theta)) + v_y\sin(\theta) & 13
-        0 \\
-        v_xv_y(1 - \cos(\theta)) + v_z\sin(\theta) & 21
-         v_y^2(1 - \cos(\theta)) + \cos(\theta) & 22
-        v_yv_z(1 - \cos(\theta)) - v_x\sin(\theta) & 23
-        0 \\
-        v_xv_z(1 - \cos(\theta)) - v_y\sin(\theta) & 31
-        v_yv_z(1 - \cos(\theta)) + v_x\sin(\theta) & 32
-        v_z^2 (1 - \cos(\theta)) + \cos(\theta) & 33
-        0 \\
+        v_x^2 (1 - c) + c &
+        v_xv_y(1 - c) - v_zs &
+        v_xv_z(1 - c) + v_ys & 0 \\
+        v_xv_y(1 - c) + v_zs &
+        v_y^2(1 - c) + c &
+        v_yv_z(1 - c) - v_xs & 0 \\
+        v_xv_z(1 - c) - v_ys &
+        v_yv_z(1 - c) + v_xs &
+        v_z^2 (1 - c) + c & 0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}.
 \end{align*} $$
@@ -632,7 +629,7 @@ $$ \begin{align*}
 
 ### Axis-angle rotation in OpenGL
 
-The rotations around the three co-ordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{\mathbf{v}}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so it makes sense to define a single function for rotation using {eq}`eq:axis-angle-rotation-matrix`. Define a couple of functions in the Maths class by entering the following code.
+The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{\mathbf{v}}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so it makes sense to define a single function for rotation using {eq}`eq:axis-angle-rotation-matrix`. Define a couple of functions in the Maths class by entering the following code.
 
 ```cpp
 static float radians(float angle);
@@ -693,14 +690,14 @@ $$ \begin{align*}
     Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} $$
 
-Next applying rotation to the scaled co-ordinates we have
+Next applying rotation to the scaled coordinates we have
 
 $$\begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix} &=
     Rotate \cdot Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} $$
 
-Finally applying translation to the scaled and rotated co-ordinates we have
+Finally applying translation to the scaled and rotated coordinates we have
 
 $$\begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix}
@@ -708,7 +705,7 @@ $$\begin{align*}
     Translate \cdot Rotate \cdot Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} $$
 
-$Translate \cdot Rotate \cdot Scale$ is a single $4 \times 4$ transformation matrix that combines the three transformations known as the **composite transformation matrix**. Note the order that the translations are applied to the co-ordinates is read from right to left so here we have scale $\to$ rotate $\to$ translate.
+$Translate \cdot Rotate \cdot Scale$ is a single $4 \times 4$ transformation matrix that combines the three transformations known as the **composite transformation matrix**. Note the order that the translations are applied to the coordinates is read from right to left so here we have scale $\to$ rotate $\to$ translate.
 
 ### Composite transformations in OpenGL
 
@@ -773,7 +770,7 @@ What has happened here is the rectangle has been scaled and translated so that i
 
 ## Exercises
 
-1. Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the co-ordinates of points on a circle centered at $(0,0)$ with radius $r$ can be calculated using $x = r\cos(t)$ and $y = r\sin(t)$ where $t$ is some number.
+1. Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the coordinates of points on a circle centered at $(0,0)$ with radius $r$ can be calculated using $x = r\cos(t)$ and $y = r\sin(t)$ where $t$ is some number.
 
 <center>
 <video controls muted="true" loop="true" width="400">

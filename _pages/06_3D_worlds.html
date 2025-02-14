@@ -368,7 +368,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-models">6.1. 3D models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#co-ordinate-systems">6.2. Co-ordinate systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. coordinate systems</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-view-and-projection-matrices">6.3. Model, view and projection matrices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">6.3.1. The Model matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-view-matrix">6.3.2. The View matrix</a></li>
@@ -384,6 +384,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-camera-class">6.6. A camera class</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-objects">6.7. Multiple objects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">6.8. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">6.9. Video walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -397,10 +398,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="d-worlds">
 <span id="d-worlds-section"></span><h1><span class="section-number">6. </span>3D Worlds<a class="headerlink" href="#d-worlds" title="Permalink to this heading">#</a></h1>
-<p>In the <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">previous lab</span></a> we looked at the transformations can can be applied to the vertex co-ordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
+<p>In the <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">previous lab</span></a> we looked at the transformations can can be applied to the vertex coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
 <section id="d-models">
 <h2><span class="section-number">6.1. </span>3D models<a class="headerlink" href="#d-models" title="Permalink to this heading">#</a></h2>
-<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the co-ordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 6.1</span></a>) so the co-ordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).</p>
+<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 6.1</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).</p>
 <figure class="align-default" id="unit-cube-figure">
 <a class="reference internal image-reference" href="../_images/06_Unit_cube.svg"><img alt="../_images/06_Unit_cube.svg" src="../_images/06_Unit_cube.svg" width="500" /></a>
 <figcaption>
@@ -431,7 +432,7 @@ document.write(`
 <span class="c1">// Define texture coordinates</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uv</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// front</span>
-<span class="w">    </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">     </span><span class="c1">// vertex co-ordinates are the same for each side</span>
+<span class="w">    </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">     </span><span class="c1">// vertex coordinates are the same for each side</span>
 <span class="w">    </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">     </span><span class="c1">// of the cube so repeat every six vertices</span>
 <span class="w">    </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
@@ -458,7 +459,7 @@ document.write(`
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>If you compile and run this program you will see that the crate texture fills the window (since the co-ordinates of the cube vertices are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>).</p>
+<p>If you compile and run this program you will see that the crate texture fills the window (since the coordinates of the cube vertices are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>).</p>
 <figure class="align-default" id="cube-figure">
 <a class="reference internal image-reference" href="../_images/06_3D_worlds.png"><img alt="../_images/06_3D_worlds.png" src="../_images/06_3D_worlds.png" style="width: 500px;" /></a>
 <figcaption>
@@ -467,40 +468,64 @@ document.write(`
 </figure>
 </section>
 <hr class="docutils" />
-<section id="co-ordinate-systems">
-<h2><span class="section-number">6.2. </span>Co-ordinate systems<a class="headerlink" href="#co-ordinate-systems" title="Permalink to this heading">#</a></h2>
-<p>OpenGL uses a co-ordinate system with the <span class="math notranslate nohighlight">\(x\)</span> axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span> axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span> axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span> so any object outside of this range will not be shown on the display. These are known as <strong>Normalised Device Co-ordinates (NDC)</strong>.</p>
+<section id="coordinate-systems">
+<h2><span class="section-number">6.2. </span>coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this heading">#</a></h2>
+<p>OpenGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span> axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span> axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span> axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span> so any object outside of this range will not be shown on the display. These are known as <strong>Normalised Device coordinates (NDC)</strong>.</p>
 <figure class="align-default" id="ndc-figure">
 <a class="reference internal image-reference" href="../_images/06_NDC.svg"><img alt="../_images/06_NDC.svg" src="../_images/06_NDC.svg" width="600" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.3 </span><span class="caption-text">Normalised Device Co-ordinates (NDC)</span><a class="headerlink" href="#ndc-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.3 </span><span class="caption-text">Normalised Device coordinates (NDC)</span><a class="headerlink" href="#ndc-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate co-ordinate systems:</p>
+<p>The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate coordinate spaces.</p>
 <ul class="simple">
 <li><p><strong>Model space</strong> – each individual 3D object that will appear in the 3D world is defined in its own space usually with the volume centre of the object at <span class="math notranslate nohighlight">\((0,0,0)\)</span> to make the transformations easier</p></li>
-<li><p><strong>World space</strong> – the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations</p></li>
-<li><p><strong>View space</strong> – the world space is transformed so that it is viewed from <span class="math notranslate nohighlight">\((0,0,0)\)</span> looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis</p></li>
-<li><p><strong>Screen space</strong> – the view space is transformed so that the co-ordinates are expressed using normalised device co-ordinates</p></li>
 </ul>
-<figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../_images/06_mvp.svg"><img alt="../_images/06_mvp.svg" src="../_images/06_mvp.svg" width="500" /></a>
+<figure class="align-default" id="model-space-figure">
+<a class="reference internal image-reference" href="../_images/06_Model_space.svg"><img alt="../_images/06_Model_space.svg" src="../_images/06_Model_space.svg" width="350" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.4 </span><span class="caption-text">Transformations between the model, world, view and screen spaces.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.4 </span><span class="caption-text">The model space.</span><a class="headerlink" href="#model-space-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>World space</strong> – the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations.</p></li>
+</ul>
+<figure class="align-default" id="world-space-figure">
+<a class="reference internal image-reference" href="../_images/06_World_space.svg"><img alt="../_images/06_World_space.svg" src="../_images/06_World_space.svg" width="350" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6.5 </span><span class="caption-text">The world space.</span><a class="headerlink" href="#world-space-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>View space</strong> – the world space is transformed so that it is viewed from <span class="math notranslate nohighlight">\((0,0,0)\)</span> looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
+</ul>
+<figure class="align-default" id="view-space-figure">
+<a class="reference internal image-reference" href="../_images/06_View_space.svg"><img alt="../_images/06_View_space.svg" src="../_images/06_View_space.svg" width="350" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6.6 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#view-space-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>Screen space</strong> –the 3D view space is projected onto a 2D projection plane.</p></li>
+</ul>
+<figure class="align-default" id="screen-space-figure">
+<a class="reference internal image-reference" href="../_images/06_Screen_space.svg"><img alt="../_images/06_Screen_space.svg" src="../_images/06_Screen_space.svg" width="350" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6.7 </span><span class="caption-text">The screen space.</span><a class="headerlink" href="#screen-space-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="model-view-and-projection-matrices">
 <h2><span class="section-number">6.3. </span>Model, view and projection matrices<a class="headerlink" href="#model-view-and-projection-matrices" title="Permalink to this heading">#</a></h2>
-<p>We saw in <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">5. Transformations</span></a> that we apply a transformation by multiplying the object co-ordinates by a transformation matrix. Since we are transforming between difference co-ordinate spaces we have 3 main transformation matrices</p>
+<p>We saw in <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">5. Transformations</span></a> that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices</p>
 <ul class="simple">
-<li><p><strong>Model matrix</strong> - transforms the model space co-ordinates for the objects to the world space</p></li>
-<li><p><strong>View matrix</strong> - transforms the world space co-ordinates to the view space co-ordinates</p></li>
-<li><p><strong>Projection matrix</strong> - transforms the view space co-ordinates to the screen space NDC co-ordinates</p></li>
+<li><p><strong>Model matrix</strong> - transforms the model space coordinates for the objects to the world space</p></li>
+<li><p><strong>View matrix</strong> - transforms the world space coordinates to the view space coordinates</p></li>
+<li><p><strong>Projection matrix</strong> - transforms the view space coordinates to the screen space NDC coordinates</p></li>
 </ul>
 <section id="the-model-matrix">
 <span id="model-matrix-section"></span><h3><span class="section-number">6.3.1. </span>The Model matrix<a class="headerlink" href="#the-model-matrix" title="Permalink to this heading">#</a></h3>
-<p>In <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">5. Transformations</span></a> we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let’s compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each co-ordinate direction, rotated about the <span class="math notranslate nohighlight">\(y\)</span>-axis using the time of the current frame as the rotation angle and translated backwards down the <span class="math notranslate nohighlight">\(z\)</span>-axis so that its centre is at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span>. Add the following code inside the rendering loop before we draw the triangles.</p>
+<p>In <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">5. Transformations</span></a> we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let’s compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the <span class="math notranslate nohighlight">\(y\)</span>-axis using the time of the current frame as the rotation angle and translated backwards down the <span class="math notranslate nohighlight">\(z\)</span>-axis so that its centre is at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span>. Add the following code inside the rendering loop before we draw the triangles.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the model matrix</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">radians</span><span class="p">(</span><span class="n">glfwGetTime</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">360.0f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0f</span><span class="p">);</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0f</span><span class="p">));</span>
@@ -513,23 +538,23 @@ document.write(`
 </section>
 <section id="the-view-matrix">
 <span id="view-matrix-section"></span><h3><span class="section-number">6.3.2. </span>The View matrix<a class="headerlink" href="#the-view-matrix" title="Permalink to this heading">#</a></h3>
-<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and the rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<a class="reference internal" href="#view-space-figure"><span class="std std-numref">Fig. 6.5</span></a>).</p>
-<figure class="align-default" id="view-space-figure">
+<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and the rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<code class="xref std std-numref docutils literal notranslate"><span class="pre">view-space-figure</span></code>).</p>
+<figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" width="350" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.5 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#view-space-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.8 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>To calculate the world space to view space transformation we require three vectors</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> – the co-ordinates of the camera position</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{target}\)</span> – the co-ordinates of the target point that the camera is pointing</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> – the coordinates of the camera position</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{target}\)</span> – the coordinates of the target point that the camera is pointing</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{worldUp}\)</span> – a vector pointing straight up in the world space which allows us to orientate the camera, this is usually <span class="math notranslate nohighlight">\((0, 1, 0)\)</span></p></li>
 </ul>
 <figure class="align-default" id="view-space-alignment-figure">
 <a class="reference internal image-reference" href="../_images/06_view_space_alignment.svg"><img alt="../_images/06_view_space_alignment.svg" src="../_images/06_view_space_alignment.svg" width="400" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.6 </span><span class="caption-text">The vectors used in the transformation to the view space.</span><a class="headerlink" href="#view-space-alignment-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">The vectors used in the transformation to the view space.</span><a class="headerlink" href="#view-space-alignment-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by the vector <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that it is at <span class="math notranslate nohighlight">\((0, 0, 0)\)</span> using the following translation matrix</p>
@@ -543,7 +568,7 @@ document.write(`
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}
 \end{align*}, \end{split}\]</div>
-<p>The next step is to align the world space so that the direction vector is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. To do this we use vectors <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> which are unit vectors at right-angles to each other the point in directions relative to the camera (<a class="reference internal" href="#view-space-alignment-figure"><span class="std std-numref">Fig. 6.6</span></a>).</p>
+<p>The next step is to align the world space so that the direction vector is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. To do this we use vectors <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> which are unit vectors at right-angles to each other the point in directions relative to the camera (<a class="reference internal" href="#view-space-alignment-figure"><span class="std std-numref">Fig. 6.9</span></a>).</p>
 <p>The <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector points directly forward of the camera and is calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \mathbf{front} = \frac{\mathbf{target} - \mathbf{eye}}{\| \mathbf{target} - \mathbf{eye}\|}.\]</div>
@@ -561,7 +586,7 @@ document.write(`
     -\mathbf{front}_x &amp; -\mathbf{front}_y &amp; -\mathbf{front}_z &amp; 0 \\
     0 &amp; 0 &amp; 0 &amp; 1
 \end{pmatrix}.\end{split}\]</div>
-<p>The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space co-ordinates to the view space.</p>
+<p>The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space coordinates to the view space.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \view &amp;= Rotate \cdot Translate \\
@@ -604,12 +629,12 @@ document.write(`
 </section>
 <section id="the-projection-matrix">
 <h3><span class="section-number">6.3.3. </span>The Projection matrix<a class="headerlink" href="#the-projection-matrix" title="Permalink to this heading">#</a></h3>
-<p>The next step is to project the view space onto the screen space. The simplest type of projection is <strong>orthographic projection</strong> where the co-ordinates in the view space are transformed to the screen space by simple translation and scaling transformations.</p>
-<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside of the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.7</span></a>).</p>
+<p>The next step is to project the view space onto the screen space. The simplest type of projection is <strong>orthographic projection</strong> where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.</p>
+<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside of the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.10</span></a>).</p>
 <figure class="align-default" id="orthographic-projection-figure">
 <a class="reference internal image-reference" href="../_images/06_orthographic_projection.svg"><img alt="../_images/06_orthographic_projection.svg" src="../_images/06_orthographic_projection.svg" width="700" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.7 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-projection-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-projection-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The transpose of the orthographic projection matrix is calculated using</p>
@@ -623,7 +648,7 @@ document.write(`
         -\dfrac{right + left}{right - left} &amp; -\dfrac{top + bottom}{top - bottom} &amp; \dfrac{near + far}{near - far} &amp; 1
     \end{pmatrix}
 \end{align*}, \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(left\)</span>, <span class="math notranslate nohighlight">\(right\)</span>, <span class="math notranslate nohighlight">\(bottom\)</span>, <span class="math notranslate nohighlight">\(top\)</span>, <span class="math notranslate nohighlight">\(near\)</span> and <span class="math notranslate nohighlight">\(far\)</span> are the co-ordinates of the edges of the visible space. You don’t really need to know how this matrix is derived but if you are interested click on the dropdown link below.</p>
+<p>where <span class="math notranslate nohighlight">\(left\)</span>, <span class="math notranslate nohighlight">\(right\)</span>, <span class="math notranslate nohighlight">\(bottom\)</span>, <span class="math notranslate nohighlight">\(top\)</span>, <span class="math notranslate nohighlight">\(near\)</span> and <span class="math notranslate nohighlight">\(far\)</span> are the coordinates of the edges of the visible space. You don’t really need to know how this matrix is derived but if you are interested click on the dropdown link below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 Derivation of the orthographic projection matrix<div class="sd-summary-down docutils">
@@ -631,7 +656,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">To derive the orthographic projection we first need to translate the co-ordinates so that the centre of the cuboid that represents the clipping volume to <span class="math notranslate nohighlight">\((0,0,0)\)</span>. The centre co-ordinates are calculated using the average of the edge co-ordinates, e.g., for the <span class="math notranslate nohighlight">\(x\)</span> co-ordinate this would be <span class="math notranslate nohighlight">\(\dfrac{right + left}{2}\)</span>, so the translation matrix is</p>
+<p class="sd-card-text">To derive the orthographic projection we first need to translate the coordinates so that the centre of the cuboid that represents the clipping volume to <span class="math notranslate nohighlight">\((0,0,0)\)</span>. The centre coordinates are calculated using the average of the edge coordinates, e.g., for the <span class="math notranslate nohighlight">\(x\)</span> coordinate this would be <span class="math notranslate nohighlight">\(\dfrac{right + left}{2}\)</span>, so the translation matrix is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     Translate =
@@ -642,7 +667,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">The second step is to scale the clipping volume so that the co-ordinates are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. This is done by dividing the distance between the edges of the screen space by the distance between the clipping planes, e.g., for the <span class="math notranslate nohighlight">\(x\)</span> co-ordinate this would be <span class="math notranslate nohighlight">\(\dfrac{1 - (-1)}{right - left}=\dfrac{2}{right - left}\)</span>, so the scaling matrix is</p>
+<p class="sd-card-text">The second step is to scale the clipping volume so that the coordinates are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. This is done by dividing the distance between the edges of the screen space by the distance between the clipping planes, e.g., for the <span class="math notranslate nohighlight">\(x\)</span> coordinate this would be <span class="math notranslate nohighlight">\(\dfrac{1 - (-1)}{right - left}=\dfrac{2}{right - left}\)</span>, so the scaling matrix is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     Scale =
@@ -666,7 +691,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
     \end{pmatrix}
 \end{align*} \end{split}\]</div>
 </div>
-</details><p>The glm function <code class="docutils literal notranslate"><span class="pre">glm::ortho()</span></code> calculates the orthographic projection matrix given inputs of the left, right, bottom, top, near and far bounding co-ordinates. Let’s calculate the orthographic projection matrix using <span class="math notranslate nohighlight">\(left = -2\)</span>, <span class="math notranslate nohighlight">\(right = 2\)</span>, <span class="math notranslate nohighlight">\(bottom = -2\)</span>, <span class="math notranslate nohighlight">\(top = 2\)</span>, <span class="math notranslate nohighlight">\(near = 0\)</span>, <span class="math notranslate nohighlight">\(far = 10\)</span>. Add the following code after we have calculated the view matrix.</p>
+</details><p>The glm function <code class="docutils literal notranslate"><span class="pre">glm::ortho()</span></code> calculates the orthographic projection matrix given inputs of the left, right, bottom, top, near and far bounding coordinates. Let’s calculate the orthographic projection matrix using <span class="math notranslate nohighlight">\(left = -2\)</span>, <span class="math notranslate nohighlight">\(right = 2\)</span>, <span class="math notranslate nohighlight">\(bottom = -2\)</span>, <span class="math notranslate nohighlight">\(top = 2\)</span>, <span class="math notranslate nohighlight">\(near = 0\)</span>, <span class="math notranslate nohighlight">\(far = 10\)</span>. Add the following code after we have calculated the view matrix.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate orthographic projection matrix</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">ortho</span><span class="p">(</span><span class="mf">-2.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0f</span><span class="p">);</span>
 </pre></div>
@@ -703,7 +728,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <span class="w">    </span><span class="c1">// Output vertex position</span>
 <span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MVP</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="c1">// Output texture co-ordinates</span>
+<span class="w">    </span><span class="c1">// Output texture coordinates</span>
 <span class="w">    </span><span class="n">UV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uv</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -719,14 +744,14 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <hr class="docutils" />
 <section id="the-depth-test">
 <h2><span class="section-number">6.4. </span>The depth test<a class="headerlink" href="#the-depth-test" title="Permalink to this heading">#</a></h2>
-<p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 6.8</span></a>).</p>
+<p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 6.11</span></a>).</p>
 <figure class="align-default" id="depth-test-1-figure">
 <a class="reference internal image-reference" href="../_images/06_depth_test.svg"><img alt="../_images/06_depth_test.svg" src="../_images/06_depth_test.svg" width="300" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.8 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To overcome this issue OpenGL uses a <strong>depth test</strong> when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a <strong>z buffer</strong> (or <strong>depth buffer</strong>) where the <span class="math notranslate nohighlight">\(z\)</span> co-ordinate of each pixel in the frame buffer is stored and initialises all the values to <span class="math notranslate nohighlight">\(-1\)</span> (the furthest possible <span class="math notranslate nohighlight">\(z\)</span> co-ordinate in the screen space). When the fragment shader is called it checks whether the fragment has a <span class="math notranslate nohighlight">\(z\)</span> co-ordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its <span class="math notranslate nohighlight">\(z\)</span> co-ordinate in the depth-buffer as the current nearest fragment (if the fragment has a <span class="math notranslate nohighlight">\(z\)</span> co-ordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.</p>
+<p>To overcome this issue OpenGL uses a <strong>depth test</strong> when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a <strong>z buffer</strong> (or <strong>depth buffer</strong>) where the <span class="math notranslate nohighlight">\(z\)</span> coordinate of each pixel in the frame buffer is stored and initialises all the values to <span class="math notranslate nohighlight">\(-1\)</span> (the furthest possible <span class="math notranslate nohighlight">\(z\)</span> coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its <span class="math notranslate nohighlight">\(z\)</span> coordinate in the depth-buffer as the current nearest fragment (if the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.</p>
 <p>To enable depth testing we simply add the following function before after the creation of the window.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Enable depth test</span>
 <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEPTH_TEST</span><span class="p">);</span>
@@ -748,11 +773,11 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <section id="perspective-projection">
 <h2><span class="section-number">6.5. </span>Perspective projection<a class="headerlink" href="#perspective-projection" title="Permalink to this heading">#</a></h2>
 <p>The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger.</p>
-<p>Perspective project uses the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#perspective-projection-figure"><span class="std std-numref">Fig. 6.9</span></a>). The clipping volume bounded by the size clipping planes is called the <strong>viewing frustum</strong>.</p>
+<p>Perspective project uses the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#perspective-projection-figure"><span class="std std-numref">Fig. 6.12</span></a>). The clipping volume bounded by the size clipping planes is called the <strong>viewing frustum</strong>.</p>
 <figure class="align-default" id="perspective-projection-figure">
 <a class="reference internal image-reference" href="../_images/06_perspective_projection.svg"><img alt="../_images/06_perspective_projection.svg" src="../_images/06_perspective_projection.svg" width="600" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-projection-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.12 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-projection-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The shape of the viewing frustum is determined by four factors:</p>
@@ -770,10 +795,10 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
         \dfrac{near}{right} &amp; 0 &amp; 0 &amp; 0 \\
         0 &amp; \dfrac{near}{top} &amp; 0 &amp; 0 \\
         0 &amp; 0 &amp; -\dfrac{far + near}{far - near} &amp; -1 \\
-        0 &amp; 0 &amp; - \dfrac{2\times far \times near}{far - near} &amp; 0
+        0 &amp; 0 &amp; - \dfrac{2\cdot far \cdot near}{far - near} &amp; 0
     \end{pmatrix},
 \end{align*} \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(top = near \times \tan\left(\dfrac{fov}{2}\right)\)</span> and <span class="math notranslate nohighlight">\(right = aspect \times top\)</span>. You don’t really need to know how this is derived but it you are interested click on the dropdown below.</p>
+<p>where <span class="math notranslate nohighlight">\(top = near \cdot \tan\left(\dfrac{fov}{2}\right)\)</span> and <span class="math notranslate nohighlight">\(right = aspect \cdot top\)</span>. You don’t really need to know how this is derived but it you are interested click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 Derivation of the perspective projection matrix<div class="sd-summary-down docutils">
@@ -781,11 +806,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The mapping of a point in the view space with co-ordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> onto the near clipping plane to the point <span class="math notranslate nohighlight">\((x', y', -near)\)</span> is shown in <a class="reference internal" href="#perspective-mapping-figure"><span class="std std-numref">Fig. 6.10</span></a>.</p>
+<p class="sd-card-text">The mapping of a point in the view space with coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> onto the near clipping plane to the point <span class="math notranslate nohighlight">\((x', y', -near)\)</span> is shown in <a class="reference internal" href="#perspective-mapping-figure"><span class="std std-numref">Fig. 6.13</span></a>.</p>
 <figure class="align-default" id="perspective-mapping-figure">
 <a class="reference internal image-reference" href="../_images/06_perspective_projection_mapping.svg"><img alt="../_images/06_perspective_projection_mapping.svg" src="../_images/06_perspective_projection_mapping.svg" width="500" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Mapping of the point at <span class="math notranslate nohighlight">\((x,y,z)\)</span> onto the near plane using perspective.</span><a class="headerlink" href="#perspective-mapping-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.13 </span><span class="caption-text">Mapping of the point at <span class="math notranslate nohighlight">\((x,y,z)\)</span> onto the near plane using perspective.</span><a class="headerlink" href="#perspective-mapping-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text">The ratio of <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\(-z\)</span> distance is the same as the ratio of <span class="math notranslate nohighlight">\(x'\)</span> to <span class="math notranslate nohighlight">\(near\)</span> distance (and similar for <span class="math notranslate nohighlight">\(y'\)</span>) so</p>
@@ -796,7 +821,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
     \dfrac{y}{-z} &amp;= \dfrac{y'}{near} &amp;\implies
     y' &amp;= -near \frac{y}{z},
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">So we are mapping <span class="math notranslate nohighlight">\((x, y)\)</span> to <span class="math notranslate nohighlight">\(\left( -near \dfrac{x}{z}, -near \dfrac{y}{z} \right)\)</span>. As well as the perspective mapping we also need to ensure that the mapped co-ordinates <span class="math notranslate nohighlight">\((x', y', z')\)</span> are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Consider the mapping of the <span class="math notranslate nohighlight">\(x\)</span> co-ordinate</p>
+<p class="sd-card-text">So we are mapping <span class="math notranslate nohighlight">\((x, y)\)</span> to <span class="math notranslate nohighlight">\(\left( -near \dfrac{x}{z}, -near \dfrac{y}{z} \right)\)</span>. As well as the perspective mapping we also need to ensure that the mapped coordinates <span class="math notranslate nohighlight">\((x', y', z')\)</span> are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Consider the mapping of the <span class="math notranslate nohighlight">\(x\)</span> coordinate</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     left &amp;\leq x' \leq right \\
@@ -813,7 +838,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 \[ \begin{align*}
     -1 &amp;\leq -\frac{near}{top}\frac{y}{z}\leq 1
 \end{align*} \]</div>
-<p class="sd-card-text">If we use <a class="reference internal" href="05_transformations.html#homogeneous-coordinates-section"><span class="std std-ref">homogeneous co-ordinates</span></a> then this mapping can be represented by the matrix equation</p>
+<p class="sd-card-text">If we use <a class="reference internal" href="05_transformations.html#homogeneous-coordinates-section"><span class="std std-ref">homogeneous coordinates</span></a> then this mapping can be represented by the matrix equation</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \begin{pmatrix}
@@ -826,7 +851,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
     =
     \begin{pmatrix} \dfrac{near}{right}x \\ \dfrac{near}{top}y \\ Az + B \\ -z \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are placeholder variables for now. Since we divide homogeneous co-ordinates by the fourth element then the projected co-ordinates are</p>
+<p class="sd-card-text">where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are placeholder variables for now. Since we divide homogeneous coordinates by the fourth element then the projected coordinates are</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix} =
@@ -843,11 +868,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
     \textsf{near plane:} &amp;&amp;\frac{Az + B}{-z} &amp;= -1, &amp; \implies  Az + B &amp;= z, \\
     \textsf{far plane:} &amp;&amp; \frac{Az + B}{-z} &amp;= 1, &amp; \implies Az + B &amp;= -z.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">At the near clipping plane <span class="math notranslate nohighlight">\(z = -n\)</span> and at the far clipping plane <span class="math notranslate nohighlight">\(z = -f\)</span> so</p>
+<p class="sd-card-text">At the near clipping plane <span class="math notranslate nohighlight">\(z = -near\)</span> and at the far clipping plane <span class="math notranslate nohighlight">\(z = -far\)</span> so</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    -A \times near + B &amp;= -near, \\
-    -A \times far + B &amp;= far.
+    -A \cdot near + B &amp;= -near, \\
+    -A \cdot far + B &amp;= far.
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">Subtracting the first equation from the second gives</p>
 <div class="math notranslate nohighlight">
@@ -861,7 +886,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
     \left(\frac{far + near}{far - near}\right) near + B &amp;= -near \\
     B &amp;= -near \left( 1 +  \frac{far + near}{far - near}\right) \\
     &amp;= -near \left( \frac{far - near + far + near}{far - near}\right) \\
-    &amp;= - \frac{2 \times far \times near}{far - near}.
+    &amp;= - \frac{2 \cdot far \cdot near}{far - near}.
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">So the perspective projection matrix is</p>
 <div class="math notranslate nohighlight">
@@ -870,11 +895,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
     \begin{pmatrix}
         \dfrac{near}{right} &amp; 0 &amp; 0 &amp; 0 \\
         0 &amp; \dfrac{near}{top} &amp; 0 &amp; 0 \\
-        0 &amp; 0 &amp; -\dfrac{far + near}{far - near} &amp; - \dfrac{2\times far \times near}{far - near} \\
+        0 &amp; 0 &amp; -\dfrac{far + near}{far - near} &amp; - \dfrac{2\cdot far \cdot near}{far - near} \\
         0 &amp; 0 &amp; -1 &amp; 0
     \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">We now need to calculate the values of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(t\)</span>. The <span class="math notranslate nohighlight">\(t\)</span> co-ordinate is the opposite side of a right angled triangle with angle <span class="math notranslate nohighlight">\(\dfrac{fov}{2}\)</span> and adjacent side <span class="math notranslate nohighlight">\(n\)</span> so it is easily calculated using trigonometry</p>
+<p class="sd-card-text">We now need to calculate the values of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(t\)</span>. The <span class="math notranslate nohighlight">\(t\)</span> coordinate is the opposite side of a right angled triangle with angle <span class="math notranslate nohighlight">\(\dfrac{fov}{2}\)</span> and adjacent side <span class="math notranslate nohighlight">\(n\)</span> so it is easily calculated using trigonometry</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \tan \left( \frac{fov}{2} \right) 
@@ -884,11 +909,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <p class="sd-card-text">Since <span class="math notranslate nohighlight">\(aspect\)</span> with the width of the window divided by the height and <span class="math notranslate nohighlight">\(l = -r\)</span> and <span class="math notranslate nohighlight">\(b = -t\)</span> then</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    aspect &amp;= \frac{right - left}{top - bottom} = \frac{2 \times right}{2 \times top} \\
-    \therefore right &amp;= aspect \times top.
+    aspect &amp;= \frac{right - left}{top - bottom} = \frac{2 \cdot right}{2 \cdot top} \\
+    \therefore right &amp;= aspect \cdot top.
 \end{align*} \end{split}\]</div>
 </div>
-</details><p>The glm function <code class="docutils literal notranslate"><span class="pre">perspective()</span></code> calculates the perspective projection matrix given inputs of the field of view angle, width-to-height aspect ratio and the <span class="math notranslate nohighlight">\(z\)</span> co-ordinates of the near and far planes. Lets apply perspective projection to our cube using a near and far clipping planes at <span class="math notranslate nohighlight">\(n=0.2\)</span> and <span class="math notranslate nohighlight">\(f=10\)</span> respectively and a field of view angle of <span class="math notranslate nohighlight">\(fov = 45^\circ\)</span>. Comment out the code use to calculate the orthogonal projection matrix and add the following code.</p>
+</details><p>The glm function <code class="docutils literal notranslate"><span class="pre">perspective()</span></code> calculates the perspective projection matrix given inputs of the field of view angle, width-to-height aspect ratio and the <span class="math notranslate nohighlight">\(z\)</span> coordinates of the near and far planes. Lets apply perspective projection to our cube using a near and far clipping planes at <span class="math notranslate nohighlight">\(n=0.2\)</span> and <span class="math notranslate nohighlight">\(f=10\)</span> respectively and a field of view angle of <span class="math notranslate nohighlight">\(fov = 45^\circ\)</span>. Comment out the code use to calculate the orthogonal projection matrix and add the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate perspective projection matrix</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">perspective</span><span class="p">(</span><span class="n">Maths</span><span class="o">::</span><span class="n">radians</span><span class="p">(</span><span class="mf">45.0f</span><span class="p">),</span><span class="w"> </span><span class="mf">1024.0f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">768.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0f</span><span class="p">);</span>
 </pre></div>
@@ -909,7 +934,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <figure class="align-default" id="id2">
 <img alt="../_images/06_fov_15.png" src="../_images/06_fov_15.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 15^\circ\)</span></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.14 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 15^\circ\)</span></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -917,7 +942,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <figure class="align-default" id="id3">
 <img alt="../_images/06_fov_90.png" src="../_images/06_fov_90.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.12 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 90^\circ\)</span></span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.15 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 90^\circ\)</span></span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -1064,7 +1089,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we loop through each object and calculate the model matrix using the position, scaling and rotation vectors and rotation angle. We need to change the position of the camera so that we can see all of the cubes. Specify the camera <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> so that the camera is moved backwards along the <span class="math notranslate nohighlight">\(z\)</span>-axis a bit and looking at the first object.</p>
+<p>Here we loop through each object and calculate the model matrix using the position, scaling and rotation vectors and rotation angle. We need to change the position of the camera so that we can see all the cubes. Specify the camera <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> so that the camera is moved backwards along the <span class="math notranslate nohighlight">\(z\)</span>-axis a bit and looking at the first object but adding the following code before we loop through the cube objects.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate view and projection matrices</span>
 <span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0f</span><span class="p">);</span>
 <span class="n">camera</span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">;</span>
@@ -1080,7 +1105,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <section id="exercises">
 <h2><span class="section-number">6.8. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Move the camera position so that it moves in a circle centred at the first cube with radius 10 with a rotation speed such that it completes one full rotation every 5 seconds. Hint: <span class="math notranslate nohighlight">\(x = c_x + r\cos(\theta)\)</span> and <span class="math notranslate nohighlight">\(z = c_z + r\sin(\theta)\)</span> gives the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> co-ordinates on a circle centred at <span class="math notranslate nohighlight">\((c_x, c_y, c_z)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
+<li><p>Move the camera position so that it moves in a circle centred at the first cube with radius 10 with a rotation speed such that it completes one full rotation every 5 seconds. Hint: <span class="math notranslate nohighlight">\(x = c_x + r\cos(\theta)\)</span> and <span class="math notranslate nohighlight">\(z = c_z + r\sin(\theta)\)</span> gives the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates on a circle centred at <span class="math notranslate nohighlight">\((c_x, c_y, c_z)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="400">
@@ -1107,6 +1132,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <li><p>Add functions called <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">perspective()</span></code> to your <code class="docutils literal notranslate"><span class="pre">Maths</span></code> class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.</p></li>
 </ol>
 </section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2><span class="section-number">6.9. </span>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Permalink to this heading">#</a></h2>
+<p>The video below walks you through these lab materials.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jVCftc0pojI?si=yC9sx6TlUDkomqvu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1177,7 +1207,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-models">6.1. 3D models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#co-ordinate-systems">6.2. Co-ordinate systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. coordinate systems</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-view-and-projection-matrices">6.3. Model, view and projection matrices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">6.3.1. The Model matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-view-matrix">6.3.2. The View matrix</a></li>
@@ -1193,6 +1223,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-camera-class">6.6. A camera class</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-objects">6.7. Multiple objects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">6.8. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">6.9. Video walkthrough</a></li>
 </ul>
   </nav></div>
 

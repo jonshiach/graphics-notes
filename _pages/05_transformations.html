@@ -400,10 +400,10 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="transformations">
 <span id="transformations-section"></span><h1><span class="section-number">5. </span>Transformations<a class="headerlink" href="#transformations" title="Permalink to this heading">#</a></h1>
 <p>Computer graphics requires that shapes are manipulated in space by moving the shapes, shrinking or stretching, rotating and reflection to name a few. We call these manipulations <strong>transformations</strong>. We need a convenient way of telling the computer how to apply our transformations and for this we make use of matrices which we covered in the previous lab on <a class="reference internal" href="04_vectors_and_matrices.html#vectors-and-matrices-section"><span class="std std-ref">vectors and matrices</span></a>.</p>
-<p>Each transformation has an associated <strong>transformation matrix</strong> which we use to multiply the vertex co-ordinates of a shape to calculate the vertex co-ordinates of the transformed shape. For example if <span class="math notranslate nohighlight">\(A\)</span> is a transformation matrix for a particular transformation and <span class="math notranslate nohighlight">\((x,y,z)\)</span> are the co-ordinates of a vertex then we apply the transformation using</p>
+<p>Each transformation has an associated <strong>transformation matrix</strong> which we use to multiply the vertex coordinates of a shape to calculate the vertex coordinates of the transformed shape. For example if <span class="math notranslate nohighlight">\(A\)</span> is a transformation matrix for a particular transformation and <span class="math notranslate nohighlight">\((x,y,z)\)</span> are the coordinates of a vertex then we apply the transformation using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{pmatrix} x' \\ y' \\ x' \end{pmatrix} = A \cdot \begin{pmatrix} x \\ y \\ z \end{pmatrix}, \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\((x',y',z')\)</span> are the co-ordinates of the transformed point. Note that all vectors and co-ordinates are written as a column vector when multiplying by a matrix.</p>
+<p>where <span class="math notranslate nohighlight">\((x',y',z')\)</span> are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The co-ordinate system used by OpenGL is a <a href="https://en.wikipedia.org/wiki/Right-hand_rule" target="_blank">right-hand</a> 3D co-ordinate system (on your right hand the thumb represents the <span class="math notranslate nohighlight">\(x\)</span>-axis, the index finger the <span class="math notranslate nohighlight">\(y\)</span>-axis and the middle finger the <span class="math notranslate nohighlight">\(z\)</span>-axis) with the <span class="math notranslate nohighlight">\(x\)</span>-axis pointing to the right, the <span class="math notranslate nohighlight">\(y\)</span>-axis point upwards and the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing out of the screen towards the user (<a class="reference internal" href="#opengl-co-ordinate-figure"><span class="std std-numref">Fig. 5.1</span></a>).</p>
@@ -423,13 +423,13 @@ document.write(`
 <p><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Translation of a triangle by the translation vector <span class="math notranslate nohighlight">\(\mathbf{t}= (t_x, t_y, t_z)\)</span>.</span><a class="headerlink" href="#translation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>A problem we have is that no transformation matrix exists for applying translation to the co-ordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span>, i.e., we can’t find a matrix <span class="math notranslate nohighlight">\(Translate\)</span> such that</p>
+<p>A problem we have is that no transformation matrix exists for applying translation to the coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span>, i.e., we can’t find a matrix <span class="math notranslate nohighlight">\(Translate\)</span> such that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}Translate \cdot \begin{pmatrix} x  \\ y \\ z \end{pmatrix} = \begin{pmatrix} x + t_x \\ y + t_y \\ z + t_z \end{pmatrix}.\end{split}\]</div>
-<p id="homogeneous-coordinates-section">We can use a trick where we use <a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank"><strong>homogeneous co-ordinates</strong></a>. Homogeneous co-ordinates add another value, <span class="math notranslate nohighlight">\(w\)</span> say, to the <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates (known as Cartesian co-ordinates) such that when the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> values are divided by <span class="math notranslate nohighlight">\(w\)</span> we get the Cartesian co-ordinates.</p>
+<p id="homogeneous-coordinates-section">We can use a trick where we use <a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank"><strong>homogeneous coordinates</strong></a>. Homogeneous coordinates add another value, <span class="math notranslate nohighlight">\(w\)</span> say, to the <span class="math notranslate nohighlight">\((x, y, z)\)</span> coordinates (known as Cartesian coordinates) such that when the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> values are divided by <span class="math notranslate nohighlight">\(w\)</span> we get the Cartesian coordinates.</p>
 <div class="math notranslate nohighlight">
 \[\underbrace{(x, y, z, w)}_{\textsf{homogeneous}} \equiv \underbrace{\left( \frac{x}{w}, \frac{y}{w}, \frac{z}{w} \right)}_{\textsf{Cartesian}}.\]</div>
-<p>So if we choose <span class="math notranslate nohighlight">\(w=1\)</span> then we can write the Cartesian co-ordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> as the homogeneous co-ordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> (remember that 4-element vector with the additional 1 in our <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#vertex-shader-section"><span class="std std-ref">vertex shader</span></a>?). So how does that help us with our elusive translation matrix? Well we can now represent translation as a <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix</p>
+<p>So if we choose <span class="math notranslate nohighlight">\(w=1\)</span> then we can write the Cartesian coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> as the homogeneous coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> (remember that 4-element vector with the additional 1 in our <a class="reference internal" href="02_basic_shapes_in_OpenGL.html#vertex-shader-section"><span class="std std-ref">vertex shader</span></a>?). So how does that help us with our elusive translation matrix? Well we can now represent translation as a <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \begin{pmatrix}
@@ -470,7 +470,7 @@ document.write(`
 <p><span class="caption-number">Fig. 5.3 </span><span class="caption-text">A textured rectangle from the lab on <a class="reference internal" href="03_textures.html#textures-section"><span class="std std-ref">textures</span></a>.</span><a class="headerlink" href="#texture-rectangle-mario-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Lets translate the rectangle <span class="math notranslate nohighlight">\(0.4\)</span> to the right and <span class="math notranslate nohighlight">\(0.3\)</span> upwards (remember we are dealing with normalised device co-ordinates so the window co-ordinates are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>). The transposed transformation matrix to perform this translation is</p>
+<p>Lets translate the rectangle <span class="math notranslate nohighlight">\(0.4\)</span> to the right and <span class="math notranslate nohighlight">\(0.3\)</span> upwards (remember we are dealing with normalised device coordinates so the window coordinates are between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>). The transposed transformation matrix to perform this translation is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} Translate = \begin{pmatrix}
     1 &amp; 0 &amp; 0 &amp; 0 \\
@@ -511,12 +511,12 @@ document.write(`
 <span class="w">    </span><span class="c1">// Output vertex position</span>
 <span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transformation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="c1">// Output texture co-ordinates</span>
+<span class="w">    </span><span class="c1">// Output texture coordinates</span>
 <span class="w">    </span><span class="n">UV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uv</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous co-ordinates of the vertex position by this matrix. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in <a class="reference internal" href="#translate-rectangle-figure"><span class="std std-numref">Fig. 5.4</span></a>.</p>
+<p>The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous coordinates of the vertex position by this matrix. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in <a class="reference internal" href="#translate-rectangle-figure"><span class="std std-numref">Fig. 5.4</span></a>.</p>
 <figure class="align-default" id="translate-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/05_translation.png"><img alt="../_images/05_translation.png" src="../_images/05_translation.png" style="width: 500px;" /></a>
 <figcaption>
@@ -570,14 +570,14 @@ document.write(`
 <hr class="docutils" />
 <section id="scaling">
 <h2><span class="section-number">5.3. </span>Scaling<a class="headerlink" href="#scaling" title="Permalink to this heading">#</a></h2>
-<p>Scaling is one of the simplest transformation we can apply. Multiplying the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> co-ordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in <a class="reference internal" href="#scaling-about-origin-figure"><span class="std std-numref">Fig. 5.5</span></a>. The <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> co-ordinates of each vertex has been multiplied by <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_y\)</span> respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_z\)</span> are all greater than 1).</p>
+<p>Scaling is one of the simplest transformation we can apply. Multiplying the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in <a class="reference internal" href="#scaling-about-origin-figure"><span class="std std-numref">Fig. 5.5</span></a>. The <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of each vertex has been multiplied by <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_y\)</span> respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_z\)</span> are all greater than 1).</p>
 <figure class="align-default" id="scaling-about-origin-figure">
 <a class="reference internal image-reference" href="../_images/05_scaling.svg"><img alt="../_images/05_scaling.svg" height="350" src="../_images/05_scaling.svg" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 5.5 </span><span class="caption-text">Scaling a triangle centred at the origin.</span><a class="headerlink" href="#scaling-about-origin-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Since scaling is simply multiplying the co-ordinates by a number we have</p>
+<p>Since scaling is simply multiplying the coordinates by a number we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \begin{pmatrix}
@@ -651,7 +651,7 @@ document.write(`
 <p><span class="caption-number">Fig. 5.7 </span><span class="caption-text">Scaling applied to a triangle not centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span>.</span><a class="headerlink" href="#scaling-not-centred-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex co-ordinates by <span class="math notranslate nohighlight">\(-\mathbf{c}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is the centre of volume for the shape so that it is at <span class="math notranslate nohighlight">\((0,0,0)\)</span>. Then we can apply the scaling before translating by <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> so that the centre of volume is back at the original position (<a class="reference internal" href="#scaling-about-centre-figure"><span class="std std-numref">Fig. 5.8</span></a>).</p>
+<p>If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex coordinates by <span class="math notranslate nohighlight">\(-\mathbf{c}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is the centre of volume for the shape so that it is at <span class="math notranslate nohighlight">\((0,0,0)\)</span>. Then we can apply the scaling before translating by <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> so that the centre of volume is back at the original position (<a class="reference internal" href="#scaling-about-centre-figure"><span class="std std-numref">Fig. 5.8</span></a>).</p>
 <figure class="align-default" id="scaling-about-centre-figure">
 <a class="reference internal image-reference" href="../_images/05_scaling_about_centre.svg"><img alt="../_images/05_scaling_about_centre.svg" src="../_images/05_scaling_about_centre.svg" width="700" /></a>
 <figcaption>
@@ -703,37 +703,37 @@ Derivation of the rotation matrices (click to show)<div class="sd-summary-down d
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">We will consider rotation about the <span class="math notranslate nohighlight">\(z\)</span>-axis and will restrict our co-ordinates to 2D.</p>
+<p class="sd-card-text">We will consider rotation about the <span class="math notranslate nohighlight">\(z\)</span>-axis and will restrict our coordinates to 2D.</p>
 <figure class="align-default" id="rotation-figure">
 <a class="reference internal image-reference" href="../_images/05_rotation.svg"><img alt="../_images/05_rotation.svg" height="300" src="../_images/05_rotation.svg" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 5.10 </span><span class="caption-text">Rotating the vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> anti-clockwise by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</span><a class="headerlink" href="#rotation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p class="sd-card-text">Consider <a class="reference internal" href="#rotation-figure"><span class="std std-numref">Fig. 5.10</span></a> where the vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> is rotated by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>. To get this rotation we first consider the rotation of the vector <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, which has the same length as <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> and points along the <span class="math notranslate nohighlight">\(x\)</span>-axis, by angle <span class="math notranslate nohighlight">\(\phi\)</span> to get to <span class="math notranslate nohighlight">\(\mathbf{a}\)</span>. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, <span class="math notranslate nohighlight">\(|\mathbf{a}|\)</span>, and the angle so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#rotation-figure"><span class="std std-numref">Fig. 5.10</span></a> where the vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> is rotated by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, <span class="math notranslate nohighlight">\(\|\mathbf{a}\|\)</span>, and the angle <span class="math notranslate nohighlight">\(\theta\)</span> so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
-    \sin(\phi) &amp;= \frac{\textsf{opposite}}{\textsf{hypotenuse}}, &amp;
-    \cos(\phi) &amp;= \frac{\textsf{adjacent}}{\textsf{hypotenuse}}, &amp;
-    \tan(\phi) &amp;= \frac{\textsf{opposite}}{\textsf{adjacent}},
+    \sin(\phi) &amp;= \frac{opposite}{hypotenuse}, &amp;
+    \cos(\phi) &amp;= \frac{adjacent}{hypotenuse}, &amp;
+    \tan(\phi) &amp;= \frac{opposite}{adjacent},
 \end{align*} \]</div>
 <p class="sd-card-text">so the length of the adjacent and opposite sides of the blue triangle is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \textsf{adjacent} &amp;= \textsf{hypotenuse} \cdot \cos(\phi), \\
-    \textsf{opposite} &amp;= \textsf{hypotenuse} \cdot \sin(\phi).
+    adjacent &amp;= hypotenuse \cdot \cos(\phi), \\
+    opposite &amp;= hypotenuse \cdot \sin(\phi).
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Since <span class="math notranslate nohighlight">\(a_x\)</span> and <span class="math notranslate nohighlight">\(a_y\)</span> are the lengths of the adjacent and opposite sides respectively and <span class="math notranslate nohighlight">\(|\mathbf{a}|\)</span> is the length of the hypotenuse we have</p>
+<p class="sd-card-text">Since <span class="math notranslate nohighlight">\(a_x\)</span> and <span class="math notranslate nohighlight">\(a_y\)</span> are the lengths of the adjacent and opposite sides respectively and <span class="math notranslate nohighlight">\(\|\mathbf{a}\|\)</span> is the length of the hypotenuse we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    a_x &amp;= |\mathbf{a}| \cos(\phi), \\
-    a_y &amp;= |\mathbf{a}| \sin(\phi).
+    a_x &amp;= \|\mathbf{a}\| \cos(\phi), \\
+    a_y &amp;= \|\mathbf{a}\| \sin(\phi).
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Now consider the rotation from <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> by the angle <span class="math notranslate nohighlight">\(\phi + \theta\)</span> to get to <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>. Using the same method as before we have</p>
+<p class="sd-card-text">Using the same method for the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    b_x &amp;= |\mathbf{a}| \cos(\phi + \theta), \\
-    b_y &amp;= |\mathbf{a}| \sin(\phi + \theta).
+    b_x &amp;= \|\mathbf{a}\| \cos(\phi + \theta), \\
+    b_y &amp;= \|\mathbf{a}\| \sin(\phi + \theta).
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">We can rewrite <span class="math notranslate nohighlight">\(\cos(\phi+\theta)\)</span> and <span class="math notranslate nohighlight">\(\sin(\phi+\theta)\)</span> using <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#" target="_blank">trigonometric identities</a></p>
 <div class="math notranslate nohighlight">
@@ -744,10 +744,10 @@ Derivation of the rotation matrices (click to show)<div class="sd-summary-down d
 <p class="sd-card-text">so</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    v_x &amp;= |\mathbf{a}| \cos(\phi) \cos(\theta) - |\mathbf{a}| \sin(\phi) \sin(\theta), \\
-    v_y &amp;= |\mathbf{a}| \sin(\phi) \cos(\theta) + |\mathbf{a}| \cos(\phi) \sin(\theta).
+    v_x &amp;= \|\mathbf{a}\| \cos(\phi) \cos(\theta) - \|\mathbf{a}\| \sin(\phi) \sin(\theta), \\
+    v_y &amp;= \|\mathbf{a}\| \sin(\phi) \cos(\theta) + \|\mathbf{a}\| \cos(\phi) \sin(\theta).
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Since <span class="math notranslate nohighlight">\( a_x = |\mathbf{a}| \cos(\phi)\)</span> and <span class="math notranslate nohighlight">\(a_y = |\mathbf{a}| \sin(\phi)\)</span> then</p>
+<p class="sd-card-text">Since <span class="math notranslate nohighlight">\( a_x = \|\mathbf{a}\| \cos(\phi)\)</span> and <span class="math notranslate nohighlight">\(a_y = \|\mathbf{a}\| \sin(\phi)\)</span> then</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     b_x &amp;= a_x \cos(\theta) - a_y \sin(\theta), \\
@@ -814,22 +814,22 @@ Derivation of the rotation matrices (click to show)<div class="sd-summary-down d
 <span class="eqno">(5.3)<a class="headerlink" href="#equation-eq-axis-angle-rotation-matrix" title="Permalink to this equation">#</a></span>\[\begin{split} \begin{align*}
     Rotate =
     \begin{pmatrix}
-        v_x^2 (1 - \cos(\theta)) + \cos(\theta) &amp;
-        v_xv_y(1 - \cos(\theta)) + v_z\sin(\theta) &amp;
-        v_xv_z(1 - \cos(\theta)) - v_y\sin(\theta) &amp;
+        v_x^2 (1 - c) + c &amp;
+        v_xv_y(1 - c) + v_zs &amp;
+        v_xv_z(1 - c) - v_ys &amp;
         0 \\
-        v_xv_y(1 - \cos(\theta)) - v_z\sin(\theta) &amp;
-         v_y^2(1 - \cos(\theta)) + \cos(\theta) &amp;
-        v_yv_z(1 - \cos(\theta)) + v_x\sin(\theta) &amp;
+        v_xv_y(1 - c) - v_zs &amp;
+         v_y^2(1 - c) + c &amp;
+        v_yv_z(1 - c) + v_xs &amp;
         0 \\
-        v_xv_z(1 - \cos(\theta)) + v_y\sin(\theta) &amp;
-        v_yv_z(1 - \cos(\theta)) - v_x\sin(\theta) &amp;
-        v_z^2 (1 - \cos(\theta)) + \cos(\theta) &amp;
+        v_xv_z(1 - c) + v_ys &amp;
+        v_yv_z(1 - c) - v_xs &amp;
+        v_z^2 (1 - c) + c &amp;
         0 \\
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p>Again, you don’t really need to know how this is derived but if you are curious click on the dropdown link below.</p>
+<p>Where <span class="math notranslate nohighlight">\(c = \cos(\theta)\)</span> and <span class="math notranslate nohighlight">\(s = \sin(\theta)\)</span>. Again, you don’t really need to know how this is derived but if you are curious click on the dropdown link below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 Derivation of the axis-angle rotation matrix (click to show)<div class="sd-summary-down docutils">
@@ -905,39 +905,36 @@ Derivation of the axis-angle rotation matrix (click to show)<div class="sd-summa
     Rotate &amp;= R_5 \cdot R_4 \cdot R_3 \cdot R_2 \cdot R_1 \\
     &amp;=
     \begin{pmatrix}
-        \dfrac{v_x^2 + (v_y^2 + v_z^2)\cos(\theta)}{\|\mathbf{v}\|^2} &amp;
-        \dfrac{v_xv_y(1 - \cos(\theta))}{\|\mathbf{v}\|^2} + \dfrac{v_z\sin(\theta)}{\|\mathbf{v}\|} &amp;
-        \dfrac{v_xv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_y\sin(\theta)}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_x^2 + (v_y^2 + v_z^2)c}{\|\mathbf{v}\|^2} &amp;
+        \dfrac{v_xv_y(1 - c)}{\|\mathbf{v}\|^2} + \dfrac{v_zs}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_xv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_ys}{\|\mathbf{v}\|} &amp;
         0 \\
-        \dfrac{v_xv_y(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_z\sin(\theta)}{\|\mathbf{v}\|} &amp;
-        \dfrac{v_y^2 + (v_x^2 + v_y^2)\cos(\theta)}{\|\mathbf{v}\|^2} &amp;
-        \dfrac{v_yv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_x\sin(\theta)}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_xv_y(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_zs}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_y^2 + (v_x^2 + v_y^2)c}{\|\mathbf{v}\|^2} &amp;
+        \dfrac{v_yv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_xs}{\|\mathbf{v}\|} &amp;
         0 \\
-        \dfrac{v_xv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} + \dfrac{v_y\sin(\theta)}{\|\mathbf{v}\|} &amp;
-        \dfrac{v_yv_z(1 - \cos(\theta))}{\|\mathbf{v}\|^2} - \dfrac{v_x\sin(\theta)}{\|\mathbf{v}\|} &amp;
-        \dfrac{v_z^2 + (v_x^2 + v_y^2)\cos(\theta)}{\|\mathbf{v}\|^2} &amp;
+        \dfrac{v_xv_z(1 - c)}{\|\mathbf{v}\|^2} + \dfrac{v_ys}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_yv_z(1 - c)}{\|\mathbf{v}\|^2} - \dfrac{v_xs}{\|\mathbf{v}\|} &amp;
+        \dfrac{v_z^2 + (v_x^2 + v_y^2)c}{\|\mathbf{v}\|^2} &amp;
         0 \\
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Substituting <span class="math notranslate nohighlight">\(v_y^2 + v_z^2 = 1 - v_x^2\)</span> and the matrix simplifies to</p>
+<p class="sd-card-text">Where <span class="math notranslate nohighlight">\(c = \cos(\theta)\)</span> and <span class="math notranslate nohighlight">\(s = \sin(\theta)\)</span>. Substituting <span class="math notranslate nohighlight">\(v_y^2 + v_z^2 = 1 - v_x^2\)</span> and the matrix simplifies to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     Rotate &amp;= R_1 \cdot R_2 \cdot R_3 \cdot R_4 \cdot R_5 \\
     &amp;=
     \begin{pmatrix}
-        v_x^2 (1 - \cos(\theta)) + \cos(\theta) &amp; 11
-        v_xv_y(1 - \cos(\theta)) - v_z\sin(\theta) &amp; 12
-        v_xv_z(1 - \cos(\theta)) + v_y\sin(\theta) &amp; 13
-        0 \\
-        v_xv_y(1 - \cos(\theta)) + v_z\sin(\theta) &amp; 21
-         v_y^2(1 - \cos(\theta)) + \cos(\theta) &amp; 22
-        v_yv_z(1 - \cos(\theta)) - v_x\sin(\theta) &amp; 23
-        0 \\
-        v_xv_z(1 - \cos(\theta)) - v_y\sin(\theta) &amp; 31
-        v_yv_z(1 - \cos(\theta)) + v_x\sin(\theta) &amp; 32
-        v_z^2 (1 - \cos(\theta)) + \cos(\theta) &amp; 33
-        0 \\
+        v_x^2 (1 - c) + c &amp;
+        v_xv_y(1 - c) - v_zs &amp;
+        v_xv_z(1 - c) + v_ys &amp; 0 \\
+        v_xv_y(1 - c) + v_zs &amp;
+        v_y^2(1 - c) + c &amp;
+        v_yv_z(1 - c) - v_xs &amp; 0 \\
+        v_xv_z(1 - c) - v_ys &amp;
+        v_yv_z(1 - c) + v_xs &amp;
+        v_z^2 (1 - c) + c &amp; 0 \\
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}.
 \end{align*} \end{split}\]</div>
@@ -945,7 +942,7 @@ Derivation of the axis-angle rotation matrix (click to show)<div class="sd-summa
 </details></section>
 <section id="axis-angle-rotation-in-opengl">
 <h3><span class="section-number">5.4.3. </span>Axis-angle rotation in OpenGL<a class="headerlink" href="#axis-angle-rotation-in-opengl" title="Permalink to this heading">#</a></h3>
-<p>The rotations around the three co-ordinates axis can be calculated using the axis-angle rotation matrix (by letting <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> be <span class="math notranslate nohighlight">\((1,0,0)\)</span>, <span class="math notranslate nohighlight">\((0,1,0)\)</span> or <span class="math notranslate nohighlight">\((0,0,1)\)</span> for rotating around the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes respectively) so it makes sense to define a single function for rotation using <a class="reference internal" href="#equation-eq-axis-angle-rotation-matrix">(5.3)</a>. Define a couple of functions in the Maths class by entering the following code.</p>
+<p>The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> be <span class="math notranslate nohighlight">\((1,0,0)\)</span>, <span class="math notranslate nohighlight">\((0,1,0)\)</span> or <span class="math notranslate nohighlight">\((0,0,1)\)</span> for rotating around the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes respectively) so it makes sense to define a single function for rotation using <a class="reference internal" href="#equation-eq-axis-angle-rotation-matrix">(5.3)</a>. Define a couple of functions in the Maths class by entering the following code.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">radians</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="p">);</span>
 <span class="k">static</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">&amp;</span><span class="n">angle</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 </pre></div>
@@ -998,20 +995,20 @@ Derivation of the axis-angle rotation matrix (click to show)<div class="sd-summa
     &amp;=
     Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p>Next applying rotation to the scaled co-ordinates we have</p>
+<p>Next applying rotation to the scaled coordinates we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix} &amp;=
     Rotate \cdot Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p>Finally applying translation to the scaled and rotated co-ordinates we have</p>
+<p>Finally applying translation to the scaled and rotated coordinates we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     \begin{pmatrix} x' \\ y' \\ z' \\ 1 \end{pmatrix}
     &amp;=
     Translate \cdot Rotate \cdot Scale \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(Translate \cdot Rotate \cdot Scale\)</span> is a single <span class="math notranslate nohighlight">\(4 \times 4\)</span> transformation matrix that combines the three transformations known as the <strong>composite transformation matrix</strong>. Note the order that the translations are applied to the co-ordinates is read from right to left so here we have scale <span class="math notranslate nohighlight">\(\to\)</span> rotate <span class="math notranslate nohighlight">\(\to\)</span> translate.</p>
+<p><span class="math notranslate nohighlight">\(Translate \cdot Rotate \cdot Scale\)</span> is a single <span class="math notranslate nohighlight">\(4 \times 4\)</span> transformation matrix that combines the three transformations known as the <strong>composite transformation matrix</strong>. Note the order that the translations are applied to the coordinates is read from right to left so here we have scale <span class="math notranslate nohighlight">\(\to\)</span> rotate <span class="math notranslate nohighlight">\(\to\)</span> translate.</p>
 <section id="composite-transformations-in-opengl">
 <h3><span class="section-number">5.5.1. </span>Composite transformations in OpenGL<a class="headerlink" href="#composite-transformations-in-opengl" title="Permalink to this heading">#</a></h3>
 <p>Lets apply scaling, rotation and translation (in that order) to our rectangle. Since we have already calculated the separate transformation matrices all we need to do is to multiply them together and set it equal to <code class="docutils literal notranslate"><span class="pre">transformation</span></code>.</p>
@@ -1061,7 +1058,7 @@ Derivation of the axis-angle rotation matrix (click to show)<div class="sd-summa
 <section id="exercises">
 <h2><span class="section-number">5.7. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the co-ordinates of points on a circle centered at <span class="math notranslate nohighlight">\((0,0)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span> can be calculated using <span class="math notranslate nohighlight">\(x = r\cos(t)\)</span> and <span class="math notranslate nohighlight">\(y = r\sin(t)\)</span> where <span class="math notranslate nohighlight">\(t\)</span> is some number.</p></li>
+<li><p>Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the coordinates of points on a circle centered at <span class="math notranslate nohighlight">\((0,0)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span> can be calculated using <span class="math notranslate nohighlight">\(x = r\cos(t)\)</span> and <span class="math notranslate nohighlight">\(y = r\sin(t)\)</span> where <span class="math notranslate nohighlight">\(t\)</span> is some number.</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="400">

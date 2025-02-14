@@ -37,7 +37,7 @@ A Light class has been created to handle the light sources. Take a look at the `
 
 ## Tangent space
 
-We have already seen in [6. 3D worlds](3D-worlds-section) that we can use transformations to map co-ordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the **tangent space**. The tangent space is a 3D space where vectors are defined in terms of three vectors: **tangent**, **bitangent** and **normal** vectors ({numref}`bitangent-vector-figure`).
+We have already seen in [6. 3D worlds](3D-worlds-section) that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the **tangent space**. The tangent space is a 3D space where vectors are defined in terms of three vectors: **tangent**, **bitangent** and **normal** vectors ({numref}`bitangent-vector-figure`).
 
 ```{figure} ../_images/09_bitangent.svg
 :name: bitangent-vector-figure
@@ -59,7 +59,7 @@ There are an infinite number of vectors on a plane that is perpendicular to the 
 The tangent space is defined by the tangent, bitangent and normal vectors.
 ```
 
-The tangent and bitangent vectors are calculated using the model space vertex co-ordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture co-ordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. 
+The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. 
 
 ```{figure} ../_images/09_UV_deltas.svg
 :width: 800
@@ -75,7 +75,7 @@ $$ \begin{align*}
     E_2 &= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}$$
 
-and calculate the difference in the $(u,v)$ co-ordinates for these edges
+and calculate the difference in the $(u,v)$ coordinates for these edges
 
 $$ \begin{align*}
     \Delta u_1 &= u_1 - u_0, &
@@ -95,7 +95,7 @@ To see the derivation of these equations click on the dropdown below.
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
-Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture co-ordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges $E_1$ and $E_2$ can be calculated using
+Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges $E_1$ and $E_2$ can be calculated using
 
 $$\begin{align*}
     E_1 &= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
@@ -160,7 +160,7 @@ std::vector<glm::vec3> tangents;
 std::vector<glm::vec3> bitangents;
 ```
 
-We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture co-ordinates and normal vectors. Under the `private:` declaration add the identifiers for the tangent and bitangent buffers.
+We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture coordinates and normal vectors. Under the `private:` declaration add the identifiers for the tangent and bitangent buffers.
 
 ```cpp
 unsigned int tangentBuffer;
@@ -238,7 +238,7 @@ glBindBuffer(GL_ARRAY_BUFFER, bitangentBuffer);
 glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 ```
 
-These are essentially the same as what we've done previously for the vertices, texture co-ordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.
+These are essentially the same as what we've done previously for the vertices, texture coordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.
 
 ---
 

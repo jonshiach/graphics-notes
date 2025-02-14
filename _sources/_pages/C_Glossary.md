@@ -12,10 +12,10 @@
     A region of memory used to store data temporarily whilst it is transferred from one place to another.
 
 {term}`Vertex Array Object (VAO)`
-    A container object for storing any data and attributes related to a vertex, e.g., co-ordinates, texture co-ordinates, normal vectors etc.  
+    A container object for storing any data and attributes related to a vertex, e.g., coordinates, texture coordinates, normal vectors etc.  
 
 {term}`Vertex Buffer Object (VBO)`
-    The buffer where the values of the vertex attributes are stored, e.g., $x$, $y$ and $z$ co-ordinates of the vertices.
+    The buffer where the values of the vertex attributes are stored, e.g., $x$, $y$ and $z$ coordinates of the vertices.
 
 {term}`Graphics Processing Unit`
     The hardware used by a computer to output graphical information to the display.
@@ -47,8 +47,8 @@
 {term}`Textel`
     An individual pixel in a texture.
 
-{term}`Texture co-ordinates`
-    The co-ordinates of a pixel (textel) in the texture. 
+{term}`Texture coordinates`
+    The coordinates of a pixel (textel) in the texture. 
 
 {term}`Texture wrapping`
     Controls how textures are repeated across a surface of a polygon.
@@ -69,9 +69,9 @@
     The process of changing an object, e.g., changing its position, orientation, size etc.
 
 {term}`Origin`
-    A point in a space with all zero co-ordinates.
+    A point in a space with all zero coordinates.
 
-{term}`Normalized Device Co-ordinates (NDC)`
+{term}`Normalized Device coordinates (NDC)`
     A 3D right-handed co-ordinate system used by OpenGL where the camera is assumed to be at the origin pointing down the $z$-axis.
 
 {term}`Translation`
@@ -87,7 +87,7 @@
     The combination of a sequence of transformations.
 
 {term}`Unit cube`
-    A cube with sides of length 2 parallel to the co-ordinate axes where the vertex co-ordinates are combinations of $-1$ and $1$.
+    A cube with sides of length 2 parallel to the co-ordinate axes where the vertex coordinates are combinations of $-1$ and $1$.
 
 {term}`Model space`
     The space in which an individual 3D model is defined (also known as *object space*).

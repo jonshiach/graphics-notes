@@ -456,7 +456,7 @@ $$ \begin{align*}
     & \qquad (p_xw + p_yz - p_zy + p_wx, p_xz + p_yw - p_zx + p_wy, -p_xy + p_yx + p_zw + p_wz)].
 \end{align*} $$
 
-If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (p_x, p_y, p_z, p_w)$ (note that the scalar part of $p$, $p_w$, is now at the end of the vector which is synonymous with [homogeneous co-ordinates](homogeneous-coordinates-section)) then we can express the rotation $qp$ as the matrix equation $R_q\mathbf{p}$ where
+If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (p_x, p_y, p_z, p_w)$ (note that the scalar part of $p$, $p_w$, is now at the end of the vector which is synonymous with [homogeneous coordinates](homogeneous-coordinates-section)) then we can express the rotation $qp$ as the matrix equation $R_q\mathbf{p}$ where
 
 $$ \begin{align*}
     R_q &=
@@ -585,7 +585,7 @@ The rotation of the vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about th
 
 ### A.3.1 Euler angles to quaternion
 
-Euler angles are the rotations around the three co-ordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_y = \cos(\frac{1}{2}\theta)$, $s_y = \sin(\frac{1}{2}\theta)$, $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$, $c_r = \cos(\frac{1}{2}\theta)$ and $s_r = \sin(\frac{1}{2}\theta)$ then the quaternions that rotate using the pitch, roll and yaw angles then
+Euler angles are the rotations around the three coordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for pitch, yaw and roll rotations. Let $c_y = \cos(\frac{1}{2}\theta)$, $s_y = \sin(\frac{1}{2}\theta)$, $c_p = \cos(\frac{1}{2}\theta)$, $s_p =\sin(\frac{1}{2}\theta)$, $c_r = \cos(\frac{1}{2}\theta)$ and $s_r = \sin(\frac{1}{2}\theta)$ then the quaternions that rotate using the pitch, roll and yaw angles then
 
 $$ \begin{align*}
     q_y &= [c_y, s_y \mathbf{i}], \\

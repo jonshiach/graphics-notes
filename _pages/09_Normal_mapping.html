@@ -423,7 +423,7 @@ document.write(`
 <hr class="docutils" />
 <section id="tangent-space">
 <h2><span class="section-number">9.1. </span>Tangent space<a class="headerlink" href="#tangent-space" title="Permalink to this heading">#</a></h2>
-<p>We have already seen in <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D worlds</span></a> that we can use transformations to map co-ordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the <strong>tangent space</strong>. The tangent space is a 3D space where vectors are defined in terms of three vectors: <strong>tangent</strong>, <strong>bitangent</strong> and <strong>normal</strong> vectors (<a class="reference internal" href="#bitangent-vector-figure"><span class="std std-numref">Fig. 9.3</span></a>).</p>
+<p>We have already seen in <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D worlds</span></a> that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the <strong>tangent space</strong>. The tangent space is a 3D space where vectors are defined in terms of three vectors: <strong>tangent</strong>, <strong>bitangent</strong> and <strong>normal</strong> vectors (<a class="reference internal" href="#bitangent-vector-figure"><span class="std std-numref">Fig. 9.3</span></a>).</p>
 <figure class="align-default" id="bitangent-vector-figure">
 <a class="reference internal image-reference" href="../_images/09_bitangent.svg"><img alt="../_images/09_bitangent.svg" src="../_images/09_bitangent.svg" width="300" /></a>
 <figcaption>
@@ -442,7 +442,7 @@ document.write(`
 <p><span class="caption-number">Fig. 9.4 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The tangent and bitangent vectors are calculated using the model space vertex co-ordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture co-ordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
+<p>The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
 <figure class="align-default" id="uv-deltas-figure">
 <a class="reference internal image-reference" href="../_images/09_UV_deltas.svg"><img alt="../_images/09_UV_deltas.svg" src="../_images/09_UV_deltas.svg" width="800" /></a>
 <figcaption>
@@ -455,7 +455,7 @@ document.write(`
     E_1 &amp;= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
     E_2 &amp;= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}\end{split}\]</div>
-<p>and calculate the difference in the <span class="math notranslate nohighlight">\((u,v)\)</span> co-ordinates for these edges</p>
+<p>and calculate the difference in the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates for these edges</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \Delta u_1 &amp;= u_1 - u_0, &amp;
@@ -477,7 +477,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 9.5</span></a> where a triangle is mapped onto the normal map using texture co-ordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges <span class="math notranslate nohighlight">\(E_1\)</span> and <span class="math notranslate nohighlight">\(E_2\)</span> can be calculated using</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 9.5</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges <span class="math notranslate nohighlight">\(E_1\)</span> and <span class="math notranslate nohighlight">\(E_2\)</span> can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     E_1 &amp;= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
@@ -534,7 +534,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bitangents</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture co-ordinates and normal vectors. Under the <code class="docutils literal notranslate"><span class="pre">private:</span></code> declaration add the identifiers for the tangent and bitangent buffers.</p>
+<p>We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture coordinates and normal vectors. Under the <code class="docutils literal notranslate"><span class="pre">private:</span></code> declaration add the identifiers for the tangent and bitangent buffers.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">;</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">bitangentBuffer</span><span class="p">;</span>
 </pre></div>
@@ -602,7 +602,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>These are essentially the same as what we’ve done previously for the vertices, texture co-ordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.</p>
+<p>These are essentially the same as what we’ve done previously for the vertices, texture coordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.</p>
 </section>
 </section>
 <hr class="docutils" />
