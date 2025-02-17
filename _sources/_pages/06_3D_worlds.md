@@ -824,7 +824,13 @@ Run your program and you should see the following.
 </video>
 </center>
 
-5. Add functions called `lookAt()` and `perspective()` to your `Maths` class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.
+5. Creat a $10 \times 10$ grid of cubes in the world space. 
+
+```{figure} ../_images/06_Ex5.png
+:width: 500
+```
+
+6. Add functions called `lookAt()` and `perspective()` to your `Maths` class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.
 
 ---
 
