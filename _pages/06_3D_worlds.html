@@ -368,7 +368,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-models">6.1. 3D models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. coordinate systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. Coordinate systems</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-view-and-projection-matrices">6.3. Model, view and projection matrices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">6.3.1. The Model matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-view-matrix">6.3.2. The View matrix</a></li>
@@ -398,7 +398,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="d-worlds">
 <span id="d-worlds-section"></span><h1><span class="section-number">6. </span>3D Worlds<a class="headerlink" href="#d-worlds" title="Permalink to this heading">#</a></h1>
-<p>In the <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">previous lab</span></a> we looked at the transformations can can be applied to the vertex coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
+<p>In the <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">previous lab</span></a> we looked at the transformations can be applied to the vertex coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
 <section id="d-models">
 <h2><span class="section-number">6.1. </span>3D models<a class="headerlink" href="#d-models" title="Permalink to this heading">#</a></h2>
 <p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 6.1</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).</p>
@@ -408,7 +408,7 @@ document.write(`
 <p><span class="caption-number">Fig. 6.1 </span><span class="caption-text">A unit cube centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> with side lengths of 2.</span><a class="headerlink" href="#unit-cube-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Open the <strong>Lab06_3D_Worlds.cpp</strong> file in the <strong>Lab06_3D_Worlds</strong> project and you will see that the <code class="docutils literal notranslate"><span class="pre">vertices</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays have been defined for our unit object.</p>
+<p>Open the <strong>Lab06_3D_Worlds.cpp</strong> file in the <strong>Lab06_3D_Worlds</strong> project, and you will see that the <code class="docutils literal notranslate"><span class="pre">vertices</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays have been defined for our unit object.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube object</span>
 <span class="c1">// Define vertices</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -469,12 +469,12 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="coordinate-systems">
-<h2><span class="section-number">6.2. </span>coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this heading">#</a></h2>
-<p>OpenGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span> axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span> axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span> axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span> so any object outside of this range will not be shown on the display. These are known as <strong>Normalised Device coordinates (NDC)</strong>.</p>
+<h2><span class="section-number">6.2. </span>Coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this heading">#</a></h2>
+<p>OpenGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span> axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span> axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span> axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span>, so any object outside this range will not be shown on the display. These are known as <strong>Normalised Device Coordinates (NDC)</strong>.</p>
 <figure class="align-default" id="ndc-figure">
 <a class="reference internal image-reference" href="../_images/06_NDC.svg"><img alt="../_images/06_NDC.svg" src="../_images/06_NDC.svg" width="600" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.3 </span><span class="caption-text">Normalised Device coordinates (NDC)</span><a class="headerlink" href="#ndc-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.3 </span><span class="caption-text">Normalised Device Coordinates (NDC)</span><a class="headerlink" href="#ndc-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate coordinate spaces.</p>
@@ -538,7 +538,7 @@ document.write(`
 </section>
 <section id="the-view-matrix">
 <span id="view-matrix-section"></span><h3><span class="section-number">6.3.2. </span>The View matrix<a class="headerlink" href="#the-view-matrix" title="Permalink to this heading">#</a></h3>
-<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and the rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<code class="xref std std-numref docutils literal notranslate"><span class="pre">view-space-figure</span></code>).</p>
+<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and then rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<code class="xref std std-numref docutils literal notranslate"><span class="pre">view-space-figure</span></code>).</p>
 <figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" width="350" /></a>
 <figcaption>
@@ -630,7 +630,7 @@ document.write(`
 <section id="the-projection-matrix">
 <h3><span class="section-number">6.3.3. </span>The Projection matrix<a class="headerlink" href="#the-projection-matrix" title="Permalink to this heading">#</a></h3>
 <p>The next step is to project the view space onto the screen space. The simplest type of projection is <strong>orthographic projection</strong> where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.</p>
-<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside of the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.10</span></a>).</p>
+<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.10</span></a>).</p>
 <figure class="align-default" id="orthographic-projection-figure">
 <a class="reference internal image-reference" href="../_images/06_orthographic_projection.svg"><img alt="../_images/06_orthographic_projection.svg" src="../_images/06_orthographic_projection.svg" width="700" /></a>
 <figcaption>
@@ -699,7 +699,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 </section>
 <section id="the-mvp-matrix">
 <h3><span class="section-number">6.3.4. </span>The MVP matrix<a class="headerlink" href="#the-mvp-matrix" title="Permalink to this heading">#</a></h3>
-<p>Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our <code class="docutils literal notranslate"><span class="pre">main()</span></code> function but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.</p>
+<p>Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.</p>
 <p>So in our main program we combine the model, view and projection matrices to form a single matrix called the <span class="math notranslate nohighlight">\(MV\!P\)</span> matrix.</p>
 <div class="math notranslate nohighlight">
 \[ MV\!P = Projection \cdot \view \cdot \model. \]</div>
@@ -798,7 +798,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
         0 &amp; 0 &amp; - \dfrac{2\cdot far \cdot near}{far - near} &amp; 0
     \end{pmatrix},
 \end{align*} \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(top = near \cdot \tan\left(\dfrac{fov}{2}\right)\)</span> and <span class="math notranslate nohighlight">\(right = aspect \cdot top\)</span>. You don’t really need to know how this is derived but it you are interested click on the dropdown below.</p>
+<p>where <span class="math notranslate nohighlight">\(top = near \cdot \tan\left(\dfrac{fov}{2}\right)\)</span> and <span class="math notranslate nohighlight">\(right = aspect \cdot top\)</span>. You don’t really need to know how this is derived but if you are interested click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 Derivation of the perspective projection matrix<div class="sd-summary-down docutils">
@@ -1213,7 +1213,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-models">6.1. 3D models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. coordinate systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">6.2. Coordinate systems</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-view-and-projection-matrices">6.3. Model, view and projection matrices</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">6.3.1. The Model matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-view-matrix">6.3.2. The View matrix</a></li>

@@ -2,7 +2,7 @@
 
 # 3D Worlds
 
-In the [previous lab](transformations-section) we looked at the transformations can can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
+In the [previous lab](transformations-section) we looked at the transformations can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
 
 ## 3D models
 
@@ -15,7 +15,7 @@ To demonstrate building a simple 3D world we are going to need a 3D object. One 
 A unit cube centred at $(0,0,0)$ with side lengths of 2.
 ```
 
-Open the **Lab06_3D_Worlds.cpp** file in the **Lab06_3D_Worlds** project and you will see that the `vertices`, `uv` and `indices` arrays have been defined for our unit object.
+Open the **Lab06_3D_Worlds.cpp** file in the **Lab06_3D_Worlds** project, and you will see that the `vertices`, `uv` and `indices` arrays have been defined for our unit object.
 
 ```cpp
 // Define cube object
@@ -79,15 +79,15 @@ A unit object.
 
 ---
 
-## coordinate systems
+## Coordinate systems
 
-OpenGL uses a coordinate system with the $x$ axis pointing horizontally to the right, the $y$ axis pointing vertically upwards and the $z$ axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$ so any object outside of this range will not be shown on the display. These are known as **Normalised Device coordinates (NDC)**.
+OpenGL uses a coordinate system with the $x$ axis pointing horizontally to the right, the $y$ axis pointing vertically upwards and the $z$ axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
 
 ```{figure} ../_images/06_NDC.svg
 :width: 600
 :name: NDC-figure
 
-Normalised Device coordinates (NDC)
+Normalised Device Coordinates (NDC)
 ```
 
 The steps used in the creation of a 3D world and eventually displaying it on screen requires that we transform through several intermediate coordinate spaces.
@@ -157,7 +157,7 @@ Here we have calculated the individual transformation matrices for translation, 
 
 ### The View matrix
 
-To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and the rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`).
+To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and then rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`).
 
 ```{figure} ../_images/06_view_space.svg
 :width: 350
@@ -262,7 +262,7 @@ glm::mat4 view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),  // eye
 
 The next step is to project the view space onto the screen space. The simplest type of projection is **orthographic projection** where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.
 
-The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside of the cuboid are clipped ({numref}`orthographic-projection-figure`).
+The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped ({numref}`orthographic-projection-figure`).
 
 ```{figure} ../_images/06_orthographic_projection.svg
 :width: 700
@@ -334,7 +334,7 @@ glm::mat4 projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, 0.0f, 10.0f);
 
 ### The MVP matrix
 
-Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our `main()` function but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single $4 \times 4$ matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.
+Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our `main()` function, but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single $4 \times 4$ matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.
 
 So in our main program we combine the model, view and projection matrices to form a single matrix called the $MV\!P$ matrix.
 
@@ -454,7 +454,7 @@ $$ \begin{align*}
     \end{pmatrix},
 \end{align*} $$
 
-where $top = near \cdot \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \cdot top$. You don't really need to know how this is derived but it you are interested click on the dropdown below.
+where $top = near \cdot \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \cdot top$. You don't really need to know how this is derived but if you are interested click on the dropdown below.
 
 ````{dropdown} Derivation of the perspective projection matrix
 
