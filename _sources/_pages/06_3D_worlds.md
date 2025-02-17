@@ -112,7 +112,7 @@ The world space.
 
 - **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis.
 
-```{figure} ../_images/06_View_space.svg
+```{figure} ../_images/06_view_space.svg
 :width: 350
 :name: view-space-figure
 
@@ -157,16 +157,7 @@ Here we have calculated the individual transformation matrices for translation, 
 
 ### The View matrix
 
-To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and then rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`).
-
-```{figure} ../_images/06_view_space.svg
-:width: 350
-:name: view-space-figure
-
-The view space.
-```
-
-To calculate the world space to view space transformation we require three vectors
+To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and then rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`). To do this we require three vectors ({numref}`camera-vectors-figure`)
 
 - $\mathbf{eye}$ -- the coordinates of the camera position
 - $\mathbf{target}$ -- the coordinates of the target point that the camera is pointing
@@ -174,7 +165,7 @@ To calculate the world space to view space transformation we require three vecto
 
 ```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
-:name: view-space-alignment-figure
+:name: camera-vectors-figure
 
 The vectors used in the transformation to the view space.
 ```
@@ -191,7 +182,7 @@ $$ \begin{align*}
     \end{pmatrix}
 \end{align*}, $$
 
-The next step is to align the world space so that the direction vector is pointing down the $z$-axis. To do this we use vectors $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ which are unit vectors at right-angles to each other the point in directions relative to the camera ({numref}`view-space-alignment-figure`).
+The next step is to align the world space so that the direction vector is pointing down the $z$-axis. To do this we use vectors $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ which are unit vectors at right-angles to each other the point in directions relative to the camera ({numref}`camera-vectors-figure`).
 
 The $\mathbf{front}$ vector points directly forward of the camera and is calculated using
 

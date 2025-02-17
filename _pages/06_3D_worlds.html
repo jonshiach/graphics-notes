@@ -500,7 +500,7 @@ document.write(`
 <li><p><strong>View space</strong> – the world space is transformed so that it is viewed from <span class="math notranslate nohighlight">\((0,0,0)\)</span> looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
 </ul>
 <figure class="align-default" id="view-space-figure">
-<a class="reference internal image-reference" href="../_images/06_View_space.svg"><img alt="../_images/06_View_space.svg" src="../_images/06_View_space.svg" width="350" /></a>
+<a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" width="350" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 6.6 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#view-space-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -538,23 +538,16 @@ document.write(`
 </section>
 <section id="the-view-matrix">
 <span id="view-matrix-section"></span><h3><span class="section-number">6.3.2. </span>The View matrix<a class="headerlink" href="#the-view-matrix" title="Permalink to this heading">#</a></h3>
-<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and then rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<code class="xref std std-numref docutils literal notranslate"><span class="pre">view-space-figure</span></code>).</p>
-<figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" width="350" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 6.8 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>To calculate the world space to view space transformation we require three vectors</p>
+<p>To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and then rotate the world space so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis (<a class="reference internal" href="#view-space-figure"><span class="std std-numref">Fig. 6.6</span></a>). To do this we require three vectors (<a class="reference internal" href="#camera-vectors-figure"><span class="std std-numref">Fig. 6.8</span></a>)</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> – the coordinates of the camera position</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{target}\)</span> – the coordinates of the target point that the camera is pointing</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{worldUp}\)</span> – a vector pointing straight up in the world space which allows us to orientate the camera, this is usually <span class="math notranslate nohighlight">\((0, 1, 0)\)</span></p></li>
 </ul>
-<figure class="align-default" id="view-space-alignment-figure">
+<figure class="align-default" id="camera-vectors-figure">
 <a class="reference internal image-reference" href="../_images/06_view_space_alignment.svg"><img alt="../_images/06_view_space_alignment.svg" src="../_images/06_view_space_alignment.svg" width="400" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">The vectors used in the transformation to the view space.</span><a class="headerlink" href="#view-space-alignment-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.8 </span><span class="caption-text">The vectors used in the transformation to the view space.</span><a class="headerlink" href="#camera-vectors-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by the vector <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that it is at <span class="math notranslate nohighlight">\((0, 0, 0)\)</span> using the following translation matrix</p>
@@ -568,7 +561,7 @@ document.write(`
         0 &amp; 0 &amp; 0 &amp; 1
     \end{pmatrix}
 \end{align*}, \end{split}\]</div>
-<p>The next step is to align the world space so that the direction vector is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. To do this we use vectors <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> which are unit vectors at right-angles to each other the point in directions relative to the camera (<a class="reference internal" href="#view-space-alignment-figure"><span class="std std-numref">Fig. 6.9</span></a>).</p>
+<p>The next step is to align the world space so that the direction vector is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. To do this we use vectors <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> which are unit vectors at right-angles to each other the point in directions relative to the camera (<a class="reference internal" href="#camera-vectors-figure"><span class="std std-numref">Fig. 6.8</span></a>).</p>
 <p>The <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector points directly forward of the camera and is calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \mathbf{front} = \frac{\mathbf{target} - \mathbf{eye}}{\| \mathbf{target} - \mathbf{eye}\|}.\]</div>
@@ -630,11 +623,11 @@ document.write(`
 <section id="the-projection-matrix">
 <h3><span class="section-number">6.3.3. </span>The Projection matrix<a class="headerlink" href="#the-projection-matrix" title="Permalink to this heading">#</a></h3>
 <p>The next step is to project the view space onto the screen space. The simplest type of projection is <strong>orthographic projection</strong> where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.</p>
-<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.10</span></a>).</p>
+<p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 6.9</span></a>).</p>
 <figure class="align-default" id="orthographic-projection-figure">
 <a class="reference internal image-reference" href="../_images/06_orthographic_projection.svg"><img alt="../_images/06_orthographic_projection.svg" src="../_images/06_orthographic_projection.svg" width="700" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-projection-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-projection-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The transpose of the orthographic projection matrix is calculated using</p>
@@ -744,11 +737,11 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <hr class="docutils" />
 <section id="the-depth-test">
 <h2><span class="section-number">6.4. </span>The depth test<a class="headerlink" href="#the-depth-test" title="Permalink to this heading">#</a></h2>
-<p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 6.11</span></a>).</p>
+<p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 6.10</span></a>).</p>
 <figure class="align-default" id="depth-test-1-figure">
 <a class="reference internal image-reference" href="../_images/06_depth_test.svg"><img alt="../_images/06_depth_test.svg" src="../_images/06_depth_test.svg" width="300" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>To overcome this issue OpenGL uses a <strong>depth test</strong> when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a <strong>z buffer</strong> (or <strong>depth buffer</strong>) where the <span class="math notranslate nohighlight">\(z\)</span> coordinate of each pixel in the frame buffer is stored and initialises all the values to <span class="math notranslate nohighlight">\(-1\)</span> (the furthest possible <span class="math notranslate nohighlight">\(z\)</span> coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its <span class="math notranslate nohighlight">\(z\)</span> coordinate in the depth-buffer as the current nearest fragment (if the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.</p>
@@ -773,11 +766,11 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <section id="perspective-projection">
 <h2><span class="section-number">6.5. </span>Perspective projection<a class="headerlink" href="#perspective-projection" title="Permalink to this heading">#</a></h2>
 <p>The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger.</p>
-<p>Perspective project uses the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#perspective-projection-figure"><span class="std std-numref">Fig. 6.12</span></a>). The clipping volume bounded by the size clipping planes is called the <strong>viewing frustum</strong>.</p>
+<p>Perspective project uses the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#perspective-projection-figure"><span class="std std-numref">Fig. 6.11</span></a>). The clipping volume bounded by the size clipping planes is called the <strong>viewing frustum</strong>.</p>
 <figure class="align-default" id="perspective-projection-figure">
 <a class="reference internal image-reference" href="../_images/06_perspective_projection.svg"><img alt="../_images/06_perspective_projection.svg" src="../_images/06_perspective_projection.svg" width="600" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.12 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-projection-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-projection-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The shape of the viewing frustum is determined by four factors:</p>
@@ -806,11 +799,11 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The mapping of a point in the view space with coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> onto the near clipping plane to the point <span class="math notranslate nohighlight">\((x', y', -near)\)</span> is shown in <a class="reference internal" href="#perspective-mapping-figure"><span class="std std-numref">Fig. 6.13</span></a>.</p>
+<p class="sd-card-text">The mapping of a point in the view space with coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> onto the near clipping plane to the point <span class="math notranslate nohighlight">\((x', y', -near)\)</span> is shown in <a class="reference internal" href="#perspective-mapping-figure"><span class="std std-numref">Fig. 6.12</span></a>.</p>
 <figure class="align-default" id="perspective-mapping-figure">
 <a class="reference internal image-reference" href="../_images/06_perspective_projection_mapping.svg"><img alt="../_images/06_perspective_projection_mapping.svg" src="../_images/06_perspective_projection_mapping.svg" width="500" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6.13 </span><span class="caption-text">Mapping of the point at <span class="math notranslate nohighlight">\((x,y,z)\)</span> onto the near plane using perspective.</span><a class="headerlink" href="#perspective-mapping-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.12 </span><span class="caption-text">Mapping of the point at <span class="math notranslate nohighlight">\((x,y,z)\)</span> onto the near plane using perspective.</span><a class="headerlink" href="#perspective-mapping-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text">The ratio of <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\(-z\)</span> distance is the same as the ratio of <span class="math notranslate nohighlight">\(x'\)</span> to <span class="math notranslate nohighlight">\(near\)</span> distance (and similar for <span class="math notranslate nohighlight">\(y'\)</span>) so</p>
@@ -931,18 +924,18 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id1">
 <img alt="../_images/06_fov_15.png" src="../_images/06_fov_15.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.14 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 15^\circ\)</span></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.13 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 15^\circ\)</span></span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
 <div class="sd-col sd-d-flex-column docutils">
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id2">
 <img alt="../_images/06_fov_90.png" src="../_images/06_fov_90.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.15 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 90^\circ\)</span></span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.14 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 90^\circ\)</span></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
