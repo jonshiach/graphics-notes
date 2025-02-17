@@ -724,11 +724,11 @@ invB * B =
 
 ## Exercises
 
-1. Three points have the coordinates $P = (5, 1, 3)$, $Q = (10, 7, 4)$ and $R = (0, 5, -3)$. Use pen and paper to calculate the following:
+1. Three points have the coordinates $A = (5, 1, 3)$, $B = (10, 7, 4)$ and $C = (0, 5, -3)$. Use pen and paper to calculate the following:
 
-    (a) The vector $\mathbf{p}$ that points from P to Q;<br>
-    (b) The vector $\mathbf{q}$ that points from Q to R;<br>
-    (c) The vector $\mathbf{r}$ that points from R to P;<br>
+    (a) The vector $\mathbf{p}$ that points from A to B;<br>
+    (b) The vector $\mathbf{q}$ that points from B to C;<br>
+    (c) The vector $\mathbf{r}$ that points from C to A;<br>
     (d) The length of the vector $\mathbf{p}$;<br>
     (e) A unit vector that points in the direction of the vector $\mathbf{q}$;<br>
     (f) The dot product $\mathbf{p} \cdot \mathbf{q}$;<br>
