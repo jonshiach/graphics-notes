@@ -206,13 +206,12 @@ Then in the **camera.cpp** define the method using the following code.
 void Camera::calculateCameraVectors()
 {
     front = glm::vec3(cos(yaw) * cos(pitch), sin(pitch), sin(yaw) * cos(pitch));
-    front = glm::normalize(front);
     right = glm::normalize(glm::cross(front, worldUp));
     up    = glm::cross(right, front);
 }
 ```
 
-Here we have calculated the $\mathbf{front}$, $\mathbf{right}$ and $\mathbf{up}$ camera vectors in the same way used for the [view matrix](view-matrix-section).
+Here we have calculated the $\mathbf{front}$ vector from the Euler angles and the $\mathbf{right}$ and $\mathbf{up}$ vectors in the same way used for the [view matrix](view-matrix-section).
 
 ### Getting the mouse input
 
