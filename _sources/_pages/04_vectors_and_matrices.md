@@ -762,7 +762,7 @@ $$ \begin{align*}
 
 1 (d) &emsp; $\|\mathbf{p}\| = \sqrt{62} \approx = 7.87$
 
-1 (e) &emsp; $\hat{\mathbf{q}} = \left(\dfrac{-10}{\sqrt{153}}, \dfrac{-2}{\sqrt{153}}, \dfrac{-7}{\sqrt{153}} \right) \approx (-0.81, -0.61, -0.57)$
+1 (e) &emsp; $\hat{\mathbf{q}} = \left(\dfrac{-10}{\sqrt{153}}, \dfrac{-2}{\sqrt{153}}, \dfrac{-7}{\sqrt{153}} \right) \approx (-0.81, -0.16, -0.57)$
 
 1 (f) &emsp; $\mathbf{p} \cdot \mathbf{q} = -69$
 
