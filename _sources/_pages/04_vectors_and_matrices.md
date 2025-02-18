@@ -2,7 +2,7 @@
 
 # Vectors and Matrices
 
-Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations. Will will be using this library in the upcoming labs, so it is important that you know how it works.
+Computer graphics relies heavily on mathematics of vectors and matrices. In this lab we will be revising the important concepts needed for computer graphics and using a library to perform calculations.
 
 ---
 
@@ -726,9 +726,9 @@ invB * B =
 
 1. Three points have the coordinates $A = (5, 1, 3)$, $B = (10, 7, 4)$ and $C = (0, 5, -3)$. Use pen and paper to calculate the following:
 
-    (a) The vector $\mathbf{p}$ that points from A to B;<br>
-    (b) The vector $\mathbf{q}$ that points from B to C;<br>
-    (c) The vector $\mathbf{r}$ that points from C to A;<br>
+    (a) The vector $\mathbf{p}$ that points from $A$ to $B$;<br>
+    (b) The vector $\mathbf{q}$ that points from $B$ to $C$;<br>
+    (c) The vector $\mathbf{r}$ that points from $C$ to $A$;<br>
     (d) The length of the vector $\mathbf{p}$;<br>
     (e) A unit vector that points in the direction of the vector $\mathbf{q}$;<br>
     (f) The dot product $\mathbf{p} \cdot \mathbf{q}$;<br>
