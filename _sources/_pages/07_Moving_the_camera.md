@@ -232,15 +232,15 @@ void mouseInput(GLFWwindow *window)
     glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 
     // Update yaw and pitch angles
-    camera.yaw   += 0.5f * deltaTime * float(xPos - 1024 / 2);
-    camera.pitch += 0.5f * deltaTime * float(768 / 2 - yPos);
+    camera.yaw   += 0.0005f * float(xPos - 1024 / 2);
+    camera.pitch += 0.0005f * float(768 / 2 - yPos);
 
     // Calculate camera vectors from the yaw and pitch angles
     camera.calculateCameraVectors();
 }
 ```
 
-Here we use the function `glfwGetCursorPos()` to get the pixel coordinates of the mouse pointer and then we reset this to the window centre using the `glfwSetCursorPos()` function. This is so that the mouse cursor does not eventually move out of the window. The $yaw$ and $pitch$ angles are then adjusted based on the number of pixels that the mouse cursor moves the centre of the window (note that we subtract `yPos` from the centre coordinates since pixel coordinates assume $(0,0)$ is the top-left hand corder of the display). The distances that the mouse cursor moves is multiplied by a factor of `0.5f * deltaTime` to limit the speed that the camera rotates, you may need to make adjustments this value depending on the machine you are using. Finally, the camera vectors are then calculated using the new $yaw$ and $pitch$ angles.
+Here we use the function `glfwGetCursorPos()` to get the pixel coordinates of the mouse pointer and then we reset this to the window centre using the `glfwSetCursorPos()` function. This is so that the mouse cursor does not eventually move out of the window. The $yaw$ and $pitch$ angles are then adjusted based on the number of pixels that the mouse cursor moves the centre of the window (note that we subtract `yPos` from the centre coordinates since pixel coordinates assume $(0,0)$ is the top-left hand corder of the display). The distances that the mouse cursor moves is multiplied by a factor of 0.0005 to limit the mouse sensitivity, you may need to make adjustments this value depending on your setup. Finally, the camera vectors are then calculated using the new $yaw$ and $pitch$ angles.
 
 We now need to invoke our mouse input function for each iteration of the render loop. Add the following code beneath where the `keyboardInput()` function is called.
 
@@ -313,6 +313,12 @@ glEnable(GL_CULL_FACE);
 ```
 
 Compile and run your program and use the keyboard and mouse to put the camera inside a cube. You will now see that the back faces haven't been rendered.
+
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/07_Back_face_culling.mp4" type="video/mp4">
+</video>
+</center>
 
 ---
 
