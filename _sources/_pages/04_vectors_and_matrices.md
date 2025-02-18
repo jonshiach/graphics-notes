@@ -750,4 +750,33 @@ $$ \begin{align*}
 &emsp;&emsp; (b) $ABC$;<br>
 &emsp;&emsp; (c) $CBA$;<br>
 &emsp;&emsp; (d) $A^\mathsf{T}B$;<br>
-&emsp;&emsp; (f) $A^{-1}$.
+&emsp;&emsp; (e) $A^{-1}$.
+
+
+````{dropdown} Solutions
+1 (a) &emsp; $\mathbf{p} = (5, 6, 1)$
+
+1 (b) &emsp; $\mathbf{q} = (-10, -2, -7)$
+
+1 (c) &emsp; $\mathbf{r} = (5, -4, 6)$
+
+1 (d) &emsp; $\|\mathbf{p}\| = \sqrt{62} \approx = 7.87$
+
+1 (e) &emsp; $\hat{\mathbf{q}} = \left(\dfrac{-10}{\sqrt{153}}, \dfrac{-2}{\sqrt{153}}, \dfrac{-7}{\sqrt{153}} \right) \approx (-0.81, -0.61, -0.57)$
+
+1 (f) &emsp; $\mathbf{p} \cdot \mathbf{q} = -69$
+
+1 (g) &emsp; $\mathbf{q} \times \mathbf{r} = (-40, 25, 50)$
+
+3 (a) &emsp; $AB = \begin{pmatrix}21 & 1 \\ -35 & -1 \end{pmatrix}$
+
+3 (b) &emsp; $ABC = \begin{pmatrix}    60  &  38 \\
+  -102 &  -66 \end{pmatrix}$
+
+3 (c) &emsp; $CBA = \begin{pmatrix} 2 & 2 \\ 8 & -34 \end{pmatrix}$
+
+3 (d) &emsp; $A^\mathsf{T}B = \begin{pmatrix} 14 & 0 \\ -35 & 1 \end{pmatrix}$
+
+3 (e) &emsp; $A^{-1} = \begin{pmatrix} 5 & 3 \\ 2 & 1 \end{pmatrix}$
+
+````
