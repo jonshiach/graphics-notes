@@ -274,7 +274,7 @@ So each element of `a * b` is the product of the corresponding elements in the v
 
 ### The dot product
 
-The **dot product** between two vectors $\mathbf{a} = (a_x, a_y, a_z)$ and $\mathbf{b} = (b_x, b_y, b_z)$ is denoted by $\mathbf{a} \cdot \mathbf{b}$ and returns a scalar. The dot product is calculated using
+The <a href="https://en.wikipedia.org/wiki/Dot_product" target="_blank">**dot product**</a> between two vectors $\mathbf{a} = (a_x, a_y, a_z)$ and $\mathbf{b} = (b_x, b_y, b_z)$ is denoted by $\mathbf{a} \cdot \mathbf{b}$ and returns a scalar. The dot product is calculated using
 
 $$ \mathbf{a} \cdot \mathbf{b} = a_xb_x + a_yb_y + a_zb_z. $$(eq:dot-product)
 
@@ -320,7 +320,7 @@ a . b = 15.000
 
 ### The cross product
 
-The **cross product** between two vectors $\mathbf{a} = (a_x, a_y, a_z)$ and $\mathbf{b} = (b_x, b_y, b_z)$ is denoted by $\mathbf{a} \times \mathbf{b}$ and returns a vector. The cross product is calculated using
+The <a href="https://en.wikipedia.org/wiki/Cross_product" target="_blank">**cross product**</a> between two vectors $\mathbf{a} = (a_x, a_y, a_z)$ and $\mathbf{b} = (b_x, b_y, b_z)$ is denoted by $\mathbf{a} \times \mathbf{b}$ and returns a vector. The cross product is calculated using
 
 $$ \mathbf{a} \times \mathbf{b} = (a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x). $$(eq:cross-product)
 

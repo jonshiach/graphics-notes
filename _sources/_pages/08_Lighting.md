@@ -2,7 +2,9 @@
 
 # Lighting
 
-In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Lighting models come in two main types: local illumination and global illumination:
+In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. 
+
+<!-- Lighting models come in two main types: local illumination and global illumination:
 
 - **local illumination** -- the colour and brightness of individual points on a surface are determined by the light emanating from one or more light sources.
 - **global illumination** -- the colour and brightness of individual points on a surface are determine both by the light emanating from light sources **in addition to** light that is reflected off of other objects in the scene.
@@ -11,9 +13,9 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 :width: 500
 ```
 
-Here we will be applying a local illumination model since they are easier to apply than global illumination and quicker to compute. The downside is that they don't produce a rendering as realistic than with global illumination.
+Here we will be applying a local illumination model since they are easier to apply than global illumination and quicker to compute. The downside is that they don't produce a rendering as realistic as with global illumination. -->
 
-Compile and run the **Lab08_Lighting** project and you will see the window below showing a wire frame representation of the Utah teapot.
+Compile and run the **Lab08_Lighting** project, and you will see the window below showing a wire frame representation of the Utah teapot.
 
 ```{figure} ../_images/08_teapot_wireframe.png
 :width: 500

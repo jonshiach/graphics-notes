@@ -155,7 +155,7 @@ To point our camera we only need the $yaw$ and $pitch$ angles which we are going
 Rotating the vector $(1,0,0)$ about the $y$-axis by the $yaw$ angle.
 ```
 
-Consider ({numref}`yaw-figure`) that shows the $\mathbf{front}$ vector initially pointing along the $x$-axis rotated about the $y$-axis by the $yaw$ angle. The $x$ and $y$ components of the rotated vector are the adjacent and opposite sides of the right-angled triangle. Remembering that $\cos(\theta) = adjacent/hypotenuse$ and $\sin(\theta) = opposite/hypotenuse$, if $\mathbf{front}$ is a unit vector then $hypotenuse=1$ and  $x$ and $y$ components of the rotated vector are
+Consider ({numref}`yaw-figure`) that shows the $\mathbf{front}$ vector initially pointing along the $x$-axis rotated about the $y$-axis by the $yaw$ angle. The $x$ and $y$ components of the rotated vector are the adjacent and opposite sides of the right-angled triangle. Remembering that $\cos(\theta) = \dfrac{adjacent}{hypotenuse}$ and $\sin(\theta) = \dfrac{opposite}{hypotenuse}$, if $\mathbf{front}$ is a unit vector then $hypotenuse=1$ and  $x$ and $y$ components of the rotated vector are
 
 $$ \begin{align*}
     \mathbf{front}_x &= \cos(yaw), \\
@@ -326,3 +326,11 @@ Compile and run your program and use the keyboard and mouse to put the camera in
 
 1. Change the `calculateMatrices()` Camera class method so that the camera position always has a $y$ co-ordinate of 0, i.e., like a first person shooter game where the player cannot fly around the world.
 2. Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function $y = h \sin(\pi t)$ produces values of $y=0$ when $t = 0$ or $t = 1$ and $y = h$ when $t = 0.5$.
+
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Au7U-dJobM8?si=1Ajdd3NEsGcbf1cJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
