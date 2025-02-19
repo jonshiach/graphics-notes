@@ -630,7 +630,7 @@ The default constructor for a glm matrix object declares the matrix as an identi
 ```cpp
 // The identity matrix
 printf("\nThe identity matrix:\n");
-glm::mat2 I;
+glm::mat4 I;
 std::cout << "I = " << glm::transpose(I) << "\n" << std::endl;
 ```
 
