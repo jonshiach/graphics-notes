@@ -112,7 +112,7 @@ The world space.
 
 - **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis.
 
-```{figure} ../_images/06_view_space.svg
+```{figure} ../_images/06_View_space.svg
 :width: 350
 :name: view-space-figure
 
