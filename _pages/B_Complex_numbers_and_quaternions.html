@@ -687,7 +687,7 @@ document.write(`
 <p><span class="caption-number">Fig. 2 </span><span class="caption-text">The quaternion <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> is rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> by multiplying by the rotation quaternion <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-1-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn’t perpendicular to the vector? Consider the rotation of the same vector <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by angle 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} =  (0.707, 0, 0.707)\)</span> which is not perpendicular to <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>. The rotation quaternion is</p>
+<p>In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn’t perpendicular to the vector? Consider the rotation of the same vector <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by angle 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the unit vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} =  (0.707, 0, 0.707)\)</span> which is not perpendicular to <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>. The rotation quaternion is</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
@@ -713,7 +713,7 @@ document.write(`
 <figure class="align-default" id="quaternion-rotation-2-figure">
 <a class="reference internal image-reference" href="../_images/A_Quaternion_rotation_2.svg"><img alt="../_images/A_Quaternion_rotation_2.svg" src="../_images/A_Quaternion_rotation_2.svg" width="450" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^circ), \sin(45^\circ) \hat{\mathbf{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where</p>

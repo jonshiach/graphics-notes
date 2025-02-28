@@ -317,7 +317,7 @@ which is the same as the absolute value of $[0, (2, 0, 0)]$. This rotation is sh
 The quaternion $p = [0, (2, 0, 0)]$ is rotated $45^\circ$ by multiplying by the rotation quaternion $q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]$.
 ```
 
-In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn't perpendicular to the vector? Consider the rotation of the same vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about the vector $\hat{\mathbf{v}} =  (0.707, 0, 0.707)$ which is not perpendicular to $\mathbf{p}$. The rotation quaternion is
+In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn't perpendicular to the vector? Consider the rotation of the same vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about the unit vector $\hat{\mathbf{v}} =  (0.707, 0, 0.707)$ which is not perpendicular to $\mathbf{p}$. The rotation quaternion is
 
 $$ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
@@ -351,7 +351,7 @@ which is the same as $|p|$. However, by calculating $qpq^*$ we have rotated the 
 :width: 450
 :name: quaternion-rotation-2-figure
 
-Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^circ), \sin(45^\circ) \hat{\mathbf{v}}]$
+Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]$
 ```
 
 So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where
