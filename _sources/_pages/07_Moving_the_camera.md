@@ -62,15 +62,16 @@ if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     camera.eye += camera.right;
 ```
 
-Here we've used the classic WSAD key combination to control the movement of the camera by adding and subtracting the $\mathbf{front}$ and $\mathbf{right}$ vectors to the $\mathbf{eye}$ vector. We also need to change the $\mathbf{target}$ vector so that the camera is looking in the direction of the $\mathbf{front}$ vector. Edit the code where we calculate the view and projection matrices so that is looks like the following
+Here we've used the classic WSAD key combination to control the movement of the camera by adding and subtracting the $\mathbf{front}$ and $\mathbf{right}$ vectors to the $\mathbf{eye}$ vector.
+
+We also need to change the `target` vector which is used by the `glm::lookAt()` function in the Camera class so that the camera is pointing down the $z$-axis. In the **Camera.cpp** file, change the `calculateMatrices()` method, change the `lookAt()` function inputs to the following
 
 ```cpp
-// Calculate view and projection matrices
-camera.target = camera.eye + camera.front;
-camera.calculateMatrices();
+// Calculate the view matrix
+view = glm::lookAt(eye, eye + front, worldUp);
 ```
 
-Run your program and experiment with moving the camera. Run your program and you should see that the camera always points down the $z$-axis.
+Here we have replaced `target` with `eye + front` so that the target is always in front of the camera. Run your program and experiment with moving the camera. Run your program and you should see that the camera always points down the $z$-axis.
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -211,7 +212,12 @@ void Camera::calculateCameraVectors()
 }
 ```
 
-Here we have calculated the $\mathbf{front}$ vector from the Euler angles and the $\mathbf{right}$ and $\mathbf{up}$ vectors in the same way used for the [view matrix](view-matrix-section).
+Here we have calculated the $\mathbf{front}$ vector from the Euler angles and the $\mathbf{right}$ and $\mathbf{up}$ vectors in the same way used for the [view matrix](view-matrix-section). We need to use this method before we calculate the view matrix in the `calculateMatrices()` method so add the following code before we call the `glm::lookAt()` function
+
+```cpp
+// Calculate camera vectors
+calculateCameraVectors();
+```
 
 ### Getting the mouse input
 
@@ -234,9 +240,6 @@ void mouseInput(GLFWwindow *window)
     // Update yaw and pitch angles
     camera.yaw   += 0.0005f * float(xPos - 1024 / 2);
     camera.pitch += 0.0005f * float(768 / 2 - yPos);
-
-    // Calculate camera vectors from the yaw and pitch angles
-    camera.calculateCameraVectors();
 }
 ```
 

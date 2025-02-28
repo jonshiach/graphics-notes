@@ -4,17 +4,6 @@
 
 In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. 
 
-<!-- Lighting models come in two main types: local illumination and global illumination:
-
-- **local illumination** -- the colour and brightness of individual points on a surface are determined by the light emanating from one or more light sources.
-- **global illumination** -- the colour and brightness of individual points on a surface are determine both by the light emanating from light sources **in addition to** light that is reflected off of other objects in the scene.
-
-```{figure} ../_images/08_local_global_illumination.svg
-:width: 500
-```
-
-Here we will be applying a local illumination model since they are easier to apply than global illumination and quicker to compute. The downside is that they don't produce a rendering as realistic as with global illumination. -->
-
 Compile and run the **Lab08_Lighting** project, and you will see the window below showing a wire frame representation of the Utah teapot.
 
 ```{figure} ../_images/08_teapot_wireframe.png
@@ -244,7 +233,7 @@ $$MV = View \cdot Model,$$
 and pass this, along with the view matrix for transforming the light source position to the view space, to the vertex shader using uniforms. Add the following code after the $MV\!P$ matrix is sent to the shader.
 
 ```cpp
-// Send MV and view matrices to the vertex shader
+// Send MV matrix to the vertex shader
 glm::mat4 MV = camera.view * model;
 glUniformMatrix4fv(glGetUniformLocation(shaderID, "MV"), 1, GL_FALSE, &MV[0][0]);
 ```
@@ -1159,31 +1148,3 @@ We can see that the teapots have been illuminated from a directional light sourc
     <source src="../_static/08_lights_on_off.mp4" type="video/mp4">
 </video>
 </center>
-
----
-
-(blender-section)=
-## Creating an .obj file in Blender
-
-To create an .obj file we can use the popular open source application <a href="https://www.blender.org" target="_blank">Blender</a> (this is installed on the machines in the Dalton building).
-
-1. Create your object in blender and sort out the material textures, UV coordinates etc. (lots of tutorials on youtube to help you with this). Or you can import a model produced by someone else (be sure to give credit if doing this).
-   
-2. Click on **File > Export > Wavefront (.obj)**
-
-```{figure} ../_images/08_blender_export_obj_1.png
-:width: 600
-```
-
-3. Make sure **Include Normals**, **Include UVs** and **Triangular Faces** are selected.
-
-
-```{figure} ../_images/08_blender_export_obj_2.png
-:width: 600
-```
-
-4. Navigate to your chosen folder e.g., `Lab10_Lighting/objects/`, and give it an appropriate name.
-
-```{note}
-The Model class that we are using here is very simple and will only work with simple models. 
-```

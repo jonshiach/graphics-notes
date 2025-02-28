@@ -112,14 +112,13 @@ We need a way of passing the `translate` matrix to the shader. We do this using 
 ```cpp
 // Send the transformation matrix to the shader
 glm::mat4 transformation = translate;
-unsigned int transformationID;
-transformationID = glGetUniformLocation(shaderID, "transformation");
+unsigned int transformationID = glGetUniformLocation(shaderID, "transformation");
 glUniformMatrix4fv(transformationID, 1, GL_FALSE, &transformation[0][0]);
 ```
 
-Here we have created another matrix called `transformation` and copied the `translate` matrix into it (we have done this because we will be combining different transformations into a single matrix later). Then after getting the location of the `transformation` uniform using the `glGetUniformatLocation()` function we send a reference to the first element of the `transformation` matrix to the shaders using `glUniformMatrix4fv()` function.
+Here we have created another matrix called `transformation` and copied the `translate` matrix into it (we have done this because we will be combining different transformations into a single matrix later). Then after getting the location of the `transformation` uniform using the `glGetUniformatLocation()` function we send a reference to the first element of the transformation matrix to the shaders using `glUniformMatrix4fv()` function.
 
-All we now have to do is modify the vertex shader to use the `transformation` matrix.
+All we now have to do is modify the vertex shader to use our new transformation matrix.
 
 ```cpp
 #version 330 core
@@ -144,7 +143,7 @@ void main()
 }
 ```
 
-The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous coordinates of the vertex position by this matrix. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in {numref}`translate-rectangle-figure`.
+The changes we have made here is to specify that we are passing the transformation matrix via a uniform and we multiply the homogeneous coordinates of the vertex position by the transformation matrix to give `gl_Position`. Compile and run the program and you should see that our rectangle has been translated to the right and up a bit as shown in {numref}`translate-rectangle-figure`.
 
 ```{figure} ../_images/05_translation.png
 :width: 500

@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -172,7 +173,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">Creating an .obj File in Blender</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
 </ul>
 
@@ -401,7 +403,7 @@ document.write(`
 <p>In the <a class="reference internal" href="05_transformations.html#transformations-section"><span class="std std-ref">previous lab</span></a> we looked at the transformations can be applied to the vertex coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
 <section id="d-models">
 <h2><span class="section-number">6.1. </span>3D models<a class="headerlink" href="#d-models" title="Permalink to this heading">#</a></h2>
-<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 6.1</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our base shape a cube consists of 12 triangles (6 sides each made out of 2 triangles).</p>
+<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 6.1</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).</p>
 <figure class="align-default" id="unit-cube-figure">
 <a class="reference internal image-reference" href="../_images/06_Unit_cube.svg"><img alt="../_images/06_Unit_cube.svg" src="../_images/06_Unit_cube.svg" width="500" /></a>
 <figcaption>

@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -172,7 +173,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">Creating an .obj File in Blender</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
 </ul>
 
@@ -441,13 +443,13 @@ document.write(`
 <span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">right</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Here we’ve used the classic WSAD key combination to control the movement of the camera by adding and subtracting the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> vectors to the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector. We also need to change the <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> vector so that the camera is looking in the direction of the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector. Edit the code where we calculate the view and projection matrices so that is looks like the following</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate view and projection matrices</span>
-<span class="n">camera</span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">eye</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">front</span><span class="p">;</span>
-<span class="n">camera</span><span class="p">.</span><span class="n">calculateMatrices</span><span class="p">();</span>
+<p>Here we’ve used the classic WSAD key combination to control the movement of the camera by adding and subtracting the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> vectors to the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector.</p>
+<p>We also need to change the <code class="docutils literal notranslate"><span class="pre">target</span></code> vector which is used by the <code class="docutils literal notranslate"><span class="pre">glm::lookAt()</span></code> function in the Camera class so that the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. In the <strong>Camera.cpp</strong> file, change the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> method, change the <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> function inputs to the following</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the view matrix</span>
+<span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">lookAt</span><span class="p">(</span><span class="n">eye</span><span class="p">,</span><span class="w"> </span><span class="n">eye</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">front</span><span class="p">,</span><span class="w"> </span><span class="n">worldUp</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Run your program and experiment with moving the camera. Run your program and you should see that the camera always points down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p>
+<p>Here we have replaced <code class="docutils literal notranslate"><span class="pre">target</span></code> with <code class="docutils literal notranslate"><span class="pre">eye</span> <span class="pre">+</span> <span class="pre">front</span></code> so that the target is always in front of the camera. Run your program and experiment with moving the camera. Run your program and you should see that the camera always points down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/07_keyboard_2.mp4" type="video/mp4">
@@ -562,7 +564,11 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we have calculated the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector from the Euler angles and the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> vectors in the same way used for the <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">view matrix</span></a>.</p>
+<p>Here we have calculated the <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector from the Euler angles and the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> vectors in the same way used for the <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">view matrix</span></a>. We need to use this method before we calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> method so add the following code before we call the <code class="docutils literal notranslate"><span class="pre">glm::lookAt()</span></code> function</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate camera vectors</span>
+<span class="n">calculateCameraVectors</span><span class="p">();</span>
+</pre></div>
+</div>
 </section>
 <section id="getting-the-mouse-input">
 <h3><span class="section-number">7.3.2. </span>Getting the mouse input<a class="headerlink" href="#getting-the-mouse-input" title="Permalink to this heading">#</a></h3>
@@ -581,9 +587,6 @@ document.write(`
 <span class="w">    </span><span class="c1">// Update yaw and pitch angles</span>
 <span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">yaw</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.0005f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">xPos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
 <span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">pitch</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.0005f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="mi">768</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yPos</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Calculate camera vectors from the yaw and pitch angles</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">calculateCameraVectors</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>

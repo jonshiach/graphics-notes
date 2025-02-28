@@ -13,7 +13,7 @@ The pitch, yaw and roll Euler angles.
 
 The angles that we use to define the rotation around each of the axes are known as **Euler angles** and we use the names **pitch**, **yaw** and **roll** for the rotation around the $x$, $y$ and $z$ axes respectively. The problem with using a composite of Euler angles rotations is that for certain alignments we can experience <a href="https://en.wikipedia.org/wiki/Gimbal_lock" target="_blank">**gimbal lock**</a> where two of the rotation axes are aligned leading to a loss of a degree of freedom causing the composite rotation to be *locked* into a 2D rotation.
 
-Quaternions are a mathematical object that can be used to perform rotation operations that do not suffer from gimbal lock and require fewer floating point calculations. There is quite a lot of maths used here but in this page I've focussed only on the bits you need to know to apply quaternions. If you are interested in the derivations of the various equations see [Appendix A - Complex Numbers and Quaternions](appendix-quaternions-section).
+Quaternions are a mathematical object that can be used to perform rotation operations that do not suffer from gimbal lock and require fewer floating point calculations. There is quite a lot of maths used here but in this page I've focussed only on the bits you need to know to apply quaternions. If you are interested in the derivations of the various equations see [Appendices - Complex Numbers and Quaternions](appendix-quaternions-section).
 
 Compile and run the project and you will see that we have the scene consisting of the cubes last seen in [7. Moving the Camera](moving-the-camera-section).
 
@@ -158,10 +158,10 @@ Axis-angle rotation about the vector $\hat{\mathbf{v}}$.
 
 We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to multiplying by the rotation quaternion from equation {eq}`rotation-quaternion-equation`.
 
-If $q = [w, (x, y, z)]$ is the rotation quaternion then the rotation matrix is
+If $q = [w, (x, y, z)]$ is the rotation quaternion, then the corresponding rotation matrix is
 
 $$ \begin{align*}
-    R &= 
+    Rotate &= 
     \begin{pmatrix}
         1 - s(y^2 + z^2) & s(xy + zw) & s(xz - yw) & 0 \\
         s(xy - zw) & 1 - s(x^2 + z^2) & s(yz + xw) & 0 \\
@@ -189,12 +189,18 @@ glm::mat4 Quaternion::matrix()
     float yy = y * ys, yz = y * zs, zz = z * zs;
     float xw = w * xs, yw = w * ys, zw = w * zs;
     
-    glm::mat4 R;
-    R[0][0] = 1.0f - (yy + zz), R[0][1] = xy + zw,          R[0][2] = xz - yw;
-    R[1][0] = xy - zw,          R[1][1] = 1.0f - (xx + zz), R[1][2] = yz + xw;
-    R[2][0] = xz + yw,          R[2][1] = yz - xw,          R[2][2] = 1.0f - (xx + yy);
+    glm::mat4 rotate;
+    rotate[0][0] = 1.0f - (yy + zz);
+    rotate[0][1] = xy + zw;
+    rotate[0][2] = xz - yw;
+    rotate[1][0] = xy - zw;
+    rotate[1][1] = 1.0f - (xx + zz);
+    rotate[1][2] = yz + xw;
+    rotate[2][0] = xz + yw;
+    rotate[2][1] = yz - xw;
+    rotate[2][2] = 1.0f - (xx + yy);
     
-    return R;
+    return rotate;
 }
 ```
 
@@ -205,16 +211,16 @@ So it makes sense to use the quaternion rotation matrix for our axis-angle rotat
 ```cpp
 glm::mat4 Maths::rotate(const float &angle, glm::vec3 v)
 {
-    glm::vec3 vHat = glm::normalize(v);
-    float cs = cos(0.5f * angle);
-    float sn = sin(0.5f * angle);
-    Quaternion q(cs, sn * vHat.x, sn * vHat.y, sn * vHat.z);
+    v = glm::normalize(v);
+    float c = cos(0.5f * angle);
+    float s = sin(0.5f * angle);
+    Quaternion q(c, s * v.x, s * v.y, s * v.z);
 
     return q.matrix();
 }
 ```
 
-Here we normalise the vector which we are rotating around before calculating the rotation quaternion `q` and returning the rotation matrix.
+Here we normalise the vector which we are rotating around before calculating the rotation quaternion `q` and returning its rotation matrix.
 
 Compile and run your program and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don't have to worry about gimbal lock.
 
@@ -235,93 +241,87 @@ $$ \begin{align*}
 
 the quaternion that represents the camera orientation is
 
-$$ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r - s_ps_yc_r)]. $$(euler-to-quaternion-equation)
+$$ q = [c_yc_pc_r + s_ys_ps_r, (s_yc_ps_r - c_ys_pc_r, s_yc_pc_r + c_ys_ps_r, c_yc_ps_r - s_ys_pc_r)]. $$(euler-to-quaternion-equation)
 
-See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add a member function to convert from Euler angles to the rotation quaternion. Add the following to the `Quaternion` data structure declaration in `maths.hpp`
+See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the `Quaternion` class declaration in `maths.hpp`
 
 ```cpp
-void eulerToQuat(const float yaw, const float pitch, const float roll);
+Quaternion(const float yaw, const float pitch, const float roll);
 ```
 
-and in the **maths.cpp** define the `eulerToQuat()` method
+and in the **maths.cpp** define the constructor
 
 ```cpp
-void Quaternion::eulerToQuat(const float yaw, const float pitch, const float roll)
+Quaternion::Quaternion(const float yaw, const float pitch, const float roll)
 {
-    float halfYaw = 0.5f * yaw, halfPitch = 0.5f * pitch, halfRoll = 0.5f * roll;
-    float cp = cos(halfPitch), sp = sin(halfPitch);
-    float cy = cos(halfYaw),   sy = sin(halfYaw);
-    float cr = cos(halfRoll),  sr = sin(halfRoll);
-    
-    Quaternion q;
-    w = cp * cy * cr - sp * sy * sr;
-    x = sp * cy * cr + cp * sy * sr;
-    y = cp * sy + cr - sp * cy * sr;
-    z = cp * cy * sr - sp * sy * cr;
+    float cp = cos(0.5f * pitch);
+    float sp = sin(0.5f * pitch);
+    float cy = cos(0.5f * yaw);
+    float sy = sin(0.5f * yaw);
+    float cr = cos(0.5f * roll);
+    float sr = sin(0.5f * roll);
+
+    this->w = cy * cp * cr + sy * sp * sr;
+    this->x = sy * cp * sr - cy * sp * cr;
+    this->y = sy * cp * cr + cy * sp * sr;
+    this->z = cy * cp * sr - sy * sp * cr;
 }
 ```
 
-We can now calculate the quaternion for the orientation given by the pitch, yaw and roll Euler angles using `q.eulerToQuat()`.
-
-We currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below and you will notice the orientation suddenly flipping around). So it would be advantageous to use quaternion rotations to calculate the view matrix.
+We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around). So it would be advantageous to use quaternion rotations to calculate the view matrix.
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Camera_without_quaternion.mp4" type="video/mp4">
+    <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
 
-First we need to add an attribute to the Camera class for the quaternion that describes the direction which the camera is looking. In `camera.hpp` add the following code.
+To implement a quaternion camera we first use the Euler angle to quaternion constructor to create a quaternion that represents the current orientation of the camera. At the start of the `calculateMatrices()` Camera class method add the following code
 
 ```cpp
-// Direction quaternion
-Quaternion direction;
+// Calculate direction quaternion from the Euler angles
+Quaternion orientation(yaw, pitch, roll);
 ```
 
-Then in the `camera.cpp` file, comment out the lines where we update the camera vectors and the line where we call the `glm::lookAt()` function and add the following code.
+Then, comment out the code used to calculate the view matrix using the `glm::lookAt()` function and add the following code
 
 ```cpp
-// Calculate direction quaternion
-direction.eulerToQuat(pitch, yaw, roll);
-    
-// Calculate view matrix
-view = direction.quatToMat() * Maths::translate(glm::mat4(1.0f), -position);
+// Calculate the view matrix using the direction quaternion
+view = orientation.matrix() * Maths::translate(-eye);
 ```
 
-Here we calculate the translation matrix to move the camera to (0,0,0) and then multiply it by the quaternion rotation matrix. Of course we need the $\tt right$, $\tt up$ and $\tt front$ camera vectors to move the camera, these can be easily obtained from the first three rows and columns of the `view` matrix. Add the following code after you have calculated the `view` matrix.
+Here we have translated the camera by $-\mathbf{eye}$ so that it is at $(0, 0, 0)$ and used the orientation quaternion matrix to rotate, so the camera is looking down the $z$-axis. We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
+
+$$ \view = \begin{pmatrix}
+        \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
+        \mathbf{right}_y & \mathbf{up}_y & -\mathbf{front}_y & 0 \\
+        \mathbf{right}_z & \mathbf{up}_z & -\mathbf{front}_z & 0 \\
+        -\mathbf{eye} \cdot \mathbf{right} & -\mathbf{eye} \cdot \mathbf{up} & \mathbf{eye} \cdot \mathbf{front} & 1 \\
+    \end{pmatrix} $$
+
+So we can just extract $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ from the view matrix. Comment out the code in the `calcaulateCameraVectors()` method and add the following
 
 ```cpp
-// Update camera vectors
-right.x =  view[0][0], right.y =  view[1][0], right.z  =  view[2][0];
-up.x    =  view[0][1], up.y    =  view[1][1], up.z     =  view[2][1];
-front.x = -view[0][2], front.y = -view[1][2], front.z  = -view[2][2];
+right =  glm::vec3(view[0][0], view[1][0], view[2][0]);
+up    =  glm::vec3(view[0][1], view[1][1], view[2][1]);
+front = -glm::vec3(view[0][2], view[1][2], view[2][2]);
+```
+
+The last thing we need to do is change the initial $yaw$ angle from $-90^\circ$ to $0^\circ$. In the **camera.hpp** change the $yaw$ angle declaration to the following
+
+```cpp
+float yaw   = 0.0f;
 ```
 
 Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90$^\circ$ or 270$^\circ$ without the orientation flipping around.
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Camera_with_quaternion.mp4" type="video/mp4">
+    <source src="../_static/10_Camera_with_quaternion.mp4" type="video/mp4">
 </video>
 </center>
 
-We are only using pitch and yaw Euler angles for our camera, lets add the ability to roll that camera as well (like a flight simulator). Where we get the keyboard input to move the camera add the following code.
-
-```cpp
-if (glfwGetKey(window, GLFW_KEY_Q))
-  roll -= 0.5f * deltaTime * speed;
-
-if (glfwGetKey(window, GLFW_KEY_E))
-  roll += 0.5f * deltaTime * speed;
-```
-
-You probably are able to work out that pressing the Q and E keys decreases or increases the roll angle respectively. Run the code and you will now be able to roll the camera!
-
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Camera_roll.mp4" type="video/mp4">
-</video>
-</center>
+--- 
 
 ## Third person camera
 
