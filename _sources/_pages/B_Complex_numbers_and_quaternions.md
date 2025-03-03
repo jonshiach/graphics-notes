@@ -100,7 +100,7 @@ So multiplying a complex number by $i$ rotates it by 90$^\circ$ anti-clockwise a
 
 Given a complex number $r = x + yi$ on the complex plane which has an absolute value of $|r|=1$, if $\theta$ is the angle between the real axis and the vector pointing from the origin to $r$, then the length of an adjacent side is $\cos(\theta)$ and the length of the opposite side is $\sin(\theta)$.
 
-```{figure} ../_images/A_Unit_complex_number.svg
+```{figure} ../_images/B_Unit_complex_number.svg
 :width: 250
 ```
 
@@ -310,7 +310,7 @@ $$ \begin{align*}
 
 which is the same as the absolute value of $[0, (2, 0, 0)]$. This rotation is shown in shown in {numref}`quaternion-rotation-1-figure`.
 
-```{figure} ../_images/A_Quaternion_rotation_1.svg
+```{figure} ../_images/B_Quaternion_rotation_1.svg
 :width: 450
 :name: quaternion-rotation-1-figure
 
@@ -347,7 +347,7 @@ $$ |qpq^*| = \sqrt{1^2 + (1.414)^2 + 1^2} = \sqrt{4} = 2,$$
 which is the same as $|p|$. However, by calculating $qpq^*$ we have rotated the vector $\mathbf{p}$ by $90^\circ$ since we have applied two rotations of $45^\circ$ ({numref}`quaternion-rotation-2-figure`).
 
 
-```{figure} ../_images/A_Quaternion_rotation_2.svg
+```{figure} ../_images/B_Quaternion_rotation_2.svg
 :width: 450
 :name: quaternion-rotation-2-figure
 
@@ -371,7 +371,7 @@ $$ \begin{align*}
 
 The effect of this rotation is shown in {numref}`quaternion-rotation-3-figure`.
 
-```{figure} ../_images/A_Quaternion_rotation_3.svg
+```{figure} ../_images/B_Quaternion_rotation_3.svg
 :width: 450
 :name: quaternion-rotation-3-figure
 

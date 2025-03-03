@@ -15,7 +15,7 @@ To demonstrate building a simple 3D world we are going to need a 3D object. One 
 A unit cube centred at $(0,0,0)$ with side lengths of 2.
 ```
 
-Open the **Lab06_3D_Worlds.cpp** file in the **Lab06_3D_Worlds** project, and you will see that the `vertices`, `uv` and `indices` arrays have been defined for our unit object.
+Open the **Lab06_3D_Worlds.cpp** file in the **Lab06_3D_Worlds** project, and you will see that the `vertices`, `uv` and `indices` arrays have been defined for our unit cube object.
 
 ```cpp
 // Define cube object
@@ -68,7 +68,7 @@ unsigned int indices[] = {
 };
 ```
 
-If you compile and run this program you will see that the crate texture fills the window (since the coordinates of the cube vertices are $-1$ and $1$).
+If you compile and run this program you will see that the crate texture fills the window. This is because the coordinates of the cube vertices are $-1$ and $1$.
 
 ```{figure} ../_images/06_3D_worlds.png
 :width: 500
@@ -81,7 +81,7 @@ A unit object.
 
 ## Coordinate systems
 
-OpenGL uses a coordinate system with the $x$ axis pointing horizontally to the right, the $y$ axis pointing vertically upwards and the $z$ axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
+OpenGL uses a coordinate system with the $x$-axis pointing horizontally to the right, the $y$-axis pointing vertically upwards and the $z$-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
 
 ```{figure} ../_images/06_NDC.svg
 :width: 600
@@ -815,7 +815,7 @@ Run your program and you should see the following.
 </video>
 </center>
 
-5. Creat a $10 \times 10$ grid of cubes in the world space. 
+5. Create a $10 \times 10$ grid of cubes in the world space.
 
 ```{figure} ../_images/06_Ex5.png
 :width: 500

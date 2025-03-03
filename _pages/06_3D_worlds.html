@@ -410,7 +410,7 @@ document.write(`
 <p><span class="caption-number">Fig. 6.1 </span><span class="caption-text">A unit cube centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> with side lengths of 2.</span><a class="headerlink" href="#unit-cube-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Open the <strong>Lab06_3D_Worlds.cpp</strong> file in the <strong>Lab06_3D_Worlds</strong> project, and you will see that the <code class="docutils literal notranslate"><span class="pre">vertices</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays have been defined for our unit object.</p>
+<p>Open the <strong>Lab06_3D_Worlds.cpp</strong> file in the <strong>Lab06_3D_Worlds</strong> project, and you will see that the <code class="docutils literal notranslate"><span class="pre">vertices</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays have been defined for our unit cube object.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube object</span>
 <span class="c1">// Define vertices</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -461,7 +461,7 @@ document.write(`
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>If you compile and run this program you will see that the crate texture fills the window (since the coordinates of the cube vertices are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>).</p>
+<p>If you compile and run this program you will see that the crate texture fills the window. This is because the coordinates of the cube vertices are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>.</p>
 <figure class="align-default" id="cube-figure">
 <a class="reference internal image-reference" href="../_images/06_3D_worlds.png"><img alt="../_images/06_3D_worlds.png" src="../_images/06_3D_worlds.png" style="width: 500px;" /></a>
 <figcaption>
@@ -472,7 +472,7 @@ document.write(`
 <hr class="docutils" />
 <section id="coordinate-systems">
 <h2><span class="section-number">6.2. </span>Coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this heading">#</a></h2>
-<p>OpenGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span> axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span> axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span> axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span>, so any object outside this range will not be shown on the display. These are known as <strong>Normalised Device Coordinates (NDC)</strong>.</p>
+<p>OpenGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span>-axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span>-axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span>, so any object outside this range will not be shown on the display. These are known as <strong>Normalised Device Coordinates (NDC)</strong>.</p>
 <figure class="align-default" id="ndc-figure">
 <a class="reference internal image-reference" href="../_images/06_NDC.svg"><img alt="../_images/06_NDC.svg" src="../_images/06_NDC.svg" width="600" /></a>
 <figcaption>
@@ -1124,7 +1124,7 @@ Derivation of the perspective projection matrix<div class="sd-summary-down docut
 </video>
 </center>
 <ol class="arabic simple" start="5">
-<li><p>Creat a <span class="math notranslate nohighlight">\(10 \times 10\)</span> grid of cubes in the world space.</p></li>
+<li><p>Create a <span class="math notranslate nohighlight">\(10 \times 10\)</span> grid of cubes in the world space.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/06_Ex5.png"><img alt="../_images/06_Ex5.png" src="../_images/06_Ex5.png" style="width: 500px;" /></a>
