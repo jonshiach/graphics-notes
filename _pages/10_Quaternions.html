@@ -609,14 +609,14 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="06_3D_worlds.html#camera-class-section"><span class="std std-ref">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
+<p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="06_3D_worlds.html#camera-class-section"><span class="std std-ref">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around – see video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
 <p>To implement a quaternion camera we first use the Euler angle to quaternion constructor to create a quaternion that represents the current orientation of the camera. At the start of the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class method add the following code</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate direction quaternion from the Euler angles</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
 <span class="n">Quaternion</span><span class="w"> </span><span class="nf">orientation</span><span class="p">(</span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -625,7 +625,7 @@ document.write(`
 <span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orientation</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">eye</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Here we have translated the camera by <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that it is at <span class="math notranslate nohighlight">\((0, 0, 0)\)</span> and used the orientation quaternion matrix to rotate, so the camera is looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis. We also need to calculate the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <a class="reference internal" href="06_3D_worlds.html#equation-lookat-matrix-equation">(6.1)</a> is</p>
+<p>Here we have translated the camera by <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that it is at <span class="math notranslate nohighlight">\((0, 0, 0)\)</span> and used the orientation quaternion matrix to rotate the world space so the camera is looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis. We also need to calculate the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <a class="reference internal" href="06_3D_worlds.html#equation-lookat-matrix-equation">(6.1)</a> is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \view = \begin{pmatrix}
         \mathbf{right}_x &amp; \mathbf{up}_x &amp; -\mathbf{front}_x &amp; 0 \\
@@ -655,7 +655,7 @@ document.write(`
 <section id="third-person-camera">
 <h2><span class="section-number">10.3. </span>Third person camera<a class="headerlink" href="#third-person-camera" title="Permalink to this heading">#</a></h2>
 <p>The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game <em>Tomb Raider</em> released by Core Design in 1996 and has become popular with game developers with game franchises such as <em>God of War</em>, <em>Horizon Zero Dawn</em>, <em>Assassins Creed</em> and <em>Red Dead Redemption</em> to name a few all using third person camera view.</p>
-<p>To implement a simple third person camera we are going to calculate the <code class="docutils literal notranslate"><span class="pre">view</span></code> matrix as usual and then move the camera back by an <span class="math notranslate nohighlight">\(\tt offset\)</span> vector which is a vector pointing from the actual camera position to the third person camera position <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 10.6</span></a>.</p>
+<p>To implement a simple third person camera we are going to calculate the view matrix as usual and then move the camera back by an <span class="math notranslate nohighlight">\(\tt offset\)</span> vector which is a vector pointing from the actual camera position to the third person camera position <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 10.6</span></a>.</p>
 <figure class="align-default" id="third-person-camera-figure">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" width="400" /></a>
 <figcaption>
@@ -663,11 +663,10 @@ document.write(`
 </figcaption>
 </figure>
 <p>For our third person camera, the direction that the character is facing will be controlled by keyboard inputs where the W and S keys move the character forward and backwards and the A and D keys rotate it to the left and right. In <code class="docutils literal notranslate"><span class="pre">camera.hpp</span></code> add the following attributes to the Camera class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Third person camera</span>
-<span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;first&quot;</span><span class="p">;</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">charYaw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="n">charDirection</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">charYaw</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+<span class="n">Quaternion</span><span class="w"> </span><span class="n">charOrientiation</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>These attributes are:</p>
@@ -675,7 +674,7 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">offset</span></code> - the vector pointing from the character position to the third person camera</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code> - a string to record whether the camera is in first or third person mode</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">charYaw</span></code> - the yaw angle for the character</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">charDirection</span></code> - a quaternion for the direction which the character is facing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">charOrientation</span></code> - a quaternion for the character orientation</p></li>
 </ul>
 <p>Also in <code class="docutils literal notranslate"><span class="pre">camera.hpp</span></code> add a declaration for the third person camera method</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">thirdPersonCamera</span><span class="p">(</span><span class="n">GLFWwindow</span><span class="o">*</span> <span class="n">window</span><span class="p">,</span> <span class="n">const</span> <span class="nb">float</span> <span class="n">deltaTime</span><span class="p">);</span>

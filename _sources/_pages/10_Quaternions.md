@@ -268,7 +268,7 @@ Quaternion::Quaternion(const float yaw, const float pitch, const float roll)
 }
 ```
 
-We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around). So it would be advantageous to use quaternion rotations to calculate the view matrix.
+We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around -- see video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -279,7 +279,7 @@ We are currently using Euler angles rotation to calculate the view matrix in the
 To implement a quaternion camera we first use the Euler angle to quaternion constructor to create a quaternion that represents the current orientation of the camera. At the start of the `calculateMatrices()` Camera class method add the following code
 
 ```cpp
-// Calculate direction quaternion from the Euler angles
+// Calculate camera orientation quaternion from the Euler angles
 Quaternion orientation(yaw, pitch, roll);
 ```
 
@@ -290,7 +290,7 @@ Then, comment out the code used to calculate the view matrix using the `glm::loo
 view = orientation.matrix() * Maths::translate(-eye);
 ```
 
-Here we have translated the camera by $-\mathbf{eye}$ so that it is at $(0, 0, 0)$ and used the orientation quaternion matrix to rotate, so the camera is looking down the $z$-axis. We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
+Here we have translated the camera by $-\mathbf{eye}$ so that it is at $(0, 0, 0)$ and used the orientation quaternion matrix to rotate the world space so the camera is looking down the $z$-axis. We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
 
 $$ \view = \begin{pmatrix}
         \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
@@ -327,7 +327,7 @@ Compile and run the code and you will see that you can move the camera in any or
 
 The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *Horizon Zero Dawn*, *Assassins Creed* and *Red Dead Redemption* to name a few all using third person camera view.
 
-To implement a simple third person camera we are going to calculate the `view` matrix as usual and then move the camera back by an $\tt offset$ vector which is a vector pointing from the actual camera position to the third person camera position {numref}`third-person-camera-figure`. 
+To implement a simple third person camera we are going to calculate the view matrix as usual and then move the camera back by an $\tt offset$ vector which is a vector pointing from the actual camera position to the third person camera position {numref}`third-person-camera-figure`. 
 
 ```{figure} ../_images/10_Third_person_camera.svg
 :width: 400
@@ -339,11 +339,10 @@ A third person camera.
 For our third person camera, the direction that the character is facing will be controlled by keyboard inputs where the W and S keys move the character forward and backwards and the A and D keys rotate it to the left and right. In `camera.hpp` add the following attributes to the Camera class.
 
 ```cpp
-// Third person camera
 glm::vec3 offset = glm::vec3(0.0f, 0.5f, 2.0f);
 std::string mode = "first";
-float charYaw = 0.0f;
-Quaternion charDirection;
+float charYaw    = 0.0f;
+Quaternion charOrientiation;
 ```
 
 These attributes are:
@@ -351,7 +350,7 @@ These attributes are:
 - `offset` - the vector pointing from the character position to the third person camera
 - `mode` - a string to record whether the camera is in first or third person mode
 - `charYaw` - the yaw angle for the character
-- `charDirection` - a quaternion for the direction which the character is facing
+- `charOrientation` - a quaternion for the character orientation
 
 Also in `camera.hpp` add a declaration for the third person camera method
 
