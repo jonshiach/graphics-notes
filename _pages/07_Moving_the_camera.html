@@ -657,6 +657,16 @@ document.write(`
 <ol class="arabic simple">
 <li><p>Make it so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> co-ordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.</p></li>
 <li><p>Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function <span class="math notranslate nohighlight">\(y = h \sin(\pi t)\)</span> produces values of <span class="math notranslate nohighlight">\(y=0\)</span> when <span class="math notranslate nohighlight">\(t = 0\)</span> or <span class="math notranslate nohighlight">\(t = 1\)</span> and <span class="math notranslate nohighlight">\(y = h\)</span> when <span class="math notranslate nohighlight">\(t = 0.5\)</span>.</p></li>
+<li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
+<ul class="simple">
+<li><p>Loop through all the cubes</p>
+<ul>
+<li><p>Calculate the distance between the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector and the centre of the current cube</p></li>
+<li><p>If this distance is less than 1, move the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> away from the centre of the current cube so that the distance is now 1</p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 </section>
 <hr class="docutils" />
