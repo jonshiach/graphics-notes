@@ -327,7 +327,7 @@ Compile and run your program and use the keyboard and mouse to put the camera in
 
 ## Exercises
 
-1. Change the `calculateMatrices()` Camera class method so that the camera position always has a $y$ co-ordinate of 0, i.e., like a first person shooter game where the player cannot fly around the world.
+1. Make it so that the camera position always has a $y$ co-ordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
 2. Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function $y = h \sin(\pi t)$ produces values of $y=0$ when $t = 0$ or $t = 1$ and $y = h$ when $t = 0.5$.
 
 ---

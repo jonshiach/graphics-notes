@@ -2,7 +2,7 @@
 
 # Complex Numbers and Quaternions
 
-In [10. Quaternions](quaternions-section) we explored how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here. 
+In [10. Quaternions](quaternions-section) we explored how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.
 
 ## Complex numbers
 
@@ -41,10 +41,6 @@ Complex numbers can be represented using a 2D graph called a **complex plane** (
 The absolute value of a complex number $z = x + yi$ is denoted by $|z|$ and is the distance of the complex number from the origin of the complex plane. It is calculated using Pythagoras' theorem
 
 $$ |z| = \sqrt{x^2 + x^2}. $$
-
-For example, given the complex number $z = 1 + 2i$ then the absolute value is
-
-$$ |z| = \sqrt{1^2 + 2^2} = \sqrt{5} \approx 2.236. $$
 
 ### Complex conjugate
 
@@ -112,7 +108,7 @@ Multiplying a complex number by $r$ rotates it by $\theta$ anti-clockwise in the
 
 ---
 
-## A.2 Quaternions
+## Quaternions
 
 The general form of a **quaternion** is
 
@@ -122,7 +118,7 @@ where $w$, $x$, $y$ and $z$ are real numbers and $i$, $j$ and $k$ are imaginary 
 
 $$ i^2 = j^2 = k^2 = ijk = -1. $$
 
-For example, $q = 1 + 2i + 3j + 4k$ is a quaternion. Lets examine the relationships between $i$, $j$ and $k$. Since $ijk = -1$ then
+Let's examine the relationships between $i$, $j$ and $k$. Since $ijk = -1$ then
 
 $$ \begin{align*}
     ij &= -\frac{1}{k} = -k^{-1} = -\left( \frac{k^*}{|k|^2} \right) = k,
@@ -135,7 +131,7 @@ $$ \begin{align*}
     ji &= -k, & kj &= -i, & ik &= -j.
 \end{align*} $$
 
-Consider the [cross products](cross-product-section) between the three unit vectors pointing in the $x$, $y$ and $z$ directions $\mathbf{i}$, $\mathbf{j}$ and $\mathbf{k}$ 
+Consider the [cross products](cross-product-section) between the three unit vectors pointing in the $x$, $y$ and $z$ directions $\mathbf{i}$, $\mathbf{j}$ and $\mathbf{k}$
 
 $$ \begin{align*}
     \mathbf{i} \times \mathbf{j} &= \mathbf{k}, &
@@ -146,9 +142,30 @@ $$ \begin{align*}
     \mathbf{i} \times \mathbf{k} &= -\mathbf{j}.
 \end{align*} $$
 
+:::::{grid}
+
+::::{grid-item}
+```{figure} ../_images/B_Cross_product_1.svg
+:width: 200
+```
+::::
+
+::::{grid-item}
+```{figure} ../_images/B_Cross_product_2.svg
+:width: 200
+```
+::::
+
+::::{grid-item}
+```{figure} ../_images/B_Cross_product_3.svg
+:width: 200
+```
+::::
+:::::
+
 So the three imaginary numbers $i$, $j$ and $k$ can be used to represent the three unit vectors pointing in the $x$, $y$ and $z$ directions and multiplying the imaginary numbers is equivalent to the cross product.
 
-### A.2.1 Scalar-vector form of a quaternion
+### Scalar-vector form of a quaternion
 
 Quaternions can be expressed more conveniently as an ordered-pair consisting of the real part $w$ and a vector of the imaginary parts
 
@@ -158,29 +175,21 @@ where $\mathbf{v} = x\mathbf{i} + y \mathbf{j} + z \mathbf{k}$. For example, the
 
 $$q = [1, (2, 3, 4)].$$
 
-### A.2.2 Absolute value of a quaternion
+### Absolute value of a quaternion
 
 The absolute value of a quaternion $q = [w, (x, y, z)]$ is denoted by $|q|$ and calculated using
 
 $$ |q| = \sqrt{w^2 + x^2 + y^2 + z^2}.$$
 
-### A.2.3 Unit quaternion
+### Unit quaternion
 
 A **unit quaternion**, denoted by $\hat{q}$, is a quaternion that has an absolute value of 1. We can **normalise** a quaternion by dividing by its absolute value to give a unit quaternion
 
 $$ \hat{q} = \frac{q}{|q|}. $$
 
-Proving that $|\hat{q}| = 1$ 
+Proving that $|\hat{q}| = 1$
 
-$$ \begin{align*}
-    \hat{q} &= \frac{q}{|q|} 
-    = \frac{[w, \mathbf{v}]}{|q|} 
-    = \left[ \frac{w}{|q|}, \frac{\mathbf{v}}{|q|} \right], \\
-    \therefore |\hat{q}| &= \frac{w^2}{|q|^2} + \frac{x^2}{|q|^2} + \frac{y^2}{|q|^2} + \frac{z^2}{|q|^2}
-    = \frac{|q|^2}{|q|^2} = 1.
-\end{align*} $$
-
-### A.2.4 Pure and real quaternions
+### Pure and real quaternions
 
 A **pure quaternion** is a quaternion where the real part has a value of zero, i.e.,
 
@@ -194,17 +203,17 @@ $$ q = [w, \mathbf{0}]. $$
 
 A real quaternion is equivalent to a real number.
 
-### A.2.7 Quaternion dot product
+### Quaternion dot product
 
 The dot product between two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ is denoted by $q_1 \cdot q_2$ and is calculated using
 
 $$ q_1 \cdot q_2 = w_1w_2 + x_1x_2 + y_1y_2 + z_1z_2,$$(quaternion-dot-product-equation)
 
-and the angle $\theta$ between $q_1$ and $q_2$ is 
+and the angle $\theta$ between $q_1$ and $q_2$ is
 
 $$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).$$(quaternion-angle-difference-equation)
 
-### A.2.8 Multiplying quaternions
+### Multiplying quaternions
 
 Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then
 
@@ -219,9 +228,9 @@ $$ \begin{align*}
 Substituting in the pure quaternions $[0,\mathbf{i}]$, $[0,\mathbf{j}]$ and $[0,\mathbf{k}]$ as well as the real quaternion $[1,\mathbf{0}]$ then
 
 $$ \begin{align*}
-    q_1q_2 &= (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1)[0,\mathbf{i}] \\
-    & \qquad + (w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1)[0,\mathbf{j}] \\
-    & \qquad + (w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1)[0,\mathbf{k}] \\
+    q_1q_2 &= (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1) [0,\mathbf{i}] \\
+    & \qquad + (w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1) [0,\mathbf{j}] \\
+    & \qquad + (w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1) [0,\mathbf{k}] \\
     & \qquad + (-x_1x_2 - y_1y_2 - z_1z_2 + w_1w_2) [1,\mathbf{0}] \\
     &=  [0, (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1) \mathbf{i}] \\
     & \qquad + [0,(w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1) \mathbf{j}] \\
@@ -245,15 +254,15 @@ $$ \begin{align*}
     q_1q_2 &= [w_1w_2 - \mathbf{v}_1\cdot \mathbf{v}_2, w_1 \mathbf{v}_2 + w_2 \mathbf{v}_1 + \mathbf{v}_1 \times \mathbf{v}_2].
 \end{align*} $$(quaternion-product-equation)
 
-Equation {eq}`quaternion-product-equation) is the equation for the multiplication of two quaternions $q_1 = [w_1, \mathbf{v}_1]$ and $q_2 = [w_2, \mathbf{v}_2]$.
+Equation {eq}`quaternion-product-equation` is the equation for the multiplication of two quaternions $q_1 = [w_1, \mathbf{v}_1]$ and $q_2 = [w_2, \mathbf{v}_2]$.
 
-### A.2.9 Quaternion conjugate
+### Quaternion conjugate
 
 The **conjugate** of a quaternion $q$, denoted by $q^*$, is found by negating the vector part. For example, given the quaternion $q = [\mathbf{v}, w]$ then
 
 $$ q^* = [w, -\mathbf{v}].$$
 
-### A.2.10 Quaternion inverse
+### Quaternion inverse
 
 The inverse of a quaternion $q$, denoted by $q^{-1}$, is defined by
 
@@ -273,7 +282,7 @@ $$ q^{-1} = q^*. $$
 
 (appendix-quaternion-rotation-section)=
 
-## A.3 Quaternion rotation
+## Quaternion rotation
 
 In [5. Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\mathbf{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
 
@@ -329,11 +338,7 @@ $$ \begin{align*}
     qp &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
 \end{align*} $$
 
-Now we no longer have a pure quaternion since the scalar part is $-1.414$ which is non-zero and the absolute value of $qp$ is
-
-$$ |qp| = \sqrt{(-1.414)^2 + 1.414^2 + 1.414^2 + 0^2} = 2.45.$$
-
-So in rotating using the quaternion $q$ we have scaled up the vector. However, if we multiply $qp$ by the quaternion conjugate $q^*$ on the right we have
+Now we no longer have a pure quaternion since the scalar part is $-1.414$ which is non-zero. However, if we multiply $qp$ by the quaternion conjugate $q^*$ on the right we have
 
 $$ \begin{align*}
     qpq^* &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
@@ -344,8 +349,7 @@ So $qpq^*$ is a pure quaternion and its absolute value is
 
 $$ |qpq^*| = \sqrt{1^2 + (1.414)^2 + 1^2} = \sqrt{4} = 2,$$
 
-which is the same as $|p|$. However, by calculating $qpq^*$ we have rotated the vector $\mathbf{p}$ by $90^\circ$ since we have applied two rotations of $45^\circ$ ({numref}`quaternion-rotation-2-figure`).
-
+which is the same as $|p|$.
 
 ```{figure} ../_images/B_Quaternion_rotation_2.svg
 :width: 450
@@ -354,11 +358,11 @@ which is the same as $|p|$. However, by calculating $qpq^*$ we have rotated the 
 Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]$
 ```
 
-So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where
+Plotting $p$ and $qpq^*$ we see that we have rotated by $90^\circ$ instead $45^\circ$ ({numref}`quaternion-rotation-2-figure`). This is because we have multiplied the quaternion $p$ by two rotation quaternions each using the angle $45^\circ$. So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where the rotation quaternio is
 
 $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].$$(appendix-rotation-quaternion-equation)
 
-This is effectively two rotations of half the desired rotation angle $\theta$. Returning to our example of rotating $\mathbf{p} = (2, 0, 0)$ by $45^\circ$ about the vector $\hat{\mathbf{v}} = (0.707, 0, 0.707)$ using equation {eq}`appendix-rotation-quaternion-equation` we have a rotation quaternion of
+Returning to our example of rotating $\mathbf{p} = (2, 0, 0)$ by $45^\circ$ about the vector $\hat{\mathbf{v}} = (0.707, 0, 0.707)$ using equation {eq}`appendix-rotation-quaternion-equation` we have a rotation quaternion of
 
 $$q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]$$
 
@@ -380,7 +384,7 @@ Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(\frac{
 
 (quaternion-rotation-matrix-derivation-section)=
 
-### A.3.2 Rotation matrix
+### Rotation matrix
 
 To be able to combine quaternion rotation with other transformations we need to express the quaternion $qpq^*$ as a $4 \times 4$ matrix. Consider the multiplication of the axis vector quaternion $p = [p_w, (p_x, p_y, p_z)]$ on the left by the rotation unit quaternion $q = [w, (x, y, z)]$
 
@@ -393,10 +397,10 @@ $$ \begin{align*}
 If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous coordinates](homogeneous-coordinates-section)) then we have
 
 $$ \begin{align*}
-    qp &= 
+    qp &=
     \begin{pmatrix}
-        wp_x + zp_y - yp_z + xp_w \\ 
-        zp_x + wp_y - xp_z + yp_w \\ 
+        wp_x + zp_y - yp_z + xp_w \\
+        zp_x + wp_y - xp_z + yp_w \\
         -yp_x + xp_y + wp_z + zp_w \\
         wp_w - xp_x - yp_y - zp_z
     \end{pmatrix},
@@ -426,10 +430,10 @@ $$ \begin{align*}
 Writing $p$ the form $\mathbf{p} = (p_x, p_y, p_z, p_w)$ as before gives
 
 $$ \begin{align*}
-    pq^* = 
+    pq^* =
     \begin{pmatrix}
-        wp_x - zp_y + yp_z - xp_w \\ 
-        zp_x + wp_y - xp_z - yp_w \\ 
+        wp_x - zp_y + yp_z - xp_w \\
+        zp_x + wp_y - xp_z - yp_w \\
         -yp_x + xp_y + wp_z - zp_w \\
         xp_x + yp_y + zp_z + wp_w
     \end{pmatrix}
@@ -451,7 +455,7 @@ $$ \begin{align*}
 The two matrices from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $qpq^*$
 
 $$ \begin{align*}
-    R &= 
+    R &=
     \begin{pmatrix}
         w & -z & y & -x \\
         z & w & -x & -y \\
@@ -482,7 +486,7 @@ $$ \begin{align*}
 Doing this for the other main diagonal elements $R$ simplifies to
 
 $$ \begin{align*}
-    R &= 
+    R &=
     \begin{pmatrix}
         1 - 2(y^2 + z^2) & 2(xy - zw) & 2(xz + yw) & 0 \\
         2(xy + zw) & 1 - 2(x^2 + z^2) & 2(yz - xw) & 0 \\
@@ -500,7 +504,7 @@ $$ \begin{align*}
 From $q$ we have $w = 0.924$, $x = 0.271$, $y = 0$ and $z = 0.271$. Substituting these into $R$ from equation {eq}`quaternion-rotation-matrix-2-equation` gives
 
 $$ \begin{align*}
-    R = 
+    R =
     \begin{pmatrix}
         0.854 & -0.5 & 0.146 & 0 \\
         0.5 & 0.707 & -0.5 & 0 \\
@@ -509,7 +513,7 @@ $$ \begin{align*}
     \end{pmatrix}.
 \end{align*} $$
 
-Applying the rotation to $p = (2, 0, 0, 0)$
+Applying the rotation to $p = (p_x, p_y, p_z, p_w) = (2, 0, 0, 0)$
 
 $$ \begin{align*}
     R \cdot p =
@@ -527,22 +531,21 @@ So the rotated vector is $(1.707, 1, 0.293)$ which was shown in {numref}`quatern
 
 (euler-to-quaternion-derivation-section)=
 
-### A.3.1 Euler angles to quaternion
+### Euler angles to quaternion
 
-Euler angles are the rotations around the three coordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for yaw, pitch and roll rotations. Since we are using OpenGL's coordinate system then yaw is the rotation around the vector $\mathbf{j} = (0, 1, 0)$ (a vector pointing in the same direction as the $y$-axis), pitch is the rotation around the vector $\mathbf{i} = (1, 0, 0)$ (a vector pointing along the $x$-axis) and roll with the rotation about the vector $\mathbf{k} = (0, 0, 1)$ (a vector pointing along the $z$-axis) so the corresponding rotation quaternions are
+Euler angles are the rotations around the three coordinates axes $x$, $y$ and $z$ so equation {eq}`appendix-rotation-quaternion-equation` can be used to give three quaternions for yaw, pitch and roll rotations
 
 $$\begin{align*}
-    q_{yaw} &= [\cos(\tfrac{1}{2}yaw), \sin(\tfrac{1}{2}yaw) \mathbf{j}], \\
-    q_{pitch} &= [\cos(\tfrac{1}{2}pitch), \sin(\tfrac{1}{2}pitch) \mathbf{i}], \\
-    q_{roll} &= [\cos(\tfrac{1}{2}roll), \sin(\tfrac{1}{2}roll) \mathbf{k}].
+    q_p &= [\cos(\tfrac{pitch}{2}), \sin(\tfrac{pitch}{2}) (1, 0, 0)], \\
+    q_y &= [\cos(\tfrac{yaw}{2}), \sin(\tfrac{yaw}{2}) (0, 1, 0)], \\
+    q_r &= [\cos(\tfrac{roll}{2}), \sin(\tfrac{roll}{2}) (0, 0, 1)].
 \end{align*} $$
 
-Let $c_y = \cos(\frac{1}{2}yaw)$ and $s_y = \sin(\frac{1}{2}yaw)$ for brevity, and do similar for $pitch$ and $roll$, then the single rotation quaternion that combines rotation about the three coordinates axes is
+Let $c_p = \cos(\tfrac{pitch}{2})$ and $s_p = \sin(\tfrac{pitch}{2})$ for brevity, and do similar for the cosines and sines of $yaw$ and $roll$, then the single rotation quaternion that combines rotation about the three coordinates axes is
 
 $$ \begin{align*}
-    q_{pitch}q_{yaw}q_{roll} &= [c_p, s_p\mathbf{i}] [c_y, s_y\mathbf{j}] [c_r, s_r\mathbf{k}] \\
-    &= [c_pc_yc_r - s_ps_ys_r, c_pc_ys_r\mathbf{k} + c_ps_yc_r\mathbf{j} + s_pc_yc_r\mathbf{i} + s_ps_yc_r\mathbf{k} + c_ps_ys_r\mathbf{i} - s_pc_ys_r\mathbf{j}] \\
-    &= [c_pc_yc_r - s_ps_ys_r, (c_ys_pc_r + s_yc_ps_r, s_yc_pc_r - c_ys_ps_r, c_yc_ps_r + s_ys_pc_r)].
+    q_pq_yq_r &= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
+    &= [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)].
 \end{align*} $$
 
 This means we can define a quaternion based on the three Euler angles and then use equation {eq}`quaternion-rotation-matrix-2-equation` to generate the rotation matrix.

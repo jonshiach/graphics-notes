@@ -173,9 +173,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">Creating an .obj File in Blender</a></li>
-<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">11. Creating an .obj File in Blender</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">12. Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">13. Glossary</a></li>
 </ul>
 
     </div>
@@ -454,8 +454,8 @@ document.write(`
 <p>We first calculate vectors that point along two sides of the triangle in the model space</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    E_1 &amp;= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
-    E_2 &amp;= (x_2, y_2, z_2) - (x_1, y_1, z_1),
+    \mathbf{e}_1 &amp;= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
+    \mathbf{e}_2 &amp;= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}\end{split}\]</div>
 <p>and calculate the difference in the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates for these edges</p>
 <div class="math notranslate nohighlight">
@@ -468,8 +468,8 @@ document.write(`
 <p>The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors can then be calculated using</p>
 <div class="math notranslate nohighlight" id="equation-tb-equation">
 <span class="eqno">(9.1)<a class="headerlink" href="#equation-tb-equation" title="Permalink to this equation">#</a></span>\[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} \end{split}\]</div>
 <p>To see the derivation of these equations click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -479,23 +479,23 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 9.5</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges <span class="math notranslate nohighlight">\(E_1\)</span> and <span class="math notranslate nohighlight">\(E_2\)</span> can be calculated using</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 9.5</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span> can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-    E_1 &amp;= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
-    E_2 &amp;= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
+    \mathbf{e}_1 &amp;= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
+    \mathbf{e}_2 &amp;= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
 \end{align*}\end{split}\]</div>
 <p class="sd-card-text">where <span class="math notranslate nohighlight">\(\Delta u_1 = u_1 - u_0\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1 = v_1 - v_0\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2 = u_2 - u_1\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2 = v_2 - v_1\)</span>. We can express this using matrices</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix} &amp;=
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} &amp;=
     \begin{pmatrix}
         \Delta u_1 &amp; \Delta v_1 \\
         \Delta u_2 &amp; \Delta v_2
     \end{pmatrix}
   \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">We want to calculate <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> and we know the values of <span class="math notranslate nohighlight">\(E_1\)</span>, <span class="math notranslate nohighlight">\(E_2\)</span>, <span class="math notranslate nohighlight">\(\Delta u_1\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2\)</span>. Using the <a class="reference internal" href="04_vectors_and_matrices.html#inverse-matrix-section"><span class="std std-ref">inverse</span></a> of the square matrix we can rewrite this equation as</p>
+<p class="sd-card-text">We want to calculate <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> and we know the values of <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span>, <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span>, <span class="math notranslate nohighlight">\(\Delta u_1\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2\)</span>. Using the <a class="reference internal" href="04_vectors_and_matrices.html#inverse-matrix-section"><span class="std std-ref">inverse</span></a> of the square matrix we can rewrite this equation as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix} &amp;=
@@ -503,19 +503,19 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
         \Delta u_1 &amp; \Delta v_1 \\
         \Delta u_2 &amp; \Delta v_2
     \end{pmatrix}^{-1}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix} \\
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} \\
     &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}
     \begin{pmatrix}
         \Delta v_2 &amp; -\Delta v_1 \\
         -\Delta u_2 &amp; \Delta u_1
     \end{pmatrix}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix}.
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">Writing the out for the <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> vectors we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} \end{split}\]</div>
 </div>
 </details><p>Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to an arbitrary space (e.g., the view space). The matrix that achieves this a 3 <span class="math notranslate nohighlight">\(\times\)</span> 3 matrix known as the <span class="math notranslate nohighlight">\(TBN\)</span> matrix</p>

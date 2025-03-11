@@ -37,11 +37,15 @@ $$ \begin{align*}
     x &= \sqrt{-1}.
 \end{align*} $$
 
-Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this mathematicians invented another type of number called the **imaginary number** that is defined by $i^2 = -1$ so the solution to the equation above is $x = i$.
+Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the **imaginary number** that is defined by $i^2 = -1$ so the solution to the equation above is $x = i$.
 
-Imaginary numbers can be combined with real numbers to give us a **complex number**. Despite their name, complex numbers aren't complicated at all, they are simply a real number added to a multiple of the imaginary number
+```{note}
+Some students find the concept of an imaginary number difficult to grasp. However, you have been using negative numbers for a while now and these are similar to the imaginary number since they do not represent a physical quantity, e.g., you can show me 5 coins but you cannot show me negative 5 coins. We developed negative numbers to help us solve problems, as we have also done with the imaginary number.
+```
 
-$$ z = x + iy, $$
+Imaginary numbers can be combined with real numbers to give us a **complex number** where a real number is added to a multiple of the imaginary number
+
+$$ z = x + yi, $$
 
 where $x$ and $y$ are real numbers, $x$ is known as the **real part** and $y$ is known as the **imaginary part** of a complex number.
 
@@ -65,7 +69,7 @@ $$ \begin{align*}
     (1 - 2i)i &= i - 2i^2 = 2 + i.
 \end{align*} $$
 
-So after four multiplications we are back to the original complex number. {numref}`complex-rotation-figure` shows these complex numbers plotted on the complex plane. Note how they have been rotated by $90^\circ$ each time.
+So after mulitplying $2 + i$ by $i$ four times we are back to where we started. {numref}`complex-rotation-figure` shows these complex numbers plotted on the complex plane. Note how they have been rotated by $90^\circ$ each time.
 
 ```{figure} ../_images/10_Complex_rotation.svg
 :width: 300
@@ -74,7 +78,7 @@ So after four multiplications we are back to the original complex number. {numre
 Rotation of the complex number $2 + i$ by repeated multiplying by $i$.
 ```
 
-So we have seen that multiplying a number by $i$ rotates it by 90$^\circ$, so how do we rotate a number by a different angle. {numref}`complex-rotation-2-figure` shows the rotation of the number 1 by $\theta$ anti-clockwise in the complex plane.
+So we have seen that multiplying a number by $i$ rotates it by 90$^\circ$, so how do we rotate a number by a different angle? {numref}`complex-rotation-2-figure` shows the rotation of the number 1 by $\theta$ anti-clockwise in the complex plane.
 
 ```{figure} ../_images/10_Complex_rotation_2.svg
 :width: 300
@@ -95,7 +99,7 @@ This means we can rotate by an arbitrary angle $\theta$ in the complex plane by 
 
 A **quaternion** is an extension of a complex number where two additional imaginary numbers are used to extend from a 2D space to a 4D space. The general form of a quaternion is
 
-$$ q = w + ix + jy + kz, $$
+$$ q = w + xi + yj + zk, $$
 
 where $w$, $x$, $y$ and $z$ are real numbers and $i$, $j$ and $k$ are imaginary numbers which are related to $-1$ and each other by
 
@@ -105,7 +109,7 @@ Quaternions are more commonly represented in scalar-vector form
 
 $$q = [w, (x, y, z)].$$
 
-We are going to write a class and some member functions to perform quaternion calculations. In the **maths.hpp** file add the following code above.
+We are going to write a class and some member functions to perform quaternion calculations. In the **maths.hpp** file add the following code **above** where we have defined the Maths class (its important that the Quaternion class is defined before the Maths class since later we will be adding methods to the Maths class that use quaternions).
 
 ```
 // Quaternion class
@@ -120,15 +124,14 @@ public:
 };
 ```
 
-This is a data structure called `Quaternion` which contains the attributes for the $x$, $y$, $z$ and $w$ values and two constructor methods (one for creating a quaternion and another for creating a quaternion from the $w$, $x$, $y$ and $z$ values).
+Here we have declared our Quaternion class which contains the attributes for the $x$, $y$, $z$ and $w$ values and two constructor methods, one for creating a quaternion and another for creating a quaternion given known values of $w$, $x$, $y$ and $z$.
 
 In the **maths.cpp** add the following function definitions for the constructors.
 
 ```cpp
 Quaternion::Quaternion() {}
 
-Quaternion::Quaternion(const float w, const float x, const float y,
-                       const float z)
+Quaternion::Quaternion(const float w, const float x, const float y, const float z)
 {
     this->w = w;
     this->x = x;
@@ -137,28 +140,47 @@ Quaternion::Quaternion(const float w, const float x, const float y,
 }
 ```
 
-### Quaternion rotations
+## Quaternion magnitude
+
+The **magnitude** of a quaternion $q = w + xi + yj + zk$ is denoted by $|q|$ and calculated in the same way as the magnitude of a 4-element vector
+
+$$|q| = \sqrt{w^2 + x^2 + y^2 + z^2}.$$
+
+## Quaternion dot product
+
+The dot product between two quaternions $q_0 = w_0 + x_0i + y_0j + z_0k$ and $q_1 = w_1 + x_1i + y_1j + z_1k$ is denoted by $q_0 \cdot q_1$ and calculated in the same way as the dot product between two 4-element vectors
+
+$$ q_0 \cdot q_1 = w_0w_1 + x_0x_1 + y_0y_1 + z_0z_1. $$
+
+Quaternion dot product shares the same geometric interpretation as vector dot product, i.e.,
+
+$$ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),$$
+
+where $\theta$ is the angle between $q_0$ and $q_1$. Rerranging this gives
+
+$$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). $$
+
+---
+## Roations using quaternions
 
 We saw above that we can rotate a number in the complex plane by multiplying by the complex number
 
 $$ z = \cos(\theta) + i\sin(\theta). $$
 
-We can do similar in 3D complex space by multiplying a quaternion by the rotation quaternion
+We can do similar in 3D space where the rotation around a unit vector $\hat{\mathbf{v}}$ by the angle $\theta$ can be achieved by multiplying a quaternion by the rotation quaternion
 
 $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}], $$(rotation-quaternion-equation)
 
-where $\hat{\mathbf{v}}$ is a unit vector around which we are rotating (see [Appendix: Quaternion rotation](appendix-quaternion-rotation-section) for the derivation of this formula).
+See [Appendix: Quaternion rotation](appendix-quaternion-rotation-section) for the derivation of this formula.
 
-```{figure} ../_images/10_Axis_angle_rotation.svg
-:width: 300
+```{figure} ../_images/05_axis_angle_rotation.svg
+:height: 300
 :name: axis-angle-rotation-figure-2
 
-Axis-angle rotation about the vector $\hat{\mathbf{v}}$.
+Axis-angle rotation.
 ```
 
-We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to multiplying by the rotation quaternion from equation {eq}`rotation-quaternion-equation`.
-
-If $q = [w, (x, y, z)]$ is the rotation quaternion, then the corresponding rotation matrix is
+We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to multiplying by the rotation quaternion from equation {eq}`rotation-quaternion-equation`. If $q = [w, (x, y, z)]$ is the rotation quaternion, then the corresponding rotation matrix is
 
 $$ \begin{align*}
     Rotate &= 
@@ -220,39 +242,37 @@ glm::mat4 Maths::rotate(const float &angle, glm::vec3 v)
 }
 ```
 
-Here we normalise the vector which we are rotating around before calculating the rotation quaternion `q` and returning its rotation matrix.
+Here we normalise the vector which we are rotating around before calculating the rotation quaternion `q` and returning its rotation matrix using equation {eq}`quaternion-rotation-matrix-equation`
 
 Compile and run your program and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don't have to worry about gimbal lock.
 
-### Euler angles to quaternion
+### Calculating a quaternion from Euler angles
 
-Quaternions can be thought of as a orientation in 4D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the pitch, yaw and roll Euler angles.
-
-Given the three Euler angles pitch, yaw and roll then using the abbreviations
+Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Using the following abbreviations
 
 $$ \begin{align*}
-    c_p &= \cos(\tfrac{1}{2}pitch), &
-    s_p &= \sin(\tfrac{1}{2}pitch), \\
-    c_y &= \cos(\tfrac{1}{2}yaw), &
-    s_y &= \sin(\tfrac{1}{2}yaw), \\
-    c_r &= \cos(\tfrac{1}{2}roll), &
-    s_r &= \sin(\tfrac{1}{2}roll),
+    c_p &= \cos(\tfrac{pitch}{2}), &
+    s_p &= \sin(\tfrac{pitch}{2}), \\
+    c_y &= \cos(\tfrac{yaw}{2}), &
+    s_y &= \sin(\tfrac{yaw}{2}), \\
+    c_r &= \cos(\tfrac{roll}{2}), &
+    s_r &= \sin(\tfrac{roll}{2}),
 \end{align*} $$
 
-the quaternion that represents the camera orientation is
+then the quaternion that represents the camera orientation is
 
-$$ q = [c_yc_pc_r + s_ys_ps_r, (s_yc_ps_r - c_ys_pc_r, s_yc_pc_r + c_ys_ps_r, c_yc_ps_r - s_ys_pc_r)]. $$(euler-to-quaternion-equation)
+$$ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)]. $$(euler-to-quaternion-equation)
 
 See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the `Quaternion` class declaration in `maths.hpp`
 
 ```cpp
-Quaternion(const float yaw, const float pitch, const float roll);
+Quaternion(const float pitch, const float yaw, const float roll);
 ```
 
 and in the **maths.cpp** define the constructor
 
 ```cpp
-Quaternion::Quaternion(const float yaw, const float pitch, const float roll)
+Quaternion::Quaternion(const float pitch, const float yaw, const float roll)
 {
     float cp = cos(0.5f * pitch);
     float sp = sin(0.5f * pitch);
@@ -261,14 +281,14 @@ Quaternion::Quaternion(const float yaw, const float pitch, const float roll)
     float cr = cos(0.5f * roll);
     float sr = sin(0.5f * roll);
 
-    this->w = cy * cp * cr + sy * sp * sr;
-    this->x = sy * cp * sr - cy * sp * cr;
-    this->y = sy * cp * cr + cy * sp * sr;
-    this->z = cy * cp * sr - sy * sp * cr;
+    this->w = cp * cy * cr - sp * sy * sr;
+    this->x = sp * cy * cr + cp * sy * sr;
+    this->y = cp * sy * cr - sp * cy * sr;
+    this->z = cp * cy * sr + sp * sy * cr;
 }
 ```
 
-We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around -- see video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.
+We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around -- see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -276,21 +296,43 @@ We are currently using Euler angles rotation to calculate the view matrix in the
 </video>
 </center>
 
-To implement a quaternion camera we first use the Euler angle to quaternion constructor to create a quaternion that represents the current orientation of the camera. At the start of the `calculateMatrices()` Camera class method add the following code
+To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to $(0, 0, 0)$, to calculate the view matrix.
+
+In the **camera.hpp** header file declare the camera orientation quaternion attribute.
 
 ```cpp
-// Calculate camera orientation quaternion from the Euler angles
-Quaternion orientation(yaw, pitch, roll);
+// Quaternion camera
+Quaternion orientation = Quaternion(yaw, pitch, roll);
 ```
 
-Then, comment out the code used to calculate the view matrix using the `glm::lookAt()` function and add the following code
+We are going to write a Camera class method for a quaternion camera, add the method declaration to the Camera class
 
 ```cpp
-// Calculate the view matrix using the direction quaternion
-view = orientation.matrix() * Maths::translate(-eye);
+void quaternionCamera();
 ```
 
-Here we have translated the camera by $-\mathbf{eye}$ so that it is at $(0, 0, 0)$ and used the orientation quaternion matrix to rotate the world space so the camera is looking down the $z$-axis. We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
+and define the method in the **camera.cpp** file
+
+```cpp
+void Camera::quaternionCamera()
+{
+    // Calculate camera orientation quaternion from the Euler angles
+    Quaternion orientation(-pitch, yaw, roll);
+    
+    // Calculate the view matrix
+    view = orientation.matrix() * Maths::translate(-eye);
+    
+    // Calculate the projection matrix
+    projection = glm::perspective(fov, aspect, near, far);
+    
+    // Calculate camera vectors from view matrix
+    right =  glm::vec3(view[0][0], view[1][0], view[2][0]);
+    up    =  glm::vec3(view[0][1], view[1][1], view[2][1]);
+    front = -glm::vec3(view[0][2], view[1][2], view[2][2]);
+}
+```
+
+Here the camera orientation quaternion is calculated from the $yaw$, $pitch$ and $roll$ Euler angles. We then combine a translation by $-\mathbf{eye}$ so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in [6. 3D Worlds](view-matrix-section)). We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
 
 $$ \view = \begin{pmatrix}
         \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
@@ -299,18 +341,18 @@ $$ \view = \begin{pmatrix}
         -\mathbf{eye} \cdot \mathbf{right} & -\mathbf{eye} \cdot \mathbf{up} & \mathbf{eye} \cdot \mathbf{front} & 1 \\
     \end{pmatrix} $$
 
-So we can just extract $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ from the view matrix. Comment out the code in the `calcaulateCameraVectors()` method and add the following
+So we just extract $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ from the first three columns of the view matrix.
 
-```cpp
-right =  glm::vec3(view[0][0], view[1][0], view[2][0]);
-up    =  glm::vec3(view[0][1], view[1][1], view[2][1]);
-front = -glm::vec3(view[0][2], view[1][2], view[2][2]);
-```
-
-The last thing we need to do is change the initial $yaw$ angle from $-90^\circ$ to $0^\circ$. In the **camera.hpp** change the $yaw$ angle declaration to the following
+We also need to change the initial $yaw$ angle from $-90^\circ$ to $0^\circ$. In the **camera.hpp** change the $yaw$ angle declaration to the following
 
 ```cpp
 float yaw   = 0.0f;
+```
+
+Finally, replace the call to the `calculateMatrices()` method in the **Lab10_Quaternions.cpp** file with the following so that we are now using our quaternion camera.
+
+```cpp
+camera.quaternionCamera();
 ```
 
 Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90$^\circ$ or 270$^\circ$ without the orientation flipping around.
@@ -321,155 +363,24 @@ Compile and run the code and you will see that you can move the camera in any or
 </video>
 </center>
 
---- 
-
-## Third person camera
-
-The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *Horizon Zero Dawn*, *Assassins Creed* and *Red Dead Redemption* to name a few all using third person camera view.
-
-To implement a simple third person camera we are going to calculate the view matrix as usual and then move the camera back by an $\tt offset$ vector which is a vector pointing from the actual camera position to the third person camera position {numref}`third-person-camera-figure`. 
-
-```{figure} ../_images/10_Third_person_camera.svg
-:width: 400
-:name: third-person-camera-figure
-
-A third person camera.
-```
-
-For our third person camera, the direction that the character is facing will be controlled by keyboard inputs where the W and S keys move the character forward and backwards and the A and D keys rotate it to the left and right. In `camera.hpp` add the following attributes to the Camera class.
-
-```cpp
-glm::vec3 offset = glm::vec3(0.0f, 0.5f, 2.0f);
-std::string mode = "first";
-float charYaw    = 0.0f;
-Quaternion charOrientiation;
-```
-
-These attributes are:
-
-- `offset` - the vector pointing from the character position to the third person camera
-- `mode` - a string to record whether the camera is in first or third person mode
-- `charYaw` - the yaw angle for the character
-- `charOrientation` - a quaternion for the character orientation
-
-Also in `camera.hpp` add a declaration for the third person camera method
-
-```
-void thirdPersonCamera(GLFWwindow* window, const float deltaTime);
-```
-
-In `camera.cpp` add the following method definition
-
-```cpp
-void Camera::thirdPersonCamera(GLFWwindow *window, const float deltaTime)
-{
-}
-```
-
-The `thirdPersonCamera()` method will be quite similar to the `calculateMatrices()` method so copy and paste the code from there into `thirdPersonCamera()`. We want the A and D keys to control the yaw angle for the character so edit your code so it looks like the following.
-
-```cpp
-if (glfwGetKey(window, GLFW_KEY_A))
-    charYaw -= 0.5f * deltaTime * speed;
-
-if (glfwGetKey(window, GLFW_KEY_D))
-    charYaw += 0.5f * deltaTime * speed;
-```
-
-The third person camera is moved back from the character position by translating the `view` matrix by the `offset` vector. Change the `view` matrix calculation to the following
-
-```cpp
-view = Maths::translate(glm::mat4(1.0f), -offset) * direction.quatToMat() * Maths::translate(glm::mat4(1.0f), -position);
-```
-
-The last change we need to make to our third person camera method is to move the character based on the character direction quaternion and not the camera direction quaternion. Replace the code used to update the camera vectors with the following.
-
-```cpp
-// Update character movement vectors
-charDirection.eulerToQuat(pitch, charYaw, roll);
-glm::mat4 charMat = charDirection.quatToMat();
-right.x =  charMat[0][0], right.y =  charMat[1][0], right.z =  charMat[2][0];
-up.x    =  charMat[0][1], up.y    =  charMat[1][1], up.z    =  charMat[2][1];
-front.x = -charMat[0][2], front.y = -charMat[1][2], front.z = -charMat[2][2];
-```
-
-We now need a way to instruct our programme whether to use the first or third person camera. In `main.cpp` add the following code before we calculate the `view` and `projection` matrices.
-
-```cpp
-// Toggle between first and third person camera
-if (glfwGetKey(window, GLFW_KEY_1) && camera.mode == "third")
-{
-    camera.mode = "first";
-    camera.yaw = camera.charYaw;
-}
-
-if (glfwGetKey(window, GLFW_KEY_2) && camera.mode == "first")
-{
-    camera.mode = "third";
-    camera.charYaw = camera.yaw;
-}
-```
-
-Here we using the 1 to select first person camera and the 2 key to select the third person camera. When switch from first person to third person camera the character yaw angle is set to the camera yaw angle so the character is facing in the correct direction. This is reversed when switching from the third to first person camera so the first person camera is facing the direction of the character.
-
-We now instruct the program to use the appropriate method for calculating the `view` and `projection` matrices.
-
-```cpp
-// Calculate view and projection matrices
-if (camera.mode == "first")
-    camera.calculateMatrices(window, deltaTime);
-
-if (camera.mode == "third")
-    camera.thirdPersonCamera(window, deltaTime);
-
-glm::mat4 view = camera.getViewMatrix();
-glm::mat4 projection = camera.getProjectionMatrix();
-```
-
-Of course when using the third person camera we need to render the character model. Add the following code after you have drawn all of the cubes. 
-
-```cpp
-// Draw suzanne model in third person camera mode
-if (camera.mode == "third")
-{
-    // Calculate model matrix
-    glm::mat4 translate = Maths::translate(glm::mat4(1.0f), camera.position);
-    glm::mat4 scale = Maths::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.2f, 0.2f));
-    glm::mat4 rotate = glm::transpose(camera.charDirection.quatToMat());
-    glm::mat4 model = translate * rotate * scale;
-    
-    // Send the model matrix to the shader
-    glUniformMatrix4fv(glGetUniformLocation(shaderID, "model"), 1, GL_FALSE, &model[0][0]);
-    
-    // Draw the model
-    suzanne.draw(shaderID);
-}
-```
-
-Here we are using Suzanne the Blender mascot to act as our character model. The `model` matrix is calculated by translating Suzanne to the camera position (this is actually our character position as the camera has been offset) and an inverse of the `charDirection` matrix is used to rotate the model so it is facing in the right direction. Since the `charDirection` matrix is orthogonal (the columns vectors are all at right angles) this can be done using the transpose of the matrix which is much quicker than calculating an inverse of a matrix.
-
-Compile and run the program and you should be able to switch between the camera modes using the 1 and 2 keys.
-
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Third_person_camera_no_SLERP.mp4" type="video/mp4">
-</video>
-</center>
-
 ---
 ## SLERP
 
 The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
 
-```{figure} ../_images/10_Linear_interpolation.svg
-:width: 400
+```{figure} ../_images/10_LERP.svg
+:width: 300
+
+Linear interpolation between two points.
 ```
 
-If $\mathbf{p}_1$ and $\mathbf{p}_2$ are two points then an interpolated point $\mathbf{p}_t$ is calculated using
+If $\mathbf{v}_0$ and $\mathbf{v}_1$ are two points then another point, $\mathbf{v}_t$, that lies on the line between $\mathbf{v}_0$ and $\mathbf{v}_1$ is calculated using
 
-$$ \operatorname{LERP}(\mathbf{p}_1, \mathbf{p}_2, t) = \mathbf{p}_1 + t(\mathbf{p}_2 - \mathbf{p}_1), $$
+$$ \operatorname{LERP}(\mathbf{v}_0, \mathbf{v}_1, t) = \mathbf{v}_0 + t(\mathbf{v}_1 - \mathbf{v}_0), $$
 
-where $t$ is a value between 0 and 1. **SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.
+where $t$ is a value between 0 and 1. 
+
+**SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.
 
 ```{figure} ../_images/10_SLERP.svg
 :width: 400
@@ -478,86 +389,114 @@ where $t$ is a value between 0 and 1. **SLERP** stands for Spherical Linear intE
 SLERP interpolation between two points on a sphere.
 ```
 
-Consider {numref}`A-SLERP-figure` where $q_1$ and $q_2$ are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since its very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion $q_t$ represents another quaternion that is partway between $q_1$ and $q_2$ calculated using
+Consider {numref}`A-SLERP-figure` where $q_1$ and $q_2$ are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it's very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion $q_t$ represents another quaternion that is partway between $q_0$ and $q_1$ calculated using
 
 $$ \begin{align*}
-    \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
+    \operatorname{SLERP}(q_0, q_1, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_0 + \frac{\sin(t\theta)}{\sin(\theta)}q_1
 \end{align*}, $$(slerp-equation)
 
-where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two pure quaternions $q_1$ and $q_2$ and is calculated using
+where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two pure quaternions $q_0$ and $q_1$ and is calculated using
 
-$$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).$$
+$$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0||q_1|} \right).$$
 
-Sometimes the to product $q_1 \cdot q_2$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$.
+Sometimes the dot product $q_0 \cdot q_1$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$.
 
-Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_1$ and $q_2$.
+Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_0$ and $q_1$.
 
 Add a method declaration to the Maths class in the `maths.hpp` file
 
 ```cpp
-static Quaternion slerp(Quaternion q1, Quaternion q2, const float);
+static Quaternion SLERP(const Quaternion q0, const Quaternion q1, const float t);
 ```
 
 and define the method in the `maths.cpp` file
 
 ```cpp
 // SLERP
-Quaternion Maths::slerp(Quaternion q1, Quaternion q2, const float t)
+Quaternion Maths::SLERP(Quaternion q0, Quaternion q1, const float t)
 {
-    // Check if we are going the "long" way around the sphere
-    float q1DotQ2 = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
-    if (q1DotQ2 < 0)
+    // Calculate cos(theta)
+    float cosTheta = q0.w * q1.w + q0.x * q1.x + q0.y * q1.y + q0.z * q1.z;
+    
+    // If q1 and q2 are close together use LERP to avoid divide by zero errors
+    if (cosTheta > 0.9999f)
     {
-        // Change signs of q2 to ensure we go the short way round
-        q2.w *= -q2.w;
-        q2.x *= -q2.x;
-        q2.y *= -q2.y;
-        q2.z *= -q2.z;
-        q1DotQ2 = -q1DotQ2;
+        Quaternion q;
+        q.w = q0.w + t * (q1.w - q0.w);
+        q.x = q0.x + t * (q1.x - q0.x);
+        q.y = q0.y + t * (q1.y - q0.y);
+        q.z = q0.z + t * (q1.z - q0.z);
+        return q;
     }
     
-    // Calculate angle between quaternions q1 and q2
-    float theta = acos(q1DotQ2);
-    
-    // Calculate interpolated quaternion qt
-    Quaternion qt;
-    float denom = sin(theta);
-    if (denom > 0.001f)
+    // Avoid taking the long path around the sphere by reversing sign of q1
+    if (cosTheta < 0)
     {
-        // Use SLERP
-        float fact1 = sin((1.0f - t) * theta);
-        float fact2 = sin(t * theta);
-        qt.w = fact1 * q1.w + fact2 * q2.w;
-        qt.x = fact1 * q1.x + fact2 * q2.x;
-        qt.y = fact1 * q1.y + fact2 * q2.y;
-        qt.z = fact1 * q1.z + fact2 * q2.z;
-    }
-    else
-    {
-        // Use LERP if sin(theta) is small
-        qt.w = (1.0f - t) * q1.w + t * q2.w;
-        qt.x = (1.0f - t) * q1.x + t * q2.x;
-        qt.y = (1.0f - t) * q1.y + t * q2.y;
-        qt.z = (1.0f - t) * q1.z + t * q2.z;
+        q1 = Quaternion(-q1.w, -q1.x, -q1.y, -q1.z);
+        cosTheta = -cosTheta;
     }
     
-    return qt;
+    // Calculate SLERP
+    Quaternion q;
+    float theta = acos(cosTheta);
+    float a = sin((1.0f - t) * theta) / sin(theta);
+    float b = sin(t * theta) / sin(theta);
+    q.w = a * q0.w + b * q2.w;
+    q.x = a * q0.x + b * q2.x;
+    q.y = a * q0.y + b * q2.y;
+    q.z = a * q0.z + b * q2.z;
+    
+    return q;
 }
 ```
 
-Then to apply SLERP replace the code used to calculate the `direction` quaternion with the following.
+Then to apply SLERP replace the code used to calculate the `orientation` quaternion in the `quaternionCamera()` method with the following.
 
 ```cpp
-// Calculate direction quaternion
-Quaternion newDirection;
-newDirection.eulerToQuat(pitch, yaw, roll);
-direction = Maths::slerp(direction, newDirection, deltaTime);
+// Calculate camera orientation quaternion from the Euler angles
+Quaternion newOrientation(-pitch, yaw, roll);
+
+// Apply SLERP
+orientation = Maths::SLERP(orientation, newOrientation, 0.2f);
 ```
 
-Here we use a temporary quaternion `newDirection` which is calculated using the pitch, yaw and roll Euler angles of the camera and then used SLERP to interpolate between `direction` and `newDirection`. Compile and run your program and you should see that the third person camera now rotates smoothly around the character.
+Here we use a temporary quaternion `newOrientation` which is calculated using the $pitch$, $yaw$ and $roll$ Euler angles of the camera and then used SLERP to interpolate between `orientation` and `newOrientation`. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.
 
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/09_Third_person_camera_with_SLERP.mp4" type="video/mp4">
 </video>
 </center>
+
+---
+
+## Third person camera
+
+The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *Horizon Zero Dawn*, *Assassins Creed* and *Red Dead Redemption* to name a few all using third person camera view.
+
+To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by an $\mathbf{offset}$ vector which is a vector pointing from $\mathbf{eye}$ to the third person camera position {numref}`third-person-camera-figure`.
+
+```{figure} ../_images/10_Third_person_camera.svg
+:width: 400
+:name: third-person-camera-figure
+
+A third person camera.
+```
+
+To apply the camera offset, we simply translate the view matrix by $-\mathbf{offset}$, i.e,.
+
+$$ View = Translate(-\mathbf{offset}) \cdot View $$
+
+The result of a third-person camera view can be seen below. Here we are using Suzanne the Blender mascot to act as our character model, and we can switch from first-person to third-person view using keyboard input.
+
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/09_Third_person_camera_no_SLERP.mp4" type="video/mp4">
+</video>
+</center>
+
+Moving the camera around we see that our character model is always facing in the same direction. To make it face in the direction of the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.
+
+$$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
+
+The implementations of third-person cameras can vary. You may wish the character movement to be independent of the camera movement, to do this you would need a separate character and matrix orientation quaternions can 

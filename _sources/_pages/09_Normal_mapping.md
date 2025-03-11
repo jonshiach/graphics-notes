@@ -71,8 +71,8 @@ The tangent, $\mathbf{t}$, and bitangent, $\mathbf{b}$, vectors are calculated b
 We first calculate vectors that point along two sides of the triangle in the model space
 
 $$ \begin{align*}
-    E_1 &= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
-    E_2 &= (x_2, y_2, z_2) - (x_1, y_1, z_1),
+    \mathbf{e}_1 &= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
+    \mathbf{e}_2 &= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}$$
 
 and calculate the difference in the $(u,v)$ coordinates for these edges
@@ -87,25 +87,25 @@ $$ \begin{align*}
 The tangent, $\mathbf{t}$, and bitangent, $\mathbf{b}$, vectors can then be calculated using
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \mathbf{t} &= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$(TB-equation)
 
 To see the derivation of these equations click on the dropdown below.
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
-Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges $E_1$ and $E_2$ can be calculated using
+Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges $\mathbf{e}_1$ and $\mathbf{e}_2$ can be calculated using
 
 $$\begin{align*}
-    E_1 &= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
-    E_2 &= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
+    \mathbf{e}_1 &= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
+    \mathbf{e}_2 &= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
 \end{align*}$$
 
 where $\Delta u_1 = u_1 - u_0$, $\Delta v_1 = v_1 - v_0$, $\Delta u_2 = u_2 - u_1$ and $\Delta v_2 = v_2 - v_1$. We can express this using matrices
 
 $$ \begin{align*}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix} &=
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} &=
     \begin{pmatrix}
         \Delta u_1 & \Delta v_1 \\
         \Delta u_2 & \Delta v_2
@@ -113,7 +113,7 @@ $$ \begin{align*}
   \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix}.
 \end{align*} $$
 
-We want to calculate $\mathbf{t}$ and $\mathbf{b}$ and we know the values of $E_1$, $E_2$, $\Delta u_1$, $\Delta v_1$, $\Delta u_2$ and $\Delta v_2$. Using the [inverse](inverse-matrix-section) of the square matrix we can rewrite this equation as
+We want to calculate $\mathbf{t}$ and $\mathbf{b}$ and we know the values of $\mathbf{e}_1$, $\mathbf{e}_2$, $\Delta u_1$, $\Delta v_1$, $\Delta u_2$ and $\Delta v_2$. Using the [inverse](inverse-matrix-section) of the square matrix we can rewrite this equation as
 
 $$ \begin{align*}
     \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix} &=
@@ -121,20 +121,20 @@ $$ \begin{align*}
         \Delta u_1 & \Delta v_1 \\
         \Delta u_2 & \Delta v_2
     \end{pmatrix}^{-1}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix} \\
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} \\
     &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}
     \begin{pmatrix}
         \Delta v_2 & -\Delta v_1 \\
         -\Delta u_2 & \Delta u_1
     \end{pmatrix}
-    \begin{pmatrix} E_1 \\ E_2 \end{pmatrix}.
+    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix}.
 \end{align*} $$
 
 Writing the out for the $\mathbf{t}$ and $\mathbf{b}$ vectors we have
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{\Delta v_2 \cdot E_1 - \Delta v_1 \cdot E_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &= \frac{\Delta u_1 \cdot E_2 - \Delta u_2 \cdot E_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \mathbf{t} &= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
+    \mathsf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$
 ````
 

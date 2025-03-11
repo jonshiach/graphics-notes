@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/10_Quaternions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Creating an .obj File in Blender" href="A_Wavefront_files.html" />
+    <link rel="next" title="11. Creating an .obj File in Blender" href="A_Wavefront_files.html" />
     <link rel="prev" title="9. Normal Mapping" href="09_Normal_mapping.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -173,9 +173,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">Creating an .obj File in Blender</a></li>
-<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">Complex Numbers and Quaternions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A_Wavefront_files.html">11. Creating an .obj File in Blender</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Complex_numbers_and_quaternions.html">12. Complex Numbers and Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Glossary.html">13. Glossary</a></li>
 </ul>
 
     </div>
@@ -373,13 +373,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-using-complex-numbers">10.1.1. Rotation using complex numbers</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-rotations">10.2.1. Quaternion rotations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euler-angles-to-quaternion">10.2.2. Euler angles to quaternion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roations-using-quaternions">10.5. Roations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.3. Third person camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.4. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.6. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.7. Third person camera</a></li>
 </ul>
             </nav>
         </div>
@@ -419,10 +421,14 @@ document.write(`
     x^2 &amp;= -1 \\
     x &amp;= \sqrt{-1}.
 \end{align*} \end{split}\]</div>
-<p>Here we have a problem since the square of a negative number always returns a positive value, e.g., <span class="math notranslate nohighlight">\((-1) \times (-1) = 1\)</span>, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this mathematicians invented another type of number called the <strong>imaginary number</strong> that is defined by <span class="math notranslate nohighlight">\(i^2 = -1\)</span> so the solution to the equation above is <span class="math notranslate nohighlight">\(x = i\)</span>.</p>
-<p>Imaginary numbers can be combined with real numbers to give us a <strong>complex number</strong>. Despite their name, complex numbers aren’t complicated at all, they are simply a real number added to a multiple of the imaginary number</p>
+<p>Here we have a problem since the square of a negative number always returns a positive value, e.g., <span class="math notranslate nohighlight">\((-1) \times (-1) = 1\)</span>, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the <strong>imaginary number</strong> that is defined by <span class="math notranslate nohighlight">\(i^2 = -1\)</span> so the solution to the equation above is <span class="math notranslate nohighlight">\(x = i\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some students find the concept of an imaginary number difficult to grasp. However, you have been using negative numbers for a while now and these are similar to the imaginary number since they do not represent a physical quantity, e.g., you can show me 5 coins but you cannot show me negative 5 coins. We developed negative numbers to help us solve problems, as we have also done with the imaginary number.</p>
+</div>
+<p>Imaginary numbers can be combined with real numbers to give us a <strong>complex number</strong> where a real number is added to a multiple of the imaginary number</p>
 <div class="math notranslate nohighlight">
-\[ z = x + iy, \]</div>
+\[ z = x + yi, \]</div>
 <p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are real numbers, <span class="math notranslate nohighlight">\(x\)</span> is known as the <strong>real part</strong> and <span class="math notranslate nohighlight">\(y\)</span> is known as the <strong>imaginary part</strong> of a complex number.</p>
 <p>Since a complex number consists of two parts we can plot them on a 2D space called the <strong>complex plane</strong> where the horizontal axis is used to represent the real part and the vertical axis is used to represent the imaginary part (<a class="reference internal" href="#complex-plane-figure"><span class="std std-numref">Fig. 10.2</span></a>).</p>
 <figure class="align-default" id="complex-plane-figure">
@@ -441,14 +447,14 @@ document.write(`
     (-2 - i)i &amp;= -2i - i^2 = 1 - 2i, \\
     (1 - 2i)i &amp;= i - 2i^2 = 2 + i.
 \end{align*} \end{split}\]</div>
-<p>So after four multiplications we are back to the original complex number. <a class="reference internal" href="#complex-rotation-figure"><span class="std std-numref">Fig. 10.3</span></a> shows these complex numbers plotted on the complex plane. Note how they have been rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> each time.</p>
+<p>So after mulitplying <span class="math notranslate nohighlight">\(2 + i\)</span> by <span class="math notranslate nohighlight">\(i\)</span> four times we are back to where we started. <a class="reference internal" href="#complex-rotation-figure"><span class="std std-numref">Fig. 10.3</span></a> shows these complex numbers plotted on the complex plane. Note how they have been rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> each time.</p>
 <figure class="align-default" id="complex-rotation-figure">
 <a class="reference internal image-reference" href="../_images/10_Complex_rotation.svg"><img alt="../_images/10_Complex_rotation.svg" src="../_images/10_Complex_rotation.svg" width="300" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 10.3 </span><span class="caption-text">Rotation of the complex number <span class="math notranslate nohighlight">\(2 + i\)</span> by repeated multiplying by <span class="math notranslate nohighlight">\(i\)</span>.</span><a class="headerlink" href="#complex-rotation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>So we have seen that multiplying a number by <span class="math notranslate nohighlight">\(i\)</span> rotates it by 90<span class="math notranslate nohighlight">\(^\circ\)</span>, so how do we rotate a number by a different angle. <a class="reference internal" href="#complex-rotation-2-figure"><span class="std std-numref">Fig. 10.4</span></a> shows the rotation of the number 1 by <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</p>
+<p>So we have seen that multiplying a number by <span class="math notranslate nohighlight">\(i\)</span> rotates it by 90<span class="math notranslate nohighlight">\(^\circ\)</span>, so how do we rotate a number by a different angle? <a class="reference internal" href="#complex-rotation-2-figure"><span class="std std-numref">Fig. 10.4</span></a> shows the rotation of the number 1 by <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</p>
 <figure class="align-default" id="complex-rotation-2-figure">
 <a class="reference internal image-reference" href="../_images/10_Complex_rotation_2.svg"><img alt="../_images/10_Complex_rotation_2.svg" src="../_images/10_Complex_rotation_2.svg" width="300" /></a>
 <figcaption>
@@ -466,14 +472,14 @@ document.write(`
 <h2><span class="section-number">10.2. </span>Quaternions<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>A <strong>quaternion</strong> is an extension of a complex number where two additional imaginary numbers are used to extend from a 2D space to a 4D space. The general form of a quaternion is</p>
 <div class="math notranslate nohighlight">
-\[ q = w + ix + jy + kz, \]</div>
+\[ q = w + xi + yj + zk, \]</div>
 <p>where <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are real numbers and <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span> are imaginary numbers which are related to <span class="math notranslate nohighlight">\(-1\)</span> and each other by</p>
 <div class="math notranslate nohighlight">
 \[i^2 = j^2 = k^2 = ijk = -1. \]</div>
 <p>Quaternions are more commonly represented in scalar-vector form</p>
 <div class="math notranslate nohighlight">
 \[q = [w, (x, y, z)].\]</div>
-<p>We are going to write a class and some member functions to perform quaternion calculations. In the <strong>maths.hpp</strong> file add the following code above.</p>
+<p>We are going to write a class and some member functions to perform quaternion calculations. In the <strong>maths.hpp</strong> file add the following code <strong>above</strong> where we have defined the Maths class (its important that the Quaternion class is defined before the Maths class since later we will be adding methods to the Maths class that use quaternions).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Quaternion</span> <span class="k">class</span>
 <span class="nc">class</span> <span class="n">Quaternion</span>
 <span class="p">{</span>
@@ -486,12 +492,11 @@ document.write(`
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>This is a data structure called <code class="docutils literal notranslate"><span class="pre">Quaternion</span></code> which contains the attributes for the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(w\)</span> values and two constructor methods (one for creating a quaternion and another for creating a quaternion from the <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> values).</p>
+<p>Here we have declared our Quaternion class which contains the attributes for the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(w\)</span> values and two constructor methods, one for creating a quaternion and another for creating a quaternion given known values of <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>.</p>
 <p>In the <strong>maths.cpp</strong> add the following function definitions for the constructors.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
 
-<span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span>
-<span class="w">                       </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
 <span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
@@ -500,23 +505,42 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="quaternion-rotations">
-<h3><span class="section-number">10.2.1. </span>Quaternion rotations<a class="headerlink" href="#quaternion-rotations" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="quaternion-magnitude">
+<h2><span class="section-number">10.3. </span>Quaternion magnitude<a class="headerlink" href="#quaternion-magnitude" title="Permalink to this heading">#</a></h2>
+<p>The <strong>magnitude</strong> of a quaternion <span class="math notranslate nohighlight">\(q = w + xi + yj + zk\)</span> is denoted by <span class="math notranslate nohighlight">\(|q|\)</span> and calculated in the same way as the magnitude of a 4-element vector</p>
+<div class="math notranslate nohighlight">
+\[|q| = \sqrt{w^2 + x^2 + y^2 + z^2}.\]</div>
+</section>
+<section id="quaternion-dot-product">
+<h2><span class="section-number">10.4. </span>Quaternion dot product<a class="headerlink" href="#quaternion-dot-product" title="Permalink to this heading">#</a></h2>
+<p>The dot product between two quaternions <span class="math notranslate nohighlight">\(q_0 = w_0 + x_0i + y_0j + z_0k\)</span> and <span class="math notranslate nohighlight">\(q_1 = w_1 + x_1i + y_1j + z_1k\)</span> is denoted by <span class="math notranslate nohighlight">\(q_0 \cdot q_1\)</span> and calculated in the same way as the dot product between two 4-element vectors</p>
+<div class="math notranslate nohighlight">
+\[ q_0 \cdot q_1 = w_0w_1 + x_0x_1 + y_0y_1 + z_0z_1. \]</div>
+<p>Quaternion dot product shares the same geometric interpretation as vector dot product, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span>. Rerranging this gives</p>
+<div class="math notranslate nohighlight">
+\[ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). \]</div>
+</section>
+<hr class="docutils" />
+<section id="roations-using-quaternions">
+<h2><span class="section-number">10.5. </span>Roations using quaternions<a class="headerlink" href="#roations-using-quaternions" title="Permalink to this heading">#</a></h2>
 <p>We saw above that we can rotate a number in the complex plane by multiplying by the complex number</p>
 <div class="math notranslate nohighlight">
 \[ z = \cos(\theta) + i\sin(\theta). \]</div>
-<p>We can do similar in 3D complex space by multiplying a quaternion by the rotation quaternion</p>
+<p>We can do similar in 3D space where the rotation around a unit vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by the angle <span class="math notranslate nohighlight">\(\theta\)</span> can be achieved by multiplying a quaternion by the rotation quaternion</p>
 <div class="math notranslate nohighlight" id="equation-rotation-quaternion-equation">
 <span class="eqno">(10.1)<a class="headerlink" href="#equation-rotation-quaternion-equation" title="Permalink to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}], \]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> is a unit vector around which we are rotating (see <a class="reference internal" href="B_Complex_numbers_and_quaternions.html#appendix-quaternion-rotation-section"><span class="std std-ref">Appendix: Quaternion rotation</span></a> for the derivation of this formula).</p>
+<p>See <a class="reference internal" href="B_Complex_numbers_and_quaternions.html#appendix-quaternion-rotation-section"><span class="std std-ref">Appendix: Quaternion rotation</span></a> for the derivation of this formula.</p>
 <figure class="align-default" id="axis-angle-rotation-figure-2">
-<a class="reference internal image-reference" href="../_images/10_Axis_angle_rotation.svg"><img alt="../_images/10_Axis_angle_rotation.svg" src="../_images/10_Axis_angle_rotation.svg" width="300" /></a>
+<a class="reference internal image-reference" href="../_images/05_axis_angle_rotation.svg"><img alt="../_images/05_axis_angle_rotation.svg" height="300" src="../_images/05_axis_angle_rotation.svg" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 10.5 </span><span class="caption-text">Axis-angle rotation about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span>.</span><a class="headerlink" href="#axis-angle-rotation-figure-2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 10.5 </span><span class="caption-text">Axis-angle rotation.</span><a class="headerlink" href="#axis-angle-rotation-figure-2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to multiplying by the rotation quaternion from equation <a class="reference internal" href="#equation-rotation-quaternion-equation">(10.1)</a>.</p>
-<p>If <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span> is the rotation quaternion, then the corresponding rotation matrix is</p>
+<p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to multiplying by the rotation quaternion from equation <a class="reference internal" href="#equation-rotation-quaternion-equation">(10.1)</a>. If <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span> is the rotation quaternion, then the corresponding rotation matrix is</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-matrix-equation">
 <span class="eqno">(10.2)<a class="headerlink" href="#equation-quaternion-rotation-matrix-equation" title="Permalink to this equation">#</a></span>\[\begin{split} \begin{align*}
     Rotate &amp;= 
@@ -569,31 +593,29 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we normalise the vector which we are rotating around before calculating the rotation quaternion <code class="docutils literal notranslate"><span class="pre">q</span></code> and returning its rotation matrix.</p>
+<p>Here we normalise the vector which we are rotating around before calculating the rotation quaternion <code class="docutils literal notranslate"><span class="pre">q</span></code> and returning its rotation matrix using equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-equation">(10.2)</a></p>
 <p>Compile and run your program and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don’t have to worry about gimbal lock.</p>
-</section>
-<section id="euler-angles-to-quaternion">
-<h3><span class="section-number">10.2.2. </span>Euler angles to quaternion<a class="headerlink" href="#euler-angles-to-quaternion" title="Permalink to this heading">#</a></h3>
-<p>Quaternions can be thought of as a orientation in 4D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in terms of the pitch, yaw and roll Euler angles.</p>
-<p>Given the three Euler angles pitch, yaw and roll then using the abbreviations</p>
+<section id="calculating-a-quaternion-from-euler-angles">
+<h3><span class="section-number">10.5.1. </span>Calculating a quaternion from Euler angles<a class="headerlink" href="#calculating-a-quaternion-from-euler-angles" title="Permalink to this heading">#</a></h3>
+<p>Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in terms of the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles. Using the following abbreviations</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    c_p &amp;= \cos(\tfrac{1}{2}pitch), &amp;
-    s_p &amp;= \sin(\tfrac{1}{2}pitch), \\
-    c_y &amp;= \cos(\tfrac{1}{2}yaw), &amp;
-    s_y &amp;= \sin(\tfrac{1}{2}yaw), \\
-    c_r &amp;= \cos(\tfrac{1}{2}roll), &amp;
-    s_r &amp;= \sin(\tfrac{1}{2}roll),
+    c_p &amp;= \cos(\tfrac{pitch}{2}), &amp;
+    s_p &amp;= \sin(\tfrac{pitch}{2}), \\
+    c_y &amp;= \cos(\tfrac{yaw}{2}), &amp;
+    s_y &amp;= \sin(\tfrac{yaw}{2}), \\
+    c_r &amp;= \cos(\tfrac{roll}{2}), &amp;
+    s_r &amp;= \sin(\tfrac{roll}{2}),
 \end{align*} \end{split}\]</div>
-<p>the quaternion that represents the camera orientation is</p>
+<p>then the quaternion that represents the camera orientation is</p>
 <div class="math notranslate nohighlight" id="equation-euler-to-quaternion-equation">
-<span class="eqno">(10.3)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Permalink to this equation">#</a></span>\[ q = [c_yc_pc_r + s_ys_ps_r, (s_yc_ps_r - c_ys_pc_r, s_yc_pc_r + c_ys_ps_r, c_yc_ps_r - s_ys_pc_r)]. \]</div>
+<span class="eqno">(10.3)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Permalink to this equation">#</a></span>\[ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)]. \]</div>
 <p>See <a class="reference internal" href="B_Complex_numbers_and_quaternions.html#euler-to-quaternion-derivation-section"><span class="std std-ref">Appendix: Euler angles to quaternion</span></a> for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the <code class="docutils literal notranslate"><span class="pre">Quaternion</span></code> class declaration in <code class="docutils literal notranslate"><span class="pre">maths.hpp</span></code></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>and in the <strong>maths.cpp</strong> define the constructor</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pitch</span><span class="p">);</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pitch</span><span class="p">);</span>
@@ -602,30 +624,49 @@ document.write(`
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">sr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
 
-<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cr</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="06_3D_worlds.html#camera-class-section"><span class="std std-ref">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around – see video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
+<p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="06_3D_worlds.html#camera-class-section"><span class="std std-ref">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around – see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
-<p>To implement a quaternion camera we first use the Euler angle to quaternion constructor to create a quaternion that represents the current orientation of the camera. At the start of the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class method add the following code</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="nf">orientation</span><span class="p">(</span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
+<p>To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to <span class="math notranslate nohighlight">\((0, 0, 0)\)</span>, to calculate the view matrix.</p>
+<p>In the <strong>camera.hpp</strong> header file declare the camera orientation quaternion attribute.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternion camera</span>
+<span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">(</span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then, comment out the code used to calculate the view matrix using the <code class="docutils literal notranslate"><span class="pre">glm::lookAt()</span></code> function and add the following code</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the view matrix using the direction quaternion</span>
-<span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orientation</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">eye</span><span class="p">);</span>
+<p>We are going to write a Camera class method for a quaternion camera, add the method declaration to the Camera class</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">quaternionCamera</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Here we have translated the camera by <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that it is at <span class="math notranslate nohighlight">\((0, 0, 0)\)</span> and used the orientation quaternion matrix to rotate the world space so the camera is looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis. We also need to calculate the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <a class="reference internal" href="06_3D_worlds.html#equation-lookat-matrix-equation">(6.1)</a> is</p>
+<p>and define the method in the <strong>camera.cpp</strong> file</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Camera::quaternionCamera</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
+<span class="w">    </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="p">(</span><span class="o">-</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Calculate the view matrix</span>
+<span class="w">    </span><span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orientation</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">eye</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Calculate the projection matrix</span>
+<span class="w">    </span><span class="n">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">perspective</span><span class="p">(</span><span class="n">fov</span><span class="p">,</span><span class="w"> </span><span class="n">aspect</span><span class="p">,</span><span class="w"> </span><span class="n">near</span><span class="p">,</span><span class="w"> </span><span class="n">far</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Calculate camera vectors from view matrix</span>
+<span class="w">    </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">up</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here the camera orientation quaternion is calculated from the <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles. We then combine a translation by <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">6. 3D Worlds</span></a>). We also need to calculate the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <a class="reference internal" href="06_3D_worlds.html#equation-lookat-matrix-equation">(6.1)</a> is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \view = \begin{pmatrix}
         \mathbf{right}_x &amp; \mathbf{up}_x &amp; -\mathbf{front}_x &amp; 0 \\
@@ -633,14 +674,13 @@ document.write(`
         \mathbf{right}_z &amp; \mathbf{up}_z &amp; -\mathbf{front}_z &amp; 0 \\
         -\mathbf{eye} \cdot \mathbf{right} &amp; -\mathbf{eye} \cdot \mathbf{up} &amp; \mathbf{eye} \cdot \mathbf{front} &amp; 1 \\
     \end{pmatrix} \end{split}\]</div>
-<p>So we can just extract <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> from the view matrix. Comment out the code in the <code class="docutils literal notranslate"><span class="pre">calcaulateCameraVectors()</span></code> method and add the following</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-<span class="n">up</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
-<span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<p>So we just extract <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> from the first three columns of the view matrix.</p>
+<p>We also need to change the initial <span class="math notranslate nohighlight">\(yaw\)</span> angle from <span class="math notranslate nohighlight">\(-90^\circ\)</span> to <span class="math notranslate nohighlight">\(0^\circ\)</span>. In the <strong>camera.hpp</strong> change the <span class="math notranslate nohighlight">\(yaw\)</span> angle declaration to the following</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The last thing we need to do is change the initial <span class="math notranslate nohighlight">\(yaw\)</span> angle from <span class="math notranslate nohighlight">\(-90^\circ\)</span> to <span class="math notranslate nohighlight">\(0^\circ\)</span>. In the <strong>camera.hpp</strong> change the <span class="math notranslate nohighlight">\(yaw\)</span> angle declaration to the following</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+<p>Finally, replace the call to the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> method in the <strong>Lab10_Quaternions.cpp</strong> file with the following so that we are now using our quaternion camera.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">camera</span><span class="p">.</span><span class="n">quaternionCamera</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> without the orientation flipping around.</p>
@@ -652,204 +692,119 @@ document.write(`
 </section>
 </section>
 <hr class="docutils" />
-<section id="third-person-camera">
-<h2><span class="section-number">10.3. </span>Third person camera<a class="headerlink" href="#third-person-camera" title="Permalink to this heading">#</a></h2>
-<p>The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game <em>Tomb Raider</em> released by Core Design in 1996 and has become popular with game developers with game franchises such as <em>God of War</em>, <em>Horizon Zero Dawn</em>, <em>Assassins Creed</em> and <em>Red Dead Redemption</em> to name a few all using third person camera view.</p>
-<p>To implement a simple third person camera we are going to calculate the view matrix as usual and then move the camera back by an <span class="math notranslate nohighlight">\(\tt offset\)</span> vector which is a vector pointing from the actual camera position to the third person camera position <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 10.6</span></a>.</p>
-<figure class="align-default" id="third-person-camera-figure">
-<a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" width="400" /></a>
+<section id="slerp">
+<h2><span class="section-number">10.6. </span>SLERP<a class="headerlink" href="#slerp" title="Permalink to this heading">#</a></h2>
+<p>The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" width="300" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 10.6 </span><span class="caption-text">A third person camera.</span><a class="headerlink" href="#third-person-camera-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 10.6 </span><span class="caption-text">Linear interpolation between two points.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>For our third person camera, the direction that the character is facing will be controlled by keyboard inputs where the W and S keys move the character forward and backwards and the A and D keys rotate it to the left and right. In <code class="docutils literal notranslate"><span class="pre">camera.hpp</span></code> add the following attributes to the Camera class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;first&quot;</span><span class="p">;</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">charYaw</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="n">charOrientiation</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>These attributes are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">offset</span></code> - the vector pointing from the character position to the third person camera</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code> - a string to record whether the camera is in first or third person mode</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">charYaw</span></code> - the yaw angle for the character</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">charOrientation</span></code> - a quaternion for the character orientation</p></li>
-</ul>
-<p>Also in <code class="docutils literal notranslate"><span class="pre">camera.hpp</span></code> add a declaration for the third person camera method</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">thirdPersonCamera</span><span class="p">(</span><span class="n">GLFWwindow</span><span class="o">*</span> <span class="n">window</span><span class="p">,</span> <span class="n">const</span> <span class="nb">float</span> <span class="n">deltaTime</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>In <code class="docutils literal notranslate"><span class="pre">camera.cpp</span></code> add the following method definition</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Camera::thirdPersonCamera</span><span class="p">(</span><span class="n">GLFWwindow</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">deltaTime</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">thirdPersonCamera()</span></code> method will be quite similar to the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> method so copy and paste the code from there into <code class="docutils literal notranslate"><span class="pre">thirdPersonCamera()</span></code>. We want the A and D keys to control the yaw angle for the character so edit your code so it looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_A</span><span class="p">))</span>
-<span class="w">    </span><span class="n">charYaw</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">deltaTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="p">;</span>
-
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_D</span><span class="p">))</span>
-<span class="w">    </span><span class="n">charYaw</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">deltaTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>The third person camera is moved back from the character position by translating the <code class="docutils literal notranslate"><span class="pre">view</span></code> matrix by the <code class="docutils literal notranslate"><span class="pre">offset</span></code> vector. Change the <code class="docutils literal notranslate"><span class="pre">view</span></code> matrix calculation to the following</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="n">offset</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">direction</span><span class="p">.</span><span class="n">quatToMat</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="n">position</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>The last change we need to make to our third person camera method is to move the character based on the character direction quaternion and not the camera direction quaternion. Replace the code used to update the camera vectors with the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update character movement vectors</span>
-<span class="n">charDirection</span><span class="p">.</span><span class="n">eulerToQuat</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">charYaw</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
-<span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">charMat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">charDirection</span><span class="p">.</span><span class="n">quatToMat</span><span class="p">();</span>
-<span class="n">right</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<span class="n">up</span><span class="p">.</span><span class="n">x</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">up</span><span class="p">.</span><span class="n">y</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">up</span><span class="p">.</span><span class="n">z</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">charMat</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<span class="n">front</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">charMat</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">front</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">charMat</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">front</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">charMat</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
-</pre></div>
-</div>
-<p>We now need a way to instruct our programme whether to use the first or third person camera. In <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> add the following code before we calculate the <code class="docutils literal notranslate"><span class="pre">view</span></code> and <code class="docutils literal notranslate"><span class="pre">projection</span></code> matrices.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Toggle between first and third person camera</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;third&quot;</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;first&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">yaw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">charYaw</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwGetKey</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_KEY_2</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;first&quot;</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;third&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">charYaw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">yaw</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Here we using the 1 to select first person camera and the 2 key to select the third person camera. When switch from first person to third person camera the character yaw angle is set to the camera yaw angle so the character is facing in the correct direction. This is reversed when switching from the third to first person camera so the first person camera is facing the direction of the character.</p>
-<p>We now instruct the program to use the appropriate method for calculating the <code class="docutils literal notranslate"><span class="pre">view</span></code> and <code class="docutils literal notranslate"><span class="pre">projection</span></code> matrices.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate view and projection matrices</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;first&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">calculateMatrices</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">deltaTime</span><span class="p">);</span>
-
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;third&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">thirdPersonCamera</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">deltaTime</span><span class="p">);</span>
-
-<span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">getViewMatrix</span><span class="p">();</span>
-<span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">getProjectionMatrix</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Of course when using the third person camera we need to render the character model. Add the following code after you have drawn all of the cubes.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw suzanne model in third person camera mode</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;third&quot;</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Calculate model matrix</span>
-<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">),</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
-<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">),</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.2f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">));</span>
-<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">rotate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">transpose</span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">charDirection</span><span class="p">.</span><span class="n">quatToMat</span><span class="p">());</span>
-<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">translate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rotate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Send the model matrix to the shader</span>
-<span class="w">    </span><span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;model&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Draw the model</span>
-<span class="w">    </span><span class="n">suzanne</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">shaderID</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Here we are using Suzanne the Blender mascot to act as our character model. The <code class="docutils literal notranslate"><span class="pre">model</span></code> matrix is calculated by translating Suzanne to the camera position (this is actually our character position as the camera has been offset) and an inverse of the <code class="docutils literal notranslate"><span class="pre">charDirection</span></code> matrix is used to rotate the model so it is facing in the right direction. Since the <code class="docutils literal notranslate"><span class="pre">charDirection</span></code> matrix is orthogonal (the columns vectors are all at right angles) this can be done using the transpose of the matrix which is much quicker than calculating an inverse of a matrix.</p>
-<p>Compile and run the program and you should be able to switch between the camera modes using the 1 and 2 keys.</p>
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Third_person_camera_no_SLERP.mp4" type="video/mp4">
-</video>
-</center>
-</section>
-<hr class="docutils" />
-<section id="slerp">
-<h2><span class="section-number">10.4. </span>SLERP<a class="headerlink" href="#slerp" title="Permalink to this heading">#</a></h2>
-<p>The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
-<figure class="align-default">
-<a class="reference internal image-reference" href="../_images/10_Linear_interpolation.svg"><img alt="../_images/10_Linear_interpolation.svg" src="../_images/10_Linear_interpolation.svg" width="400" /></a>
-</figure>
-<p>If <span class="math notranslate nohighlight">\(\mathbf{p}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}_2\)</span> are two points then an interpolated point <span class="math notranslate nohighlight">\(\mathbf{p}_t\)</span> is calculated using</p>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{v}_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> are two points then another point, <span class="math notranslate nohighlight">\(\mathbf{v}_t\)</span>, that lies on the line between <span class="math notranslate nohighlight">\(\mathbf{v}_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> is calculated using</p>
 <div class="math notranslate nohighlight">
-\[ \operatorname{LERP}(\mathbf{p}_1, \mathbf{p}_2, t) = \mathbf{p}_1 + t(\mathbf{p}_2 - \mathbf{p}_1), \]</div>
-<p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1. <strong>SLERP</strong> stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.</p>
+\[ \operatorname{LERP}(\mathbf{v}_0, \mathbf{v}_1, t) = \mathbf{v}_0 + t(\mathbf{v}_1 - \mathbf{v}_0), \]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1.</p>
+<p><strong>SLERP</strong> stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.</p>
 <figure class="align-default" id="a-slerp-figure">
 <a class="reference internal image-reference" href="../_images/10_SLERP.svg"><img alt="../_images/10_SLERP.svg" src="../_images/10_SLERP.svg" width="400" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 10.7 </span><span class="caption-text">SLERP interpolation between two points on a sphere.</span><a class="headerlink" href="#a-slerp-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 10.7</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since its very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
+<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 10.7</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span> calculated using</p>
 <div class="math notranslate nohighlight" id="equation-slerp-equation">
 <span class="eqno">(10.4)<a class="headerlink" href="#equation-slerp-equation" title="Permalink to this equation">#</a></span>\[ \begin{align*}
-    \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
+    \operatorname{SLERP}(q_0, q_1, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_0 + \frac{\sin(t\theta)}{\sin(\theta)}q_1
 \end{align*}, \]</div>
-<p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1 and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two pure quaternions <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> and is calculated using</p>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1 and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two pure quaternions <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span> and is calculated using</p>
 <div class="math notranslate nohighlight">
-\[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).\]</div>
-<p>Sometimes the to product <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(10.4)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
+\[ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0||q_1|} \right).\]</div>
+<p>Sometimes the dot product <span class="math notranslate nohighlight">\(q_0 \cdot q_1\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>.</p>
+<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(10.4)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span>.</p>
 <p>Add a method declaration to the Maths class in the <code class="docutils literal notranslate"><span class="pre">maths.hpp</span></code> file</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="nf">slerp</span><span class="p">(</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="nf">SLERP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q0</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>and define the method in the <code class="docutils literal notranslate"><span class="pre">maths.cpp</span></code> file</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// SLERP</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="nf">Maths::slerp</span><span class="p">(</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="n">Quaternion</span><span class="w"> </span><span class="nf">Maths::SLERP</span><span class="p">(</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q0</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="c1">// Check if we are going the &quot;long&quot; way around the sphere</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">q1DotQ2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">q1DotQ2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Calculate cos(theta)</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cosTheta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// If q1 and q2 are close together use LERP to avoid divide by zero errors</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cosTheta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.9999f</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Change signs of q2 to ensure we go the short way round</span>
-<span class="w">        </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
-<span class="w">        </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="w">        </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="w">        </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-<span class="w">        </span><span class="n">q1DotQ2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">q1DotQ2</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate angle between quaternions q1 and q2</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="n">q1DotQ2</span><span class="p">);</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate interpolated quaternion qt</span>
-<span class="w">    </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">qt</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">denom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">denom</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.001f</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Avoid taking the long path around the sphere by reversing sign of q1</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cosTheta</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Use SLERP</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">fact1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">((</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">);</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fact1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fact1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fact1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fact1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Use LERP if sin(theta) is small</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="w">        </span><span class="n">qt</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">(</span><span class="o">-</span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="w">        </span><span class="n">cosTheta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">cosTheta</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">qt</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Calculate SLERP</span>
+<span class="w">    </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="n">cosTheta</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">((</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q0</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Then to apply SLERP replace the code used to calculate the <code class="docutils literal notranslate"><span class="pre">direction</span></code> quaternion with the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate direction quaternion</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="n">newDirection</span><span class="p">;</span>
-<span class="n">newDirection</span><span class="p">.</span><span class="n">eulerToQuat</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
-<span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">slerp</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span><span class="w"> </span><span class="n">newDirection</span><span class="p">,</span><span class="w"> </span><span class="n">deltaTime</span><span class="p">);</span>
+<p>Then to apply SLERP replace the code used to calculate the <code class="docutils literal notranslate"><span class="pre">orientation</span></code> quaternion in the <code class="docutils literal notranslate"><span class="pre">quaternionCamera()</span></code> method with the following.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
+<span class="n">Quaternion</span><span class="w"> </span><span class="nf">newOrientation</span><span class="p">(</span><span class="o">-</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
+
+<span class="c1">// Apply SLERP</span>
+<span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">SLERP</span><span class="p">(</span><span class="n">orientation</span><span class="p">,</span><span class="w"> </span><span class="n">newOrientation</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newDirection</span></code> which is calculated using the pitch, yaw and roll Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">direction</span></code> and <code class="docutils literal notranslate"><span class="pre">newDirection</span></code>. Compile and run your program and you should see that the third person camera now rotates smoothly around the character.</p>
+<p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code> which is calculated using the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">orientation</span></code> and <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code>. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/09_Third_person_camera_with_SLERP.mp4" type="video/mp4">
 </video>
-</center></section>
+</center>
+</section>
+<hr class="docutils" />
+<section id="third-person-camera">
+<h2><span class="section-number">10.7. </span>Third person camera<a class="headerlink" href="#third-person-camera" title="Permalink to this heading">#</a></h2>
+<p>The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game <em>Tomb Raider</em> released by Core Design in 1996 and has become popular with game developers with game franchises such as <em>God of War</em>, <em>Horizon Zero Dawn</em>, <em>Assassins Creed</em> and <em>Red Dead Redemption</em> to name a few all using third person camera view.</p>
+<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by an <span class="math notranslate nohighlight">\(\mathbf{offset}\)</span> vector which is a vector pointing from <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> to the third person camera position <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 10.8</span></a>.</p>
+<figure class="align-default" id="third-person-camera-figure">
+<a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" width="400" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10.8 </span><span class="caption-text">A third person camera.</span><a class="headerlink" href="#third-person-camera-figure" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To apply the camera offset, we simply translate the view matrix by <span class="math notranslate nohighlight">\(-\mathbf{offset}\)</span>, i.e,.</p>
+<div class="math notranslate nohighlight">
+\[ View = Translate(-\mathbf{offset}) \cdot View \]</div>
+<p>The result of a third-person camera view can be seen below. Here we are using Suzanne the Blender mascot to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/09_Third_person_camera_no_SLERP.mp4" type="video/mp4">
+</video>
+</center>
+<p>Moving the camera around we see that our character model is always facing in the same direction. To make it face in the direction of the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.</p>
+<div class="math notranslate nohighlight">
+\[ Rotate = R_y(yaw) \cdot R_x(pitch).\]</div>
+<p>The implementations of third-person cameras can vary. You may wish the character movement to be independent of the camera movement, to do this you would need a separate character and matrix orientation quaternions can</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -897,7 +852,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Creating an .obj File in Blender</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Creating an .obj File in Blender</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -923,13 +878,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-using-complex-numbers">10.1.1. Rotation using complex numbers</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-rotations">10.2.1. Quaternion rotations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euler-angles-to-quaternion">10.2.2. Euler angles to quaternion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roations-using-quaternions">10.5. Roations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.3. Third person camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.4. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.6. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.7. Third person camera</a></li>
 </ul>
   </nav></div>
 
