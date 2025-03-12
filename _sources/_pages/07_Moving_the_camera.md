@@ -64,7 +64,7 @@ if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 
 Here we've used the classic WSAD key combination to control the movement of the camera by adding and subtracting the $\mathbf{front}$ and $\mathbf{right}$ vectors to the $\mathbf{eye}$ vector.
 
-We also need to change the `target` vector which is used by the `glm::lookAt()` function in the Camera class so that the camera is pointing down the $z$-axis. In the **Camera.cpp** file, change the `calculateMatrices()` method, change the `lookAt()` function inputs to the following
+We also need to change the $\mathbf{target}$ vector which is used by the `glm::lookAt()` function in the Camera class so that the camera is pointing down the $z$-axis. In the **Camera.cpp** file, change the `calculateMatrices()` method so that the call to the `lookAt()` function looks like the following
 
 ```cpp
 // Calculate the view matrix

@@ -19,7 +19,7 @@ To create an .obj file we can use the popular open source application <a href="h
 :width: 600
 ```
 
-4. Navigate to your chosen folder e.g., `Lab10_Lighting/objects/`, and give it an appropriate name.
+1. Navigate to your chosen folder e.g., **Computer-Graphics-Labs/assets/**, and give it an appropriate name.
 
 ```{note}
 The Model class that we are using in these labs is very simple and will only work with simple models. 

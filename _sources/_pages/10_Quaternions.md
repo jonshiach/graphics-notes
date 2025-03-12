@@ -109,37 +109,6 @@ Quaternions are more commonly represented in scalar-vector form
 
 $$q = [w, (x, y, z)].$$
 
-We are going to write a class and some member functions to perform quaternion calculations. In the **maths.hpp** file add the following code **above** where we have defined the Maths class (its important that the Quaternion class is defined before the Maths class since later we will be adding methods to the Maths class that use quaternions).
-
-```
-// Quaternion class
-class Quaternion
-{
-public:
-    float w, x, y, z;
-
-    // Constructors
-    Quaternion();
-    Quaternion(const float w, const float x, const float y, const float z);
-};
-```
-
-Here we have declared our Quaternion class which contains the attributes for the $x$, $y$, $z$ and $w$ values and two constructor methods, one for creating a quaternion and another for creating a quaternion given known values of $w$, $x$, $y$ and $z$.
-
-In the **maths.cpp** add the following function definitions for the constructors.
-
-```cpp
-Quaternion::Quaternion() {}
-
-Quaternion::Quaternion(const float w, const float x, const float y, const float z)
-{
-    this->w = w;
-    this->x = x;
-    this->y = y;
-    this->z = z;
-}
-```
-
 ## Quaternion magnitude
 
 The **magnitude** of a quaternion $q = w + xi + yj + zk$ is denoted by $|q|$ and calculated in the same way as the magnitude of a 4-element vector
@@ -251,17 +220,19 @@ Compile and run your program and you should see that nothing has changed. This i
 Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Using the following abbreviations
 
 $$ \begin{align*}
-    c_p &= \cos(\tfrac{pitch}{2}), &
-    s_p &= \sin(\tfrac{pitch}{2}), \\
-    c_y &= \cos(\tfrac{yaw}{2}), &
-    s_y &= \sin(\tfrac{yaw}{2}), \\
-    c_r &= \cos(\tfrac{roll}{2}), &
-    s_r &= \sin(\tfrac{roll}{2}),
+    c_p &= \cos\left(\frac{pitch}{2}\right), &
+    s_p &= \sin\left(\frac{pitch}{2}\right), \\
+    c_y &= \cos\left(\frac{yaw}{2}\right), &
+    s_y &= \sin\left(\frac{yaw}{2}\right), \\
+    % c_r &= \cos(\tfrac{roll}{2}), &
+    % s_r &= \sin(\tfrac{roll}{2}),
 \end{align*} $$
 
 then the quaternion that represents the camera orientation is
 
-$$ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)]. $$(euler-to-quaternion-equation)
+<!-- $$ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)]. $$(euler-to-quaternion-equation) -->
+
+$$ q = [c_pc_y, (c_ys_p, c_ps_y, s_ps_y)]. $$(euler-to-quaternion-equation)
 
 See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the `Quaternion` class declaration in `maths.hpp`
 
@@ -495,8 +466,8 @@ The result of a third-person camera view can be seen below. Here we are using Su
 </video>
 </center>
 
-Moving the camera around we see that our character model is always facing in the same direction. To make it face in the direction of the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.
+Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.
 
 $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 
-The implementations of third-person cameras can vary. You may wish the character movement to be independent of the camera movement, to do this you would need a separate character and matrix orientation quaternions can 
+The implementations of third-person cameras can vary. You may wish the character movement to be independent of the camera movement, to do this you would need a separate character and matrix orientation quaternions.
