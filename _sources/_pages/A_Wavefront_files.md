@@ -20,7 +20,3 @@ To create an .obj file we can use the popular open source application <a href="h
 ```
 
 4. Navigate to your chosen folder e.g., **Computer-Graphics-Labs/assets/**, give it an appropriate name and click on **Export Wavefront OBJ**.
-
-```{note}
-The Model class that we are using in these labs is very simple and will only work with simple models. 
-```
