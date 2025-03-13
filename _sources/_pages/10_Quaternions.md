@@ -55,8 +55,12 @@ Since a complex number consists of two parts we can plot them on a 2D space call
 :width: 400
 :name: complex-plane-figure
 
-The complex number $x + yi$ plotted on the complex plane.
+The complex number $z = x + yi$ plotted on the complex plane.
 ```
+
+We can see from {numref}`complex-plane-figure` that a complex number $z = x + yi$ can be thought of as a 2D vector pointing from $(0,0)$ to $(x, y)$. The length of this vector is known as the **magnitude** of $z$ denoted by $|z|$ and calculated using
+
+$$|z| = \sqrt{x^2 + y^2}.$$
 
 ### Rotation using complex numbers
 
@@ -228,9 +232,9 @@ $$ \begin{align*}
 
 then the quaternion that represents the camera orientation is
 
-$$ q = [c_pc_y, (c_ys_p, c_ps_y, s_ps_y)]. $$(euler-to-quaternion-equation)
+$$ q = [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)]. $$(euler-to-quaternion-equation)
 
-See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the `Quaternion` class declaration in `maths.hpp`
+See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the Quaternion class declaration in **maths.hpp**
 
 ```cpp
 Quaternion(const float pitch, const float yaw);
@@ -247,7 +251,7 @@ Quaternion::Quaternion(const float pitch, const float yaw)
     float sinYaw   = sin(0.5f * yaw);
 
     this->w = cosPitch * cosYaw;
-    this->x = cosYaw   * sinPitch;
+    this->x = sinPitch * cosYaw;
     this->y = cosPitch * sinYaw;
     this->z = sinPitch * sinYaw;
 }
