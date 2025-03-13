@@ -544,8 +544,12 @@ $$\begin{align*}
 Let $c_p = \cos(\tfrac{pitch}{2})$ and $s_p = \sin(\tfrac{pitch}{2})$ for brevity, and do similar for the cosines and sines of $yaw$ and $roll$, then the single rotation quaternion that combines rotation about the three coordinates axes is
 
 $$ \begin{align*}
-    q_pq_yq_r &= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
+    q &= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
     &= [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)].
 \end{align*} $$
 
-This means we can define a quaternion based on the three Euler angles and then use equation {eq}`quaternion-rotation-matrix-2-equation` to generate the rotation matrix.
+This means we can define a quaternion based on the three Euler angles and then use equation {eq}`quaternion-rotation-matrix-2-equation` to generate the rotation matrix. A camera only requires the $pitch$ and $yaw$ angles. If $roll = 0^\circ$ then $\cos(roll) = 1$ and $\sin(roll) = 0$ and so the quaternion simplifies to
+
+$$ \begin{align*}
+    q &= [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)].
+\end{align*} $$

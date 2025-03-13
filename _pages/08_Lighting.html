@@ -384,6 +384,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spotlights">8.5. Spotlights</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directional-light">8.6. Directional light</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.7. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">8.8. Video walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -932,10 +933,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 <p>Replace the code used to calculate the model, <span class="math notranslate nohighlight">\(MVP\)</span> and <span class="math notranslate nohighlight">\(MV\)</span> matrices as well as drawing the teapot with the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send the view matrix to the shader</span>
-<span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">shaderID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">camera</span><span class="p">.</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-
-<span class="c1">// Loop through objects</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Loop through objects</span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">objects</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// Calculate model matrix</span>
@@ -1371,15 +1369,15 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <h2><span class="section-number">8.7. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Experiment with the positions, colours and material properties of the various light sources to see what effects they have.</p></li>
-<li><p>Use a spotlight to model a flashlight controlled by the user such that the light is positioned at <code class="docutils literal notranslate"><span class="pre">camera.position</span></code>, is pointing in the same direction as <code class="docutils literal notranslate"><span class="pre">camera.direction</span></code> and has a spread of <span class="math notranslate nohighlight">\(\phi = 15^\circ\)</span>. Turn off all other light sources for extra spookiness.</p></li>
+<li><p>Use a spotlight to model a flashlight controlled by the user such that the light is positioned at <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span>, is pointing in the same direction as <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> and has a spread angle of <span class="math notranslate nohighlight">\(\phi = 15^\circ\)</span>. Turn off all other light sources for extra spookiness.</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/08_flash_light.mp4" type="video/mp4">
 </video>
 </center>
-<ol class="arabic simple" start="3">
-<li><p>Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the coordinates of points on a circle can be calculated using <span class="math notranslate nohighlight">\((x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))\)</span>.</p></li>
+<ol class="arabic simple">
+<li><p>Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using <span class="math notranslate nohighlight">\((x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))\)</span> where <span class="math notranslate nohighlight">\(r\)</span> is the radius <span class="math notranslate nohighlight">\(t\)</span> is some parameter (e.g., time).</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -1395,6 +1393,11 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 </video>
 </center>
 </section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2><span class="section-number">8.8. </span>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Permalink to this heading">#</a></h2>
+<p>The video below walks you through these lab materials.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-hyZHa3jXzs?si=4-N9Nhlv5VBjnn2b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1479,6 +1482,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spotlights">8.5. Spotlights</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directional-light">8.6. Directional light</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.7. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">8.8. Video walkthrough</a></li>
 </ul>
   </nav></div>
 

@@ -1,6 +1,6 @@
 (blender-section)=
 
-## Creating an .obj File in Blender
+# Creating an .obj File in Blender
 
 To create an .obj file we can use the popular open source application <a href="https://www.blender.org" target="_blank">Blender</a> (this is installed on the machines in the Dalton building).
 

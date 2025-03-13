@@ -885,10 +885,14 @@ document.write(`
 <p>Let <span class="math notranslate nohighlight">\(c_p = \cos(\tfrac{pitch}{2})\)</span> and <span class="math notranslate nohighlight">\(s_p = \sin(\tfrac{pitch}{2})\)</span> for brevity, and do similar for the cosines and sines of <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span>, then the single rotation quaternion that combines rotation about the three coordinates axes is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    q_pq_yq_r &amp;= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
+    q &amp;= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
     &amp;= [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)].
 \end{align*} \end{split}\]</div>
-<p>This means we can define a quaternion based on the three Euler angles and then use equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(12.7)</a> to generate the rotation matrix.</p>
+<p>This means we can define a quaternion based on the three Euler angles and then use equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(12.7)</a> to generate the rotation matrix. A camera only requires the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles. If <span class="math notranslate nohighlight">\(roll = 0^\circ\)</span> then <span class="math notranslate nohighlight">\(\cos(roll) = 1\)</span> and <span class="math notranslate nohighlight">\(\sin(roll) = 0\)</span> and so the quaternion simplifies to</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    q &amp;= [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)].
+\end{align*} \]</div>
 </section>
 </section>
 </section>

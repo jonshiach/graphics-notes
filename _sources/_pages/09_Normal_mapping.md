@@ -561,19 +561,19 @@ A neutral specular map applied to the teapot.
 ---
 ## Exercises
 
-1. Add another object using the .obj model `../assets/wall.obj` to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90$^\circ$ about the x axis. Apply the diffuse map `../assets/bricks_diffuse.png`.
+1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90$^\circ$ about the x axis. Apply the diffuse map **../assets/bricks_diffuse.png**.
 
 ```{figure} ../_images/09_ex1.png
 :width: 500
 ```
 
-2. Apply the normal map `../assets/bricks_normal.png` to the wall object.
+2. Apply the normal map **../assets/bricks_normal.png** to the wall object.
 
 ```{figure} ../_images/09_ex2.png
 :width: 500
 ```
 
-3. Apply the specular map `../assets/bricks_specular.png` to the wall object.
+3. Apply the specular map **../assets/bricks_specular.png** to the wall object.
 
 ```{figure} ../_images/09_ex3.png
 :width: 500

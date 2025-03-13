@@ -217,45 +217,39 @@ Compile and run your program and you should see that nothing has changed. This i
 
 ### Calculating a quaternion from Euler angles
 
-Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Using the following abbreviations
+Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$ and $yaw$ Euler angles. Using the following abbreviations
 
 $$ \begin{align*}
     c_p &= \cos\left(\frac{pitch}{2}\right), &
     s_p &= \sin\left(\frac{pitch}{2}\right), \\
     c_y &= \cos\left(\frac{yaw}{2}\right), &
-    s_y &= \sin\left(\frac{yaw}{2}\right), \\
-    % c_r &= \cos(\tfrac{roll}{2}), &
-    % s_r &= \sin(\tfrac{roll}{2}),
+    s_y &= \sin\left(\frac{yaw}{2}\right),
 \end{align*} $$
 
 then the quaternion that represents the camera orientation is
-
-<!-- $$ q = [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)]. $$(euler-to-quaternion-equation) -->
 
 $$ q = [c_pc_y, (c_ys_p, c_ps_y, s_ps_y)]. $$(euler-to-quaternion-equation)
 
 See [Appendix: Euler angles to quaternion](euler-to-quaternion-derivation-section) for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the `Quaternion` class declaration in `maths.hpp`
 
 ```cpp
-Quaternion(const float pitch, const float yaw, const float roll);
+Quaternion(const float pitch, const float yaw);
 ```
 
 and in the **maths.cpp** define the constructor
 
 ```cpp
-Quaternion::Quaternion(const float pitch, const float yaw, const float roll)
+Quaternion::Quaternion(const float pitch, const float yaw)
 {
-    float cp = cos(0.5f * pitch);
-    float sp = sin(0.5f * pitch);
-    float cy = cos(0.5f * yaw);
-    float sy = sin(0.5f * yaw);
-    float cr = cos(0.5f * roll);
-    float sr = sin(0.5f * roll);
+    float cosPitch = cos(0.5f * pitch);
+    float sinPitch = sin(0.5f * pitch);
+    float cosYaw   = cos(0.5f * yaw);
+    float sinYaw   = sin(0.5f * yaw);
 
-    this->w = cp * cy * cr - sp * sy * sr;
-    this->x = sp * cy * cr + cp * sy * sr;
-    this->y = cp * sy * cr - sp * cy * sr;
-    this->z = cp * cy * sr + sp * sy * cr;
+    this->w = cosPitch * cosYaw;
+    this->x = cosYaw   * sinPitch;
+    this->y = cosPitch * sinYaw;
+    this->z = sinPitch * sinYaw;
 }
 ```
 
@@ -273,7 +267,7 @@ In the **camera.hpp** header file declare the camera orientation quaternion attr
 
 ```cpp
 // Quaternion camera
-Quaternion orientation = Quaternion(yaw, pitch, roll);
+Quaternion orientation = Quaternion(pitch, yaw);
 ```
 
 We are going to write a Camera class method for a quaternion camera, add the method declaration to the Camera class
@@ -288,7 +282,7 @@ and define the method in the **camera.cpp** file
 void Camera::quaternionCamera()
 {
     // Calculate camera orientation quaternion from the Euler angles
-    Quaternion orientation(-pitch, yaw, roll);
+    Quaternion orientation(-pitch, yaw);
     
     // Calculate the view matrix
     view = orientation.matrix() * Maths::translate(-eye);
@@ -303,7 +297,7 @@ void Camera::quaternionCamera()
 }
 ```
 
-Here the camera orientation quaternion is calculated from the $yaw$, $pitch$ and $roll$ Euler angles. We then combine a translation by $-\mathbf{eye}$ so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in [6. 3D Worlds](view-matrix-section)). We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
+Here the camera orientation quaternion is calculated from the $pitch$ and $yaw$ Euler angles. We then combine a translation by $-\mathbf{eye}$ so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in [6. 3D Worlds](view-matrix-section)). We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
 
 $$ \view = \begin{pmatrix}
         \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
@@ -445,24 +439,21 @@ Here we use a temporary quaternion `newOrientation` which is calculated using th
 
 The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *Horizon Zero Dawn*, *Assassins Creed* and *Red Dead Redemption* to name a few all using third person camera view.
 
-To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by an $\mathbf{offset}$ vector which is a vector pointing from $\mathbf{eye}$ to the third person camera position {numref}`third-person-camera-figure`.
-
 ```{figure} ../_images/10_Third_person_camera.svg
 :width: 400
 :name: third-person-camera-figure
 
-A third person camera.
+A third person camera that follows a character.
 ```
+To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an $\mathbf{offset}$ vector {numref}`third-person-camera-figure`.
 
-To apply the camera offset, we simply translate the view matrix by $-\mathbf{offset}$, i.e,.
-
-$$ View = Translate(-\mathbf{offset}) \cdot View $$
+$$ View = Translate(\mathbf{offset}) \cdot View $$
 
 The result of a third-person camera view can be seen below. Here we are using Suzanne the Blender mascot to act as our character model, and we can switch from first-person to third-person view using keyboard input.
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Third_person_camera_no_SLERP.mp4" type="video/mp4">
+    <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -470,4 +461,23 @@ Moving the camera around we see that our character model is always facing in the
 
 $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 
-The implementations of third-person cameras can vary. You may wish the character movement to be independent of the camera movement, to do this you would need a separate character and matrix orientation quaternions.
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
+</video>
+</center>
+
+Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different $\mathbf{front}$ vector for the character based on another $yaw$ angle that can be altered using keyboard inputs.
+
+---
+## Exercises
+
+1. Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character.
+
+2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a yaw angle that can be altered by the A and D keys.
+
+<center>
+<video controls muted="true" loop="true" width="500">
+    <source src="../_static/10_Third_person_camera_3.mp4" type="video/mp4">
+</video>
+</center>

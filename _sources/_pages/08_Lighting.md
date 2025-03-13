@@ -615,9 +615,6 @@ for (unsigned int i = 0 ; i < 10 ; i++)
 Replace the code used to calculate the model, $MVP$ and $MV$ matrices as well as drawing the teapot with the following.
 
 ```cpp
-// Send the view matrix to the shader
-glUniformMatrix4fv(glGetUniformLocation(shaderID, "V"), 1, GL_FALSE, &camera.view[0][0]);
-
 // Loop through objects
 for (int i = 0; i < static_cast<unsigned int>(objects.size()); i++)
 {
@@ -1125,7 +1122,7 @@ We can see that the teapots have been illuminated from a directional light sourc
 
 1. Experiment with the positions, colours and material properties of the various light sources to see what effects they have.
 
-2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at `camera.position`, is pointing in the same direction as `camera.direction` and has a spread of $\phi = 15^\circ$. Turn off all other light sources for extra spookiness.
+2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at $\mathbf{eye}$, is pointing in the same direction as $\mathbf{front}$ and has a spread angle of $\phi = 15^\circ$. Turn off all other light sources for extra spookiness.
    
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -1133,7 +1130,7 @@ We can see that the teapots have been illuminated from a directional light sourc
 </video>
 </center>
 
-3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off any spotlights and directional lighting. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (0,0,-5) + 5 * (\cos({\tt time}), 0, \sin(\tt time))$.
+1. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -1148,3 +1145,11 @@ We can see that the teapots have been illuminated from a directional light sourc
     <source src="../_static/08_lights_on_off.mp4" type="video/mp4">
 </video>
 </center>
+
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-hyZHa3jXzs?si=4-N9Nhlv5VBjnn2b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
