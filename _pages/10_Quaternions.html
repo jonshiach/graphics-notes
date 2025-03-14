@@ -376,7 +376,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roations-using-quaternions">10.5. Roations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.5. Rotations using quaternions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>
@@ -498,13 +498,13 @@ document.write(`
 <p>Quaternion dot product shares the same geometric interpretation as vector dot product, i.e.,</p>
 <div class="math notranslate nohighlight">
 \[ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span>. Rerranging this gives</p>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span>. Rearranging this gives the expression for the angle between two quaternions</p>
 <div class="math notranslate nohighlight">
 \[ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). \]</div>
 </section>
 <hr class="docutils" />
-<section id="roations-using-quaternions">
-<h2><span class="section-number">10.5. </span>Roations using quaternions<a class="headerlink" href="#roations-using-quaternions" title="Permalink to this heading">#</a></h2>
+<section id="rotations-using-quaternions">
+<h2><span class="section-number">10.5. </span>Rotations using quaternions<a class="headerlink" href="#rotations-using-quaternions" title="Permalink to this heading">#</a></h2>
 <p>We saw above that we can rotate a number in the complex plane by multiplying by the complex number</p>
 <div class="math notranslate nohighlight">
 \[ z = \cos(\theta) + i\sin(\theta). \]</div>
@@ -871,7 +871,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roations-using-quaternions">10.5. Roations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.5. Rotations using quaternions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>

@@ -129,12 +129,12 @@ Quaternion dot product shares the same geometric interpretation as vector dot pr
 
 $$ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),$$
 
-where $\theta$ is the angle between $q_0$ and $q_1$. Rerranging this gives
+where $\theta$ is the angle between $q_0$ and $q_1$. Rearranging this gives the expression for the angle between two quaternions
 
 $$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). $$
 
 ---
-## Roations using quaternions
+## Rotations using quaternions
 
 We saw above that we can rotate a number in the complex plane by multiplying by the complex number
 
