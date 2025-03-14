@@ -208,7 +208,7 @@ $$ Rotate = \begin{pmatrix}
 The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space coordinates to the view space.
 
 $$ \begin{align*}
-    \view &= Rotate \cdot Translate \\
+    View &= Rotate \cdot Translate \\
     &=
     \begin{pmatrix}
          \mathbf{right}_x &  \mathbf{right}_y &  \mathbf{right}_z & 0 \\
@@ -233,14 +233,14 @@ $$ \begin{align*}
 
 So the transposed view matrix is
 
-$$ \view = \begin{pmatrix}
+$$ View = \begin{pmatrix}
         \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
         \mathbf{right}_y & \mathbf{up}_y & -\mathbf{front}_y & 0 \\
         \mathbf{right}_z & \mathbf{up}_z & -\mathbf{front}_z & 0 \\
         -\mathbf{eye} \cdot \mathbf{right} & -\mathbf{eye} \cdot \mathbf{up} & \mathbf{eye} \cdot \mathbf{front} & 1 \\
     \end{pmatrix} $$(lookat-matrix-equation)
 
-The glm function `lookAt()` calculates the $\view$ matrix given inputs of the $\mathbf{eye}$, $\mathbf{target}$ and $\mathbf{worldUp}$ vectors. Let's move the camera to the right, back and up a bit so that it is at $(1, 1, 1)$ looking towards the center of the cube which is at $(0, 0, -2)$. Add the following code after we have calculated the model matrix.
+The glm function `lookAt()` calculates the $View$ matrix given inputs of the $\mathbf{eye}$, $\mathbf{target}$ and $\mathbf{worldUp}$ vectors. Let's move the camera to the right, back and up a bit so that it is at $(1, 1, 1)$ looking towards the center of the cube which is at $(0, 0, -2)$. Add the following code after we have calculated the model matrix.
 
 ```cpp
 // Calculate the view matrix
@@ -329,7 +329,7 @@ Now that we have the model, view and projection matrices we need to apply them t
 
 So in our main program we combine the model, view and projection matrices to form a single matrix called the $MV\!P$ matrix.
 
-$$ MV\!P = Projection \cdot \view \cdot \model. $$
+$$ MV\!P = Projection \cdot View \cdot \model. $$
 
 We need a way to send the $MV\!P$ matrix to the vertex shader. We do this using a uniform in the same way as we did for the texture locations in [3. Textures](uniforms-section), enter the following code after we have calculated the projection matrix.
 

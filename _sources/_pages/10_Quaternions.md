@@ -265,7 +265,9 @@ We are currently using Euler angles rotation to calculate the view matrix in the
 </video>
 </center>
 
-To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to $(0, 0, 0)$, to calculate the view matrix.
+To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to $(0, 0, 0)$, to calculate the view matrix, i.e., 
+
+$$ View = Quaternion(pitch, yaw) \cdot Translate(-\mathbf{eye}) $$
 
 In the **camera.hpp** header file declare the camera orientation quaternion attribute.
 
@@ -303,7 +305,7 @@ void Camera::quaternionCamera()
 
 Here the camera orientation quaternion is calculated from the $pitch$ and $yaw$ Euler angles. We then combine a translation by $-\mathbf{eye}$ so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in [6. 3D Worlds](view-matrix-section)). We also need to calculate the $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ camera vectors using the orientation quaternion. Recall that the view matrix given in equation {eq}`lookat-matrix-equation` is
 
-$$ \view = \begin{pmatrix}
+$$ View = \begin{pmatrix}
         \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
         \mathbf{right}_y & \mathbf{up}_y & -\mathbf{front}_y & 0 \\
         \mathbf{right}_z & \mathbf{up}_z & -\mathbf{front}_z & 0 \\
@@ -431,12 +433,6 @@ orientation = Maths::SLERP(orientation, newOrientation, 0.2f);
 
 Here we use a temporary quaternion `newOrientation` which is calculated using the $pitch$, $yaw$ and $roll$ Euler angles of the camera and then used SLERP to interpolate between `orientation` and `newOrientation`. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.
 
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Third_person_camera_with_SLERP.mp4" type="video/mp4">
-</video>
-</center>
-
 ---
 
 ## Third person camera
@@ -449,11 +445,12 @@ The use of quaternions allows game developers to implement third person camera v
 
 A third person camera that follows a character.
 ```
+
 To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an $\mathbf{offset}$ vector {numref}`third-person-camera-figure`.
 
 $$ View = Translate(\mathbf{offset}) \cdot View $$
 
-The result of a third-person camera view can be seen below. Here we are using Suzanne the Blender mascot to act as our character model, and we can switch from first-person to third-person view using keyboard input.
+The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.
 
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -471,7 +468,14 @@ $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 </video>
 </center>
 
-Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different $\mathbf{front}$ vector for the character based on another $yaw$ angle that can be altered using keyboard inputs.
+Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different $\mathbf{front}$ vector for the character based on another $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).
+
+```{figure} ../_images/10_Third_person_camera_2.svg
+:width: 450
+:name: third-person-camera-figure-2
+
+A third person camera that is independent of the character orientation.
+```
 
 ---
 ## Exercises

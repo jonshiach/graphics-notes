@@ -611,7 +611,9 @@ document.write(`
     <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
-<p>To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to <span class="math notranslate nohighlight">\((0, 0, 0)\)</span>, to calculate the view matrix.</p>
+<p>To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to <span class="math notranslate nohighlight">\((0, 0, 0)\)</span>, to calculate the view matrix, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[ View = Quaternion(pitch, yaw) \cdot Translate(-\mathbf{eye}) \]</div>
 <p>In the <strong>camera.hpp</strong> header file declare the camera orientation quaternion attribute.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternion camera</span>
 <span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
@@ -642,7 +644,7 @@ document.write(`
 </div>
 <p>Here the camera orientation quaternion is calculated from the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> Euler angles. We then combine a translation by <span class="math notranslate nohighlight">\(-\mathbf{eye}\)</span> so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">6. 3D Worlds</span></a>). We also need to calculate the <span class="math notranslate nohighlight">\(\mathbf{right}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{up}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <a class="reference internal" href="06_3D_worlds.html#equation-lookat-matrix-equation">(6.1)</a> is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \view = \begin{pmatrix}
+\[\begin{split} View = \begin{pmatrix}
         \mathbf{right}_x &amp; \mathbf{up}_x &amp; -\mathbf{front}_x &amp; 0 \\
         \mathbf{right}_y &amp; \mathbf{up}_y &amp; -\mathbf{front}_y &amp; 0 \\
         \mathbf{right}_z &amp; \mathbf{up}_z &amp; -\mathbf{front}_z &amp; 0 \\
@@ -748,11 +750,6 @@ document.write(`
 </pre></div>
 </div>
 <p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code> which is calculated using the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">orientation</span></code> and <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code>. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.</p>
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/09_Third_person_camera_with_SLERP.mp4" type="video/mp4">
-</video>
-</center>
 </section>
 <hr class="docutils" />
 <section id="third-person-camera">
@@ -767,7 +764,7 @@ document.write(`
 <p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\mathbf{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 10.8</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[ View = Translate(\mathbf{offset}) \cdot View \]</div>
-<p>The result of a third-person camera view can be seen below. Here we are using Suzanne the Blender mascot to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
+<p>The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
@@ -781,7 +778,13 @@ document.write(`
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector for the character based on another <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs.</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector for the character based on another <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).</p>
+<figure class="align-default" id="third-person-camera-figure-2">
+<a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" width="450" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10.9 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <hr class="docutils" />
 <section id="exercises">

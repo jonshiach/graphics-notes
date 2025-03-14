@@ -747,26 +747,27 @@ document.write(`
 \[\begin{split} \begin{align*}
     qp &amp;= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
     &amp;= [wp_w - (x, y, z) \cdot (p_x, p_y, p_z), w(p_x, p_y, p_z) + p_w(x, y, z) + (x, y, z) \times (p_x, p_y, p_z)] \\
-    &amp;= [wp_w - xp_x - yp_y - zp_z, (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
+    &amp;= [wp_w - xp_x - yp_y - zp_z, \\
+    &amp;\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
 \end{align*} \end{split}\]</div>
 <p>If we write the quaternion <span class="math notranslate nohighlight">\(p\)</span> as a 4-element vector of the form <span class="math notranslate nohighlight">\(\mathbf{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}\)</span> (note that <span class="math notranslate nohighlight">\(p_w\)</span>, is now at the end of the vector which is synonymous with <a class="reference internal" href="05_transformations.html#homogeneous-coordinates-section"><span class="std std-ref">homogeneous coordinates</span></a>) then we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     qp &amp;=
     \begin{pmatrix}
-        wp_x + zp_y - yp_z + xp_w \\
-        zp_x + wp_y - xp_z + yp_w \\
+         wp_x - zp_y + yp_z + xp_w \\
+         zp_x + wp_y - xp_z + yp_w \\
         -yp_x + xp_y + wp_z + zp_w \\
-        wp_w - xp_x - yp_y - zp_z
+        -xp_x - yp_y - zp_z + wp_w
     \end{pmatrix},
 \end{align*} \end{split}\]</div>
 <p>and we can express the rotation <span class="math notranslate nohighlight">\(qp\)</span> as the matrix equation</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-q-equation">
 <span class="eqno">(12.5)<a class="headerlink" href="#equation-quaternion-rotation-q-equation" title="Permalink to this equation">#</a></span>\[\begin{split} qp = \begin{align*}
     \begin{pmatrix}
-        w &amp; -z &amp; y &amp; x \\
-        z &amp; w &amp; -x &amp; y \\
-        -y &amp; x &amp; w &amp; z \\
+         w &amp; -z &amp;  y &amp; x \\
+         z &amp;  w &amp; -x &amp; y \\
+        -y &amp;  x &amp;  w &amp; z \\
         -x &amp; -y &amp; -z &amp; w
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
@@ -777,7 +778,8 @@ document.write(`
     pq^* &amp;= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
     &amp;= [wp_w - (p_x, p_y, p_z) \cdot ( -x, -y, -z), \\
     &amp; \qquad p_w(-x, -y, -z) + w(p_x, p_y, p_z) + (p_x, p_y, p_z) \times (-x, -y, -z)] \\
-    &amp;= [xp_x + yp_y + zp_z + wp_w, (wp_x - zp_y + yp_z - xp_w, zp_x + wp_y - xp_z - yp_w, -yp_x + xp_y + wp_z - zp_w)].
+    &amp;= [xp_x + yp_y + zp_z + wp_w, \\
+    &amp; \qquad (wp_x - zp_y + yp_z - xp_w, zp_x + wp_y - xp_z - yp_w, -yp_x + xp_y + wp_z - zp_w)].
 \end{align*} \end{split}\]</div>
 <p>Writing <span class="math notranslate nohighlight">\(p\)</span> the form <span class="math notranslate nohighlight">\(\mathbf{p} = (p_x, p_y, p_z, p_w)\)</span> as before gives</p>
 <div class="math notranslate nohighlight">
@@ -802,10 +804,10 @@ document.write(`
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p>The two matrices from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(12.5)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(12.6)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
+<p>The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^*\)</span> from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(12.5)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(12.6)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    R &amp;=
+    R &amp;= qp \cdot pq^* 
     \begin{pmatrix}
         w &amp; -z &amp; y &amp; -x \\
         z &amp; w &amp; -x &amp; -y \\

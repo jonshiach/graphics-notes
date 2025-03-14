@@ -391,7 +391,8 @@ To be able to combine quaternion rotation with other transformations we need to 
 $$ \begin{align*}
     qp &= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
     &= [wp_w - (x, y, z) \cdot (p_x, p_y, p_z), w(p_x, p_y, p_z) + p_w(x, y, z) + (x, y, z) \times (p_x, p_y, p_z)] \\
-    &= [wp_w - xp_x - yp_y - zp_z, (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
+    &= [wp_w - xp_x - yp_y - zp_z, \\
+    &\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
 \end{align*} $$
 
 If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous coordinates](homogeneous-coordinates-section)) then we have
@@ -399,10 +400,10 @@ If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (
 $$ \begin{align*}
     qp &=
     \begin{pmatrix}
-        wp_x + zp_y - yp_z + xp_w \\
-        zp_x + wp_y - xp_z + yp_w \\
+         wp_x - zp_y + yp_z + xp_w \\
+         zp_x + wp_y - xp_z + yp_w \\
         -yp_x + xp_y + wp_z + zp_w \\
-        wp_w - xp_x - yp_y - zp_z
+        -xp_x - yp_y - zp_z + wp_w
     \end{pmatrix},
 \end{align*} $$
 
@@ -410,9 +411,9 @@ and we can express the rotation $qp$ as the matrix equation
 
 $$ qp = \begin{align*}
     \begin{pmatrix}
-        w & -z & y & x \\
-        z & w & -x & y \\
-        -y & x & w & z \\
+         w & -z &  y & x \\
+         z &  w & -x & y \\
+        -y &  x &  w & z \\
         -x & -y & -z & w
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
@@ -424,7 +425,8 @@ $$ \begin{align*}
     pq^* &= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
     &= [wp_w - (p_x, p_y, p_z) \cdot ( -x, -y, -z), \\
     & \qquad p_w(-x, -y, -z) + w(p_x, p_y, p_z) + (p_x, p_y, p_z) \times (-x, -y, -z)] \\
-    &= [xp_x + yp_y + zp_z + wp_w, (wp_x - zp_y + yp_z - xp_w, zp_x + wp_y - xp_z - yp_w, -yp_x + xp_y + wp_z - zp_w)].
+    &= [xp_x + yp_y + zp_z + wp_w, \\
+    & \qquad (wp_x - zp_y + yp_z - xp_w, zp_x + wp_y - xp_z - yp_w, -yp_x + xp_y + wp_z - zp_w)].
 \end{align*} $$
 
 Writing $p$ the form $\mathbf{p} = (p_x, p_y, p_z, p_w)$ as before gives
@@ -452,10 +454,10 @@ $$ \begin{align*}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} $$(quaternion-rotation-q2-equation)
 
-The two matrices from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $qpq^*$
+The two matrices for $qp$ and $pq^*$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $qpq^*$
 
 $$ \begin{align*}
-    R &=
+    R &= qp \cdot pq^* 
     \begin{pmatrix}
         w & -z & y & -x \\
         z & w & -x & -y \\

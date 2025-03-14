@@ -584,7 +584,7 @@ document.write(`
 <p>The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space coordinates to the view space.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \view &amp;= Rotate \cdot Translate \\
+    View &amp;= Rotate \cdot Translate \\
     &amp;=
     \begin{pmatrix}
          \mathbf{right}_x &amp;  \mathbf{right}_y &amp;  \mathbf{right}_z &amp; 0 \\
@@ -608,13 +608,13 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>So the transposed view matrix is</p>
 <div class="math notranslate nohighlight" id="equation-lookat-matrix-equation">
-<span class="eqno">(6.1)<a class="headerlink" href="#equation-lookat-matrix-equation" title="Permalink to this equation">#</a></span>\[\begin{split} \view = \begin{pmatrix}
+<span class="eqno">(6.1)<a class="headerlink" href="#equation-lookat-matrix-equation" title="Permalink to this equation">#</a></span>\[\begin{split} View = \begin{pmatrix}
         \mathbf{right}_x &amp; \mathbf{up}_x &amp; -\mathbf{front}_x &amp; 0 \\
         \mathbf{right}_y &amp; \mathbf{up}_y &amp; -\mathbf{front}_y &amp; 0 \\
         \mathbf{right}_z &amp; \mathbf{up}_z &amp; -\mathbf{front}_z &amp; 0 \\
         -\mathbf{eye} \cdot \mathbf{right} &amp; -\mathbf{eye} \cdot \mathbf{up} &amp; \mathbf{eye} \cdot \mathbf{front} &amp; 1 \\
     \end{pmatrix} \end{split}\]</div>
-<p>The glm function <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> calculates the <span class="math notranslate nohighlight">\(\view\)</span> matrix given inputs of the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{worldUp}\)</span> vectors. Let’s move the camera to the right, back and up a bit so that it is at <span class="math notranslate nohighlight">\((1, 1, 1)\)</span> looking towards the center of the cube which is at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span>. Add the following code after we have calculated the model matrix.</p>
+<p>The glm function <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> calculates the <span class="math notranslate nohighlight">\(View\)</span> matrix given inputs of the <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{target}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{worldUp}\)</span> vectors. Let’s move the camera to the right, back and up a bit so that it is at <span class="math notranslate nohighlight">\((1, 1, 1)\)</span> looking towards the center of the cube which is at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span>. Add the following code after we have calculated the model matrix.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the view matrix</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">lookAt</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">),</span><span class="w">  </span><span class="c1">// eye</span>
 <span class="w">                             </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0f</span><span class="p">),</span><span class="w"> </span><span class="c1">// target</span>
@@ -697,7 +697,7 @@ Derivation of the orthographic projection matrix<div class="sd-summary-down docu
 <p>Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.</p>
 <p>So in our main program we combine the model, view and projection matrices to form a single matrix called the <span class="math notranslate nohighlight">\(MV\!P\)</span> matrix.</p>
 <div class="math notranslate nohighlight">
-\[ MV\!P = Projection \cdot \view \cdot \model. \]</div>
+\[ MV\!P = Projection \cdot View \cdot \model. \]</div>
 <p>We need a way to send the <span class="math notranslate nohighlight">\(MV\!P\)</span> matrix to the vertex shader. We do this using a uniform in the same way as we did for the texture locations in <a class="reference internal" href="03_textures.html#uniforms-section"><span class="std std-ref">3. Textures</span></a>, enter the following code after we have calculated the projection matrix.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send MVP matrix to the vertex shader</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">MVP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
