@@ -257,6 +257,10 @@ Quaternion::Quaternion(const float pitch, const float yaw)
 }
 ```
 
+---
+
+## A Quaternion camera
+
 We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around -- see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.
 
 <center>
@@ -389,7 +393,7 @@ Quaternion Maths::SLERP(Quaternion q0, Quaternion q1, const float t)
     // Calculate cos(theta)
     float cosTheta = q0.w * q1.w + q0.x * q1.x + q0.y * q1.y + q0.z * q1.z;
     
-    // If q1 and q2 are close together use LERP to avoid divide by zero errors
+    // If q0 and q1 are close together use LERP to avoid divide by zero errors
     if (cosTheta > 0.9999f)
     {
         Quaternion q;
