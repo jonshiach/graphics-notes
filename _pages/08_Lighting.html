@@ -632,11 +632,11 @@ Derivation of the view space normal transformation<div class="sd-summary-down do
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider the diagram in <a class="reference internal" href="#view-space-normal-1-figure"><span class="std std-numref">Fig. 8.6</span></a> that shows the normal and tangent vectors to a surface in the object space. If the combined model and view transformations preserves the scaling of the edge such the equal scaling is used in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes then the normal and tangent vectors are perpendicular in the view space.</p>
+<p class="sd-card-text">Consider the diagram in <a class="reference internal" href="#view-space-normal-1-figure"><span class="std std-numref">Fig. 8.6</span></a> that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the combined model and view transformations preserves the scaling of the edge such the equal scaling is used in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes then the normal and tangent vectors are perpendicular in the view space.</p>
 <figure class="align-default" id="view-space-normal-1-figure">
 <a class="reference internal image-reference" href="../_images/08_view_space_normal_1.svg"><img alt="../_images/08_view_space_normal_1.svg" src="../_images/08_view_space_normal_1.svg" width="200" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 8.6 </span><span class="caption-text">Normal and tangent vectors in the object space.</span><a class="headerlink" href="#view-space-normal-1-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8.6 </span><span class="caption-text">Normal and tangent vectors in the model space.</span><a class="headerlink" href="#view-space-normal-1-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text">If the model and view transformations do not preserve the scaling then the the view space normal vector is no longer perpendicular to the tangent vector (<a class="reference internal" href="#view-space-normal-2-figure"><span class="std std-numref">Fig. 8.7</span></a>).</p>
@@ -646,24 +646,24 @@ Derivation of the view space normal transformation<div class="sd-summary-down do
 <p><span class="caption-number">Fig. 8.7 </span><span class="caption-text">Normal and tangent vectors in the view space.</span><a class="headerlink" href="#view-space-normal-2-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p class="sd-card-text">We need to derive a transformation matrix <span class="math notranslate nohighlight">\(A\)</span> that transforms the object space normal vector <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> to the view space normal vector <span class="math notranslate nohighlight">\(\mathbf{n}_{view}\)</span> such that it is perpendicular to the view space tangent vector <span class="math notranslate nohighlight">\(\mathbf{T}_{view}\)</span>. The view space normal and tangent vectors are calculated using</p>
+<p class="sd-card-text">We need to derive a transformation matrix <span class="math notranslate nohighlight">\(A\)</span> that transforms the model space normal vector <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> to the view space normal vector <span class="math notranslate nohighlight">\(\mathbf{n}_{view}\)</span> such that it is perpendicular to the view space tangent vector <span class="math notranslate nohighlight">\(\mathbf{t}_{view}\)</span>. So the view space normal is calculated by multiplying the model space normal by <span class="math notranslate nohighlight">\(A\)</span>, and the view space tangent vector is calculated by multiplying the model space tangent vector by the <span class="math notranslate nohighlight">\(MV\)</span> matrix</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \mathbf{n}_{view} &amp;= A \mathbf{n}, \\
-    \mathbf{T}_{view} &amp;= MV \mathbf{T}.
+    \mathbf{n}_{view} &amp;= A\mathbf{n}, \\
+    \mathbf{t}_{view} &amp;= MV \mathbf{t}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">The dot product between two perpendicular vectors is zero, so</p>
+<p class="sd-card-text">The dot product between two perpendicular vectors is zero, and we want <span class="math notranslate nohighlight">\(\mathbf{n}_{view}\)</span> to be perpendicular to <span class="math notranslate nohighlight">\(\mathbf{t}_{view}\)</span> so</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-    \mathbf{n}_{view} \cdot \mathbf{T}_{view} &amp;= 0 \\
-    \therefore A \mathbf{n} \cdot MV \mathbf{T} &amp;= 0.
+    \mathbf{n}_{view} \cdot \mathbf{t}_{view} &amp;= 0 \\
+    \therefore A \mathbf{n} \cdot MV \mathbf{t} &amp;= 0.
 \end{align*}\end{split}\]</div>
 <p class="sd-card-text">We can replace the dot product by a matrix multiplication by transposing <span class="math notranslate nohighlight">\(A \mathbf{n}\)</span></p>
 <div class="math notranslate nohighlight">
-\[(A \mathbf{n})^\mathsf{T} MV \mathbf{T} = 0.\]</div>
+\[(A \mathbf{n})^\mathsf{T} MV \mathbf{t} = 0.\]</div>
 <p class="sd-card-text">A property of matrix multiplication is that the transpose of a multiplication is equal to the multiplication of the transposes swapped (i.e., <span class="math notranslate nohighlight">\((AB)^\mathsf{T} = B^\mathsf{T} A^\mathsf{T}\)</span>) so we can write this as</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{n}^\mathsf{T} A^\mathsf{T} MV \mathbf{T} = 0\]</div>
+\[\mathbf{n}^\mathsf{T} A^\mathsf{T} MV \mathbf{t} = 0\]</div>
 <p class="sd-card-text">If <span class="math notranslate nohighlight">\(A^\mathsf{T}  MV = I\)</span> then the view space normal and tangent vectors are perpendicular. Solving for <span class="math notranslate nohighlight">\(A\)</span> gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
@@ -671,7 +671,7 @@ Derivation of the view space normal transformation<div class="sd-summary-down do
     A^\mathsf{T} &amp;=  MV^{-1} \\
     A &amp;=  (MV^{-1})^\mathsf{T}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">The matrix <span class="math notranslate nohighlight">\((MV^{-1})^\mathsf{T}\)</span> is the transformation matrix to transform the object space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.</p>
+<p class="sd-card-text">The matrix <span class="math notranslate nohighlight">\((MV^{-1})^\mathsf{T}\)</span> is the transformation matrix to transform the model space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.</p>
 </div>
 </details><p>Edit the vertex shader so that is looks like the following.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
@@ -784,7 +784,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <figure class="align-default" id="vector-projection-figure">
 <a class="reference internal image-reference" href="../_images/08_vector_projection.svg"><img alt="../_images/08_vector_projection.svg" src="../_images/08_vector_projection.svg" width="250" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 8.11 </span><span class="caption-text">The projection of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> onto <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</span><a class="headerlink" href="#vector-projection-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8.11 </span><span class="caption-text">The vector <span class="math notranslate nohighlight">\(\operatorname{proj}_\mathbf{b} \mathbf{a}\)</span> is the projection of the vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> onto <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</span><a class="headerlink" href="#vector-projection-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text"><span class="math notranslate nohighlight">\(\operatorname{proj}_\mathbf{b} \mathbf{a}\)</span> is represented by the green vector in <a class="reference internal" href="#vector-projection-figure"><span class="std std-numref">Fig. 8.11</span></a> and is calculated by multiplying the unit vector <span class="math notranslate nohighlight">\(\hat{\mathbf{b}}\)</span> by the length of the adjacent side of the right-angled triangle. Using trigonometry this gives</p>
@@ -808,7 +808,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <p><span class="caption-number">Fig. 8.12 </span><span class="caption-text">Calculating the reflection vector <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>.</span><a class="headerlink" href="#reflection-vector-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p class="sd-card-text">If <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> are unit vectors, then the reflection vector <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> can be calculated by reversing <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> and adding two projections <span class="math notranslate nohighlight">\((\mathbf{L} \cdot \mathbf{n}) \mathbf{n}\)</span> to it</p>
+<p class="sd-card-text">If <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> are unit vectors, then the reflection vector <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> can be calculated by reversing <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> and adding the two projections, <span class="math notranslate nohighlight">\(\operatorname{proj}_{\mathbf{n}} \mathbf{L} = (\mathbf{L} \cdot \mathbf{n}) \mathbf{n}\)</span></p>
 <div class="math notranslate nohighlight">
 \[ \mathbf{R} = - \mathbf{L} + 2 (\mathbf{L} \cdot \mathbf{n}) \mathbf{n} \]</div>
 </div>
@@ -980,7 +980,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <figure class="align-default" id="teapot-attenuation-figure">
 <a class="reference internal image-reference" href="../_images/08_teapot_attenuation.png"><img alt="../_images/08_teapot_attenuation.png" src="../_images/08_teapot_attenuation.png" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 8.16 </span><span class="caption-text">The affects of applying attenuation.</span><a class="headerlink" href="#teapot-attenuation-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8.16 </span><span class="caption-text">Applying attenuation means that the objects further away from light source appear darker.</span><a class="headerlink" href="#teapot-attenuation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1106,7 +1106,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Light</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lightSources</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader which it compiles the shader program.</p>
+<p>Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader when it compiles the shader program.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Compile shader programs</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">shaderID</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LoadShaders</span><span class="p">(</span><span class="s">&quot;vertexShader.glsl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;multipleLightsFragmentShader.glsl&quot;</span><span class="p">);</span>
 </pre></div>
@@ -1173,7 +1173,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <figure class="align-default" id="multiple-lights-figure">
 <a class="reference internal image-reference" href="../_images/08_teapot_multiple_lights.png"><img alt="../_images/08_teapot_multiple_lights.png" src="../_images/08_teapot_multiple_lights.png" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 8.17 </span><span class="caption-text">Teapots lit using 2 light sources.</span><a class="headerlink" href="#multiple-lights-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8.17 </span><span class="caption-text">Teapots lit using two light sources.</span><a class="headerlink" href="#multiple-lights-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Use the keyboard and mouse to move the camera around the teapots to see the affects of the light sources.</p>
@@ -1290,7 +1290,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <span class="kt">float</span><span class="w"> </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">cosTheta</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cosPhi</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">delta</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">clamp(x,</span> <span class="pre">a,</span> <span class="pre">b)</span></code> limits the value of <code class="docutils literal notranslate"><span class="pre">x</span></code> so that is is not less than <code class="docutils literal notranslate"><span class="pre">a</span></code> and not greater than <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">clamp(x,</span> <span class="pre">a,</span> <span class="pre">b)</span></code> function limits the value of <code class="docutils literal notranslate"><span class="pre">x</span></code> so that is is not less than <code class="docutils literal notranslate"><span class="pre">a</span></code> and not greater than <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
 <figure class="align-default" id="directional-light-soft-figure">
 <a class="reference internal image-reference" href="../_images/08_teapot_spotlight_soft.png"><img alt="../_images/08_teapot_spotlight_soft.png" src="../_images/08_teapot_spotlight_soft.png" style="width: 500px;" /></a>
 <figcaption>

@@ -297,9 +297,9 @@ We have seen [above](rotation-of-complex-numbers-section) that we can rotate a c
 
 $$ q = \cos(\theta) + \sin(\theta) i + \sin(\theta) j + \sin(\theta) k, $$
 
-or in vector-scalar form
+or in scalar-vector form
 
-$$ q = [\cos(\theta), \sin(\theta) \hat{\mathbf{v}}]. $$
+$$ q = [\cos(\theta), \sin(\theta) \mathbf{v}]. $$
 
 To demonstrate rotation using quaternion rotation consider the rotation of the vector $\mathbf{p} = (2, 0, 0)$ by 45$^\circ$ about the $z$-axis. The rotation quaternion for this is
 
@@ -342,7 +342,7 @@ Now we no longer have a pure quaternion since the scalar part is $-1.414$ which 
 
 $$ \begin{align*}
     qpq^* &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
-    &= [0, 1, 1.414, 1)]
+    &= [0, (1, 1.414, 1)]
 \end{align*} $$
 
 So $qpq^*$ is a pure quaternion and its absolute value is
@@ -358,7 +358,7 @@ which is the same as $|p|$.
 Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]$
 ```
 
-Plotting $p$ and $qpq^*$ we see that we have rotated by $90^\circ$ instead $45^\circ$ ({numref}`quaternion-rotation-2-figure`). This is because we have multiplied the quaternion $p$ by two rotation quaternions each using the angle $45^\circ$. So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where the rotation quaternio is
+Plotting $p$ and $qpq^*$ we see that we have rotated by $90^\circ$ instead of the desired $45^\circ$ ({numref}`quaternion-rotation-2-figure`). This is because we have multiplied the quaternion $p$ by two rotation quaternions each using the angle $45^\circ$. So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where the rotation quaternion is
 
 $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].$$(appendix-rotation-quaternion-equation)
 
@@ -457,7 +457,8 @@ $$ \begin{align*}
 The two matrices for $qp$ and $pq^*$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $qpq^*$
 
 $$ \begin{align*}
-    R &= qp \cdot pq^* 
+    R &= qp \cdot pq^*
+    =
     \begin{pmatrix}
         w & -z & y & -x \\
         z & w & -x & -y \\

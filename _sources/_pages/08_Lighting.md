@@ -257,13 +257,13 @@ Recall that $A^\mathsf{T}$ is the [transpose](transpose-section) and $A^{-1}$ is
 
 ````{dropdown} Derivation of the view space normal transformation
 
-Consider the diagram in {numref}`view-space-normal-1-figure` that shows the normal and tangent vectors to a surface in the object space. If the combined model and view transformations preserves the scaling of the edge such the equal scaling is used in the $x$, $y$ and $z$ axes then the normal and tangent vectors are perpendicular in the view space.
+Consider the diagram in {numref}`view-space-normal-1-figure` that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the combined model and view transformations preserves the scaling of the edge such the equal scaling is used in the $x$, $y$ and $z$ axes then the normal and tangent vectors are perpendicular in the view space.
 
 ```{figure} ../_images/08_view_space_normal_1.svg
 :width: 200
 :name: view-space-normal-1-figure
 
-Normal and tangent vectors in the object space.
+Normal and tangent vectors in the model space.
 ```
 
 If the model and view transformations do not preserve the scaling then the the view space normal vector is no longer perpendicular to the tangent vector ({numref}`view-space-normal-2-figure`).
@@ -275,27 +275,27 @@ If the model and view transformations do not preserve the scaling then the the v
 Normal and tangent vectors in the view space.
 ```
 
-We need to derive a transformation matrix $A$ that transforms the object space normal vector $\mathbf{n}$ to the view space normal vector $\mathbf{n}_{view}$ such that it is perpendicular to the view space tangent vector $\mathbf{T}_{view}$. The view space normal and tangent vectors are calculated using
+We need to derive a transformation matrix $A$ that transforms the model space normal vector $\mathbf{n}$ to the view space normal vector $\mathbf{n}_{view}$ such that it is perpendicular to the view space tangent vector $\mathbf{t}_{view}$. So the view space normal is calculated by multiplying the model space normal by $A$, and the view space tangent vector is calculated by multiplying the model space tangent vector by the $MV$ matrix
 
 $$ \begin{align*}
-    \mathbf{n}_{view} &= A \mathbf{n}, \\
-    \mathbf{T}_{view} &= MV \mathbf{T}.
+    \mathbf{n}_{view} &= A\mathbf{n}, \\
+    \mathbf{t}_{view} &= MV \mathbf{t}.
 \end{align*} $$
 
-The dot product between two perpendicular vectors is zero, so
+The dot product between two perpendicular vectors is zero, and we want $\mathbf{n}_{view}$ to be perpendicular to $\mathbf{t}_{view}$ so
 
 $$\begin{align*}
-    \mathbf{n}_{view} \cdot \mathbf{T}_{view} &= 0 \\
-    \therefore A \mathbf{n} \cdot MV \mathbf{T} &= 0.
+    \mathbf{n}_{view} \cdot \mathbf{t}_{view} &= 0 \\
+    \therefore A \mathbf{n} \cdot MV \mathbf{t} &= 0.
 \end{align*}$$
 
 We can replace the dot product by a matrix multiplication by transposing $A \mathbf{n}$
 
-$$(A \mathbf{n})^\mathsf{T} MV \mathbf{T} = 0.$$
+$$(A \mathbf{n})^\mathsf{T} MV \mathbf{t} = 0.$$
 
 A property of matrix multiplication is that the transpose of a multiplication is equal to the multiplication of the transposes swapped (i.e., $(AB)^\mathsf{T} = B^\mathsf{T} A^\mathsf{T}$) so we can write this as
 
-$$\mathbf{n}^\mathsf{T} A^\mathsf{T} MV \mathbf{T} = 0$$
+$$\mathbf{n}^\mathsf{T} A^\mathsf{T} MV \mathbf{t} = 0$$
 
 If $A^\mathsf{T}  MV = I$ then the view space normal and tangent vectors are perpendicular. Solving for $A$ gives
 
@@ -305,7 +305,7 @@ $$ \begin{align*}
     A &=  (MV^{-1})^\mathsf{T}.
 \end{align*} $$
 
-The matrix $(MV^{-1})^\mathsf{T}$ is the transformation matrix to transform the object space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.
+The matrix $(MV^{-1})^\mathsf{T}$ is the transformation matrix to transform the model space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.
 ````
 
 Edit the vertex shader so that is looks like the following.
@@ -428,7 +428,7 @@ The <a href="https://en.wikipedia.org/wiki/Vector_projection" target="_blank">ve
 :width: 250
 :name: vector-projection-figure
 
-The projection of $\mathbf{a}$ onto $\mathbf{b}$.
+The vector $\operatorname{proj}_\mathbf{b} \mathbf{a}$ is the projection of the vector $\mathbf{a}$ onto $\mathbf{b}$.
 ```
 
 $\operatorname{proj}_\mathbf{b} \mathbf{a}$ is represented by the green vector in {numref}`vector-projection-figure` and is calculated by multiplying the unit vector $\hat{\mathbf{b}}$ by the length of the adjacent side of the right-angled triangle. Using trigonometry this gives
@@ -458,7 +458,7 @@ Consider {numref}`reflection-vector-figure` that shows a surface with a normal v
 Calculating the reflection vector $\mathbf{R}$.
 ```
 
-If $\mathbf{n}$ and $\mathbf{L}$ are unit vectors, then the reflection vector $\mathbf{R}$ can be calculated by reversing $\mathbf{L}$ and adding two projections $(\mathbf{L} \cdot \mathbf{n}) \mathbf{n}$ to it
+If $\mathbf{n}$ and $\mathbf{L}$ are unit vectors, then the reflection vector $\mathbf{R}$ can be calculated by reversing $\mathbf{L}$ and adding the two projections, $\operatorname{proj}_{\mathbf{n}} \mathbf{L} = (\mathbf{L} \cdot \mathbf{n}) \mathbf{n}$
 
 $$ \mathbf{R} = - \mathbf{L} + 2 (\mathbf{L} \cdot \mathbf{n}) \mathbf{n} $$
 ````
@@ -666,7 +666,7 @@ Moving the camera to a different position allows us to see the affects of attenu
 :width: 500
 :name: teapot-attenuation-figure
 
-The affects of applying attenuation.
+Applying attenuation means that the objects further away from light source appear darker.
 ```
 
 ---
@@ -802,7 +802,7 @@ struct Light
 std::vector<Light> lightSources;
 ```
 
-Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader which it compiles the shader program.
+Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader when it compiles the shader program.
 
 ```cpp
 // Compile shader programs
@@ -880,7 +880,7 @@ Hopefully once you've made all of the changes it compiles and runs to show the f
 :width: 500
 :name: multiple-lights-figure
 
-Teapots lit using 2 light sources.
+Teapots lit using two light sources.
 ```
 
 Use the keyboard and mouse to move the camera around the teapots to see the affects of the light sources.
@@ -1026,7 +1026,7 @@ float delta     = radians(2.0);
 float intensity = clamp((cosTheta - cosPhi) / delta, 0.0, 1.0);
 ```
 
-The `clamp(x, a, b)` limits the value of `x` so that is is not less than `a` and not greater than `b`.
+The `clamp(x, a, b)` function limits the value of `x` so that is is not less than `a` and not greater than `b`.
 
 ```{figure} ../_images/08_teapot_spotlight_soft.png
 :width: 500

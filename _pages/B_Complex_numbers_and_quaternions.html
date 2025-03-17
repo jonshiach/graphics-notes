@@ -672,9 +672,9 @@ document.write(`
 <p>We have seen <a class="reference internal" href="#rotation-of-complex-numbers-section"><span class="std std-ref">above</span></a> that we can rotate a complex number by multiplying by the complex number <span class="math notranslate nohighlight">\( r = \cos(\theta) + \sin(\theta)i\)</span>. Since quaternions are an extension of complex numbers the quaternion equivalent to this is</p>
 <div class="math notranslate nohighlight">
 \[ q = \cos(\theta) + \sin(\theta) i + \sin(\theta) j + \sin(\theta) k, \]</div>
-<p>or in vector-scalar form</p>
+<p>or in scalar-vector form</p>
 <div class="math notranslate nohighlight">
-\[ q = [\cos(\theta), \sin(\theta) \hat{\mathbf{v}}]. \]</div>
+\[ q = [\cos(\theta), \sin(\theta) \mathbf{v}]. \]</div>
 <p>To demonstrate rotation using quaternion rotation consider the rotation of the vector <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the <span class="math notranslate nohighlight">\(z\)</span>-axis. The rotation quaternion for this is</p>
 <div class="math notranslate nohighlight">
 \[ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)], \]</div>
@@ -709,7 +709,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     qpq^* &amp;= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
-    &amp;= [0, 1, 1.414, 1)]
+    &amp;= [0, (1, 1.414, 1)]
 \end{align*} \end{split}\]</div>
 <p>So <span class="math notranslate nohighlight">\(qpq^*\)</span> is a pure quaternion and its absolute value is</p>
 <div class="math notranslate nohighlight">
@@ -721,7 +721,7 @@ document.write(`
 <p><span class="caption-number">Fig. 12.3 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 12.3</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternio is</p>
+<p>Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 12.3</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternion is</p>
 <div class="math notranslate nohighlight" id="equation-appendix-rotation-quaternion-equation">
 <span class="eqno">(12.4)<a class="headerlink" href="#equation-appendix-rotation-quaternion-equation" title="Permalink to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].\]</div>
 <p>Returning to our example of rotating <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} = (0.707, 0, 0.707)\)</span> using equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(12.4)</a> we have a rotation quaternion of</p>
@@ -807,7 +807,8 @@ document.write(`
 <p>The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^*\)</span> from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(12.5)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(12.6)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    R &amp;= qp \cdot pq^* 
+    R &amp;= qp \cdot pq^*
+    =
     \begin{pmatrix}
         w &amp; -z &amp; y &amp; -x \\
         z &amp; w &amp; -x &amp; -y \\

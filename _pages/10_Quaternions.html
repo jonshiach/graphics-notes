@@ -749,7 +749,7 @@ document.write(`
 <span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">SLERP</span><span class="p">(</span><span class="n">orientation</span><span class="p">,</span><span class="w"> </span><span class="n">newOrientation</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code> which is calculated using the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">orientation</span></code> and <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code>. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.</p>
+<p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code> which is calculated using the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">orientation</span></code> and <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code>. Note that here we are using <span class="math notranslate nohighlight">\(t = 0.2\)</span>. This parameter determines how far towards the new orientation we are interpolating. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.</p>
 </section>
 <hr class="docutils" />
 <section id="third-person-camera">
@@ -778,7 +778,7 @@ document.write(`
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 10.9</span></a>).</p>
 <figure class="align-default" id="third-person-camera-figure-2">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" width="450" /></a>
 <figcaption>
@@ -790,8 +790,8 @@ document.write(`
 <section id="exercises">
 <h2><span class="section-number">10.8. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character.</p></li>
-<li><p>Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. The character movement direction should be governed by a yaw angle that can be altered by the A and D keys.</p></li>
+<li><p>Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.</p></li>
+<li><p>Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. The character movement direction should be governed by a character <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered by the A and D keys.</p></li>
 </ol>
 <center>
 <video controls muted="true" loop="true" width="500">

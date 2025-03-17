@@ -431,7 +431,7 @@ Quaternion newOrientation(-pitch, yaw, roll);
 orientation = Maths::SLERP(orientation, newOrientation, 0.2f);
 ```
 
-Here we use a temporary quaternion `newOrientation` which is calculated using the $pitch$, $yaw$ and $roll$ Euler angles of the camera and then used SLERP to interpolate between `orientation` and `newOrientation`. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.
+Here we use a temporary quaternion `newOrientation` which is calculated using the $pitch$, $yaw$ and $roll$ Euler angles of the camera and then used SLERP to interpolate between `orientation` and `newOrientation`. Note that here we are using $t = 0.2$. This parameter determines how far towards the new orientation we are interpolating. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.
 
 ---
 
@@ -468,7 +468,7 @@ $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 </video>
 </center>
 
-Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).
+Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-figure-2`).
 
 ```{figure} ../_images/10_Third_person_camera_2.svg
 :width: 450
@@ -480,9 +480,9 @@ A third person camera that is independent of the character orientation.
 ---
 ## Exercises
 
-1. Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character.
+1. Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.
 
-2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a yaw angle that can be altered by the A and D keys.
+2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a character $yaw$ angle that can be altered by the A and D keys.
 
 <center>
 <video controls muted="true" loop="true" width="500">
