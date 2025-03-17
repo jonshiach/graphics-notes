@@ -458,7 +458,7 @@ The result of a third-person camera view can be seen below. Here we are using <a
 </video>
 </center>
 
-Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.
+Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation for the character model.
 
 $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 
@@ -468,7 +468,7 @@ $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 </video>
 </center>
 
-Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different $\mathbf{front}$ vector for the character based on another $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).
+Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).
 
 ```{figure} ../_images/10_Third_person_camera_2.svg
 :width: 450

@@ -11,7 +11,7 @@ Compile and run the **Lab08_Lighting** project, and you will see the window belo
 ```
 
 ```{note}
-The Utah teapot is a standard test model for computer graphics first created in 1975 by Martin Newell whilst at the University of Utah. It has become a bit of an in-joke in the computer graphics community and has appeared in Pixar's *Toy Story* and in *The Simpsons* episode *Treehouse of Horror VI*.
+The Utah teapot is a standard test model for computer graphics first created in 1975 by Martin Newell whilst at the University of Utah. It has become that "hello world" example for computer graphics and a bit of an in-joke in the computer graphics community. It has made appearances in Pixar's *Toy Story* and in *The Simpsons* episode *Treehouse of Horror VI*.
 ```
 
 The teapot has been rendered as a wire frame model since in the absence of light and shadow we wouldn't be able to tell that it was in fact a 3D model. We can turn of the wire frame rendering by commenting out the line `glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);`. Do this and you should see the following.

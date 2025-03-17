@@ -134,7 +134,7 @@ Writing the out for the $\mathbf{t}$ and $\mathbf{b}$ vectors we have
 
 $$ \begin{align*}
     \mathbf{t} &= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \mathbf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$
 ````
 
@@ -395,10 +395,10 @@ A problem with this is that when using a normal map we assume that the vertex no
 :width: 300
 :name: reorthogonalise-T-figure
 
-Re-orthogonalising T using the Gram-Schmidt process.
+Re-orthogonalising the tangent vector using the Gram-Schmidt process.
 ```
 
-Consider {numref}`reorthogonalise-T-figure` where the tangent vector $\mathbf{t}$ is non-orthogonal to the normal vector $\mathbf{n}$. If $\mathbf{n}$ and $\mathbf{t}$ are unit vectors then if we subtract $(\mathbf{t} \cdot \mathbf{n}) \mathbf{n}$ from $\mathbf{t}$ then this creates a vector $\mathbf{t}_{new}$ that is orthogonal to $\mathbf{n}$ (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can use the cross product between $\mathbf{n}$ and $\mathbf{t}$ to calculate the bitangent vector $\mathbf{n}$.
+Consider {numref}`reorthogonalise-T-figure` where the tangent vector $\mathbf{t}$ is non-orthogonal to the normal vector $\mathbf{n}$. If $\mathbf{n}$ and $\mathbf{t}$ are unit vectors then if we subtract $(\mathbf{t} \cdot \mathbf{n}) \mathbf{n}$ from $\mathbf{t}$ then this creates a vector $\mathbf{t}_{new}$ that is orthogonal to $\mathbf{n}$ (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can then use the cross product between $\mathbf{n}$ and $\mathbf{t}$ to calculate the bitangent vector $\mathbf{b}$.
 
 Edit the vertex shader so that we re-orthogonalise $\mathbf{t}$ and $\mathbf{b}$.
 

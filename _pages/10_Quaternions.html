@@ -770,7 +770,7 @@ document.write(`
     <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
 </video>
 </center>
-<p>Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation.</p>
+<p>Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation for the character model.</p>
 <div class="math notranslate nohighlight">
 \[ Rotate = R_y(yaw) \cdot R_x(pitch).\]</div>
 <center>
@@ -778,7 +778,7 @@ document.write(`
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different <span class="math notranslate nohighlight">\(\mathbf{front}\)</span> vector for the character based on another <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs ({numref}`third-person-camera-2).</p>
 <figure class="align-default" id="third-person-camera-figure-2">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" width="450" /></a>
 <figcaption>
