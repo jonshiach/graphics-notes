@@ -1112,7 +1112,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 </div>
 <p>Since we are using a different file for the fragment shader we need to tell OpenGL to use our new fragment shader when it compiles the shader program.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Compile shader programs</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">shaderID</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LoadShaders</span><span class="p">(</span><span class="s">&quot;vertexShader.glsl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;multipleLightsFragmentShader.glsl&quot;</span><span class="p">);</span>
+<span class="n">shaderID</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LoadShaders</span><span class="p">(</span><span class="s">&quot;vertexShader.glsl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;multipleLightsFragmentShader.glsl&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>We now define the lighting properties for multiple lights sources using our <code class="docutils literal notranslate"><span class="pre">Light</span></code> structure. Comment out the code used to define the colour and position of our single light source and add the following.</p>

@@ -810,7 +810,7 @@ Since we are using a different file for the fragment shader we need to tell Open
 
 ```cpp
 // Compile shader programs
-unsigned int shaderID      = LoadShaders("vertexShader.glsl", "multipleLightsFragmentShader.glsl");
+shaderID      = LoadShaders("vertexShader.glsl", "multipleLightsFragmentShader.glsl");
 ```
 
 We now define the lighting properties for multiple lights sources using our `Light` structure. Comment out the code used to define the colour and position of our single light source and add the following.
