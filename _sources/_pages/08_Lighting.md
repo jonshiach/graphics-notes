@@ -2,7 +2,7 @@
 
 # Lighting
 
-In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. 
+In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong reflection model</a>.
 
 Compile and run the **Lab08_Lighting** project, and you will see the window below showing a wire frame representation of the Utah teapot.
 
@@ -24,9 +24,9 @@ The teapot has been rendered as a wire frame model since in the absence of light
 
 If you take a look at the source code in the **Lab08_Lighting** you will notice that in addition to the classes introduced in previous labs (Texture, Shader and Camera) we have an addition class called Model which is defined in the **model.hpp** and **model.cpp** files. The Model class has been written so that we can load the vertex and texture coordinates from external files rather than having to define these in our code. Take a look at the **Lab08_Lighting.cpp** file where the following Model class methods have been called:
 
-- Line 89: `Model teapot("../assets/teapot.obj)` -- this is the constructor for the Model class and creates an object called `teapot`, loads the vertex and texture coordinates from an .obj file (see below) and creates the relevant buffers.
-- Line 92: `teapot.addTexture("../assets/blue.bmp", "diffuse");` -- this method loads a texture map called `blue.bmp` and sets its type to `diffuse`.
-- Line 131: `teapot.draw(shaderID)` - this method binds the buffers objects and instructs OpenGL to draw the model
+- `Model teapot("../assets/teapot.obj)` -- this is the constructor for the Model class and creates an object called `teapot`, loads the vertex and texture coordinates from an .obj file (see below) and creates the relevant buffers.
+- `teapot.addTexture("../assets/blue.bmp", "diffuse");` -- this method loads a texture map called `blue.bmp` and sets its type to `diffuse`.
+- `teapot.draw(shaderID)` - this method binds the buffers objects and instructs OpenGL to draw the model
 
 ### Wavefront (.obj) files
 
