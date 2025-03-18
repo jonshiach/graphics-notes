@@ -1134,7 +1134,7 @@ We can see that the teapots have been illuminated from a directional light sourc
 </video>
 </center>
 
-1. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
+3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
 
 <center>
 <video controls muted="true" loop="true" width="500">
