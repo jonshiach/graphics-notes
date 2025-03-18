@@ -422,6 +422,10 @@ document.write(`
 <section id="wavefront-obj-files">
 <h3><span class="section-number">8.1.1. </span>Wavefront (.obj) files<a class="headerlink" href="#wavefront-obj-files" title="Permalink to this heading">#</a></h3>
 <p>The Model class includes a private member function called <code class="docutils literal notranslate"><span class="pre">loadObj()</span></code> written by contributors of <a href = "https://www.opengl-tutorial.org" target="_blank">opengl-tutorial.org</a> which loads in a <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file" target="_blank"><strong>wavefront (.obj)</strong></a> file. A wavefront file is one of the many different types of file that is used to describe 3D models in computer graphics. In the <strong>assets/</strong> folder you will see some files with the extension .obj. Open the file <strong>cube.obj</strong> using a text editor and you will see the following.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you don’t have any <strong>.obj</strong> file in your <strong>assets/</strong> folder the <strong>Lab08_Lighting</strong> project will not work. You will need to download the files from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> repository.</p>
+</div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Blender 4.0.2
 # www.blender.org
 mtllib cube.mtl
@@ -903,7 +907,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <span class="n">fragmentColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned a different distances from the light source. In your <strong>Lab08_Lighting.cpp</strong> file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from <a class="reference internal" href="06_3D_worlds.html#multiple-objects-section"><span class="std std-ref">6. 3D Worlds</span></a>).</p>
+<p>To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned at different distances from the light source. In your <strong>Lab08_Lighting.cpp</strong> file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from <a class="reference internal" href="06_3D_worlds.html#multiple-objects-section"><span class="std std-ref">6. 3D Worlds</span></a>).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Teapot positions</span>
 <span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">positions</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">),</span>
@@ -953,7 +957,7 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>It would also be useful to render the light source. After the for loop to draw the teapots add the following code</p>
+<p>It would also be useful to render the light source. After the for loop used to draw the teapots, add the following code</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// ---------------------------------------------------------------------</span>
 <span class="c1">// Draw light sources</span>
 <span class="c1">// Activate light source shader</span>

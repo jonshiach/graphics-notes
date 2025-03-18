@@ -2,7 +2,7 @@
 
 # Normal Mapping
 
-In [the last lab on lighting](lighting-section) we saw that the diffuse and specular reflection models used the normal vector to determine the fragment colour. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
+In [8. Lighting](lighting-section) we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
 
 ```{figure} ../_images/09_normal_mapping.svg
 :width: 600
@@ -13,7 +13,7 @@ Normal mapping applies a texture of normals for each fragment giving the appeara
 A **normal map** is a texture where the RGB colour values of each textel is used for the normal vector $\mathbf{n} = (n_x, n_y, n_z)$ where $n_x$, $n_y$ and $n_z$ values are determined by the red, green and blue colours values respectively ({numref}`normal-map-figure`).
 
 ```{figure} ../_images/09_normal_map.svg
-:width: 300
+:width: 400
 :name: normal-map-figure
 
 The RBG values of a normal map give the values of the normal vectors.
@@ -95,7 +95,7 @@ To see the derivation of these equations click on the dropdown below.
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
-Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the co-ordinate directions of the normal map then the tangle space positions along the triangle edges $\mathbf{e}_1$ and $\mathbf{e}_2$ can be calculated using
+Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the $u$ and $v$ co-ordinate directions then the tangent space coordinates of points along the triangle edges $\mathbf{e}_1$ and $\mathbf{e}_2$ can be calculated using
 
 $$\begin{align*}
     \mathbf{e}_1 &= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\

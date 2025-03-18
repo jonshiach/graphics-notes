@@ -32,6 +32,10 @@ If you take a look at the source code in the **Lab08_Lighting** you will notice 
 
 The Model class includes a private member function called `loadObj()` written by contributors of <a href = "https://www.opengl-tutorial.org" target="_blank">opengl-tutorial.org</a> which loads in a <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file" target="_blank">**wavefront (.obj)**</a> file. A wavefront file is one of the many different types of file that is used to describe 3D models in computer graphics. In the **assets/** folder you will see some files with the extension .obj. Open the file **cube.obj** using a text editor and you will see the following.
 
+```{warning}
+If you don't have any **.obj** file in your **assets/** folder the **Lab08_Lighting** project will not work. You will need to download the files from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> repository.
+```
+
 ```text
 # Blender 4.0.2
 # www.blender.org
@@ -581,7 +585,7 @@ float attenuation = 1.0 / (constant + linear * distance + quadratic * distance *
 fragmentColour = (ambient + diffuse + specular) * attenuation;
 ```
 
-To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned a different distances from the light source. In your **Lab08_Lighting.cpp** file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from [6. 3D Worlds](multiple-objects-section)).
+To demonstrate the affects of applying attenuation we are going to need some more objects that a positioned at different distances from the light source. In your **Lab08_Lighting.cpp** file before the render loop define arrays for the position vectors and rotation angles for the teapots (taken from the multiple cubes example from [6. 3D Worlds](multiple-objects-section)).
 
 ```cpp
 // Teapot positions
@@ -635,7 +639,7 @@ for (int i = 0; i < static_cast<unsigned int>(objects.size()); i++)
 }
 ```
 
-It would also be useful to render the light source. After the for loop to draw the teapots add the following code
+It would also be useful to render the light source. After the for loop used to draw the teapots, add the following code
 
 ```cpp
 // ---------------------------------------------------------------------
