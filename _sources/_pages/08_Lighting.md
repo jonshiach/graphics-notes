@@ -33,7 +33,7 @@ If you take a look at the source code in the **Lab08_Lighting** you will notice 
 The Model class includes a private member function called `loadObj()` written by contributors of <a href = "https://www.opengl-tutorial.org" target="_blank">opengl-tutorial.org</a> which loads in a <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file" target="_blank">**wavefront (.obj)**</a> file. A wavefront file is one of the many different types of file that is used to describe 3D models in computer graphics. In the **assets/** folder you will see some files with the extension .obj. Open the file **cube.obj** using a text editor and you will see the following.
 
 ```{warning}
-If you don't have any **.obj** file in your **assets/** folder the **Lab08_Lighting** project will not work. You will need to download the files from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs" target="_blank">GitHub</a> repository.
+If you don't have any **.obj** file in your **assets/** folder the **Lab08_Lighting** project will not work. You will need to download the files from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs/tree/main/assets" target="_blank">GitHub</a> repository.
 ```
 
 ```text
