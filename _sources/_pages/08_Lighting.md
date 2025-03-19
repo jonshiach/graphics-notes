@@ -116,7 +116,7 @@ where theses are 3-element vectors of RGB colour values.
 
 ### Ambient reflection
 
-Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we simply assume that the object emits some light. The equation to do this is
+Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong's model for ambient reflection is
 
 $$ \mathbf{ambient} = k_a \mathbf{O}_d $$(ambient-reflection-equation)
 

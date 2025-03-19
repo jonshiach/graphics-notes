@@ -503,7 +503,7 @@ f 5/12/6 1/3/6 2/9/6
 <p>where theses are 3-element vectors of RGB colour values.</p>
 <section id="ambient-reflection">
 <h3><span class="section-number">8.2.1. </span>Ambient reflection<a class="headerlink" href="#ambient-reflection" title="Permalink to this heading">#</a></h3>
-<p>Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we simply assume that the object emits some light. The equation to do this is</p>
+<p>Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient reflection is</p>
 <div class="math notranslate nohighlight" id="equation-ambient-reflection-equation">
 <span class="eqno">(8.1)<a class="headerlink" href="#equation-ambient-reflection-equation" title="Permalink to this equation">#</a></span>\[ \mathbf{ambient} = k_a \mathbf{O}_d \]</div>
 <p>where <span class="math notranslate nohighlight">\(k_a\)</span> is known as the <strong>ambient reflection constant</strong> which takes on a value between 0 and 1 and <span class="math notranslate nohighlight">\(\mathbf{O}_d\)</span> is the object colour. <span class="math notranslate nohighlight">\(k_a\)</span> is a property of the object so we specify a value for this for each objects in our scene. Add the following code to the <strong>Lab08_Lighting.cpp</strong> file just before the render loop.</p>
