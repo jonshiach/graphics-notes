@@ -96,7 +96,7 @@ The vertex and face data is given in lines with the following abbreviations:
 The `loadObj()` private member function in the Model class is quite simplistic and we need to make sure our .obj file is in the correct form. There are some model loading libraries available such as <a href="http://www.assimp.org" target="_blank">assimp</a> (open ASSet IMPorter library) that can handle most common object formats but use of this requires compiling source code and configuring the IDE which is a bit too fiddly for what we are doing here.
 ```
 
-To see how you can use <a href="https://www.blender.org" target="_blank">Blender</a> to create .obj files [see below](blender-section).
+To see how you can use <a href="https://www.blender.org" target="_blank">Blender</a> to create .obj files go to the [appendices](blender-section).
 
 ---
 
@@ -674,6 +674,8 @@ Applying attenuation means that the objects further away from light source appea
 ```
 
 ---
+
+(multiple-light-sources-section)= 
 
 ## Multiple light sources
 

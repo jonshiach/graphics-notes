@@ -580,7 +580,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <span class="n">calculateTangents</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> method (before we unbind the VAO).</p>
+<p>The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> method (before we call the <code class="docutils literal notranslate"><span class="pre">glBindVertexArray(0)</span></code> function).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create tangent buffer</span>
 <span class="n">GLuint</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">;</span>
 <span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tangentBuffer</span><span class="p">);</span>
@@ -623,7 +623,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
 </pre></div>
 </div>
-<p>We also need to declare the Light data structure here so add the following before the uniforms are declared</p>
+<p>We also need to declare the Light data structure here like we did in the fragment shader in <a class="reference internal" href="08_Lighting.html#multiple-light-sources-section"><span class="std std-ref">8. Lighting</span></a> so add the following before the uniforms are declared</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Light struct</span>
 <span class="k">struct</span><span class="w"> </span><span class="n">Light</span>
 <span class="p">{</span>
@@ -654,7 +654,7 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <p>Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation <a class="reference internal" href="08_Lighting.html#equation-view-space-normal-equation">(8.3)</a> which are then used to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Remember that by transposing the <span class="math notranslate nohighlight">\(TBN\)</span> matrix we are calculating its inverse so here the <span class="math notranslate nohighlight">\(TBN\)</span> matrix will transform from the view space to the tangent space.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Some people transform the vectors to the world space instead of the view space, however, this means that we need to also calculate the tangent space position of the camera for the eye vector calculation in the fragment shader. Doing this would mean we have additional uniforms and vector calculations. Since the camera position in the view space is <span class="math notranslate nohighlight">\((0,0,0)\)</span> then it is also <span class="math notranslate nohighlight">\((0,0,0)\)</span> in the tangent space so by transforming the vectors to the view space we don’t need to worry about this.</p>
+<p>Some people transform the vectors from the world space instead of the view space, however, this means that we also need to calculate the tangent space <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector calculation. Doing this would mean we have additional uniforms and vector calculations. Since in the view space <span class="math notranslate nohighlight">\(\mathbf{eye} = (0,0,0)\)</span> then it is also <span class="math notranslate nohighlight">\((0,0,0)\)</span> in the tangent space so by transforming the vectors to the view space we do nt need to worry about this.</p>
 </div>
 <p>So now we can calculate the tangent space fragment position, light position and direction vector using the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output tangent space fragment position, light positions and directions</span>
@@ -867,19 +867,19 @@ Calculating the tangent and bitangent vectors<div class="sd-summary-down docutil
 <section id="exercises">
 <h2><span class="section-number">9.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Add another object using the .obj model <strong>../assets/wall.obj</strong> to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90<span class="math notranslate nohighlight">\(^\circ\)</span> about the x axis. Apply the diffuse map <strong>../assets/bricks_diffuse.png</strong>.</p></li>
+<li><p>Add another object using the .obj model <strong>../assets/wall.obj</strong> to your scene and position it at <span class="math notranslate nohighlight">\((0, 4, -2)\)</span>, scale it up by a factor of 5 in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> directions and rotate it %90^\circ<span class="math notranslate nohighlight">\( about the \)</span>x$-axis. Apply the diffuse map <strong>assets/bricks_diffuse.png</strong>.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/09_ex1.png"><img alt="../_images/09_ex1.png" src="../_images/09_ex1.png" style="width: 500px;" /></a>
 </figure>
 <ol class="arabic simple" start="2">
-<li><p>Apply the normal map <strong>../assets/bricks_normal.png</strong> to the wall object.</p></li>
+<li><p>Apply the normal map <strong>assets/bricks_normal.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/09_ex2.png"><img alt="../_images/09_ex2.png" src="../_images/09_ex2.png" style="width: 500px;" /></a>
 </figure>
-<ol class="arabic simple" start="3">
-<li><p>Apply the specular map <strong>../assets/bricks_specular.png</strong> to the wall object.</p></li>
+<ol class="arabic simple">
+<li><p>Apply the specular map <strong>assets/bricks_specular.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/09_ex3.png"><img alt="../_images/09_ex3.png" src="../_images/09_ex3.png" style="width: 500px;" /></a>

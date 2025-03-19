@@ -212,7 +212,7 @@ This code calculates the tangent and bitangent vectors using equation {eq}`TB-eq
 calculateTangents();
 ```
 
-The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the `setupBuffers()` method (before we unbind the VAO).
+The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the `setupBuffers()` method (before we call the `glBindVertexArray(0)` function).
 
 ```cpp
 // Create tangent buffer
@@ -262,7 +262,7 @@ out vec3 tangentSpaceLightPosition[maxLights];
 out vec3 tangentSpaceLightDirection[maxLights];
 ```
 
-We also need to declare the Light data structure here so add the following before the uniforms are declared
+We also need to declare the Light data structure here like we did in the fragment shader in [8. Lighting](multiple-light-sources-section) so add the following before the uniforms are declared
 
 ```glsl
 // Light struct
@@ -299,7 +299,7 @@ mat3 TBN   = transpose(mat3(t, b, n));
 Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation {eq}`view-space-normal-equation` which are then used to calculate the $TBN$ matrix. Remember that by transposing the $TBN$ matrix we are calculating its inverse so here the $TBN$ matrix will transform from the view space to the tangent space.
 
 ```{note}
-Some people transform the vectors to the world space instead of the view space, however, this means that we need to also calculate the tangent space position of the camera for the eye vector calculation in the fragment shader. Doing this would mean we have additional uniforms and vector calculations. Since the camera position in the view space is $(0,0,0)$ then it is also $(0,0,0)$ in the tangent space so by transforming the vectors to the view space we don't need to worry about this.
+Some people transform the vectors from the world space instead of the view space, however, this means that we also need to calculate the tangent space $\mathbf{eye}$ vector calculation. Doing this would mean we have additional uniforms and vector calculations. Since in the view space $\mathbf{eye} = (0,0,0)$ then it is also $(0,0,0)$ in the tangent space so by transforming the vectors to the view space we do nt need to worry about this.
 ```
 
 So now we can calculate the tangent space fragment position, light position and direction vector using the $TBN$ matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.
@@ -561,19 +561,19 @@ A neutral specular map applied to the teapot.
 ---
 ## Exercises
 
-1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at (0, 4, -2), scale it up by a factor of 5 in the x and z directions and rotate it 90$^\circ$ about the x axis. Apply the diffuse map **../assets/bricks_diffuse.png**.
+1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at $(0, 4, -2)$, scale it up by a factor of 5 in the $x$ and $z$ directions and rotate it %90^\circ$ about the $x$-axis. Apply the diffuse map **assets/bricks_diffuse.png**.
 
 ```{figure} ../_images/09_ex1.png
 :width: 500
 ```
 
-2. Apply the normal map **../assets/bricks_normal.png** to the wall object.
+2. Apply the normal map **assets/bricks_normal.png** to the wall object.
 
 ```{figure} ../_images/09_ex2.png
 :width: 500
 ```
 
-3. Apply the specular map **../assets/bricks_specular.png** to the wall object.
+1. Apply the specular map **assets/bricks_specular.png** to the wall object.
 
 ```{figure} ../_images/09_ex3.png
 :width: 500

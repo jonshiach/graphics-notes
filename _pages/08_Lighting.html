@@ -485,7 +485,7 @@ f 5/12/6 1/3/6 2/9/6
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">loadObj()</span></code> private member function in the Model class is quite simplistic and we need to make sure our .obj file is in the correct form. There are some model loading libraries available such as <a href="http://www.assimp.org" target="_blank">assimp</a> (open ASSet IMPorter library) that can handle most common object formats but use of this requires compiling source code and configuring the IDE which is a bit too fiddly for what we are doing here.</p>
 </div>
-<p>To see how you can use <a href="https://www.blender.org" target="_blank">Blender</a> to create .obj files <a class="reference internal" href="A_Wavefront_files.html#blender-section"><span class="std std-ref">see below</span></a>.</p>
+<p>To see how you can use <a href="https://www.blender.org" target="_blank">Blender</a> to create .obj files go to the <a class="reference internal" href="A_Wavefront_files.html#blender-section"><span class="std std-ref">appendices</span></a>.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -987,10 +987,10 @@ Derivation of the reflection vector<div class="sd-summary-down docutils">
 <p><span class="caption-number">Fig. 8.16 </span><span class="caption-text">Applying attenuation means that the objects further away from light source appear darker.</span><a class="headerlink" href="#teapot-attenuation-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</section>
 <hr class="docutils" />
+</section>
 <section id="multiple-light-sources">
-<h2><span class="section-number">8.4. </span>Multiple light sources<a class="headerlink" href="#multiple-light-sources" title="Permalink to this heading">#</a></h2>
+<span id="multiple-light-sources-section"></span><h2><span class="section-number">8.4. </span>Multiple light sources<a class="headerlink" href="#multiple-light-sources" title="Permalink to this heading">#</a></h2>
 <p>To add another light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for the additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.</p>
 <p>A data structure in GLSL is defined in a similar way to C++.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">Light</span>
