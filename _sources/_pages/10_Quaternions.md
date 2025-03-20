@@ -113,13 +113,13 @@ Quaternions are more commonly represented in scalar-vector form
 
 $$q = [w, (x, y, z)].$$
 
-## Quaternion magnitude
+### Quaternion magnitude
 
 The **magnitude** of a quaternion $q = w + xi + yj + zk$ is denoted by $|q|$ and calculated in the same way as the magnitude of a 4-element vector
 
 $$|q| = \sqrt{w^2 + x^2 + y^2 + z^2}.$$
 
-## Quaternion dot product
+### Quaternion dot product
 
 The dot product between two quaternions $q_0 = w_0 + x_0i + y_0j + z_0k$ and $q_1 = w_1 + x_1i + y_1j + z_1k$ is denoted by $q_0 \cdot q_1$ and calculated in the same way as the dot product between two 4-element vectors
 
@@ -132,6 +132,42 @@ $$ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),$$
 where $\theta$ is the angle between $q_0$ and $q_1$. Rearranging this gives the expression for the angle between two quaternions
 
 $$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). $$
+
+--
+
+## A Quaternion Class
+
+We are going to create a Quaternion class so that we can work with quaternions. In the **maths.hpp** header file, add the following class declaration **before** the Maths class declaration (it needs to come before the Maths class since later we will be adding commands to the Maths class that use quaternions).
+
+```cpp
+// Quaternion class
+class Quaternion
+{
+public:
+    float w, x, y, z;
+
+    // Constructors
+    Quaternion();
+    Quaternion(const float w, const float x, const float y, const float z);
+};
+```
+
+Here we have declared a class with four attributes fo the $w$, $x$, $y$ and $z$ parts of a quaternion along with two constructors.
+
+Then, in the **maths.cpp** file, define the constructors
+
+```cpp
+// Quaternions
+Quaternion::Quaternion() {}
+
+Quaternion::Quaternion(const float w, const float x, const float y, const float z)
+{
+    this->w = w;
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+```
 
 ---
 ## Rotations using quaternions

@@ -373,17 +373,20 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-using-complex-numbers">10.1.1. Rotation using complex numbers</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.5. Rotations using quaternions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.2.1. Quaternion magnitude</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.2.2. Quaternion dot product</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">10.6. A Quaternion camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.7. SLERP</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.8. Third person camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">10.9. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-class">10.3. A Quaternion Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.4. Rotations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.4.1. Calculating a quaternion from Euler angles</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">10.5. A Quaternion camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.6. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.7. Third person camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">10.8. Exercises</a></li>
 </ul>
             </nav>
         </div>
@@ -484,15 +487,14 @@ document.write(`
 <p>Quaternions are more commonly represented in scalar-vector form</p>
 <div class="math notranslate nohighlight">
 \[q = [w, (x, y, z)].\]</div>
-</section>
 <section id="quaternion-magnitude">
-<h2><span class="section-number">10.3. </span>Quaternion magnitude<a class="headerlink" href="#quaternion-magnitude" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">10.2.1. </span>Quaternion magnitude<a class="headerlink" href="#quaternion-magnitude" title="Permalink to this heading">#</a></h3>
 <p>The <strong>magnitude</strong> of a quaternion <span class="math notranslate nohighlight">\(q = w + xi + yj + zk\)</span> is denoted by <span class="math notranslate nohighlight">\(|q|\)</span> and calculated in the same way as the magnitude of a 4-element vector</p>
 <div class="math notranslate nohighlight">
 \[|q| = \sqrt{w^2 + x^2 + y^2 + z^2}.\]</div>
 </section>
 <section id="quaternion-dot-product">
-<h2><span class="section-number">10.4. </span>Quaternion dot product<a class="headerlink" href="#quaternion-dot-product" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">10.2.2. </span>Quaternion dot product<a class="headerlink" href="#quaternion-dot-product" title="Permalink to this heading">#</a></h3>
 <p>The dot product between two quaternions <span class="math notranslate nohighlight">\(q_0 = w_0 + x_0i + y_0j + z_0k\)</span> and <span class="math notranslate nohighlight">\(q_1 = w_1 + x_1i + y_1j + z_1k\)</span> is denoted by <span class="math notranslate nohighlight">\(q_0 \cdot q_1\)</span> and calculated in the same way as the dot product between two 4-element vectors</p>
 <div class="math notranslate nohighlight">
 \[ q_0 \cdot q_1 = w_0w_1 + x_0x_1 + y_0y_1 + z_0z_1. \]</div>
@@ -502,10 +504,42 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(q_0\)</span> and <span class="math notranslate nohighlight">\(q_1\)</span>. Rearranging this gives the expression for the angle between two quaternions</p>
 <div class="math notranslate nohighlight">
 \[ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). \]</div>
+<p>–</p>
+</section>
+</section>
+<section id="a-quaternion-class">
+<h2><span class="section-number">10.3. </span>A Quaternion Class<a class="headerlink" href="#a-quaternion-class" title="Permalink to this heading">#</a></h2>
+<p>We are going to create a Quaternion class so that we can work with quaternions. In the <strong>maths.hpp</strong> header file, add the following class declaration <strong>before</strong> the Maths class declaration (it needs to come before the Maths class since later we will be adding commands to the Maths class that use quaternions).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternion class</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Quaternion</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Constructors</span>
+<span class="w">    </span><span class="n">Quaternion</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Here we have declared a class with four attributes fo the <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> parts of a quaternion along with two constructors.</p>
+<p>Then, in the <strong>maths.cpp</strong> file, define the constructors</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternions</span>
+<span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="n">Quaternion</span><span class="o">::</span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="rotations-using-quaternions">
-<h2><span class="section-number">10.5. </span>Rotations using quaternions<a class="headerlink" href="#rotations-using-quaternions" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.4. </span>Rotations using quaternions<a class="headerlink" href="#rotations-using-quaternions" title="Permalink to this heading">#</a></h2>
 <p>We saw above that we can rotate a number in the complex plane by multiplying by the complex number</p>
 <div class="math notranslate nohighlight">
 \[ z = \cos(\theta) + i\sin(\theta). \]</div>
@@ -575,7 +609,7 @@ document.write(`
 <p>Here we normalise the vector which we are rotating around before calculating the rotation quaternion <code class="docutils literal notranslate"><span class="pre">q</span></code> and returning its rotation matrix using equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-equation">(10.2)</a></p>
 <p>Compile and run your program and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don’t have to worry about gimbal lock.</p>
 <section id="calculating-a-quaternion-from-euler-angles">
-<h3><span class="section-number">10.5.1. </span>Calculating a quaternion from Euler angles<a class="headerlink" href="#calculating-a-quaternion-from-euler-angles" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.4.1. </span>Calculating a quaternion from Euler angles<a class="headerlink" href="#calculating-a-quaternion-from-euler-angles" title="Permalink to this heading">#</a></h3>
 <p>Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in terms of the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> Euler angles. Using the following abbreviations</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
@@ -610,7 +644,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="a-quaternion-camera">
-<h2><span class="section-number">10.6. </span>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.5. </span>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Permalink to this heading">#</a></h2>
 <p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="06_3D_worlds.html#camera-class-section"><span class="std std-ref">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around – see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
 <center>
 <video controls muted="true" loop="true" width="500">
@@ -674,7 +708,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="slerp">
-<h2><span class="section-number">10.7. </span>SLERP<a class="headerlink" href="#slerp" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.6. </span>SLERP<a class="headerlink" href="#slerp" title="Permalink to this heading">#</a></h2>
 <p>The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
 <figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" width="300" /></a>
@@ -758,7 +792,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="third-person-camera">
-<h2><span class="section-number">10.8. </span>Third person camera<a class="headerlink" href="#third-person-camera" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.7. </span>Third person camera<a class="headerlink" href="#third-person-camera" title="Permalink to this heading">#</a></h2>
 <p>The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game <em>Tomb Raider</em> released by Core Design in 1996 and has become popular with game developers with game franchises such as <em>God of War</em>, <em>Horizon Zero Dawn</em>, <em>Assassins Creed</em> and <em>Red Dead Redemption</em> to name a few all using third person camera view.</p>
 <figure class="align-default" id="third-person-camera-figure">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" width="400" /></a>
@@ -793,7 +827,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="exercises">
-<h2><span class="section-number">10.9. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">10.8. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.</p></li>
 <li><p>Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. The character movement direction should be governed by a character <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered by the A and D keys.</p></li>
@@ -876,17 +910,20 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-using-complex-numbers">10.1.1. Rotation using complex numbers</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.3. Quaternion magnitude</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.4. Quaternion dot product</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.5. Rotations using quaternions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.5.1. Calculating a quaternion from Euler angles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.2. Quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-magnitude">10.2.1. Quaternion magnitude</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-dot-product">10.2.2. Quaternion dot product</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">10.6. A Quaternion camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.7. SLERP</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.8. Third person camera</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">10.9. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-class">10.3. A Quaternion Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">10.4. Rotations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">10.4.1. Calculating a quaternion from Euler angles</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">10.5. A Quaternion camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">10.6. SLERP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">10.7. Third person camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">10.8. Exercises</a></li>
 </ul>
   </nav></div>
 
