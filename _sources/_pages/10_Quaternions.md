@@ -93,7 +93,7 @@ The complex number $z$ is the real number 1 rotated $\theta$ anti-clockwise in t
 
 Recall that $\cos(\theta) = \dfrac{adjacent}{hypotenuse}$ and $\sin(\theta) = \dfrac{opposite}{hypotenuse}$ and since the hypotenuse is 1 then
 
-$$ z = \cos(\theta) + i \sin(\theta).$$
+$$ z = \cos(\theta) + \sin(\theta)i.$$
 
 This means we can rotate by an arbitrary angle $\theta$ in the complex plane by multiplying by $z$.
 
