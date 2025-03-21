@@ -213,6 +213,8 @@ and the angle $\theta$ between $q_1$ and $q_2$ is
 
 $$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).$$(quaternion-angle-difference-equation)
 
+(multiplying-quaternions-section)= 
+
 ### Multiplying quaternions
 
 Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then

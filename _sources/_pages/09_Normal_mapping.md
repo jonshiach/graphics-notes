@@ -578,3 +578,10 @@ A neutral specular map applied to the teapot.
 ```{figure} ../_images/09_ex3.png
 :width: 500
 ```
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5ZNO5SV-cKU?si=W1uXu90e6a5_-Prg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

@@ -95,7 +95,7 @@ Recall that $\cos(\theta) = \dfrac{adjacent}{hypotenuse}$ and $\sin(\theta) = \d
 
 $$ z = \cos(\theta) + i \sin(\theta).$$
 
-This means we can rotate by an arbitrary angle $\theta$ in the complex plane by multiplying by $z$. 
+This means we can rotate by an arbitrary angle $\theta$ in the complex plane by multiplying by $z$.
 
 ---
 
@@ -111,31 +111,9 @@ $$i^2 = j^2 = k^2 = ijk = -1. $$
 
 Quaternions are more commonly represented in scalar-vector form
 
-$$q = [w, (x, y, z)].$$
+$$q = [w, \mathbf{v}],$$
 
-### Quaternion magnitude
-
-The **magnitude** of a quaternion $q = w + xi + yj + zk$ is denoted by $|q|$ and calculated in the same way as the magnitude of a 4-element vector
-
-$$|q| = \sqrt{w^2 + x^2 + y^2 + z^2}.$$
-
-### Quaternion dot product
-
-The dot product between two quaternions $q_0 = w_0 + x_0i + y_0j + z_0k$ and $q_1 = w_1 + x_1i + y_1j + z_1k$ is denoted by $q_0 \cdot q_1$ and calculated in the same way as the dot product between two 4-element vectors
-
-$$ q_0 \cdot q_1 = w_0w_1 + x_0x_1 + y_0y_1 + z_0z_1. $$
-
-Quaternion dot product shares the same geometric interpretation as vector dot product, i.e.,
-
-$$ q_0 \cdot q_1 = |q_0| |q_1| \cos(\theta),$$
-
-where $\theta$ is the angle between $q_0$ and $q_1$. Rearranging this gives the expression for the angle between two quaternions
-
-$$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0| |q_1|} \right). $$
-
---
-
-## A Quaternion Class
+where $\mathbf{v} = (x, y, z)$. 
 
 We are going to create a Quaternion class so that we can work with quaternions. In the **maths.hpp** header file, add the following class declaration **before** the Maths class declaration (it needs to come before the Maths class since later we will be adding commands to the Maths class that use quaternions).
 
@@ -176,9 +154,13 @@ We saw above that we can rotate a number in the complex plane by multiplying by 
 
 $$ z = \cos(\theta) + i\sin(\theta). $$
 
-We can do similar in 3D space where the rotation around a unit vector $\hat{\mathbf{v}}$ by the angle $\theta$ can be achieved by multiplying a quaternion by the rotation quaternion
+We can do similar in 3D space where the rotation of the vector $\mathbf{p}$ around a unit vector $\hat{\mathbf{v}}$ by the angle $\theta$ can be achieved by calculating $qpq^*$ using the following quaternions (see [Appendix: Multiplying quaternions](multiplying-quaternions-section) for the how to multiply quaternions)
 
-$$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}], $$(rotation-quaternion-equation)
+$$ \begin{align*}
+    p &= [0, \mathbf{p}], \\
+    q &= [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}], \\
+    q^* &= [\cos(\tfrac{1}{2}\theta), -\sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].
+\end{align*} $$(rotation-quaternion-equation)
 
 See [Appendix: Quaternion rotation](appendix-quaternion-rotation-section) for the derivation of this formula.
 
@@ -189,7 +171,7 @@ See [Appendix: Quaternion rotation](appendix-quaternion-rotation-section) for th
 Axis-angle rotation.
 ```
 
-We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to multiplying by the rotation quaternion from equation {eq}`rotation-quaternion-equation`. If $q = [w, (x, y, z)]$ is the rotation quaternion, then the corresponding rotation matrix is
+We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to $qpq^*$. If $q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}] = [w, (x, y, z)]$ is the rotation quaternion, then the corresponding rotation matrix is
 
 $$ \begin{align*}
     Rotate &= 
@@ -235,9 +217,9 @@ glm::mat4 Quaternion::matrix()
 }
 ```
 
-We can now calculate the rotation matrix for a rotation quaternion `q` using `q.matrix()`. Comparing this code to the definition of `rotate()` in the **maths.cpp** file we can see the the the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix based on the composite of three separate rotations about the $x$, $y$ and $z$ axes and a translation. Efficiency is always a bonus but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock.
+We can now calculate the rotation matrix for a rotation quaternion `q` using `q.matrix()`. Comparing this code to the definition of `rotate()` in the **maths.cpp** file we can see the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix based on the composite of three separate rotations about the $x$, $y$ and $z$ axes and a translation. Efficiency is always a bonus, but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock.
 
-So it makes sense to use the quaternion rotation matrix for our axis-angle rotations. Edit the `rotate()` function definition so that is looks like the following.
+So it makes sense to use the quaternion rotation matrix for our axis-angle rotations. Edit the `rotate()` function definition, so that is looks like the following.
 
 ```cpp
 glm::mat4 Maths::rotate(const float &angle, glm::vec3 v)
@@ -253,11 +235,11 @@ glm::mat4 Maths::rotate(const float &angle, glm::vec3 v)
 
 Here we normalise the vector which we are rotating around before calculating the rotation quaternion `q` and returning its rotation matrix using equation {eq}`quaternion-rotation-matrix-equation`
 
-Compile and run your program and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don't have to worry about gimbal lock.
+Compile and run your program, and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don't have to worry about gimbal lock.
 
 ### Calculating a quaternion from Euler angles
 
-Quaternions can be thought of as a orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$ and $yaw$ Euler angles. Using the following abbreviations
+Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$ and $yaw$ Euler angles. Using the following abbreviations
 
 $$ \begin{align*}
     c_p &= \cos\left(\frac{pitch}{2}\right), &
@@ -385,11 +367,11 @@ The another advantage that quaternions have over Euler angles is that we can int
 Linear interpolation between two points.
 ```
 
-If $\mathbf{v}_0$ and $\mathbf{v}_1$ are two points then another point, $\mathbf{v}_t$, that lies on the line between $\mathbf{v}_0$ and $\mathbf{v}_1$ is calculated using
+If $\mathbf{v}_1$ and $\mathbf{v}_2$ are two points then another point, $\mathbf{v}_t$, that lies on the line between $\mathbf{v}_1$ and $\mathbf{v}_2$ is calculated using
 
-$$ \operatorname{LERP}(\mathbf{v}_0, \mathbf{v}_1, t) = \mathbf{v}_0 + t(\mathbf{v}_1 - \mathbf{v}_0), $$
+$$ \operatorname{LERP}(\mathbf{v}_1, \mathbf{v}_2, t) = \mathbf{v}_1 + t(\mathbf{v}_2 - \mathbf{v}_1), $$
 
-where $t$ is a value between 0 and 1. 
+where $t$ is a value between 0 and 1.
 
 **SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.
 
@@ -400,50 +382,50 @@ where $t$ is a value between 0 and 1.
 SLERP interpolation between two points on a sphere.
 ```
 
-Consider {numref}`A-SLERP-figure` where $q_1$ and $q_2$ are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it's very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion $q_t$ represents another quaternion that is partway between $q_0$ and $q_1$ calculated using
+Consider {numref}`A-SLERP-figure` where $q_1$ and $q_2$ are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it's very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion $q_t$ represents another quaternion that is partway between $q_1$ and $q_2$ calculated using
 
 $$ \begin{align*}
-    \operatorname{SLERP}(q_0, q_1, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_0 + \frac{\sin(t\theta)}{\sin(\theta)}q_1
+    \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
 \end{align*}, $$(slerp-equation)
 
-where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two pure quaternions $q_0$ and $q_1$ and is calculated using
+where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two quaternions and is calculated using
 
-$$ \theta = \cos^{-1} \left( \frac{q_0 \cdot q_1}{|q_0||q_1|} \right).$$
+$$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right),$$
 
-Sometimes the dot product $q_0 \cdot q_1$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$.
+where $q_1 \cdot q_2$ is the dot product between the two quaternions and calculated in the same way as the [dot product between two 4-element vectors](dot-product-section). Sometimes $q_1 \cdot q_2$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$.
 
-Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_0$ and $q_1$.
+Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_1$ and $q_2$.
 
 Add a method declaration to the Maths class in the `maths.hpp` file
 
 ```cpp
-static Quaternion SLERP(const Quaternion q0, const Quaternion q1, const float t);
+static Quaternion SLERP(const Quaternion q1, const Quaternion q2, const float t);
 ```
 
 and define the method in the `maths.cpp` file
 
 ```cpp
 // SLERP
-Quaternion Maths::SLERP(Quaternion q0, Quaternion q1, const float t)
+Quaternion Maths::SLERP(Quaternion q1, Quaternion q2, const float t)
 {
     // Calculate cos(theta)
-    float cosTheta = q0.w * q1.w + q0.x * q1.x + q0.y * q1.y + q0.z * q1.z;
+    float cosTheta = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
     
-    // If q0 and q1 are close together use LERP to avoid divide by zero errors
+    // If q1 and q2 are close together use LERP to avoid divide by zero errors
     if (cosTheta > 0.9999f)
     {
         Quaternion q;
-        q.w = q0.w + t * (q1.w - q0.w);
-        q.x = q0.x + t * (q1.x - q0.x);
-        q.y = q0.y + t * (q1.y - q0.y);
-        q.z = q0.z + t * (q1.z - q0.z);
+        q.w = q1.w + t * (q2.w - q1.w);
+        q.x = q1.x + t * (q2.x - q1.x);
+        q.y = q1.y + t * (q2.y - q1.y);
+        q.z = q1.z + t * (q2.z - q1.z);
         return q;
     }
     
-    // Avoid taking the long path around the sphere by reversing sign of q1
+    // Avoid taking the long path around the sphere by reversing sign of q2
     if (cosTheta < 0)
     {
-        q1 = Quaternion(-q1.w, -q1.x, -q1.y, -q1.z);
+        q2 = Quaternion(-q2.w, -q2.x, -q2.y, -q2.z);
         cosTheta = -cosTheta;
     }
     
@@ -452,10 +434,10 @@ Quaternion Maths::SLERP(Quaternion q0, Quaternion q1, const float t)
     float theta = acos(cosTheta);
     float a = sin((1.0f - t) * theta) / sin(theta);
     float b = sin(t * theta) / sin(theta);
-    q.w = a * q0.w + b * q2.w;
-    q.x = a * q0.x + b * q2.x;
-    q.y = a * q0.y + b * q2.y;
-    q.z = a * q0.z + b * q2.z;
+    q.w = a * q1.w + b * q2.w;
+    q.x = a * q1.x + b * q2.x;
+    q.y = a * q1.y + b * q2.y;
+    q.z = a * q1.z + b * q2.z;
     
     return q;
 }
@@ -465,7 +447,7 @@ Then to apply SLERP replace the code used to calculate the `orientation` quatern
 
 ```cpp
 // Calculate camera orientation quaternion from the Euler angles
-Quaternion newOrientation(-pitch, yaw, roll);
+Quaternion newOrientation(-pitch, yaw);
 
 // Apply SLERP
 orientation = Maths::SLERP(orientation, newOrientation, 0.2f);
