@@ -511,3 +511,11 @@ A third person camera that is independent of the character orientation.
     <source src="../_static/10_Third_person_camera_3.mp4" type="video/mp4">
 </video>
 </center>
+
+---
+
+## Video walkthrough
+
+The video below walks you through these lab materials.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-hodWDPpV9w?si=SouaIdCqYoy6wEmb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
