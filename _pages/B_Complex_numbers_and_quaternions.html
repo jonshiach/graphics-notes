@@ -639,7 +639,7 @@ document.write(`
 </section>
 <section id="quaternion-conjugate">
 <h3><span class="section-number">12.3.7. </span>Quaternion conjugate<a class="headerlink" href="#quaternion-conjugate" title="Permalink to this heading">#</a></h3>
-<p>The <strong>conjugate</strong> of a quaternion <span class="math notranslate nohighlight">\(q\)</span>, denoted by <span class="math notranslate nohighlight">\(q^*\)</span>, is found by negating the vector part. For example, given the quaternion <span class="math notranslate nohighlight">\(q = [\mathbf{v}, w]\)</span> then</p>
+<p>The <strong>conjugate</strong> of a quaternion <span class="math notranslate nohighlight">\(q\)</span>, denoted by <span class="math notranslate nohighlight">\(q^*\)</span>, is found by negating the vector part. For example, given the quaternion <span class="math notranslate nohighlight">\(q = [w, \mathbf{v}]\)</span> then</p>
 <div class="math notranslate nohighlight">
 \[ q^* = [w, -\mathbf{v}].\]</div>
 </section>
@@ -669,7 +669,7 @@ document.write(`
 <p><span class="caption-number">Fig. 12.1 </span><span class="caption-text">Axis-angle rotation</span><a class="headerlink" href="#axis-angle-rotation2-figure-3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We have seen <a class="reference internal" href="#rotation-of-complex-numbers-section"><span class="std std-ref">above</span></a> that we can rotate a complex number by multiplying by the complex number <span class="math notranslate nohighlight">\( r = \cos(\theta) + \sin(\theta)i\)</span>. Since quaternions are an extension of complex numbers the quaternion equivalent to this is</p>
+<p>We have seen <a class="reference internal" href="#rotation-of-complex-numbers-section"><span class="std std-ref">above</span></a> that we can rotate a complex number by multiplying by the complex number <span class="math notranslate nohighlight">\(z = \cos(\theta) + \sin(\theta)i\)</span>. Since quaternions are an extension of complex numbers the quaternion equivalent to this is</p>
 <div class="math notranslate nohighlight">
 \[ q = \cos(\theta) + \sin(\theta) i + \sin(\theta) j + \sin(\theta) k, \]</div>
 <p>or in scalar-vector form</p>

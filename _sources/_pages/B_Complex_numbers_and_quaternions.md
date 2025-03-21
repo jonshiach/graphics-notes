@@ -260,7 +260,7 @@ Equation {eq}`quaternion-product-equation` is the equation for the multiplicatio
 
 ### Quaternion conjugate
 
-The **conjugate** of a quaternion $q$, denoted by $q^*$, is found by negating the vector part. For example, given the quaternion $q = [\mathbf{v}, w]$ then
+The **conjugate** of a quaternion $q$, denoted by $q^*$, is found by negating the vector part. For example, given the quaternion $q = [w, \mathbf{v}]$ then
 
 $$ q^* = [w, -\mathbf{v}].$$
 
@@ -295,7 +295,7 @@ In [5. Transformations](axis-angle-rotation-section) we saw that we can rotate a
 Axis-angle rotation
 ```
 
-We have seen [above](rotation-of-complex-numbers-section) that we can rotate a complex number by multiplying by the complex number $ r = \cos(\theta) + \sin(\theta)i$. Since quaternions are an extension of complex numbers the quaternion equivalent to this is
+We have seen [above](rotation-of-complex-numbers-section) that we can rotate a complex number by multiplying by the complex number $z = \cos(\theta) + \sin(\theta)i$. Since quaternions are an extension of complex numbers the quaternion equivalent to this is
 
 $$ q = \cos(\theta) + \sin(\theta) i + \sin(\theta) j + \sin(\theta) k, $$
 
