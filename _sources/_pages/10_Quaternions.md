@@ -411,17 +411,10 @@ Quaternion Maths::SLERP(Quaternion q1, Quaternion q2, const float t)
     // Calculate cos(theta)
     float cosTheta = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
     
-    // If q1 and q2 are close together use LERP to avoid divide by zero errors
+    // If q1 and q2 are close together return q2
     if (cosTheta > 0.9999f)
-    {
-        Quaternion q;
-        q.w = q1.w + t * (q2.w - q1.w);
-        q.x = q1.x + t * (q2.x - q1.x);
-        q.y = q1.y + t * (q2.y - q1.y);
-        q.z = q1.z + t * (q2.z - q1.z);
-        return q;
-    }
-    
+        return q2;
+
     // Avoid taking the long path around the sphere by reversing sign of q2
     if (cosTheta < 0)
     {
