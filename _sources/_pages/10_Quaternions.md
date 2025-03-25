@@ -411,7 +411,7 @@ Quaternion Maths::SLERP(Quaternion q1, Quaternion q2, const float t)
     // Calculate cos(theta)
     float cosTheta = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
     
-    // If q1 and q2 are close together return q2
+    // If q1 and q2 are close together return q2 to avoid divide by zero errors
     if (cosTheta > 0.9999f)
         return q2;
 
