@@ -6,7 +6,7 @@ In [10. Quaternions](quaternions-section) we explored how we can make use of qua
 
 ## Complex numbers
 
-The **imaginary number** $i$ is defined as $i^2 = -1$. A **complex number** is a real number plus a multiple of an imaginary number
+The **imaginary number** $i$ is defined as $i = \sqrt{-1}$. A **complex number** is a real number plus a multiple of an imaginary number
 
 $$ z = x + yi.$$
 

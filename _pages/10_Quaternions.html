@@ -422,7 +422,7 @@ document.write(`
     x^2 &amp;= -1 \\
     x &amp;= \sqrt{-1}.
 \end{align*} \end{split}\]</div>
-<p>Here we have a problem since the square of a negative number always returns a positive value, e.g., <span class="math notranslate nohighlight">\((-1) \times (-1) = 1\)</span>, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the <strong>imaginary number</strong> that is defined by <span class="math notranslate nohighlight">\(i^2 = -1\)</span> so the solution to the equation above is <span class="math notranslate nohighlight">\(x = i\)</span>.</p>
+<p>Here we have a problem since the square of a negative number always returns a positive value, e.g., <span class="math notranslate nohighlight">\((-1) \times (-1) = 1\)</span>, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the <strong>imaginary number</strong> that is defined by <span class="math notranslate nohighlight">\(i = \sqrt{-1}\)</span> so the solution to the equation above is <span class="math notranslate nohighlight">\(x = i\)</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Some students find the concept of an imaginary number difficult to grasp. However, you have been using negative numbers for a while now and these are similar to the imaginary number since they do not represent a physical quantity, e.g., you can show me 5 coins but you cannot show me negative 5 coins. We developed negative numbers to help us solve problems, as we have also done with the imaginary number.</p>
@@ -688,7 +688,7 @@ document.write(`
 <hr class="docutils" />
 <section id="slerp">
 <h2><span class="section-number">10.5. </span>SLERP<a class="headerlink" href="#slerp" title="Permalink to this heading">#</a></h2>
-<p>The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
+<p>The another advantage that quaternions have over Euler angles is that we can interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
 <figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" width="300" /></a>
 <figcaption>
@@ -699,7 +699,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ \operatorname{LERP}(\mathbf{v}_1, \mathbf{v}_2, t) = \mathbf{v}_1 + t(\mathbf{v}_2 - \mathbf{v}_1), \]</div>
 <p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1.</p>
-<p><strong>SLERP</strong> stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.</p>
+<p><strong>SLERP</strong> stands for Spherical Linear intERPpolation and is a method used to interpolate between two quaternions across a surface of a sphere.</p>
 <figure class="align-default" id="a-slerp-figure">
 <a class="reference internal image-reference" href="../_images/10_SLERP.svg"><img alt="../_images/10_SLERP.svg" src="../_images/10_SLERP.svg" width="400" /></a>
 <figcaption>
@@ -802,6 +802,9 @@ document.write(`
 <h2><span class="section-number">10.7. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.</p></li>
+</ol>
+<p>The Suzanne model and textures can be downloaded from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs/tree/main/assets" target="_blank">GitHub repository</a> (this was only added recently so you might not have it).</p>
+<ol class="arabic simple" start="2">
 <li><p>Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. The character movement direction should be governed by a character <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered by the A and D keys.</p></li>
 </ol>
 <center>

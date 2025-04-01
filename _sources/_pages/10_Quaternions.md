@@ -37,7 +37,7 @@ $$ \begin{align*}
     x &= \sqrt{-1}.
 \end{align*} $$
 
-Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the **imaginary number** that is defined by $i^2 = -1$ so the solution to the equation above is $x = i$.
+Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the **imaginary number** that is defined by $i = \sqrt{-1}$ so the solution to the equation above is $x = i$.
 
 ```{note}
 Some students find the concept of an imaginary number difficult to grasp. However, you have been using negative numbers for a while now and these are similar to the imaginary number since they do not represent a physical quantity, e.g., you can show me 5 coins but you cannot show me negative 5 coins. We developed negative numbers to help us solve problems, as we have also done with the imaginary number.
@@ -359,7 +359,7 @@ Compile and run the code and you will see that you can move the camera in any or
 ---
 ## SLERP
 
-The another advantage that quaternions have over Euler angles is that we can interpolate between two orientations smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
+The another advantage that quaternions have over Euler angles is that we can interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
 
 ```{figure} ../_images/10_LERP.svg
 :width: 300
@@ -373,7 +373,7 @@ $$ \operatorname{LERP}(\mathbf{v}_1, \mathbf{v}_2, t) = \mathbf{v}_1 + t(\mathbf
 
 where $t$ is a value between 0 and 1.
 
-**SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two orientations emanating from the centre of a sphere.
+**SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two quaternions across a surface of a sphere.
 
 ```{figure} ../_images/10_SLERP.svg
 :width: 400
@@ -496,6 +496,8 @@ A third person camera that is independent of the character orientation.
 ## Exercises
 
 1. Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.
+
+The Suzanne model and textures can be downloaded from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs/tree/main/assets" target="_blank">GitHub repository</a> (this was only added recently so you might not have it).
 
 2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a character $yaw$ angle that can be altered by the A and D keys.
 
