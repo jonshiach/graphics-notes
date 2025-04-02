@@ -2,7 +2,7 @@
 
 # Quaternions
 
-We saw in [5. Transformations](axis-angle-rotation-section) that we can use calculate a transformation matrix to rotate about a vector. This matrix was derived by compositing three individual rotations about the three co-ordinate $x$, $y$ and $z$ axes.
+We saw in [5. Transformations](axis-angle-rotation-section) that we can calculate a transformation matrix to rotate about a vector. This matrix was derived by compositing three individual rotations about the three co-ordinate $x$, $y$ and $z$ axes.
 
 ```{figure} ../_images/10_Euler_angles.svg
 :width: 300
