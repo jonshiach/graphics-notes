@@ -1,90 +1,72 @@
 (3D-worlds-section)=
 
-# 3D Worlds
+# Lab 6: 3D Worlds
 
-In the [previous lab](transformations-section) we looked at the transformations can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
+In [Lab 5: Transformations](transformations-section) we looked at the transformations can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
 
 ## 3D models
 
 To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a **unit cube** which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes ({numref}`unit-cube-figure`) so the coordinates of the 8 corners of the cube are combinations of $-1$ and $1$. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).
 
-```{figure} ../_images/06_Unit_cube.svg
-:width: 500
+```{figure} ../_images/06_unit_cube.svg
+:width: 350
 :name: unit-cube-figure
 
 A unit cube centred at $(0,0,0)$ with side lengths of 2.
 ```
 
-Open the **Lab06_3D_Worlds.cpp** file in the **Lab06_3D_Worlds** project, and you will see that the `vertices`, `uv` and `indices` arrays have been defined for our unit cube object.
+Open the ***3D_worlds.js*** file and you will see that the vertices and indices have been defined for a unit cube.
 
-```cpp
-// Define cube object
-// Define vertices
-const float vertices[] = {
-    // front
-    -1.0f, -1.0f,  1.0f,    //              + ------ +
-     1.0f, -1.0f,  1.0f,    //             /|       /|
-     1.0f,  1.0f,  1.0f,    //   y        / |      / |
-    -1.0f, -1.0f,  1.0f,    //   |       + ------ +  |
-     1.0f,  1.0f,  1.0f,    //   + - x   |  + ----|- +
-    -1.0f,  1.0f,  1.0f,    //  /        | /      | /
-    // right                // z         |/       |/
-     1.0f, -1.0f,  1.0f,    //           + ------ +
-     1.0f, -1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f, -1.0f,  1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f,  1.0f,
+```javascript
+// Define cube vertices
+  const vertices = new Float32Array([
+    // x  y  z      r  g  b     u  v                    + ------ +
+    // front                                           /|       /|
+    -1, -1,  1,     0, 0, 0,    0, 0,  //    y        / |      / |
+     1, -1,  1,     0, 0, 0,    1, 0,  //    |       + ------ +  |
+     1,  1,  1,     0, 0, 0,    1, 1,  //    +-- x   |  + ----|- +
+    -1, -1,  1,     0, 0, 0,    0, 0,  //   /        | /      | /   
+     1,  1,  1,     0, 0, 0,    1, 1,  //  z         |/       |/
+    -1,  1,  1,     0, 0, 0,    0, 1,  //            + ------ +   
+    // right                        
+     1, -1,  1,     0, 0, 0,    0, 0,
+     1, -1, -1,     0, 0, 0,    1, 0, 
+     1,  1, -1,     0, 0, 0,    1, 1,
+     1, -1,  1,     0, 0, 0,    0, 0,
+     1,  1, -1,     0, 0, 0,    1, 1,
+     1,  1,  1,     0, 0, 0,    0, 1,
     // etc.
-};
+  ]);
 
-// Define texture coordinates
-const float uv[] = {
-    // front
-    0.0f, 0.0f,     // vertex coordinates are the same for each side
-    1.0f, 0.0f,     // of the cube so repeat every six vertices
-    1.0f, 1.0f,
-    0.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
-    // right
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
-    // etc.
-};
+  // Define cube indices
+  const indices = new Uint16Array([
+     0,  1,  2,  3,  4,  5,  // front
+     6,  7,  8,  9, 10, 11,  // right
+    12, 13, 14, 15, 16, 17,  // back
+    18, 19, 20, 21, 22, 23,  // left
+    24, 25, 26, 27, 28, 29,  // bottom
+    30, 31, 32, 33, 34, 35   // top
+  ]);
 
-// Define indices
-unsigned int indices[] = {
-    0,   1,  2,  3,  4,  5,     // front
-    6,   7,  8,  9, 10, 11,     // right
-    12, 13, 14, 15, 16, 17,     // back
-    18, 19, 20, 21, 22, 23,     // left
-    24, 25, 26, 27, 28, 29,     // bottom
-    30, 31, 32, 33, 34, 35      // top
-};
 ```
 
-If you compile and run this program you will see that the crate texture fills the window. This is because the coordinates of the cube vertices are $-1$ and $1$.
+If you compile and run this program you will see that a crate texture fills the canvas. This is because the coordinates of the cube vertices are $-1$ and $1$.
 
-```{figure} ../_images/06_3D_worlds.png
-:width: 500
+```{figure} ../_images/06_unit_cube.png
+:width: 80%
 :name: cube-figure
 
-A unit object.
+The unit cube.
 ```
 
 ---
 
 ## Coordinate systems
 
-OpenGL uses a coordinate system with the $x$-axis pointing horizontally to the right, the $y$-axis pointing vertically upwards and the $z$-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
+WebGL uses a coordinate system with the $x$-axis pointing horizontally to the right, the $y$-axis pointing vertically upwards and the $z$-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
 
 ```{figure} ../_images/06_NDC.svg
-:width: 600
+:width: 500
 :name: NDC-figure
 
 Normalised Device Coordinates (NDC)
@@ -94,7 +76,7 @@ The steps used in the creation of a 3D world and eventually displaying it on scr
 
 - **Model space** -- each individual 3D object that will appear in the 3D world is defined in its own space usually with the volume centre of the object at $(0,0,0)$ to make the transformations easier
 
-```{figure} ../_images/06_Model_space.svg
+```{figure} ../_images/06_model_space.svg
 :width: 350
 :name: model-space-figure
 
@@ -103,7 +85,7 @@ The model space.
 
 - **World space** -- the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations.
 
-```{figure} ../_images/06_World_space.svg
+```{figure} ../_images/06_world_space.svg
 :width: 350
 :name: world-space-figure
 
@@ -112,7 +94,7 @@ The world space.
 
 - **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis.
 
-```{figure} ../_images/06_View_space.svg
+```{figure} ../_images/06_view_space.svg
 :width: 350
 :name: view-space-figure
 
@@ -121,16 +103,18 @@ The view space.
 
 - **Screen space** --the 3D view space is projected onto a 2D projection plane.
 
-```{figure} ../_images/06_Screen_space.svg
+```{figure} ../_images/06_screen_space.svg
 :width: 350
 :name: screen-space-figure
 
 The screen space.
 ```
 
+---
+
 ## Model, view and projection matrices
 
-We saw in [5. Transformations](transformations-section) that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices
+We saw in [Lab 5: Transformations](transformations-section) that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices:
 
 - **Model matrix** - transforms the model space coordinates for the objects to the world space
 - **View matrix** - transforms the world space coordinates to the view space coordinates
@@ -140,28 +124,37 @@ We saw in [5. Transformations](transformations-section) that we apply a transfor
 
 ### The Model matrix
 
-In [5. Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis using the time of the current frame as the rotation angle and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. Add the following code inside the rendering loop before we draw the triangles.
+In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. 
 
-```cpp
+:::{admonition} Task
+:class: tip
+
+Edit the `render()` function in the ***3D_worlds.js*** file so that the transformation matrices look like the following.
+
+```javascript
 // Calculate the model matrix
-float angle         = Maths::radians(glfwGetTime() * 360.0f / 3.0f);
-glm::mat4 translate = Maths::translate(glm::vec3(0.0f, 0.0f, -2.0f));
-glm::mat4 scale     = Maths::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-glm::mat4 rotate    = Maths::rotate(angle, glm::vec3(0.0f, 1.0f, 0.0f));
-glm::mat4 model     = translate * rotate * scale;
+const translate = new Mat4().translate(0, 0, -2);
+const scale     = new Mat4().scale(0.5, 0.5, 1);
+const angle     = 1/3 * time * 2 * Math.PI * 0.001;
+const rotate    = new Mat4().rotate(0, 0, 1, angle);
+const model     = translate.multiply(rotate).multiply(scale);
 ```
 
+:::
+
 Here we have calculated the individual transformation matrices for translation, scaling and rotation and multiply them together to create the model matrix. The rotation angle has been calculated using the time of the current frame so that the cube will perform one full rotation every 3 seconds.
+
+---
 
 (view-matrix-section)=
 
 ### The View matrix
 
-To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and then rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`). To do this we require three vectors ({numref}`camera-vectors-figure`)
+To view the world space we create a virtual camera and place it in the world space. We need to translate the whole of the world space so that the camera is at $(0,0,0)$ and then rotate the world space so that the camera is pointing down the $z$-axis ({numref}`view-space-figure`). To do this we require three vectors ({numref}`camera-vectors-figure`):
 
-- $\mathbf{eye}$ -- the coordinates of the camera position
-- $\mathbf{target}$ -- the coordinates of the target point that the camera is pointing
-- $\mathbf{worldUp}$ -- a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
+- $\vec{eye}$: the coordinates of the camera position,
+- $\vec{target}$: the coordinates of the target point that the camera is pointing,
+- $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
 
 ```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
@@ -170,63 +163,67 @@ To view the world space we create a virtual camera and place it in the world spa
 The vectors used in the transformation to the view space.
 ```
 
-The $\mathbf{eye}$ and $\mathbf{target}$ vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by the vector $-\mathbf{eye}$ so that it is at $(0, 0, 0)$ using the following translation matrix
+The eye and target vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by negative of the eye vector so that it is at $(0, 0, 0)$ using the following translation matrix
 
 $$ \begin{align*}
     Translate =
     \begin{pmatrix}
-        1 & 0 & 0 & -\mathbf{eye}_x \\
-        0 & 1 & 0 & -\mathbf{eye}_y \\
-        0 & 0 & 1 & -\mathbf{eye}_z \\
+        1 & 0 & 0 & -\vec{eye}_x \\
+        0 & 1 & 0 & -\vec{eye}_y \\
+        0 & 0 & 1 & -\vec{eye}_z \\
         0 & 0 & 0 & 1
     \end{pmatrix}
 \end{align*}, $$
 
-The next step is to align the world space so that the direction vector is pointing down the $z$-axis. To do this we use vectors $\mathbf{right}$, $\mathbf{up}$ and $\mathbf{front}$ which are unit vectors at right-angles to each other the point in directions relative to the camera ({numref}`camera-vectors-figure`).
+The next step is to align the world space so that the direction vector is pointing down the $z$-axis. To do this we calculate three camera vectors ({numref}`camera-vectors-figure`):
 
-The $\mathbf{front}$ vector points directly forward of the camera and is calculated using
+- $\vec{front}$ vector which extends outwards in front of the camera towards the target,
+- $\vec{right}$ vector which extends outwards to the right of the camera,
+- $\vec{up}$ vector which extends straight up from the camera.
 
-$$ \mathbf{front} = \frac{\mathbf{target} - \mathbf{eye}}{\| \mathbf{target} - \mathbf{eye}\|}.$$
+These three vectors are all unit vectors (have a length of 1) and are at right-angles to each other. The front vector is calculated using
 
-The $\mathbf{right}$ vector points to the right of the camera so is at right-angles to both the $\mathbf{front}$ and $\mathbf{worldUp}$ vectors. We can use the [cross product](cross-product-section) between the two vectors to calculate this (note that the order of the vectors is important).
+$$ \vec{front} = \operatorname{normalize}(\vec{target} - \vec{eye}).$$(eq-front-camera-vector)
 
-$$ \mathbf{right} = \frac{\mathbf{front} \times \mathbf{worldUp}}{\| \mathbf{front} \times \mathbf{worldUp} \|}.$$
+The right vector points is at right-angles to both the front and world up vectors. We can use the [cross product](cross-product-section) between the two vectors to calculate this (note that the order of the vectors is important).
 
-The $\mathbf{up}$ vector points in the up direction of the camera and is at right-angles to the $\mathbf{front}$ and $\mathbf{right}$ vectors we have already calculated. So this can be calculated using another cross product (we don't need to normalise this this both $\mathbf{right}$ and $\mathbf{front}$ are unit vectors).
+$$ \vec{right} = \operatorname{normalize}( \vec{front} \times \vec{world Up}).$$(eq-right-camera-vector)
 
-$$ \mathbf{up} = \mathbf{right} \times \mathbf{front}.$$
+The up vector points is at right-angles to the front and right vectors, so this can be calculated using another cross product
 
-Once these vectors have been calculated the transformation matrix to rotate the $\mathbf{front}$ vector so that it points down the $z$-axis is
+$$ \vec{up} = \operatorname{normalize}(\vec{right} \times \vec{front}).$$(eq-up-camera-vector)
+
+Once these vectors have been calculated the transformation matrix to rotate the camera so that it is looking down the $z$-axis is
 
 $$ Rotate = \begin{pmatrix}
-     \mathbf{right}_x &  \mathbf{right}_y &  \mathbf{right}_z & 0 \\
-     \mathbf{up}_x    &  \mathbf{up}_y    &  \mathbf{up}_z    & 0 \\
-    -\mathbf{front}_x & -\mathbf{front}_y & -\mathbf{front}_z & 0 \\
+     \vec{right}_x &  \vec{right}_y &  \vec{right}_z & 0 \\
+     \vec{up}_x    &  \vec{up}_y    &  \vec{up}_z    & 0 \\
+    -\vec{front}_x & -\vec{front}_y & -\vec{front}_z & 0 \\
     0 & 0 & 0 & 1
 \end{pmatrix}.$$
 
 The translation matrix and rotation matrix are multiplied together to form the view matrix which transforms the world space coordinates to the view space.
 
 $$ \begin{align*}
-    View &= Rotate \cdot Translate \\
+    View &= Rotate \times Translate \\
     &=
     \begin{pmatrix}
-         \mathbf{right}_x &  \mathbf{right}_y &  \mathbf{right}_z & 0 \\
-         \mathbf{up}_x    &  \mathbf{up}_y    &  \mathbf{up}_z    & 0 \\
-        -\mathbf{front}_x & -\mathbf{front}_y & -\mathbf{front}_z & 0 \\
+         \vec{right}_x &  \vec{right}_y &  \vec{right}_z & 0 \\
+         \vec{up}_x    &  \vec{up}_y    &  \vec{up}_z    & 0 \\
+        -\vec{front}_x & -\vec{front}_y & -\vec{front}_z & 0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}
     \begin{pmatrix}
-        1 & 0 & 0 & -\mathbf{eye}_x \\
-        0 & 1 & 0 & -\mathbf{eye}_y \\
-        0 & 0 & 1 & -\mathbf{eye}_z \\
+        1 & 0 & 0 & -\vec{eye}_x \\
+        0 & 1 & 0 & -\vec{eye}_y \\
+        0 & 0 & 1 & -\vec{eye}_z \\
         0 & 0 & 0 & 1
     \end{pmatrix} \\
     &=
     \begin{pmatrix}
-        \mathbf{right}_x  & \mathbf{right}_y  & \mathbf{right}_z  & -\mathbf{eye} \cdot \mathbf{right} \\
-        \mathbf{up}_x     & \mathbf{up}_y     & \mathbf{up}_z     & -\mathbf{eye} \cdot \mathbf{up} \\
-        -\mathbf{front}_x & -\mathbf{front}_y & -\mathbf{front}_z &  \mathbf{eye} \cdot \mathbf{front} \\
+        \vec{right}_x  & \vec{right}_y  & \vec{right}_z  & -\vec{eye} \cdot \vec{right} \\
+        \vec{up}_x     & \vec{up}_y     & \vec{up}_z     & -\vec{eye} \cdot \vec{up} \\
+        -\vec{front}_x & -\vec{front}_y & -\vec{front}_z &  \vec{eye} \cdot \vec{front} \\
         0 & 0 & 0 & 1
     \end{pmatrix}
 \end{align*} $$
@@ -234,20 +231,84 @@ $$ \begin{align*}
 So the transposed view matrix is
 
 $$ View = \begin{pmatrix}
-        \mathbf{right}_x & \mathbf{up}_x & -\mathbf{front}_x & 0 \\
-        \mathbf{right}_y & \mathbf{up}_y & -\mathbf{front}_y & 0 \\
-        \mathbf{right}_z & \mathbf{up}_z & -\mathbf{front}_z & 0 \\
-        -\mathbf{eye} \cdot \mathbf{right} & -\mathbf{eye} \cdot \mathbf{up} & \mathbf{eye} \cdot \mathbf{front} & 1 \\
-    \end{pmatrix} $$(lookat-matrix-equation)
+    \vec{right}_x & \vec{up}_x & -\vec{front}_x & 0 \\
+    \vec{right}_y & \vec{up}_y & -\vec{front}_y & 0 \\
+    \vec{right}_z & \vec{up}_z & -\vec{front}_z & 0 \\
+    -\vec{eye} \cdot \vec{right} &
+    -\vec{eye} \cdot \vec{up} &
+     \vec{eye} \cdot \vec{front} &
+     1
+\end{pmatrix} $$(eq-view-matrix)
 
-The glm function `lookAt()` calculates the $View$ matrix given inputs of the $\mathbf{eye}$, $\mathbf{target}$ and $\mathbf{worldUp}$ vectors. Let's move the camera to the right, back and up a bit so that it is at $(1, 1, 1)$ looking towards the center of the cube which is at $(0, 0, -2)$. Add the following code after we have calculated the model matrix.
+:::{admonition} Task
+:class: tip
 
-```cpp
-// Calculate the view matrix
-glm::mat4 view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),  // eye
-                             glm::vec3(0.0f, 0.0f, -2.0f), // target
-                             glm::vec3(0.0f, 1.0f, 0.0f)); // worldUp
+Create a file called ***camera.js*** inside which enter the following code.
+
+```javascript
+class Camera {
+
+  constructor() {
+    // Camera vectors
+    this.eye     = new Vec3(0, 0, 0);
+    this.worldUp = new Vec3(0, 1, 0);
+    this.front   = new Vec3(0, 0, -1);
+    this.right   = new Vec3(1, 0, 0);
+    this.up      = new Vec3(0, 1, 0);
+  }
+
+  // Update camera vectors
+  updateVectors() {
+    this.right = this.front.cross(this.worldUp).normalize();
+    this.up    = this.right.cross(this.front).normalize();
+  }
+
+  // LookAt
+  lookAt() {
+    return new Mat4().set(
+      this.right.x, this.up.x, -this.front.x, 0,
+      this.right.y, this.up.y, -this.front.y, 0,
+      this.right.z, this.up.z, -this.front.z, 0,
+      -this.eye.dot(this.right),
+      -this.eye.dot(this.up),
+       this.eye.dot(this.front),
+      1
+    );
+  }
+}
 ```
+
+:::
+
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the methods `.updateVectors()` which calculates the $\vec{right}$ and $\vec{up}$ camera vectors using equations {eq}`eq-right-camera-vector` and {eq}`eq-up-camera-vector`, and `.lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+
+:::{admonition} Task
+:class: tip
+
+Enter the following code before the `render()` function in the ***3D_worlds.js*** file.
+
+```javascript
+// Camera object
+const camera = new Camera();
+```
+
+And add the following to the `render()` function after we clear the canvas.
+
+```javascript
+  // Update camera vectors
+  const target = new Vec3(0, 0, -2);
+  camera.eye   = new Vec3(1, 1, 1);
+  camera.front = target.subtract(camera.eye).normalize();
+  camera.updateVectors();
+
+  // Calculate view and projection matrices
+  const view       = camera.lookAt();
+```
+:::
+
+Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `.lookAt()` method.
+
+---
 
 ### The Projection matrix
 
@@ -265,14 +326,14 @@ Orthographic projection.
 The transpose of the orthographic projection matrix is calculated using
 
 $$ \begin{align*}
-    Projection_{orth} =
+    Orthographic =
     \begin{pmatrix}
         \dfrac{2}{right - left} & 0 & 0 & 0 \\
         0 & \dfrac{2}{top - bottom} & 0 & 0 \\
-        0 & 0 & \dfrac{2}{near - far} & 0 \\
-        -\dfrac{right + left}{right - left} & -\dfrac{top + bottom}{top - bottom} & \dfrac{near + far}{near - far} & 1
+        0 & 0 & -\dfrac{2}{far - near} & 0 \\
+        -\dfrac{right + left}{right - left} & -\dfrac{top + bottom}{top - bottom} & -\dfrac{far + near}{far - near} & 1
     \end{pmatrix}
-\end{align*}, $$
+\end{align*}, $$(eq-orthographic-projection-matrix)
 
 where $left$, $right$, $bottom$, $top$, $near$ and $far$ are the coordinates of the edges of the visible space. You don't really need to know how this matrix is derived but if you are interested click on the dropdown link below.
 
@@ -285,7 +346,7 @@ $$ \begin{align*}
     \begin{pmatrix}
         1 & 0 & 0 & -\dfrac{right + left}{2}  \\
         0 & 1 & 0 & -\dfrac{top + bottom}{2} \\
-        0 & 0 & 1 &  \dfrac{near + far}{2}  \\
+        0 & 0 & 1 & -\dfrac{far - near}{2}  \\
         0 & 0 & 0 & 1
     \end{pmatrix}
 \end{align*} $$
@@ -297,7 +358,7 @@ $$ \begin{align*}
     \begin{pmatrix}
         \dfrac{2}{right - left} & 0 & 0 & 0 \\
         0 & \dfrac{2}{top - bottom} & 0 & 0 \\
-        0 & 0 & \dfrac{2}{near - far} & 0 \\
+        0 & 0 & -\dfrac{2}{far - near} & 0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}.
 \end{align*} $$
@@ -305,72 +366,111 @@ $$ \begin{align*}
 Combining the translation and scaling matrices gives the orthographic projection matrix
 
 $$ \begin{align*}
-    Projection_{orth} &= Translate \cdot Scale \\
+    Orthographic &= Translate \times Scale \\
     &=
     \begin{pmatrix}
         \dfrac{2}{right - left} & 0 & 0 & -\dfrac{right + left}{right - left} \\
         0 & \dfrac{2}{top - bottom} & 0 & -\dfrac{top + bottom}{top - bottom} \\
-        0 & 0 & \dfrac{2}{near - far}   &  \dfrac{near + far}{near - far} \\
+        0 & 0 & -\dfrac{2}{far - near}  & -\dfrac{far + near}{far - near} \\
         0 & 0 & 0 & 1
     \end{pmatrix}
 \end{align*} $$
+
+This matrix is transposed when coding in JavaScript.
 ```
 
-The glm function `glm::ortho()` calculates the orthographic projection matrix given inputs of the left, right, bottom, top, near and far bounding coordinates. Let's calculate the orthographic projection matrix using $left = -2$, $right = 2$, $bottom = -2$, $top = 2$, $near = 0$, $far = 10$. Add the following code after we have calculated the view matrix.
+:::{admonition} Task
+:class: tip
 
-```cpp
-// Calculate orthographic projection matrix
-glm::mat4 projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, 0.0f, 10.0f);
+Add the following method definition to the Camera class.
+
+```javascript
+// Orthographic projection
+orthographic(left, right, bottom, top, near, far) {
+  const rl = 1 / (right - left);
+  const tb = 1 / (top - bottom);
+  const fn = 1 / (far - near);
+
+  return new Mat4().set(
+    2 * rl, 0, 0, 0,
+    0, 2 * tb, 0, 0,
+    0, 0, -2 * fn, 0,
+    -(right + left) * rl,
+    -(top + bottom) * tb,
+    -(far + near) * fn,
+    1
+  );
+  }
 ```
+
+And add the following to the `render()` function file after we have calculated the view matrix.
+
+```javascript
+const projection = camera.orthographic(-2, 2, -2, 2, 0, 100);
+```
+
+:::
+
+Here we have defined the method `.orthographic()` that returns the orthographic projection matrix from equation {eq}`eq-orthographic-projection-matrix` and used it to calculate the projection matrix.
+
+---
 
 ### The MVP matrix
 
-Now that we have the model, view and projection matrices we need to apply them to our objects. We could do this in our `main()` function, but this would mean sending lots of vertex buffers to the GPU and very inefficient. Much better to send a single $4 \times 4$ matrix to the shader and perform the calculations using the GPU since the vertex buffer is already in the GPU memory.
+Now that we have the model, view and projection matrices we need to apply them to the vertices. Rather than sending three separate matrices to the shaders, we multiply them using the CPU and send a single $4 \times 4$ matrix to the GPU known as the MVP matrix.
 
-So in our main program we combine the model, view and projection matrices to form a single matrix called the $MV\!P$ matrix.
+$$ MVP = Projection \times View \times Model. $$
 
-$$ MV\!P = Projection \cdot View \cdot \model. $$
+:::{admonition} Task
+:class: tip
 
-We need a way to send the $MV\!P$ matrix to the vertex shader. We do this using a uniform in the same way as we did for the texture locations in [3. Textures](uniforms-section), enter the following code after we have calculated the projection matrix.
+Edit the code that sends the model matrix to the shader so that it looks like the following.
 
-```cpp
-// Send MVP matrix to the vertex shader
-glm::mat4 MVP = projection * view * model;
-glUniformMatrix4fv(glGetUniformLocation(shaderID, "MVP"), 1, GL_FALSE, &MVP[0][0]);
+```javascript
+// Calculate MVP matrix and send it to the shaders
+const mvp = projection.multiply(view).multiply(model);
+gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMvp"), false, mvp.m);
 ```
 
-Here after calculating the $MV\!P$ matrix we get the location of the uniform and point OpenGL to the first element of the matrix using the <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml" target="_blank">`glUniformMatrix4fv()`</a> function.
+:::
 
-We also need to update the vertex shader so that is uses the $MV\!P$ matrix. Edit the **vertexShader.glsl** file in the **Lab06_3D_Worlds** project so that the `gl_Position` vector is calculated by applying the $MV\!P$ matrix to the vertex position.
+Here we multiply the model, view and projection matrices to give the MVP matrix which is sent to the shader as the `uMvp` uniform. We now need to update the vertex shader so that is uses the MVP matrix. The only change we need to make is changing the `uModel` uniform to `uMvp`.
 
-```cpp
-#version 330 core
+```c
+#version 300 es
+precision mediump float;
 
-// Inputs
-layout(location = 0) in vec3 position;
-layout(location = 1) in vec2 uv;
+in vec3 aPosition;
+in vec3 aColour;
+in vec2 aTexCoord;
 
-// Outputs
-out vec2 UV;
+out vec3 vColour;
+out vec2 vTexCoord;
 
-// Uniforms
-uniform mat4 MVP;
+uniform mat4 uMvp;
 
-void main()
-{
-    // Output vertex position
-    gl_Position = MVP * vec4(position, 1.0);
-    
-    // Output texture coordinates
-    UV = uv;
+void main() {
+  gl_Position = uMvp * vec4(aPosition, 1.0);
+
+  // Output vertex colour
+  vColour = aColour;
+
+  // Output texture co-ordinates
+  vTexCoord = aTexCoord;
 }
 ```
 
-Compile and run the program and you should see the following.
+:::{admonition} Task
+:class: tip
+
+Edit the vertex shader code at the top of the ***3D_worlds.js*** file so that it looks like the vertex shader shown above.
+:::
+
+Refresh your web browser and you should the rotating cube below.
 
 <center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/06_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
+<video controls muted="true" loop="true" width="80%">
+    <source src="../_static/videos/videos/06_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -387,27 +487,30 @@ Our rendering of the cube doesn't look quite right. What is happening here is th
 Rendering the far triangle after the near triangle.
 ```
 
-To overcome this issue OpenGL uses a **depth test** when computing the fragment shader. When OpenGL creates a frame buffer it also creates another buffer called a **z buffer** (or **depth buffer**) where the $z$ coordinate of each pixel in the frame buffer is stored and initialises all the values to $-1$ (the furthest possible $z$ coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a $z$ coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its $z$ coordinate in the depth-buffer as the current nearest fragment (if the fragment has a $z$ coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.
+To overcome this issue WebGL uses a **depth test** when computing the fragment shader. When WebGL creates a frame buffer it also creates another buffer called a **z buffer** (or **depth buffer**) where the $z$ coordinate of each pixel in the frame buffer is stored and initialises all the values to $-1$ (the furthest possible $z$ coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a $z$ coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its $z$ coordinate in the depth-buffer as the current nearest fragment (if the fragment has a $z$ coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.
 
-To enable depth testing we simply add the following function after the creation of the window.
+:::{admonition} Task
+:class: tip
 
-```cpp
-// Enable depth test
-glEnable(GL_DEPTH_TEST);
+Add the following where the WebGL canvas is configured in the `main()` function
+
+```javascript
+gl.enable(gl.DEPTH_TEST);
 ```
 
-We also need to clear the depth buffer at the start of each frame, change `glClear(GL_COLOR_BUFFER_BIT);` to the following.
+And change command to clear the canvas in the `render()` function to the following.
 
-```cpp
-// Clear the window
-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+```javascript
+// Clear canvas
+gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 ```
+:::
 
-Make these changes to your code and you should get a much better result.
+Here we first enabled WebGL's depth test and then we clear the depth buffer at the start of the rendering of each frame. Refresh your web browser and you should get a much better result.
 
 <center>
 <video controls muted="true" loop="true" width="500">
-    <source src="../_static/06_orthogonal_cube_depth_test.mp4" type="video/mp4">
+    <source src="../_static/videos/videos/06_orthogonal_cube_depth_test.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -415,12 +518,76 @@ Make these changes to your code and you should get a much better result.
 
 ## Perspective projection
 
-The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger.
+The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger. To demonstrate this we are going to add another cube to our scene which is placed futher away from the camera.
 
-Perspective project uses the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at $(0,0,0)$ ({numref}`perspective-projection-figure`). The clipping volume bounded by the size clipping planes is called the **viewing frustum**. 
+:::{admonition} Task
+:class: tip
+
+Add the following to the global variables section at the top of the ***3D_worlds.js*** file.
+
+```javascript
+const cubePositions = [
+  0, 0, -2,
+  0, 0, -6
+];
+const numberOfCubes = 2;
+```
+
+Now put the commands used to calculate the model matrix, the MVP matrix and to draw the cube inside a for loop.
+
+```javascript
+// Draw cubes
+for (let i = 0; i < numCubes; i++) {
+
+  // Calculate the model matrix
+  const translate = new Mat4().translate(0, 0, -2);
+  const scale     = new Mat4().scale(0.5, 0.5, 0.5);
+  const angle     = 1/3 * time * 2 * Math.PI * 0.001;
+  const rotate    = new Mat4().rotate(0, 1, 0, angle);
+  const model     = translate.multiply(rotate).multiply(scale);
+
+  // Calculate MVP matrix and send it to the shaders
+  const mvp = projection.multiply(view).multiply(model);
+  gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMvp"), false, mvp.m);
+
+  // Draw triangles
+  gl.bindVertexArray(VAO);
+  gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+}
+```
+
+Change the translation matrix so that it uses the new cube centre coordinates.
+
+```javascript
+const tx = cubePositions[i * 3 + 0];
+const ty = cubePositions[i * 3 + 1];
+const tz = cubePositions[i * 3 + 2];
+const translateMatrix = translate(tx, ty, tz);
+```
+
+Finally change the rotation matrix so that it uses an angle of zero.
+
+```javascript
+const rotateMatrix = rotate([0, 1, 0], 0);
+```
+
+:::
+
+Here we first define an array of 3-element vectors which stores the centre coordinates of two cubes. We then loop through the two cubes, calculate the MVP matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
+
+```{figure} ../_images/06_orthographic_cubes.png
+:width: 80%
+:name: orthographic-cubes-figure
+
+Orthographic projection.
+```
+
+The cube in the front is centred at $(0, 0, -2)$ and the cube behind is centred at $(0, 0, -5)$. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at $(1,1,1)$.
+
+Perspective projection is used to render objects where the further an object is from the camera, the small it appears in the canvas. It use the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at $(0,0,0)$ ({numref}`perspective-projection-figure`). The clipping volume bounded by the size clipping planes is called the **viewing frustum**.
 
 ```{figure} ../_images/06_perspective_projection.svg
-:width: 600
+:width: 700
 :name: perspective-projection-figure
 
 Perspective projection.
@@ -430,22 +597,22 @@ The shape of the viewing frustum is determined by four factors:
 
 - $near$ -- the distance from $(0,0,0)$ to the near clipping plane
 - $far$ -- the distance from $(0,0,0)$ to the far clipping plane
-- $fov$ -- the **field of view** angle between the bottom and top clipping planes (used to determine how much of the view space is visible)
-- $aspect$ -- the width-to-height **aspect ratio** of the window
+- $fov$ -- the field of view angle between the bottom and top clipping planes (used to determine how much of the view space is visible)
+- $aspect$ -- the width-to-height aspect ratio of the window
 
 Given these four factors we can calculate the transpose of the perspective projection matrix using
 
 $$ \begin{align*}
-    Projection_{pers} =
+    Perspective =
     \begin{pmatrix}
         \dfrac{near}{right} & 0 & 0 & 0 \\
         0 & \dfrac{near}{top} & 0 & 0 \\
-        0 & 0 & -\dfrac{far + near}{far - near} & -1 \\
-        0 & 0 & - \dfrac{2\cdot far \cdot near}{far - near} & 0
+        0 & 0 & -\dfrac{near + far}{far - near} & -1 \\
+        0 & 0 & - \dfrac{2\times far \times near}{far - near} & 0
     \end{pmatrix},
-\end{align*} $$
+\end{align*} $$(eq-perspective-matrix)
 
-where $top = near \cdot \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \cdot top$. You don't really need to know how this is derived but if you are interested click on the dropdown below.
+where $top = near \times \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \times top$. You don't really need to know how this is derived but if you are interested click on the dropdown below.
 
 ````{dropdown} Derivation of the perspective projection matrix
 
@@ -523,8 +690,8 @@ $$ \begin{align*}
 At the near clipping plane $z = -near$ and at the far clipping plane $z = -far$ so
 
 $$ \begin{align*}
-    -A \cdot near + B &= -near, \\
-    -A \cdot far + B &= far.
+    -A \times near + B &= -near, \\
+    -A \times far + B &= far.
 \end{align*} $$
 
 Subtracting the first equation from the second gives
@@ -540,25 +707,25 @@ $$ \begin{align*}
     \left(\frac{far + near}{far - near}\right) near + B &= -near \\
     B &= -near \left( 1 +  \frac{far + near}{far - near}\right) \\
     &= -near \left( \frac{far - near + far + near}{far - near}\right) \\
-    &= - \frac{2 \cdot far \cdot near}{far - near}.
+    &= - \frac{2 \times far \times near}{far - near}.
 \end{align*} $$
 
 So the perspective projection matrix is
 
 $$ \begin{align*}
-    Projection_{pers} =
+    Perspective =
     \begin{pmatrix}
         \dfrac{near}{right} & 0 & 0 & 0 \\
         0 & \dfrac{near}{top} & 0 & 0 \\
-        0 & 0 & -\dfrac{far + near}{far - near} & - \dfrac{2\cdot far \cdot near}{far - near} \\
+        0 & 0 & -\dfrac{far + near}{far - near} & - \dfrac{2\times far \times near}{far - near} \\
         0 & 0 & -1 & 0
     \end{pmatrix}.
 \end{align*} $$
 
-We now need to calculate the values of $r$ and $t$. The $t$ coordinate is the opposite side of a right angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$ so it is easily calculated using trigonometry 
+We now need to calculate the values of $r$ and $t$. The $t$ coordinate is the opposite side of a right angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$ so it is easily calculated using trigonometry
 
 $$ \begin{align*}
-    \tan \left( \frac{fov}{2} \right) 
+    \tan \left( \frac{fov}{2} \right)
     &= \frac{top}{near} \\
     t &= near \tan \left( \frac{fov}{2} \right).
 \end{align*} $$
@@ -566,25 +733,49 @@ $$ \begin{align*}
 Since $aspect$ with the width of the window divided by the height and $l = -r$ and $b = -t$ then
 
 $$ \begin{align*}
-    aspect &= \frac{right - left}{top - bottom} = \frac{2 \cdot right}{2 \cdot top} \\
-    \therefore right &= aspect \cdot top.
+    aspect &= \frac{right - left}{top - bottom} = \frac{2 \times right}{2 \times top} \\
+    \therefore right &= aspect \times top.
 \end{align*} $$
 ````
 
-The glm function `perspective()` calculates the perspective projection matrix given inputs of the field of view angle, width-to-height aspect ratio and the $z$ coordinates of the near and far planes. Lets apply perspective projection to our cube using a near and far clipping planes at $n=0.2$ and $f=10$ respectively and a field of view angle of $fov = 45^\circ$. Comment out the code use to calculate the orthogonal projection matrix and add the following code.
+:::{admonition} Task
+:class: tip
 
-```cpp
-// Calculate perspective projection matrix
-glm::mat4 projection = glm::perspective(Maths::radians(45.0f), 1024.0f / 768.0f, 0.2f, 10.0f);
+Add the following method definition to the Camera class.
+
+```javascript
+// Perspective projection
+perspective() {
+  const top = this.near * Math.tan(0.5 * this.fov * Math.PI / 180);
+  const right = this.aspect * top;
+  const fn = 1 / (this.far - this.near);
+
+  return new Mat4().set(
+    this.near / right, 0, 0, 0,
+    0, this.near / top, 0, 0,
+    0, 0, -(this.near + this.far) * fn, -1,
+    0, 0, -2 * this.far * this.near * fn, 0
+  );
+}
 ```
 
-Run your program and you should see the following.
+Comment out the command used to calculate the projection matrix in the `render()` function and add the following.
 
-<center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/06_perspective_cube.mp4" type="video/mp4">
-</video>
-</center>
+```javascript
+const projection = camera.perspective();
+```
+:::
+
+Refresh your web browser and you should see something similar to the following.
+
+```{figure} ../_images/06_perspective_cubes.png
+:width: 80%
+:name: perspective-cubes-figure
+
+Perspective projection.
+```
+
+---
 
 (changing-the-fov-section)=
 
@@ -603,207 +794,30 @@ $fov = 15^\circ$
 ````
 
 ````{grid-item}
-```{figure} ../_images/06_fov_90.png
+```{figure} ../_images/06_fov_120.png
 
-$fov = 90^\circ$
+$fov = 120^\circ$
 ```
 ````
 `````
 
 ---
 
-(camera-class-section)= 
-
-## A camera class
-
-Our render loop is starting to look a bit messy, so we are going to create a `Camera` class to handle all operations relating to the calculation of the view and projection matrices. In the **common/** folder there is a header file and code file called **camera.hpp** and **camera.cpp** which are currently empty. Enter the following code into **camera.hpp**.
-
-```cpp
-#pragma once
-
-#include <iostream>
-#include <glm/gtc/matrix_transform.hpp>
-#include <common/maths.hpp>
-
-class Camera
-{
-public:
-    // Projection parameters
-    float fov    = Maths::radians(45.0f);
-    float aspect = 1024.0f / 768.0f;
-    float near   = 0.2f;
-    float far    = 100.0f;
-
-    // Camera vectors
-    glm::vec3 eye;
-    glm::vec3 target;
-    glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-    // Transformation matrices
-    glm::mat4 view;
-    glm::mat4 projection;
-
-    // Constructor
-    Camera(const glm::vec3 eye, const glm::vec3 target);
-
-    // Methods
-    void calculateMatrices();
-};
-```
-
-You should be familiar with class declarations by now. Here we have declared a `Camera` class with attributes of the floats for the projection parameters, glm vector objects for the camera vectors and glm matrix objects for the view and projection matrices.
-
-In the **camera.cpp** file add the following code.
-
-```cpp
-#include <common/camera.hpp>
-
-Camera::Camera(const glm::vec3 Eye, const glm::vec3 Target)
-{
-    eye    = Eye;
-    target = Target;
-}
-
-void Camera::calculateMatrices()
-{
-    // Calculate the view matrix
-    view = glm::lookAt(eye, target, worldUp);
-
-    // Calculate the projection matrix
-    projection = glm::perspective(fov, aspect, near, far);
-}
-```
-
-The Camera class constructor creates a camera object and instantiates the $\mathbf{eye}$ and $\mathbf{target}$ vectors using the values of the two `glm::vec3` objects that are inputted. The `calculateMatrices()` method calculates the view and projection matrices using glm functions. So now we have a Camera class let's use it to calculate our view and projection matrices. First create a Camera object by entering the following code before the `main()` function.
-
-```cpp
-// Create camera object
-Camera camera(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
-```
-
-Here we have placed the camera at $(1, 1, 1)$ pointing towards $(0, 0, -2)$ (the same as before). Comment out the code used to calculate the view and projection matrices and add the following code to use our new Camera class method.
-
-```cpp
-// Calculate view and projection matrices
-camera.calculateMatrices();
-```
-
-The last thing we need to do is to use the view and projection matrices from the `camera` object when calculating the $MV\!P$ matrix. Edit your code so that it looks like the following.
-
-```cpp
-//Calculate the MVP matrix and send it to the vertex shader
-glm::mat4 MVP = camera.projection * camera.view * model;
-```
-
-Compile and run your code to check that everything is working correctly.
-
----
-
-(multiple-objects-section)= 
-
-## Multiple objects
-
-The last thing we are going to do in this lab is to add some more cubes to our 3D world. We can do this by defining the position of each cube and then, in the render loop, we loop through each cube and calculate its model matrix, calculate the $MV\!P$ matrix and then render the current object. First we need to define a data structure to contain the information for our cubes. Somewhere before the `main()` function add the following code.  
-
-```cpp
-// Object struct
-struct Object
-{
-    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 scale    = glm::vec3(1.0f, 1.0f, 1.0f);
-    float angle = 0.0f;
-    std::string name;
-};
-```
-
-This creates an object with attributes that define the position, rotation and scaling of the object as well as a string for the object name. Then just before the render loop add the following code.
-
-```cpp
-// Cube positions
-glm::vec3 positions[] = {
-    glm::vec3( 0.0f,  0.0f,  0.0f),
-    glm::vec3( 2.0f,  5.0f, -10.0f),
-    glm::vec3(-3.0f, -2.0f, -3.0f),
-    glm::vec3(-4.0f, -2.0f, -8.0f),
-    glm::vec3( 2.0f,  2.0f, -6.0f),
-    glm::vec3(-4.0f,  3.0f, -8.0f),
-    glm::vec3( 0.0f, -2.0f, -5.0f),
-    glm::vec3( 4.0f,  2.0f, -4.0f),
-    glm::vec3( 2.0f,  0.0f, -2.0f),
-    glm::vec3(-1.0f,  1.0f, -2.0f)
-};
-
-// Add cubes to objects vector
-std::vector<Object> objects;
-Object object;
-object.name = "cube";
-for (unsigned int i = 0 ; i < 10 ; i++)
-{
-    object.position = positions[i];
-    object.rotation = glm::vec3(1.0f, 1.0f, 1.0f);
-    object.scale    = glm::vec3(0.5f, 0.5f, 0.5f);
-    object.angle    = Maths::radians(20.0f * i);
-    objects.push_back(object);
-}
-```
-
-Here we have created a vector called `objects` and have populated it with 10 cube objects positioned at different locations in the worlds space, each scaled down by a factor of one half and rotated at different angles about the vector $(1,1,1)$. The `objects.push_back(object)` function appends the current object to the end of the `objects` vector. In the **render loop** replace the code used to calculate the $MV\!P$ matrix and render the cube with the following.
-
-```cpp
-// Loop through cubes and draw each one
-for (int i = 0; i < static_cast<unsigned int>(objects.size()); i++)
-{
-    // Calculate the model matrix
-    glm::mat4 translate = Maths::translate(objects[i].position);
-    glm::mat4 scale     = Maths::scale(objects[i].scale);
-    glm::mat4 rotate    = Maths::rotate(objects[i].angle, objects[i].rotation);
-    glm::mat4 model     = translate * rotate * scale;
-
-    // Calculate the MVP matrix
-    glm::mat4 MVP = camera.projection * camera.view * model;
-
-    // Send MVP matrix to the vertex shader
-    glUniformMatrix4fv(glGetUniformLocation(shaderID, "MVP"), 1, GL_FALSE, &MVP[0][0]);
-
-    // Draw the triangles
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
-}
-```
-
-Here we loop through each object and calculate the model matrix using the position, scaling and rotation vectors and rotation angle. We need to change the position of the camera so that we can see all the cubes. Specify the camera $\mathbf{eye}$ and $\mathbf{target}$ so that the camera is moved backwards along the $z$-axis a bit and looking at the first object but adding the following code before we loop through the cube objects.
-
-```cpp
-// Calculate view and projection matrices
-camera.eye    = glm::vec3(0.0f, 0.0f, 5.0f);
-camera.target = objects[0].position;
-camera.calculateMatrices();
-```
-
-Run your program and you should see the following.
-
-```{figure} ../_images/06_multiple_cubes.png
-:width: 500
-```
-
----
-
 ## Exercises
 
-1. Move the camera position so that it moves in a circle centred at the first cube with radius 10 with a rotation speed such that it completes one full rotation every 5 seconds. Hint: $x = c_x + r\cos(\theta)$ and $z = c_z + r\sin(\theta)$ gives the $x$ and $y$ coordinates on a circle centred at $(c_x, c_y, c_z)$ with radius $r$.
+1. Move the camera so that it circles the first cube centred at $(0, 0, -2)$ with radius of 5 and a height of 2. The camera should perform one full rotation every 5 seconds. Hint: $x = c_x + r\cos(\theta)$ and $z = c_z + r\sin(\theta)$ gives the $x$ and $y$ coordinates on a circle centred at $(c_x, c_y, c_z)$ with radius $r$.
 
 <center>
 <video controls muted="true" loop="true" width="400">
-    <source src="../_static/06_Ex2.mp4" type="video/mp4">
+    <source src="../_static/videos/videos/06_Ex2.mp4" type="video/mp4">
 </video>
 </center>
 
-3. Rotate the cubes that have an odd index number about the vector $(1,1,1)$ so that they complete one full rotation every 2 seconds. Hint: `x % y` returns the remainder when `x` is divided by `y`, e.g., `3 % 2` will return `1`.
+1. Rotate the cubes that have an odd index number about the vector $(1,1,1)$ so that they complete one full rotation every 2 seconds. Hint: `x % y` returns the remainder when `x` is divided by `y`, e.g., `3 % 2` will return `1`.
 
 <center>
 <video controls muted="true" loop="true" width="400">
-    <source src="../_static/06_Ex3.mp4" type="video/mp4">
+    <source src="../_static/videos/videos/06_Ex3.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -811,7 +825,7 @@ Run your program and you should see the following.
 
 <center>
 <video controls muted="true" loop="true" width="400">
-    <source src="../_static/06_Ex4.mp4" type="video/mp4">
+    <source src="../_static/videos/videos/06_Ex4.mp4" type="video/mp4">
 </video>
 </center>
 
