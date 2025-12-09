@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.22)  4 AUG 2025 10:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.10.9)  9 DEC 2025 09:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Users/jon/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/webGL_notes/_images/tikz/tikz_figures"
-(/Users/jon/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/webGL_notes/_images/tikz/tikz_figures.tex
+**"/Users/jon/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/graphics-notes/_images/tikz/tikz_figures"
+(/Users/jon/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/graphics-notes/_images/tikz/tikz_figures.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (/usr/local/texlive/2024/texmf-dist/tex/latex/standalone/standalone.cls
@@ -441,28 +441,32 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Missing character: There is no ; in font nullfont!
-[1
+<camera.pdf, id=4, 81.8227pt x 53.36938pt>
+File: camera.pdf Graphic file (type pdf)
+<use camera.pdf>
+Package pdftex.def Info: camera.pdf  used on input line 1163.
+(pdftex.def)             Requested size: 42.67912pt x 27.83774pt.
+ [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] (./tikz_figures.aux)
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./camera.pdf>] (./tikz_figures.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 17510 strings out of 474116
- 389617 string characters out of 5743681
- 1937187 words of memory out of 5000000
- 39545 multiletter control sequences out of 15000+600000
- 560047 words of font info for 40 fonts, out of 8000000 for 9000
+ 17579 strings out of 474116
+ 391146 string characters out of 5743682
+ 1929187 words of memory out of 5000000
+ 39612 multiletter control sequences out of 15000+600000
+ 560974 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,7n,121p,513b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb>
-Output written on tikz_figures.pdf (1 page, 37262 bytes).
+ 117i,7n,121p,516b,641s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+Output written on tikz_figures.pdf (1 page, 20751 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 23 PDF objects out of 1000 (max. 8388607)
+ 14 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
