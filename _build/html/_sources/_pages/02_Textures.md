@@ -18,7 +18,7 @@ The texture is a 2D image where each pixel within the texture, known as a **text
 :::{admonition} Task
 :class: tip
 
-Copy your ***01 Basic Shapes/*** folder you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***02 Textures/***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
+Copy your ***01 Basic Shapes*** folder you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***02 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
 
 :::
 
@@ -73,7 +73,7 @@ const texture = loadTexture(gl, "assets/mario.png");
 
 :::
 
-Here we have defined a function `loadTexture()` that creates a texture object and loads an image from the specified URL into the texture. A temporary image consisting of a $1 \times 1$ magenta pixel is used because WebGL needs something bound immediately even before the image has finished loading. Once the image has loaded it is copied into the texture using the `gl.texImage2D()` function. The texture filtering is set to linear interpolation for both minification and magnification using the `gl.texParameteri()` function (minification and magnification are explained later). We have then called this function to load in the image from the file ***mario.png*** in the ***assets/*** folder.
+Here we have defined a function `loadTexture()` that creates a texture object and loads an image from the specified URL into the texture. A temporary image consisting of a $1 \times 1$ magenta pixel is used because WebGL needs something bound immediately even before the image has finished loading. Once the image has loaded it is copied into the texture using the `gl.texImage2D()` function. The texture filtering is set to linear interpolation for both minification and magnification using the `gl.texParameteri()` function (minification and magnification are explained later). We have then called this function to load in the image from the file ***mario.png*** in the ***assets*** folder.
 
 ---
 
@@ -469,7 +469,7 @@ gl.uniform1i(gl.getUniformLocation(program, "uTexture2"), 1);
 
 :::
 
-Here we have loaded a second texture from the file ***crate.png*** in the ***assets/*** folder. We then bind this texture to the second texture unit `GL_TEXTURE1` and bind this to a uniform called `uTexture2` in the fragment shader. We now need to update the fragment shader to use both textures.
+Here we have loaded a second texture from the file ***crate.png*** in the ***assets*** folder. We then bind this texture to the second texture unit `GL_TEXTURE1` and bind this to a uniform called `uTexture2` in the fragment shader. We now need to update the fragment shader to use both textures.
 
 :::{admonition} Task
 :class: tip

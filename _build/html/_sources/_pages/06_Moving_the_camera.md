@@ -7,7 +7,7 @@ In the [Lab 5: 3D Worlds](3D-worlds-section) we saw how we use transformations t
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***06_Moving the Camera/*** and copy across the contents of your ***05_3D_worlds/*** folder (you will need to have completed [Lab 5: 3D Worlds](3D-worlds-section) before proceeding with this one). Change the filename of ***3D_worlds.js*** to ***moving_the_camera.js*** and edit ***index.html*** so that uses this file.
+Create a folder called ***06_Moving the Camera*** and copy across the contents of your ***05_3D_worlds*** folder (you will need to have completed [Lab 5: 3D Worlds](3D-worlds-section) before proceeding with this one). Change the filename of ***3D_worlds.js*** to ***moving_the_camera.js*** and edit ***index.html*** so that uses this file.
 :::
 
 ```{figure} ../_images/06_moving_the_camera.png

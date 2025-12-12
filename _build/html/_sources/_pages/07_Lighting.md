@@ -7,7 +7,7 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***07 Lighting/*** and copy the contents of your ***06 Moving the Camera/*** folder to it. Rename the ***moving_the_camera.js*** file to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" and change the script element so that it uses ***lighting.js***.
+Create a folder called ***07 Lighting*** and copy the contents of your ***06 Moving the Camera*** folder to it. Rename the ***moving_the_camera.js*** file to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" and change the script element so that it uses ***lighting.js***.
 
 :::
 
