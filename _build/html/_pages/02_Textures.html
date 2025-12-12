@@ -1,0 +1,1006 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 2: Textures &#8212; Computer Graphics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_pages/02_Textures';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab 3: Vectors and Matrices" href="03_Vectors_and_matrices.html" />
+    <link rel="prev" title="Lab 1: Drawing Basic Shapes in WebGL" href="01_Basic_shapes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Computer Graphics
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 2: Textures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Transformations.html">Lab 4: Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jonshiach/graphics-notes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jonshiach/graphics-notes/issues/new?title=Issue%20on%20page%20%2F_pages/02_Textures.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/_pages/02_Textures.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 2: Textures</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-texture">Creating a texture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-coordinates">Texture coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-filtering">Texture filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mipmaps">Mipmaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-wrapping">Texture wrapping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-textures">Multiple textures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-2-textures">
+<span id="textures-section"></span><h1>Lab 2: Textures<a class="headerlink" href="#lab-2-textures" title="Link to this heading">#</a></h1>
+<p>Texture mapping is a technique for applying a 2D image known as a <strong>texture</strong> onto a 3D surface. Applying a texture adds detail and complexity to the appearance of 3D objects without the need for modelling intricate geometry.</p>
+<figure class="align-default" id="texture-mapping-figure">
+<a class="reference internal image-reference" href="../_images/02_texture_mapping.svg"><img alt="../_images/02_texture_mapping.svg" src="../_images/02_texture_mapping.svg" style="width: 700px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Mapping a texture to a polygon.</span><a class="headerlink" href="#texture-mapping-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The texture is a 2D image where each pixel within the texture, known as a <strong>textel</strong>, is referenced using the <strong>texture coordinates</strong> given as <span class="math notranslate nohighlight">\((u,v)\)</span> where <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are in the range 0 to 1, i.e., <span class="math notranslate nohighlight">\((0,0)\)</span> corresponds to the textel in the bottom-left corner and <span class="math notranslate nohighlight">\((1,1)\)</span> corresponds to the textel in the top-right corner. When a fragment is created by the shader the corresponding texture coordinates are calculated and the sample colour of the textel is used for the fragment. Fortunately we do not need to write a texture mapper functions since these are in WebGL.</p>
+<hr class="docutils" />
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Copy your <em><strong>01 Basic Shapes/</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>02 Textures/</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+</div>
+<p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
+<figure class="align-default" id="colour-rectangle-figure">
+<a class="reference internal image-reference" href="../_images/02_colourful_rectangle.png"><img alt="../_images/02_colourful_rectangle.png" src="../_images/02_colourful_rectangle.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">A colourful rectangle.</span><a class="headerlink" href="#colour-rectangle-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<hr class="docutils" />
+<section id="creating-a-texture">
+<h2>Creating a texture<a class="headerlink" href="#creating-a-texture" title="Link to this heading">#</a></h2>
+<p>The first thing we need to do is create a texture in WebGL.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following function definition to the <em><strong>webGLUtils.js</strong></em> file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createTexture</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">pixelStorei</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNPACK_FLIP_Y_WEBGL</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Temporary 1×1 magenta pixel while image loads</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texImage2D</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint8Array</span><span class="p">([</span><span class="mf">255</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">255</span><span class="p">,</span><span class="w"> </span><span class="mf">255</span><span class="p">]));</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">image</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">url</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">image</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texImage2D</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="nx">image</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">texture</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Add the following code to the <em><strong>textures.js</strong></em> file after the VAO is creates.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/mario.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have defined a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that creates a texture object and loads an image from the specified URL into the texture. A temporary image consisting of a <span class="math notranslate nohighlight">\(1 \times 1\)</span> magenta pixel is used because WebGL needs something bound immediately even before the image has finished loading. Once the image has loaded it is copied into the texture using the <code class="docutils literal notranslate"><span class="pre">gl.texImage2D()</span></code> function. The texture filtering is set to linear interpolation for both minification and magnification using the <code class="docutils literal notranslate"><span class="pre">gl.texParameteri()</span></code> function (minification and magnification are explained later). We have then called this function to load in the image from the file <em><strong>mario.png</strong></em> in the <em><strong>assets/</strong></em> folder.</p>
+</section>
+<hr class="docutils" />
+<section id="texture-coordinates">
+<h2>Texture coordinates<a class="headerlink" href="#texture-coordinates" title="Link to this heading">#</a></h2>
+<p>So we have created a texture and told WebGL all about it. Now we need to specify how we want to use the texture. To do this for each of the vertices of the triangle we need to define the corresponding <span class="math notranslate nohighlight">\((u, v)\)</span> texture coordinates where <span class="math notranslate nohighlight">\((0, 0)\)</span> is the bottom left-hand corner and <span class="math notranslate nohighlight">\((1,1)\)</span> is the top-right hand corner of the texture (see <a class="reference internal" href="#texture-mapping-figure"><span class="std std-numref">Fig. 9</span></a>). We already have an array that contains the vertex coordinates and colours, so we can simply add <span class="math notranslate nohighlight">\((u, v)\)</span> coordinates to this.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates are defined for each vertex.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertices</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="c1">//  x     y    z       r    g    b      u  v            </span>
+<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
+<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have defined the texture coordinates for each vertex so that each vertex of the rectangle is mapped to the corresponding vertex of the texture. Now that we have added texture coordinates to each vertex we need to update the code that tells WebGL how to interpret the data in the vertex buffer.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> function in the <em><strong>webGLUtils.js</strong></em> file, update the stride value.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And add the following before the VAO us unbound.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Texture coordinates</span>
+<span class="nx">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">texCoordsLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aTexCoord&quot;</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">texCoordsLocation</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">texCoordsLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">stride</span><span class="p">,</span><span class="w"> </span><span class="nx">offset</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="shaders">
+<h2>Shaders<a class="headerlink" href="#shaders" title="Link to this heading">#</a></h2>
+<p>The next thing we need to do is to update the vertex and fragment shader. The texture coordinates are read in by the vertex shader and then passed to the rasteriser which calculates the texture coordinates of each fragment.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Edit the vertex shader source code at the top of the <em><strong>textures.js</strong></em> file so that it looks like the following</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+
+<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span><span class="w"> </span>
+<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
+<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
+
+<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
+<span class="n">out</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">/// Output vertex coordinates</span>
+<span class="w">  </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Output vertex colour</span>
+<span class="w">  </span><span class="n">vColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Output texture co-ordinates</span>
+<span class="w">  </span><span class="n">vTexCoord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Here we declare a 2-element input vector <code class="docutils literal notranslate"><span class="pre">aTexCoord</span></code> and a 2-element output vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> for the texture coordinates of the vertex (recall that standard convention is that the prefix <code class="docutils literal notranslate"><span class="pre">a</span></code> stands for attribute and <code class="docutils literal notranslate"><span class="pre">v</span></code> stands for vertex). The texture coordinates are outputted without us doing anything to them.</p>
+<p>The fragment shader needs to read in the texture coordinates of the fragment and get the colour of the fragment from the texture.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Edit the fragment shader source code so that it looks like the following</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+
+<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
+<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
+
+<span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
+
+<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">uTexture</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Here we now have an input of the 2-element vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> which has been outputted from the vertex shader. A uniform is declared which is a <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> type called <code class="docutils literal notranslate"><span class="pre">uTexture</span></code>. A uniform is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders which we have done here with our texture. The colour of the fragment is taken from the texture using the <code class="docutils literal notranslate"><span class="pre">texture()</span></code> function which outputs a 4-element RGBA vector.</p>
+<p>The last thing we need to do is to bind the texture to the uniform in the JavaScript code.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following code the texture has been loaded.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind texture</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE0</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uTexture&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Refresh your web browser, and you should see that we now have applied a texture to the rectangle.</p>
+<figure class="align-default" id="mario-texture-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_texture.png"><img alt="../_images/02_mario_texture.png" src="../_images/02_mario_texture.png" style="width: 80%;" />
+</a>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="texture-filtering">
+<h2>Texture filtering<a class="headerlink" href="#texture-filtering" title="Link to this heading">#</a></h2>
+<p>Whe you apply a texture to a polygon, WebGL needs to determine the colour of each fragment from the texture. This is not always straightforward since the size of the texture and the size of the polygon may not match up. For example, if the texture is very high resolution and the polygon is small on the screen then a single fragment may cover multiple textels in the texture. Conversely, if the texture is low resolution and the polygon is large on the screen then a single textel may cover multiple fragments. To deal with these issues WebGL scales the texture.</p>
+<p>There are two types of scaling:</p>
+<ul class="simple">
+<li><p><strong>Minification</strong> - where the texture is larger than the polygon it is being mapped to so a fragment covers multiple textels, so the texture must be minified to fit the polygon;</p></li>
+<li><p><strong>Magnification</strong> - where the texture is smaller than the polygon so that a single textel takes up multiple fragments, so the texture must be magnified to fit the polygon.</p></li>
+</ul>
+<p>In addition to scaling the texture WebGL also needs to determine how to get the colour of the fragment from the texture. There are different methods for doing this known as <strong>texture filtering</strong>.</p>
+<p>There are two types of texture filtering:</p>
+<ul class="simple">
+<li><p><strong>Nearest-neighbour interpolation</strong> - where the colour of the nearest textel to the <span class="math notranslate nohighlight">\((u,v)\)</span> texture coordinates is used as the colour sample.</p></li>
+</ul>
+<figure class="align-default" id="nearest-neighbour-interpolation-figure">
+<a class="reference internal image-reference" href="../_images/02_nearest_neighbour.svg"><img alt="../_images/02_nearest_neighbour.svg" src="../_images/02_nearest_neighbour.svg" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Nearest neighbour interpolation.</span><a class="headerlink" href="#nearest-neighbour-interpolation-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>Bilinear interpolation</strong> - where the distance between <span class="math notranslate nohighlight">\((u,v)\)</span> coordinate and the centre of a textel determines how much that textel contributes to the colour sample.</p></li>
+</ul>
+<figure class="align-default" id="bilinear-interpolation-figure">
+<a class="reference internal image-reference" href="../_images/02_bilinear.svg"><img alt="../_images/02_bilinear.svg" src="../_images/02_bilinear.svg" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Bilinear interpolation.</span><a class="headerlink" href="#bilinear-interpolation-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In our <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> function we set the texture filtering to linear interpolation for both minification and magnification using the following code.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here we specified that both minification and magnification should use bilinear interpolation. We can change these settings to see how they affect the appearance of the texture on the rectangle.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Chnage the command to load the texture in the <em><strong>textures.js</strong></em> file to the following.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/mario_small.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">NEAREST</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">NEAREST</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have changed the texture to a low resolution <span class="math notranslate nohighlight">\(64 \times 64\)</span> pixel version of the Mario texture and the texture filtering to nearest-neighbour interpolation. Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-nearest-figure"><span class="std std-numref">Fig. 13</span></a>.</p>
+<figure class="align-default" id="mario-nearest-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_nearest.png"><img alt="../_images/02_mario_nearest.png" src="../_images/02_mario_nearest.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Nearest neighbour interpolation</span><a class="headerlink" href="#mario-nearest-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We have told WebGL to use the nearest textel to get the colour sample for each fragment. This results in a blocky appearance since each textel is enlarged to cover multiple fragments.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Change the texture filtering back to bilinear interpolation for both minification and magnification.</p>
+</div>
+<p>Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-linear-figure"><span class="std std-numref">Fig. 14</span></a>. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment.</p>
+<figure class="align-default" id="mario-linear-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_linear.png"><img alt="../_images/02_mario_linear.png" src="../_images/02_mario_linear.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Bilinear interpolation</span><a class="headerlink" href="#mario-linear-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<hr class="docutils" />
+</section>
+<section id="mipmaps">
+<span id="mipmaps-section"></span><h2>Mipmaps<a class="headerlink" href="#mipmaps" title="Link to this heading">#</a></h2>
+<p>Another issue that may occur is when the fragment is a lot smaller than the texture which can happen when an object that is far away from the viewer. In these cases WebGL will struggle to get the colour sample from a high resolution texture since a single fragment covers a large part of the texture.</p>
+<p>To solve this issue WebGL uses <a href="https://www.khronos.org/WebGL/wiki/Texture#Mip_maps" target="_blank"><strong>mipmaps</strong></a> (mip is short for the latin phrase <em>“multum in parvo”</em> or “much in little”) which are a series of textures, each one half the size of the previous one. WebGL will use a mipmap texture most suitable based on the size of the fragment relative to the texture. This way the fragment does not span a large part of the texture.</p>
+<figure class="align-default" id="mipmaps-figure">
+<a class="reference internal image-reference" href="../_images/02_mipmaps.svg"><img alt="../_images/02_mipmaps.svg" src="../_images/02_mipmaps.svg" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Mipmaps</span><a class="headerlink" href="#mipmaps-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The good news is that we do not need to create lots of new different size textures because WebGL has a function <code class="docutils literal notranslate"><span class="pre">glGenerateMipmap()</span></code> to do this for us. The bad news is that we can only use this when the dimensions of the texture image are powers of two, e.g., <span class="math notranslate nohighlight">\(64 \times 64\)</span>, <span class="math notranslate nohighlight">\(128 \times 128\)</span>, <span class="math notranslate nohighlight">\(256 \times 256\)</span> etc. When we have non-power of 2 textures we cannot use mipmaps.</p>
+<p>One issue we may encounter is that when we switch between two mipmaps, e.g., when the viewer is moving towards or away from an object, there can be a notable change in appearance of the object. This is known as <strong>texture popping</strong> and is caused by switching between two mipmaps. To overcome this WebGL gives the option to sample the texture from a linear interpolation between the two nearest mipmaps. So we have two main texture filtering options and two mipmap options giving four main mipmap options:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GL_NEAREST_MIPMAP_NEAREST</span></code></p></td>
+<td><p>uses nearest texture filtering on the nearest mipmap</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GL_LINEAR_MIPMAP_NEAREST</span></code></p></td>
+<td><p>uses linear texture filtering on the nearest mipmap</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GL_NEAREST_MIPMAP_LINEAR</span></code></p></td>
+<td><p>uses nearest texture filtering on a linear interpolation between two mipmaps</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GL_LINEAR_MIPMAP_LINEAR</span></code></p></td>
+<td><p>uses linear texture filtering on a linear interpolation between two mipmaps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following function definition to the <em><strong>webGLUtils.js</strong></em> file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">isPowerOf2</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">))</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then change the onlload function in the <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> function to the following.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">image</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texImage2D</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">RGBA</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="nx">image</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// Auto-generate mipmaps (requires power-of-2 image)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isPowerOf2</span><span class="p">(</span><span class="nx">image</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">isPowerOf2</span><span class="p">(</span><span class="nx">image</span><span class="p">.</span><span class="nx">height</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">generateMipmap</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR_MIPMAP_LINEAR</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Non power-of-2 textures must be clamped &amp; non-mipmapped</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINEAR</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_WRAP_S</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">CLAMP_TO_EDGE</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_WRAP_T</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">CLAMP_TO_EDGE</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Now revert the texture back to the high resolution version by changing the load command.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/mario.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have created a function to check if a number is a power of 2 and used this in the onload function to decide whether we can generate mipmaps or not. Refresh your web browser, and you should see the image similar to that from <code class="xref std std-numref docutils literal notranslate"><span class="pre">mario-texture-figure</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="texture-wrapping">
+<h2>Texture wrapping<a class="headerlink" href="#texture-wrapping" title="Link to this heading">#</a></h2>
+<p>In our examples above, all the texture coordinates have been in the range from 0 to 1. What happens if we use textures coordinates outside this range?</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Change the texture coordinates in the vertices array so that the 1 values are changed to 4.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertices</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="c1">//  x     y    z       r    g    b      u  v            </span>
+<span class="w">  </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
+<span class="w">   </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
+<span class="w">   </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
+<span class="w">  </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<p>Refresh your web browser, and you see something like the followin.</p>
+<figure class="align-default" id="mario-repeat-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_repeat.png"><img alt="../_images/02_mario_repeat.png" src="../_images/02_mario_repeat.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>.</span><a class="headerlink" href="#mario-repeat-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Here WebGL has used <strong>texture wrapping</strong> to repeat the texture over the rectangle. This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself. WebGL offers other options for texture wrapping;</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code></p></td>
+<td><p>the texture repeats over the fragment (default)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code></p></td>
+<td><p>same as <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>, but the texture is mirrored with each repeat</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code></p></td>
+<td><p>clamps the texture coordinates to between 0 and 1, coordinates outside this range are clamped to the edge so that the textels on the edge are stretched to the edge of the fragment</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The WebGL default wrapping is <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code> but we can specify the texture wrapping using the <code class="docutils literal notranslate"><span class="pre">glTexParameteri()</span></code> function.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to the <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> function in the <em><strong>webGLUtils.js</strong></em> file after the mipmap code.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_WRAP_S</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">MIRRORED_REPEAT</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_WRAP_T</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">MIRRORED_REPEAT</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have specified the wrapping in the horizontal (<code class="docutils literal notranslate"><span class="pre">S</span></code>) and vertical (<code class="docutils literal notranslate"><span class="pre">T</span></code>) directions (some people use <span class="math notranslate nohighlight">\((S,T)\)</span> for the vertex coordinates instead of <span class="math notranslate nohighlight">\((u,v)\)</span>) to <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>. Refresh your web browser, and you should see the image shown below.</p>
+<figure class="align-default" id="mario-mirrored-repeat-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_mirrored_repeat.png"><img alt="../_images/02_mario_mirrored_repeat.png" src="../_images/02_mario_mirrored_repeat.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>.</span><a class="headerlink" href="#mario-mirrored-repeat-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code> results in the images shown below.</p>
+<figure class="align-default" id="mario-clamp-to-edge-figure">
+<a class="reference internal image-reference" href="../_images/02_mario_clamp_to_edge.png"><img alt="../_images/02_mario_clamp_to_edge.png" src="../_images/02_mario_clamp_to_edge.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code>.</span><a class="headerlink" href="#mario-clamp-to-edge-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="multiple-textures">
+<h2>Multiple textures<a class="headerlink" href="#multiple-textures" title="Link to this heading">#</a></h2>
+<p>WebGL allows us to use up to 16 textures in a single fragment shader. For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options.</p>
+<p>A <strong>texture unit</strong> is a location value used by fragment shader for the texture sampler we are using. The default texture unit for a texture is <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code> which is what we have been using up to now. We can have up to 16 texture units, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE1</span></code> up to <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE15</span></code>. Alternatively we could use <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span> <span class="pre">+</span> <span class="pre">2</span></code> up to <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE</span> <span class="pre">+</span> <span class="pre">15</span></code>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Load a second texture by adding the following code after the first texture is loaded.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">texture2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/crate.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>And add the following code after we bind the first texture.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE1</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture2</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uTexture2&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have loaded a second texture from the file <em><strong>crate.png</strong></em> in the <em><strong>assets/</strong></em> folder. We then bind this texture to the second texture unit <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE1</span></code> and bind this to a uniform called <code class="docutils literal notranslate"><span class="pre">uTexture2</span></code> in the fragment shader. We now need to update the fragment shader to use both textures.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>In the fragment shader, add the following after we have declared the first texture uniform.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">uTexture2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And then modify the fragment colour assignment to the following.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">),</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture2</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">),</span><span class="w"> </span><span class="mf">0.4</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have used the <code class="docutils literal notranslate"><span class="pre">mix()</span></code> function to combine the two textures so that 60% is from the first texture (Mario) and the and the remaining 40% is from the second texture (the crate).</p>
+<figure class="align-default" id="two-textures-figure">
+<a class="reference internal image-reference" href="../_images/02_two_textures.png"><img alt="../_images/02_two_textures.png" src="../_images/02_two_textures.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">A rectangle with a mix of two textures applied.</span><a class="headerlink" href="#two-textures-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Change the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to create a texture rectangle consisting of a 6 by 4 grid of Mario’s.</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex1.png"><img alt="../_images/02_Ex1.png" src="../_images/02_Ex1.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="2">
+<li><p>Modify the fragment shader so that Mario is facing to the right instead of the left. Hint: the command <code class="docutils literal notranslate"><span class="pre">vec2(vector.x,</span> <span class="pre">vector.y)</span></code> creates a 2-element vector using the elements of <code class="docutils literal notranslate"><span class="pre">vector</span></code>.</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex2.png"><img alt="../_images/02_Ex2.png" src="../_images/02_Ex2.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="3">
+<li><p>Modify the fragment shader so that the red and green colour components of the pixel are switched.</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex3.png"><img alt="../_images/02_Ex3.png" src="../_images/02_Ex3.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="4">
+<li><p>Apply a texture of your choice to the rectangle (e.g., a selfie or a picture of cute kitten).</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex4.png"><img alt="../_images/02_Ex4.png" src="../_images/02_Ex4.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="5">
+<li><p>Modify the fragment shader so that the colours of the vertices are multiplied by the Mario texture.</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex5.png"><img alt="../_images/02_Ex5.png" src="../_images/02_Ex5.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="6">
+<li><p>Change the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates so that the textured rectangle shows a zoomed in image of Mario’s eye.</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/02_Ex6.png"><img alt="../_images/02_Ex6.png" src="../_images/02_Ex6.png" style="width: 60%;" />
+</a>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
+<p>The video below walks you through these lab materials.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./_pages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_Basic_shapes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 1: Drawing Basic Shapes in WebGL</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_Vectors_and_matrices.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 3: Vectors and Matrices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-texture">Creating a texture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-coordinates">Texture coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-filtering">Texture filtering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mipmaps">Mipmaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-wrapping">Texture wrapping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-textures">Multiple textures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr Jon Shiach
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

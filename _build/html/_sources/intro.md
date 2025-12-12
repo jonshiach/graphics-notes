@@ -2,18 +2,16 @@
 
 This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses code from the preceding labs, so you will need to make sure you have completed each lab before moving onto the next one.
 
-| Week | Date (w/c) | Content |
-|:--:|:--:|:--|
-| 1 | 26/01/2026 | Core Computer Graphics Concepts: WebGL, the graphics pipeline, glossary of terms. Hello Triangle: vertex buffers, vertex and fragment shaders |
-| 2 | 02/02/2026 | Vertex Colours, More Shapes & VAOs |
-| 3 | 09/02/2026 | Textures |
-| 4 | 16/02/2026 | Vectors and Matrices |
-| 5 | 23/02/2026 | Transformations |
-| 6 | 02/03/2026 | 3D Worlds|
-| 7 | 09/03/2026 | Moving the Camera |
-| 8 | 16/03/2026 | Lighting Models |
-| 9 | 23/03/2026 | Normal Maps |
-| 10 | 20/04/2026 | Quaternions |
+1. [Basic Shapes in WebGL](basic-shapes-section)
+2. [Textures](textures-section)
+3. [Vectors and Matrices](vectors-and-matrices-section)
+4. [Transformations](transformations-section)
+5. [3D Worlds](3D-worlds-section)
+6. [Moving the Camera](moving-the-camera-section)
+7. [Lighting](lighting-section)
+8. [More Lights](more-lights-section)
+9. [Normal Maps](normal-maps-section)
+10. [Quaternions](quaternions-section)
 
 ---
 

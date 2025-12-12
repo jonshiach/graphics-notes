@@ -45,4 +45,3 @@ sphinx:
       tex:
         macros:
           "vec": ["\\mathbf{#1}", 1]
-          "dydt": ["\\frac{\\mathrm{d} #1}{\\mathrm{d} #2}", 2]

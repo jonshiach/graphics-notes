@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.10.9)  9 DEC 2025 09:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.10.9)  11 DEC 2025 16:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -441,32 +441,50 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-<camera.pdf, id=4, 81.8227pt x 53.36938pt>
-File: camera.pdf Graphic file (type pdf)
-<use camera.pdf>
-Package pdftex.def Info: camera.pdf  used on input line 1163.
-(pdftex.def)             Requested size: 42.67912pt x 27.83774pt.
+<mario_small.png, id=4, 32.12pt x 32.12pt>
+File: mario_small.png Graphic file (type png)
+<use mario_small.png>
+Package pdftex.def Info: mario_small.png  used on input line 747.
+(pdftex.def)             Requested size: 56.9055pt x 56.91019pt.
  [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./camera.pdf>] (./tikz_figures.aux)
+ <./mario_small.png>]
+<crate.png, id=12, 295.1025pt x 274.02374pt>
+File: crate.png Graphic file (type png)
+<use crate.png>
+Package pdftex.def Info: crate.png  used on input line 1455.
+(pdftex.def)             Requested size: 28.45274pt x 26.41719pt.
+File: crate.png Graphic file (type png)
+<use crate.png>
+Package pdftex.def Info: crate.png  used on input line 1455.
+(pdftex.def)             Requested size: 28.45274pt x 26.41719pt.
+File: crate.png Graphic file (type png)
+<use crate.png>
+Package pdftex.def Info: crate.png  used on input line 1455.
+(pdftex.def)             Requested size: 28.45274pt x 26.41719pt.
+File: crate.png Graphic file (type png)
+<use crate.png>
+Package pdftex.def Info: crate.png  used on input line 1455.
+(pdftex.def)             Requested size: 28.45274pt x 26.41719pt.
+ [2{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./crate.png>] (./tikz_figures.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 17579 strings out of 474116
- 391146 string characters out of 5743682
- 1929187 words of memory out of 5000000
- 39612 multiletter control sequences out of 15000+600000
- 560974 words of font info for 43 fonts, out of 8000000 for 9000
+ 17544 strings out of 474116
+ 390422 string characters out of 5743682
+ 1931187 words of memory out of 5000000
+ 39580 multiletter control sequences out of 15000+600000
+ 559593 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,7n,121p,516b,641s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-Output written on tikz_figures.pdf (1 page, 20751 bytes).
+ 117i,7n,121p,516b,701s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb>
+Output written on tikz_figures.pdf (2 pages, 143757 bytes).
 PDF statistics:
- 23 PDF objects out of 1000 (max. 8388607)
+ 25 PDF objects out of 1000 (max. 8388607)
  14 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
