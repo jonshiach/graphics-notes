@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -52,18 +52,18 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1], "dydt": ["\\frac{\\mathrm{d} #1}{\\mathrm{d} #2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/02_Colours';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lab 3: Textures" href="03_Textures.html" />
-    <link rel="prev" title="Lab 1: Drawing a Simple Shape in WebGL" href="01_Hello_Triangle.html" />
+    <link rel="next" title="Lab 3: Textures" href="02_Textures.html" />
+    <link rel="prev" title="Lab 1: Drawing Basic Shapes in WebGL" href="01_Basic_shapes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -182,13 +182,13 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_Hello_Triangle.html">Lab 1: Drawing a Simple Shape in WebGL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 2: Colours</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_Textures.html">Lab 3: Textures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_Vectors_and_matrices.html">Lab 4: Vectors and Matrices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_Transformations.html">Lab 5: Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_3D_worlds.html">Lab 6: 3D Worlds</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07_Moving_the_camera.html">Lab 7: Moving the Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Textures.html">Lab 3: Textures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 4: Vectors and Matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Transformations.html">Lab 5: Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 6: 3D Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 7: Moving the Camera</a></li>
 </ul>
 
     </div>
@@ -411,7 +411,7 @@ document.write(`
 <p>We are going to build upon the code we used to draw the boring red triangle example and jazz it up a bit by defined colour data for each vertex. Instead of starting from scratch, let’s copy the code from the previous page.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>02 Colours</strong></em> and download <a class="reference download internal" download="" href="../_downloads/9513bb859e07b1e15e13eefe67f7f10a/index.html"><span class="xref download myst">index.html</span></a>, <a class="reference download internal" download="" href="../_downloads/968c69b7ddf4a7860d201ea83f996911/colours.js"><span class="xref download myst">colours.js</span></a> and <a class="reference download internal" download="" href="../_downloads/c202759be3cabca52b965c8c0c43976c/webGLUtils.js"><span class="xref download myst">webGLUtils.js</span></a> to it. Open <em><strong>index.html</strong></em> in a web browser to check that the red triangle from <a class="reference internal" href="01_Hello_Triangle.html#lab1-section"><span class="std std-ref">Lab 1</span></a> is displayed.</p>
+<p>Create a folder called <em><strong>02 Colours</strong></em> and download <a class="reference download internal" download="" href="../_downloads/9513bb859e07b1e15e13eefe67f7f10a/index.html"><span class="xref download myst">index.html</span></a>, <a class="reference download internal" download="" href="../_downloads/968c69b7ddf4a7860d201ea83f996911/colours.js"><span class="xref download myst">colours.js</span></a> and <a class="reference download internal" download="" href="../_downloads/c202759be3cabca52b965c8c0c43976c/webGLUtils.js"><span class="xref download myst">webGLUtils.js</span></a> to it. Open <em><strong>index.html</strong></em> in a web browser to check that the red triangle from <a class="reference internal" href="#lab1-section"><span class="xref myst">Lab 1</span></a> is displayed.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/02_hello_triangle.png"><img alt="../_images/02_hello_triangle.png" src="../_images/02_hello_triangle.png" style="width: 80%;" />
 </a>
@@ -478,20 +478,20 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is now black, and it appears that the top vertex has been moved to the right-hand edge of the canvas (<span class="xref std std-ref">black-triangle-figure</span>). The reason why its skewed is that when we told WebGL how to read the vertex buffer using <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(colourLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>. This means that WebGL is expected no gaps between the vertex co-ordinate data since the <code class="docutils literal notranslate"><span class="pre">stride</span></code> input (the second to last input) is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so it thinks the 3 vertex co-ordinates are <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span>.</p>
+<p>Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is now black, and it appears that the top vertex has been moved to the right-hand edge of the canvas (<a class="reference internal" href="01_Basic_shapes.html#black-triangle-figure"><span class="std std-ref">Sorted the vertex co-ordinates but not the colour.</span></a>). The reason why its skewed is that when we told WebGL how to read the vertex buffer using <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(colourLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>. This means that WebGL is expected no gaps between the vertex co-ordinate data since the <code class="docutils literal notranslate"><span class="pre">stride</span></code> input (the second to last input) is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so it thinks the 3 vertex co-ordinates are <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span>.</p>
 <figure class="align-default" id="black-triangle-figure-1">
-<a class="reference internal image-reference" href="../_images/02_black_triangle-1.png"><img alt="../_images/02_black_triangle-1.png" src="../_images/02_black_triangle-1.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="_images/02_black_triangle-1.png"><img alt="_images/02_black_triangle-1.png" src="_images/02_black_triangle-1.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Oops, something has gone wrong.</span><a class="headerlink" href="#black-triangle-figure-1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Oops, something has gone wrong.</span><a class="headerlink" href="#black-triangle-figure-1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>This is where the <code class="docutils literal notranslate"><span class="pre">stride</span></code> input for the <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer()</span></code> function comes in. Stride is the number of bytes from the start of the attribute (in our case the <span class="math notranslate nohighlight">\(x\)</span> vertex co-ordinate) for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the <span class="math notranslate nohighlight">\((x, y, z)\)</span> values and 3 for the RGB values.</p>
 <figure class="align-default" id="stride-offset-figure">
-<a class="reference internal image-reference" href="../_images/02_stride_offset.svg"><img alt="../_images/02_stride_offset.svg" src="../_images/02_stride_offset.svg" style="width: 70%;" />
+<a class="reference internal image-reference" href="_images/02_stride_offset.svg"><img alt="_images/02_stride_offset.svg" src="_images/02_stride_offset.svg" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">The stride and offset of a vertex array.</span><a class="headerlink" href="#stride-offset-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">The stride and offset of a vertex array.</span><a class="headerlink" href="#stride-offset-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="tip admonition">
@@ -509,10 +509,10 @@ document.write(`
 </div>
 <p>Refresh your browser, and you should see that the triangle vertices has returned to its previous state, but it’s still black (<a class="reference internal" href="#black-triangle-figure-2"><span class="std std-ref">Sorted the vertex co-ordinates but not the colour.</span></a>). The reason for this is that we have not yet told WebGL about our new vertex colours. To do this we get the location of the <code class="docutils literal notranslate"><span class="pre">aColour</span></code> attribute from the vertex shader, enable the attribute array and point WebGL to where it can find the colour data.</p>
 <figure class="align-default" id="black-triangle-figure-2">
-<a class="reference internal image-reference" href="../_images/02_black_triangle-2.png"><img alt="../_images/02_black_triangle-2.png" src="../_images/02_black_triangle-2.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="_images/02_black_triangle-2.png"><img alt="_images/02_black_triangle-2.png" src="_images/02_black_triangle-2.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Sorted the vertex co-ordinates but not the colour.</span><a class="headerlink" href="#black-triangle-figure-2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Sorted the vertex co-ordinates but not the colour.</span><a class="headerlink" href="#black-triangle-figure-2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="tip admonition">
@@ -536,7 +536,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_hello_colourful_triangle.png"><img alt="../_images/02_hello_colourful_triangle.png" src="../_images/02_hello_colourful_triangle.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Hello colourful triangle!</span><a class="headerlink" href="#colurful-triangle-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Hello colourful triangle!</span><a class="headerlink" href="#colurful-triangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>You can see that the 3 triangle vertices are red, green and blue going anti-clockwise from the bottom-left vertex. The colour of the pixels across the interior of the triangle have been interpolated by the rasteriser so that we have a smooth transition of colours.</p>
@@ -730,16 +730,16 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_Hello_Triangle.html"
+       href="01_Basic_shapes.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lab 1: Drawing a Simple Shape in WebGL</p>
+        <p class="prev-next-title">Lab 1: Drawing Basic Shapes in WebGL</p>
       </div>
     </a>
     <a class="right-next"
-       href="03_Textures.html"
+       href="02_Textures.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
