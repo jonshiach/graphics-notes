@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/08_More_lights';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab 9: Normal Mapping" href="09_Normal_mapping.html" />
     <link rel="prev" title="Lab 7: Lighting" href="07_Lighting.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -180,7 +181,13 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Textures.html">Lab 2: Textures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
@@ -189,6 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 8: More Lights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -405,8 +418,9 @@ document.write(`
 <p>In <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">Lab 7: Lighting</span></a> we saw how to add a single point light source to a scene using the Phong reflection model. In this lab we will extend this to multiple light sources of different types including point lights, spotlights and directional lights.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a copy of your <em><strong>Lab07_Lighting/</strong></em> folder, rename it to <em><strong>Lab08 More Lights/</strong></em>, change the name of <em><strong>lighting.js</strong></em> to <em><strong>more_lignts.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+<p>Create a copy of your <em><strong>07 Lighting</strong></em> folder, rename it <em><strong>08 More Lights</strong></em>, rename the file <em><strong>lighting.js</strong></em> to <em><strong>more_lights.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 8 - More Lights” and it uses the <em><strong>more_lights.js</strong></em> file.</p>
 </div>
+<p>Open the <em><strong>index.html</strong></em> file in a live server to check everything is working as expected.</p>
 <figure class="align-default" id="cubes-attenuation-figure-2">
 <a class="reference internal image-reference" href="../_images/08_cubes_attenuation.png"><img alt="../_images/08_cubes_attenuation.png" src="../_images/08_cubes_attenuation.png" style="width: 80%;" />
 </a>
@@ -785,6 +799,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Lab 7: Lighting</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="09_Normal_mapping.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 9: Normal Mapping</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

@@ -181,7 +181,13 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 2: Textures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
@@ -190,6 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -419,7 +431,7 @@ document.write(`
 <hr class="docutils" />
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Copy your <em><strong>01 Basic Shapes/</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>02 Textures/</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+<p>Copy your <em><strong>01 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>02 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
 </div>
 <p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
 <figure class="align-default" id="colour-rectangle-figure">
@@ -463,7 +475,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have defined a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that creates a texture object and loads an image from the specified URL into the texture. A temporary image consisting of a <span class="math notranslate nohighlight">\(1 \times 1\)</span> magenta pixel is used because WebGL needs something bound immediately even before the image has finished loading. Once the image has loaded it is copied into the texture using the <code class="docutils literal notranslate"><span class="pre">gl.texImage2D()</span></code> function. The texture filtering is set to linear interpolation for both minification and magnification using the <code class="docutils literal notranslate"><span class="pre">gl.texParameteri()</span></code> function (minification and magnification are explained later). We have then called this function to load in the image from the file <em><strong>mario.png</strong></em> in the <em><strong>assets/</strong></em> folder.</p>
+<p>Here we have defined a function <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> that creates a texture object and loads an image from the specified URL into the texture. A temporary image consisting of a <span class="math notranslate nohighlight">\(1 \times 1\)</span> magenta pixel is used because WebGL needs something bound immediately even before the image has finished loading. Once the image has loaded it is copied into the texture using the <code class="docutils literal notranslate"><span class="pre">gl.texImage2D()</span></code> function. The texture filtering is set to linear interpolation for both minification and magnification using the <code class="docutils literal notranslate"><span class="pre">gl.texParameteri()</span></code> function (minification and magnification are explained later). We have then called this function to load in the image from the file <em><strong>mario.png</strong></em> in the <em><strong>assets</strong></em> folder.</p>
 </section>
 <hr class="docutils" />
 <section id="texture-coordinates">
@@ -802,7 +814,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have loaded a second texture from the file <em><strong>crate.png</strong></em> in the <em><strong>assets/</strong></em> folder. We then bind this texture to the second texture unit <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE1</span></code> and bind this to a uniform called <code class="docutils literal notranslate"><span class="pre">uTexture2</span></code> in the fragment shader. We now need to update the fragment shader to use both textures.</p>
+<p>Here we have loaded a second texture from the file <em><strong>crate.png</strong></em> in the <em><strong>assets</strong></em> folder. We then bind this texture to the second texture unit <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE1</span></code> and bind this to a uniform called <code class="docutils literal notranslate"><span class="pre">uTexture2</span></code> in the fragment shader. We now need to update the fragment shader to use both textures.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>In the fragment shader, add the following after we have declared the first texture uniform.</p>

@@ -502,7 +502,7 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors can then be calculated using</p>
 <div class="math notranslate nohighlight" id="equation-tb-equation">
-<span class="eqno">(26)<a class="headerlink" href="#equation-tb-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(25)<a class="headerlink" href="#equation-tb-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     \mathbf{t} &amp;= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
     \mathsf{b} &amp;= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} \end{split}\]</div>
@@ -606,7 +606,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This code calculates the tangent and bitangent vectors using equation <a class="reference internal" href="#equation-tb-equation">(26)</a> and adds them the <code class="docutils literal notranslate"><span class="pre">tangents</span></code> and <code class="docutils literal notranslate"><span class="pre">bitangents</span></code> vectors. We want these to be calculated whenever we create a model so amend the Model class constructor at the top of the file and add the following before <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> is called.</p>
+<p>This code calculates the tangent and bitangent vectors using equation <a class="reference internal" href="#equation-tb-equation">(25)</a> and adds them the <code class="docutils literal notranslate"><span class="pre">tangents</span></code> and <code class="docutils literal notranslate"><span class="pre">bitangents</span></code> vectors. We want these to be calculated whenever we create a model so amend the Model class constructor at the top of the file and add the following before <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> is called.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate tangent and bitangent vectors</span>
 <span class="n">calculateTangents</span><span class="p">();</span>
 </pre></div>
@@ -682,7 +682,7 @@ document.write(`
 <span class="n">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">));</span>
 </pre></div>
 </div>
-<p>Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation <a class="reference internal" href="07_Lighting.html#equation-view-space-normal-equation">(24)</a> which are then used to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Remember that by transposing the <span class="math notranslate nohighlight">\(TBN\)</span> matrix we are calculating its inverse so here the <span class="math notranslate nohighlight">\(TBN\)</span> matrix will transform from the view space to the tangent space.</p>
+<p>Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation <code class="xref eq docutils literal notranslate"><span class="pre">view-space-normal-equation</span></code> which are then used to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Remember that by transposing the <span class="math notranslate nohighlight">\(TBN\)</span> matrix we are calculating its inverse so here the <span class="math notranslate nohighlight">\(TBN\)</span> matrix will transform from the view space to the tangent space.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Some people transform the vectors from the world space instead of the view space, however, this means that we also need to calculate the tangent space <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector calculation. Doing this would mean we have additional uniforms and vector calculations. Since in the view space <span class="math notranslate nohighlight">\(\mathbf{eye} = (0,0,0)\)</span> then it is also <span class="math notranslate nohighlight">\((0,0,0)\)</span> in the tangent space so by transforming the vectors to the view space we do nt need to worry about this.</p>
@@ -758,7 +758,7 @@ document.write(`
 <p><span class="caption-number">Fig. 101 </span><span class="caption-text">The vertex normal is the average of the normal of the triangles sharing that vertex.</span><a class="headerlink" href="#averaged-normal-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation <a class="reference internal" href="#equation-tb-equation">(26)</a> will not give an orthogonal set of vectors. We can get around this problem by <strong>re-orthogonalising</strong> the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.</p>
+<p>A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation <a class="reference internal" href="#equation-tb-equation">(25)</a> will not give an orthogonal set of vectors. We can get around this problem by <strong>re-orthogonalising</strong> the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.</p>
 <figure class="align-default" id="reorthogonalise-t-figure">
 <a class="reference internal image-reference" href="_images/09_reorthogonalise_T.svg"><img alt="_images/09_reorthogonalise_T.svg" src="_images/09_reorthogonalise_T.svg" style="width: 300px;" />
 </a>

@@ -7,11 +7,10 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***07 Lighting*** and copy the contents of your ***06 Moving the Camera*** folder to it. Rename the ***moving_the_camera.js*** file to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" and change the script element so that it uses ***lighting.js***.
-
+Create a copy of your ***06 Moving the Camera*** folder, rename it ***07 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" it uses ***lighting.js***.
 :::
 
-To help demonstrate the effects of lighting on a scene we are going to need more objects.
+To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.
 
 :::{admonition} Task
 :class: tip
@@ -19,20 +18,25 @@ To help demonstrate the effects of lighting on a scene we are going to need more
 Change the definition of the cubes to the following.
 
 ```javascript
-// Define cube positions
-const spacing = 3;
-const cubes = [];
-for (let i = 0; i < 5; i++) {
+// Define cube positions (5x5 grid of cubes)
+const cubePositions = [];
+for (let i = 0; i < 5; i++)  {
   for (let j = 0; j < 5; j++) {
-    cubes.push({
-      position : new Vec3(i * spacing, 0, -j * spacing)
-    })
+    cubePositions.push([3 * i, 0, -3 * j]);
   }
 }
-const numberCubes = cubes.length;
+
+// Define cubes
+const numCubes = cubePositions.length;
+const cubes = [];
+for (let i = 0; i < numCubes; i++) {
+  cubes.push({
+    position  : cubePositions[i],
+  });
+}
 ```
 
-Also, change the background colour to black by changing the `gl.clearColor()` command the `initWebGL()` function.
+Also, change the `gl.clearColor()` command in the `initWebGL()` function.
 
 ```javascript
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -40,7 +44,7 @@ gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 :::
 
-Refresh your browser, and you can see that we have created a grid of 25 cubes. We have also changed the background colour to black so that we can better see the lighting effects.
+Here we have defined an array called `cubes` that contains JavaScript objects that define the positions of the centre coordinates of a set of cubes. Refresh your browser, and you can see that we have created a $5 \times 5$ grid of cubes. We have also changed the background colour to black so that we can better see the lighting effects.
 
 ```{figure} ../_images/07_cubes.png
 :width: 80%
@@ -55,9 +59,9 @@ Grid of 25 cubes.
 
 Phong's lighting model first described by Bui Tuong Phong is a local illumination model that simulates the interaction of light falling on surfaces. The brightness of a point on a surface is based on three components
 
-- **ambient reflection** -- a simplified model of light that reflects off all objects in a scene
-- **diffuse reflection** -- describes the direct illumination of a surface by a light source based on the angle between the light source direction and the normal vector to the surface
-- **specular reflection** -- models the shiny highlights on a surface caused by a light source based on the angle between the light source direction, the normal vector and the view direction
+- **ambient lighting** -- a simplified model of light that reflects off all objects in a scene
+- **diffuse lighting** -- describes the direct illumination of a surface by a light source based on the angle between the light source direction and the normal vector to the surface
+- **specular lighting** -- models the shiny highlights on a surface caused by a light source based on the angle between the light source direction, the normal vector and the view direction
 
 The colour intensity of a fragment on the surface is calculated as a sum of these components, i.e.,
 
@@ -67,13 +71,13 @@ where theses are 3-element vectors of RGB colour values.
 
 ---
 
-## Ambient reflection
+## Ambient lighting
 
-Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong's model for ambient reflection is
+Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong's model for ambient lighting is
 
 $$ \vec{ambient} = k_a \vec{O}_d $$(ambient-reflection-equation)
 
-where $k_a$ is known as the **ambient reflection constant** which takes on a value between 0 and 1 and $\vec{O}_d$ is the object colour. $k_a$ is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.
+where $k_a$ is known as the **ambient lighting constant** which takes on a value between 0 and 1 and $\vec{O}_d$ is the object colour. $k_a$ is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.
 
 ```glsl
 #version 300 es
@@ -102,7 +106,7 @@ void main() {
 }
 ```
 
-Note that here we are using swizzling to extract the RBG components of the object colour vector when calculating the ambient reflection where `objectColour.rgb` gives the first three components of the `objectColour` vector.
+Note that here we are using swizzling to extract the RBG components of the object colour vector when calculating the ambient lighting where `objectColour.rgb` gives the first three components of the `objectColour` vector.
 
 :::{admonition} Task
 :class: tip
@@ -115,18 +119,13 @@ We need now need to define $k_a$ for the cube objects and send this to the shade
 :::{admonition} Task
 :class: tip
 
-Edit the code used to define the cube positions so that it looks like the following.
+Edit the code used to define the cubes so that it looks like the following.
 
 ```javascript
-const cubes = [];
-for (let i = 0; i < 5; i++) {
-  for (let j = 0; j < 5; j++) {
-    cubes.push({
-      position : new Vec3(i * spacing, 0, -j * spacing),
-      ka       : 0.2,
-    })
-  }
-}
+cubes.push({
+  position  : cubePositions[i],
+  ka        : 0.2,
+});
 ```
 
 And add the following code after the model matrix has been sent to the shader in the `render()` loop.
@@ -140,13 +139,12 @@ gl.uniform1f(gl.getUniformLocation(program, "uKa"), cubes[i].ka);
 
 Refresh your web browser and you should see that the cubes are appear duller than compared to {numref}`5x5-cubes-figure`.
 
-```{figure} ../_images/07_cubes_ambient.png
+```{figure} ../_images/07_cubes_ambient_0.2.png
 :width: 80%
 :name: cubes-ambient-figure
 
-Ambient reflection with $k_a = 0.2$.
+Ambient lighting with $k_a = 0.2$.
 ```
-
 
 Changing the value of $k_a$ will make the colour of the cubes appear lighter or darker.
 
@@ -167,9 +165,9 @@ $k_a=0.8$
 
 ---
 
-## Diffuse reflection
+## Diffuse lighting
 
-Diffuse reflection is the reflection of light off a rough surface. Consider {numref}`diffuse-reflection-figure` that shows parallel light rays hitting a surface where light is scattered in multiple directions.
+Diffuse lighting is where light is reflected off a rough surface. Consider {numref}`diffuse-reflection-figure` that shows parallel light rays hitting a surface where light is scattered in multiple directions.
 
 ```{figure} ../_images/07_diffuse_reflection.svg
 :width: 400
@@ -178,34 +176,38 @@ Diffuse reflection is the reflection of light off a rough surface. Consider {num
 Light rays hitting a rough surface are scattered in all directions.
 ```
 
-To model diffuse reflection Phong's model assumes that light is reflected equally in all directions ({numref}`diffuse-figure`).
+To model diffuse lighting Phong's model assumes that light is reflected equally in all directions ({numref}`diffuse-figure`).
 
 ```{figure} ../_images/07_diffuse.svg
 :width: 350
 :name: diffuse-figure
 
-Diffuse reflection scatters light equally in all directions.
+Diffuse lighting scatters light equally in all directions.
 ```
 
-The amount of light that is reflected to the viewer is modelled using the angle $\theta$ between the light vector $\vec{L}$ which points from the fragment to the light source and the normal vector $\vec{n}$ which points perpendicular to the surface. If $\theta$ is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if $\theta$ is close to 90$^\circ$ then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When $\theta > 90^\circ$ the light source is behind the surface so no light is reflected to the viewer. We model this using $\cos(\theta)$ since $\cos(0^\circ) = 1$ and $\cos(90^\circ)=0$. Diffuse reflection is calculated using
+The amount of light that is reflected to the viewer is modelled using the angle $\theta$ between the light vector $\vec{L}$ which points from the fragment to the light source and the normal vector $\vec{n}$ which points perpendicular to the surface. If $\theta$ is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if $\theta$ is close to 90$^\circ$ then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When $\theta > 90^\circ$ the light source is behind the surface so no light is reflected to the viewer. We model this using $\cos(\theta)$ since $\cos(0^\circ) = 1$ and $\cos(90^\circ)=0$. Diffuse lighting is calculated using
 
 $$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-reflection-equation)
 
-where $k_d$ is known as the **diffuse reflection constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
+where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
 $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
-The view space fragment position is calculated by multiplying the vertex position by the $MV$ matrix, however the view space normal vector is calculated using the following transformation
+So the equation to calculate diffuse reflection is
+
+$$ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
+
+The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation
 
 $$ \begin{align*}
-    \vec{n}_{world} = (Model^{-1})^\mathsf{T} \vec{n}
-\end{align*} $$(view-space-normal-equation)
+    \vec{n} = (Model^{-1})^\mathsf{T} \vec{n}
+\end{align*} $$
 
 Recall that $A^\mathsf{T}$ is the [transpose](transpose-section) and $A^{-1}$ is the inverse of the matrix $A$ such that $A^{-1}A = I$. We use this transformation to ensure that the normal vector is perpendicular to the surface after the object vertices have been multiplied by the model matrix. You don't need to know where this comes from but if you are interested, click on the dropdown link below.
 
 ````{dropdown} Derivation of the world space normal transformation
 
-Consider the diagram in {numref}`world-space-normal-1-figure` that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the model transformation preserves the scaling of the edge such the equal scaling is used in the $x$, $y$ and $z$ axes then the normal and tangent vectors are perpendicular in the view space.
+Consider the diagram in {numref}`world-space-normal-1-figure` that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the model transformation preserves the scaling of the edge such the equal scaling is used in the $x$, $y$ and $z$ axes then the normal and tangent vectors are perpendicular in the world space.
 
 ```{figure} ../_images/07_world_space_normal_1.svg
 :width: 250
@@ -214,7 +216,7 @@ Consider the diagram in {numref}`world-space-normal-1-figure` that shows the nor
 Normal and tangent vectors in the model space.
 ```
 
-If the model transformation does not preserve the scaling then the view space normal vector is no longer perpendicular to the tangent vector ({numref}`world-space-normal-2-figure`).
+If the model transformation does not preserve the scaling then the world space normal vector is no longer perpendicular to the tangent vector ({numref}`world-space-normal-2-figure`).
 
 ```{figure} ../_images/07_world_space_normal_2.svg
 :width: 250
@@ -245,7 +247,7 @@ A property of matrix multiplication is that the transpose of a multiplication is
 
 $$\vec{n}^\mathsf{T} A^\mathsf{T} M\vec{t} = 0$$
 
-If $A^\mathsf{T}M = I$ then the view space normal and tangent vectors are perpendicular. Solving for $A$ gives
+If $A^\mathsf{T}M = I$ then the world space normal and tangent vectors are perpendicular. Solving for $A$ gives
 
 $$ \begin{align*}
     A^\mathsf{T} M &= I \\
@@ -253,10 +255,10 @@ $$ \begin{align*}
     A &= (M^{-1})^\mathsf{T}.
 \end{align*} $$
 
-The matrix $(M^{-1})^\mathsf{T}$ is the transformation matrix to transform the model space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.
+The matrix $(M^{-1})^\mathsf{T}$ is the transformation matrix to transform the model space normal vectors to the world space that ensures the world space normal vectors are perpendicular to the surface.
 ````
 
-To apply diffuse lighting we are first going to focus on the normal vectors. Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0, 0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1, 0, 0)$, and similar for the other faces of the cube.
+Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0, 0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1, 0, 0)$, and similar for the other faces of the cube.
 
 ```{figure} ../_images/07_cube_normals.svg
 :width: 250
@@ -291,7 +293,7 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
     // etc.
 ```
 
-````{dropdown} Reveal for all cube vertices
+````{dropdown} Click to reveal the vertex coordinates for the cube
 ```javascript
 ```{code-cell} javascript
 // Define cube vertices
@@ -361,35 +363,35 @@ gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, stride, offset);
 
 Now change the vertex shader to accept the normals as an input attribute and an output.
 
-```c
+```glsl
 in vec3 aNormal;
 
 out vec3 vNormal;
 ```
 
-And in the `main()` funtion calculate the world space normal preserving orthogonality with the face.
+And in the `main()` function calculate the world space normal preserving orthogonality with the face.
 
-```c
+```glsl
 // Output world space normal vectors
 vNormal = normalize(mat3(transpose(inverse(uModel))) * aNormal);
 ```
 
 Now change the fragment shader to accept the normal as an input
 
-```c
+```glsl
 in vec3 aNormal;
 ```
 
 Lastly, set the fragment colour to the normal vector.
 
-```c
+```glsl
 // Fragment colour
 fragColour = vec4(vNormal, objectColour.a);
 ```
 
 :::
 
-Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in Red, Green or Blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the sides facing to the right are red because their normal vectors are $(1, 0, 0)$ so in RGB this is pure red. The sides facing up are green because their normal vectors are $(0, 1, 0)$ and the side facing towards us are blue because their normal vectors are $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
+Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`. The sides of the cubes that have been rotated are varying shades of red, green and blue based on the direction their normals are pointing.
 
 ```{figure} ../_images/07_cubes_normals.png
 :width: 80%
@@ -406,16 +408,7 @@ Now we just need to define diffuse coefficient for the cubes, the position and c
 Edit the commands used to define the cubes to include the diffuse coefficient $k_d = 0.7$.
 
 ```javascript
-const cubes = [];
-for (let i = 0; i < 5; i++) {
-  for (let j = 0; j < 5; j++) {
-    cubes.push({
-      position : new Vec3(i * spacing, 0, -j * spacing),
-      ka       : 0.5,
-      kd       : 0.7,
-    })
-  }
-}
+kd        : 0.7,
 ```
 
 Now define a JavaScript object for the light source properties just after where we have defined the cube positions and lighting coefficients.
@@ -423,8 +416,8 @@ Now define a JavaScript object for the light source properties just after where 
 ```javascript
 // Define light source properties
 const light = {
-  position : new Vec3(4, 2, 4),
-  colour   : new Vec3(1, 1, 1),
+  position  : [2, 2, 2],
+  colour    : [1, 1, 1],
 }
 ```
 
@@ -432,11 +425,11 @@ Send the light position and colour vectors to the shaders after we have done thi
 
 ```javascript
 // Send light source properties to the shader
-gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), light.position.array);
-gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), light.colour.array);
+gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), light.position);
+gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), light.colour);
 ```
 
-Send the diffuse coefficient to the shader where we did this for the ambient coefficient.
+And send the diffuse coefficient to the shader where we did this for the ambient coefficient.
 
 ```javascript
 gl.uniform1f(gl.getUniformLocation(program, "uKd"), cubes[i].kd);
@@ -448,82 +441,44 @@ Now we have sent all the information required for diffuse lighting to the shader
 :::{admonition} Task
 :class: tip
 
-Edit the vertex shader so that it outputs the world space vertex position.
+Add output declarations to the vertex shader so that it outputs the world space vertex coordinates.
 
-```c
-#version 300 es
-precision mediump float;
-
-in vec3 aPosition;
-in vec3 aColour;
-in vec2 aTexCoords;
-in vec3 aNormal;
-
-out vec3 vColour;
-out vec2 vTexCoords;
-out vec3 vNormal;
+```glsl
 out vec3 vPosition;
-
-uniform mat4 uModel;
-uniform mat4 uView;
-uniform mat4 uProjection;
-
-void main() {
-  gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
-
-  // Output vertex colour
-  vColour = aColour;
-
-  // Output texture coordinates
-  vTexCoords = aTexCoords;
-
-  // Output world space normal vectors
-  vNormal = normalize(mat3(transpose(inverse(uModel))) * aNormal);
-
-  // Output world space vertex position
-  vPosition = vec3(uModel * vec4(aPosition, 1.0));
-}
 ```
 
-And edit the fragment shader to calculate diffuse reflection.
+And add the following code after we output the world space normal vectors.
 
-```c
-#version 300 es
-precision mediump float;
+```glsl
+// Output world space vertex position
+vPosition = vec3(uModel * vec4(aPosition, 1.0));
+```
 
-in vec3 vColour;
-in vec2 vTexCoords;
-in vec3 vNormal;
+Add input declarations to the fragment shader to take in the world space fragment coordinates.
+
+```glsl
 in vec3 vPosition;
+```
 
-out vec4 fragColour;
+Add uniform declarations for the light position and colour and the diffuse coefficient.
 
-uniform sampler2D uTexture;
+```glsl
 uniform vec3 uLightPosition;
 uniform vec3 uLightColour;
 
-// Material coefficients
-uniform float uKa;
 uniform float uKd;
+```
 
-void main() {
+Finally, add code to calculate diffuse lighting.
 
-  // Object colour
-  vec4 objectColour = texture(uTexture, vTexCoords);
+```glsl
+// Diffuse
+vec3 N = normalize(vNormal);
+vec3 L = normalize(uLightPosition - vPosition);
+vec3 diffuse = uKd * max(dot(N, L), 0.0) * uLightColour * objectColour.rgb;
 
-  // Ambient
-  vec3 ambient = uKa * objectColour.rgb;
-
-  // Lighting vectors
-  vec3 N = normalize(vNormal);
-  vec3 L = normalize(uLightPosition - vPosition);
-
-  // Diffuse
-  vec3 diffuse = uKd * max(dot(N, L), 0.0) * uLightColour * objectColour.rgb;
-
-  // Fragment colour
-  fragColour = vec4(diffuse, objectColour.a);
-}
+// Fragment colour
+fragColour = vec4(diffuse, objectColour.a);
 ```
 
 :::
@@ -577,7 +532,7 @@ In the `render()` loop, after rendering the cubes, add the following code to ren
 gl.useProgram(lightProgram);
 
 // Calculate model matrix for light source
-const translate = new Mat4().translate(...light.position.array);
+const translate = new Mat4().translate(...light.position);
 const scale     = new Mat4().scale(0.1, 0.1, 0.1);
 const model     = translate.multiply(scale);
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
@@ -585,7 +540,7 @@ gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m)
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
 // Send light colour to the shader
-gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), light.colour.array);
+gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), light.colour);
 
 // Draw light source cube
 gl.bindVertexArray(vao);
@@ -594,13 +549,13 @@ gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
 
 :::
 
-Refresh your web browser, and you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away. 
+Refresh your web browser, and you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
 
 ```{figure} ../_images/07_cubes_diffuse.png
 :width: 80%
 :name: cubes-diffuse-figure
 
-Diffuse reflection: $k_d = 0.7$.
+Diffuse lighting: $k_d = 0.7$.
 ```
 
 If you move the camera around, you will see that the faces of the cubes that are facing away from the light source are black since we have not factored in ambient lighting, so let's include that now.
@@ -608,26 +563,26 @@ If you move the camera around, you will see that the faces of the cubes that are
 :::{admonition} Task
 :class: tip
 
-Change the fragment shader so that the fragment colour is the sum of the ambient and diffuse reflection.
+Change the fragment shader so that the fragment colour is the sum of the ambient and diffuse lighting.
 
-```c
+```glsl
 fragColour = vec4(ambient + diffuse, objectColour.a);
 ```
 
 :::
 
-Refresh your web browser, and you should see the cubes rendered with both ambient and diffuse reflection ({numref}`cubes-diffuse-ambient-figure`).
+Refresh your web browser, and you should see the cubes rendered with both ambient and diffuse lighting ({numref}`cubes-diffuse-ambient-figure`).
 
 ```{figure} ../_images/07_cubes_ambient_diffuse.png
 :width: 80%
 :name: cubes-diffuse-ambient-figure
 
-Ambient and diffuse reflection: $k_a = 0.2$, $k_d = 0.7$.
+Ambient and diffuse lighting: $k_a = 0.2$, $k_d = 0.7$.
 ```
 
 ---
 
-## Specular reflection
+## Specular lighting
 
 Consider {numref}`specular-reflection-figure` that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).
 
@@ -638,7 +593,7 @@ Consider {numref}`specular-reflection-figure` that shows parallel light rays hit
 Light rays hitting a smooth surface are reflected in the same direction.
 ```
 
-Specular reflection depends upon the position of the light source and the fragment in the view space. Consider {numref}`reflection-figure` that shows a surface with a normal vector $\vec{n}$, a vector $\vec{L}$ pointing from the surface to a light source and a vector $\vec{R}$ pointing in the direction of reflected light off the surface. The angle between $\vec{L}$ and $\vec{n}$, $\theta$ which is known as the incidence angle, and the angle between $\vec{R}$ and $\vec{n}$ are the same.
+Specular lighting depends upon the position of the light source and the fragment in the world space. Consider {numref}`reflection-figure` that shows a surface with a normal vector $\vec{n}$, a vector $\vec{L}$ pointing from the surface to a light source and a vector $\vec{R}$ pointing in the direction of reflected light off the surface. The angle between $\vec{L}$ and $\vec{n}$, $\theta$ which is known as the incidence angle, and the angle between $\vec{R}$ and $\vec{n}$ are the same.
 
 ```{figure} ../_images/07_reflection.svg
 :width: 350
@@ -697,31 +652,31 @@ If $\vec{n}$ and $\vec{L}$ are unit vectors, then the reflection vector $\vec{R}
 $$ \vec{R} = - \vec{L} + 2 (\vec{L} \cdot \vec{n}) \vec{n} $$
 ````
 
-For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular reflection seen by the viewer. This is determined by the angle $\alpha$ between the $\vec{R}$ vector and the $\vec{V}$ vector. The closer the viewing vector is to the reflection vector, the smaller the value of $\alpha$ will be and the more of the light will be reflected towards the camera.
+For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. This is determined by the angle $\phi$ between the $\vec{R}$ vector and the $\vec{V}$ vector. The closer the viewing vector is to the reflection vector, the smaller the value of $\phi$ will be and the more of the light will be reflected towards the camera.
 
 ```{figure} ../_images/07_specular.svg
 :width: 400
 :name: specular-figure
 
-Specular reflection scatters light mainly towards the reflection vector.
+Specular lighting scatters light mainly towards the reflection vector.
 ```
 
-Phong modelled the scattering of the reflected light rays using $\cos(\alpha)$ raised to a power
+Phong modelled the scattering of the reflected light rays using $\cos(\phi)$ raised to a power
 
-$$\vec{specular} = k_s \vec{I}_p \cos(\alpha)^{N_s},$$(specular-reflection-equation)
+$$\vec{specular} = k_s \vec{I}_p \cos(\phi)^{\alpha},$$
 
-where $k_s$ is the **specular reflection constant** similar to its ambient and diffuse counterparts and $N_s$ is the **specular exponent** that determines the shininess of the object. If $\vec{R}$ and $\vec{eye}$ are unit vectors, then $\cos(\alpha)$ can be calculated using the dot product between the $\vec{R}$ and $\vec{eye}$ vector limited to positive values
+where $k_s$ is the **specular lighting coefficient** similar to its ambient and diffuse counterparts and $\alpha$ is the **specular exponent** that determines the shininess of the object. If $\vec{R}$ and $\vec{V}$ are unit vectors, then $\cos(\phi)$ can be calculated using $ \cos(\phi) = \max(\vec{V} \cdot \vec{R}, 0)^{\alpha}$, so the specular reflection equation is
 
-$$ \cos(\alpha) = \max(\vec{eye} \cdot \vec{R}, 0)^{N_s}.$$
+$$ \vec{specular} = k_s \max(\vec{V} \cdot \vec{R}, 0)^\alpha \vec{I}_p.$$(specular-reflection-equation)
 
 :::{admonition} Task
 :class: tip
 
 Add the specular coefficient and exponent to the cube objects where we did the same for the ambient and diffuse coefficients.
 
-```javascrtip
+```javascript
 ks        : 1.0,
-shininess : 20,
+shininess : 32,
 ```
 
 And send them to the shader where we did this for the ambient and diffuse coefficients.
@@ -731,7 +686,7 @@ gl.uniform1f(gl.getUniformLocation(program, "uKs"), cubes[i].ks);
 gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
 ```
 
-Send the camera position to the shader after we calculate the view and projection matrices.
+Send the camera position to the shader after we sent the light position and colour.
 
 ```javascript
 // Send camera position to the shader
@@ -747,18 +702,16 @@ gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
 
 Now in the fragment shader, add uniforms for the camera position, specular coefficient and exponent.
 
-```c
+```glsl
 uniform vec3 uCameraPosition;
-
-// other uniforms...
 
 uniform float uKs;
 uniform float uShininess;
 ```
 
-And calculate the specular reflection in the `main()` function.
+And add code to calculate the specular lighting in the `main()` function.
 
-```c
+```glsl
 // Specular
 vec3 V = normalize(uCameraPosition - vPosition);
 vec3 R = reflect(-L, N);
@@ -770,23 +723,23 @@ fragColour = vec4(specular, objectColour.a);
 
 :::
 
-Refresh your web browser and move the camera so that the cubes are between the camera and the light source and you should see the image shown in {numref}`cubes-specular-figure`.
+Refresh your web browser and your scene should be very dark. Move the camera so that the cubes are between the camera and the light source and you should start to see the specular highlights where light is being reflected off the cube {numref}`cubes-specular-figure`.
 
 ```{figure} ../_images/07_cubes_specular.png
 :width: 80%
 :name: cubes-specular-figure
 
-Specular reflection: $k_s = 1.0$, $N_s = 20$.
+Specular lighting: $k_s = 1.0$, $\alpha = 20$.
 ```
 
-Move the camera around the cubes and notice how the specular highlights (the white bits) change due to the position of the camera and the normal vectors of the cube surfaces. Let's add ambient and diffuse relfection to the specular reflection to complete the Phong reflection model.
+Let's add ambient and diffuse lighting to the specular lighting to complete the Phong reflection model.
 
 :::{admonition} Task
 :class: tip
 
-Change the fragment shader so that the fragment colour is the sum of the ambient, diffuse and specular reflection.
+Change the fragment shader so that the fragment colour is the sum of the ambient, diffuse and specular lighting.
 
-```c
+```glsl
 fragColour = vec4(ambient + diffuse + specular, objectColour.a);
 ```
 
@@ -796,7 +749,7 @@ fragColour = vec4(ambient + diffuse + specular, objectColour.a);
 :width: 80%
 :name: cubes-phong-figure
 
-Ambient, diffuse and specular reflection: $k_a = 0.2$, $k_d = 0.7$, $k_s = 1.0$, $N_s = 20$.
+Ambient, diffuse and specular lighting: $k_a = 0.2$, $k_d = 0.7$, $k_s = 1.0$, $\alpha = 20$.
 ```
 
 ---
@@ -837,7 +790,7 @@ gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
 
 Add the uniforms to the fragment shader.
 
-```c
+```glsl
 // Attenuation parameters
 uniform float uConstant;
 uniform float uLinear;
@@ -846,7 +799,7 @@ uniform float uQuadratic;
 
 Then calculate and apply attenuation to the fragment colour.
 
-```c
+```glsl
 // Attenuation
 float dist = length(uLightPosition - vPosition);
 float attenuation = 1.0 / (uConstant + uLinear * dist + uQuadratic * dist * dist);

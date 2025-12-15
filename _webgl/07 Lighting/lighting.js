@@ -73,20 +73,22 @@ void main() {
   // Diffuse
   vec3 N = normalize(vNormal);
   vec3 L = normalize(uLightPosition - vPosition);
-  vec3 diffuse = uKd * max(dot(N, L), 0.0) * uLightColour * objectColour.rgb;
+  vec3 diffuse = uKd * max(dot(L, N), 0.0) * uLightColour * objectColour.rgb;
 
   // Specular
   vec3 V = normalize(uCameraPosition - vPosition);
   vec3 R = reflect(-L, N);
   vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * uLightColour;
-
+  
+  vec3 H = normalize(L + V);
+  // vec3 specular = uKs * pow(max(dot(N, H), 0.0), uShininess) * uLightColour;
+  
   // Attenuation
   float dist = length(uLightPosition - vPosition);
   float attenuation = 1.0 / (uConstant + uLinear * dist + uQuadratic * dist * dist);
 
   // Fragment colour
-  // fragColour = vec4(attenuation * (ambient + diffuse + specular), objectColour.a);
-  fragColour = objectColour;
+  fragColour = vec4(attenuation * (ambient + diffuse + specular), objectColour.a);
 }`;
 
 // Define vertex and fragment shaders for the light source
@@ -187,38 +189,30 @@ function main() {
     30, 31, 32, 33, 34, 35   // top
   ]);
 
-  // Define cube positions
-  cubePositions = [
-     0.0,  0.0,   0.0,
-     2.0,  5.0, -10.0,
-    -3.0, -2.0,  -3.0,
-    -4.0, -2.0,  -8.0,
-     2.0,  2.0,  -6.0,
-    -4.0,  3.0,  -8.0,
-     0.0, -2.0,  -5.0,
-     4.0,  2.0,  -4.0,
-     2.0,  0.0,  -2.0,
-    -1.0,  1.0,  -2.0,
-  ];
-
+  // Define cube positions (10x10 grid of cubes)
+  const cubePositions = [];
+  for (let i = 0; i < 5; i++)  {
+    for (let j = 0; j < 5; j++) {
+      cubePositions.push([3 * i, 0, -3 * j]);
+    }
+  }
+  
   // Define cubes
   const numCubes = cubePositions.length;
   const cubes = [];
   for (let i = 0; i < numCubes; i++) {
     cubes.push({
-      position  : cubePositions.slice(3 * i, 3 * i + 3),
-      vector    : [1, 1, 1],
-      angle     : 20 * i * Math.PI / 180,
+      position  : cubePositions[i],
       ka        : 0.2,
-      kd         : 0.7,
+      kd        : 0.7,
       ks        : 1.0,
-      shininess : 20,
+      shininess : 32.0,
     });
   }
 
   // Define light source properties
   const light = {
-    position  : [2, 2, 2],
+    position  : [6, 2, 0],
     colour    : [1, 1, 1],
     constant  : 1.0,
     linear    : 0.1,
@@ -238,7 +232,7 @@ function main() {
 
   // Create camera object
   const camera = new Camera(canvas);
-  camera.eye = new Vec3(0, 0, 5);
+  camera.eye = new Vec3(6, 2, 5);
 
   // Timer
   let lastTime = 0;
@@ -262,9 +256,6 @@ function main() {
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 
-    // Send camera position to the shader
-    gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye.array);
-
     // Send light source properties to the shader
     gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), light.position);
     gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), light.colour);   
@@ -272,14 +263,17 @@ function main() {
     gl.uniform1f(gl.getUniformLocation(program, "uLinear"), light.linear);
     gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
 
+    // Send camera position to the shader
+    gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye.array);
+
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
       
       // Calculate the model matrix
       const translate = new Mat4().translate(...cubes[i].position);
       const scale     = new Mat4().scale(0.5, 0.5, 0.5);
-      const rotate    = new Mat4().rotate(...cubes[i].vector, cubes[i].angle);
-      const model     = translate.multiply(rotate).multiply(rotate).multiply(scale);
+      const rotate    = new Mat4().rotate(0, 1, 0, 0);
+      const model     = translate.multiply(rotate).multiply(scale);
       gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
       // Send object light properties to the shader

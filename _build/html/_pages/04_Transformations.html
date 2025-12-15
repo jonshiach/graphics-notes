@@ -181,7 +181,13 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Textures.html">Lab 2: Textures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
@@ -190,6 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -415,7 +427,7 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\((x',y',z')\)</span> are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>04 Transformations/</strong></em> and copy across the files from your <em><strong>02 Textures/</strong></em> folder. Rename <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em>, change the title of the web page to ‘Lab 04 - Transformations’ and add a script for the <em><strong>maths.js</strong></em> file.</p>
+<p>Create a folder called <em><strong>04 Transformations</strong></em> and copy across the files from your <em><strong>02 Textures</strong></em> folder. Rename <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em>, change the title of the web page to ‘Lab 04 - Transformations’ and add a script for the <em><strong>maths.js</strong></em> file.</p>
 </div>
 <p>Load <em><strong>index.html</strong></em> using a live server and you should see the textured rectangle from <a class="reference internal" href="02_Textures.html#textures-section"><span class="std std-ref">Lab 3 - Textures</span></a>.</p>
 <figure class="align-default">

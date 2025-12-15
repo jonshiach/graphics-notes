@@ -553,7 +553,7 @@ document.write(`
 \[ z = \cos(\theta) + i\sin(\theta). \]</div>
 <p>We can do similar in 3D space where the rotation of the vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> around a unit vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by the angle <span class="math notranslate nohighlight">\(\theta\)</span> can be achieved by calculating <span class="math notranslate nohighlight">\(qpq^*\)</span> using the following quaternions (see <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#multiplying-quaternions-section"><span class="std std-ref">Appendix: Multiplying quaternions</span></a> for the how to multiply quaternions)</p>
 <div class="math notranslate nohighlight" id="equation-rotation-quaternion-equation">
-<span class="eqno">(27)<a class="headerlink" href="#equation-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(26)<a class="headerlink" href="#equation-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     p &amp;= [0, \mathbf{p}], \\
     q &amp;= [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}], \\
     q^* &amp;= [\cos(\tfrac{1}{2}\theta), -\sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].
@@ -568,7 +568,7 @@ document.write(`
 </figure>
 <p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to <span class="math notranslate nohighlight">\(qpq^*\)</span>. If <span class="math notranslate nohighlight">\(q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}] = [w, (x, y, z)]\)</span> is the rotation quaternion, then the corresponding rotation matrix is</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-matrix-equation">
-<span class="eqno">(28)<a class="headerlink" href="#equation-quaternion-rotation-matrix-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(27)<a class="headerlink" href="#equation-quaternion-rotation-matrix-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     Rotate &amp;= 
     \begin{pmatrix}
         1 - s(y^2 + z^2) &amp; s(xy + zw) &amp; s(xz - yw) &amp; 0 \\
@@ -619,7 +619,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here we normalise the vector which we are rotating around before calculating the rotation quaternion <code class="docutils literal notranslate"><span class="pre">q</span></code> and returning its rotation matrix using equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-equation">(28)</a></p>
+<p>Here we normalise the vector which we are rotating around before calculating the rotation quaternion <code class="docutils literal notranslate"><span class="pre">q</span></code> and returning its rotation matrix using equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-equation">(27)</a></p>
 <p>Compile and run your program, and you should see that nothing has changed. This is good news as we are now using efficient quaternion rotation to rotate the cubes and don’t have to worry about gimbal lock.</p>
 <section id="calculating-a-quaternion-from-euler-angles">
 <h3>Calculating a quaternion from Euler angles<a class="headerlink" href="#calculating-a-quaternion-from-euler-angles" title="Link to this heading">#</a></h3>
@@ -633,7 +633,7 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>then the quaternion that represents the camera orientation is</p>
 <div class="math notranslate nohighlight" id="equation-euler-to-quaternion-equation">
-<span class="eqno">(29)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)]. \]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)]. \]</div>
 <p>See <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#euler-to-quaternion-derivation-section"><span class="std std-ref">Appendix: Euler angles to quaternion</span></a> for the derivation of this equation. We are going to add constructor to our quaternion class to create a quaternion from Euler angles. Add the following to the Quaternion class declaration in <strong>maths.hpp</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Quaternion</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
 </pre></div>
@@ -744,14 +744,14 @@ document.write(`
 </figure>
 <p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 117</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
 <div class="math notranslate nohighlight" id="equation-slerp-equation">
-<span class="eqno">(30)<a class="headerlink" href="#equation-slerp-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
+<span class="eqno">(29)<a class="headerlink" href="#equation-slerp-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
     \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
 \end{align*}, \]</div>
 <p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1 and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two quaternions and is calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right),\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> is the dot product between the two quaternions and calculated in the same way as the <a class="reference internal" href="03_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product between two 4-element vectors</span></a>. Sometimes <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(30)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
+<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(29)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
 <p>Add a method declaration to the Maths class in the <code class="docutils literal notranslate"><span class="pre">maths.hpp</span></code> file</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="nf">SLERP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
 </pre></div>

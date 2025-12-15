@@ -67,6 +67,11 @@ struct Light {
   float innerCutoff;
 };
 
+// Light types
+const int LIGHT_POINT = 1;
+const int LIGHT_SPOT = 2;
+const int LIGHT_DIRECTIONAL = 3;
+
 // Number of lights
 uniform int uNumLights;
 
@@ -78,37 +83,38 @@ vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
  
   vec3 L;
   float attenuation = 1.0;
+  float spot = 1.0;
+
+  // Direction and attenuation based on light type
+  if (light.type == LIGHT_DIRECTIONAL) {
+    L = normalize(-light.direction);
+  } 
+  else {
+    L = normalize(light.position - vPosition);
+
+    // Attenuation (only for point and spot lights)
+    float dist = length(light.position - vPosition);
+    attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+  }
+  
+  // Spotlight
+  if (light.type == LIGHT_SPOT) {
+    float theta = dot(-L, normalize(light.direction));
+    float epsilon = light.innerCutoff - light.cutoff;
+    spot = clamp((theta - light.cutoff) / epsilon, 0.0, 1.0);
+  }
 
   // Ambient reflection
   vec3 ambient = uKa * objectColour;
 
   // Diffuse
-  if (light.type == 3) {
-    L = normalize(-light.direction);
-  } else {
-    L = normalize(light.position - vPosition);
-  }
   vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
   // Specular
   vec3 R = reflect(-L, N);
   vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
 
-  // Attenuation
-  if (light.type != 3) {
-    float dist = length(light.position - vPosition);
-    attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
-  }
-
-  // Spotlight
-  float spot = 1.0;
-  if (light.type == 2) {
-    float theta = dot(-L, normalize(light.direction));
-    float epsilon = light.innerCutoff - light.cutoff;
-    spot = clamp((theta - light.cutoff) / epsilon, 0.0, 1.0);
-  }
-
-  return spot * attenuation * (ambient + diffuse + specular);
+  return ambient + attenuation * (diffuse + specular);
 }
 
 // Main function
@@ -231,56 +237,69 @@ function main() {
   ]);
 
   // Define cube positions
-  const spacing = 3;
+  cubePositions = [
+     0.0,  0.0,   0.0,
+     2.0,  5.0, -10.0,
+    -3.0, -2.0,  -3.0,
+    -4.0, -2.0,  -8.0,
+     2.0,  2.0,  -6.0,
+    -4.0,  3.0,  -8.0,
+     0.0, -2.0,  -5.0,
+     4.0,  2.0,  -4.0,
+     2.0,  0.0,  -2.0,
+    -1.0,  1.0,  -2.0,
+  ];
+
+  // Define cubes
+  const numCubes = cubePositions.length;
   const cubes = [];
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      cubes.push({
-        position  : [i * spacing, 0, -j * spacing],
-        ka        : 0.2,
-        kd        : 0.7,
-        ks        : 1.0,
-        shininess : 20,
-      })
-    }
+  for (let i = 0; i < numCubes; i++) {
+    cubes.push({
+      position  : cubePositions.slice(3 * i, 3 * i + 3),
+      vector    : [1, 1, 1],
+      angle     : 20 * i * Math.PI / 180,
+      ka        : 0.2,
+      kd        : 0.7,
+      ks        : 1.0,
+      shininess : 20,
+    });
   }
-  const numCubes = cubes.length;
 
   // Create vector of light sources
   const lightSources = [ 
     {
-      type        : 2,
-      position    : [6, 2, 2],
-      direction   : [0, -1, -2],
+      type        : 1,
+      position    : [2, 2, 2],
       colour      : [1, 1, 1],
+      direction   : [0, -1, -2],
       constant    : 1.0,
       linear      : 0.1,
       quadratic   : 0.02,
       cutoff      : Math.cos(30 * Math.PI / 180),
       innerCutoff : Math.cos(25 * Math.PI / 180),
     },
-    {
-      type        : 1,
-      position    : [6, 2, -9],
-      direction   : [0, 0, 0],
-      colour      : [1, 1, 0],
-      constant    : 1.0,
-      linear      : 0.1,
-      quadratic   : 0.02,
-      cutoff      : 0,
-      innerCutoff : 0,
-    },
-    {
-      type        : 3,
-      position    : [0, 0, 0],
-      direction   : [2, -1, -1],
-      colour      : [1, 0, 1],
-      constant    : 1.0,
-      linear      : 0.1,
-      quadratic   : 0.02,
-      cutoff      : 0,
-      innerCutoff : 0,
-    },
+    // {
+    //   type        : 1,
+    //   position    : [1, 1, -8],
+    //   direction   : [0, 0, 0],
+    //   colour      : [1, 1, 0],
+    //   constant    : 1.0,
+    //   linear      : 0.1,
+    //   quadratic   : 0.02,
+    //   cutoff      : 0,
+    //   innerCutoff : 0,
+    // },
+    // {
+    //   type        : 3,
+    //   position    : [0, 0, 0],
+    //   direction   : [2, -1, -1],
+    //   colour      : [1, 0, 1],
+    //   constant    : 1.0,
+    //   linear      : 0.1,
+    //   quadratic   : 0.02,
+    //   cutoff      : 0,
+    //   innerCutoff : 0,
+    // },
   ];
 
   // Number of lights
@@ -299,7 +318,7 @@ function main() {
 
   // Create camera object
   const camera = new Camera(canvas);
-  camera.eye = new Vec3(6, 3, 5);
+  camera.eye = new Vec3(0, 0, 5);
 
   // Timer
   let lastTime = 0;
@@ -346,8 +365,7 @@ function main() {
       // Calculate the model matrix
       const translate = new Mat4().translate(...cubes[i].position);
       const scale     = new Mat4().scale(0.5, 0.5, 0.5);
-      const angle     = 0;
-      const rotate    = new Mat4().rotate(0, 1, 0, angle);
+      const rotate    = new Mat4().rotate(...cubes[i].vector, cubes[i].angle);
       const model     = translate.multiply(rotate).multiply(scale);
       gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 

@@ -531,10 +531,10 @@ Add the following code after the cube indices are defined.
 ```javascript
 // Define cube positions
 const cubes = [
-  { position : new Vec3(0, 0, -2) },
-  { position : new Vec3(0, 0, -6) }
+  { position : [0, 0, -2] },
+  { position : [0, 0, -6] }
 ];
-const numberCubes = cubes.length;
+const numCubes = cubes.length;
 ```
 
 Now put the commands used to calculate the model matrix to draw the cube inside a for loop.
@@ -560,7 +560,7 @@ for (let i = 0; i < numberCubes; i++){
 Change the translation matrix so that it uses the new cube centre coordinates.
 
 ```javascript
-const translate = new Mat4().translate(...cubes[i].position.array);
+const translate = new Mat4().translate(...cubes[i].position);
 ```
 
 Finally change the rotation angle to zero.
@@ -571,7 +571,7 @@ const angle     = 0;
 
 :::
 
-Here we first define an array of JavaScript objects where the position attribute are 3-element vectors which stores the centre coordinates of two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
+Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
 
 ```{figure} ../_images/05_orthographic_cubes.png
 :width: 80%

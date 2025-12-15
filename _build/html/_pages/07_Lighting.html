@@ -181,7 +181,13 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Textures.html">Lab 2: Textures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
@@ -190,6 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 7: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -386,9 +398,9 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-reflection">Ambient reflection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-reflection">Diffuse reflection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-reflection">Specular reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
 </ul>
             </nav>
@@ -406,31 +418,36 @@ document.write(`
 <p>In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong reflection model</a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>07 Lighting/</strong></em> and copy the contents of your <em><strong>06 Moving the Camera/</strong></em> folder to it. Rename the <em><strong>moving_the_camera.js</strong></em> file to <em><strong>lighting.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 7 - Lighting” and change the script element so that it uses <em><strong>lighting.js</strong></em>.</p>
+<p>Create a copy of your <em><strong>06 Moving the Camera</strong></em> folder, rename it <em><strong>07 Lighting</strong></em>, rename the file <em><strong>moving_the_camera.js</strong></em> to <em><strong>lighting.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 7 - Lighting” it uses <em><strong>lighting.js</strong></em>.</p>
 </div>
-<p>To help demonstrate the effects of lighting on a scene we are going to need more objects.</p>
+<p>To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Change the definition of the cubes to the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube positions</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">spacing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube positions (5x5 grid of cubes)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cubePositions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">j</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">)</span>
-<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="nx">cubePositions</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">j</span><span class="p">]);</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">numberCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+
+<span class="c1">// Define cubes</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">numCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cubePositions</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">numCubes</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">cubePositions</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Also, change the background colour to black by changing the <code class="docutils literal notranslate"><span class="pre">gl.clearColor()</span></code> command the <code class="docutils literal notranslate"><span class="pre">initWebGL()</span></code> function.</p>
+<p>Also, change the <code class="docutils literal notranslate"><span class="pre">gl.clearColor()</span></code> command in the <code class="docutils literal notranslate"><span class="pre">initWebGL()</span></code> function.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Refresh your browser, and you can see that we have created a grid of 25 cubes. We have also changed the background colour to black so that we can better see the lighting effects.</p>
+<p>Here we have defined an array called <code class="docutils literal notranslate"><span class="pre">cubes</span></code> that contains JavaScript objects that define the positions of the centre coordinates of a set of cubes. Refresh your browser, and you can see that we have created a <span class="math notranslate nohighlight">\(5 \times 5\)</span> grid of cubes. We have also changed the background colour to black so that we can better see the lighting effects.</p>
 <figure class="align-default" id="x5-cubes-figure">
 <a class="reference internal image-reference" href="../_images/07_cubes.png"><img alt="../_images/07_cubes.png" src="../_images/07_cubes.png" style="width: 80%;" />
 </a>
@@ -443,9 +460,9 @@ document.write(`
 <h2>Phong’s lighting model<a class="headerlink" href="#phong-s-lighting-model" title="Link to this heading">#</a></h2>
 <p>Phong’s lighting model first described by Bui Tuong Phong is a local illumination model that simulates the interaction of light falling on surfaces. The brightness of a point on a surface is based on three components</p>
 <ul class="simple">
-<li><p><strong>ambient reflection</strong> – a simplified model of light that reflects off all objects in a scene</p></li>
-<li><p><strong>diffuse reflection</strong> – describes the direct illumination of a surface by a light source based on the angle between the light source direction and the normal vector to the surface</p></li>
-<li><p><strong>specular reflection</strong> – models the shiny highlights on a surface caused by a light source based on the angle between the light source direction, the normal vector and the view direction</p></li>
+<li><p><strong>ambient lighting</strong> – a simplified model of light that reflects off all objects in a scene</p></li>
+<li><p><strong>diffuse lighting</strong> – describes the direct illumination of a surface by a light source based on the angle between the light source direction and the normal vector to the surface</p></li>
+<li><p><strong>specular lighting</strong> – models the shiny highlights on a surface caused by a light source based on the angle between the light source direction, the normal vector and the view direction</p></li>
 </ul>
 <p>The colour intensity of a fragment on the surface is calculated as a sum of these components, i.e.,</p>
 <div class="math notranslate nohighlight">
@@ -453,12 +470,12 @@ document.write(`
 <p>where theses are 3-element vectors of RGB colour values.</p>
 </section>
 <hr class="docutils" />
-<section id="ambient-reflection">
-<h2>Ambient reflection<a class="headerlink" href="#ambient-reflection" title="Link to this heading">#</a></h2>
-<p>Ambient reflection is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient reflection is</p>
+<section id="ambient-lighting">
+<h2>Ambient lighting<a class="headerlink" href="#ambient-lighting" title="Link to this heading">#</a></h2>
+<p>Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient lighting is</p>
 <div class="math notranslate nohighlight" id="equation-ambient-reflection-equation">
 <span class="eqno">(22)<a class="headerlink" href="#equation-ambient-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{ambient} = k_a \vec{O}_d \]</div>
-<p>where <span class="math notranslate nohighlight">\(k_a\)</span> is known as the <strong>ambient reflection constant</strong> which takes on a value between 0 and 1 and <span class="math notranslate nohighlight">\(\vec{O}_d\)</span> is the object colour. <span class="math notranslate nohighlight">\(k_a\)</span> is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.</p>
+<p>where <span class="math notranslate nohighlight">\(k_a\)</span> is known as the <strong>ambient lighting constant</strong> which takes on a value between 0 and 1 and <span class="math notranslate nohighlight">\(\vec{O}_d\)</span> is the object colour. <span class="math notranslate nohighlight">\(k_a\)</span> is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
 <span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 
@@ -485,7 +502,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that here we are using swizzling to extract the RBG components of the object colour vector when calculating the ambient reflection where <code class="docutils literal notranslate"><span class="pre">objectColour.rgb</span></code> gives the first three components of the <code class="docutils literal notranslate"><span class="pre">objectColour</span></code> vector.</p>
+<p>Note that here we are using swizzling to extract the RBG components of the object colour vector when calculating the ambient lighting where <code class="docutils literal notranslate"><span class="pre">objectColour.rgb</span></code> gives the first three components of the <code class="docutils literal notranslate"><span class="pre">objectColour</span></code> vector.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Edit the fragment shader in the <em><strong>lighting.js</strong></em> file so that it looks like the fragment shader above.</p>
@@ -493,16 +510,11 @@ document.write(`
 <p>We need now need to define <span class="math notranslate nohighlight">\(k_a\)</span> for the cube objects and send this to the shader.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the code used to define the cube positions so that it looks like the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">j</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">),</span>
-<span class="w">      </span><span class="nx">ka</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<p>Edit the code used to define the cubes so that it looks like the following.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">cubePositions</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">ka</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
+<span class="p">});</span>
 </pre></div>
 </div>
 <p>And add the following code after the model matrix has been sent to the shader in the <code class="docutils literal notranslate"><span class="pre">render()</span></code> loop.</p>
@@ -513,10 +525,10 @@ document.write(`
 </div>
 <p>Refresh your web browser and you should see that the cubes are appear duller than compared to <a class="reference internal" href="#x5-cubes-figure"><span class="std std-numref">Fig. 65</span></a>.</p>
 <figure class="align-default" id="cubes-ambient-figure">
-<a class="reference internal image-reference" href="../_images/07_cubes_ambient.png"><img alt="../_images/07_cubes_ambient.png" src="../_images/07_cubes_ambient.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/07_cubes_ambient_0.2.png"><img alt="../_images/07_cubes_ambient_0.2.png" src="../_images/07_cubes_ambient_0.2.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Ambient reflection with <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>.</span><a class="headerlink" href="#cubes-ambient-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Ambient lighting with <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>.</span><a class="headerlink" href="#cubes-ambient-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Changing the value of <span class="math notranslate nohighlight">\(k_a\)</span> will make the colour of the cubes appear lighter or darker.</p>
@@ -542,9 +554,9 @@ document.write(`
 </div>
 </section>
 <hr class="docutils" />
-<section id="diffuse-reflection">
-<h2>Diffuse reflection<a class="headerlink" href="#diffuse-reflection" title="Link to this heading">#</a></h2>
-<p>Diffuse reflection is the reflection of light off a rough surface. Consider <a class="reference internal" href="#diffuse-reflection-figure"><span class="std std-numref">Fig. 69</span></a> that shows parallel light rays hitting a surface where light is scattered in multiple directions.</p>
+<section id="diffuse-lighting">
+<h2>Diffuse lighting<a class="headerlink" href="#diffuse-lighting" title="Link to this heading">#</a></h2>
+<p>Diffuse lighting is where light is reflected off a rough surface. Consider <a class="reference internal" href="#diffuse-reflection-figure"><span class="std std-numref">Fig. 69</span></a> that shows parallel light rays hitting a surface where light is scattered in multiple directions.</p>
 <figure class="align-default" id="diffuse-reflection-figure">
 <a class="reference internal image-reference" href="../_images/07_diffuse_reflection.svg"><img alt="../_images/07_diffuse_reflection.svg" src="../_images/07_diffuse_reflection.svg" style="width: 400px;" />
 </a>
@@ -552,30 +564,33 @@ document.write(`
 <p><span class="caption-number">Fig. 69 </span><span class="caption-text">Light rays hitting a rough surface are scattered in all directions.</span><a class="headerlink" href="#diffuse-reflection-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To model diffuse reflection Phong’s model assumes that light is reflected equally in all directions (<a class="reference internal" href="#diffuse-figure"><span class="std std-numref">Fig. 70</span></a>).</p>
+<p>To model diffuse lighting Phong’s model assumes that light is reflected equally in all directions (<a class="reference internal" href="#diffuse-figure"><span class="std std-numref">Fig. 70</span></a>).</p>
 <figure class="align-default" id="diffuse-figure">
 <a class="reference internal image-reference" href="../_images/07_diffuse.svg"><img alt="../_images/07_diffuse.svg" src="../_images/07_diffuse.svg" style="width: 350px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Diffuse reflection scatters light equally in all directions.</span><a class="headerlink" href="#diffuse-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Diffuse lighting scatters light equally in all directions.</span><a class="headerlink" href="#diffuse-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The amount of light that is reflected to the viewer is modelled using the angle <span class="math notranslate nohighlight">\(\theta\)</span> between the light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> which points from the fragment to the light source and the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span> which points perpendicular to the surface. If <span class="math notranslate nohighlight">\(\theta\)</span> is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if <span class="math notranslate nohighlight">\(\theta\)</span> is close to 90<span class="math notranslate nohighlight">\(^\circ\)</span> then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> the light source is behind the surface so no light is reflected to the viewer. We model this using <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> since <span class="math notranslate nohighlight">\(\cos(0^\circ) = 1\)</span> and <span class="math notranslate nohighlight">\(\cos(90^\circ)=0\)</span>. Diffuse reflection is calculated using</p>
+<p>The amount of light that is reflected to the viewer is modelled using the angle <span class="math notranslate nohighlight">\(\theta\)</span> between the light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> which points from the fragment to the light source and the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span> which points perpendicular to the surface. If <span class="math notranslate nohighlight">\(\theta\)</span> is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if <span class="math notranslate nohighlight">\(\theta\)</span> is close to 90<span class="math notranslate nohighlight">\(^\circ\)</span> then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> the light source is behind the surface so no light is reflected to the viewer. We model this using <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> since <span class="math notranslate nohighlight">\(\cos(0^\circ) = 1\)</span> and <span class="math notranslate nohighlight">\(\cos(90^\circ)=0\)</span>. Diffuse lighting is calculated using</p>
 <div class="math notranslate nohighlight" id="equation-diffuse-reflection-equation">
 <span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,\]</div>
-<p>where <span class="math notranslate nohighlight">\(k_d\)</span> is known as the <strong>diffuse reflection constant</strong> which takes a value between 0 and 1, and <span class="math notranslate nohighlight">\(\vec{I}_p\)</span> is the colour intensity of the point light source. Recall that the angle between two vectors is related by <a class="reference internal" href="03_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> so if the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> vectors are unit vectors then <span class="math notranslate nohighlight">\(\cos(\theta) = \vec{L} \cdot \vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> then light source is behind the surface and no light should be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta\)</span> is between 90<span class="math notranslate nohighlight">\(^\circ\)</span> and 180<span class="math notranslate nohighlight">\(^\circ\)</span>, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is negative so we limit the value of <span class="math notranslate nohighlight">\(\cos(\theta )\)</span> to positive values</p>
+<p>where <span class="math notranslate nohighlight">\(k_d\)</span> is known as the <strong>diffuse lighting constant</strong> which takes a value between 0 and 1, and <span class="math notranslate nohighlight">\(\vec{I}_p\)</span> is the colour intensity of the point light source. Recall that the angle between two vectors is related by <a class="reference internal" href="03_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> so if the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> vectors are unit vectors then <span class="math notranslate nohighlight">\(\cos(\theta) = \vec{L} \cdot \vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> then light source is behind the surface and no light should be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta\)</span> is between 90<span class="math notranslate nohighlight">\(^\circ\)</span> and 180<span class="math notranslate nohighlight">\(^\circ\)</span>, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is negative so we limit the value of <span class="math notranslate nohighlight">\(\cos(\theta )\)</span> to positive values</p>
 <div class="math notranslate nohighlight">
 \[ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). \]</div>
-<p>The view space fragment position is calculated by multiplying the vertex position by the <span class="math notranslate nohighlight">\(MV\)</span> matrix, however the view space normal vector is calculated using the following transformation</p>
-<div class="math notranslate nohighlight" id="equation-view-space-normal-equation">
-<span class="eqno">(24)<a class="headerlink" href="#equation-view-space-normal-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
-    \vec{n}_{world} = (Model^{-1})^\mathsf{T} \vec{n}
+<p>So the equation to calculate diffuse reflection is</p>
+<div class="math notranslate nohighlight">
+\[ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
+<p>The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    \vec{n} = (Model^{-1})^\mathsf{T} \vec{n}
 \end{align*} \]</div>
 <p>Recall that <span class="math notranslate nohighlight">\(A^\mathsf{T}\)</span> is the <a class="reference internal" href="03_Vectors_and_matrices.html#transpose-section"><span class="std std-ref">transpose</span></a> and <span class="math notranslate nohighlight">\(A^{-1}\)</span> is the inverse of the matrix <span class="math notranslate nohighlight">\(A\)</span> such that <span class="math notranslate nohighlight">\(A^{-1}A = I\)</span>. We use this transformation to ensure that the normal vector is perpendicular to the surface after the object vertices have been multiplied by the model matrix. You don’t need to know where this comes from but if you are interested, click on the dropdown link below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Derivation of the world space normal transformation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider the diagram in <a class="reference internal" href="#world-space-normal-1-figure"><span class="std std-numref">Fig. 71</span></a> that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the model transformation preserves the scaling of the edge such the equal scaling is used in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes then the normal and tangent vectors are perpendicular in the view space.</p>
+<p class="sd-card-text">Consider the diagram in <a class="reference internal" href="#world-space-normal-1-figure"><span class="std std-numref">Fig. 71</span></a> that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the model transformation preserves the scaling of the edge such the equal scaling is used in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes then the normal and tangent vectors are perpendicular in the world space.</p>
 <figure class="align-default" id="world-space-normal-1-figure">
 <a class="reference internal image-reference" href="../_images/07_world_space_normal_1.svg"><img alt="../_images/07_world_space_normal_1.svg" src="../_images/07_world_space_normal_1.svg" style="width: 250px;" />
 </a>
@@ -583,7 +598,7 @@ document.write(`
 <p><span class="caption-number">Fig. 71 </span><span class="caption-text">Normal and tangent vectors in the model space.</span><a class="headerlink" href="#world-space-normal-1-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p class="sd-card-text">If the model transformation does not preserve the scaling then the view space normal vector is no longer perpendicular to the tangent vector (<a class="reference internal" href="#world-space-normal-2-figure"><span class="std std-numref">Fig. 72</span></a>).</p>
+<p class="sd-card-text">If the model transformation does not preserve the scaling then the world space normal vector is no longer perpendicular to the tangent vector (<a class="reference internal" href="#world-space-normal-2-figure"><span class="std std-numref">Fig. 72</span></a>).</p>
 <figure class="align-default" id="world-space-normal-2-figure">
 <a class="reference internal image-reference" href="../_images/07_world_space_normal_2.svg"><img alt="../_images/07_world_space_normal_2.svg" src="../_images/07_world_space_normal_2.svg" style="width: 250px;" />
 </a>
@@ -609,16 +624,16 @@ document.write(`
 <p class="sd-card-text">A property of matrix multiplication is that the transpose of a multiplication is equal to the multiplication of the transposes swapped (i.e., <span class="math notranslate nohighlight">\((AB)^\mathsf{T} = B^\mathsf{T} A^\mathsf{T}\)</span>) so we can write this as</p>
 <div class="math notranslate nohighlight">
 \[\vec{n}^\mathsf{T} A^\mathsf{T} M\vec{t} = 0\]</div>
-<p class="sd-card-text">If <span class="math notranslate nohighlight">\(A^\mathsf{T}M = I\)</span> then the view space normal and tangent vectors are perpendicular. Solving for <span class="math notranslate nohighlight">\(A\)</span> gives</p>
+<p class="sd-card-text">If <span class="math notranslate nohighlight">\(A^\mathsf{T}M = I\)</span> then the world space normal and tangent vectors are perpendicular. Solving for <span class="math notranslate nohighlight">\(A\)</span> gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     A^\mathsf{T} M &amp;= I \\
     A^\mathsf{T} &amp;= M^{-1} \\
     A &amp;= (M^{-1})^\mathsf{T}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">The matrix <span class="math notranslate nohighlight">\((M^{-1})^\mathsf{T}\)</span> is the transformation matrix to transform the model space normal vectors to the view space that ensures the view space normal vectors are perpendicular to the surface.</p>
+<p class="sd-card-text">The matrix <span class="math notranslate nohighlight">\((M^{-1})^\mathsf{T}\)</span> is the transformation matrix to transform the model space normal vectors to the world space that ensures the world space normal vectors are perpendicular to the surface.</p>
 </div>
-</details><p>To apply diffuse lighting we are first going to focus on the normal vectors. Each vertex of our cube object needs to have an associated normal vector (<a class="reference internal" href="#cube-normals-figure"><span class="std std-numref">Fig. 73</span></a>). The normals for the front face will point in the positive <span class="math notranslate nohighlight">\(z\)</span> direction so <span class="math notranslate nohighlight">\(\vec{n} = (0, 0, 1)\)</span>, the normals for the right face will point in the positive <span class="math notranslate nohighlight">\(x\)</span> direction so <span class="math notranslate nohighlight">\(\vec{n} = (1, 0, 0)\)</span>, and similar for the other faces of the cube.</p>
+</details><p>Each vertex of our cube object needs to have an associated normal vector (<a class="reference internal" href="#cube-normals-figure"><span class="std std-numref">Fig. 73</span></a>). The normals for the front face will point in the positive <span class="math notranslate nohighlight">\(z\)</span> direction so <span class="math notranslate nohighlight">\(\vec{n} = (0, 0, 1)\)</span>, the normals for the right face will point in the positive <span class="math notranslate nohighlight">\(x\)</span> direction so <span class="math notranslate nohighlight">\(\vec{n} = (1, 0, 0)\)</span>, and similar for the other faces of the cube.</p>
 <figure class="align-default" id="cube-normals-figure">
 <a class="reference internal image-reference" href="../_images/07_cube_normals.svg"><img alt="../_images/07_cube_normals.svg" src="../_images/07_cube_normals.svg" style="width: 250px;" />
 </a>
@@ -651,7 +666,7 @@ document.write(`
 </div>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">Reveal for all cube vertices</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text">Click to reveal the vertex coordinates for the cube</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="sb">```{code-cell} javascript</span>
 <span class="sb">// Define cube vertices</span>
 <span class="sb">const vertices = new Float32Array([</span>
@@ -715,27 +730,27 @@ document.write(`
 </pre></div>
 </div>
 <p>Now change the vertex shader to accept the normals as an input attribute and an output.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> funtion calculate the world space normal preserving orthogonality with the face.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space normal vectors</span>
-<span class="n">vNormal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">uModel</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aNormal</span><span class="p">);</span>
+<p>And in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function calculate the world space normal preserving orthogonality with the face.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space normal vectors</span>
+<span class="n">vNormal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="kt">mat3</span><span class="p">(</span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">uModel</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aNormal</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now change the fragment shader to accept the normal as an input</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Lastly, set the fragment colour to the normal vector.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Fragment colour</span>
-<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">vNormal</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Fragment colour</span>
+<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">vNormal</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in Red, Green or Blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the sides facing to the right are red because their normal vectors are <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> so in RGB this is pure red. The sides facing up are green because their normal vectors are <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> and the side facing towards us are blue because their normal vectors are <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> as shown in <a class="reference internal" href="#cube-normals-screenshot-figure"><span class="std std-numref">Fig. 74</span></a>.</p>
+<p>Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> so in RGB this is pure red. The side facing up is green because its normal vector is <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> and the side facing towards us is blue because its normal vector is <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> as shown in <a class="reference internal" href="#cube-normals-screenshot-figure"><span class="std std-numref">Fig. 74</span></a>. The sides of the cubes that have been rotated are varying shades of red, green and blue based on the direction their normals are pointing.</p>
 <figure class="align-default" id="cube-normals-screenshot-figure">
 <a class="reference internal image-reference" href="../_images/07_cubes_normals.png"><img alt="../_images/07_cubes_normals.png" src="../_images/07_cubes_normals.png" style="width: 80%;" />
 </a>
@@ -747,33 +762,24 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Edit the commands used to define the cubes to include the diffuse coefficient <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">j</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">spacing</span><span class="p">),</span>
-<span class="w">      </span><span class="nx">ka</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">kd</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">kd</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
 </pre></div>
 </div>
 <p>Now define a JavaScript object for the light source properties just after where we have defined the cube positions and lighting coefficients.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define light source properties</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">),</span>
-<span class="w">  </span><span class="nx">colour</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">colour</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Send the light position and colour vectors to the shaders after we have done this for the view and projection matrices.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send light source properties to the shader</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightPosition&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">colour</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightPosition&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">colour</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Send the diffuse coefficient to the shader where we did this for the ambient coefficient.</p>
+<p>And send the diffuse coefficient to the shader where we did this for the ambient coefficient.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uKd&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">kd</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -781,78 +787,34 @@ document.write(`
 <p>Now we have sent all the information required for diffuse lighting to the shader we now just need to edit the shaders.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the vertex shader so that it outputs the world space vertex position.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
-
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span>
-
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
-<span class="n">out</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">;</span>
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vPosition</span><span class="p">;</span>
-
-<span class="n">uniform</span><span class="w"> </span><span class="n">mat4</span><span class="w"> </span><span class="n">uModel</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">mat4</span><span class="w"> </span><span class="n">uView</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">mat4</span><span class="w"> </span><span class="n">uProjection</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uProjection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uView</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uModel</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Output vertex colour</span>
-<span class="w">  </span><span class="n">vColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// Output texture coordinates</span>
-<span class="w">  </span><span class="n">vTexCoords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// Output world space normal vectors</span>
-<span class="w">  </span><span class="n">vNormal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">uModel</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aNormal</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Output world space vertex position</span>
-<span class="w">  </span><span class="n">vPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">uModel</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">));</span>
-<span class="p">}</span>
+<p>Add output declarations to the vertex shader so that it outputs the world space vertex coordinates.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vPosition</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And edit the fragment shader to calculate diffuse reflection.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<p>And add the following code after we output the world space normal vectors.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space vertex position</span>
+<span class="n">vPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">uModel</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Add input declarations to the fragment shader to take in the world space fragment coordinates.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vPosition</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Add uniform declarations for the light position and colour and the diffuse coefficient.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">uLightPosition</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">uLightColour</span><span class="p">;</span>
 
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vPosition</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKd</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Finally, add code to calculate diffuse lighting.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Diffuse</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vNormal</span><span class="p">);</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">uLightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKd</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uLightColour</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
-
-<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">uTexture</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">uLightPosition</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">uLightColour</span><span class="p">;</span>
-
-<span class="c1">// Material coefficients</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKa</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKd</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="c1">// Object colour</span>
-<span class="w">  </span><span class="n">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Ambient</span>
-<span class="w">  </span><span class="n">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKa</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// Lighting vectors</span>
-<span class="w">  </span><span class="n">vec3</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vNormal</span><span class="p">);</span>
-<span class="w">  </span><span class="n">vec3</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">uLightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Diffuse</span>
-<span class="w">  </span><span class="n">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKd</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uLightColour</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// Fragment colour</span>
-<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// Fragment colour</span>
+<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -897,7 +859,7 @@ document.write(`
 <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">);</span>
 
 <span class="c1">// Calculate model matrix for light source</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">light</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">light</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">scale</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
@@ -905,7 +867,7 @@ document.write(`
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uProjection&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">projection</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
 
 <span class="c1">// Send light colour to the shader</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">colour</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">light</span><span class="p">.</span><span class="nx">colour</span><span class="p">);</span>
 
 <span class="c1">// Draw light source cube</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">vao</span><span class="p">);</span>
@@ -918,29 +880,29 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/07_cubes_diffuse.png"><img alt="../_images/07_cubes_diffuse.png" src="../_images/07_cubes_diffuse.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Diffuse reflection: <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>.</span><a class="headerlink" href="#cubes-diffuse-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Diffuse lighting: <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>.</span><a class="headerlink" href="#cubes-diffuse-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>If you move the camera around, you will see that the faces of the cubes that are facing away from the light source are black since we have not factored in ambient lighting, so let’s include that now.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Change the fragment shader so that the fragment colour is the sum of the ambient and diffuse reflection.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<p>Change the fragment shader so that the fragment colour is the sum of the ambient and diffuse lighting.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser, and you should see the cubes rendered with both ambient and diffuse reflection (<a class="reference internal" href="#cubes-diffuse-ambient-figure"><span class="std std-numref">Fig. 76</span></a>).</p>
+<p>Refresh your web browser, and you should see the cubes rendered with both ambient and diffuse lighting (<a class="reference internal" href="#cubes-diffuse-ambient-figure"><span class="std std-numref">Fig. 76</span></a>).</p>
 <figure class="align-default" id="cubes-diffuse-ambient-figure">
 <a class="reference internal image-reference" href="../_images/07_cubes_ambient_diffuse.png"><img alt="../_images/07_cubes_ambient_diffuse.png" src="../_images/07_cubes_ambient_diffuse.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Ambient and diffuse reflection: <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>, <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>.</span><a class="headerlink" href="#cubes-diffuse-ambient-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Ambient and diffuse lighting: <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>, <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>.</span><a class="headerlink" href="#cubes-diffuse-ambient-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <hr class="docutils" />
-<section id="specular-reflection">
-<h2>Specular reflection<a class="headerlink" href="#specular-reflection" title="Link to this heading">#</a></h2>
+<section id="specular-lighting">
+<h2>Specular lighting<a class="headerlink" href="#specular-lighting" title="Link to this heading">#</a></h2>
 <p>Consider <a class="reference internal" href="#specular-reflection-figure"><span class="std std-numref">Fig. 77</span></a> that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).</p>
 <figure class="align-default" id="specular-reflection-figure">
 <a class="reference internal image-reference" href="../_images/07_specular_reflection.svg"><img alt="../_images/07_specular_reflection.svg" src="../_images/07_specular_reflection.svg" style="width: 400px;" />
@@ -949,7 +911,7 @@ document.write(`
 <p><span class="caption-number">Fig. 77 </span><span class="caption-text">Light rays hitting a smooth surface are reflected in the same direction.</span><a class="headerlink" href="#specular-reflection-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Specular reflection depends upon the position of the light source and the fragment in the view space. Consider <a class="reference internal" href="#reflection-figure"><span class="std std-numref">Fig. 78</span></a> that shows a surface with a normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>, a vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> pointing from the surface to a light source and a vector <span class="math notranslate nohighlight">\(\vec{R}\)</span> pointing in the direction of reflected light off the surface. The angle between <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span> which is known as the incidence angle, and the angle between <span class="math notranslate nohighlight">\(\vec{R}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> are the same.</p>
+<p>Specular lighting depends upon the position of the light source and the fragment in the world space. Consider <a class="reference internal" href="#reflection-figure"><span class="std std-numref">Fig. 78</span></a> that shows a surface with a normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>, a vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> pointing from the surface to a light source and a vector <span class="math notranslate nohighlight">\(\vec{R}\)</span> pointing in the direction of reflected light off the surface. The angle between <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span> which is known as the incidence angle, and the angle between <span class="math notranslate nohighlight">\(\vec{R}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> are the same.</p>
 <figure class="align-default" id="reflection-figure">
 <a class="reference internal image-reference" href="../_images/07_reflection.svg"><img alt="../_images/07_reflection.svg" src="../_images/07_reflection.svg" style="width: 350px;" />
 </a>
@@ -1000,25 +962,25 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ \vec{R} = - \vec{L} + 2 (\vec{L} \cdot \vec{n}) \vec{n} \]</div>
 </div>
-</details><p>For a perfectly smooth surface the reflected ray will point in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector so in order to see the light the viewer would need to be positioned in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector. The viewing vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular reflection seen by the viewer. This is determined by the angle <span class="math notranslate nohighlight">\(\alpha\)</span> between the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector and the <span class="math notranslate nohighlight">\(\vec{V}\)</span> vector. The closer the viewing vector is to the reflection vector, the smaller the value of <span class="math notranslate nohighlight">\(\alpha\)</span> will be and the more of the light will be reflected towards the camera.</p>
+</details><p>For a perfectly smooth surface the reflected ray will point in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector so in order to see the light the viewer would need to be positioned in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector. The viewing vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. This is determined by the angle <span class="math notranslate nohighlight">\(\phi\)</span> between the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector and the <span class="math notranslate nohighlight">\(\vec{V}\)</span> vector. The closer the viewing vector is to the reflection vector, the smaller the value of <span class="math notranslate nohighlight">\(\phi\)</span> will be and the more of the light will be reflected towards the camera.</p>
 <figure class="align-default" id="specular-figure">
 <a class="reference internal image-reference" href="../_images/07_specular.svg"><img alt="../_images/07_specular.svg" src="../_images/07_specular.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Specular reflection scatters light mainly towards the reflection vector.</span><a class="headerlink" href="#specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Specular lighting scatters light mainly towards the reflection vector.</span><a class="headerlink" href="#specular-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Phong modelled the scattering of the reflected light rays using <span class="math notranslate nohighlight">\(\cos(\alpha)\)</span> raised to a power</p>
-<div class="math notranslate nohighlight" id="equation-specular-reflection-equation">
-<span class="eqno">(25)<a class="headerlink" href="#equation-specular-reflection-equation" title="Link to this equation">#</a></span>\[\vec{specular} = k_s \vec{I}_p \cos(\alpha)^{N_s},\]</div>
-<p>where <span class="math notranslate nohighlight">\(k_s\)</span> is the <strong>specular reflection constant</strong> similar to its ambient and diffuse counterparts and <span class="math notranslate nohighlight">\(N_s\)</span> is the <strong>specular exponent</strong> that determines the shininess of the object. If <span class="math notranslate nohighlight">\(\vec{R}\)</span> and <span class="math notranslate nohighlight">\(\vec{eye}\)</span> are unit vectors, then <span class="math notranslate nohighlight">\(\cos(\alpha)\)</span> can be calculated using the dot product between the <span class="math notranslate nohighlight">\(\vec{R}\)</span> and <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector limited to positive values</p>
+<p>Phong modelled the scattering of the reflected light rays using <span class="math notranslate nohighlight">\(\cos(\phi)\)</span> raised to a power</p>
 <div class="math notranslate nohighlight">
-\[ \cos(\alpha) = \max(\vec{eye} \cdot \vec{R}, 0)^{N_s}.\]</div>
+\[\vec{specular} = k_s \vec{I}_p \cos(\phi)^{\alpha},\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_s\)</span> is the <strong>specular lighting coefficient</strong> similar to its ambient and diffuse counterparts and <span class="math notranslate nohighlight">\(\alpha\)</span> is the <strong>specular exponent</strong> that determines the shininess of the object. If <span class="math notranslate nohighlight">\(\vec{R}\)</span> and <span class="math notranslate nohighlight">\(\vec{V}\)</span> are unit vectors, then <span class="math notranslate nohighlight">\(\cos(\phi)\)</span> can be calculated using <span class="math notranslate nohighlight">\( \cos(\phi) = \max(\vec{V} \cdot \vec{R}, 0)^{\alpha}\)</span>, so the specular reflection equation is</p>
+<div class="math notranslate nohighlight" id="equation-specular-reflection-equation">
+<span class="eqno">(24)<a class="headerlink" href="#equation-specular-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{specular} = k_s \max(\vec{V} \cdot \vec{R}, 0)^\alpha \vec{I}_p.\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the specular coefficient and exponent to the cube objects where we did the same for the ambient and diffuse coefficients.</p>
-<div class="highlight-javascrtip notranslate"><div class="highlight"><pre><span></span>ks        : 1.0,
-shininess : 20,
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">ks</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="nx">shininess</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">32</span><span class="p">,</span>
 </pre></div>
 </div>
 <p>And send them to the shader where we did this for the ambient and diffuse coefficients.</p>
@@ -1026,7 +988,7 @@ shininess : 20,
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uShininess&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">shininess</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Send the camera position to the shader after we calculate the view and projection matrices.</p>
+<p>Send the camera position to the shader after we sent the light position and colour.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send camera position to the shader</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uCameraPosition&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
 </pre></div>
@@ -1037,38 +999,36 @@ shininess : 20,
 </pre></div>
 </div>
 <p>Now in the fragment shader, add uniforms for the camera position, specular coefficient and exponent.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">uCameraPosition</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">uCameraPosition</span><span class="p">;</span>
 
-<span class="c1">// other uniforms...</span>
-
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKs</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uShininess</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKs</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uShininess</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And calculate the specular reflection in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Specular</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">uCameraPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">uShininess</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uLightColour</span><span class="p">;</span>
+<p>And add code to calculate the specular lighting in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Specular</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">uCameraPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">uShininess</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">uLightColour</span><span class="p">;</span>
 
 <span class="c1">// Fragment colour</span>
-<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser and move the camera so that the cubes are between the camera and the light source and you should see the image shown in <a class="reference internal" href="#cubes-specular-figure"><span class="std std-numref">Fig. 82</span></a>.</p>
+<p>Refresh your web browser and your scene should be very dark. Move the camera so that the cubes are between the camera and the light source and you should start to see the specular highlights where light is being reflected off the cube <a class="reference internal" href="#cubes-specular-figure"><span class="std std-numref">Fig. 82</span></a>.</p>
 <figure class="align-default" id="cubes-specular-figure">
 <a class="reference internal image-reference" href="../_images/07_cubes_specular.png"><img alt="../_images/07_cubes_specular.png" src="../_images/07_cubes_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 82 </span><span class="caption-text">Specular reflection: <span class="math notranslate nohighlight">\(k_s = 1.0\)</span>, <span class="math notranslate nohighlight">\(N_s = 20\)</span>.</span><a class="headerlink" href="#cubes-specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">Specular lighting: <span class="math notranslate nohighlight">\(k_s = 1.0\)</span>, <span class="math notranslate nohighlight">\(\alpha = 20\)</span>.</span><a class="headerlink" href="#cubes-specular-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Move the camera around the cubes and notice how the specular highlights (the white bits) change due to the position of the camera and the normal vectors of the cube surfaces. Let’s add ambient and diffuse relfection to the specular reflection to complete the Phong reflection model.</p>
+<p>Let’s add ambient and diffuse lighting to the specular lighting to complete the Phong reflection model.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Change the fragment shader so that the fragment colour is the sum of the ambient, diffuse and specular reflection.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<p>Change the fragment shader so that the fragment colour is the sum of the ambient, diffuse and specular lighting.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1076,7 +1036,7 @@ shininess : 20,
 <a class="reference internal image-reference" href="../_images/07_cubes_phong.png"><img alt="../_images/07_cubes_phong.png" src="../_images/07_cubes_phong.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 83 </span><span class="caption-text">Ambient, diffuse and specular reflection: <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>, <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>, <span class="math notranslate nohighlight">\(k_s = 1.0\)</span>, <span class="math notranslate nohighlight">\(N_s = 20\)</span>.</span><a class="headerlink" href="#cubes-phong-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">Ambient, diffuse and specular lighting: <span class="math notranslate nohighlight">\(k_a = 0.2\)</span>, <span class="math notranslate nohighlight">\(k_d = 0.7\)</span>, <span class="math notranslate nohighlight">\(k_s = 1.0\)</span>, <span class="math notranslate nohighlight">\(\alpha = 20\)</span>.</span><a class="headerlink" href="#cubes-phong-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1109,19 +1069,19 @@ shininess : 20,
 </pre></div>
 </div>
 <p>Add the uniforms to the fragment shader.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attenuation parameters</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uConstant</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uLinear</span><span class="p">;</span>
-<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uQuadratic</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attenuation parameters</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uConstant</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uLinear</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uQuadratic</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Then calculate and apply attenuation to the fragment colour.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attenuation</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attenuation</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">uLightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">uConstant</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">uLinear</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">uQuadratic</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="p">);</span>
 
 <span class="c1">// Fragment colour</span>
-<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">),</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">),</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1201,9 +1161,9 @@ shininess : 20,
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-reflection">Ambient reflection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-reflection">Diffuse reflection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-reflection">Specular reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
 </ul>
   </nav></div>

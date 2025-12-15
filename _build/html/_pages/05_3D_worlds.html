@@ -885,10 +885,10 @@ document.write(`
 <p>Add the following code after the cube indices are defined.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube positions</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">6</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">6</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
 <span class="p">];</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">numberCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">numCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Now put the commands used to calculate the model matrix to draw the cube inside a for loop.</p>
@@ -910,7 +910,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Change the translation matrix so that it uses the new cube centre coordinates.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">.</span><span class="nx">array</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Finally change the rotation angle to zero.</p>
@@ -918,7 +918,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we first define an array of JavaScript objects where the position attribute are 3-element vectors which stores the centre coordinates of two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.</p>
+<p>Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.</p>
 <figure class="align-default" id="orthographic-cubes-figure">
 <a class="reference internal image-reference" href="../_images/05_orthographic_cubes.png"><img alt="../_images/05_orthographic_cubes.png" src="../_images/05_orthographic_cubes.png" style="width: 80%;" />
 </a>

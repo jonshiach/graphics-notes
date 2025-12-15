@@ -628,10 +628,10 @@ document.write(`
 <h3>Quaternion dot product<a class="headerlink" href="#quaternion-dot-product" title="Link to this heading">#</a></h3>
 <p>The dot product between two quaternions <span class="math notranslate nohighlight">\(q_1 = [w_1, (x_1, y_1, z_1)]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, (x_2, y_2, z_2)]\)</span> is denoted by <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> and is calculated using</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-dot-product-equation">
-<span class="eqno">(31)<a class="headerlink" href="#equation-quaternion-dot-product-equation" title="Link to this equation">#</a></span>\[ q_1 \cdot q_2 = w_1w_2 + x_1x_2 + y_1y_2 + z_1z_2,\]</div>
+<span class="eqno">(30)<a class="headerlink" href="#equation-quaternion-dot-product-equation" title="Link to this equation">#</a></span>\[ q_1 \cdot q_2 = w_1w_2 + x_1x_2 + y_1y_2 + z_1z_2,\]</div>
 <p>and the angle <span class="math notranslate nohighlight">\(\theta\)</span> between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> is</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-angle-difference-equation">
-<span class="eqno">(32)<a class="headerlink" href="#equation-quaternion-angle-difference-equation" title="Link to this equation">#</a></span>\[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).\]</div>
+<span class="eqno">(31)<a class="headerlink" href="#equation-quaternion-angle-difference-equation" title="Link to this equation">#</a></span>\[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).\]</div>
 </section>
 <section id="multiplying-quaternions">
 <span id="multiplying-quaternions-section"></span><h3>Multiplying quaternions<a class="headerlink" href="#multiplying-quaternions" title="Link to this heading">#</a></h3>
@@ -667,10 +667,10 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>results in</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-product-equation">
-<span class="eqno">(33)<a class="headerlink" href="#equation-quaternion-product-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
+<span class="eqno">(32)<a class="headerlink" href="#equation-quaternion-product-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
     q_1q_2 &amp;= [w_1w_2 - \mathbf{v}_1\cdot \mathbf{v}_2, w_1 \mathbf{v}_2 + w_2 \mathbf{v}_1 + \mathbf{v}_1 \times \mathbf{v}_2].
 \end{align*} \]</div>
-<p>Equation <a class="reference internal" href="#equation-quaternion-product-equation">(33)</a> is the equation for the multiplication of two quaternions <span class="math notranslate nohighlight">\(q_1 = [w_1, \mathbf{v}_1]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, \mathbf{v}_2]\)</span>.</p>
+<p>Equation <a class="reference internal" href="#equation-quaternion-product-equation">(32)</a> is the equation for the multiplication of two quaternions <span class="math notranslate nohighlight">\(q_1 = [w_1, \mathbf{v}_1]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, \mathbf{v}_2]\)</span>.</p>
 </section>
 <section id="quaternion-conjugate">
 <h3>Quaternion conjugate<a class="headerlink" href="#quaternion-conjugate" title="Link to this heading">#</a></h3>
@@ -714,7 +714,7 @@ document.write(`
 <p>To demonstrate rotation using quaternion rotation consider the rotation of the vector <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the <span class="math notranslate nohighlight">\(z\)</span>-axis. The rotation quaternion for this is</p>
 <div class="math notranslate nohighlight">
 \[ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)], \]</div>
-<p>and expressing <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> as a pure quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span>. Multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="#equation-quaternion-product-equation">(33)</a> gives</p>
+<p>and expressing <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> as a pure quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span>. Multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="#equation-quaternion-product-equation">(32)</a> gives</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     qp &amp;=  [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
@@ -761,8 +761,8 @@ document.write(`
 </figure>
 <p>Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 122</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternion is</p>
 <div class="math notranslate nohighlight" id="equation-appendix-rotation-quaternion-equation">
-<span class="eqno">(34)<a class="headerlink" href="#equation-appendix-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].\]</div>
-<p>Returning to our example of rotating <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} = (0.707, 0, 0.707)\)</span> using equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(34)</a> we have a rotation quaternion of</p>
+<span class="eqno">(33)<a class="headerlink" href="#equation-appendix-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].\]</div>
+<p>Returning to our example of rotating <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} = (0.707, 0, 0.707)\)</span> using equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(33)</a> we have a rotation quaternion of</p>
 <div class="math notranslate nohighlight">
 \[q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]\]</div>
 <p>so calculating <span class="math notranslate nohighlight">\(qpq^*\)</span> we have</p>
@@ -802,7 +802,7 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>and we can express the rotation <span class="math notranslate nohighlight">\(qp\)</span> as the matrix equation</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-q-equation">
-<span class="eqno">(35)<a class="headerlink" href="#equation-quaternion-rotation-q-equation" title="Link to this equation">#</a></span>\[\begin{split} qp = \begin{align*}
+<span class="eqno">(34)<a class="headerlink" href="#equation-quaternion-rotation-q-equation" title="Link to this equation">#</a></span>\[\begin{split} qp = \begin{align*}
     \begin{pmatrix}
          w &amp; -z &amp;  y &amp; x \\
          z &amp;  w &amp; -x &amp; y \\
@@ -833,7 +833,7 @@ document.write(`
 \end{align*} \end{split}\]</div>
 <p>which can be expressed by the matrix equation</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-q2-equation">
-<span class="eqno">(36)<a class="headerlink" href="#equation-quaternion-rotation-q2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(35)<a class="headerlink" href="#equation-quaternion-rotation-q2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     pq^* &amp;=
     \begin{pmatrix}
         w &amp; -z &amp; y &amp; -x \\
@@ -843,7 +843,7 @@ document.write(`
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p>The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^*\)</span> from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(35)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(36)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
+<p>The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^*\)</span> from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(34)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(35)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     R &amp;= qp \cdot pq^*
@@ -875,7 +875,7 @@ document.write(`
 \end{align*} \]</div>
 <p>Doing this for the other main diagonal elements <span class="math notranslate nohighlight">\(R\)</span> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-matrix-2-equation">
-<span class="eqno">(37)<a class="headerlink" href="#equation-quaternion-rotation-matrix-2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(36)<a class="headerlink" href="#equation-quaternion-rotation-matrix-2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     R &amp;=
     \begin{pmatrix}
         1 - 2(y^2 + z^2) &amp; 2(xy - zw) &amp; 2(xz + yw) &amp; 0 \\
@@ -889,7 +889,7 @@ document.write(`
 \[ \begin{align*}
     q &amp;= [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2}) (0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)].
 \end{align*} \]</div>
-<p>From <span class="math notranslate nohighlight">\(q\)</span> we have <span class="math notranslate nohighlight">\(w = 0.924\)</span>, <span class="math notranslate nohighlight">\(x = 0.271\)</span>, <span class="math notranslate nohighlight">\(y = 0\)</span> and <span class="math notranslate nohighlight">\(z = 0.271\)</span>. Substituting these into <span class="math notranslate nohighlight">\(R\)</span> from equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(37)</a> gives</p>
+<p>From <span class="math notranslate nohighlight">\(q\)</span> we have <span class="math notranslate nohighlight">\(w = 0.924\)</span>, <span class="math notranslate nohighlight">\(x = 0.271\)</span>, <span class="math notranslate nohighlight">\(y = 0\)</span> and <span class="math notranslate nohighlight">\(z = 0.271\)</span>. Substituting these into <span class="math notranslate nohighlight">\(R\)</span> from equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(36)</a> gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     R =
@@ -917,7 +917,7 @@ document.write(`
 </section>
 <section id="euler-angles-to-quaternion">
 <span id="euler-to-quaternion-derivation-section"></span><h3>Euler angles to quaternion<a class="headerlink" href="#euler-angles-to-quaternion" title="Link to this heading">#</a></h3>
-<p>Euler angles are the rotations around the three coordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(34)</a> can be used to give three quaternions for yaw, pitch and roll rotations</p>
+<p>Euler angles are the rotations around the three coordinates axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> so equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(33)</a> can be used to give three quaternions for yaw, pitch and roll rotations</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     q_p &amp;= [\cos(\tfrac{pitch}{2}), \sin(\tfrac{pitch}{2}) (1, 0, 0)], \\
@@ -930,7 +930,7 @@ document.write(`
     q &amp;= [c_p, s_p(1, 0, 0)] [c_y, s_y(0, 1, 0)] [c_r, s_r(0, 0, 1)] \\
     &amp;= [c_pc_yc_r - s_ps_ys_r, (s_pc_yc_r + c_ps_ys_r, c_ps_yc_r - s_pc_ys_r, c_pc_ys_r + s_ps_yc_r)].
 \end{align*} \end{split}\]</div>
-<p>This means we can define a quaternion based on the three Euler angles and then use equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(37)</a> to generate the rotation matrix. A camera only requires the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles. If <span class="math notranslate nohighlight">\(roll = 0^\circ\)</span> then <span class="math notranslate nohighlight">\(\cos(roll) = 1\)</span> and <span class="math notranslate nohighlight">\(\sin(roll) = 0\)</span> and so the quaternion simplifies to</p>
+<p>This means we can define a quaternion based on the three Euler angles and then use equation <a class="reference internal" href="#equation-quaternion-rotation-matrix-2-equation">(36)</a> to generate the rotation matrix. A camera only requires the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles. If <span class="math notranslate nohighlight">\(roll = 0^\circ\)</span> then <span class="math notranslate nohighlight">\(\cos(roll) = 1\)</span> and <span class="math notranslate nohighlight">\(\sin(roll) = 0\)</span> and so the quaternion simplifies to</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     q &amp;= [c_pc_y, (s_pc_y, c_ps_y, s_ps_y)].
