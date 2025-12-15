@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/A1_Complex_numbers_and_quaternions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Lab 10: Quaternions" href="10_Quaternions.html" />
+    <link rel="prev" title="Lab 10: Quaternions" href="09_Quaternions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -194,9 +194,8 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="current nav bd-sidenav">
@@ -432,7 +431,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="appendix-a-complex-numbers-and-quaternions">
 <span id="appendix-quaternions-section"></span><h1>Appendix A: Complex Numbers and Quaternions<a class="headerlink" href="#appendix-a-complex-numbers-and-quaternions" title="Link to this heading">#</a></h1>
-<p>In <a class="reference internal" href="10_Quaternions.html#quaternions-section"><span class="std std-ref">10. Quaternions</span></a> we explored how we can make use of quaternions to perform rotation calculations. You don’t need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.</p>
+<p>In <a class="reference internal" href="09_Quaternions.html#quaternions-section"><span class="std std-ref">10. Quaternions</span></a> we explored how we can make use of quaternions to perform rotation calculations. You don’t need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.</p>
 <section id="complex-numbers">
 <h2>Complex numbers<a class="headerlink" href="#complex-numbers" title="Link to this heading">#</a></h2>
 <p>The <strong>imaginary number</strong> <span class="math notranslate nohighlight">\(i\)</span> is defined as <span class="math notranslate nohighlight">\(i = \sqrt{-1}\)</span>. A <strong>complex number</strong> is a real number plus a multiple of an imaginary number</p>
@@ -702,7 +701,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/04_axis_angle_rotation.svg"><img alt="../_images/04_axis_angle_rotation.svg" src="../_images/04_axis_angle_rotation.svg" style="height: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 120 </span><span class="caption-text">Axis-angle rotation</span><a class="headerlink" href="#axis-angle-rotation2-figure-3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 119 </span><span class="caption-text">Axis-angle rotation</span><a class="headerlink" href="#axis-angle-rotation2-figure-3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We have seen <a class="reference internal" href="#rotation-of-complex-numbers-section"><span class="std std-ref">above</span></a> that we can rotate a complex number by multiplying by the complex number <span class="math notranslate nohighlight">\(z = \cos(\theta) + \sin(\theta)i\)</span>. Since quaternions are an extension of complex numbers the quaternion equivalent to this is</p>
@@ -724,12 +723,12 @@ document.write(`
 \[ \begin{align*}
     |qp| &amp;= \sqrt{0 ^ 2 + 1.414^2 + 1.414^2 + 0^2} = 2,
 \end{align*} \]</div>
-<p>which is the same as the absolute value of <span class="math notranslate nohighlight">\([0, (2, 0, 0)]\)</span>. This rotation is shown in shown in <a class="reference internal" href="#quaternion-rotation-1-figure"><span class="std std-numref">Fig. 121</span></a>.</p>
+<p>which is the same as the absolute value of <span class="math notranslate nohighlight">\([0, (2, 0, 0)]\)</span>. This rotation is shown in shown in <a class="reference internal" href="#quaternion-rotation-1-figure"><span class="std std-numref">Fig. 120</span></a>.</p>
 <figure class="align-default" id="quaternion-rotation-1-figure">
 <a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_1.svg"><img alt="../_images/B_Quaternion_rotation_1.svg" src="../_images/B_Quaternion_rotation_1.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 121 </span><span class="caption-text">The quaternion <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> is rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> by multiplying by the rotation quaternion <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-1-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 120 </span><span class="caption-text">The quaternion <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> is rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> by multiplying by the rotation quaternion <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-1-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn’t perpendicular to the vector? Consider the rotation of the same vector <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by angle 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the unit vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} =  (0.707, 0, 0.707)\)</span> which is not perpendicular to <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>. The rotation quaternion is</p>
@@ -756,10 +755,10 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_2.svg"><img alt="../_images/B_Quaternion_rotation_2.svg" src="../_images/B_Quaternion_rotation_2.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 122 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 121 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 122</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternion is</p>
+<p>Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 121</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternion is</p>
 <div class="math notranslate nohighlight" id="equation-appendix-rotation-quaternion-equation">
 <span class="eqno">(33)<a class="headerlink" href="#equation-appendix-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].\]</div>
 <p>Returning to our example of rotating <span class="math notranslate nohighlight">\(\mathbf{p} = (2, 0, 0)\)</span> by <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\mathbf{v}} = (0.707, 0, 0.707)\)</span> using equation <a class="reference internal" href="#equation-appendix-rotation-quaternion-equation">(33)</a> we have a rotation quaternion of</p>
@@ -771,12 +770,12 @@ document.write(`
     qpq^* &amp;= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
     &amp;= [0, (1.707, 1, 0.293)].
 \end{align*}\end{split}\]</div>
-<p>The effect of this rotation is shown in <a class="reference internal" href="#quaternion-rotation-3-figure"><span class="std std-numref">Fig. 123</span></a>.</p>
+<p>The effect of this rotation is shown in <a class="reference internal" href="#quaternion-rotation-3-figure"><span class="std std-numref">Fig. 122</span></a>.</p>
 <figure class="align-default" id="quaternion-rotation-3-figure">
 <a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_3.svg"><img alt="../_images/B_Quaternion_rotation_3.svg" src="../_images/B_Quaternion_rotation_3.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 123 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(\frac{45^\circ}{2}), \sin(\frac{45^\circ}{2}) \hat{\mathbf{v}}]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-3-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 122 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(\frac{45^\circ}{2}), \sin(\frac{45^\circ}{2}) \hat{\mathbf{v}}]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-3-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <section id="rotation-matrix">
@@ -913,7 +912,7 @@ document.write(`
     \begin{pmatrix} 2 \\ 0 \\ 0 \\ 0 \end{pmatrix}
     = \begin{pmatrix} 1.707 \\ 1 \\ 0.293 \\ 0 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p>So the rotated vector is <span class="math notranslate nohighlight">\((1.707, 1, 0.293)\)</span> which was shown in <a class="reference internal" href="#quaternion-rotation-3-figure"><span class="std std-numref">Fig. 123</span></a>. We can see that the vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> has now been rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
+<p>So the rotated vector is <span class="math notranslate nohighlight">\((1.707, 1, 0.293)\)</span> which was shown in <a class="reference internal" href="#quaternion-rotation-3-figure"><span class="std std-numref">Fig. 122</span></a>. We can see that the vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> has now been rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
 </section>
 <section id="euler-angles-to-quaternion">
 <span id="euler-to-quaternion-derivation-section"></span><h3>Euler angles to quaternion<a class="headerlink" href="#euler-angles-to-quaternion" title="Link to this heading">#</a></h3>
@@ -970,7 +969,7 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="10_Quaternions.html"
+       href="09_Quaternions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">

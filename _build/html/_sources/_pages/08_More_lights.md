@@ -1,3 +1,5 @@
+(more-lights-section)=
+
 # Lab 8: More Lights
 
 In [Lab 7: Lighting](lighting-section) we saw how to add a single point light source to a scene using the Phong reflection model. In this lab we will extend this to multiple light sources of different types including point lights, spotlights and directional lights.
@@ -10,7 +12,7 @@ Create a copy of your ***07 Lighting*** folder, rename it ***08 More Lights***, 
 
 Open the ***index.html*** file in a live server to check everything is working as expected.
 
-```{figure} ../_images/08_cubes_attenuation.png
+```{figure} ../_images/08_cubes.png
 :width: 80%
 :name: cubes-attenuation-figure-2
 
@@ -27,7 +29,7 @@ To add another light sources to a scene is simply a matter of calculating the am
 
 A data structure in GLSL is defined as follows:
 
-```c
+```glsl
 struct Light {
   int type;
   vec3 position;
@@ -40,7 +42,7 @@ struct Light {
 
 This defines a `Light` structure with attributes for the light source type, position, colour and attenuation constants. The `type` attribute will be used later to specify different types of light sources. Before we add additional light sources we are going to rewrite our fragment shader to use a data structure.
 
-```c
+```glsl
 #version 300 es
 precision mediump float;
 
@@ -79,24 +81,26 @@ uniform Light uLights[16];
 // Function to calculate diffuse and specular reflection
 vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
  
-  vec3 L;
-  float attenuation = 1.0;
+  // Light vector
+  vec3 L = normalize(light.position - vPosition);
+
+  // Reflection vector
+  vec3 R = reflect(-L, N);
+
+  // Attenuation
+  float dist = length(light.position - vPosition);
+  float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
 
   // Ambient reflection
   vec3 ambient = uKa * objectColour;
 
   // Diffuse
-  L = normalize(light.position - vPosition);
   vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
   // Specular
-  vec3 R = reflect(-L, N);
   vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
 
-  // Attenuation
-  float dist = length(light.position - vPosition);
-  attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
-
+  // Output fragment colour
   return attenuation * (ambient + diffuse + specular);
 }
 
@@ -143,21 +147,23 @@ Define an array containing the properties of two light sources.
 // Create vector of light sources
 const lightSources = [ 
   {
-    type      : 1,
-    position  : [6, 2, 2],
-    colour    : [1, 1, 1],
-    constant  : 1.0,
-    linear    : 0.1,
-    quadratic : 0.02,
+    type        : 1,
+    position    : [6, 2, 0],
+    colour      : [1, 1, 1],
+    direction   : [0, -1, -2],
+    constant    : 1.0,
+    linear      : 0.1,
+    quadratic   : 0.02,
   },
   {
-    type      : 1,
-    position  : [6, 2, -9],
-    colour    : [1, 1, 0],
-    constant  : 1.0,
-    linear    : 0.1,
-    quadratic : 0.02,
-  }
+    type        : 1,
+    position    : [9, 2, -9],
+    direction   : [0, 0, 0],
+    colour      : [1, 1, 0],
+    constant    : 1.0,
+    linear      : 0.1,
+    quadratic   : 0.02,
+  },
 ];
 ```
 
@@ -232,35 +238,41 @@ $$ \cos(\theta) = \vec{L} \cdot \vec{D}. $$
 
 So to determine if a fragment is illuminated by the spotlight we can calculate $\cos(\theta)$ and compare it to $\cos(\textsf{cutoff})$. If $\cos(\theta) < \cos(\textsf{cutoff})$ then $\theta > \textsf{cutoff}$ and the fragment is not illuminated.
 
-:::{admoniotion} Task
+:::{admonition} Task
 :class: tip
 
 Add attributes for the light direction vector and the value of $\cos(\textsf{cutoff})$ to the Light data structure in the fragment shader.
 
-```c
+```glsl
 vec3 direction;
 float cutoff;
 ```
 
-And in the `computeLight()` function, add the following code to turn off the light contribution if the fragment is outside the spotlight cone.
+In the `computeLight()` function, add the following code to turn off the light contribution if the fragment is outside the spotlight cone.
 
-```c
+```glsl
 // Spotlight
-float spot = 1.0;
-if (light.type == 2) {
-  float theta = dot(-L, normalize(light.direction));
-  if (theta < light.cutoff) spot = 0.0;
+vec3 D = normalize(light.direction);
+float theta = dot(-L, D);
+float spotLight = 0.0;
+if (theta > light.cutoff) {
+  spotLight = 1.0;
 }
-
-return spot * attenuation * (ambient + diffuse + specular);
 ```
 
-In the ***more_lights.js*** file, add the light direction and cutoff attributes to both light sources. In the first light source add the following and comment out the code definining the first light source.
+And apply the spotlight to the fragment colour calculation.
+
+```glsl
+// Output fragment colour
+return spotlight * attenuation * (ambient + diffuse + specular);
+```
+
+In the `main()` function, add the light direction and cutoff attributes to both light sources. In the first light source add the following and comment out the code definining the second light source.
 
 ```javascript
 type      : 2,
-direction : [0, -1, -2],
-cutoff    : Math.cos(30 * Math.PI / 180),
+direction : [0, -1, -1],
+cutoff    : Math.cos(40 * Math.PI / 180),
 ```
 
 Finally, send the additional light source properties to the shader by adding the following code where the other light source properties are sent.
@@ -278,7 +290,7 @@ Here we have changed the first light source to be a spotlight that is pointing d
 :width: 80%
 :name: directional-light-harsh-figure
 
-Teapots lit using a spotlight.
+Cubes lit using a spotlight.
 ```
 
 Use the keyboard and mouse to move the camera around the cubes and see the effect of the spotlight. You may notice that there is an abrupt cutoff between the region illuminated by the spotlight and the region in darkness. In the real world this doesn't usually happen as light on this edge gets softened by various effects.
@@ -297,26 +309,24 @@ Intensity value over a range of $\theta$.
 
 Add an attribute for the inner cutoff angle to the Light data structure in the fragment shader.
 
-```c
+```glsl
 float innerCutoff;
 ```
 
 And in the `computeLight()` function, replace the spotlight code with the following code to soften the edges of the spotlight.
 
-```c
+```glsl
 // Spotlight
-float spot = 1.0;
-if (light.type == 2) {
-  float theta = dot(-L, normalize(light.direction));
-  float epsilon = light.innerCutoff - light.cutoff;
-  spot = clamp((theta - light.cutoff) / epsilon, 0.0, 1.0);
-}
+vec3 D = normalize(light.direction);
+float theta = dot(-L, D);
+float epsilon = light.cutoff - light.innerCutoff;
+float spotLight = clamp((light.cutoff - theta) / epsilon, 0.0, 1.0);
 ```
 
 Now add the attibute to the light source definitions in the ***more_lights.js*** file.
 
 ```javascript
-innerCutoff : Math.cos(25 * Math.PI / 180),
+innerCutoff : Math.cos(30 * Math.PI / 180),
 ```
 
 And send the additional light source property to the shader by adding the following code where the other light source properties are sent.
@@ -356,7 +366,7 @@ The lighting calculations are the same as for the other light sources seen above
 
 Update the `computeLight()` function in the fragment by replacing the code used to calculate the light source vector with the following.
 
-```c
+```glsl
 if (light.type == 3) {
   L = normalize(-light.direction);
 } else {
@@ -366,7 +376,7 @@ if (light.type == 3) {
 
 And replace the code used to calculate the attenuation with the following.
 
-```c
+```glsl
 // Attenuation
 if (light.type != 3) {
   float dist = length(light.position - vPosition);

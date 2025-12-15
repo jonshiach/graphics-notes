@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/07_Lighting';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lab 8: More Lights" href="08_More_lights.html" />
+    <link rel="next" title="Lab 9: Normal Mapping" href="08_Normal_mapping.html" />
     <link rel="prev" title="Lab 6: Moving the Camera" href="06_Moving_the_camera.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -195,9 +195,8 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -397,11 +396,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-light-sources">Multiple light sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spotlights">Spotlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directional-light">Directional light</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -468,10 +474,8 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ \vec{colour} = \vec{ambient} + \vec{diffuse} + \vec{specular},\]</div>
 <p>where theses are 3-element vectors of RGB colour values.</p>
-</section>
-<hr class="docutils" />
 <section id="ambient-lighting">
-<h2>Ambient lighting<a class="headerlink" href="#ambient-lighting" title="Link to this heading">#</a></h2>
+<h3>Ambient lighting<a class="headerlink" href="#ambient-lighting" title="Link to this heading">#</a></h3>
 <p>Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient lighting is</p>
 <div class="math notranslate nohighlight" id="equation-ambient-reflection-equation">
 <span class="eqno">(22)<a class="headerlink" href="#equation-ambient-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{ambient} = k_a \vec{O}_d \]</div>
@@ -553,9 +557,8 @@ document.write(`
 </div>
 </div>
 </section>
-<hr class="docutils" />
 <section id="diffuse-lighting">
-<h2>Diffuse lighting<a class="headerlink" href="#diffuse-lighting" title="Link to this heading">#</a></h2>
+<h3>Diffuse lighting<a class="headerlink" href="#diffuse-lighting" title="Link to this heading">#</a></h3>
 <p>Diffuse lighting is where light is reflected off a rough surface. Consider <a class="reference internal" href="#diffuse-reflection-figure"><span class="std std-numref">Fig. 69</span></a> that shows parallel light rays hitting a surface where light is scattered in multiple directions.</p>
 <figure class="align-default" id="diffuse-reflection-figure">
 <a class="reference internal image-reference" href="../_images/07_diffuse_reflection.svg"><img alt="../_images/07_diffuse_reflection.svg" src="../_images/07_diffuse_reflection.svg" style="width: 400px;" />
@@ -900,9 +903,8 @@ document.write(`
 </figcaption>
 </figure>
 </section>
-<hr class="docutils" />
 <section id="specular-lighting">
-<h2>Specular lighting<a class="headerlink" href="#specular-lighting" title="Link to this heading">#</a></h2>
+<h3>Specular lighting<a class="headerlink" href="#specular-lighting" title="Link to this heading">#</a></h3>
 <p>Consider <a class="reference internal" href="#specular-reflection-figure"><span class="std std-numref">Fig. 77</span></a> that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).</p>
 <figure class="align-default" id="specular-reflection-figure">
 <a class="reference internal image-reference" href="../_images/07_specular_reflection.svg"><img alt="../_images/07_specular_reflection.svg" src="../_images/07_specular_reflection.svg" style="width: 400px;" />
@@ -1040,9 +1042,8 @@ document.write(`
 </figcaption>
 </figure>
 </section>
-<hr class="docutils" />
 <section id="attenuation">
-<h2>Attenuation<a class="headerlink" href="#attenuation" title="Link to this heading">#</a></h2>
+<h3>Attenuation<a class="headerlink" href="#attenuation" title="Link to this heading">#</a></h3>
 <p><strong>Attenuation</strong> is the gradual decrease in light intensity as the distance between the light source and a surface increases. We can use attenuation to model light from low intensity light source, for example, a candle or torch which will only illuminate an area close to the source. Theoretically attenuation should follow the inverse square law where the light intensity is inversely proportional to the square of the distance between the light source and the surface. However, in practice this tends to result in a scene that is too dark so we calculate attenuation using an inverse quadratic function</p>
 <div class="math notranslate nohighlight">
 \[ attenuation = \frac{1}{constant + linear \cdot d + quadratic \cdot d^2}, \]</div>
@@ -1095,6 +1096,361 @@ document.write(`
 </figure>
 </section>
 </section>
+<hr class="docutils" />
+<section id="multiple-light-sources">
+<h2>Multiple light sources<a class="headerlink" href="#multiple-light-sources" title="Link to this heading">#</a></h2>
+<p>To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.</p>
+<p>A data structure in GLSL is defined as follows:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This defines a <code class="docutils literal notranslate"><span class="pre">Light</span></code> structure with attributes for the light source type, position, colour and attenuation constants. The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute will be used later to specify different types of light sources. Before we add additional light sources we are going to rewrite our fragment shader to use a data structure.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vPosition</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">uTexture</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">uCameraPosition</span><span class="p">;</span>
+
+<span class="c1">// Material coefficients</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKa</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKd</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uKs</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">uShininess</span><span class="p">;</span>
+
+<span class="c1">// Light struct</span>
+<span class="k">struct</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Number of lights</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">uNumLights</span><span class="p">;</span>
+
+<span class="c1">// Array of lights</span>
+<span class="k">uniform</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="n">uLights</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Function to calculate diffuse and specular reflection</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">computeLight</span><span class="p">(</span><span class="n">Light</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">objectColour</span><span class="p">){</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="c1">// Light vector</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Reflection vector</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Attenuation</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">constant</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">linear</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">quadratic</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Ambient reflection</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKa</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Diffuse</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKd</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">colour</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Specular</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">uShininess</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">colour</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Output fragment colour</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Main function</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="c1">// Object colour</span>
+<span class="w">  </span><span class="kt">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Lighting vectors</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vNormal</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">uCameraPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Calculate lighting for each light source</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">uNumLights</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">computeLight</span><span class="p">(</span><span class="n">uLights</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Fragment colour</span>
+<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This fragment shader is a little more complex than before but the main changes are:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Light</span></code> data structure is defined with attributes for the light source type, position, colour and attenuation constants.</p></li>
+<li><p>An array of <code class="docutils literal notranslate"><span class="pre">Light</span></code> structures called <code class="docutils literal notranslate"><span class="pre">uLights</span></code> is defined to hold up to 16 light sources.</p></li>
+<li><p>A uniform integer <code class="docutils literal notranslate"><span class="pre">uNumLights</span></code> is defined to specify the number of active light sources.</p></li>
+<li><p>A function <code class="docutils literal notranslate"><span class="pre">computeLight()</span></code> is defined to calculate the diffuse and specular reflection for a given light source.</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function a for loop iterates over the active light sources and calls the <code class="docutils literal notranslate"><span class="pre">computeLight()</span></code> function for each light source to add its contribution to the fragment colour.</p></li>
+</ul>
+<p>Since this fragment shader not uses an array of light source we need to update the <em><strong>more_lights.js</strong></em> file to define multiple light sources using the <code class="docutils literal notranslate"><span class="pre">Light</span></code> data structure and send them to the shader.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Edit the fragment shader in the <strong>more_lights.js</strong> file to use the new fragment shader above.</p>
+<p>Define an array containing the properties of two light sources.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create vector of light sources</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lightSources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">type</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">position</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">colour</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">direction</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">constant</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">linear</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">quadratic</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">type</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">position</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">9</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">9</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">direction</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">colour</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">constant</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">linear</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">quadratic</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Edit the code where the light source properties are sent to the shader to loop over the <code class="docutils literal notranslate"><span class="pre">lightSources</span></code> array and send each light source’s properties to the shader.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send light source properties to the shader</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uNumLights&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">numLights</span><span class="p">);</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">numLights</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].type`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">type</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].position`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].colour`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">colour</span><span class="p">);</span><span class="w">  </span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].constant`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">constant</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].linear`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">linear</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].quadratic`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">quadratic</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And edit the code where the light sources are drawn to loop over the number of light sources.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Render light sources</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">);</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">numLights</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Calculate model matrix for light source</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">scale</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uView&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uProjection&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">projection</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Send light colour to the shader</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">colour</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Draw light source cube</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">vao</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">36</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have defined two light sources, with an additional yellow light source positioned further back in the scene. The code to send the light source properties to the shader and to draw the light sources has been updated to loop over the number of light sources defined in the <code class="docutils literal notranslate"><span class="pre">lightSources</span></code> array. Refresh your web browser, and you should see the following. Move the camera around the scene to see the effects of the light sources on the cubes.</p>
+<figure class="align-default" id="cubes-multiple-lights-figure">
+<a class="reference internal image-reference" href="../_images/07_cubes_multiple_lights.png"><img alt="../_images/07_cubes_multiple_lights.png" src="../_images/07_cubes_multiple_lights.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 86 </span><span class="caption-text">The cubes lit from two light sources.</span><a class="headerlink" href="#cubes-multiple-lights-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="spotlights">
+<h2>Spotlights<a class="headerlink" href="#spotlights" title="Link to this heading">#</a></h2>
+<p>Our light sources we have in our scene emit light in all directions. A spotlight is a light source that emits light along a specific direction so that only those objects that are within some distance of this vector are illuminated. These are useful for modelling light sources such as flashlights, streetlights, car headlights etc.</p>
+<figure class="align-default" id="spot-light-figure">
+<a class="reference internal image-reference" href="../_images/07_spot_light.svg"><img alt="../_images/07_spot_light.svg" src="../_images/07_spot_light.svg" style="width: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 87 </span><span class="caption-text">A spotlight only illuminates fragments where <span class="math notranslate nohighlight">\(\theta &lt; \phi\)</span>.</span><a class="headerlink" href="#spot-light-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Consider <a class="reference internal" href="#spot-light-figure"><span class="std std-numref">Fig. 87</span></a> that shows a spotlight emitting light in the direction given by the <span class="math notranslate nohighlight">\(\vec{D}\)</span> vector. The <span class="math notranslate nohighlight">\(\vec{L}\)</span> vector points from the light source position to the position of the fragment and the spread of the spotlight is determined by the cutoff angle. If the angle <span class="math notranslate nohighlight">\(\theta\)</span> between <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{D}\)</span> is less than the cutoff angle then the fragment is illuminated by the spotlight.</p>
+<p>The angle between <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{D}\)</span> is related to the dot product of the two vectors by</p>
+<div class="math notranslate nohighlight">
+\[ \cos(\theta) = \vec{L} \cdot \vec{D}. \]</div>
+<p>So to determine if a fragment is illuminated by the spotlight we can calculate <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> and compare it to <span class="math notranslate nohighlight">\(\cos(\textsf{cutoff})\)</span>. If <span class="math notranslate nohighlight">\(\cos(\theta) &lt; \cos(\textsf{cutoff})\)</span> then <span class="math notranslate nohighlight">\(\theta &gt; \textsf{cutoff}\)</span> and the fragment is not illuminated.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add attributes for the light direction vector and the value of <span class="math notranslate nohighlight">\(\cos(\textsf{cutoff})\)</span> to the Light data structure in the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec3</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">cutoff</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">computeLight()</span></code> function, add the following code to turn off the light contribution if the fragment is outside the spotlight cone.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Spotlight</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">spotLight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
+<span class="w">  </span><span class="n">spotLight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">spotLight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And apply the spotlight to the fragment colour calculation.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output fragment colour</span>
+<span class="k">return</span><span class="w"> </span><span class="n">spotlight</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, add the light direction and cutoff attributes to both light sources. In the first light source add the following and comment out the code definining the second light source.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">type</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="nx">direction</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">],</span>
+<span class="nx">cutoff</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="mf">40</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">),</span>
+</pre></div>
+</div>
+<p>Finally, send the additional light source properties to the shader by adding the following code where the other light source properties are sent.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].direction`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">direction</span><span class="p">);</span><span class="w">      </span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].cutoff`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">cutoff</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have changed the first light source to be a spotlight that is pointing downwards and slightly towards the back of the scene. The cutoff angle is set to <span class="math notranslate nohighlight">\(30^\circ\)</span> by calculating <span class="math notranslate nohighlight">\(\cos(30^\circ)\)</span>. The second light source has been switched off by commenting out the code that defines it. Refresh your web browser and you should see the following.</p>
+<figure class="align-default" id="directional-light-harsh-figure">
+<a class="reference internal image-reference" href="../_images/07_cubes_spotlight_harsh.png"><img alt="../_images/07_cubes_spotlight_harsh.png" src="../_images/07_cubes_spotlight_harsh.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 88 </span><span class="caption-text">Cubes lit using a spotlight.</span><a class="headerlink" href="#directional-light-harsh-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Use the keyboard and mouse to move the camera around the cubes and see the effect of the spotlight. You may notice that there is an abrupt cutoff between the region illuminated by the spotlight and the region in darkness. In the real world this doesn’t usually happen as light on this edge gets softened by various effects.</p>
+<p>We can model this softening by gradually reducing the intensity of the light as we approach the cutoff angle. Introducing a new inner cutoff angle that is slightly less than the cutoff angle then we can have full intensity for angles less than the inner cutoff angle and zero intensity for angles greater than the cutoff angle. Between these two angles we can gradually reduce the intensity from 1 to 0.</p>
+<figure class="align-default" id="soft-edge-figure">
+<a class="reference internal image-reference" href="../_images/07_soft_edge.svg"><img alt="../_images/07_soft_edge.svg" src="../_images/07_soft_edge.svg" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 89 </span><span class="caption-text">Intensity value over a range of <span class="math notranslate nohighlight">\(\theta\)</span>.</span><a class="headerlink" href="#soft-edge-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add an attribute for the inner cutoff angle to the Light data structure in the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">innerCutoff</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And in the <code class="docutils literal notranslate"><span class="pre">computeLight()</span></code> function, replace the spotlight code with the following code to soften the edges of the spotlight.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Spotlight</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">spotLight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">epsilon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">innerCutoff</span><span class="p">;</span>
+<span class="w">  </span><span class="n">spotLight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now add the attibute to the light source definitions in the <em><strong>more_lights.js</strong></em> file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">innerCutoff</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="mf">30</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">),</span>
+</pre></div>
+</div>
+<p>And send the additional light source property to the shader by adding the following code where the other light source properties are sent.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="sb">`uLights[</span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">].innerCutoff`</span><span class="p">),</span><span class="w"> </span><span class="nx">lightSources</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">innerCutoff</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have defined an inner cutoff angle of <span class="math notranslate nohighlight">\(25^\circ\)</span> which is slightly less than the cutoff angle of <span class="math notranslate nohighlight">\(30^\circ\)</span>. Refresh your web browser and you should see the following.</p>
+<figure class="align-default" id="spotlight-soft-figure">
+<a class="reference internal image-reference" href="../_images/07_cubes_spotlight_soft.png"><img alt="../_images/07_cubes_spotlight_soft.png" src="../_images/07_cubes_spotlight_soft.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 90 </span><span class="caption-text">The edges of the spotlight have been softened.</span><a class="headerlink" href="#spotlight-soft-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="directional-light">
+<h2>Directional light<a class="headerlink" href="#directional-light" title="Link to this heading">#</a></h2>
+<p>The final light source type we will look at is <strong>directional light</strong>. When a light source is far away the light rays are very close to being parallel. It does not matter where the object is in the view space as all objects are lit from the same direction.</p>
+<figure class="align-default" id="directional-light-figure">
+<a class="reference internal image-reference" href="../_images/07_directional_light.svg"><img alt="../_images/07_directional_light.svg" src="../_images/07_directional_light.svg" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 91 </span><span class="caption-text">Directional lighting</span><a class="headerlink" href="#directional-light-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The lighting calculations are the same as for the other light sources seen above with the exception that we do not need the light source position and we do not apply the attenuation. The light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> is simply the light direction vector negated.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following after we have calculated the light vector in the <code class="docutils literal notranslate"><span class="pre">computeLight()</span></code> function in the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="o">-</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And replace the code used to calculate the attenuation with the following.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Attenuation</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vPosition</span><span class="p">);</span>
+<span class="w">  </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">constant</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">linear</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">quadratic</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the <em><strong>more_lights.js</strong></em> file, add an additional light source to the light sources array.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nx">type</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">position</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">direction</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">colour</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">constant</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">linear</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">quadratic</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">cutoff</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">innerCutoff</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>Finally, uncomment the code defining the other two light sources.</p>
+</div>
+<p>Here we have defined a directional light source with the direction vector <span class="math notranslate nohighlight">\((2, -1, -1)\)</span> which will produce light rays coming down from the top right as we look down the <span class="math notranslate nohighlight">\(z\)</span>-axis. The light source colour has been set to magenta using the RGB values <span class="math notranslate nohighlight">\((1, 0, 1)\)</span>. Refresh your web browser and you should see the following.</p>
+<figure class="align-default" id="cubes-directional-light-figure">
+<a class="reference internal image-reference" href="../_images/07_cubes_directional_light.png"><img alt="../_images/07_cubes_directional_light.png" src="../_images/07_cubes_directional_light.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 92 </span><span class="caption-text">Cubes lit using a point light, spotlight and directional light.</span><a class="headerlink" href="#cubes-directional-light-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<hr class="docutils" />
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Experiment with the positions, colours and material properties of the various light sources to see what effects they have.</p></li>
+<li><p>Use a spotlight to model a flashlight controlled by the user such that the light is positioned at <span class="math notranslate nohighlight">\(\vec{eye}\)</span>, is pointing in the same direction as <span class="math notranslate nohighlight">\(\vec{front}\)</span> and has a spread angle of <span class="math notranslate nohighlight">\(\phi = 15^\circ\)</span>. Turn off all other light sources for extra spookiness.</p></li>
+<li><p>Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using <span class="math notranslate nohighlight">\((x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))\)</span> where <span class="math notranslate nohighlight">\(r\)</span> is the radius <span class="math notranslate nohighlight">\(t\)</span> is some parameter (e.g., time).</p></li>
+<li><p>Add the ability to turn the lights off and on using keyboard input.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
+<p>The video below walks you through these lab materials.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1136,11 +1492,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="08_More_lights.html"
+       href="08_Normal_mapping.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lab 8: More Lights</p>
+        <p class="prev-next-title">Lab 9: Normal Mapping</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1160,11 +1516,18 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phong-s-lighting-model">Phong’s lighting model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambient-lighting">Ambient lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffuse-lighting">Diffuse lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-lighting">Specular lighting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attenuation">Attenuation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-light-sources">Multiple light sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spotlights">Spotlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directional-light">Directional light</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
   </nav></div>
 

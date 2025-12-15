@@ -138,6 +138,23 @@ class Mat4 {
     );
   }
 
+  // rotate(x, y, z, rad) {
+  //   const len = Math.sqrt(x * x + y * y + z * z);
+  //   if (len > 0) {
+  //     x /= len; y /= len; z /= len;
+  //   }
+  //   const c = Math.cos(rad);
+  //   const s = Math.sin(rad);
+  //   const t = 1 - c;
+
+  //   return new Mat4().set(
+  //     t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+  //     t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+  //     t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+  //     0, 0, 0, 1
+  //   );
+  // }
+
   rotate(x, y, z, rad) {
     const len = Math.sqrt(x * x + y * y + z * z);
     if (len > 0) {
@@ -145,13 +162,34 @@ class Mat4 {
     }
     const c = Math.cos(rad);
     const s = Math.sin(rad);
-    const t = 1 - c;
+
+    return new Quaternion(s * x, s * y, s * z, c).matrix();
+  }
+}
+
+// Quaternion class
+class Quaternion {
+  constructor(x = 0, y = 0, z = 0, w = 0) {
+    this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  // Quaternion matrix
+  matrix () {
+    const x = this.x, y = this.y, z = this.z, w = this.w;
+    const s = 2 / (w * w + x * x + y * y + z * z);
+    const xs = x * s, ys = y * s, zs = z * s;
+    const xx = x * xs, xy = x * ys, xz = x * zs;
+    const yy = y * ys, yz = y * zs, zz = z * zs;
+    const xw = w * xs, yw = w * ys, zw = w * zs;
 
     return new Mat4().set(
-      t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
-      t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
-      t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
-      0, 0, 0, 1
+      1 - (yy + zz),  xy + zw,        xz - yw,        0,
+      xy - zw,        1 - (xx + zz),  yz - xw,        0,
+      xz + yw,        yz - xw,        1 - (xx + yy),  0,
+      0,              0,              0,              1
     );
   }
 }

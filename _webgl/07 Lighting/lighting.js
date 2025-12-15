@@ -17,7 +17,6 @@ uniform mat4 uModel;
 uniform mat4 uView;
 uniform mat4 uProjection;
 
-
 void main() {
   gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
 
@@ -47,14 +46,7 @@ in vec3 vPosition;
 out vec4 fragColour;
 
 uniform sampler2D uTexture;
-uniform vec3 uLightPosition;
-uniform vec3 uLightColour;
 uniform vec3 uCameraPosition;
-
-// Attenuation parameters
-uniform float uConstant;
-uniform float uLinear;
-uniform float uQuadratic;
 
 // Material coefficients
 uniform float uKa;
@@ -62,33 +54,85 @@ uniform float uKd;
 uniform float uKs;
 uniform float uShininess;
 
+// Light struct
+struct Light {
+  int type;
+  vec3 position;
+  vec3 colour;
+  vec3 direction;
+  float constant;
+  float linear;
+  float quadratic;
+  float cutoff;
+  float innerCutoff;
+};
+
+// Number of lights
+uniform int uNumLights;
+
+// Array of lights
+uniform Light uLights[16];
+
+// Function to calculate diffuse and specular reflection
+vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
+
+  // Light vector
+  vec3 L = normalize(light.position - vPosition);
+  if (light.type == 3) {
+    L = normalize(-light.direction);
+  }
+
+  // Reflection vector
+  vec3 R = reflect(-L, N);
+
+  // Attenuation
+  float attenuation = 1.0;
+  if (light.type != 3) {
+    float dist = length(light.position - vPosition);
+    attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+  }
+
+  // Ambient reflection
+  vec3 ambient = uKa * objectColour;
+
+  // Spotlight
+  float spotLight = 1.0;
+  if (light.type == 2) {
+    vec3 D = normalize(light.direction);
+    float theta = dot(-L, D);
+    float epsilon = light.cutoff - light.innerCutoff;
+    spotLight = clamp((light.cutoff - theta) / epsilon, 0.0, 1.0);
+  }
+
+  // Diffuse
+  vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
+
+  // Specular
+  vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
+
+  // Output fragment colour
+  return spotLight * attenuation * (ambient + diffuse + specular);
+}
+
+// Main function
 void main() {
 
   // Object colour
   vec4 objectColour = texture(uTexture, vTexCoords);
 
-  // Ambient
-  vec3 ambient = uKa * objectColour.rgb;
-
-  // Diffuse
+  // Lighting vectors
   vec3 N = normalize(vNormal);
-  vec3 L = normalize(uLightPosition - vPosition);
-  vec3 diffuse = uKd * max(dot(L, N), 0.0) * uLightColour * objectColour.rgb;
-
-  // Specular
   vec3 V = normalize(uCameraPosition - vPosition);
-  vec3 R = reflect(-L, N);
-  vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * uLightColour;
-  
-  vec3 H = normalize(L + V);
-  // vec3 specular = uKs * pow(max(dot(N, H), 0.0), uShininess) * uLightColour;
-  
-  // Attenuation
-  float dist = length(uLightPosition - vPosition);
-  float attenuation = 1.0 / (uConstant + uLinear * dist + uQuadratic * dist * dist);
+
+  // Calculate lighting for each light source
+  vec3 result;
+  for (int i = 0; i < 16; i++) {
+    if (i >= uNumLights) break;
+    result += computeLight(uLights[i], N, V, objectColour.rgb);
+  }
 
   // Fragment colour
-  fragColour = vec4(attenuation * (ambient + diffuse + specular), objectColour.a);
+  fragColour = vec4(result, objectColour.a);
 }`;
 
 // Define vertex and fragment shaders for the light source
@@ -132,7 +176,7 @@ function main() {
   // Set the shader program
   gl.useProgram(program);
 
-// Define cube vertices
+  // Define cube vertices
   const vertices = new Float32Array([
     // x  y  z      r  g  b     u  v     nx  ny  nz                   + ------ +
     // front                                                         /|       /|
@@ -189,7 +233,7 @@ function main() {
     30, 31, 32, 33, 34, 35   // top
   ]);
 
-  // Define cube positions (10x10 grid of cubes)
+  // Define cube positions (5x5 grid of cubes)
   const cubePositions = [];
   for (let i = 0; i < 5; i++)  {
     for (let j = 0; j < 5; j++) {
@@ -210,14 +254,45 @@ function main() {
     });
   }
 
-  // Define light source properties
-  const light = {
-    position  : [6, 2, 0],
-    colour    : [1, 1, 1],
-    constant  : 1.0,
-    linear    : 0.1,
-    quadratic : 0.02,
-  }
+  // Create vector of light sources
+  const lightSources = [ 
+    {
+      type        : 2,
+      position    : [6, 2, 0],
+      colour      : [1, 1, 1],
+      direction   : [0, -1, -1],
+      constant    : 1.0,
+      linear      : 0.1,
+      quadratic   : 0.02,
+      cutoff      : Math.cos(40 * Math.PI / 180),
+      innerCutoff : Math.cos(30 * Math.PI / 180),
+    },
+    {
+      type        : 1,
+      position    : [9, 2, -9],
+      direction   : [0, -1, 0],
+      colour      : [1, 1, 0],
+      constant    : 1.0,
+      linear      : 0.1,
+      quadratic   : 0.02,
+      cutoff      : 0,
+      innerCutoff : 0,
+    },
+    {
+      type        : 3,
+      position    : [0, 0, 0],
+      direction   : [2, -1, -1],
+      colour      : [1, 0, 1],
+      constant    : 1.0,
+      linear      : 0.1,
+      quadratic   : 0.02,
+      cutoff      : 0,
+      innerCutoff : 0,
+    },
+  ];
+
+  // Number of lights
+  const numLights = lightSources.length;
 
   // Create VAOs
   const vao = createVao(gl, program, vertices, indices);
@@ -256,15 +331,22 @@ function main() {
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 
-    // Send light source properties to the shader
-    gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), light.position);
-    gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), light.colour);   
-    gl.uniform1f(gl.getUniformLocation(program, "uConstant"), light.constant);
-    gl.uniform1f(gl.getUniformLocation(program, "uLinear"), light.linear);
-    gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
-
     // Send camera position to the shader
     gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye.array);
+
+    // Send light source properties to the shader
+    gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), numLights);
+    for (let i = 0; i < numLights; i++) {
+      gl.uniform1i(gl.getUniformLocation(program, `uLights[${i}].type`), lightSources[i].type);
+      gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].position`), lightSources[i].position);
+      gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].direction`), lightSources[i].direction);
+      gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].colour`), lightSources[i].colour);  
+      gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].constant`), lightSources[i].constant);
+      gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].linear`), lightSources[i].linear);
+      gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].quadratic`), lightSources[i].quadratic);
+      gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].cutoff`), lightSources[i].cutoff);
+      gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].innerCutoff`), lightSources[i].innerCutoff);
+    }
 
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
@@ -287,23 +369,25 @@ function main() {
       gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }
 
-    // Render light source
+    // Render light sources
     gl.useProgram(lightProgram);
 
-    // Calculate model matrix for light source
-    const translate = new Mat4().translate(...light.position);
-    const scale     = new Mat4().scale(0.1, 0.1, 0.1);
-    const model     = translate.multiply(scale);
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
+    for (let i = 0; i < numLights; i++) {
+      // Calculate model matrix for light source
+      const translate = new Mat4().translate(...lightSources[i].position);
+      const scale     = new Mat4().scale(0.1, 0.1, 0.1);
+      const model     = translate.multiply(scale);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
-    // Send light colour to the shader
-    gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), light.colour);
+      // Send light colour to the shader
+      gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
 
-    // Draw light source cube
-    gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+      // Draw light source cube
+      gl.bindVertexArray(vao);
+      gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+    }
 
     // Render next frame
     requestAnimationFrame(render);
