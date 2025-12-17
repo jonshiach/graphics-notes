@@ -81,7 +81,6 @@ function main() {
   gl.bindTexture(gl.TEXTURE_2D, texture2);
   gl.uniform1i(gl.getUniformLocation(program, "uTexture2"), 1);
 
-
   function render() {
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);

@@ -136,8 +136,8 @@ function main() {
   for (let i = 0; i < numCubes; i++) {
     cubes.push({
       position  : cubePositions[i],
-      vector    : [0, 1, 0],
-      angle     : 25 * Math.PI / 180,
+      vector    : [1, 1, 1],
+      angle     : 20 * i * Math.PI / 180,
     });
   }
 

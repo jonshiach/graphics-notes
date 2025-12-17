@@ -18,7 +18,7 @@ The texture is a 2D image where each pixel within the texture, known as a **text
 :::{admonition} Task
 :class: tip
 
-Copy your ***01 Basic Shapes*** folder you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***02 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
+Copy your ***Lab 1 Basic Shapes*** folder you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 2 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
 
 :::
 
@@ -35,7 +35,7 @@ A colourful rectangle.
 
 ## Creating a texture
 
-The first thing we need to do is create a texture in WebGL.
+The first thing we need to do is create a texture in WebGL. We will do this by loading in an image file stored locally on our computer.
 
 :::{admonition} Task
 :class: tip
@@ -89,7 +89,7 @@ Edit the `vertices` array so that the $(u,v)$ coordinates are defined for each v
 ```javascript
 // Define vertices
 const vertices = new Float32Array([
-//  x     y    z       r    g    b      u  v            
+// x    y    z       r    g    b      u  v            
 -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
  0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
  0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
@@ -131,29 +131,20 @@ The next thing we need to do is to update the vertex and fragment shader. The te
 :::{admonition} Task
 :class: tip
 
-Edit the vertex shader source code at the top of the ***textures.js*** file so that it looks like the following
+Add an input and output declaration to the vertex shader.
 
-```c
-#version 300 es
-precision mediump float;
-
-in vec3 aPosition; 
-in vec3 aColour;
+```glsl
 in vec2 aTexCoord;
 
-out vec3 vColour;
+
 out vec2 vTexCoord;
+```
 
-void main() {
-  /// Output vertex coordinates
-  gl_Position = vec4(aPosition, 1.0);
+Then in the `main()` function in the vertex shader add the following.
 
-  // Output vertex colour
-  vColour = aColour;
-
-  // Output texture co-ordinates
-  vTexCoord = aTexCoord;
-}
+```glsl
+// Output texture co-ordinates
+vTexCoord = aTexCoord;
 ```
 
 :::
@@ -165,27 +156,27 @@ The fragment shader needs to read in the texture coordinates of the fragment and
 :::{admonition} Task
 :class: tip
 
-Edit the fragment shader source code so that it looks like the following
+Add the following input declaration to the fragment shader.
 
-```c
-#version 300 es
-precision mediump float;
-
-in vec3 vColour;
+```glsl
 in vec2 vTexCoord;
+```
 
-out vec4 fragColour;
+And add the following uniform declaration before the `main()` function in the fragment shader.
 
+```glsl
 uniform sampler2D uTexture;
+```
 
-void main() {
-  fragColour = texture(uTexture, vTexCoord);
-}
+Then in the `main()` function in the fragment shader edit the code used to determine the fragment colour to the following.
+
+```glsl
+fragColour = texture(uTexture, vTexCoord);
 ```
 
 :::
 
-Here we now have an input of the 2-element vector `vTexCoord` which has been outputted from the vertex shader. A uniform is declared which is a `sampler2D` type called `uTexture`. A uniform is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders which we have done here with our texture. The colour of the fragment is taken from the texture using the `texture()` function which outputs a 4-element RGBA vector.
+Here we have an input of the 2-element vector `vTexCoord` which has been outputted from the vertex shader. This contains the $(u,v)$ coordinates of the fragment which has been calculated by WebGL by interpolating between the three triangle vertices. A uniform is declared which is a `sampler2D` type called `uTexture`. A uniform is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders which we have done here with our texture. The colour of the fragment is taken from the texture using the `texture()` function which outputs a 4-element RGBA vector.
 
 The last thing we need to do is to bind the texture to the uniform in the JavaScript code.
 
@@ -208,6 +199,8 @@ Refresh your web browser, and you should see that we now have applied a texture 
 ```{figure} ../_images/02_mario_texture.png
 :name: mario-texture-figure
 :width: 80%
+
+It's a me, Mario!
 ```
 
 ---
@@ -289,7 +282,7 @@ Change the texture filtering back to bilinear interpolation for both minificatio
 
 :::
 
-Refresh your web browser, and you should see the image shown in {numref}`mario-linear-figure`. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment.
+Refresh your web browser, and you should see the image shown in {numref}`mario-linear-figure`. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment. Our texture mapped rectangle looks slightly blurry since we are using a low resolution texture.
 
 ```{figure} ../_images/02_mario_linear.png
 :width: 80%
@@ -393,7 +386,7 @@ const vertices = new Float32Array([
 
 :::
 
-Refresh your web browser, and you see something like the followin.
+Refresh your web browser, and you see something like the following.
 
 ```{figure} ../_images/02_mario_repeat.png
 :width: 500

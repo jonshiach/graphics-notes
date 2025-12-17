@@ -195,9 +195,8 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -435,10 +434,10 @@ document.write(`
 <section id="setup-html-and-javascript-files">
 <h2>Setup HTML and JavaScript Files<a class="headerlink" href="#setup-html-and-javascript-files" title="Link to this heading">#</a></h2>
 <p>To start with we need two files, an HTML file that includes a canvas element which acts as a rendering surface for WebGL, and JavaScript file that controls everything that happens inside the canvas using the WebGL API.</p>
-<p>These notes use a code-along principle in that as you work through these notes you will be tasked to create files, enter text and run code (the first of these tasks is below). Through working this way you will build an understanding of the concepts and techniques used in computer graphics. Where you are asked to enter code into your files, try to avoid the temptation of simply copying and pasting code, instead type out the code. Whilst this does have the risk of making typos and creating bugs, it does have an effect of helping you understand what each line of code is doing.</p>
+<p>These notes use a code-along principle in that as you work through these notes you will be tasked to create files, enter text and run code. Through working this way you will build an understanding of the concepts and techniques used in computer graphics. Where you are asked to enter code into your files, try to avoid the temptation of simply copying and pasting code, instead type out the code. Whilst this does have the risk of making typos and creating bugs, it does have an effect of helping you understand what each line of code is doing.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>01 Basic Shapes</strong></em> inside which create an HTML file called <em><strong>index.html</strong></em>.</p>
+<p>Create a folder called <em><strong>Lab 1 Basic Shapes</strong></em> inside which create an HTML file called <em><strong>index.html</strong></em>.</p>
 <p>Open the <em><strong>index.html</strong></em> in Visual Studio Code (this is installed on PCs in the Dalton Building).</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;!doctype html&gt;
 
@@ -468,7 +467,7 @@ document.write(`
 </div>
 <p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank">Live Server</a> extension for Visual Studio Code and click on ‘Go Live’ in the status bar (bottom right-hand corner).</p>
 </div>
-<p>If everything has gone to plan you should be looking at a web browser with a page titled ‘Lab 1 - Basic Shapes’ that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.</p>
+<p>If everything has gone to plan you should be looking at a web browser with a page titled ‘Lab 1 - Basic Shapes in WebGL’ that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.</p>
 <figure class="align-default" id="canvas-figure">
 <a class="reference internal image-reference" href="../_images/01_Canvas.png"><img alt="../_images/01_Canvas.png" src="../_images/01_Canvas.png" style="width: 80%;" />
 </a>
@@ -478,7 +477,7 @@ document.write(`
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Inside your <em><strong>01 Basic Shapes</strong></em> folder, create a JavaScript file <em><strong>basic_shapes.js</strong></em> that contains the following.</p>
+<p>Inside your <em><strong>Lab 1 Basic Shapes</strong></em> folder, create a JavaScript file <em><strong>basic_shapes.js</strong></em> that contains the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Main function</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
@@ -498,22 +497,19 @@ document.write(`
 </div>
 </div>
 <p>Here we have created our main function <code class="docutils literal notranslate"><span class="pre">main()</span></code> inside which we have set up the WebGL canvas. Some functions used here are defined below</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.viewport(0,</span> <span class="pre">0,</span> <span class="pre">canvas.width,</span> <span class="pre">canvas.height);</span></code></p>
-<p>Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes). Here our viewport fills the <code class="docutils literal notranslate"><span class="pre">&lt;canvas&gt;</span></code> element.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.clearColor(0.2,</span> <span class="pre">0.2,</span> <span class="pre">0.2,</span> <span class="pre">1.0);</span></code></p>
-<p>Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.clear(gl.COLOR_BUFFER_BIT);</span></code></p>
-<p>: Clears the specified buffer, in this case it’s the colour buffer.</p>
-<p>Refresh the browser window and you should still see that the horrible lurid green background. But hang on, haven’t we defined our background colour to be dark grey? The reason for this is that we haven’t embedded the JavaScript file into our HTML file.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.viewport(0,</span> <span class="pre">0,</span> <span class="pre">canvas.width,</span> <span class="pre">canvas.height);</span></code>: Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes). Here our viewport fills the <code class="docutils literal notranslate"><span class="pre">&lt;canvas&gt;</span></code> element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.clearColor(0.2,</span> <span class="pre">0.2,</span> <span class="pre">0.2,</span> <span class="pre">1.0);</span></code>: Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.clear(gl.COLOR_BUFFER_BIT);</span></code>: Clears the specified buffer, in this case it’s the colour buffer.</p></li>
+</ul>
+<p>Refresh the browser window, and you should still see that the horrible lurid green background. But hang on, haven’t we defined our background colour to be dark grey? The reason for this is that we haven’t embedded the JavaScript file into our HTML file.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag near the bottom of the <em><strong>index.html</strong></em> file so that it looks like the following.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
-  &lt;body&gt;
-    &lt;canvas id=&quot;canvasId&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
-    &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
-  &lt;/body&gt;
-...
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;body&gt;
+  &lt;canvas id=&quot;canvasId&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
+  &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
 </pre></div>
 </div>
 </div>
@@ -580,14 +576,12 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 </div>
 <p>The commands used here are explained below</p>
-<p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">vbo</span> <span class="pre">=</span> <span class="pre">gl.createBuffer();</span></code></p>
-<p>Creates a buffer object on the GPU.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">vbo);</span></code></p>
-<p>Binds our VBO to an array buffer so that WebGL knows where to send the data. The word <em>bind</em> in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.bufferData(gl.ARRAY_BUFFER,</span> <span class="pre">vertices,</span> <span class="pre">gl.STATIC_DRAW);</span></code></p>
-<p>Copies the data from the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array into the VBO which is the currently bound buffer. The <code class="docutils literal notranslate"><span class="pre">gl.STATIC_DRAW</span></code> input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">null);</span></code></p>
-<p>Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">vbo</span> <span class="pre">=</span> <span class="pre">gl.createBuffer();</span></code>: Creates a buffer object on the GPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">vbo);</span></code>: Binds our VBO to an array buffer so that WebGL knows where to send the data. The word <em>bind</em> in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bufferData(gl.ARRAY_BUFFER,</span> <span class="pre">vertices,</span> <span class="pre">gl.STATIC_DRAW);</span></code>: Copies the data from the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array into the VBO which is the currently bound buffer. The <code class="docutils literal notranslate"><span class="pre">gl.STATIC_DRAW</span></code> input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">null);</span></code> Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.</p></li>
+</ul>
 </section>
 <section id="write-and-compile-the-vertex-shader">
 <span id="lab01-vertex-shader"></span><h3>Write and Compile the Vertex Shader<a class="headerlink" href="#write-and-compile-the-vertex-shader" title="Link to this heading">#</a></h3>
@@ -604,10 +598,12 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </pre></div>
 </div>
 <p>This code is explained below</p>
-<p><code class="docutils literal notranslate"><span class="pre">#version</span> <span class="pre">300</span> <span class="pre">es</span></code> – Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.</p>
-<p><code class="docutils literal notranslate"><span class="pre">precision</span> <span class="pre">mediump</span> <span class="pre">float;</span></code> – Sets the default float precision to medium (16-bit).</p>
-<p><code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">vec3</span> <span class="pre">aPosition;</span></code> – Tells the shader that we are inputting a 3-element vector for the vertex position (the <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> is short for attribute).</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl_Position</span> <span class="pre">=</span> <span class="pre">vec4(aPosition,</span> <span class="pre">1.0);</span></code> – Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it’s a 4-element vector will be covered later when we look at transformations). The <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> variable is a required output of every vertex shader.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#version</span> <span class="pre">300</span> <span class="pre">es</span></code>: Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">precision</span> <span class="pre">mediump</span> <span class="pre">float;</span></code>: Sets the default float precision to medium (16-bit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">vec3</span> <span class="pre">aPosition;</span></code>: Tells the shader that we are inputting a 3-element vector for the vertex position (the <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> is short for attribute).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl_Position</span> <span class="pre">=</span> <span class="pre">vec4(aPosition,</span> <span class="pre">1.0);</span></code>: Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it’s a 4-element vector will be covered later when we look at transformations). The <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> variable is a required output of every vertex shader.</p></li>
+</ul>
 <p>The simplest way of entering shader code into our JavaScript file is to define it as a multiline string.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
@@ -735,10 +731,12 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 </div>
 <p>The functions used here are explained below;</p>
-<p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">positionLocation</span> <span class="pre">=</span> <span class="pre">gl.getAttribLocation(program,</span> <span class="pre">'aPosition');</span></code> – Gets the location of the <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> attribute from the WebGL shader program.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.enableVertexAttribArray(0);</span></code> – Enables a vertex attribute with location <code class="docutils literal notranslate"><span class="pre">0</span></code> so that WebGL knows to read data from the VBO and pass it to the vertex shader.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.Array_BUFFER,</span> <span class="pre">vbo);</span></code> – Make the VBO the currently active buffer.</p>
-<p><code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(positionLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code> – Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution <code class="docutils literal notranslate"><span class="pre">0</span></code>. The inputs are explained in the table below.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">positionLocation</span> <span class="pre">=</span> <span class="pre">gl.getAttribLocation(program,</span> <span class="pre">'aPosition');</span></code>: Gets the location of the <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> attribute from the WebGL shader program.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.enableVertexAttribArray(0);</span></code>: Enables a vertex attribute with location <code class="docutils literal notranslate"><span class="pre">0</span></code> so that WebGL knows to read data from the VBO and pass it to the vertex shader.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.Array_BUFFER,</span> <span class="pre">vbo);</span></code>: Make the VBO the currently active buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(positionLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>: Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution <code class="docutils literal notranslate"><span class="pre">0</span></code>. The inputs are explained in the table below.</p></li>
+</ul>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>Input</p></th>
@@ -750,19 +748,19 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <td class="text-left"><p>Attribute location. We stored this in the <code class="docutils literal notranslate"><span class="pre">positionLocation</span></code> variable using the <code class="docutils literal notranslate"><span class="pre">gl.getAttribLocation()</span></code> function.</p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p>size</p></td>
-<td class="text-left"><p>Number of components per vertex, We have 3D <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates, so this is 3.</p></td>
+<td class="text-left"><p>Number of components per vertex, We have 3D <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates, so this is <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p>type</p></td>
-<td class="text-left"><p>Data type. We are using floats.</p></td>
+<td class="text-left"><p>Data type. We are using floats so this is <code class="docutils literal notranslate"><span class="pre">gl_FLOAT</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p>normalized</p></td>
-<td class="text-left"><p>Whether integer values should be mapped to <span class="math notranslate nohighlight">\([0, 1]\)</span> or <span class="math notranslate nohighlight">\([-1, 1]\)</span>. Our vertex co-ordinates are in NDC, so we don’t need to do this.</p></td>
+<td class="text-left"><p>Whether integer values should be mapped to <span class="math notranslate nohighlight">\([0, 1]\)</span> or <span class="math notranslate nohighlight">\([-1, 1]\)</span>. Our vertex co-ordinates are in NDC, so we don’t need to do this, so we set this to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p>stride</p></td>
-<td class="text-left"><p>Number of bytes between first attribute of each vertex. Our data is tightly packed, so we can set the stride to 0, if the array buffer contained other data, e.g., colours, then we would need to determine the number of bytes between the first attribute, e.g., the <span class="math notranslate nohighlight">\(x\)</span> co-ordinates.</p></td>
+<td class="text-left"><p>Number of bytes between first attribute of each vertex. Our data is tightly packed, so we can set the stride to <code class="docutils literal notranslate"><span class="pre">0</span></code>, if the array buffer contained other data, e.g., colours, then we would need to determine the number of bytes between the first attribute, e.g., the <span class="math notranslate nohighlight">\(x\)</span> co-ordinates.</p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p>offset</p></td>
-<td class="text-left"><p>Number of bytes from the start of the buffer the attribute of the first vertex. Our first vertex co-ordinate is the first element in the buffer, so this is 0.</p></td>
+<td class="text-left"><p>Number of bytes from the start of the buffer the attribute of the first vertex. Our first vertex co-ordinate is the first element in the buffer, so this is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -805,7 +803,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Looking at our <code class="docutils literal notranslate"><span class="pre">main()</span></code> function we see that the code to compile and link the shaders is very similar for the vertex and fragment shaders. In the spirit of DRY (Do not Repeat Yourself), we will now write some utility functions to simplify the code.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a new JavaScript files called <em><strong>webGLUtils.js</strong></em> within the <em><strong>01 Basic Shapes</strong></em> folder and enter the following code.</p>
+<p>Create a new JavaScript files called <em><strong>webGLUtils.js</strong></em> within the <em><strong>Lab 1 Basic Shapes</strong></em> folder and enter the following code.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Initialize WebGL context</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl2&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl&#39;</span><span class="p">);</span>
@@ -934,7 +932,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </pre></div>
 </div>
 </div>
-<p>Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas (<a class="reference internal" href="#skewed-triangle-figure"><span class="std std-ref">Oops, something has gone wrong.</span></a>). The reason why its skewed is that when we told WebGL how to read the vertex buffer using <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(colourLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>. This means that WebGL is expected no gaps between the vertex co-ordinate data since the <code class="docutils literal notranslate"><span class="pre">stride</span></code> input (the second to last input) is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so it thinks the 3 vertex co-ordinates are <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span>.</p>
+<p>Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas (<a class="reference internal" href="#skewed-triangle-figure"><span class="std std-numref">Fig. 4</span></a>). The reason why its skewed is that when we told WebGL how to read the vertex buffer using <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(colourLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>. This means that WebGL is expected no gaps between the vertex co-ordinate data since the stride input (the second to last input) is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so it thinks the 3 vertex co-ordinates are <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span>.</p>
 <figure class="align-default" id="skewed-triangle-figure">
 <a class="reference internal image-reference" href="../_images/01_skewed_triangle.png"><img alt="../_images/01_skewed_triangle.png" src="../_images/01_skewed_triangle.png" style="width: 80%;" />
 </a>
@@ -942,7 +940,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p><span class="caption-number">Fig. 4 </span><span class="caption-text">Oops, something has gone wrong.</span><a class="headerlink" href="#skewed-triangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>This is where the stride input for the <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer()</span></code> function comes in. Stride is the number of bytes from the start of the attribute (in our case the <span class="math notranslate nohighlight">\(x\)</span> vertex co-ordinate) for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the <span class="math notranslate nohighlight">\((x, y, z)\)</span> values and 3 for the RGB values.</p>
+<p>The stride is the number of bytes from the start of the attribute, in our case the <span class="math notranslate nohighlight">\(x\)</span> vertex co-ordinate, for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the <span class="math notranslate nohighlight">\((x, y, z)\)</span> values and 3 for the RGB values.</p>
 <figure class="align-default" id="stride-offset-figure">
 <a class="reference internal image-reference" href="../_images/01_stride_offset.svg"><img alt="../_images/01_stride_offset.svg" src="../_images/01_stride_offset.svg" style="width: 70%;" />
 </a>
@@ -1042,7 +1040,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </pre></div>
 </div>
 </div>
-<p>This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two squares, we change the 3 to a 6 in the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> function.</p>
+<p>This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two triangles, we change the 3 to a 6 in the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> function.</p>
 <figure class="align-default" id="colourful-shapes-figure">
 <a class="reference internal image-reference" href="../_images/01_triangle_and_square.png"><img alt="../_images/01_triangle_and_square.png" src="../_images/01_triangle_and_square.png" style="width: 80%;" />
 </a>
@@ -1105,7 +1103,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function should not look like the following.</p>
+<p>Your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function should not look something like the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="c1">// Setup WebGL</span>

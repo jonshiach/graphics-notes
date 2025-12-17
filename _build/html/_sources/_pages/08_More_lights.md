@@ -7,7 +7,7 @@ In [Lab 7: Lighting](lighting-section) we saw how to add a single point light so
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***07 Lighting*** folder, rename it ***08 More Lights***, rename the file ***lighting.js*** to ***more_lights.js*** and change ***index.html*** so that the page title is "Lab 8 - More Lights" and it uses the ***more_lights.js*** file.
+Create a copy of your ***Lab 7 Lighting*** folder, rename it ***Lab 8 More Lights***, rename the file ***lighting.js*** to ***more_lights.js*** and change ***index.html*** so that the page title is "Lab 8 - More Lights" and it uses the ***more_lights.js*** file.
 :::
 
 Open the ***index.html*** file in a live server to check everything is working as expected.

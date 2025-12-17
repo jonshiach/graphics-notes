@@ -1,10 +1,10 @@
 (normal-mapping-section)=
 
-# Lab 9: Normal Mapping
+# Lab 8: Normal Mapping
 
 In [8. Lighting](lighting-section) we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
 
-```{figure} ../_images/09_normal_mapping.svg
+```{figure} ../_images/08_normal_mapping.svg
 :width: 600
 
 Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.
@@ -12,7 +12,7 @@ Normal mapping applies a texture of normals for each fragment giving the appeara
 
 A **normal map** is a texture where the RGB colour values of each textel is used for the normal vector $\mathbf{n} = (n_x, n_y, n_z)$ where $n_x$, $n_y$ and $n_z$ values are determined by the red, green and blue colours values respectively ({numref}`normal-map-figure`).
 
-```{figure} ../_images/09_normal_map.svg
+```{figure} ../_images/08_normal_map.svg
 :width: 400
 :name: normal-map-figure
 
@@ -23,7 +23,7 @@ Note that since the OpenGL co-ordinate system has the $z$-axis pointing outwards
 
 Compile and run the project **Lab09_Normal_maps** and you will see that we have the scene used at the end of [8. Lighting](lighting-section) with the teapots lit using two point lights, a spotlight and a directional light.
 
-```{figure} ../_images/09_teapots.png
+```{figure} ../_images/08_teapots.png
 :width: 500
 ```
 
@@ -39,7 +39,7 @@ A Light class has been created to handle the light sources. Take a look at the `
 
 We have already seen in [6. 3D worlds](3D-worlds-section) that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the **tangent space**. The tangent space is a 3D space where vectors are defined in terms of three vectors: **tangent**, **bitangent** and **normal** vectors ({numref}`bitangent-vector-figure`).
 
-```{figure} ../_images/09_bitangent.svg
+```{figure} ../_images/08_bitangent.svg
 :name: bitangent-vector-figure
 :width: 300
 
@@ -52,7 +52,7 @@ Normal, tangent and the bitangent vectors.
 
 There are an infinite number of vectors on a plane that is perpendicular to the normal vector so we have a choice for the tangent and bitangent vectors. A natural choice is to use vectors that point along the edges of the normal map, we know these are perpendicular and this also means we are consistent for neighbouring triangles.
 
-```{figure} ../_images/09_TBN.svg
+```{figure} ../_images/08_TBN.svg
 :width: 300
 :name: TBN-figure
 
@@ -61,7 +61,7 @@ The tangent space is defined by the tangent, bitangent and normal vectors.
 
 The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. 
 
-```{figure} ../_images/09_UV_deltas.svg
+```{figure} ../_images/08_UV_deltas.svg
 :width: 800
 :name: UV-deltas-figure
 
@@ -358,7 +358,7 @@ teapot.addTexture("../assets/diamond_normal.png", "normal");
 
 Compile and run the program and you should see the following.
 
-```{figure} ../_images/09_normal_map.png
+```{figure} ../_images/08_normal_map.png
 :width: 500
 :name: 09-normal-map-figure
 
@@ -367,7 +367,7 @@ Normal map applied to teapot objects.
 
 The surfaces of the teapots which are smooth now have the appearance of bumpy diamond plate simply by getting the normal vectors from a texture and performing the lighting calculations in the tangent space. {numref}`09-normal-map-closeup-figure` shows a closeup of the surface so we can see the detail.
 
-```{figure} ../_images/09_normal_map_closeup.png
+```{figure} ../_images/08_normal_map_closeup.png
 :width: 500
 :name: 09-normal-map-closeup-figure
 
@@ -382,7 +382,7 @@ In the close up view of the normal mapped teapot in {numref}`09-normal-map-close
 
 When a vertex is shared by multiple triangles the 3D modelling software (e.g., Blender) calculates a single normal vector for the vertex by averaging of the normal vectors for the triangles ({numref}`averaged-normal-figure`). This saves memory and ensures that there is a smooth transition between the normal vectors across the surface. 
 
-```{figure} ../_images/09_averaged_normal.svg
+```{figure} ../_images/08_averaged_normal.svg
 :width: 350
 :name: averaged-normal-figure
 
@@ -391,7 +391,7 @@ The vertex normal is the average of the normal of the triangles sharing that ver
 
 A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation {eq}`TB-equation` will not give an orthogonal set of vectors. We can get around this problem by **re-orthogonalising** the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.
 
-```{figure} ../_images/09_reorthogonalise_T.svg
+```{figure} ../_images/08_reorthogonalise_T.svg
 :width: 300
 :name: reorthogonalise-T-figure
 
@@ -414,7 +414,7 @@ mat3 TBN   = transpose(mat3(t, b, n));
 
 Compile and run the code once against and you should see a screen similar to the one below.
 
-```{figure} ../_images/09_normal_map_orthogonalised.png
+```{figure} ../_images/08_normal_map_orthogonalised.png
 :width: 500
 :name: 09-normal-map-orthogonalised-figure
 
@@ -432,7 +432,7 @@ In addition to diffuse (texture) and normal maps we can also apply a **specular 
 `````{grid}
 
 ````{grid-item}
-```{figure} ../_images/09_stones_diffuse.png
+```{figure} ../_images/08_stones_diffuse.png
 :name: stones-diffuse-map-figure
 
 Diffuse map
@@ -440,7 +440,7 @@ Diffuse map
 ````
 
 ````{grid-item}
-```{figure} ../_images/09_stones_normal.png
+```{figure} ../_images/08_stones_normal.png
 :name: stones-normal-map-figure
 
 Normal map
@@ -448,7 +448,7 @@ Normal map
 ````
 
 ````{grid-item}
-```{figure} ../_images/09_stones_specular.png
+```{figure} ../_images/08_stones_specular.png
 :name: stones-specular-map-figure
 
 Specular map
@@ -488,7 +488,7 @@ if (objects[i].name == "floor")
 
 Compile and run the program and you should see a scene resembling the following.
 
-```{figure} ../_images/09_floor_no_specular.png
+```{figure} ../_images/08_floor_no_specular.png
 :width: 500
 :name: stone-floor-no-specular-figure
 
@@ -517,7 +517,7 @@ vec3 specular   = ks * lightColour * pow(cosAlpha, Ns) * vec3(texture(specularMa
 
 Compile and run the program and now you will notice that the mortar between the stones no longer have specular highlights.
 
-```{figure} ../_images/09_floor_specular.png
+```{figure} ../_images/08_floor_specular.png
 :width: 500
 :name: stone-floor-specular-figure
 
@@ -528,7 +528,7 @@ Stone floor with specular map applied.
 
 We may not always want to apply a normal map or specular map to an object. If you look at your teapots after applying the specular map for the floor you can see that it has also been applied to the teapot.
 
-```{figure} ../_images/09_teapot_specular.png
+```{figure} ../_images/08_teapot_specular.png
 :width: 500
 :name: teapot-specular-map-figure
 
@@ -551,7 +551,7 @@ teapot.addTexture("../assets/neutral_specular.png", "specular");
 
 Compile and run the program and you should see the teapot no longer has the floor specular map applied to it.
 
-```{figure} ../_images/09_neutral_map.png
+```{figure} ../_images/08_neutral_map.png
 :width: 500
 :name: teapot-neutral-map-figure
 
@@ -563,19 +563,19 @@ A neutral specular map applied to the teapot.
 
 1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at $(0, 4, -5)$, scale it up by a factor of 5 in the $x$ and $z$ directions and rotate it $90^\circ$ about the $x$-axis. Apply the diffuse map **assets/bricks_diffuse.png**.
 
-```{figure} ../_images/09_ex1.png
+```{figure} ../_images/08_ex1.png
 :width: 500
 ```
 
 2. Apply the normal map **assets/bricks_normal.png** to the wall object.
 
-```{figure} ../_images/09_ex2.png
+```{figure} ../_images/08_ex2.png
 :width: 500
 ```
 
 3. Apply the specular map **assets/bricks_specular.png** to the wall object.
 
-```{figure} ../_images/09_ex3.png
+```{figure} ../_images/08_ex3.png
 :width: 500
 ```
 ---

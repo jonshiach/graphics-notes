@@ -83,8 +83,7 @@ vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
   }
 
   // Reflection vector
-  vec3 R = reflect(-L, N);
-
+  vec3 R = normalize(2.0 * dot(L, N) * N - L);
   // Attenuation
   float attenuation = 1.0;
   if (light.type != 3) {
@@ -257,7 +256,7 @@ function main() {
   // Create vector of light sources
   const lightSources = [ 
     {
-      type        : 2,
+      type        : 1,
       position    : [6, 2, 0],
       colour      : [1, 1, 1],
       direction   : [0, -1, -1],

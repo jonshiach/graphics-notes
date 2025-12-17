@@ -7,7 +7,7 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***06 Moving the Camera*** folder, rename it ***07 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" it uses ***lighting.js***.
+Create a copy of your ***Lab 6 Moving the Camera*** folder, rename it ***Lab 7 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 7 - Lighting" it uses ***lighting.js***.
 :::
 
 To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.
@@ -15,7 +15,7 @@ To help demonstrate the effects of lighting on a scene we are going to need more
 :::{admonition} Task
 :class: tip
 
-Change the definition of the cubes to the following.
+In the ***lighting.js*** file, change the definition of the cubes to the following.
 
 ```javascript
 // Define cube positions (5x5 grid of cubes)
@@ -599,7 +599,7 @@ The light vector is reflected about the normal vector.
 If $\vec{n}$ and $\vec{L}$ are unit vectors then the $\vec{R}$ vector is calculated using
 
 $$ \begin{align*}
-    \vec{R} = - \vec{L} + 2 (\vec{L} \cdot \vec{n}) \vec{n}
+    \vec{R} = \operatorname{normalize}(2 (\vec{L} \cdot \vec{n}) \vec{n} - \vec{L}).
 \end{align*} $$
 
 If you are interested in the derivation of this formula, click on the dropdown below.
@@ -643,7 +643,7 @@ Calculating the reflection vector $\vec{R}$.
 
 If $\vec{n}$ and $\vec{L}$ are unit vectors, then the reflection vector $\vec{R}$ can be calculated by reversing $\vec{L}$ and adding the two projections, $\operatorname{proj}_{\vec{n}} \vec{L} = (\vec{L} \cdot \vec{n}) \vec{n}$
 
-$$ \vec{R} = - \vec{L} + 2 (\vec{L} \cdot \vec{n}) \vec{n} $$
+$$ \vec{R} = 2 (\vec{L} \cdot \vec{n}) \vec{n} - \vec{L}$$
 ````
 
 For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. This is determined by the angle $\phi$ between the $\vec{R}$ vector and the $\vec{V}$ vector. The closer the viewing vector is to the reflection vector, the smaller the value of $\phi$ will be and the more of the light will be reflected towards the camera.
@@ -708,7 +708,7 @@ And add code to calculate the specular lighting in the `main()` function.
 ```glsl
 // Specular
 vec3 V = normalize(uCameraPosition - vPosition);
-vec3 R = reflect(-L, N);
+vec3 R = normalize(2.0 * dot(L, N) * N - L);
 vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * uLightColour;
 
 // Fragment colour
@@ -875,7 +875,7 @@ vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 L = normalize(light.position - vPosition);
 
   // Reflection vector
-  vec3 R = reflect(-L, N);
+  vec3 R = normalize(2.0 * dot(L, N) * N - L);
 
   // Attenuation
   float dist = length(light.position - vPosition);

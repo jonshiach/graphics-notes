@@ -107,4 +107,51 @@ class Mat4 {
     }
     return new Mat4().set(...c);
   }
+
+  // Transformation matrices
+  translate(x, y, z) {
+    return new Mat4().set(
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      x, y, z, 1
+    );
+  }
+
+  scale(x, y, z) {
+    return new Mat4().set(
+      x, 0, 0, 0,
+      0, y, 0, 0,
+      0, 0, z, 0,
+      0, 0, 0, 1
+    );
+  }
+
+  rotateZ(rad) {
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    return new Mat4().set(
+      c,  s, 0, 0,
+      -s, c, 0, 0,
+      0,  0, 1, 0,
+      0,  0, 0, 1
+    );
+  }
+
+  rotate(x, y, z, rad) {
+    const len = Math.sqrt(x * x + y * y + z * z);
+    if (len > 0) {
+      x /= len; y /= len; z /= len;
+    }
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    const t = 1 - c;
+
+    return new Mat4().set(
+      t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+      t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+      t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+      0, 0, 0, 1
+    );
+  }
 }

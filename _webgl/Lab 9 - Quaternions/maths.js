@@ -160,8 +160,8 @@ class Mat4 {
     if (len > 0) {
       x /= len; y /= len; z /= len;
     }
-    const c = Math.cos(rad);
-    const s = Math.sin(rad);
+    const c = Math.cos(0.5 * rad);
+    const s = Math.sin(0.5 * rad);
 
     return new Quaternion(s * x, s * y, s * z, c).matrix();
   }
@@ -179,17 +179,33 @@ class Quaternion {
   // Quaternion matrix
   matrix () {
     const x = this.x, y = this.y, z = this.z, w = this.w;
-    const s = 2 / (w * w + x * x + y * y + z * z);
-    const xs = x * s, ys = y * s, zs = z * s;
-    const xx = x * xs, xy = x * ys, xz = x * zs;
-    const yy = y * ys, yz = y * zs, zz = z * zs;
-    const xw = w * xs, yw = w * ys, zw = w * zs;
+    const x2 = x + x,  y2 = y + y,  z2 = z + z;
+    const xx = x * x2, yy = y * y2, zz = z * z2;
+    const xy = x * y2, xz = x * z2, xw = w * x2;
+    const yz = y * z2, yw = w * y2, zw = w * z2;
 
     return new Mat4().set(
-      1 - (yy + zz),  xy + zw,        xz - yw,        0,
-      xy - zw,        1 - (xx + zz),  yz - xw,        0,
-      xz + yw,        yz - xw,        1 - (xx + yy),  0,
+      1 - yy - zz,    xy + zw,        xz - yw,        0,
+      xy - zw,        1 - xx - zz,    yz + xw,        0,
+      xz + yw,        yz - xw,        1 - xx - yy,    0,
       0,              0,              0,              1
+    );
+  }
+
+  // Euler to quaternion
+  static fromEuler(pitch, yaw, roll) {
+    const cp = Math.cos(0.5 * pitch);
+    const sp = Math.sin(0.5 * pitch);
+    const cy = Math.cos(0.5 * yaw);
+    const sy = Math.sin(0.5 * yaw);
+    const cr = Math.cos(0.5 * roll);
+    const sr = Math.sin(0.5 * roll);
+
+    return new Quaternion(
+      cy * cp * cr + sy * sp * sr,
+      cy * cp * sr - sy * sp * cr,
+      cy * sp * cr + sy * cp * sr,
+      sy * cp * cr - cy * sp * sr
     );
   }
 }

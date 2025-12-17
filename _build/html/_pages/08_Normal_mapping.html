@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lab 9: Normal Mapping &#8212; Computer Graphics</title>
+    <title>Lab 8: Normal Mapping &#8212; Computer Graphics</title>
   
   
   
@@ -195,7 +195,7 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 8: Normal Mapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
@@ -386,7 +386,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lab 9: Normal Mapping</h1>
+    <h1>Lab 8: Normal Mapping</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -423,28 +423,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lab-9-normal-mapping">
-<span id="normal-mapping-section"></span><h1>Lab 9: Normal Mapping<a class="headerlink" href="#lab-9-normal-mapping" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-8-normal-mapping">
+<span id="normal-mapping-section"></span><h1>Lab 8: Normal Mapping<a class="headerlink" href="#lab-8-normal-mapping" title="Link to this heading">#</a></h1>
 <p>In <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">8. Lighting</span></a> we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don’t get the benefits of highlights and shadow. <strong>Normal mapping</strong> is technique that uses a <a class="reference internal" href="02_Textures.html#textures-section"><span class="std std-ref">texture map</span></a> to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.</p>
 <figure class="align-default" id="id2">
-<a class="reference internal image-reference" href="_images/09_normal_mapping.svg"><img alt="_images/09_normal_mapping.svg" src="_images/09_normal_mapping.svg" style="width: 600px;" />
+<a class="reference internal image-reference" href="../_images/08_normal_mapping.svg"><img alt="../_images/08_normal_mapping.svg" src="../_images/08_normal_mapping.svg" style="width: 600px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 93 </span><span class="caption-text">Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 94 </span><span class="caption-text">Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>A <strong>normal map</strong> is a texture where the RGB colour values of each textel is used for the normal vector <span class="math notranslate nohighlight">\(\mathbf{n} = (n_x, n_y, n_z)\)</span> where <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span> and <span class="math notranslate nohighlight">\(n_z\)</span> values are determined by the red, green and blue colours values respectively (<a class="reference internal" href="#normal-map-figure"><span class="std std-numref">Fig. 94</span></a>).</p>
+<p>A <strong>normal map</strong> is a texture where the RGB colour values of each textel is used for the normal vector <span class="math notranslate nohighlight">\(\mathbf{n} = (n_x, n_y, n_z)\)</span> where <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span> and <span class="math notranslate nohighlight">\(n_z\)</span> values are determined by the red, green and blue colours values respectively (<a class="reference internal" href="#normal-map-figure"><span class="std std-numref">Fig. 95</span></a>).</p>
 <figure class="align-default" id="normal-map-figure">
-<a class="reference internal image-reference" href="_images/09_normal_map.svg"><img alt="_images/09_normal_map.svg" src="_images/09_normal_map.svg" style="width: 400px;" />
+<a class="reference internal image-reference" href="../_images/08_normal_map.svg"><img alt="../_images/08_normal_map.svg" src="../_images/08_normal_map.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 94 </span><span class="caption-text">The RBG values of a normal map give the values of the normal vectors.</span><a class="headerlink" href="#normal-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 95 </span><span class="caption-text">The RBG values of a normal map give the values of the normal vectors.</span><a class="headerlink" href="#normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note that since the OpenGL co-ordinate system has the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance.</p>
 <p>Compile and run the project <strong>Lab09_Normal_maps</strong> and you will see that we have the scene used at the end of <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">8. Lighting</span></a> with the teapots lit using two point lights, a spotlight and a directional light.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/09_teapots.png"><img alt="_images/09_teapots.png" src="_images/09_teapots.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_teapots.png"><img alt="../_images/08_teapots.png" src="../_images/08_teapots.png" style="width: 500px;" />
 </a>
 </figure>
 <p>A Light class has been created to handle the light sources. Take a look at the <code class="docutils literal notranslate"><span class="pre">light.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">light.cpp</span></code> files and you will see the following Light class methods</p>
@@ -456,12 +456,12 @@ document.write(`
 <hr class="docutils" />
 <section id="tangent-space">
 <h2>Tangent space<a class="headerlink" href="#tangent-space" title="Link to this heading">#</a></h2>
-<p>We have already seen in <a class="reference internal" href="05_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D worlds</span></a> that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the <strong>tangent space</strong>. The tangent space is a 3D space where vectors are defined in terms of three vectors: <strong>tangent</strong>, <strong>bitangent</strong> and <strong>normal</strong> vectors (<a class="reference internal" href="#bitangent-vector-figure"><span class="std std-numref">Fig. 95</span></a>).</p>
+<p>We have already seen in <a class="reference internal" href="05_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D worlds</span></a> that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the <strong>tangent space</strong>. The tangent space is a 3D space where vectors are defined in terms of three vectors: <strong>tangent</strong>, <strong>bitangent</strong> and <strong>normal</strong> vectors (<a class="reference internal" href="#bitangent-vector-figure"><span class="std std-numref">Fig. 96</span></a>).</p>
 <figure class="align-default" id="bitangent-vector-figure">
-<a class="reference internal image-reference" href="_images/09_bitangent.svg"><img alt="_images/09_bitangent.svg" src="_images/09_bitangent.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="_images/08_bitangent.svg"><img alt="_images/08_bitangent.svg" src="_images/08_bitangent.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 95 </span><span class="caption-text">Normal, tangent and the bitangent vectors.</span><a class="headerlink" href="#bitangent-vector-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 96 </span><span class="caption-text">Normal, tangent and the bitangent vectors.</span><a class="headerlink" href="#bitangent-vector-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -471,18 +471,18 @@ document.write(`
 </ul>
 <p>There are an infinite number of vectors on a plane that is perpendicular to the normal vector so we have a choice for the tangent and bitangent vectors. A natural choice is to use vectors that point along the edges of the normal map, we know these are perpendicular and this also means we are consistent for neighbouring triangles.</p>
 <figure class="align-default" id="tbn-figure">
-<a class="reference internal image-reference" href="_images/09_TBN.svg"><img alt="_images/09_TBN.svg" src="_images/09_TBN.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/08_TBN.svg"><img alt="../_images/08_TBN.svg" src="../_images/08_TBN.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 96 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 97 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
 <figure class="align-default" id="uv-deltas-figure">
-<a class="reference internal image-reference" href="_images/09_UV_deltas.svg"><img alt="_images/09_UV_deltas.svg" src="_images/09_UV_deltas.svg" style="width: 800px;" />
+<a class="reference internal image-reference" href="../_images/08_UV_deltas.svg"><img alt="../_images/08_UV_deltas.svg" src="../_images/08_UV_deltas.svg" style="width: 800px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 97 </span><span class="caption-text">The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors are calculated by mapping the model space triangle onto the normal map space.</span><a class="headerlink" href="#uv-deltas-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 98 </span><span class="caption-text">The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors are calculated by mapping the model space triangle onto the normal map space.</span><a class="headerlink" href="#uv-deltas-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We first calculate vectors that point along two sides of the triangle in the model space</p>
@@ -509,7 +509,7 @@ document.write(`
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Calculating the tangent and bitangent vectors</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 97</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span> can be calculated using</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 98</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span> can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     \mathbf{e}_1 &amp;= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
@@ -729,18 +729,18 @@ document.write(`
 </div>
 <p>Compile and run the program and you should see the following.</p>
 <figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="_images/09_normal_map.png"><img alt="_images/09_normal_map.png" src="_images/09_normal_map.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_normal_map.png"><img alt="../_images/08_normal_map.png" src="../_images/08_normal_map.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 98 </span><span class="caption-text">Normal map applied to teapot objects.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Normal map applied to teapot objects.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The surfaces of the teapots which are smooth now have the appearance of bumpy diamond plate simply by getting the normal vectors from a texture and performing the lighting calculations in the tangent space. <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 99</span></a> shows a closeup of the surface so we can see the detail.</p>
+<p>The surfaces of the teapots which are smooth now have the appearance of bumpy diamond plate simply by getting the normal vectors from a texture and performing the lighting calculations in the tangent space. <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 100</span></a> shows a closeup of the surface so we can see the detail.</p>
 <figure class="align-default" id="normal-map-closeup-figure">
-<a class="reference internal image-reference" href="_images/09_normal_map_closeup.png"><img alt="_images/09_normal_map_closeup.png" src="_images/09_normal_map_closeup.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_normal_map_closeup.png"><img alt="../_images/08_normal_map_closeup.png" src="../_images/08_normal_map_closeup.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Close up of the normal map applied to teapot objects.</span><a class="headerlink" href="#normal-map-closeup-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">Close up of the normal map applied to teapot objects.</span><a class="headerlink" href="#normal-map-closeup-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -748,24 +748,24 @@ document.write(`
 <hr class="docutils" />
 <section id="re-orthogonalising-the-tangent-space-vectors">
 <h2>Re-orthogonalising the tangent space vectors<a class="headerlink" href="#re-orthogonalising-the-tangent-space-vectors" title="Link to this heading">#</a></h2>
-<p>In the close up view of the normal mapped teapot in <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 99</span></a> we can see a distinct line in the specular highlights where polygons that form the surface of the teapot join. The reason for this is that the tangent vector is not exactly perpendicular to the normal vector.</p>
-<p>When a vertex is shared by multiple triangles the 3D modelling software (e.g., Blender) calculates a single normal vector for the vertex by averaging of the normal vectors for the triangles (<a class="reference internal" href="#averaged-normal-figure"><span class="std std-numref">Fig. 100</span></a>). This saves memory and ensures that there is a smooth transition between the normal vectors across the surface.</p>
+<p>In the close up view of the normal mapped teapot in <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 100</span></a> we can see a distinct line in the specular highlights where polygons that form the surface of the teapot join. The reason for this is that the tangent vector is not exactly perpendicular to the normal vector.</p>
+<p>When a vertex is shared by multiple triangles the 3D modelling software (e.g., Blender) calculates a single normal vector for the vertex by averaging of the normal vectors for the triangles (<a class="reference internal" href="#averaged-normal-figure"><span class="std std-numref">Fig. 101</span></a>). This saves memory and ensures that there is a smooth transition between the normal vectors across the surface.</p>
 <figure class="align-default" id="averaged-normal-figure">
-<a class="reference internal image-reference" href="_images/09_averaged_normal.svg"><img alt="_images/09_averaged_normal.svg" src="_images/09_averaged_normal.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="_images/08_averaged_normal.svg"><img alt="_images/08_averaged_normal.svg" src="_images/08_averaged_normal.svg" style="width: 350px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 100 </span><span class="caption-text">The vertex normal is the average of the normal of the triangles sharing that vertex.</span><a class="headerlink" href="#averaged-normal-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">The vertex normal is the average of the normal of the triangles sharing that vertex.</span><a class="headerlink" href="#averaged-normal-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation <a class="reference internal" href="#equation-tb-equation">(25)</a> will not give an orthogonal set of vectors. We can get around this problem by <strong>re-orthogonalising</strong> the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.</p>
 <figure class="align-default" id="reorthogonalise-t-figure">
-<a class="reference internal image-reference" href="_images/09_reorthogonalise_T.svg"><img alt="_images/09_reorthogonalise_T.svg" src="_images/09_reorthogonalise_T.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/08_reorthogonalise_T.svg"><img alt="../_images/08_reorthogonalise_T.svg" src="../_images/08_reorthogonalise_T.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Re-orthogonalising the tangent vector using the Gram-Schmidt process.</span><a class="headerlink" href="#reorthogonalise-t-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Re-orthogonalising the tangent vector using the Gram-Schmidt process.</span><a class="headerlink" href="#reorthogonalise-t-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Consider <a class="reference internal" href="#reorthogonalise-t-figure"><span class="std std-numref">Fig. 101</span></a> where the tangent vector <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> is non-orthogonal to the normal vector <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>. If <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> are unit vectors then if we subtract <span class="math notranslate nohighlight">\((\mathbf{t} \cdot \mathbf{n}) \mathbf{n}\)</span> from <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> then this creates a vector <span class="math notranslate nohighlight">\(\mathbf{t}_{new}\)</span> that is orthogonal to <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can then use the cross product between <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> to calculate the bitangent vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
+<p>Consider <a class="reference internal" href="#reorthogonalise-t-figure"><span class="std std-numref">Fig. 102</span></a> where the tangent vector <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> is non-orthogonal to the normal vector <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>. If <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> are unit vectors then if we subtract <span class="math notranslate nohighlight">\((\mathbf{t} \cdot \mathbf{n}) \mathbf{n}\)</span> from <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> then this creates a vector <span class="math notranslate nohighlight">\(\mathbf{t}_{new}\)</span> that is orthogonal to <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can then use the cross product between <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> to calculate the bitangent vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
 <p>Edit the vertex shader so that we re-orthogonalise <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the TBN matrix that transforms view space to tangent space</span>
 <span class="n">mat3</span><span class="w"> </span><span class="n">invMV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">MV</span><span class="p">)));</span>
@@ -778,10 +778,10 @@ document.write(`
 </div>
 <p>Compile and run the code once against and you should see a screen similar to the one below.</p>
 <figure class="align-default" id="normal-map-orthogonalised-figure">
-<a class="reference internal image-reference" href="_images/09_normal_map_orthogonalised.png"><img alt="_images/09_normal_map_orthogonalised.png" src="_images/09_normal_map_orthogonalised.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_normal_map_orthogonalised.png"><img alt="../_images/08_normal_map_orthogonalised.png" src="../_images/08_normal_map_orthogonalised.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 102 </span><span class="caption-text">A normal map with orthogonalised tangent and bitangent vectors.</span><a class="headerlink" href="#normal-map-orthogonalised-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 103 </span><span class="caption-text">A normal map with orthogonalised tangent and bitangent vectors.</span><a class="headerlink" href="#normal-map-orthogonalised-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Now our tangent space vectors are orthogonal and we have a correct normal map applied.</p>
@@ -789,30 +789,30 @@ document.write(`
 <hr class="docutils" />
 <section id="specular-maps">
 <h2>Specular maps<a class="headerlink" href="#specular-maps" title="Link to this heading">#</a></h2>
-<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 103</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 104</span></a> so that the stones are lit by the light sources.</p>
+<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 104</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 105</span></a> so that the stones are lit by the light sources.</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-diffuse-map-figure">
-<img alt="_images/09_stones_diffuse.png" src="_images/09_stones_diffuse.png" />
+<img alt="../_images/08_stones_diffuse.png" src="../_images/08_stones_diffuse.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-normal-map-figure">
-<img alt="_images/09_stones_normal.png" src="_images/09_stones_normal.png" />
+<img alt="../_images/08_stones_normal.png" src="../_images/08_stones_normal.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 104 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-specular-map-figure">
-<img alt="_images/09_stones_specular.png" src="_images/09_stones_specular.png" />
+<img alt="../_images/08_stones_specular.png" src="../_images/08_stones_specular.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 105 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -846,13 +846,13 @@ document.write(`
 </div>
 <p>Compile and run the program and you should see a scene resembling the following.</p>
 <figure class="align-default" id="stone-floor-no-specular-figure">
-<a class="reference internal image-reference" href="_images/09_floor_no_specular.png"><img alt="_images/09_floor_no_specular.png" src="_images/09_floor_no_specular.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_floor_no_specular.png"><img alt="../_images/08_floor_no_specular.png" src="../_images/08_floor_no_specular.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Stone floor with no specular map applied.</span><a class="headerlink" href="#stone-floor-no-specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Stone floor with no specular map applied.</span><a class="headerlink" href="#stone-floor-no-specular-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Move the camera around the floor and note how the mortar between the stones have specular highlights (an example of this can be seen in the bottom left-hand corner of <a class="reference internal" href="#stone-floor-no-specular-figure"><span class="std std-numref">Fig. 106</span></a>). This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map to switch off the specular highlights for certain fragments.</p>
+<p>Move the camera around the floor and note how the mortar between the stones have specular highlights (an example of this can be seen in the bottom left-hand corner of <a class="reference internal" href="#stone-floor-no-specular-figure"><span class="std std-numref">Fig. 107</span></a>). This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map to switch off the specular highlights for certain fragments.</p>
 <p>To apply the specular map we added to the <code class="docutils literal notranslate"><span class="pre">floor</span></code> object we first need to add a specular map to the <code class="docutils literal notranslate"><span class="pre">floor</span></code> model. Where we added the diffuse and normal maps add a specular map using the following code</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/stones_specular.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;specular&quot;</span><span class="p">);</span>
 </pre></div>
@@ -867,20 +867,20 @@ document.write(`
 </div>
 <p>Compile and run the program and now you will notice that the mortar between the stones no longer have specular highlights.</p>
 <figure class="align-default" id="stone-floor-specular-figure">
-<a class="reference internal image-reference" href="_images/09_floor_specular.png"><img alt="_images/09_floor_specular.png" src="_images/09_floor_specular.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_floor_specular.png"><img alt="../_images/08_floor_specular.png" src="../_images/08_floor_specular.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Stone floor with specular map applied.</span><a class="headerlink" href="#stone-floor-specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Stone floor with specular map applied.</span><a class="headerlink" href="#stone-floor-specular-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <section id="neutral-maps">
 <h3>Neutral maps<a class="headerlink" href="#neutral-maps" title="Link to this heading">#</a></h3>
 <p>We may not always want to apply a normal map or specular map to an object. If you look at your teapots after applying the specular map for the floor you can see that it has also been applied to the teapot.</p>
 <figure class="align-default" id="teapot-specular-map-figure">
-<a class="reference internal image-reference" href="_images/09_teapot_specular.png"><img alt="_images/09_teapot_specular.png" src="_images/09_teapot_specular.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_teapot_specular.png"><img alt="../_images/08_teapot_specular.png" src="../_images/08_teapot_specular.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 108 </span><span class="caption-text">The specular map for the floor has been applied to the teapot.</span><a class="headerlink" href="#teapot-specular-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 109 </span><span class="caption-text">The specular map for the floor has been applied to the teapot.</span><a class="headerlink" href="#teapot-specular-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Rather than writing a fragment shader for each case we can apply <strong>neutral maps</strong> which is a texture that when normal and specular mapping is applied it has no affect. Since the normal vector is calculated using</p>
@@ -894,10 +894,10 @@ document.write(`
 </div>
 <p>Compile and run the program and you should see the teapot no longer has the floor specular map applied to it.</p>
 <figure class="align-default" id="teapot-neutral-map-figure">
-<a class="reference internal image-reference" href="_images/09_neutral_map.png"><img alt="_images/09_neutral_map.png" src="_images/09_neutral_map.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_neutral_map.png"><img alt="../_images/08_neutral_map.png" src="../_images/08_neutral_map.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 109 </span><span class="caption-text">A neutral specular map applied to the teapot.</span><a class="headerlink" href="#teapot-neutral-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 110 </span><span class="caption-text">A neutral specular map applied to the teapot.</span><a class="headerlink" href="#teapot-neutral-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -909,21 +909,21 @@ document.write(`
 <li><p>Add another object using the .obj model <strong>../assets/wall.obj</strong> to your scene and position it at <span class="math notranslate nohighlight">\((0, 4, -5)\)</span>, scale it up by a factor of 5 in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> directions and rotate it <span class="math notranslate nohighlight">\(90^\circ\)</span> about the <span class="math notranslate nohighlight">\(x\)</span>-axis. Apply the diffuse map <strong>assets/bricks_diffuse.png</strong>.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/09_ex1.png"><img alt="_images/09_ex1.png" src="_images/09_ex1.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_ex1.png"><img alt="../_images/08_ex1.png" src="../_images/08_ex1.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="2">
 <li><p>Apply the normal map <strong>assets/bricks_normal.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/09_ex2.png"><img alt="_images/09_ex2.png" src="_images/09_ex2.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_ex2.png"><img alt="../_images/08_ex2.png" src="../_images/08_ex2.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="3">
 <li><p>Apply the specular map <strong>assets/bricks_specular.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/09_ex3.png"><img alt="_images/09_ex3.png" src="_images/09_ex3.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/08_ex3.png"><img alt="../_images/08_ex3.png" src="../_images/08_ex3.png" style="width: 500px;" />
 </a>
 </figure>
 </section>

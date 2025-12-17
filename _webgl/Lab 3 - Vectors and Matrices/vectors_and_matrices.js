@@ -69,3 +69,13 @@ const B = new Mat4().set(
 console.log("\nB =\n" + B.print());
 console.log("\nAB =\n" + A.multiply(B).print());
 console.log("\nAB =\n" + B.multiply(A).print());
+
+const C = new Mat4().set(
+  1, 3, 2, 1, 
+  1, 1, 2, 2, 
+  1, 3, 3, 2,
+  3, 1, 3, 2
+);
+console.log("\nC =\n" + C.print());
+console.log("\ninv(C) =\n" + C.inverse().print());
+console.log("\ninv(C)C =\n" + C.inverse().multiply(C).print());

@@ -15,39 +15,71 @@ To demonstrate building a simple 3D world we are going to need a 3D object. One 
 A unit cube centred at $(0,0,0)$ with side lengths of 2.
 ```
 
-Open the ***3D_worlds.js*** file and you will see that the vertices and indices have been defined for a unit cube.
+:::{admonition} Task
+:class: tip
+
+Download [Lab 5.zip](../_downloads/Lab%205%20-%203D%20Worlds.zip) and extract the files to your computer.
+:::
+
+Open the ***3D_worlds.js*** file, and you will see that the vertices and indices have been defined for a unit cube.
 
 ```javascript
 // Define cube vertices
-  const vertices = new Float32Array([
-    // x  y  z      r  g  b     u  v                    + ------ +
-    // front                                           /|       /|
-    -1, -1,  1,     0, 0, 0,    0, 0,  //    y        / |      / |
-     1, -1,  1,     0, 0, 0,    1, 0,  //    |       + ------ +  |
-     1,  1,  1,     0, 0, 0,    1, 1,  //    +-- x   |  + ----|- +
-    -1, -1,  1,     0, 0, 0,    0, 0,  //   /        | /      | /   
-     1,  1,  1,     0, 0, 0,    1, 1,  //  z         |/       |/
-    -1,  1,  1,     0, 0, 0,    0, 1,  //            + ------ +   
-    // right                        
-     1, -1,  1,     0, 0, 0,    0, 0,
-     1, -1, -1,     0, 0, 0,    1, 0, 
-     1,  1, -1,     0, 0, 0,    1, 1,
-     1, -1,  1,     0, 0, 0,    0, 0,
-     1,  1, -1,     0, 0, 0,    1, 1,
-     1,  1,  1,     0, 0, 0,    0, 1,
-    // etc.
-  ]);
+const vertices = new Float32Array([
+  // x  y  z      r  g  b     u  v                    + ------ +
+  // front                                           /|       /|
+  -1, -1,  1,     0, 0, 0,    0, 0,  //    y        / |      / |
+   1, -1,  1,     0, 0, 0,    1, 0,  //    |       + ------ +  |
+   1,  1,  1,     0, 0, 0,    1, 1,  //    +-- x   |  + ----|- +
+  -1, -1,  1,     0, 0, 0,    0, 0,  //   /        | /      | /   
+   1,  1,  1,     0, 0, 0,    1, 1,  //  z         |/       |/
+  -1,  1,  1,     0, 0, 0,    0, 1,  //            + ------ +   
+  // right                        
+   1, -1,  1,     0, 0, 0,    0, 0,
+   1, -1, -1,     0, 0, 0,    1, 0, 
+   1,  1, -1,     0, 0, 0,    1, 1,
+   1, -1,  1,     0, 0, 0,    0, 0,
+   1,  1, -1,     0, 0, 0,    1, 1,
+   1,  1,  1,     0, 0, 0,    0, 1,
+  // back
+   1, -1, -1,     0, 0, 0,    0, 0,
+  -1, -1, -1,     0, 0, 0,    1, 0,
+  -1,  1, -1,     0, 0, 0,    1, 1,
+   1, -1, -1,     0, 0, 0,    0, 0,
+  -1,  1, -1,     0, 0, 0,    1, 1,
+   1,  1, -1,     0, 0, 0,    0, 1,
+  // left
+  -1, -1, -1,     0, 0, 0,    0, 0,
+  -1, -1,  1,     0, 0, 0,    1, 0,
+  -1,  1,  1,     0, 0, 0,    1, 1,
+  -1, -1, -1,     0, 0, 0,    0, 0,
+  -1,  1,  1,     0, 0, 0,    1, 1,
+  -1,  1, -1,     0, 0, 0,    0, 1,
+  // bottom
+  -1, -1, -1,     0, 0, 0,    0, 0,
+   1, -1, -1,     0, 0, 0,    1, 0,
+   1, -1,  1,     0, 0, 0,    1, 1,
+  -1, -1, -1,     0, 0, 0,    0, 0,
+   1, -1,  1,     0, 0, 0,    1, 1, 
+  -1, -1,  1,     0, 0, 0,    0, 1,
+  // top
+  -1,  1,  1,     0, 0, 0,    0, 0,
+   1,  1,  1,     0, 0, 0,    1, 0,
+   1,  1, -1,     0, 0, 0,    1, 1,
+  -1,  1,  1,     0, 0, 0,    0, 0,
+   1,  1, -1,     0, 0, 0,    1, 1,
+  -1,  1, -1,     0, 0, 0,    0, 1
+]);
 
-  // Define cube indices
-  const indices = new Uint16Array([
-     0,  1,  2,  3,  4,  5,  // front
-     6,  7,  8,  9, 10, 11,  // right
-    12, 13, 14, 15, 16, 17,  // back
-    18, 19, 20, 21, 22, 23,  // left
-    24, 25, 26, 27, 28, 29,  // bottom
-    30, 31, 32, 33, 34, 35   // top
-  ]);
-
+// Define cube indices
+const indices = new Uint16Array([
+   0,  1,  2,  3,  4,  5,  // front
+   6,  7,  8,  9, 10, 11,  // right
+  12, 13, 14, 15, 16, 17,  // back
+  18, 19, 20, 21, 22, 23,  // left
+  24, 25, 26, 27, 28, 29,  // bottom
+  30, 31, 32, 33, 34, 35   // top
+]);
 ```
 
 If you compile and run this program you will see that a crate texture fills the canvas. This is because the coordinates of the cube vertices are $-1$ and $1$.

@@ -9,7 +9,7 @@ In this lab we will not be drawing any graphical objects, but we will be writing
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***03 Vectors and Matrices*** inside which create a file called ***index.html*** and enter the following into it.
+Create a folder called ***Lab 3 Vectors and Matrices*** inside which create a file called ***index.html*** and enter the following into it.
 
 ```html
 <!doctype html>
@@ -76,7 +76,7 @@ A 3D vector.
 ```
 
 ```{note}
-The reason the diagram above has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see [5. Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
+The reason the diagram above has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see [Lab 4: Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
 ```
 
 Since we will be using vectors (and matrices) a lot over the rest of the labs we will create a vector class to define vectors and perform operations on them.
@@ -94,7 +94,6 @@ class Vec3 {
     this.x = x;
     this.y = y;
     this.z = z;
-    this.array = [x, y, z];
   }
 
   // Print vector
@@ -106,13 +105,13 @@ class Vec3 {
 
 :::
 
-Here we have declared a class called `Vec3` inside which we have defined the constructor function and a method to print the vector. To create a 3-element vector object we use the syntax
+Here we have declared a class called `Vec3` inside which we have defined the constructor method and a method to print the vector. To create a 3-element vector object we use the syntax
 
 ```javascript
-const vector = new Vec3(xValue, yValue, zValue);
+const a = new Vec3(ax, ay, az);
 ```
 
-To access the individual elements of the vector object we use `vector.x`, `vector.y` and `vector.z` and to access the array containing all three elements we use `vector.array`. The `.print()` method outputs a string where the elements of the vector are printed to 4 decimal places.
+To access the individual elements of the vector object we use `a.x`, `a.y` and `a.z`. The `.print()` method outputs a string where the elements of the vector are printed to 4 decimal places.
 
 Now let's create the following vector objects in JavaScript and print them.
 
@@ -135,7 +134,6 @@ console.log('\nVectors\n-------');
 const a = new Vec3(3, 0, 4)
 const b = new Vec3(1, 2, 3);
 console.log("x = " + a.x + ", y = " + a.y + ", z = " + a.z);
-console.log("x,y,z = " + a.array);
 console.log("a = " + a.print());
 console.log("b = " + b.print());
 ```
@@ -148,7 +146,6 @@ Here we have created two vector objects `a` and `b` that contain the elements of
 Vectors
 -------
 x = 3, y = 0, z = 4
-x,y,z = 3,0,4
 a = [ 3.0000, 0.0000, 4.0000 ]
 b = [ 1.0000, 2.0000, 3.0000 ]
 ```
@@ -196,12 +193,12 @@ The subtraction of the vector $\vec{b}$ does similar, but since $\vec{a} - \vec{
 Vector subtraction.
 ```
 
-To calculate the addition and subtraction of vectors we are going to write functions to do this.
+To calculate the addition and subtraction of vectors we are going to write methods to do this.
 
 :::{admonition} Task
 :class: tip
 
-Add the following functions to your `Vec3` class.
+Add the following methods to your `Vec3` class.
 
 ```javascript
 // Arithmetic operations
@@ -216,7 +213,7 @@ subtract(v) {
 
 :::
 
-Here we have defined two similar functions `add()` and `subtract()` that add and subtract two vectors (not surprisingly). Both functions return the `this` keyword so when we call these functions on a vector object it will change the values in the vector.
+Here we have defined two similar methods `add()` and `subtract()` that add and subtract two vectors. Both methods return a new vector object so that we don't change the values of the current vector.
 
 :::{admonition} Task
 :class: tip
@@ -277,7 +274,7 @@ Multiplying a vector by a positive scalar has the effect of scaling the length o
 
 :::{admonition} Task
 :class: tip
-Add the following function definition to the vector class.
+Add the following method definition to the vector class.
 
 ```javascript
 scale(s) {
@@ -333,7 +330,7 @@ For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magni
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the vector class.
+Add the following method definition to the vector class.
 
 ```javascript
 // Length and normalization
@@ -367,16 +364,16 @@ length(b)    = 3.7416573867739413
 
 ### Unit vectors
 
-A **unit vector** is a vector that has a length of 1. We can find a unit vector that points in the same direction as a non-zero vector $\vec{a}$, which is denoted by $\hat{a}$ (pronounced *a-hat*), by dividing by its magnitude, i.e.,
+A **unit vector** is a vector that has a length of 1. We can find a unit vector that points in the same direction as a non-zero vector $\vec{a}$, which is denoted by $\hat{\vec{a}}$ (pronounced *a-hat*), by dividing by its magnitude, i.e.,
 
-$$ \hat{a} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq:unit-vector)
+$$ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq:unit-vector)
 
 This process is called **normalising a vector**. For example, to determine a unit vector pointing in the same direction as the vector $\vec{a} = (3, 0, 4)$, we normalize it by dividing by its magnitude which is 5.
 
 ```{math}
 :numbered: false
 \begin{align*}
-    \hat{a} &= \frac{(3, 0, 4)}{5} = \left( \frac{3}{5}, 0, \frac{4}{5} \right) = (0.6, 0, 0.8).
+    \hat{\vec{a}} &= \frac{(3, 0, 4)}{5} = \left( \frac{3}{5}, 0, \frac{4}{5} \right) = (0.6, 0, 0.8).
 \end{align*}
 ```
 
@@ -387,12 +384,12 @@ Checking that $\hat{a}$ has a magnitude of 1
 \|\hat{a}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
 ```
 
-Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a function that does this.
+Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a method that does this.
 
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the vector class.
+Add the following method definition to the vector class.
 
 ```javascript
 normalize() {
@@ -471,7 +468,7 @@ In order words, if the dot product of two vectors is zero then the two vectors a
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the vector class.
+Add the following method definition to the vector class.
 
 ```javascript
 // Dot and cross products
@@ -541,7 +538,7 @@ We can show that $\vec{a} \times \vec{b}$ is perpendicular to both $\vec{a}$ and
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the vector class.
+Add the following method definition to the vector class.
 
 ```javascript
 cross(v) {
@@ -578,7 +575,7 @@ Here we have also shown that the cross product of `a` and `b` is perpendicular t
 
 ## Matrices
 
-Another type of mathematic object that is fundamental to computer graphics is the matrix. A matrix is a rectangular array of numbers.
+Another type of mathematical object that is fundamental to computer graphics is the matrix. A matrix is a rectangular array of numbers.
 
 ```{math}
 :numbered: false
@@ -653,7 +650,7 @@ console.log("A =\n" + A.print());
 
 :::
 
-Here we have declared a class called `Mat4` inside which we have defined the `constructor()` function that defines a $4\times 4$ matrix of zeros, a `print()` function, a `set()` function that sets the elements of a matrix to values from a 16-element array and a `clone()` function. We have then created a matrix object and set the values equal to
+Here we have declared a class called `Mat4` inside which we have defined the constructor method that defines a $4\times 4$ matrix of zeros, a print method and a set method that sets the elements of a matrix to values from a 16-element array. We have then created a matrix object and set the values equal to
 
 ```{math}
 :numbered: false
@@ -663,7 +660,7 @@ A =
   5 & 6 & 7 & 8 \\
   9 & 10 & 11 & 12 \\
   13 & 14 & 15 & 16
-\end{pmatrix}
+\end{pmatrix}.
 ```
 
 And printed the matrix. Refresh your web page, and you should see the following has been added.
@@ -717,7 +714,7 @@ A^\mathsf{T} =
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the matrix class.
+Add the following method definition to the matrix class.
 
 ```javascript
 // Arithmetic operations
@@ -828,7 +825,7 @@ $$ \begin{pmatrix}
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the matrix class.
+Add the following method definition to the matrix class.
 
 ```javascript
 multiply(mat) {
@@ -875,7 +872,7 @@ AB =
   [ 874.0000  996.0000  1118.0000  1240.0000 ]
 ```
 
-What... wait... hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-matrix-multiplication-example`. Our `.multiply()` function hasn't given us the result shown above. The reason for this is something called column-major order.
+What... wait... hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-matrix-multiplication-example`. Our `.multiply()` method hasn't given us the result shown above. The reason for this is something called column-major order.
 
 ---
 
@@ -908,7 +905,7 @@ i.e., we move down and across the matrix. Alternatively, using row-major order t
 :width: 650
 ```
 
-i.e., we move across and down the matrix. **WebGL uses column-major order** because it is based upon OpenGL which was written for early GPUs that treated vertex data as column vectors. So a matrix containing vertices is stored column-by-column which means, when working with WebGL, we need to switch the rows and columns around when multiplying matrices. This is why our `.multiply()` function produced the wrong result.
+i.e., we move across and down the matrix. **WebGL uses column-major order** because it is based upon OpenGL which was written for early GPUs that treated vertex data as column vectors. So a matrix containing vertices is stored column-by-column which means, when working with WebGL, we need to switch the rows and columns around when multiplying matrices. This is why our `.multiply()` method produced the wrong result.
 
 To output the matrix multiplication $AB$ as we would expect it to appear, we can swap `A` and `B`.
 
@@ -923,7 +920,7 @@ console.log("\nAB =\n" + B.multiply(A).print());
 
 :::
 
-Refresh your browser and you should now see that we have the matrix seen in equation {eq}`matrix-multiplication-example`.
+Refresh your browser and you should now see that we have the matrix seen in equation {eq}`eq-matrix-multiplication-example`.
 
 ```text
 AB =
@@ -938,7 +935,7 @@ AB =
 Microsoft's graphics library directX and Unreal Engine uses row-major order whilst WebGL, OpenGL, Vulkan (successor to OpenGL), Metal (Apple's graphics library) and Unity all use column-major order. This means when porting code between the graphics libraries developers have to change all of their matrix calculations.
 :::
 
-<!-- ---
+---
 
 ## The Identity Matrix
 
@@ -980,40 +977,143 @@ IA =
 = A.
 ```
 
-:::{admonition} Task
-:class: tip
+---
 
-Add the following function to the matrix class.
+## Matrix Inverse
+
+Whilst matrix multiplication is defined for certain matrices there is no way of dividing one matrix by another. However, for certain square matrices we can calculate an **inverse matrix** that performs a similar function to divide. Consider the division of two numbers, 4 and 2 say. If we wanted to divide 4 by two we could write
+
+$$ \frac{4}{2} = 2. $$
+
+We could also write this division as the multiplication of $\dfrac{1}{2}$ and 4
+
+$$ \frac{1}{2} \times 4 = 2.$$
+
+Here we have shown that $\frac{1}{2}$ is the **multiplicative inverse** of 2. A multiplicative inverse of a number $x$ is denoted as $x^{-1}$ and satisfies $x \times x^{-1} = 1$. The inverse of a matrix $A$ is denoted by $A^{-1}$ and satisfies $A^{-1} A = AA^{-1} = I$ where $I$ is the identity matrix. For example, consider the matrix $C$
+
+$$ C = \begin{pmatrix}
+  1  &   3  &   2  &   1 \\
+  1  &   1  &   2  &   2 \\
+  1  &   3  &   3  &   2 \\
+  3  &   1  &   3  &   2 \\
+\end{pmatrix}, $$
+
+which has the inverse
+
+$$ C^{-1} = \begin{pmatrix}
+  1 & 1/2 & -5/4 & 1/4 \\
+  1 & 1/2 & -3/4 & -1/4 \\
+  -2 & -2 & 5/2 & 1/2 \\
+  1 & 2 & -3/2 & -1/2
+\end{pmatrix}. $$
+
+We can check whether this is the inverse of $A$ by calculating $A^{-1}A$ (or $A A^{-1}$)
+
+$$ \begin{align*}
+    C^{-1} C &=
+  \begin{pmatrix}
+    1  &   3  &   2  &   1 \\
+    1  &   1  &   2  &   2 \\
+    1  &   3  &   3  &   2 \\
+    3  &   1  &   3  &   2 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    1 & 1/2 & -5/4 & 1/4 \\
+    1 & 1/2 & -3/4 & -1/4 \\
+    -2 & -2 & 5/2 & 1/2 \\
+    1 & 2 & -3/2 & -1/2
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+   1 & 0 & 0 & 0  \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 1 & 0 \\
+   0 & 0 & 0 & 1
+  \end{pmatrix}.
+\end{align*} $$
+
+So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating the inverse of a matrix is quite involved process and not all square matrices have an inverse.
+
+:::{admonition} Task
+
+Add the following method to the Matrix class (you may wish to use copy and paste here).
 
 ```javascript
-// Identity matrix
-identity() {
-  this.m[0]  = 1;
-  this.m[5]  = 1;
-  this.m[10] = 1;
-  this.m[15] = 1;
-  return this;
+inverse() {
+  let m = this.m;
+  const inv = new Float32Array([
+    m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
+    -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],      
+    m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],      
+    -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
+
+    -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
+    m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
+    -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
+    m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
+
+    m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
+    -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
+    m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
+    -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
+
+    -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
+    m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
+    -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
+    m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
+  ]);
+
+  let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+  if (det === 0) {
+    console.error("Matrix is singular, no inverse exists");
+    return null;
+  }
+
+  det = 1 / det;
+  for (let i = 0; i < 16; i++) {
+    inv[i] *= det;
+  }
+  return new Mat4().set(...inv);
 }
 ```
 
-And add the following to the ***Vectors_and_matrices.js*** file.
+Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-const I = new Mat4().identity();
-console.log("I =\n", I.print());
+const C = new Mat4().set(
+  1, 3, 2, 1, 
+  1, 1, 2, 2, 
+  1, 3, 3, 2,
+  3, 1, 3, 2
+);
+console.log("\nC =\n" + C.print());
+console.log("\ninv(C) =\n" + C.inverse().print());
+console.log("\ninv(C)C =\n" + C.inverse().multiply(C).print());
 ```
 
 :::
 
-Refresh your browser and you should now see that we have the matrix seen in equation {eq}`matrix-multiplication-example`.
+Refresh your browser and you should now see that we have calculated the inverse matrix $C^{-1}$ and shown that $C^{-1}C = I$.
 
 ```text
-I =
-   [ 1.0000  0.0000  0.0000  0.0000 ]
+C =
+  [ 1.0000  3.0000  2.0000  1.0000 ]
+  [ 1.0000  1.0000  2.0000  2.0000 ]
+  [ 1.0000  3.0000  3.0000  2.0000 ]
+  [ 3.0000  1.0000  3.0000  2.0000 ]
+
+inv(C) =
+  [ 1.0000  0.5000  -1.2500  0.2500 ]
+  [ 1.0000  0.5000  -0.7500  -0.2500 ]
+  [ -2.0000  -2.0000  2.5000  0.5000 ]
+  [ 1.0000  2.0000  -1.5000  -0.5000 ]
+
+inv(C)C =
+  [ 1.0000  0.0000  0.0000  0.0000 ]
   [ 0.0000  1.0000  0.0000  0.0000 ]
   [ 0.0000  0.0000  1.0000  0.0000 ]
   [ 0.0000  0.0000  0.0000  1.0000 ]
-``` -->
+```
 
 ---
 
@@ -1031,7 +1131,7 @@ I =
     (f) The dot product $\vec{p} \cdot \vec{q}$;<br>
     (g) The cross product $\vec{q} \times \vec{r}$.
 
-2. Repeat exercise 1 using your functions from the ***maths.js*** file.
+2. Repeat exercise 1 using your methods from the ***maths.js*** file.
 
 3. The three matrices $A$, $B$ and $C$ are defined by
 
