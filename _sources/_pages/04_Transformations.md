@@ -13,7 +13,7 @@ where $(x',y',z')$ are the coordinates of the transformed point. Note that all v
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***04 Transformations*** and copy across the files from your ***02 Textures*** folder. Rename ***textures.js*** to ***transformations.js***, change the title of the web page to 'Lab 04 - Transformations' and add a script for the ***maths.js*** file.
+Create a folder called ***Lab 4 Transformations*** and copy across the files from your ***Lab 2 Textures*** folder. Rename ***textures.js*** to ***transformations.js***, change the title of the web page to 'Lab 04 - Transformations' and add a script for the ***maths.js*** file.
 
 :::
 

@@ -195,9 +195,8 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -431,7 +430,7 @@ document.write(`
 <hr class="docutils" />
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Copy your <em><strong>01 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>02 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+<p>Copy your <em><strong>Lab 1 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>Lab 2 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
 </div>
 <p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
 <figure class="align-default" id="colour-rectangle-figure">
@@ -444,7 +443,7 @@ document.write(`
 <hr class="docutils" />
 <section id="creating-a-texture">
 <h2>Creating a texture<a class="headerlink" href="#creating-a-texture" title="Link to this heading">#</a></h2>
-<p>The first thing we need to do is create a texture in WebGL.</p>
+<p>The first thing we need to do is create a texture in WebGL. We will do this by loading in an image file stored locally on our computer.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following function definition to the <em><strong>webGLUtils.js</strong></em> file.</p>
@@ -486,7 +485,7 @@ document.write(`
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates are defined for each vertex.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="c1">//  x     y    z       r    g    b      u  v            </span>
+<span class="c1">// x    y    z       r    g    b      u  v            </span>
 <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
 <span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
 <span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
@@ -518,27 +517,16 @@ document.write(`
 <p>The next thing we need to do is to update the vertex and fragment shader. The texture coordinates are read in by the vertex shader and then passed to the rasteriser which calculates the texture coordinates of each fragment.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the vertex shader source code at the top of the <em><strong>textures.js</strong></em> file so that it looks like the following</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<p>Add an input and output declaration to the vertex shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
 
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span><span class="w"> </span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
-<span class="n">out</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">/// Output vertex coordinates</span>
-<span class="w">  </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Output vertex colour</span>
-<span class="w">  </span><span class="n">vColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// Output texture co-ordinates</span>
-<span class="w">  </span><span class="n">vTexCoord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function in the vertex shader add the following.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output texture co-ordinates</span>
+<span class="n">vTexCoord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoord</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -546,24 +534,20 @@ document.write(`
 <p>The fragment shader needs to read in the texture coordinates of the fragment and get the colour of the fragment from the texture.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the fragment shader source code so that it looks like the following</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
-
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
-
-<span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
-
-<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">uTexture</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">);</span>
-<span class="p">}</span>
+<p>Add the following input declaration to the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And add the following uniform declaration before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function in the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">uTexture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function in the fragment shader edit the code used to determine the fragment colour to the following.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoord</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Here we now have an input of the 2-element vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> which has been outputted from the vertex shader. A uniform is declared which is a <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> type called <code class="docutils literal notranslate"><span class="pre">uTexture</span></code>. A uniform is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders which we have done here with our texture. The colour of the fragment is taken from the texture using the <code class="docutils literal notranslate"><span class="pre">texture()</span></code> function which outputs a 4-element RGBA vector.</p>
+<p>Here we have an input of the 2-element vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> which has been outputted from the vertex shader. This contains the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates of the fragment which has been calculated by WebGL by interpolating between the three triangle vertices. A uniform is declared which is a <code class="docutils literal notranslate"><span class="pre">sampler2D</span></code> type called <code class="docutils literal notranslate"><span class="pre">uTexture</span></code>. A uniform is a shader variable that remains constant during the execution of the rendering pass and has the same value for all vertices and fragments. Uniforms provide a way to passing data to the shaders which we have done here with our texture. The colour of the fragment is taken from the texture using the <code class="docutils literal notranslate"><span class="pre">texture()</span></code> function which outputs a 4-element RGBA vector.</p>
 <p>The last thing we need to do is to bind the texture to the uniform in the JavaScript code.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
@@ -579,6 +563,9 @@ document.write(`
 <figure class="align-default" id="mario-texture-figure">
 <a class="reference internal image-reference" href="../_images/02_mario_texture.png"><img alt="../_images/02_mario_texture.png" src="../_images/02_mario_texture.png" style="width: 80%;" />
 </a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">It’s a me, Mario!</span><a class="headerlink" href="#mario-texture-figure" title="Link to this image">#</a></p>
+</figcaption>
 </figure>
 </section>
 <hr class="docutils" />
@@ -599,7 +586,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_nearest_neighbour.svg"><img alt="../_images/02_nearest_neighbour.svg" src="../_images/02_nearest_neighbour.svg" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Nearest neighbour interpolation.</span><a class="headerlink" href="#nearest-neighbour-interpolation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Nearest neighbour interpolation.</span><a class="headerlink" href="#nearest-neighbour-interpolation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -609,7 +596,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_bilinear.svg"><img alt="../_images/02_bilinear.svg" src="../_images/02_bilinear.svg" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Bilinear interpolation.</span><a class="headerlink" href="#bilinear-interpolation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Bilinear interpolation.</span><a class="headerlink" href="#bilinear-interpolation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In our <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> function we set the texture filtering to linear interpolation for both minification and magnification using the following code.</p>
@@ -631,12 +618,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have changed the texture to a low resolution <span class="math notranslate nohighlight">\(64 \times 64\)</span> pixel version of the Mario texture and the texture filtering to nearest-neighbour interpolation. Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-nearest-figure"><span class="std std-numref">Fig. 13</span></a>.</p>
+<p>Here we have changed the texture to a low resolution <span class="math notranslate nohighlight">\(64 \times 64\)</span> pixel version of the Mario texture and the texture filtering to nearest-neighbour interpolation. Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-nearest-figure"><span class="std std-numref">Fig. 14</span></a>.</p>
 <figure class="align-default" id="mario-nearest-figure">
 <a class="reference internal image-reference" href="../_images/02_mario_nearest.png"><img alt="../_images/02_mario_nearest.png" src="../_images/02_mario_nearest.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Nearest neighbour interpolation</span><a class="headerlink" href="#mario-nearest-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Nearest neighbour interpolation</span><a class="headerlink" href="#mario-nearest-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We have told WebGL to use the nearest textel to get the colour sample for each fragment. This results in a blocky appearance since each textel is enlarged to cover multiple fragments.</p>
@@ -644,12 +631,12 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Change the texture filtering back to bilinear interpolation for both minification and magnification.</p>
 </div>
-<p>Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-linear-figure"><span class="std std-numref">Fig. 14</span></a>. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment.</p>
+<p>Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-linear-figure"><span class="std std-numref">Fig. 15</span></a>. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment. Our texture mapped rectangle looks slightly blurry since we are using a low resolution texture.</p>
 <figure class="align-default" id="mario-linear-figure">
 <a class="reference internal image-reference" href="../_images/02_mario_linear.png"><img alt="../_images/02_mario_linear.png" src="../_images/02_mario_linear.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Bilinear interpolation</span><a class="headerlink" href="#mario-linear-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Bilinear interpolation</span><a class="headerlink" href="#mario-linear-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <hr class="docutils" />
@@ -662,7 +649,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_mipmaps.svg"><img alt="../_images/02_mipmaps.svg" src="../_images/02_mipmaps.svg" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Mipmaps</span><a class="headerlink" href="#mipmaps-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Mipmaps</span><a class="headerlink" href="#mipmaps-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The good news is that we do not need to create lots of new different size textures because WebGL has a function <code class="docutils literal notranslate"><span class="pre">glGenerateMipmap()</span></code> to do this for us. The bad news is that we can only use this when the dimensions of the texture image are powers of two, e.g., <span class="math notranslate nohighlight">\(64 \times 64\)</span>, <span class="math notranslate nohighlight">\(128 \times 128\)</span>, <span class="math notranslate nohighlight">\(256 \times 256\)</span> etc. When we have non-power of 2 textures we cannot use mipmaps.</p>
@@ -722,7 +709,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have created a function to check if a number is a power of 2 and used this in the onload function to decide whether we can generate mipmaps or not. Refresh your web browser, and you should see the image similar to that from <code class="xref std std-numref docutils literal notranslate"><span class="pre">mario-texture-figure</span></code>.</p>
+<p>Here we have created a function to check if a number is a power of 2 and used this in the onload function to decide whether we can generate mipmaps or not. Refresh your web browser, and you should see the image similar to that from <a class="reference internal" href="#mario-texture-figure"><span class="std std-numref">Fig. 11</span></a>.</p>
 </section>
 <hr class="docutils" />
 <section id="texture-wrapping">
@@ -742,12 +729,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser, and you see something like the followin.</p>
+<p>Refresh your web browser, and you see something like the following.</p>
 <figure class="align-default" id="mario-repeat-figure">
 <a class="reference internal image-reference" href="../_images/02_mario_repeat.png"><img alt="../_images/02_mario_repeat.png" src="../_images/02_mario_repeat.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>.</span><a class="headerlink" href="#mario-repeat-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>.</span><a class="headerlink" href="#mario-repeat-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Here WebGL has used <strong>texture wrapping</strong> to repeat the texture over the rectangle. This can be useful if we want to use a small texture containing a pattern over a larger polygon, e.g., think of brick wall where the pattern repeats itself. WebGL offers other options for texture wrapping;</p>
@@ -784,7 +771,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_mario_mirrored_repeat.png"><img alt="../_images/02_mario_mirrored_repeat.png" src="../_images/02_mario_mirrored_repeat.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>.</span><a class="headerlink" href="#mario-mirrored-repeat-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>.</span><a class="headerlink" href="#mario-mirrored-repeat-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code> results in the images shown below.</p>
@@ -792,7 +779,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_mario_clamp_to_edge.png"><img alt="../_images/02_mario_clamp_to_edge.png" src="../_images/02_mario_clamp_to_edge.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code>.</span><a class="headerlink" href="#mario-clamp-to-edge-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code>.</span><a class="headerlink" href="#mario-clamp-to-edge-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -831,7 +818,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/02_two_textures.png"><img alt="../_images/02_two_textures.png" src="../_images/02_two_textures.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">A rectangle with a mix of two textures applied.</span><a class="headerlink" href="#two-textures-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">A rectangle with a mix of two textures applied.</span><a class="headerlink" href="#two-textures-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>

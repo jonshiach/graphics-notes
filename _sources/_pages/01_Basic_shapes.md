@@ -8,12 +8,12 @@ For our first WebGL example we are going to display a simple triangle to the scr
 
 To start with we need two files, an HTML file that includes a canvas element which acts as a rendering surface for WebGL, and JavaScript file that controls everything that happens inside the canvas using the WebGL API.
 
-These notes use a code-along principle in that as you work through these notes you will be tasked to create files, enter text and run code (the first of these tasks is below). Through working this way you will build an understanding of the concepts and techniques used in computer graphics. Where you are asked to enter code into your files, try to avoid the temptation of simply copying and pasting code, instead type out the code. Whilst this does have the risk of making typos and creating bugs, it does have an effect of helping you understand what each line of code is doing.
+These notes use a code-along principle in that as you work through these notes you will be tasked to create files, enter text and run code. Through working this way you will build an understanding of the concepts and techniques used in computer graphics. Where you are asked to enter code into your files, try to avoid the temptation of simply copying and pasting code, instead type out the code. Whilst this does have the risk of making typos and creating bugs, it does have an effect of helping you understand what each line of code is doing.
 
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***01 Basic Shapes*** inside which create an HTML file called ***index.html***.
+Create a folder called ***Lab 1 Basic Shapes*** inside which create an HTML file called ***index.html***.
 
 Open the ***index.html*** in Visual Studio Code (this is installed on PCs in the Dalton Building).
 
@@ -48,7 +48,7 @@ Install the <a href="https://marketplace.visualstudio.com/items?itemName=ritwick
 
 ::::
 
-If everything has gone to plan you should be looking at a web browser with a page titled 'Lab 1 - Basic Shapes' that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.
+If everything has gone to plan you should be looking at a web browser with a page titled 'Lab 1 - Basic Shapes in WebGL' that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.
 
 :::{figure} ../_images/01_Canvas.png
 :width: 80%
@@ -60,7 +60,7 @@ The lurid green canvas element.
 :::{admonition} Task
 :class: tip
 
-Inside your ***01 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following.
+Inside your ***Lab 1 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following.
 
 ```javascript
 // Main function
@@ -84,19 +84,13 @@ main();
 
 Here we have created our main function `main()` inside which we have set up the WebGL canvas. Some functions used here are defined below
 
-`gl.viewport(0, 0, canvas.width, canvas.height);`
+- `gl.viewport(0, 0, canvas.width, canvas.height);`: Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the $x$, $y$ and $z$ axes). Here our viewport fills the `<canvas>` element.
 
-Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the $x$, $y$ and $z$ axes). Here our viewport fills the `<canvas>` element.
+- `gl.clearColor(0.2, 0.2, 0.2, 1.0);`: Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.
 
-`gl.clearColor(0.2, 0.2, 0.2, 1.0);`
+- `gl.clear(gl.COLOR_BUFFER_BIT);`: Clears the specified buffer, in this case it's the colour buffer.
 
-Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.
-
-`gl.clear(gl.COLOR_BUFFER_BIT);`
-
-: Clears the specified buffer, in this case it's the colour buffer.
-
-Refresh the browser window and you should still see that the horrible lurid green background. But hang on, haven't we defined our background colour to be dark grey? The reason for this is that we haven't embedded the JavaScript file into our HTML file.
+Refresh the browser window, and you should still see that the horrible lurid green background. But hang on, haven't we defined our background colour to be dark grey? The reason for this is that we haven't embedded the JavaScript file into our HTML file.
 
 ::::{admonition} Task
 :class: tip
@@ -104,12 +98,10 @@ Refresh the browser window and you should still see that the horrible lurid gree
 Edit the `<body>` tag near the bottom of the ***index.html*** file so that it looks like the following.
 
 ```text
-...
-  <body>
-    <canvas id="canvasId" width="800px" height="600px"></canvas>
-    <script src="basic_shapes.js"></script>
-  </body>
-...
+<body>
+  <canvas id="canvasId" width="800px" height="600px"></canvas>
+  <script src="basic_shapes.js"></script>
+</body>
 ```
 
 ::::
@@ -198,21 +190,13 @@ gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
 The commands used here are explained below
 
-`const vbo = gl.createBuffer();`
+- `const vbo = gl.createBuffer();`: Creates a buffer object on the GPU.
 
-Creates a buffer object on the GPU.
+- `gl.bindBuffer(gl.ARRAY_BUFFER, vbo);`: Binds our VBO to an array buffer so that WebGL knows where to send the data. The word *bind* in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.
 
-`gl.bindBuffer(gl.ARRAY_BUFFER, vbo);`
+- `gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);`: Copies the data from the `vertices` array into the VBO which is the currently bound buffer. The `gl.STATIC_DRAW` input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.
 
-Binds our VBO to an array buffer so that WebGL knows where to send the data. The word *bind* in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.
-
-`gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);`
-
-Copies the data from the `vertices` array into the VBO which is the currently bound buffer. The `gl.STATIC_DRAW` input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.
-
-`gl.bindBuffer(gl.ARRAY_BUFFER, null);`
-
-Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.
+- `gl.bindBuffer(gl.ARRAY_BUFFER, null);` Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.
 
 (lab01-vertex-shader)=
 
@@ -235,13 +219,13 @@ void main() {
 
 This code is explained below
 
-`#version 300 es` -- Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.
+- `#version 300 es`: Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.
 
-`precision mediump float;` -- Sets the default float precision to medium (16-bit).
+- `precision mediump float;`: Sets the default float precision to medium (16-bit).
 
-`in vec3 aPosition;` -- Tells the shader that we are inputting a 3-element vector for the vertex position (the `a` in `aPosition` is short for attribute).
+- `in vec3 aPosition;`: Tells the shader that we are inputting a 3-element vector for the vertex position (the `a` in `aPosition` is short for attribute).
 
-`gl_Position = vec4(aPosition, 1.0);` -- Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it's a 4-element vector will be covered later when we look at transformations). The `gl_Position` variable is a required output of every vertex shader.
+- `gl_Position = vec4(aPosition, 1.0);`: Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it's a 4-element vector will be covered later when we look at transformations). The `gl_Position` variable is a required output of every vertex shader.
 
 The simplest way of entering shader code into our JavaScript file is to define it as a multiline string.
 
@@ -409,22 +393,22 @@ gl.vertexAttribPointer(
 
 The functions used here are explained below;
 
-`const positionLocation = gl.getAttribLocation(program, 'aPosition');` -- Gets the location of the `aPosition` attribute from the WebGL shader program.
+- `const positionLocation = gl.getAttribLocation(program, 'aPosition');`: Gets the location of the `aPosition` attribute from the WebGL shader program.
 
-`gl.enableVertexAttribArray(0);` -- Enables a vertex attribute with location `0` so that WebGL knows to read data from the VBO and pass it to the vertex shader.
+- `gl.enableVertexAttribArray(0);`: Enables a vertex attribute with location `0` so that WebGL knows to read data from the VBO and pass it to the vertex shader.
 
-`gl.bindBuffer(gl.Array_BUFFER, vbo);` -- Make the VBO the currently active buffer.
+- `gl.bindBuffer(gl.Array_BUFFER, vbo);`: Make the VBO the currently active buffer.
 
-`gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);` -- Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution `0`. The inputs are explained in the table below.
+- `gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);`: Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution `0`. The inputs are explained in the table below.
 
 | Input | Description |
 |:--|:--|
 | index | Attribute location. We stored this in the `positionLocation` variable using the `gl.getAttribLocation()` function. |
-| size | Number of components per vertex, We have 3D $(x, y, z)$ co-ordinates, so this is 3. |
-| type | Data type. We are using floats. |
-| normalized | Whether integer values should be mapped to $[0, 1]$ or $[-1, 1]$. Our vertex co-ordinates are in NDC, so we don't need to do this. |
-| stride | Number of bytes between first attribute of each vertex. Our data is tightly packed, so we can set the stride to 0, if the array buffer contained other data, e.g., colours, then we would need to determine the number of bytes between the first attribute, e.g., the $x$ co-ordinates. |
-| offset | Number of bytes from the start of the buffer the attribute of the first vertex. Our first vertex co-ordinate is the first element in the buffer, so this is 0. |
+| size | Number of components per vertex, We have 3D $(x, y, z)$ co-ordinates, so this is `3`. |
+| type | Data type. We are using floats so this is `gl_FLOAT` |
+| normalized | Whether integer values should be mapped to $[0, 1]$ or $[-1, 1]$. Our vertex co-ordinates are in NDC, so we don't need to do this, so we set this to `false`. |
+| stride | Number of bytes between first attribute of each vertex. Our data is tightly packed, so we can set the stride to `0`, if the array buffer contained other data, e.g., colours, then we would need to determine the number of bytes between the first attribute, e.g., the $x$ co-ordinates. |
+| offset | Number of bytes from the start of the buffer the attribute of the first vertex. Our first vertex co-ordinate is the first element in the buffer, so this is `0`. |
 
 The last thing we need to do is actually tell WebGL to draw the triangle.
 
@@ -471,7 +455,7 @@ Looking at our `main()` function we see that the code to compile and link the sh
 ::::{admonition} Task
 :class: tip
 
-Create a new JavaScript files called ***webGLUtils.js*** within the ***01 Basic Shapes*** folder and enter the following code.
+Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 1 Basic Shapes*** folder and enter the following code.
 
 ```javascript
 // Initialize WebGL context
@@ -627,7 +611,7 @@ const vertices = new Float32Array([
 
 ::::
 
-Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas ({ref}`skewed-triangle-figure`). The reason why its skewed is that when we told WebGL how to read the vertex buffer using `gl.vertexAttribPointer(colourLocation, 3, gl.FLOAT, false, 0, 0);`. This means that WebGL is expected no gaps between the vertex co-ordinate data since the `stride` input (the second to last input) is `0`, so it thinks the 3 vertex co-ordinates are $(-0.5, -0.5, 0)$, $(1, 0, 0)$ and $(0.5, -0.5, 0)$.
+Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas ({numref}`skewed-triangle-figure`). The reason why its skewed is that when we told WebGL how to read the vertex buffer using `gl.vertexAttribPointer(colourLocation, 3, gl.FLOAT, false, 0, 0);`. This means that WebGL is expected no gaps between the vertex co-ordinate data since the stride input (the second to last input) is `0`, so it thinks the 3 vertex co-ordinates are $(-0.5, -0.5, 0)$, $(1, 0, 0)$ and $(0.5, -0.5, 0)$.
 
 ```{figure} ../_images/01_skewed_triangle.png
 :width: 80%
@@ -636,7 +620,7 @@ Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2
 Oops, something has gone wrong.
 ```
 
-This is where the stride input for the `gl.vertexAttribPointer()` function comes in. Stride is the number of bytes from the start of the attribute (in our case the $x$ vertex co-ordinate) for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the $(x, y, z)$ values and 3 for the RGB values.
+The stride is the number of bytes from the start of the attribute, in our case the $x$ vertex co-ordinate, for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the $(x, y, z)$ values and 3 for the RGB values.
 
 ```{figure} ../_images/01_stride_offset.svg
 :width: 70%
@@ -758,7 +742,7 @@ gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 ::::
 
-This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two squares, we change the 3 to a 6 in the `gl.drawArrays()` function.
+This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two triangles, we change the 3 to a 6 in the `gl.drawArrays()` function.
 
 ```{figure} ../_images/01_triangle_and_square.png
 :width: 80%
@@ -833,7 +817,7 @@ gl.bindVertexArray(squareVAO);
 gl.drawArrays(gl.TRIANGLES, 0, 6);
 ```
 
-Your `main()` function should not look like the following.
+Your `main()` function should not look something like the following.
 
 ```javascript
 function main() {

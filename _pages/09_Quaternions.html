@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Appendix A: Complex Numbers and Quaternions" href="A1_Complex_numbers_and_quaternions.html" />
-    <link rel="prev" title="Lab 9: Normal Mapping" href="08_Normal_mapping.html" />
+    <link rel="prev" title="Lab 8: Normal Mapping" href="08_Normal_mapping.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -195,7 +195,7 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
@@ -428,7 +428,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/10_Euler_angles.svg"><img alt="../_images/10_Euler_angles.svg" src="../_images/10_Euler_angles.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 110 </span><span class="caption-text">The pitch, yaw and roll Euler angles.</span><a class="headerlink" href="#euler-angles-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">The pitch, yaw and roll Euler angles.</span><a class="headerlink" href="#euler-angles-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The angles that we use to define the rotation around each of the axes are known as <strong>Euler angles</strong> and we use the names <strong>pitch</strong>, <strong>yaw</strong> and <strong>roll</strong> for the rotation around the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes respectively. The problem with using a composite of Euler angles rotations is that for certain alignments we can experience <a href="https://en.wikipedia.org/wiki/Gimbal_lock" target="_blank"><strong>gimbal lock</strong></a> where two of the rotation axes are aligned leading to a loss of a degree of freedom causing the composite rotation to be <em>locked</em> into a 2D rotation.</p>
@@ -460,15 +460,15 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ z = x + yi, \]</div>
 <p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are real numbers, <span class="math notranslate nohighlight">\(x\)</span> is known as the <strong>real part</strong> and <span class="math notranslate nohighlight">\(y\)</span> is known as the <strong>imaginary part</strong> of a complex number.</p>
-<p>Since a complex number consists of two parts we can plot them on a 2D space called the <strong>complex plane</strong> where the horizontal axis is used to represent the real part and the vertical axis is used to represent the imaginary part (<a class="reference internal" href="#complex-plane-figure"><span class="std std-numref">Fig. 111</span></a>).</p>
+<p>Since a complex number consists of two parts we can plot them on a 2D space called the <strong>complex plane</strong> where the horizontal axis is used to represent the real part and the vertical axis is used to represent the imaginary part (<a class="reference internal" href="#complex-plane-figure"><span class="std std-numref">Fig. 112</span></a>).</p>
 <figure class="align-default" id="complex-plane-figure">
 <a class="reference internal image-reference" href="../_images/10_Complex_plane.svg"><img alt="../_images/10_Complex_plane.svg" src="../_images/10_Complex_plane.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 111 </span><span class="caption-text">The complex number <span class="math notranslate nohighlight">\(z = x + yi\)</span> plotted on the complex plane.</span><a class="headerlink" href="#complex-plane-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 112 </span><span class="caption-text">The complex number <span class="math notranslate nohighlight">\(z = x + yi\)</span> plotted on the complex plane.</span><a class="headerlink" href="#complex-plane-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We can see from <a class="reference internal" href="#complex-plane-figure"><span class="std std-numref">Fig. 111</span></a> that a complex number <span class="math notranslate nohighlight">\(z = x + yi\)</span> can be thought of as a 2D vector pointing from <span class="math notranslate nohighlight">\((0,0)\)</span> to <span class="math notranslate nohighlight">\((x, y)\)</span>. The length of this vector is known as the <strong>magnitude</strong> of <span class="math notranslate nohighlight">\(z\)</span> denoted by <span class="math notranslate nohighlight">\(|z|\)</span> and calculated using</p>
+<p>We can see from <a class="reference internal" href="#complex-plane-figure"><span class="std std-numref">Fig. 112</span></a> that a complex number <span class="math notranslate nohighlight">\(z = x + yi\)</span> can be thought of as a 2D vector pointing from <span class="math notranslate nohighlight">\((0,0)\)</span> to <span class="math notranslate nohighlight">\((x, y)\)</span>. The length of this vector is known as the <strong>magnitude</strong> of <span class="math notranslate nohighlight">\(z\)</span> denoted by <span class="math notranslate nohighlight">\(|z|\)</span> and calculated using</p>
 <div class="math notranslate nohighlight">
 \[|z| = \sqrt{x^2 + y^2}.\]</div>
 <section id="rotation-using-complex-numbers">
@@ -481,20 +481,20 @@ document.write(`
     (-2 - i)i &amp;= -2i - i^2 = 1 - 2i, \\
     (1 - 2i)i &amp;= i - 2i^2 = 2 + i.
 \end{align*} \end{split}\]</div>
-<p>So after mulitplying <span class="math notranslate nohighlight">\(2 + i\)</span> by <span class="math notranslate nohighlight">\(i\)</span> four times we are back to where we started. <a class="reference internal" href="#complex-rotation-figure"><span class="std std-numref">Fig. 112</span></a> shows these complex numbers plotted on the complex plane. Note how they have been rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> each time.</p>
+<p>So after mulitplying <span class="math notranslate nohighlight">\(2 + i\)</span> by <span class="math notranslate nohighlight">\(i\)</span> four times we are back to where we started. <a class="reference internal" href="#complex-rotation-figure"><span class="std std-numref">Fig. 113</span></a> shows these complex numbers plotted on the complex plane. Note how they have been rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> each time.</p>
 <figure class="align-default" id="complex-rotation-figure">
 <a class="reference internal image-reference" href="../_images/10_Complex_rotation.svg"><img alt="../_images/10_Complex_rotation.svg" src="../_images/10_Complex_rotation.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 112 </span><span class="caption-text">Rotation of the complex number <span class="math notranslate nohighlight">\(2 + i\)</span> by repeated multiplying by <span class="math notranslate nohighlight">\(i\)</span>.</span><a class="headerlink" href="#complex-rotation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Rotation of the complex number <span class="math notranslate nohighlight">\(2 + i\)</span> by repeated multiplying by <span class="math notranslate nohighlight">\(i\)</span>.</span><a class="headerlink" href="#complex-rotation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>So we have seen that multiplying a number by <span class="math notranslate nohighlight">\(i\)</span> rotates it by 90<span class="math notranslate nohighlight">\(^\circ\)</span>, so how do we rotate a number by a different angle? <a class="reference internal" href="#complex-rotation-2-figure"><span class="std std-numref">Fig. 113</span></a> shows the rotation of the number 1 by <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</p>
+<p>So we have seen that multiplying a number by <span class="math notranslate nohighlight">\(i\)</span> rotates it by 90<span class="math notranslate nohighlight">\(^\circ\)</span>, so how do we rotate a number by a different angle? <a class="reference internal" href="#complex-rotation-2-figure"><span class="std std-numref">Fig. 114</span></a> shows the rotation of the number 1 by <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</p>
 <figure class="align-default" id="complex-rotation-2-figure">
 <a class="reference internal image-reference" href="../_images/10_Complex_rotation_2.svg"><img alt="../_images/10_Complex_rotation_2.svg" src="../_images/10_Complex_rotation_2.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 113 </span><span class="caption-text">The complex number <span class="math notranslate nohighlight">\(z\)</span> is the real number 1 rotated <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</span><a class="headerlink" href="#complex-rotation-2-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 114 </span><span class="caption-text">The complex number <span class="math notranslate nohighlight">\(z\)</span> is the real number 1 rotated <span class="math notranslate nohighlight">\(\theta\)</span> anti-clockwise in the complex plane.</span><a class="headerlink" href="#complex-rotation-2-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Recall that <span class="math notranslate nohighlight">\(\cos(\theta) = \dfrac{adjacent}{hypotenuse}\)</span> and <span class="math notranslate nohighlight">\(\sin(\theta) = \dfrac{opposite}{hypotenuse}\)</span> and since the hypotenuse is 1 then</p>
@@ -562,7 +562,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/04_axis_angle_rotation.svg"><img alt="../_images/04_axis_angle_rotation.svg" src="../_images/04_axis_angle_rotation.svg" style="height: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 114 </span><span class="caption-text">Axis-angle rotation.</span><a class="headerlink" href="#axis-angle-rotation-figure-2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 115 </span><span class="caption-text">Axis-angle rotation.</span><a class="headerlink" href="#axis-angle-rotation-figure-2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to <span class="math notranslate nohighlight">\(qpq^*\)</span>. If <span class="math notranslate nohighlight">\(q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}] = [w, (x, y, z)]\)</span> is the rotation quaternion, then the corresponding rotation matrix is</p>
@@ -726,7 +726,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 115 </span><span class="caption-text">Linear interpolation between two points.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 116 </span><span class="caption-text">Linear interpolation between two points.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>If <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_2\)</span> are two points then another point, <span class="math notranslate nohighlight">\(\mathbf{v}_t\)</span>, that lies on the line between <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_2\)</span> is calculated using</p>
@@ -738,10 +738,10 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/10_SLERP.svg"><img alt="../_images/10_SLERP.svg" src="../_images/10_SLERP.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 116 </span><span class="caption-text">SLERP interpolation between two points on a sphere.</span><a class="headerlink" href="#a-slerp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 117 </span><span class="caption-text">SLERP interpolation between two points on a sphere.</span><a class="headerlink" href="#a-slerp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 116</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
+<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 117</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
 <div class="math notranslate nohighlight" id="equation-slerp-equation">
 <span class="eqno">(29)<a class="headerlink" href="#equation-slerp-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
     \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
@@ -805,10 +805,10 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 117 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 118 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\mathbf{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 117</span></a>.</p>
+<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\mathbf{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 118</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[ View = Translate(\mathbf{offset}) \cdot View \]</div>
 <p>The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
@@ -825,12 +825,12 @@ document.write(`
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 118</span></a>).</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 119</span></a>).</p>
 <figure class="align-default" id="third-person-camera-figure-2">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 118 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 119 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -893,7 +893,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lab 9: Normal Mapping</p>
+        <p class="prev-next-title">Lab 8: Normal Mapping</p>
       </div>
     </a>
     <a class="right-next"

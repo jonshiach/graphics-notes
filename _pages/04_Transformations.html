@@ -195,9 +195,8 @@
 <li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_More_lights.html">Lab 8: More Lights</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -427,7 +426,7 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\((x',y',z')\)</span> are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>04 Transformations</strong></em> and copy across the files from your <em><strong>02 Textures</strong></em> folder. Rename <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em>, change the title of the web page to ‘Lab 04 - Transformations’ and add a script for the <em><strong>maths.js</strong></em> file.</p>
+<p>Create a folder called <em><strong>Lab 4 Transformations</strong></em> and copy across the files from your <em><strong>Lab 2 Textures</strong></em> folder. Rename <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em>, change the title of the web page to ‘Lab 04 - Transformations’ and add a script for the <em><strong>maths.js</strong></em> file.</p>
 </div>
 <p>Load <em><strong>index.html</strong></em> using a live server and you should see the textured rectangle from <a class="reference internal" href="02_Textures.html#textures-section"><span class="std std-ref">Lab 3 - Textures</span></a>.</p>
 <figure class="align-default">
@@ -445,12 +444,12 @@ document.write(`
 <li><p>the middle finger points along the positive <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
 </ul>
 <p>The other way of representing 3D space is to use a left-hand coordinate system which is the same but on your left hand.</p>
-<p><strong>WebGL uses the right-handed coordinate system</strong> where the <span class="math notranslate nohighlight">\(x\)</span>-axis points to the right of the screen, the <span class="math notranslate nohighlight">\(y\)</span>-axis points towards the top of the screen and the <span class="math notranslate nohighlight">\(z\)</span>-axis points out of the screen towards you (<a class="reference internal" href="#webgl-co-ordinate-figure"><span class="std std-numref">Fig. 26</span></a>).</p>
+<p><strong>WebGL uses the right-handed coordinate system</strong> where the <span class="math notranslate nohighlight">\(x\)</span>-axis points to the right of the screen, the <span class="math notranslate nohighlight">\(y\)</span>-axis points towards the top of the screen and the <span class="math notranslate nohighlight">\(z\)</span>-axis points out of the screen towards you (<a class="reference internal" href="#webgl-co-ordinate-figure"><span class="std std-numref">Fig. 27</span></a>).</p>
 <figure class="align-default" id="webgl-co-ordinate-figure">
 <a class="reference internal image-reference" href="../_images/04_webgl_axes.svg"><img alt="../_images/04_webgl_axes.svg" src="../_images/04_webgl_axes.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 26 </span><span class="caption-text">The WebGL co-ordinate system.</span><a class="headerlink" href="#webgl-co-ordinate-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">The WebGL co-ordinate system.</span><a class="headerlink" href="#webgl-co-ordinate-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraies that use the left-handed coordinate system include DirectX, Direct3D and Unity.</p>
@@ -458,12 +457,12 @@ document.write(`
 </section>
 <section id="translation">
 <span id="translation-section"></span><h2>Translation<a class="headerlink" href="#translation" title="Link to this heading">#</a></h2>
-<p>The <strong>translation</strong> transformation when applied to a set of points moves each point by the same amount. For example, consider the triangle in <a class="reference internal" href="#translation-figure"><span class="std std-numref">Fig. 27</span></a>, each of the vertices has been translated by the same vector <span class="math notranslate nohighlight">\(\vec{t}\)</span> which has that effect of moving the triangle.</p>
+<p>The <strong>translation</strong> transformation when applied to a set of points moves each point by the same amount. For example, consider the triangle in <a class="reference internal" href="#translation-figure"><span class="std std-numref">Fig. 28</span></a>, each of the vertices has been translated by the same vector <span class="math notranslate nohighlight">\(\vec{t}\)</span> which has that effect of moving the triangle.</p>
 <figure class="align-default" id="translation-figure">
 <a class="reference internal image-reference" href="../_images/04_translation.svg"><img alt="../_images/04_translation.svg" src="../_images/04_translation.svg" style="height: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Translation of a triangle by the translation vector <span class="math notranslate nohighlight">\(\vec{t}= (t_x, t_y, t_z)\)</span>.</span><a class="headerlink" href="#translation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Translation of a triangle by the translation vector <span class="math notranslate nohighlight">\(\vec{t}= (t_x, t_y, t_z)\)</span>.</span><a class="headerlink" href="#translation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>A problem we have is that no transformation matrix exists for applying translation to the coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span>, i.e., we can’t find a matrix <span class="math notranslate nohighlight">\(Translate\)</span> such that</p>
@@ -558,24 +557,24 @@ Translate = \begin{pmatrix}
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser and you should see that our rectangle has been translated to the right and up a bit as shown in <a class="reference internal" href="#translate-rectangle-figure"><span class="std std-numref">Fig. 28</span></a>.</p>
+<p>Refresh your web browser and you should see that our rectangle has been translated to the right and up a bit as shown in <a class="reference internal" href="#translate-rectangle-figure"><span class="std std-numref">Fig. 29</span></a>.</p>
 <figure class="align-default" id="translate-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/04_translation.png"><img alt="../_images/04_translation.png" src="../_images/04_translation.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">The rectangle is translated by the vector <span class="math notranslate nohighlight">\((0.4, 0.3, 0)\)</span>.</span><a class="headerlink" href="#translate-rectangle-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">The rectangle is translated by the vector <span class="math notranslate nohighlight">\((0.4, 0.3, 0)\)</span>.</span><a class="headerlink" href="#translate-rectangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <hr class="docutils" />
 <section id="scaling">
 <h2>Scaling<a class="headerlink" href="#scaling" title="Link to this heading">#</a></h2>
-<p>Scaling is one of the simplest transformation we can apply. Multiplying the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in <a class="reference internal" href="#scaling-about-origin-figure"><span class="std std-numref">Fig. 29</span></a>. The <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of each vertex has been multiplied by <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_y\)</span> respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_z\)</span> are all greater than 1).</p>
+<p>Scaling is one of the simplest transformation we can apply. Multiplying the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in <a class="reference internal" href="#scaling-about-origin-figure"><span class="std std-numref">Fig. 30</span></a>. The <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> coordinates of each vertex has been multiplied by <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_y\)</span> respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because <span class="math notranslate nohighlight">\(s_x\)</span>, <span class="math notranslate nohighlight">\(s_y\)</span> and <span class="math notranslate nohighlight">\(s_z\)</span> are all greater than 1).</p>
 <figure class="align-default" id="scaling-about-origin-figure">
 <a class="reference internal image-reference" href="../_images/04_scaling.svg"><img alt="../_images/04_scaling.svg" src="../_images/04_scaling.svg" style="height: 350px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 29 </span><span class="caption-text">Scaling a triangle centred at the origin.</span><a class="headerlink" href="#scaling-about-origin-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Scaling a triangle centred at the origin.</span><a class="headerlink" href="#scaling-about-origin-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Since scaling is simply multiplying the coordinates by a number we have</p>
@@ -632,30 +631,30 @@ Translate = \begin{pmatrix}
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser and you should see that our rectangle has been scaled down as shown in <a class="reference internal" href="#scaling-rectangle-figure"><span class="std std-numref">Fig. 30</span></a>.</p>
+<p>Refresh your web browser and you should see that our rectangle has been scaled down as shown in <a class="reference internal" href="#scaling-rectangle-figure"><span class="std std-numref">Fig. 31</span></a>.</p>
 <figure class="align-default" id="scaling-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/04_scaling.png"><img alt="../_images/04_scaling.png" src="../_images/04_scaling.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 30 </span><span class="caption-text">The rectangle is scaled by the vector <span class="math notranslate nohighlight">\((0.5, 0.4, 1)\)</span>.</span><a class="headerlink" href="#scaling-rectangle-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text">The rectangle is scaled by the vector <span class="math notranslate nohighlight">\((0.5, 0.4, 1)\)</span>.</span><a class="headerlink" href="#scaling-rectangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If scaling is applied to a shape that is not centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> then the transformed shape is distorted and its centre is moved from its original position (<a class="reference internal" href="#scaling-not-centred-figure"><span class="std std-numref">Fig. 31</span></a>).</p>
+<p>If scaling is applied to a shape that is not centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> then the transformed shape is distorted and its centre is moved from its original position (<a class="reference internal" href="#scaling-not-centred-figure"><span class="std std-numref">Fig. 32</span></a>).</p>
 <figure class="align-default" id="scaling-not-centred-figure">
 <a class="reference internal image-reference" href="../_images/04_scaling_not_centred.svg"><img alt="../_images/04_scaling_not_centred.svg" src="../_images/04_scaling_not_centred.svg" style="width: 550px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Scaling applied to a triangle not centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span>.</span><a class="headerlink" href="#scaling-not-centred-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Scaling applied to a triangle not centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span>.</span><a class="headerlink" href="#scaling-not-centred-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex coordinates by <span class="math notranslate nohighlight">\(-\vec{c}\)</span> where <span class="math notranslate nohighlight">\(\vec{c}\)</span> is the centre of volume for the shape so that it is at <span class="math notranslate nohighlight">\((0,0,0)\)</span>. Then we can apply the scaling before translating by <span class="math notranslate nohighlight">\(\vec{c}\)</span> so that the centre of volume is back at the original position (<a class="reference internal" href="#scaling-about-centre-figure"><span class="std std-numref">Fig. 32</span></a>).</p>
+<p>If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex coordinates by <span class="math notranslate nohighlight">\(-\vec{c}\)</span> where <span class="math notranslate nohighlight">\(\vec{c}\)</span> is the centre of volume for the shape so that it is at <span class="math notranslate nohighlight">\((0,0,0)\)</span>. Then we can apply the scaling before translating by <span class="math notranslate nohighlight">\(\vec{c}\)</span> so that the centre of volume is back at the original position (<a class="reference internal" href="#scaling-about-centre-figure"><span class="std std-numref">Fig. 33</span></a>).</p>
 <figure class="align-default" id="scaling-about-centre-figure">
 <a class="reference internal image-reference" href="../_images/04_scaling_about_centre.svg"><img alt="../_images/04_scaling_about_centre.svg" src="../_images/04_scaling_about_centre.svg" style="width: 700px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 32 </span><span class="caption-text">The steps required to scale a shape about its centre.</span><a class="headerlink" href="#scaling-about-centre-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">The steps required to scale a shape about its centre.</span><a class="headerlink" href="#scaling-about-centre-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -663,12 +662,12 @@ Translate = \begin{pmatrix}
 </section>
 <section id="rotation">
 <span id="rotation-section"></span><h2>Rotation<a class="headerlink" href="#rotation" title="Link to this heading">#</a></h2>
-<p>As well as translating and scaling objects, the next most common transformation is the rotation of objects around the three co-ordinate axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>. We define the rotation <strong>anti-clockwise</strong> around each of the co-ordinate axes by an angle <span class="math notranslate nohighlight">\(\theta\)</span> when looking down the axes (<a class="reference internal" href="#d-rotation-figure"><span class="std std-numref">Fig. 33</span></a>).</p>
+<p>As well as translating and scaling objects, the next most common transformation is the rotation of objects around the three co-ordinate axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>. We define the rotation <strong>anti-clockwise</strong> around each of the co-ordinate axes by an angle <span class="math notranslate nohighlight">\(\theta\)</span> when looking down the axes (<a class="reference internal" href="#d-rotation-figure"><span class="std std-numref">Fig. 34</span></a>).</p>
 <figure class="align-default" id="d-rotation-figure">
 <a class="reference internal image-reference" href="../_images/04_3D_rotation.svg"><img alt="../_images/04_3D_rotation.svg" src="../_images/04_3D_rotation.svg" style="height: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Rotation is assumed to be in the anti-clockwise direction when looking down the axis.</span><a class="headerlink" href="#d-rotation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Rotation is assumed to be in the anti-clockwise direction when looking down the axis.</span><a class="headerlink" href="#d-rotation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The rotation matrices for achieving these rotations are</p>
@@ -705,10 +704,10 @@ Translate = \begin{pmatrix}
 <a class="reference internal image-reference" href="../_images/04_rotation.svg"><img alt="../_images/04_rotation.svg" src="../_images/04_rotation.svg" style="height: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Rotating the vector <span class="math notranslate nohighlight">\(\vec{a}\)</span> anti-clockwise by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\vec{b}\)</span>.</span><a class="headerlink" href="#rotation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Rotating the vector <span class="math notranslate nohighlight">\(\vec{a}\)</span> anti-clockwise by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\vec{b}\)</span>.</span><a class="headerlink" href="#rotation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p class="sd-card-text">Consider <a class="reference internal" href="#rotation-figure"><span class="std std-numref">Fig. 34</span></a> where the vector <span class="math notranslate nohighlight">\(\vec{a}\)</span> is rotated by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\vec{b}\)</span>. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, <span class="math notranslate nohighlight">\(\|\vec{a}\|\)</span>, and the angle <span class="math notranslate nohighlight">\(\theta\)</span>, so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#rotation-figure"><span class="std std-numref">Fig. 35</span></a> where the vector <span class="math notranslate nohighlight">\(\vec{a}\)</span> is rotated by angle <span class="math notranslate nohighlight">\(\theta\)</span> to the vector <span class="math notranslate nohighlight">\(\vec{b}\)</span>. If we form a right-angled triangle (the blue one) then we know the length of the hypotenuse, <span class="math notranslate nohighlight">\(\|\vec{a}\|\)</span>, and the angle <span class="math notranslate nohighlight">\(\theta\)</span>, so we can calculate the lengths of the adjacent and opposite sides using trigonometry. Remember our trig ratios (SOH-CAH-TOA)</p>
 <div class="math notranslate nohighlight">
 \[\begin{align*}
     \sin(\phi) &amp;= \frac{opposite}{hypotenuse}, &amp;
@@ -811,23 +810,23 @@ Translate = \begin{pmatrix}
 </pre></div>
 </div>
 </div>
-<p>Here we defined a function to the matrix class to calculate the rotation matrix. Refresh your web browser, and you should see that our rectangle has been rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> degrees in the anti-clockwise direction as shown in <a class="reference internal" href="#rotation-rectangle-figure"><span class="std std-numref">Fig. 35</span></a>.</p>
+<p>Here we defined a function to the matrix class to calculate the rotation matrix. Refresh your web browser, and you should see that our rectangle has been rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> degrees in the anti-clockwise direction as shown in <a class="reference internal" href="#rotation-rectangle-figure"><span class="std std-numref">Fig. 36</span></a>.</p>
 <figure class="align-default" id="rotation-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/04_rotation.png"><img alt="../_images/04_rotation.png" src="../_images/04_rotation.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Rectangle rotated anti-clockwise about the <span class="math notranslate nohighlight">\(z\)</span>-axis by <span class="math notranslate nohighlight">\(45^\circ\)</span>.</span><a class="headerlink" href="#rotation-rectangle-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">Rectangle rotated anti-clockwise about the <span class="math notranslate nohighlight">\(z\)</span>-axis by <span class="math notranslate nohighlight">\(45^\circ\)</span>.</span><a class="headerlink" href="#rotation-rectangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <hr class="docutils" />
 <section id="axis-angle-rotation">
 <span id="axis-angle-rotation-section"></span><h3>Axis-angle rotation<a class="headerlink" href="#axis-angle-rotation" title="Link to this heading">#</a></h3>
-<p>The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector <span class="math notranslate nohighlight">\(\hat{v}\)</span> which has its tail at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#axis-angle-rotation-figure"><span class="std std-numref">Fig. 36</span></a>).</p>
+<p>The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector <span class="math notranslate nohighlight">\(\hat{v}\)</span> which has its tail at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#axis-angle-rotation-figure"><span class="std std-numref">Fig. 37</span></a>).</p>
 <figure class="align-default" id="axis-angle-rotation-figure">
 <a class="reference internal image-reference" href="../_images/04_axis_angle_rotation.svg"><img alt="../_images/04_axis_angle_rotation.svg" src="../_images/04_axis_angle_rotation.svg" style="height: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 36 </span><span class="caption-text">Axis-angle rotation.</span><a class="headerlink" href="#axis-angle-rotation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Axis-angle rotation.</span><a class="headerlink" href="#axis-angle-rotation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The transposed transformation matrix for rotation around a unit vector <span class="math notranslate nohighlight">\(\hat{v} = (v_x, v_y, v_z)\)</span>, anti-clockwise by angle <span class="math notranslate nohighlight">\(\theta\)</span> when looking down the vector is.</p>
@@ -864,13 +863,13 @@ Translate = \begin{pmatrix}
 </ol>
 <hr class="docutils" />
 <ol class="arabic simple">
-<li><p class="sd-card-text">The rotation around the <span class="math notranslate nohighlight">\(x\)</span>-axis is achieved by forming a right-angled triangle in the <span class="math notranslate nohighlight">\(yz\)</span>-plane where the angle of rotation <span class="math notranslate nohighlight">\(\theta\)</span> has an adjacent side of length <span class="math notranslate nohighlight">\(v_z\)</span>, an opposite side of length <span class="math notranslate nohighlight">\(v_y\)</span> and a hypotenuse of length <span class="math notranslate nohighlight">\(\sqrt{v_y^2 + v_z^2}\)</span> (<a class="reference internal" href="#axis-angle-rotation1-figure"><span class="std std-numref">Fig. 37</span></a>).</p></li>
+<li><p class="sd-card-text">The rotation around the <span class="math notranslate nohighlight">\(x\)</span>-axis is achieved by forming a right-angled triangle in the <span class="math notranslate nohighlight">\(yz\)</span>-plane where the angle of rotation <span class="math notranslate nohighlight">\(\theta\)</span> has an adjacent side of length <span class="math notranslate nohighlight">\(v_z\)</span>, an opposite side of length <span class="math notranslate nohighlight">\(v_y\)</span> and a hypotenuse of length <span class="math notranslate nohighlight">\(\sqrt{v_y^2 + v_z^2}\)</span> (<a class="reference internal" href="#axis-angle-rotation1-figure"><span class="std std-numref">Fig. 38</span></a>).</p></li>
 </ol>
 <figure class="align-default" id="axis-angle-rotation1-figure">
 <a class="reference internal image-reference" href="../_images/04_axis_angle_rotation_1.svg"><img alt="../_images/04_axis_angle_rotation_1.svg" src="../_images/04_axis_angle_rotation_1.svg" style="height: 250px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Rotate <span class="math notranslate nohighlight">\(\vec{v}\)</span> around the <span class="math notranslate nohighlight">\(x\)</span>-axis</span><a class="headerlink" href="#axis-angle-rotation1-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Rotate <span class="math notranslate nohighlight">\(\vec{v}\)</span> around the <span class="math notranslate nohighlight">\(x\)</span>-axis</span><a class="headerlink" href="#axis-angle-rotation1-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text">Therefore, <span class="math notranslate nohighlight">\(\cos(\theta) = \dfrac{v_z}{\sqrt{v_y^2 + v_z^2}}\)</span> and <span class="math notranslate nohighlight">\(\sin(\theta) = \dfrac{v_y}{\sqrt{v_y^2 + v_z^2}}\)</span> so the rotation matrix is</p>
@@ -884,13 +883,13 @@ Translate = \begin{pmatrix}
 \end{pmatrix}.\end{split}\]</div>
 <hr class="docutils" />
 <ol class="arabic simple" start="2">
-<li><p class="sd-card-text">The rotation around the <span class="math notranslate nohighlight">\(y\)</span>-axis is achieved by forming another right-angled triangle in the <span class="math notranslate nohighlight">\(xz\)</span>-plane where <span class="math notranslate nohighlight">\(\theta\)</span> has an adjacent side of length <span class="math notranslate nohighlight">\(\sqrt{v_y^2 + v_z^2}\)</span>, an opposite side of length <span class="math notranslate nohighlight">\(v_x\)</span> and a hypotenuse of length 1 since <span class="math notranslate nohighlight">\(\hat{v}\)</span> is a unit vector (<a class="reference internal" href="#axis-angle-rotation2-figure"><span class="std std-numref">Fig. 38</span></a>).</p></li>
+<li><p class="sd-card-text">The rotation around the <span class="math notranslate nohighlight">\(y\)</span>-axis is achieved by forming another right-angled triangle in the <span class="math notranslate nohighlight">\(xz\)</span>-plane where <span class="math notranslate nohighlight">\(\theta\)</span> has an adjacent side of length <span class="math notranslate nohighlight">\(\sqrt{v_y^2 + v_z^2}\)</span>, an opposite side of length <span class="math notranslate nohighlight">\(v_x\)</span> and a hypotenuse of length 1 since <span class="math notranslate nohighlight">\(\hat{v}\)</span> is a unit vector (<a class="reference internal" href="#axis-angle-rotation2-figure"><span class="std std-numref">Fig. 39</span></a>).</p></li>
 </ol>
 <figure class="align-default" id="axis-angle-rotation2-figure">
 <a class="reference internal image-reference" href="../_images/04_axis_angle_rotation_2.svg"><img alt="../_images/04_axis_angle_rotation_2.svg" src="../_images/04_axis_angle_rotation_2.svg" style="height: 250px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Rotate around the <span class="math notranslate nohighlight">\(y\)</span>-axis</span><a class="headerlink" href="#axis-angle-rotation2-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Rotate around the <span class="math notranslate nohighlight">\(y\)</span>-axis</span><a class="headerlink" href="#axis-angle-rotation2-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p class="sd-card-text">Therefore, <span class="math notranslate nohighlight">\(\cos(\theta) = \sqrt{v_y^2 + v_z^2}\)</span> and <span class="math notranslate nohighlight">\(\sin(\theta) = v_x\)</span>. Note that here we are rotating in the clockwise direction so the rotation matrix is</p>
@@ -1007,7 +1006,7 @@ Translate = \begin{pmatrix}
 </pre></div>
 </div>
 </div>
-<p>Here we have changed our function for calculating the rotation matrix so that it uses axis-angle rotation and have used it to rotate the rectangle by <span class="math notranslate nohighlight">\(45^\circ\)</span> anti-clockwise about a vector pointing along the <span class="math notranslate nohighlight">\(z\)</span>-axis (i.e., straight out of the screen towards you). Refreshing your browser, and you should see that the output doesn’t change (<a class="reference internal" href="#rotation-rectangle-figure"><span class="std std-numref">Fig. 35</span></a>).</p>
+<p>Here we have changed our function for calculating the rotation matrix so that it uses axis-angle rotation and have used it to rotate the rectangle by <span class="math notranslate nohighlight">\(45^\circ\)</span> anti-clockwise about a vector pointing along the <span class="math notranslate nohighlight">\(z\)</span>-axis (i.e., straight out of the screen towards you). Refreshing your browser, and you should see that the output doesn’t change (<a class="reference internal" href="#rotation-rectangle-figure"><span class="std std-numref">Fig. 36</span></a>).</p>
 <hr class="docutils" />
 </section>
 </section>
@@ -1042,12 +1041,12 @@ Translate = \begin{pmatrix}
 </pre></div>
 </div>
 </div>
-<p>Refresh your web browser, and you should see that the rectangle has been scaled down, rotated anti-clockwise and then translated as shown in <a class="reference internal" href="#composite-transformation-figure"><span class="std std-numref">Fig. 39</span></a>.</p>
+<p>Refresh your web browser, and you should see that the rectangle has been scaled down, rotated anti-clockwise and then translated as shown in <a class="reference internal" href="#composite-transformation-figure"><span class="std std-numref">Fig. 40</span></a>.</p>
 <figure class="align-default" id="composite-transformation-figure">
 <a class="reference internal image-reference" href="../_images/04_composite_transformation.png"><img alt="../_images/04_composite_transformation.png" src="../_images/04_composite_transformation.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Scaling, rotation and translation applied to the textured rectangle.</span><a class="headerlink" href="#composite-transformation-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">Scaling, rotation and translation applied to the textured rectangle.</span><a class="headerlink" href="#composite-transformation-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <hr class="docutils" />

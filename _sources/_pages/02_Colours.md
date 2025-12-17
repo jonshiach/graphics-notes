@@ -11,7 +11,7 @@ We are going to build upon the code we used to draw the boring red triangle exam
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***02 Colours*** and download [index.html](../_downloads/Lab02/index.html), [colours.js](../_downloads/Lab02/colours.js) and [webGLUtils.js](../_downloads/Lab02/webGLUtils.js) to it. Open ***index.html*** in a web browser to check that the red triangle from [Lab 1](lab1-section) is displayed.
+Create a folder called ***Lab 2 Colours*** and download [index.html](../_downloads/Lab02/index.html), [colours.js](../_downloads/Lab02/colours.js) and [webGLUtils.js](../_downloads/Lab02/webGLUtils.js) to it. Open ***index.html*** in a web browser to check that the red triangle from [Lab 1](lab1-section) is displayed.
 
 ```{figure} ../_images/02_hello_triangle.png
 :width: 80%
