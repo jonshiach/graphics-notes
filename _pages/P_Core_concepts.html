@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/P_Core_concepts';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -186,15 +188,16 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_Textures.html">Lab 2: Textures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_Transformations.html">Lab 4: Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_intro_to_javascript.html">Lab 1: Introduction to JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Basic_shapes.html">Lab 2: Drawing Basic Shapes in WebGL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Textures.html">Lab 3: Textures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Vectors_and_matrices.html">Lab 4: Vectors and Matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Transformations.html">Lab 5: Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_3D_worlds.html">Lab 6: 3D Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Moving_the_camera.html">Lab 7: Moving the Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">Lab 8: Lighting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -395,6 +398,12 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graphics-pipeline">The Graphics Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-and-primitives">Geometry and primitives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems-and-transformations">Coordinate systems and transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-the-gpu">The Role of the GPU</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders-and-programmability">Shaders and Programmability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-constraints-and-performance">Real-Time Constraints and Performance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-rgb-colour-model">The RGB Colour Model</a></li>
 </ul>
             </nav>
         </div>
@@ -406,21 +415,120 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="core-computer-graphics-concepts">
+  <section class="tex2jax_ignore mathjax_ignore" id="core-computer-graphics-concepts">
 <h1>Core Computer Graphics Concepts<a class="headerlink" href="#core-computer-graphics-concepts" title="Link to this heading">#</a></h1>
+<p>Computer graphics is the study of how computers generate, manipulate, and display visual images. At its core, the field combines mathematics, programming, and visual perception to transform abstract data into images that can be displayed on a screen. Computer graphics underpins modern applications ranging from video games and films to scientific visualisation, virtual reality, medical imaging, and web-based interactive media.</p>
+<p>This course focuses on real-time computer graphics, where images are generated interactively at high frame rates, typically using the graphics processing unit (GPU).</p>
+<hr class="docutils" />
 <section id="the-graphics-pipeline">
 <h2>The Graphics Pipeline<a class="headerlink" href="#the-graphics-pipeline" title="Link to this heading">#</a></h2>
-<p>The <strong>graphics pipeline</strong> (or rendering pipeline) is a sequence of steps the GPU takes to convert 3D scene data (e.g., vertices, textures, lighting information, etc.) into a 2D image displayed on the screen. Like many graphics APIs, WebGL uses <strong>vertex shaders</strong> and <strong>fragment shaders</strong>, small programs that are written in <strong>GLSL (OpenGL Shading Language)</strong> which are run directly on the GPU to perform these steps.</p>
+<p>The <strong>graphics pipeline</strong> is a sequence of steps the GPU takes to convert 3D scene data (e.g., vertices, textures, lighting information, etc.) into a set of pixels that are displayed on the screen. Like many graphics APIs, WebGL uses <strong>vertex shaders</strong> and <strong>fragment shaders</strong>, small programs that are written in <strong>GLSL (OpenGL Shading Language)</strong> which are run directly on the GPU to perform these steps.</p>
 <p>The stages of the graphics pipeline are:</p>
 <ol class="arabic simple">
-<li><p><strong>Vertex specification</strong> – the geometry of objects that construct a 3D scene are defined using arrays of vertices. Each vertex is a collection of data, typically the co-ordinates of the vertex position but can also include texture co-ordinates, surface normal vectors and other attributes (more on these later). In WebGL we create <strong>Vertex Buffer Objects (VBO)</strong> to store this data and tell WebGL how to interpret them.</p></li>
-<li><p><strong>Vertex shader</strong> – each vertex is processed by a vertex shader whose job it is to transform the 3D co-ordinates from the <strong>model space</strong> (the local object co-ordinates) into <strong>clip space</strong> (the co-ordinate system the GPU uses to determine what is visible on screen). The vertex shader is called once per vertex.</p></li>
-<li><p><strong>Clipping</strong> – the vertex outputs from the vertex shader are grouped into <strong>primitives</strong> (usually triangles) and clipped to the clip space such that any primitive that lie outside the clip space are ignored. Primitives that lie partially outside the clip space are cut so that the part that is within the clip space is retained.</p></li>
-<li><p><strong>Rasterisation</strong> – the primitives are converted into grids of pixels known as <strong>fragments</strong>. The interior fragments of a primitive are “filled in” by interpolating the vertex data across the surface.</p></li>
-<li><p><strong>Fragment shader</strong> – each fragment is processed by the fragment shader which computes the final colour. This can be based on vertex data, texture mapping, lighting models and other visual effects.</p></li>
-<li><p><strong>Per-fragment operations</strong> – before a fragment is displayed (i.e., becomes a pixel on the screen), depth testing (is it hidden by something else), alpha testing (for transparency) and stencil testing (for masking). Fragments can be discarded at this stage.</p></li>
-<li><p><strong>Frame buffer</strong> – after processing the fragment is written to the <strong>frame buffer</strong> which is then is sent to the display.</p></li>
+<li><p>Application stage (CPU) – the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.</p></li>
+<li><p>Vertex processing (GPU) – each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.</p></li>
+<li><p>Rasterisation – geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.</p></li>
+<li><p>Fragment processing (GPU) – each fragment is shaded to determine its final colour, typically using lighting and texture calculations.</p></li>
+<li><p>Framebuffer – the coloured fragments are written to the framebuffer, which is displayed on the screen.</p></li>
 </ol>
+<p>Understanding this pipeline is fundamental: computer graphics is not about drawing objects directly, but about <strong>transforming and processing data through a series of well-defined stages</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="geometry-and-primitives">
+<h2>Geometry and primitives<a class="headerlink" href="#geometry-and-primitives" title="Link to this heading">#</a></h2>
+<p>All complex graphical objects are built from simple geometric primitives. In real-time graphics, these primitives are almost always triangles.</p>
+<p>Triangles are used because:</p>
+<ul class="simple">
+<li><p>Three points always define a plane</p></li>
+<li><p>They are efficient for hardware processing</p></li>
+<li><p>They can approximate any surface when used in sufficient numbers</p></li>
+</ul>
+<p>More complex shapes – such as spheres, characters, and landscapes – are represented as <strong>meshes</strong>, which are collections of vertices connected into triangles.</p>
+<p>Each vertex typically contains:</p>
+<ul class="simple">
+<li><p>A position in space</p></li>
+<li><p>Texture coordinates</p></li>
+<li><p>A surface normal (direction)</p></li>
+<li><p>Optional colour or other attributes</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="coordinate-systems-and-transformations">
+<h2>Coordinate systems and transformations<a class="headerlink" href="#coordinate-systems-and-transformations" title="Link to this heading">#</a></h2>
+<p>A key challenge in computer graphics is managing multiple coordinate systems. Objects must be positioned relative to one another, viewed from a camera, and projected onto a 2D screen.</p>
+<p>The main coordinate spaces are:</p>
+<ul class="simple">
+<li><p><strong>Object (model) space</strong> – coordinates relative to an object’s local origin</p></li>
+<li><p><strong>World space</strong> – coordinates within the overall scene</p></li>
+<li><p><strong>View (camera) space</strong> – coordinates relative to the camera</p></li>
+<li><p><strong>Clip and Normalised Device Coordinates (NDC)</strong> – standardised coordinates used for rendering</p></li>
+<li><p><strong>Screen space</strong> – final pixel positions on the display</p></li>
+</ul>
+<p>Transformations between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.</p>
+</section>
+<hr class="docutils" />
+<section id="the-role-of-the-gpu">
+<h2>The Role of the GPU<a class="headerlink" href="#the-role-of-the-gpu" title="Link to this heading">#</a></h2>
+<p>The GPU is a specialised processor designed for massively parallel computation. Unlike the CPU, which excels at sequential logic and control flow, the GPU performs the same operations on large amounts of data simultaneously.</p>
+<p>In graphics programming:</p>
+<ul class="simple">
+<li><p>The CPU sets up data and state</p></li>
+<li><p>The GPU executes small programs, called shaders, on many vertices or pixels in parallel</p></li>
+</ul>
+<p>This division of labour enables real-time rendering of complex scenes at high frame rates.</p>
+</section>
+<hr class="docutils" />
+<section id="shaders-and-programmability">
+<h2>Shaders and Programmability<a class="headerlink" href="#shaders-and-programmability" title="Link to this heading">#</a></h2>
+<p>Shaders are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:</p>
+<ul class="simple">
+<li><p><strong>Vertex shaders</strong>, which process individual vertices</p></li>
+<li><p><strong>Fragment shaders</strong>, which compute the colour of each pixel-sized fragment</p></li>
+</ul>
+<p>Shaders give developers fine-grained control over how objects appear, enabling effects such as lighting, shading, texturing, and animation. Each shader invocation operates independently, with no shared state between executions.</p>
+</section>
+<hr class="docutils" />
+<section id="real-time-constraints-and-performance">
+<h2>Real-Time Constraints and Performance<a class="headerlink" href="#real-time-constraints-and-performance" title="Link to this heading">#</a></h2>
+<p>Real-time graphics must generate images within a strict time budget, typically 16 milliseconds per frame for 60 frames per second. This constraint influences every design decision in graphics systems.</p>
+<ul class="simple">
+<li><p>Key performance considerations include:</p></li>
+<li><p>Minimising data transfer between CPU and GPU</p></li>
+<li><p>Reducing the number of draw calls</p></li>
+<li><p>Efficient use of shaders and memory</p></li>
+</ul>
+<p>Understanding these constraints helps explain why graphics systems are structured the way they are.</p>
+</section>
+<hr class="docutils" />
+<section id="the-rgb-colour-model">
+<h2>The RGB Colour Model<a class="headerlink" href="#the-rgb-colour-model" title="Link to this heading">#</a></h2>
+<p>The RGB colour model is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.</p>
+<p>RGB is an additive colour model, meaning that colours are created by adding light together rather than mixing pigments, for example</p>
+<ul class="simple">
+<li><p>Red + Green = Yellow</p></li>
+<li><p>Red + Blue = Magenta</p></li>
+<li><p>Green + Blue = Cyan</p></li>
+<li><p>Red + Green + Blue = White</p></li>
+<li><p>No light at all = Black</p></li>
+</ul>
+<p>Each primary colour contributes light to the final result. Increasing the intensity of a channel makes the colour brighter; decreasing it makes the colour darker.</p>
+<p>RGB values are represented numerically. If each primary colour is represented using 8-bits then a total of <span class="math notranslate nohighlight">\(2^8 \times 2^8 \times 2^8 = 16,777,216\)</span> colours. It is estimated that the human eye can distinguish between approximately 10 million colours so 8-bit colour is sufficient.</p>
+<p>The most common numerical representations are:</p>
+<ul class="simple">
+<li><p>8-bit per channel: integer values range from 0 to 255</p>
+<ul>
+<li><p>Example: (255, 0, 0) which is pure red</p></li>
+<li><p>Example: (255, 255, 255) which is pure white</p></li>
+</ul>
+</li>
+<li><p>Normalised floating-point: values range from 0.0 to 1.0</p>
+<ul>
+<li><p>Example: (1.0, 0.0, 0.0) which is pure red</p></li>
+<li><p>Example: (0.5, 0.5, 0.5) which is mid-gray</p></li>
+</ul>
+</li>
+</ul>
+<p>Graphics APIs and shaders typically use the normalised form, while image files and user interfaces often use 8-bit integers.</p>
 </section>
 </section>
 
@@ -489,6 +597,12 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graphics-pipeline">The Graphics Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-and-primitives">Geometry and primitives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems-and-transformations">Coordinate systems and transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-the-gpu">The Role of the GPU</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders-and-programmability">Shaders and Programmability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-constraints-and-performance">Real-Time Constraints and Performance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-rgb-colour-model">The RGB Colour Model</a></li>
 </ul>
   </nav></div>
 

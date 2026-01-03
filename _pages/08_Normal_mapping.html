@@ -397,19 +397,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tangent-space">Tangent space</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-the-tangent-and-bitangent-vectors">Calculating the tangent and bitangent vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-the-tangent-vectors">Calculating the tangent vectors</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-shader">Vertex shader</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-shader">Fragment shader</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#re-orthogonalising-the-tangent-space-vectors">Re-orthogonalising the tangent space vectors</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-maps">Neutral maps</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
@@ -425,71 +417,87 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lab-8-normal-mapping">
 <span id="normal-mapping-section"></span><h1>Lab 8: Normal Mapping<a class="headerlink" href="#lab-8-normal-mapping" title="Link to this heading">#</a></h1>
-<p>In <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">8. Lighting</span></a> we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don’t get the benefits of highlights and shadow. <strong>Normal mapping</strong> is technique that uses a <a class="reference internal" href="02_Textures.html#textures-section"><span class="std std-ref">texture map</span></a> to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.</p>
-<figure class="align-default" id="id2">
+<p>In <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">Lab 7: Lighting</span></a> we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don’t get the benefits of highlights and shadow. <strong>Normal mapping</strong> is technique that uses a <a class="reference internal" href="02_Textures.html#textures-section"><span class="std std-ref">texture map</span></a> to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.</p>
+<figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/08_normal_mapping.svg"><img alt="../_images/08_normal_mapping.svg" src="../_images/08_normal_mapping.svg" style="width: 600px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 94 </span><span class="caption-text">Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 94 </span><span class="caption-text">Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>A <strong>normal map</strong> is a texture where the RGB colour values of each textel is used for the normal vector <span class="math notranslate nohighlight">\(\mathbf{n} = (n_x, n_y, n_z)\)</span> where <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span> and <span class="math notranslate nohighlight">\(n_z\)</span> values are determined by the red, green and blue colours values respectively (<a class="reference internal" href="#normal-map-figure"><span class="std std-numref">Fig. 95</span></a>).</p>
-<figure class="align-default" id="normal-map-figure">
-<a class="reference internal image-reference" href="../_images/08_normal_map.svg"><img alt="../_images/08_normal_map.svg" src="../_images/08_normal_map.svg" style="width: 400px;" />
+<p>A <strong>normal map</strong> is a texture where the RGB colour values of each textel is used for the normal vector <span class="math notranslate nohighlight">\(\vec{n} = (n_x, n_y, n_z)\)</span> where <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span> and <span class="math notranslate nohighlight">\(n_z\)</span> values are determined by the red, green and blue colours values respectively. A normal map for the crate texture is shown in <a class="reference internal" href="#crate-normal-map-figure"><span class="std std-numref">Fig. 95</span></a>.</p>
+<figure class="align-default" id="crate-normal-map-figure">
+<a class="reference internal image-reference" href="../_images/08_crate_normal.png"><img alt="../_images/08_crate_normal.png" src="../_images/08_crate_normal.png" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 95 </span><span class="caption-text">The RBG values of a normal map give the values of the normal vectors.</span><a class="headerlink" href="#normal-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 95 </span><span class="caption-text">A normal map for the crate texture.</span><a class="headerlink" href="#crate-normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Note that since the OpenGL co-ordinate system has the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance.</p>
-<p>Compile and run the project <strong>Lab09_Normal_maps</strong> and you will see that we have the scene used at the end of <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">8. Lighting</span></a> with the teapots lit using two point lights, a spotlight and a directional light.</p>
-<figure class="align-default">
-<a class="reference internal image-reference" href="../_images/08_teapots.png"><img alt="../_images/08_teapots.png" src="../_images/08_teapots.png" style="width: 500px;" />
+<p>Normal maps tend to have a blue tinge to them because the normal vectors are pointing away from the surface so the <span class="math notranslate nohighlight">\(z\)</span> component dominates. Any red on a normal map suggests that the normal is pointing to the right and green suggests the normal is pointing upwards.</p>
+<figure class="align-default" id="normal-map-figure">
+<a class="reference internal image-reference" href="../_images/08_normal_map.svg"><img alt="../_images/08_normal_map.svg" src="../_images/08_normal_map.svg" style="width: 350px;" />
 </a>
+<figcaption>
+<p><span class="caption-number">Fig. 96 </span><span class="caption-text">The RBG values of a normal map give the values of the normal vectors.</span><a class="headerlink" href="#normal-map-figure" title="Link to this image">#</a></p>
+</figcaption>
 </figure>
-<p>A Light class has been created to handle the light sources. Take a look at the <code class="docutils literal notranslate"><span class="pre">light.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">light.cpp</span></code> files and you will see the following Light class methods</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">addPointLight()</span></code>, <code class="docutils literal notranslate"><span class="pre">addSpotLight()</span></code>, <code class="docutils literal notranslate"><span class="pre">addDirLight()</span></code> - these are used to add another light source to the scene</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">toShader()</span></code> - sends all of the lighting uniforms to the shader</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">draw()</span></code> - draws the light source</p></li>
-</ul>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Create a copy of your <em><strong>Lab 7 Lighting</strong></em> folder, rename it <em><strong>Lab 8 Normal Mapping</strong></em>, rename the file <em><strong>lighting.js</strong></em> to <em><strong>normal_mapping.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 8 - Normal Maps” it uses <em><strong>normal_mapping.js</strong></em>.</p>
+</div>
+<p>Load <em><strong>index.html</strong></em> in a live server, and you should see the cubes from <a class="reference internal" href="07_Lighting.html#lighting-section"><span class="std std-ref">Lab 7: Lighting</span></a> lit using a point light, a spotlight and a directional light source.</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/08_cubes.png"><img alt="../_images/08_cubes.png" src="../_images/08_cubes.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 97 </span><span class="caption-text">The cubes lit using three light sources from [Lab 7: Lighting].</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Download the file <a class="reference download internal" download="" href="../_downloads/11724a299766c59b133c153d0a7f1e50/crate_normal.png"><span class="xref download myst">crate_normal.png</span></a> and save it to the <em><strong>Lab 8 - Normal Mapping/assets/</strong></em> folder.</p>
+<p>Add the following just after we have loadied the crate texture.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">normalMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/crate_normal.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>And add the following asfter we bind the crate texture in the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind normal map</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE1</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">normalMap</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uNormalMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have loaded the normal map for the crate texture and bind it to the sampler <code class="docutils literal notranslate"><span class="pre">uNormalMap</span></code>. Note that here we used the texture unit <code class="docutils literal notranslate"><span class="pre">gl.TEXTURE1</span></code> which tells WebGL this is the second texture we are sending to the shaders (see <a class="reference internal" href="02_Textures.html#multiple-textures-section"><span class="std std-ref">Multiple textures</span></a>).</p>
 <hr class="docutils" />
 <section id="tangent-space">
 <h2>Tangent space<a class="headerlink" href="#tangent-space" title="Link to this heading">#</a></h2>
-<p>We have already seen in <a class="reference internal" href="05_3D_worlds.html#d-worlds-section"><span class="std std-ref">6. 3D worlds</span></a> that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the <strong>tangent space</strong>. The tangent space is a 3D space where vectors are defined in terms of three vectors: <strong>tangent</strong>, <strong>bitangent</strong> and <strong>normal</strong> vectors (<a class="reference internal" href="#bitangent-vector-figure"><span class="std std-numref">Fig. 96</span></a>).</p>
-<figure class="align-default" id="bitangent-vector-figure">
-<a class="reference internal image-reference" href="_images/08_bitangent.svg"><img alt="_images/08_bitangent.svg" src="_images/08_bitangent.svg" style="width: 300px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 96 </span><span class="caption-text">Normal, tangent and the bitangent vectors.</span><a class="headerlink" href="#bitangent-vector-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
+<p>We have already seen in <a class="reference internal" href="05_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 5: 3D worlds</span></a> that we can use transformations to map coordinates and vectors between the model, view and screen spaces. The normal vectors in a normal map are defined in <strong>tangent space</strong>, a local coordinate system aligned with the surface that has the basis vectors:</p>
 <ul class="simple">
-<li><p><strong>Normal vector</strong>, <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> - we have already met the normal vector which is a vector perpendicular to the surface</p></li>
-<li><p><strong>Tangent vector</strong>, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> - this is a vector that points along the surface so is perpendicular to the normal vector</p></li>
-<li><p><strong>Bitangent vector</strong>, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> - this is a vector that is perpendicular to both the normal and tangent vectors</p></li>
+<li><p><strong>Normal</strong>, <span class="math notranslate nohighlight">\(\vec{N}\)</span> - we have already met the normal vector which is a vector perpendicular to the surface.</p></li>
+<li><p><strong>Tangent</strong>, <span class="math notranslate nohighlight">\(\vec{T}\)</span> - this is a vector that points in the direction of increasing texture coordinate <span class="math notranslate nohighlight">\(u\)</span>.</p></li>
+<li><p><strong>Bitangent</strong>, <span class="math notranslate nohighlight">\(\vec{B}\)</span> - this is a vector that points in the direction of increasing texture coordinate <span class="math notranslate nohighlight">\(v\)</span>.</p></li>
 </ul>
-<p>There are an infinite number of vectors on a plane that is perpendicular to the normal vector so we have a choice for the tangent and bitangent vectors. A natural choice is to use vectors that point along the edges of the normal map, we know these are perpendicular and this also means we are consistent for neighbouring triangles.</p>
 <figure class="align-default" id="tbn-figure">
-<a class="reference internal image-reference" href="../_images/08_TBN.svg"><img alt="../_images/08_TBN.svg" src="../_images/08_TBN.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/08_TBN.svg"><img alt="../_images/08_TBN.svg" src="../_images/08_TBN.svg" style="width: 250px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 97 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 98 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
+<p>The world space tangent vector <span class="math notranslate nohighlight">\(\vec{T}\)</span> is calculated using the model space vertex coordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
 <figure class="align-default" id="uv-deltas-figure">
 <a class="reference internal image-reference" href="../_images/08_UV_deltas.svg"><img alt="../_images/08_UV_deltas.svg" src="../_images/08_UV_deltas.svg" style="width: 800px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 98 </span><span class="caption-text">The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors are calculated by mapping the model space triangle onto the normal map space.</span><a class="headerlink" href="#uv-deltas-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">The tangent, <span class="math notranslate nohighlight">\(\vec{T}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\vec{B}\)</span>, vectors are calculated by mapping the model space triangle onto the normal map space.</span><a class="headerlink" href="#uv-deltas-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We first calculate vectors that point along two sides of the triangle in the model space</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \mathbf{e}_1 &amp;= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
-    \mathbf{e}_2 &amp;= (x_2, y_2, z_2) - (x_1, y_1, z_1),
+    \vec{e}_1 &amp;= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
+    \vec{e}_2 &amp;= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}\end{split}\]</div>
 <p>and calculate the difference in the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates for these edges</p>
 <div class="math notranslate nohighlight">
@@ -499,304 +507,235 @@ document.write(`
     \Delta u_2 &amp;= u_2 - u_1, &amp;
     \Delta v_2 &amp;= v_2 - v_1.
 \end{align*} \end{split}\]</div>
-<p>The tangent, <span class="math notranslate nohighlight">\(\mathbf{t}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, vectors can then be calculated using</p>
-<div class="math notranslate nohighlight" id="equation-tb-equation">
-<span class="eqno">(25)<a class="headerlink" href="#equation-tb-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &amp;= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
-\end{align*} \end{split}\]</div>
-<p>To see the derivation of these equations click on the dropdown below.</p>
+<p>The tangent vector is then calculated using</p>
+<div class="math notranslate nohighlight" id="equation-eq-tangent">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-tangent" title="Link to this equation">#</a></span>\[ \begin{align*}
+    \vec{T} &amp;= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+\end{align*} \]</div>
+<p>To see the derivation of these equations click on the dropdown below. Since the bitangent vector <span class="math notranslate nohighlight">\(\vec{B}\)</span> is perpendicular to the normal vector <span class="math notranslate nohighlight">\(\vec{N}\)</span> and the tangent vector <span class="math notranslate nohighlight">\(\vec{T}\)</span> we can calculate this using</p>
+<div class="math notranslate nohighlight">
+\[ \vec{B} = \vec{N} \times \vec{T}. \]</div>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Calculating the tangent and bitangent vectors</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 98</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span> can be calculated using</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 99</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\vec{T}\)</span> and <span class="math notranslate nohighlight">\(\vec{B}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\vec{e}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{e}_2\)</span> can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-    \mathbf{e}_1 &amp;= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
-    \mathbf{e}_2 &amp;= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
+    \vec{e}_1 &amp;= \Delta u_1 \cdot \vec{T} + \Delta v_1 \cdot \vec{B}, \\
+    \vec{e}_2 &amp;= \Delta u_2 \cdot \vec{T} + \Delta v_2 \cdot \vec{B},
 \end{align*}\end{split}\]</div>
 <p class="sd-card-text">where <span class="math notranslate nohighlight">\(\Delta u_1 = u_1 - u_0\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1 = v_1 - v_0\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2 = u_2 - u_1\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2 = v_2 - v_1\)</span>. We can express this using matrices</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} &amp;=
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix} &amp;=
     \begin{pmatrix}
         \Delta u_1 &amp; \Delta v_1 \\
         \Delta u_2 &amp; \Delta v_2
     \end{pmatrix}
-  \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix}.
+  \begin{pmatrix} \vec{T} \\ \vec{B} \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">We want to calculate <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> and we know the values of <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span>, <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span>, <span class="math notranslate nohighlight">\(\Delta u_1\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2\)</span>. Using the <a class="reference internal" href="#inverse-matrix-section"><span class="xref myst">inverse</span></a> of the square matrix we can rewrite this equation as</p>
+<p class="sd-card-text">We want to calculate <span class="math notranslate nohighlight">\(\vec{T}\)</span> and <span class="math notranslate nohighlight">\(\vec{B}\)</span> and we know the values of <span class="math notranslate nohighlight">\(\vec{e}_1\)</span>, <span class="math notranslate nohighlight">\(\vec{e}_2\)</span>, <span class="math notranslate nohighlight">\(\Delta u_1\)</span>, <span class="math notranslate nohighlight">\(\Delta v_1\)</span>, <span class="math notranslate nohighlight">\(\Delta u_2\)</span> and <span class="math notranslate nohighlight">\(\Delta v_2\)</span>. Using the <a class="reference internal" href="#inverse-matrix-section"><span class="xref myst">inverse</span></a> of the square matrix we can rewrite this equation as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix} &amp;=
+    \begin{pmatrix} \vec{T} \\ \vec{B} \end{pmatrix} &amp;=
     \begin{pmatrix}
         \Delta u_1 &amp; \Delta v_1 \\
         \Delta u_2 &amp; \Delta v_2
     \end{pmatrix}^{-1}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} \\
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix} \\
     &amp;= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}
     \begin{pmatrix}
         \Delta v_2 &amp; -\Delta v_1 \\
         -\Delta u_2 &amp; \Delta u_1
     \end{pmatrix}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix}.
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Writing the out for the <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> vectors we have</p>
+<p class="sd-card-text">Writing the out for the <span class="math notranslate nohighlight">\(\vec{T}\)</span> vector we have</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \begin{align*}
-    \mathbf{t} &amp;= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathbf{b} &amp;= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
-\end{align*} \end{split}\]</div>
+\[ \begin{align*}
+    \vec{T} &amp;= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+\end{align*} \]</div>
 </div>
-</details><p>Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to an arbitrary space (e.g., the view space). The matrix that achieves this a 3 <span class="math notranslate nohighlight">\(\times\)</span> 3 matrix known as the <span class="math notranslate nohighlight">\(TBN\)</span> matrix</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{align*}
+</details><p>Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to the world space. The matrix that achieves this a 3 <span class="math notranslate nohighlight">\(\times\)</span> 3 matrix known as the <span class="math notranslate nohighlight">\(TBN\)</span> matrix</p>
+<div class="math notranslate nohighlight" id="equation-eq-tbn-matrix">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-tbn-matrix" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     TBN &amp;= 
     \begin{pmatrix}
-        \mathbf{t}_x &amp; \mathbf{b}_x &amp; \mathbf{n}_x \\
-        \mathbf{t}_y &amp; \mathbf{b}_y &amp; \mathbf{n}_y \\
-        \mathbf{t}_z &amp; \mathbf{b}_z &amp; \mathbf{n}_z
+        \vec{T}_x &amp; \vec{B}_x &amp; \vec{N}_x \\
+        \vec{T}_y &amp; \vec{B}_y &amp; \vec{N}_y \\
+        \vec{T}_z &amp; \vec{B}_z &amp; \vec{N}_z
     \end{pmatrix},
 \end{align*} \end{split}\]</div>
-<p>We will be performing our lighting calculations in the tangent space so we want to transform from the view space to the tangent space. To do this we calculate the <a class="reference internal" href="#inverse-matrix-section"><span class="xref myst">inverse</span></a> of the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Fortunately this is an orthogonal matrix where the inverse is simply the transpose, i.e., <span class="math notranslate nohighlight">\(TBN^{-1} = TBN^\mathsf{T}\)</span>, which is an easy calculation.</p>
-<section id="calculating-the-tangent-and-bitangent-vectors">
-<h3>Calculating the tangent and bitangent vectors<a class="headerlink" href="#calculating-the-tangent-and-bitangent-vectors" title="Link to this heading">#</a></h3>
-<p>All of the lighting calculations are performed by the shaders so we calculate the tangent and bitangent vectors in our C++ program and pass them to the vertex shader using uniforms. The model class contains all of the attributes for a model so we create two vectors that will contain the tangents and bitangents for each of the vertices of the model. In the <strong>model.hpp</strong> file add the following code after we have declared a vector array for the normals.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tangents</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bitangents</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture coordinates and normal vectors. Under the <code class="docutils literal notranslate"><span class="pre">private:</span></code> declaration add the identifiers for the tangent and bitangent buffers.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">;</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">bitangentBuffer</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>We now create a private method for our model class to calculate the tangent and bitangent vectors. Add the following method declaration.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Calculate tangents and bitangents</span>
-<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">calculateTangents</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Then in the <strong>model.cpp</strong> file we define the <code class="docutils literal notranslate"><span class="pre">calculateTangents()</span></code> method.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">Model</span><span class="p">::</span><span class="n">calculateTangents</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Calculate</span> <span class="n">edge</span> <span class="n">vectors</span> <span class="ow">and</span> <span class="n">deltas</span>
-        <span class="n">glm</span><span class="p">::</span><span class="n">vec3</span> <span class="n">E1</span>  <span class="o">=</span> <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="n">glm</span><span class="p">::</span><span class="n">vec3</span> <span class="n">E2</span>  <span class="o">=</span> <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
-        <span class="nb">float</span> <span class="n">deltaU1</span> <span class="o">=</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">;</span>
-        <span class="nb">float</span> <span class="n">deltaV1</span> <span class="o">=</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">;</span>
-        <span class="nb">float</span> <span class="n">deltaU2</span> <span class="o">=</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">;</span>
-        <span class="nb">float</span> <span class="n">deltaV2</span> <span class="o">=</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">uvs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">;</span>
-        
-        <span class="o">//</span> <span class="n">Calculate</span> <span class="n">tangents</span>
-        <span class="nb">float</span> <span class="n">denom</span>         <span class="o">=</span> <span class="mf">1.0</span><span class="n">f</span> <span class="o">/</span> <span class="p">(</span><span class="n">deltaU1</span> <span class="o">*</span> <span class="n">deltaV2</span> <span class="o">-</span> <span class="n">deltaU2</span> <span class="o">*</span> <span class="n">deltaV1</span><span class="p">);</span>
-        <span class="n">glm</span><span class="p">::</span><span class="n">vec3</span> <span class="n">tangent</span>   <span class="o">=</span> <span class="p">(</span><span class="n">deltaV2</span> <span class="o">*</span> <span class="n">E1</span> <span class="o">-</span> <span class="n">deltaV1</span> <span class="o">*</span> <span class="n">E2</span><span class="p">)</span> <span class="o">*</span> <span class="n">denom</span><span class="p">;</span>
-        <span class="n">glm</span><span class="p">::</span><span class="n">vec3</span> <span class="n">bitangent</span> <span class="o">=</span> <span class="p">(</span><span class="n">deltaU1</span> <span class="o">*</span> <span class="n">E2</span> <span class="o">-</span> <span class="n">deltaU2</span> <span class="o">*</span> <span class="n">E1</span><span class="p">)</span> <span class="o">*</span> <span class="n">denom</span><span class="p">;</span>
-        
-        <span class="o">//</span> <span class="n">Set</span> <span class="n">the</span> <span class="n">same</span> <span class="n">tangents</span> <span class="k">for</span> <span class="n">the</span> <span class="n">three</span> <span class="n">vertices</span> <span class="n">of</span> <span class="n">the</span> <span class="n">triangle</span>
-        <span class="n">tangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tangent</span><span class="p">);</span>
-        <span class="n">tangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tangent</span><span class="p">);</span>
-        <span class="n">tangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tangent</span><span class="p">);</span>
-        <span class="n">bitangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">bitangent</span><span class="p">);</span>
-        <span class="n">bitangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">bitangent</span><span class="p">);</span>
-        <span class="n">bitangents</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">bitangent</span><span class="p">);</span>
-    <span class="p">}</span>
+<section id="calculating-the-tangent-vectors">
+<h3>Calculating the tangent vectors<a class="headerlink" href="#calculating-the-tangent-vectors" title="Link to this heading">#</a></h3>
+<p>All the lighting calculations are performed by the shaders, so we calculate the tangent vectors in JavaScript and pass them to the shaders using uniforms.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following function to the <em><strong>webGLUtils.js</strong></em> file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">computeTangents</span><span class="p">(</span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">indices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertexCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tangents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">(</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">vertexCount</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">vertexCount</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Indices of triangle vertices</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">i0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">indices</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">i1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">indices</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">i2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">indices</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">];</span>
+
+<span class="w">    </span><span class="c1">// Positions and uvs</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p0x</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p0y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p0z</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p1x</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p1y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p1z</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p2x</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p2y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p2z</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">];</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv0x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">6</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv0y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">7</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv1x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">6</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv1y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">7</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv2x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">6</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv2y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertices</span><span class="p">[</span><span class="nx">i2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">11</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">7</span><span class="p">];</span>
+
+<span class="w">    </span><span class="c1">// Edges</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e1x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p1x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p0x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e1y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p1y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p0y</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e1z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p1z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p0z</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e2x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p2x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p1x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e2y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p2y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p1y</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">e2z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p2z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">p1z</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// UV deltas</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">du1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uv1x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">uv0x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">dv1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uv1y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">uv0y</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">du2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uv2x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">uv1x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">dv2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uv2y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">uv1y</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Calculate tangent and bitangent</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">denom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">du1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dv2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">du2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dv1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">denom</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">denom</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">dv2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e1x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">dv1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e2x</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">ty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">dv2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e1y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">dv1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e2y</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">dv2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e1z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">dv1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">e2z</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Accumulate tangents</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">idx</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">[</span><span class="nx">i0</span><span class="p">,</span><span class="w"> </span><span class="nx">i1</span><span class="p">,</span><span class="w"> </span><span class="nx">i2</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">tangents</span><span class="p">[</span><span class="nx">idx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">]</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="nx">tx</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">tangents</span><span class="p">[</span><span class="nx">idx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">]</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="nx">ty</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">tangents</span><span class="p">[</span><span class="nx">idx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">]</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="nx">tz</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">tangents</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This code calculates the tangent and bitangent vectors using equation <a class="reference internal" href="#equation-tb-equation">(25)</a> and adds them the <code class="docutils literal notranslate"><span class="pre">tangents</span></code> and <code class="docutils literal notranslate"><span class="pre">bitangents</span></code> vectors. We want these to be calculated whenever we create a model so amend the Model class constructor at the top of the file and add the following before <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> is called.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate tangent and bitangent vectors</span>
-<span class="n">calculateTangents</span><span class="p">();</span>
+<p>Then, add the following to the <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> function before we unbind the VAO.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Tangents</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tangents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">computeTangents</span><span class="p">(</span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">indices</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tangentLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aTangent&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tangentBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">tangentBuffer</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">tangents</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">tangentLocation</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">tangentLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the <code class="docutils literal notranslate"><span class="pre">setupBuffers()</span></code> method (before we call the <code class="docutils literal notranslate"><span class="pre">glBindVertexArray(0)</span></code> function).</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create tangent buffer</span>
-<span class="n">GLuint</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">;</span>
-<span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tangentBuffer</span><span class="p">);</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">);</span>
-<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">tangents</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tangents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
-
-<span class="c1">// Create bitangent buffer</span>
-<span class="n">GLuint</span><span class="w"> </span><span class="n">bitangentBuffer</span><span class="p">;</span>
-<span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">bitangentBuffer</span><span class="p">);</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">bitangentBuffer</span><span class="p">);</span>
-<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">bitangents</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">bitangents</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
-
-<span class="c1">// Bind the tangent buffer</span>
-<span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">tangentBuffer</span><span class="p">);</span>
-<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
-
-<span class="c1">// Bind the bitangent buffer</span>
-<span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">bitangentBuffer</span><span class="p">);</span>
-<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
-</pre></div>
 </div>
-<p>These are essentially the same as what we’ve done previously for the vertices, texture coordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.</p>
+<p>Here we have written a function to compute the tangent vectors in the model space using equation <a class="reference internal" href="#equation-eq-tangent">(25)</a>, created a buffer for the tangents and sent it to the GPU simiarly to what we did for the vertex coordinates, texture coordinates and normal vectors.</p>
 </section>
 </section>
 <hr class="docutils" />
 <section id="shaders">
 <h2>Shaders<a class="headerlink" href="#shaders" title="Link to this heading">#</a></h2>
-<section id="vertex-shader">
-<h3>Vertex shader<a class="headerlink" href="#vertex-shader" title="Link to this heading">#</a></h3>
-<p>In the vertex shader we need to calculate the tangent space fragment position, light position and light direction. We could do this in the fragment shader but since that is called for each fragment in the triangle and the vertex shader is just called 3 times per triangle it is much more efficient to do it in the vertex shader.</p>
-<p>The first change we need to make to the vertex shader is to declare the new tangent and bitangent inputs. These were bound to attributes 3 and 4 respectively so edit your file so that we input the tangent and bitangent buffers.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">tangent</span><span class="p">;</span>
-<span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">bitangent</span><span class="p">;</span>
+<p>In the vertex shader we need to calculate the world space tangent vector for the vertex and output this to the fragment shader.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add input and output declarations to the vertex shader in the <em><strong>normal_mapping.js</strong></em> file.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aTangent</span><span class="p">;</span>
+
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vTangent</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>We need to transform the fragment position, and the positions and direction vectors of each light source, to the tangent space. For the light source positions and directions we will be outputting an array of vectors to the fragment shader, so add the following to the output list.</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
+<p>Then add the following to the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space tangent vector</span>
+<span class="n">vTangent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="kt">mat3</span><span class="p">(</span><span class="n">uModel</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aTangent</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>We also need to declare the Light data structure here like we did in the fragment shader in <a class="reference internal" href="#multiple-light-sources-section"><span class="xref myst">8. Lighting</span></a> so add the following before the uniforms are declared</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Light struct</span>
-<span class="k">struct</span><span class="w"> </span><span class="n">Light</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cosPhi</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="p">;</span>
-<span class="p">};</span>
-</pre></div>
 </div>
-<p>and add a uniform for the light sources.</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="n">lightSources</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-</pre></div>
-</div>
-<p>We need to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix to transform from the view space to the tangent space. Before the view space fragment position and normal vector are calculated add the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the TBN matrix that transforms view space to tangent space</span>
-<span class="n">mat3</span><span class="w"> </span><span class="n">invMV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">MV</span><span class="p">)));</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tangent</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">b</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">bitangent</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">n</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normal</span><span class="p">);</span>
-<span class="n">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">));</span>
-</pre></div>
-</div>
-<p>Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation <code class="xref eq docutils literal notranslate"><span class="pre">view-space-normal-equation</span></code> which are then used to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Remember that by transposing the <span class="math notranslate nohighlight">\(TBN\)</span> matrix we are calculating its inverse so here the <span class="math notranslate nohighlight">\(TBN\)</span> matrix will transform from the view space to the tangent space.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Some people transform the vectors from the world space instead of the view space, however, this means that we also need to calculate the tangent space <span class="math notranslate nohighlight">\(\mathbf{eye}\)</span> vector calculation. Doing this would mean we have additional uniforms and vector calculations. Since in the view space <span class="math notranslate nohighlight">\(\mathbf{eye} = (0,0,0)\)</span> then it is also <span class="math notranslate nohighlight">\((0,0,0)\)</span> in the tangent space so by transforming the vectors to the view space we do nt need to worry about this.</p>
-</div>
-<p>So now we can calculate the tangent space fragment position, light position and direction vector using the <span class="math notranslate nohighlight">\(TBN\)</span> matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output tangent space fragment position, light positions and directions</span>
-<span class="n">fragmentPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">MV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">));</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">maxLights</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightSources</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">position</span><span class="p">;</span>
-<span class="w">    </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightSources</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">direction</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="fragment-shader">
-<h3>Fragment shader<a class="headerlink" href="#fragment-shader" title="Link to this heading">#</a></h3>
-<p>Now that we have transformed the vectors to the tangent space in the vertex shader we need to make a few changes to the fragment shader. The beauty of the tangent space is that it is orthogonal so we don’t need to change any of our lighting calculations. This means we only need to make a few changes to the fragment shader.</p>
-<p>First, comment out the command used to input the normal vector from the vertex shader, since we will be getting the normal vector from the normal map, and declare the inputs for the array of tangent space light source position and direction</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// in vec3 Normal;</span>
-<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">maxLights</span><span class="p">];</span>
-</pre></div>
-</div>
-<p>We have an additional texture for the normal map so we use a sampler uniform. Add the following where we declared the diffuse map uniform.</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">normalMap</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>Within the main function we obtain the normal vector from the normal map. Since the values in a texture are between 0 and 1 and we need the values of a normal vector to be between -1 and 1 we scale using the following</p>
+<p>Here we transform the tangent to the world space using the model matrix and output it to the fragment shader. Now we need to edit the fragment shader to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix using equation <a class="reference internal" href="#equation-eq-tbn-matrix">(26)</a> and use it to transform the normal vectors from the normal map from the tangent space to the world space.</p>
+<p>The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a normal vector we use the following</p>
 <div class="math notranslate nohighlight">
-\[ \mathbf{n} = 2 \times \mathbf{normal\,map} - 1. \]</div>
-<p>Before the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function add the following code</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the normal vector from the normal map</span>
-<span class="kt">vec3</span><span class="w"> </span><span class="n">Normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+\[ \vec{n}_{tangent} = 2 \times \vec{n}_{map} - 1. \]</div>
+<p>which is then transformed to the world space using</p>
+<div class="math notranslate nohighlight">
+\[ \vec{n}_{world} = TBN \cdot \vec{n}_{tangent}. \]</div>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following input declaration to the fragment shader.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vTangent</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>and replace the code used to extract the light position and direction from the <code class="docutils literal notranslate"><span class="pre">lightSources</span></code> array with the following</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec3</span><span class="w"> </span><span class="n">lightPosition</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tangentSpaceLightPosition</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<span class="kt">vec3</span><span class="w"> </span><span class="n">lightDirection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tangentSpaceLightDirection</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<p>And add the uniform for the normal map.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">uNormalMap</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>In the <strong>Lab09_Normal_maps.cpp</strong> file add the normal map texture to the <code class="docutils literal notranslate"><span class="pre">teapot</span></code> object where we added the diffuse map.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">teapot</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/diamond_normal.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;normal&quot;</span><span class="p">);</span>
+<p>Then in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, add the following</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Construct tangent space basis</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vTangent</span><span class="p">);</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">);</span>
+<span class="kt">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+
+<span class="c1">// Calculate world space normal</span>
+<span class="kt">vec3</span><span class="w"> </span><span class="n">normalSample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uNormalMap</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normalSample</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Compile and run the program and you should see the following.</p>
-<figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../_images/08_normal_map.png"><img alt="../_images/08_normal_map.png" src="../_images/08_normal_map.png" style="width: 500px;" />
+</div>
+<p>Refresh your web browser and move the camera around to see the effects of the normal map.</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/08_cubes_specular_1.png"><img alt="../_images/08_cubes_specular_1.png" src="../_images/08_cubes_specular_1.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Normal map applied to teapot objects.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">The crate specular map applied to the cubes.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The surfaces of the teapots which are smooth now have the appearance of bumpy diamond plate simply by getting the normal vectors from a texture and performing the lighting calculations in the tangent space. <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 100</span></a> shows a closeup of the surface so we can see the detail.</p>
-<figure class="align-default" id="normal-map-closeup-figure">
-<a class="reference internal image-reference" href="../_images/08_normal_map_closeup.png"><img alt="../_images/08_normal_map_closeup.png" src="../_images/08_normal_map_closeup.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 100 </span><span class="caption-text">Close up of the normal map applied to teapot objects.</span><a class="headerlink" href="#normal-map-closeup-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<hr class="docutils" />
-<section id="re-orthogonalising-the-tangent-space-vectors">
-<h2>Re-orthogonalising the tangent space vectors<a class="headerlink" href="#re-orthogonalising-the-tangent-space-vectors" title="Link to this heading">#</a></h2>
-<p>In the close up view of the normal mapped teapot in <a class="reference internal" href="#normal-map-closeup-figure"><span class="std std-numref">Fig. 100</span></a> we can see a distinct line in the specular highlights where polygons that form the surface of the teapot join. The reason for this is that the tangent vector is not exactly perpendicular to the normal vector.</p>
-<p>When a vertex is shared by multiple triangles the 3D modelling software (e.g., Blender) calculates a single normal vector for the vertex by averaging of the normal vectors for the triangles (<a class="reference internal" href="#averaged-normal-figure"><span class="std std-numref">Fig. 101</span></a>). This saves memory and ensures that there is a smooth transition between the normal vectors across the surface.</p>
-<figure class="align-default" id="averaged-normal-figure">
-<a class="reference internal image-reference" href="_images/08_averaged_normal.svg"><img alt="_images/08_averaged_normal.svg" src="_images/08_averaged_normal.svg" style="width: 350px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 101 </span><span class="caption-text">The vertex normal is the average of the normal of the triangles sharing that vertex.</span><a class="headerlink" href="#averaged-normal-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation <a class="reference internal" href="#equation-tb-equation">(25)</a> will not give an orthogonal set of vectors. We can get around this problem by <strong>re-orthogonalising</strong> the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.</p>
-<figure class="align-default" id="reorthogonalise-t-figure">
-<a class="reference internal image-reference" href="../_images/08_reorthogonalise_T.svg"><img alt="../_images/08_reorthogonalise_T.svg" src="../_images/08_reorthogonalise_T.svg" style="width: 300px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Re-orthogonalising the tangent vector using the Gram-Schmidt process.</span><a class="headerlink" href="#reorthogonalise-t-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Consider <a class="reference internal" href="#reorthogonalise-t-figure"><span class="std std-numref">Fig. 102</span></a> where the tangent vector <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> is non-orthogonal to the normal vector <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>. If <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> are unit vectors then if we subtract <span class="math notranslate nohighlight">\((\mathbf{t} \cdot \mathbf{n}) \mathbf{n}\)</span> from <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> then this creates a vector <span class="math notranslate nohighlight">\(\mathbf{t}_{new}\)</span> that is orthogonal to <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can then use the cross product between <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> to calculate the bitangent vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
-<p>Edit the vertex shader so that we re-orthogonalise <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the TBN matrix that transforms view space to tangent space</span>
-<span class="n">mat3</span><span class="w"> </span><span class="n">invMV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">MV</span><span class="p">)));</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tangent</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">n</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">invMV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normal</span><span class="p">);</span>
-<span class="n">t</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-<span class="n">vec3</span><span class="w"> </span><span class="n">b</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-<span class="n">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">));</span>
+<p>The lighting properties of our cubes makes the surfaces look shiny. Since these should be wooden, we can reduce the specular coefficient to give a more realistic result.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">ks</span></code> attribute of the cube objects to the following.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">ks</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
 </pre></div>
 </div>
-<p>Compile and run the code once against and you should see a screen similar to the one below.</p>
-<figure class="align-default" id="normal-map-orthogonalised-figure">
-<a class="reference internal image-reference" href="../_images/08_normal_map_orthogonalised.png"><img alt="../_images/08_normal_map_orthogonalised.png" src="../_images/08_normal_map_orthogonalised.png" style="width: 500px;" />
+</div>
+<p>Refresh your web browser and you should see that the cubes are now less shiny and more realistic.</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/08_cubes_specular_2.png"><img alt="../_images/08_cubes_specular_2.png" src="../_images/08_cubes_specular_2.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 103 </span><span class="caption-text">A normal map with orthogonalised tangent and bitangent vectors.</span><a class="headerlink" href="#normal-map-orthogonalised-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">The crate specular map applied to the cubes (<span class="math notranslate nohighlight">\(k_s = 0.2\)</span>).</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Now our tangent space vectors are orthogonal and we have a correct normal map applied.</p>
 </section>
 <hr class="docutils" />
 <section id="specular-maps">
 <h2>Specular maps<a class="headerlink" href="#specular-maps" title="Link to this heading">#</a></h2>
-<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 104</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 105</span></a> so that the stones are lit by the light sources.</p>
+<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 102</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 103</span></a> so that the stones are lit by the light sources.</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-diffuse-map-figure">
 <img alt="../_images/08_stones_diffuse.png" src="../_images/08_stones_diffuse.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 104 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -804,7 +743,7 @@ document.write(`
 <figure class="align-default" id="stones-normal-map-figure">
 <img alt="../_images/08_stones_normal.png" src="../_images/08_stones_normal.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 105 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -812,95 +751,110 @@ document.write(`
 <figure class="align-default" id="stones-specular-map-figure">
 <img alt="../_images/08_stones_specular.png" src="../_images/08_stones_specular.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>To add our stone floor we are going to load in a simple 2D plane model, add diffuse, normal textures, define lighting and world space properties and add it to the list of objects.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load a 2D plane model for the floor and add textures</span>
-<span class="n">Model</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="s">&quot;../assets/plane.obj&quot;</span><span class="p">);</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/stones_diffuse.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;diffuse&quot;</span><span class="p">);</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/stones_normal.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;normal&quot;</span><span class="p">);</span>
+<p>To add our stone floor we are going to load in a simple 2D plane model, add diffuse and normal textures, define lighting and world space properties and draw it.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following code after we load the crate textures.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define floor vertices</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">floorVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="w">  </span><span class="c1">// x  y   z      r  g  b     u  v     nx  ny  nz</span>
+<span class="w">   </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">     </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">     </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">8</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w">     </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">8</span><span class="p">,</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">   </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w">     </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="p">]);</span>
 
-<span class="c1">// Define floor light properties</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">ka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">kd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">ks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
-<span class="n">floor</span><span class="p">.</span><span class="n">Ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0f</span><span class="p">;</span>
+<span class="c1">// Define floor indices</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">floorIndices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint16Array</span><span class="p">([</span>
+<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">2</span><span class="p">,</span><span class="w">  </span>
+<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">2</span><span class="p">,</span><span class="w">  </span><span class="mf">3</span><span class="p">,</span>
+<span class="p">]);</span>
 
-<span class="c1">// Add floor model to objects vector</span>
-<span class="n">object</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.85f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
-<span class="n">object</span><span class="p">.</span><span class="n">scale</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
-<span class="n">object</span><span class="p">.</span><span class="n">rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
-<span class="n">object</span><span class="p">.</span><span class="n">angle</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-<span class="n">object</span><span class="p">.</span><span class="n">name</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;floor&quot;</span><span class="p">;</span>
-<span class="n">objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">object</span><span class="p">);</span>
+<span class="c1">// Define floor VAO</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">floorVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">floorVertices</span><span class="p">,</span><span class="w"> </span><span class="nx">floorIndices</span><span class="p">);</span>
+
+<span class="c1">// Load floor textures</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">floorTexture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/stones.png&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">floorNormalMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/stones_normal.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>We also need to draw the floor object so add the following after we have drawn the teapot objects.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;floor&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">floor</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">shaderID</span><span class="p">);</span>
+<p>And add the following after we have drawn the cubes.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw floor</span>
+<span class="c1">// Bind texture</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE0</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">floorTexture</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uTexture&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+
+<span class="c1">// Bind normal map</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE1</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">floorNormalMap</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uNormalMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+
+<span class="c1">// Send object light properties to the shader</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uKa&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uKd&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.7</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uKs&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uShininess&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">32</span><span class="p">);</span>
+
+<span class="c1">// Calculate the model matrix</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">6</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">rotate</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">scale</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+
+<span class="c1">// Draw the triangles</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">floorVao</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Compile and run the program and you should see a scene resembling the following.</p>
-<figure class="align-default" id="stone-floor-no-specular-figure">
-<a class="reference internal image-reference" href="../_images/08_floor_no_specular.png"><img alt="../_images/08_floor_no_specular.png" src="../_images/08_floor_no_specular.png" style="width: 500px;" />
+</div>
+<p>Here we have added another object ot our scene that consists of a simple flat plane which has been scaled up and translated so that it forms a floor underneath the cubes. All of the this code is similar to what we have done previously. Refresh your web browser and move the camera around to see the effect of normal mapping on the stone floor.</p>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/08_floor_no_specular.png"><img alt="../_images/08_floor_no_specular.png" src="../_images/08_floor_no_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Stone floor with no specular map applied.</span><a class="headerlink" href="#stone-floor-no-specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">A the floor object with normal mapping.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Move the camera around the floor and note how the mortar between the stones have specular highlights (an example of this can be seen in the bottom left-hand corner of <a class="reference internal" href="#stone-floor-no-specular-figure"><span class="std std-numref">Fig. 107</span></a>). This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map to switch off the specular highlights for certain fragments.</p>
-<p>To apply the specular map we added to the <code class="docutils literal notranslate"><span class="pre">floor</span></code> object we first need to add a specular map to the <code class="docutils literal notranslate"><span class="pre">floor</span></code> model. Where we added the diffuse and normal maps add a specular map using the following code</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/stones_specular.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;specular&quot;</span><span class="p">);</span>
+<p>Note how the mortar between the stones have specular highlights. This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map (<a class="reference internal" href="#stones-specular-map-figure"><span class="std std-numref">Fig. 104</span></a>) to switch off the specular highlights for certain fragments.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Download the file <a class="reference download internal" download="" href="../_downloads/094567ecb5874ab8db846102d5d00610/crate_specular.png"><span class="xref download myst">stones_specular.png</span></a> and save it in your <em><strong>Lab 8 - Normal Mapping/assets/</strong></em> folder.</p>
+<p>Add the following code after we have loaded the floor textures.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">floorSpecularMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/stones_specular.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>We now need to make minor changes to the fragment shader. First, declare a sampler uniform for the specular map near to where we did the same for the diffuse and normal maps.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">specularMap</span><span class="p">;</span>
+<p>And add the following after we bind the normal map for the floor.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind specular map</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE2</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">floorSpecularMap</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uSpecularMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then, whenever we calculate the specular lighting in the <code class="docutils literal notranslate"><span class="pre">calculatePointLight()</span></code>, <code class="docutils literal notranslate"><span class="pre">calculateSpotlight()</span></code> and <code class="docutils literal notranslate"><span class="pre">calculateDirectionalLight()</span></code> functions multiply by the colour of the textel from the specular map.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">ks</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColour</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">cosAlpha</span><span class="p">,</span><span class="w"> </span><span class="n">Ns</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">specularMap</span><span class="p">,</span><span class="w"> </span><span class="n">UV</span><span class="p">));</span>
+<p>Then in the fragment shader, add a declaration for the specular map</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">uSpecularMap</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Compile and run the program and now you will notice that the mortar between the stones no longer have specular highlights.</p>
-<figure class="align-default" id="stone-floor-specular-figure">
-<a class="reference internal image-reference" href="../_images/08_floor_specular.png"><img alt="../_images/08_floor_specular.png" src="../_images/08_floor_specular.png" style="width: 500px;" />
+<p>And add the following after the specular lighting is calculated.</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">specular</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uSpecularMap</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Refresh your web browser and position the camera to see the effect of the specular map. Note how the mortar between the stones no longer appears to be shiny.</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/08_floor_specular.png"><img alt="../_images/08_floor_specular.png" src="../_images/08_floor_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Stone floor with specular map applied.</span><a class="headerlink" href="#stone-floor-specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">A the floor object with normal and specular mapping.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<section id="neutral-maps">
-<h3>Neutral maps<a class="headerlink" href="#neutral-maps" title="Link to this heading">#</a></h3>
-<p>We may not always want to apply a normal map or specular map to an object. If you look at your teapots after applying the specular map for the floor you can see that it has also been applied to the teapot.</p>
-<figure class="align-default" id="teapot-specular-map-figure">
-<a class="reference internal image-reference" href="../_images/08_teapot_specular.png"><img alt="../_images/08_teapot_specular.png" src="../_images/08_teapot_specular.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 109 </span><span class="caption-text">The specular map for the floor has been applied to the teapot.</span><a class="headerlink" href="#teapot-specular-map-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Rather than writing a fragment shader for each case we can apply <strong>neutral maps</strong> which is a texture that when normal and specular mapping is applied it has no affect. Since the normal vector is calculated using</p>
-<div class="math notranslate nohighlight">
-\[ \mathsf{normal} = \mathsf{normalise}(2 \times \mathbf{normal\, map} - 1), \]</div>
-<p>then if the normal maps has pixels with the RGB colour code <span class="math notranslate nohighlight">\((0.5, 0.5, 1)\)</span> then all fragments will have a normal vector of <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> which is perpendicular to the surface.</p>
-<p>A neutral specular map is simply a texture with all white pixels that have the RGB colour code <span class="math notranslate nohighlight">\((1, 1, 1)\)</span> so multiplying this by the specular colour has no affect.</p>
-<p>The neutral maps for normal and specular mapping are contained in the <strong>neutral_normal.png</strong> and <strong>neutral_specular.png</strong> files in the <strong>assets/</strong> folder and are applied to a model when it is created. Add the neutral specular map to the teapot model by adding the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">teapot</span><span class="p">.</span><span class="n">addTexture</span><span class="p">(</span><span class="s">&quot;../assets/neutral_specular.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;specular&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Compile and run the program and you should see the teapot no longer has the floor specular map applied to it.</p>
-<figure class="align-default" id="teapot-neutral-map-figure">
-<a class="reference internal image-reference" href="../_images/08_neutral_map.png"><img alt="../_images/08_neutral_map.png" src="../_images/08_neutral_map.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 110 </span><span class="caption-text">A neutral specular map applied to the teapot.</span><a class="headerlink" href="#teapot-neutral-map-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
 </section>
 <hr class="docutils" />
 <section id="exercises">
@@ -909,21 +863,21 @@ document.write(`
 <li><p>Add another object using the .obj model <strong>../assets/wall.obj</strong> to your scene and position it at <span class="math notranslate nohighlight">\((0, 4, -5)\)</span>, scale it up by a factor of 5 in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> directions and rotate it <span class="math notranslate nohighlight">\(90^\circ\)</span> about the <span class="math notranslate nohighlight">\(x\)</span>-axis. Apply the diffuse map <strong>assets/bricks_diffuse.png</strong>.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/08_ex1.png"><img alt="../_images/08_ex1.png" src="../_images/08_ex1.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/08_ex1.png"><img alt="_images/08_ex1.png" src="_images/08_ex1.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="2">
 <li><p>Apply the normal map <strong>assets/bricks_normal.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/08_ex2.png"><img alt="../_images/08_ex2.png" src="../_images/08_ex2.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/08_ex2.png"><img alt="_images/08_ex2.png" src="_images/08_ex2.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="3">
 <li><p>Apply the specular map <strong>assets/bricks_specular.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/08_ex3.png"><img alt="../_images/08_ex3.png" src="../_images/08_ex3.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/08_ex3.png"><img alt="_images/08_ex3.png" src="_images/08_ex3.png" style="width: 500px;" />
 </a>
 </figure>
 </section>
@@ -999,19 +953,11 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tangent-space">Tangent space</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-the-tangent-and-bitangent-vectors">Calculating the tangent and bitangent vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-the-tangent-vectors">Calculating the tangent vectors</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-shader">Vertex shader</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-shader">Fragment shader</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#re-orthogonalising-the-tangent-space-vectors">Re-orthogonalising the tangent space vectors</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-maps">Neutral maps</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>

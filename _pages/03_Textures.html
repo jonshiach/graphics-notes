@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lab 2: Textures &#8212; Computer Graphics</title>
+    <title>Lab 3: Textures &#8212; Computer Graphics</title>
   
   
   
@@ -59,11 +59,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_pages/02_Textures';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_pages/03_Textures';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lab 3: Vectors and Matrices" href="03_Vectors_and_matrices.html" />
-    <link rel="prev" title="Lab 1: Drawing Basic Shapes in WebGL" href="01_Basic_shapes.html" />
+    <link rel="next" title="Lab 4: Vectors and Matrices" href="04_Vectors_and_matrices.html" />
+    <link rel="prev" title="Lab 2: Drawing Basic Shapes in WebGL" href="02_Basic_shapes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -188,15 +188,16 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_Basic_shapes.html">Lab 1: Drawing Basic Shapes in WebGL</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 2: Textures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_Vectors_and_matrices.html">Lab 3: Vectors and Matrices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_Transformations.html">Lab 4: Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_3D_worlds.html">Lab 5: 3D Worlds</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_Moving_the_camera.html">Lab 6: Moving the Camera</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07_Lighting.html">Lab 7: Lighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_Normal_mapping.html">Lab 8: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Quaternions.html">Lab 10: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_intro_to_javascript.html">Lab 1: Introduction to JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Basic_shapes.html">Lab 2: Drawing Basic Shapes in WebGL</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 3: Textures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Vectors_and_matrices.html">Lab 4: Vectors and Matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Transformations.html">Lab 5: Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_3D_worlds.html">Lab 6: 3D Worlds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Moving_the_camera.html">Lab 7: Moving the Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">Lab 8: Lighting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -272,7 +273,7 @@
       
       
       
-      <li><a href="https://github.com/jonshiach/graphics-notes/issues/new?title=Issue%20on%20page%20%2F_pages/02_Textures.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/jonshiach/graphics-notes/issues/new?title=Issue%20on%20page%20%2F_pages/03_Textures.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -302,7 +303,7 @@
       
       
       
-      <li><a href="../_sources/_pages/02_Textures.md" target="_blank"
+      <li><a href="../_sources/_pages/03_Textures.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -386,7 +387,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lab 2: Textures</h1>
+    <h1>Lab 3: Textures</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -416,8 +417,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lab-2-textures">
-<span id="textures-section"></span><h1>Lab 2: Textures<a class="headerlink" href="#lab-2-textures" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-3-textures">
+<span id="textures-section"></span><h1>Lab 3: Textures<a class="headerlink" href="#lab-3-textures" title="Link to this heading">#</a></h1>
 <p>Texture mapping is a technique for applying a 2D image known as a <strong>texture</strong> onto a 3D surface. Applying a texture adds detail and complexity to the appearance of 3D objects without the need for modelling intricate geometry.</p>
 <figure class="align-default" id="texture-mapping-figure">
 <a class="reference internal image-reference" href="../_images/02_texture_mapping.svg"><img alt="../_images/02_texture_mapping.svg" src="../_images/02_texture_mapping.svg" style="width: 700px;" />
@@ -430,9 +431,9 @@ document.write(`
 <hr class="docutils" />
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Copy your <em><strong>Lab 1 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>Lab 2 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+<p>Copy your <em><strong>Lab 2 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>Lab 3 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
 </div>
-<p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="01_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 1: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
+<p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
 <figure class="align-default" id="colour-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/02_colourful_rectangle.png"><img alt="../_images/02_colourful_rectangle.png" src="../_images/02_colourful_rectangle.png" style="width: 80%;" />
 </a>
@@ -530,7 +531,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we declare a 2-element input vector <code class="docutils literal notranslate"><span class="pre">aTexCoord</span></code> and a 2-element output vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> for the texture coordinates of the vertex (recall that standard convention is that the prefix <code class="docutils literal notranslate"><span class="pre">a</span></code> stands for attribute and <code class="docutils literal notranslate"><span class="pre">v</span></code> stands for vertex). The texture coordinates are outputted without us doing anything to them.</p>
+<p>Here we declare a 2-element input vector <code class="docutils literal notranslate"><span class="pre">aTexCoord</span></code> and a 2-element output vector <code class="docutils literal notranslate"><span class="pre">vTexCoord</span></code> for the texture coordinates of the vertex (recall that standard convention is that the prefix <code class="docutils literal notranslate"><span class="pre">a</span></code> stands for attribute and <code class="docutils literal notranslate"><span class="pre">v</span></code> stands for varying). The texture coordinates are outputted without us doing anything to them.</p>
 <p>The fragment shader needs to read in the texture coordinates of the fragment and get the colour of the fragment from the texture.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
@@ -906,20 +907,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_Basic_shapes.html"
+       href="02_Basic_shapes.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lab 1: Drawing Basic Shapes in WebGL</p>
+        <p class="prev-next-title">Lab 2: Drawing Basic Shapes in WebGL</p>
       </div>
     </a>
     <a class="right-next"
-       href="03_Vectors_and_matrices.html"
+       href="04_Vectors_and_matrices.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lab 3: Vectors and Matrices</p>
+        <p class="prev-next-title">Lab 4: Vectors and Matrices</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

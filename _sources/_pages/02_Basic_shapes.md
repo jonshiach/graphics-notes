@@ -8,8 +8,6 @@ For our first WebGL example we are going to display a simple triangle to the scr
 
 To start with we need two files, an HTML file that includes a canvas element which acts as a rendering surface for WebGL, and JavaScript file that controls everything that happens inside the canvas using the WebGL API.
 
-These notes use a code-along principle in that as you work through these notes you will be tasked to create files, enter text and run code. Through working this way you will build an understanding of the concepts and techniques used in computer graphics. Where you are asked to enter code into your files, try to avoid the temptation of simply copying and pasting code, instead type out the code. Whilst this does have the risk of making typos and creating bugs, it does have an effect of helping you understand what each line of code is doing.
-
 ::::{admonition} Task
 :class: tip
 

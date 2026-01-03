@@ -1,6 +1,6 @@
 (lab2-section)=
 
-# Lab 2: Colours
+# Lab 3: Colours
 
 In the previous page we were able to draw triangles using WebGL of a single colour. Whilst this is awesome, wouldn't it be better if we were able to draw triangles using different colours. In this page we will see how we can add colour data to each vertex, add more shapes to the scene and make use of **VAOs (Vertex Array Objects)** and **EBOs (Element Buffer Objects)**.
 
@@ -11,7 +11,7 @@ We are going to build upon the code we used to draw the boring red triangle exam
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 2 Colours*** and download [index.html](../_downloads/Lab02/index.html), [colours.js](../_downloads/Lab02/colours.js) and [webGLUtils.js](../_downloads/Lab02/webGLUtils.js) to it. Open ***index.html*** in a web browser to check that the red triangle from [Lab 1](lab1-section) is displayed.
+Create a folder called ***Lab 3 Colours*** and download [index.html](../_downloads/Lab02/index.html), [colours.js](../_downloads/Lab02/colours.js) and [webGLUtils.js](../_downloads/Lab02/webGLUtils.js) to it. Open ***index.html*** in a web browser to check that the red triangle from [Lab 2](lab1-section) is displayed.
 
 ```{figure} ../_images/02_hello_triangle.png
 :width: 80%

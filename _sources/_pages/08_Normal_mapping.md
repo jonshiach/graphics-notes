@@ -1,8 +1,8 @@
 (normal-mapping-section)=
 
-# Lab 8: Normal Mapping
+# Lab 9: Normal Mapping
 
-In [8. Lighting](lighting-section) we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
+In [Lab 8: Lighting](lighting-section) we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
 
 ```{figure} ../_images/08_normal_mapping.svg
 :width: 600
@@ -10,69 +10,93 @@ In [8. Lighting](lighting-section) we saw that the diffuse and specular reflecti
 Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.
 ```
 
-A **normal map** is a texture where the RGB colour values of each textel is used for the normal vector $\mathbf{n} = (n_x, n_y, n_z)$ where $n_x$, $n_y$ and $n_z$ values are determined by the red, green and blue colours values respectively ({numref}`normal-map-figure`).
+A **normal map** is a texture where the RGB colour values of each textel is used for the normal vector $\vec{n} = (n_x, n_y, n_z)$ where $n_x$, $n_y$ and $n_z$ values are determined by the red, green and blue colours values respectively. A normal map for the crate texture is shown in {numref}`crate-normal-map-figure`.
+
+```{figure} ../_images/08_crate_normal.png
+:width: 400
+:name: crate-normal-map-figure
+
+A normal map for the crate texture.
+```
+
+Normal maps tend to have a blue tinge to them because the normal vectors are pointing away from the surface so the $z$ component dominates. Any red on a normal map suggests that the normal is pointing to the right and green suggests the normal is pointing upwards.
 
 ```{figure} ../_images/08_normal_map.svg
-:width: 400
+:width: 350
 :name: normal-map-figure
 
 The RBG values of a normal map give the values of the normal vectors.
 ```
 
-Note that since the OpenGL co-ordinate system has the $z$-axis pointing outwards towards the viewer then normal maps take on a mostly blue appearance.
+:::{admonition} Task
+:class: tip
 
-Compile and run the project **Lab09_Normal_maps** and you will see that we have the scene used at the end of [8. Lighting](lighting-section) with the teapots lit using two point lights, a spotlight and a directional light.
+Create a copy of your ***Lab 8 Lighting*** folder, rename it ***Lab 9 Normal Mapping***, rename the file ***lighting.js*** to ***normal_mapping.js*** and change ***index.html*** so that the page title is "Lab 9 - Normal Maps" it uses ***normal_mapping.js***.
+:::
 
-```{figure} ../_images/08_teapots.png
-:width: 500
+Load ***index.html*** in a live server, and you should see the cubes from [Lab 8: Lighting](lighting-section) lit using a point light, a spotlight and a directional light source.
+
+```{figure} ../_images/08_cubes.png
+:width: 80%
+
+The cubes lit using three light sources from [Lab 8: Lighting].
 ```
 
-A Light class has been created to handle the light sources. Take a look at the `light.hpp` and `light.cpp` files and you will see the following Light class methods
+:::{admonition} Task
+:class: tip
 
-- `addPointLight()`, `addSpotLight()`, `addDirLight()` - these are used to add another light source to the scene
-- `toShader()` - sends all of the lighting uniforms to the shader
-- `draw()` - draws the light source
+Download the file [crate_normal.png](../_downloads/Lab%208%20-%20Normal%20Mapping/crate_normal.png) and save it to the ***Lab 9 - Normal Mapping/assets/*** folder.
+
+Add the following just after we have loadied the crate texture.
+
+```javascript
+const normalMap = loadTexture(gl, "assets/crate_normal.png");
+```
+
+And add the following asfter we bind the crate texture in the `render()` function.
+
+```javascript
+// Bind normal map
+gl.activeTexture(gl.TEXTURE1);
+gl.bindTexture(gl.TEXTURE_2D, normalMap);
+gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
+```
+
+:::
+
+Here we have loaded the normal map for the crate texture and bind it to the sampler `uNormalMap`. Note that here we used the texture unit `gl.TEXTURE1` which tells WebGL this is the second texture we are sending to the shaders (see [Multiple textures](multiple-textures-section)).
 
 ---
 
 ## Tangent space
 
-We have already seen in [6. 3D worlds](3D-worlds-section) that we can use transformations to map coordinates and vectors between the model, view and screen spaces. To apply normal mapping we need to perform our lighting calculations in a new space called the **tangent space**. The tangent space is a 3D space where vectors are defined in terms of three vectors: **tangent**, **bitangent** and **normal** vectors ({numref}`bitangent-vector-figure`).
+We have already seen in [Lab 6: 3D worlds](3D-worlds-section) that we can use transformations to map coordinates and vectors between the model, view and screen spaces. The normal vectors in a normal map are defined in **tangent space**, a local coordinate system aligned with the surface that has the basis vectors:
 
-```{figure} ../_images/08_bitangent.svg
-:name: bitangent-vector-figure
-:width: 300
-
-Normal, tangent and the bitangent vectors.
-```
-
-- **Normal vector**, $\mathbf{n}$ - we have already met the normal vector which is a vector perpendicular to the surface
-- **Tangent vector**, $\mathbf{t}$ - this is a vector that points along the surface so is perpendicular to the normal vector
-- **Bitangent vector**, $\mathbf{b}$ - this is a vector that is perpendicular to both the normal and tangent vectors
-
-There are an infinite number of vectors on a plane that is perpendicular to the normal vector so we have a choice for the tangent and bitangent vectors. A natural choice is to use vectors that point along the edges of the normal map, we know these are perpendicular and this also means we are consistent for neighbouring triangles.
+- **Normal**, $\vec{N}$ - we have already met the normal vector which is a vector perpendicular to the surface.
+- **Tangent**, $\vec{T}$ - this is a vector that points in the direction of increasing texture coordinate $u$.
+- **Bitangent**, $\vec{B}$ - this is a vector that points in the direction of increasing texture coordinate $v$.
 
 ```{figure} ../_images/08_TBN.svg
-:width: 300
+:width: 250
 :name: TBN-figure
 
 The tangent space is defined by the tangent, bitangent and normal vectors.
 ```
 
-The tangent and bitangent vectors are calculated using the model space vertex coordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. 
+The world space tangent vector $\vec{T}$ is calculated using the model space vertex coordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$.
 
 ```{figure} ../_images/08_UV_deltas.svg
 :width: 800
 :name: UV-deltas-figure
 
-The tangent, $\mathbf{t}$, and bitangent, $\mathbf{b}$, vectors are calculated by mapping the model space triangle onto the normal map space.
+The tangent, $\vec{T}$, and bitangent, $\vec{B}$, vectors are calculated by mapping the model space triangle onto the normal map space.
 ```
 
 We first calculate vectors that point along two sides of the triangle in the model space
 
 $$ \begin{align*}
-    \mathbf{e}_1 &= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
-    \mathbf{e}_2 &= (x_2, y_2, z_2) - (x_1, y_1, z_1),
+    \vec{e}_1 &= (x_1, y_1, z_1) - (x_0, y_0, z_0), \\
+    \vec{e}_2 &= (x_2, y_2, z_2) - (x_1, y_1, z_1),
 \end{align*}$$
 
 and calculate the difference in the $(u,v)$ coordinates for these edges
@@ -84,344 +108,258 @@ $$ \begin{align*}
     \Delta v_2 &= v_2 - v_1.
 \end{align*} $$
 
-The tangent, $\mathbf{t}$, and bitangent, $\mathbf{b}$, vectors can then be calculated using
+The tangent vector is then calculated using
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathsf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
-\end{align*} $$(TB-equation)
+    \vec{T} &= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+\end{align*} $$(eq-tangent)
 
-To see the derivation of these equations click on the dropdown below.
+To see the derivation of these equations click on the dropdown below. Since the bitangent vector $\vec{B}$ is perpendicular to the normal vector $\vec{N}$ and the tangent vector $\vec{T}$ we can calculate this using 
+
+$$ \vec{B} = \vec{N} \times \vec{T}. $$
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
-Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\mathbf{t}$ and $\mathbf{b}$ point in the $u$ and $v$ co-ordinate directions then the tangent space coordinates of points along the triangle edges $\mathbf{e}_1$ and $\mathbf{e}_2$ can be calculated using
+Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\vec{T}$ and $\vec{B}$ point in the $u$ and $v$ co-ordinate directions then the tangent space coordinates of points along the triangle edges $\vec{e}_1$ and $\vec{e}_2$ can be calculated using
 
 $$\begin{align*}
-    \mathbf{e}_1 &= \Delta u_1 \cdot \mathbf{t} + \Delta v_1 \cdot \mathbf{b}, \\
-    \mathbf{e}_2 &= \Delta u_2 \cdot \mathbf{t} + \Delta v_2 \cdot \mathbf{b},
+    \vec{e}_1 &= \Delta u_1 \cdot \vec{T} + \Delta v_1 \cdot \vec{B}, \\
+    \vec{e}_2 &= \Delta u_2 \cdot \vec{T} + \Delta v_2 \cdot \vec{B},
 \end{align*}$$
 
 where $\Delta u_1 = u_1 - u_0$, $\Delta v_1 = v_1 - v_0$, $\Delta u_2 = u_2 - u_1$ and $\Delta v_2 = v_2 - v_1$. We can express this using matrices
 
 $$ \begin{align*}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} &=
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix} &=
     \begin{pmatrix}
         \Delta u_1 & \Delta v_1 \\
         \Delta u_2 & \Delta v_2
     \end{pmatrix}
-  \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix}.
+  \begin{pmatrix} \vec{T} \\ \vec{B} \end{pmatrix}.
 \end{align*} $$
 
-We want to calculate $\mathbf{t}$ and $\mathbf{b}$ and we know the values of $\mathbf{e}_1$, $\mathbf{e}_2$, $\Delta u_1$, $\Delta v_1$, $\Delta u_2$ and $\Delta v_2$. Using the [inverse](inverse-matrix-section) of the square matrix we can rewrite this equation as
+We want to calculate $\vec{T}$ and $\vec{B}$ and we know the values of $\vec{e}_1$, $\vec{e}_2$, $\Delta u_1$, $\Delta v_1$, $\Delta u_2$ and $\Delta v_2$. Using the [inverse](inverse-matrix-section) of the square matrix we can rewrite this equation as
 
 $$ \begin{align*}
-    \begin{pmatrix} \mathbf{t} \\ \mathbf{b} \end{pmatrix} &=
+    \begin{pmatrix} \vec{T} \\ \vec{B} \end{pmatrix} &=
     \begin{pmatrix}
         \Delta u_1 & \Delta v_1 \\
         \Delta u_2 & \Delta v_2
     \end{pmatrix}^{-1}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix} \\
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix} \\
     &= \frac{1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}
     \begin{pmatrix}
         \Delta v_2 & -\Delta v_1 \\
         -\Delta u_2 & \Delta u_1
     \end{pmatrix}
-    \begin{pmatrix} \mathbf{e}_1 \\ \mathbf{e}_2 \end{pmatrix}.
+    \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix}.
 \end{align*} $$
 
-Writing the out for the $\mathbf{t}$ and $\mathbf{b}$ vectors we have
+Writing the out for the $\vec{T}$ vector we have
 
 $$ \begin{align*}
-    \mathbf{t} &= \frac{\Delta v_2 \cdot \mathbf{e}_1 - \Delta v_1 \cdot \mathbf{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}, \\
-    \mathbf{b} &= \frac{\Delta u_1 \cdot \mathbf{e}_2 - \Delta u_2 \cdot \mathbf{e}_1}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
+    \vec{T} &= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$
 ````
 
-Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to an arbitrary space (e.g., the view space). The matrix that achieves this a 3 $\times$ 3 matrix known as the $TBN$ matrix
+Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to the world space. The matrix that achieves this a 3 $\times$ 3 matrix known as the $TBN$ matrix
 
 $$ \begin{align*}
     TBN &= 
     \begin{pmatrix}
-        \mathbf{t}_x & \mathbf{b}_x & \mathbf{n}_x \\
-        \mathbf{t}_y & \mathbf{b}_y & \mathbf{n}_y \\
-        \mathbf{t}_z & \mathbf{b}_z & \mathbf{n}_z
+        \vec{T}_x & \vec{B}_x & \vec{N}_x \\
+        \vec{T}_y & \vec{B}_y & \vec{N}_y \\
+        \vec{T}_z & \vec{B}_z & \vec{N}_z
     \end{pmatrix},
-\end{align*} $$
+\end{align*} $$(eq-TBN-matrix)
 
-We will be performing our lighting calculations in the tangent space so we want to transform from the view space to the tangent space. To do this we calculate the [inverse](inverse-matrix-section) of the $TBN$ matrix. Fortunately this is an orthogonal matrix where the inverse is simply the transpose, i.e., $TBN^{-1} = TBN^\mathsf{T}$, which is an easy calculation.
+### Calculating the tangent vectors
 
-### Calculating the tangent and bitangent vectors
+All the lighting calculations are performed by the shaders, so we calculate the tangent vectors in JavaScript and pass them to the shaders using uniforms. 
 
-All of the lighting calculations are performed by the shaders so we calculate the tangent and bitangent vectors in our C++ program and pass them to the vertex shader using uniforms. The model class contains all of the attributes for a model so we create two vectors that will contain the tangents and bitangents for each of the vertices of the model. In the **model.hpp** file add the following code after we have declared a vector array for the normals.
+:::{admonition} Task
+:class: tip
 
-```cpp
-std::vector<glm::vec3> tangents;
-std::vector<glm::vec3> bitangents;
-```
+Add the following function to the ***webGLUtils.js*** file.
 
-We are going to send the tangents and bitangents to the GPU using vertex buffers in the same way as we did for the vertices, texture coordinates and normal vectors. Under the `private:` declaration add the identifiers for the tangent and bitangent buffers.
+```javascript
+function computeTangents(vertices, indices) {
+  const vertexCount = indices.length;
+  const tangents = new Float32Array(3 * vertexCount);
 
-```cpp
-unsigned int tangentBuffer;
-unsigned int bitangentBuffer;
-```
+  for (let i = 0; i < vertexCount; i += 3) {
 
-We now create a private method for our model class to calculate the tangent and bitangent vectors. Add the following method declaration.
+    // Indices of triangle vertices
+    const i0 = indices[i + 0];
+    const i1 = indices[i + 1];
+    const i2 = indices[i + 2];
 
-```cpp
- // Calculate tangents and bitangents
- void calculateTangents();
- ```
+    // Positions and uvs
+    const p0x  = vertices[i0 * 11 + 0];
+    const p0y  = vertices[i0 * 11 + 1];
+    const p0z  = vertices[i0 * 11 + 2];
+    const p1x  = vertices[i1 * 11 + 0];
+    const p1y  = vertices[i1 * 11 + 1];
+    const p1z  = vertices[i1 * 11 + 2];
+    const p2x  = vertices[i2 * 11 + 0];
+    const p2y  = vertices[i2 * 11 + 1];
+    const p2z  = vertices[i2 * 11 + 2];
 
-Then in the **model.cpp** file we define the `calculateTangents()` method.
+    const uv0x = vertices[i0 * 11 + 6];
+    const uv0y = vertices[i0 * 11 + 7];
+    const uv1x = vertices[i1 * 11 + 6];
+    const uv1y = vertices[i1 * 11 + 7];
+    const uv2x = vertices[i2 * 11 + 6];
+    const uv2y = vertices[i2 * 11 + 7];
 
-```
-void Model::calculateTangents()
-{
-    for (unsigned int i = 0; i < vertices.size(); i += 3)
-    {
-        // Calculate edge vectors and deltas
-        glm::vec3 E1  = vertices[i+1] - vertices[i];
-        glm::vec3 E2  = vertices[i+2] - vertices[i+1];
-        float deltaU1 = uvs[i+1].x - uvs[i].x;
-        float deltaV1 = uvs[i+1].y - uvs[i].y;
-        float deltaU2 = uvs[i+2].x - uvs[i+1].x;
-        float deltaV2 = uvs[i+2].y - uvs[i+1].y;
-        
-        // Calculate tangents
-        float denom         = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
-        glm::vec3 tangent   = (deltaV2 * E1 - deltaV1 * E2) * denom;
-        glm::vec3 bitangent = (deltaU1 * E2 - deltaU2 * E1) * denom;
-        
-        // Set the same tangents for the three vertices of the triangle
-        tangents.push_back(tangent);
-        tangents.push_back(tangent);
-        tangents.push_back(tangent);
-        bitangents.push_back(bitangent);
-        bitangents.push_back(bitangent);
-        bitangents.push_back(bitangent);
+    // Edges
+    const e1x = p1x - p0x;
+    const e1y = p1y - p0y;
+    const e1z = p1z - p0z;
+    const e2x = p2x - p1x;
+    const e2y = p2y - p1y;
+    const e2z = p2z - p1z;
+
+    // UV deltas
+    const du1 = uv1x - uv0x;
+    const dv1 = uv1y - uv0y;
+    const du2 = uv2x - uv1x;
+    const dv2 = uv2y - uv1y;
+
+    // Calculate tangent and bitangent
+    const denom = du1 * dv2 - du2 * dv1;
+    if (denom === 0) continue;
+    const f = 1 / denom;
+
+    const tx = f * (dv2 * e1x - dv1 * e2x);
+    const ty = f * (dv2 * e1y - dv1 * e2y);
+    const tz = f * (dv2 * e1z - dv1 * e2z);
+
+    // Accumulate tangents
+    for (const idx of [i0, i1, i2]) {
+      tangents[idx * 3 + 0]   += tx;
+      tangents[idx * 3 + 1]   += ty;
+      tangents[idx * 3 + 2]   += tz;
     }
+  }
+
+  return tangents;
 }
 ```
 
-This code calculates the tangent and bitangent vectors using equation {eq}`TB-equation` and adds them the `tangents` and `bitangents` vectors. We want these to be calculated whenever we create a model so amend the Model class constructor at the top of the file and add the following before `setupBuffers()` is called.
+Then, add the following to the `createVao()` function before we unbind the VAO.
 
-```cpp 
-// Calculate tangent and bitangent vectors
-calculateTangents();
+```javascript
+// Tangents
+const tangents = computeTangents(vertices, indices);
+const tangentLocation = gl.getAttribLocation(program, "aTangent");
+const tangentBuffer = gl.createBuffer();
+
+gl.bindBuffer(gl.ARRAY_BUFFER, tangentBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, tangents, gl.STATIC_DRAW);
+gl.enableVertexAttribArray(tangentLocation);
+gl.vertexAttribPointer(tangentLocation, 3, gl.FLOAT, false, 0, 0);
 ```
 
-The last addition we need to make to the Model class is to setup the buffers for the tangent and bitangent and copy these across to the GPU. Add the following to the `setupBuffers()` method (before we call the `glBindVertexArray(0)` function).
+:::
 
-```cpp
-// Create tangent buffer
-GLuint tangentBuffer;
-glGenBuffers(1, &tangentBuffer);
-glBindBuffer(GL_ARRAY_BUFFER, tangentBuffer);
-glBufferData(GL_ARRAY_BUFFER, tangents.size() * sizeof(glm::vec3), &tangents[0], GL_STATIC_DRAW);
-
-// Create bitangent buffer
-GLuint bitangentBuffer;
-glGenBuffers(1, &bitangentBuffer);
-glBindBuffer(GL_ARRAY_BUFFER, bitangentBuffer);
-glBufferData(GL_ARRAY_BUFFER, bitangents.size() * sizeof(glm::vec3), &bitangents[0], GL_STATIC_DRAW);
-
-// Bind the tangent buffer
-glEnableVertexAttribArray(3);
-glBindBuffer(GL_ARRAY_BUFFER, tangentBuffer);
-glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-// Bind the bitangent buffer
-glEnableVertexAttribArray(4);
-glBindBuffer(GL_ARRAY_BUFFER, bitangentBuffer);
-glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-```
-
-These are essentially the same as what we've done previously for the vertices, texture coordinates and normal vectors. Note that the tangent and bitangent buffers are bound to attributes 3 and 4 respectively.
+Here we have written a function to compute the tangent vectors in the model space using equation {eq}`eq-tangent`, created a buffer for the tangents and sent it to the GPU simiarly to what we did for the vertex coordinates, texture coordinates and normal vectors.
 
 ---
 
 ## Shaders
 
-### Vertex shader
+In the vertex shader we need to calculate the world space tangent vector for the vertex and output this to the fragment shader.
 
-In the vertex shader we need to calculate the tangent space fragment position, light position and light direction. We could do this in the fragment shader but since that is called for each fragment in the triangle and the vertex shader is just called 3 times per triangle it is much more efficient to do it in the vertex shader.
+:::{admonition} Task
+:class: tip
 
-The first change we need to make to the vertex shader is to declare the new tangent and bitangent inputs. These were bound to attributes 3 and 4 respectively so edit your file so that we input the tangent and bitangent buffers.
-
-```cpp
-layout(location = 3) in vec3 tangent;
-layout(location = 4) in vec3 bitangent;
-```
-
-We need to transform the fragment position, and the positions and direction vectors of each light source, to the tangent space. For the light source positions and directions we will be outputting an array of vectors to the fragment shader, so add the following to the output list.
+Add input and output declarations to the vertex shader in the ***normal_mapping.js*** file.
 
 ```glsl
-out vec3 tangentSpaceLightPosition[maxLights];
-out vec3 tangentSpaceLightDirection[maxLights];
+in vec3 aTangent;
+
+
+out vec3 vTangent;
 ```
 
-We also need to declare the Light data structure here like we did in the fragment shader in [8. Lighting](multiple-light-sources-section) so add the following before the uniforms are declared
+Then add the following to the `main()` function
 
 ```glsl
-// Light struct
-struct Light
-{
-    vec3 position;
-    vec3 colour;
-    vec3 direction;
-    float constant;
-    float linear;
-    float quadratic;
-    float cosPhi;
-    int type;
-};
+// Output world space tangent vector
+vTangent = normalize(mat3(uModel) * aTangent);
 ```
 
-and add a uniform for the light sources.
+:::
+
+Here we transform the tangent to the world space using the model matrix and output it to the fragment shader. Now we need to edit the fragment shader to calculate the $TBN$ matrix using equation {eq}`eq-TBN-matrix` and use it to transform the normal vectors from the normal map from the tangent space to the world space.
+
+The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a normal vector we use the following
+
+$$ \vec{n}_{tangent} = 2 \times \vec{n}_{map} - 1. $$
+
+which is then transformed to the world space using
+
+$$ \vec{n}_{world} = TBN \cdot \vec{n}_{tangent}. $$
+
+:::{admonition} Task
+:class: tip
+
+Add the following input declaration to the fragment shader.
 
 ```glsl
-uniform Light lightSources[maxLights];
+in vec3 vTangent;
 ```
 
-We need to calculate the $TBN$ matrix to transform from the view space to the tangent space. Before the view space fragment position and normal vector are calculated add the following code.
-
-```cpp
-// Calculate the TBN matrix that transforms view space to tangent space
-mat3 invMV = transpose(inverse(mat3(MV)));
-vec3 t     = normalize(invMV * tangent);
-vec3 b     = normalize(invMV * bitangent);
-vec3 n     = normalize(invMV * normal);
-mat3 TBN   = transpose(mat3(t, b, n));
-```
-
-Here we transform the tangent, bitangent and normal vectors to the view space using the matrix from equation {eq}`view-space-normal-equation` which are then used to calculate the $TBN$ matrix. Remember that by transposing the $TBN$ matrix we are calculating its inverse so here the $TBN$ matrix will transform from the view space to the tangent space.
-
-```{note}
-Some people transform the vectors from the world space instead of the view space, however, this means that we also need to calculate the tangent space $\mathbf{eye}$ vector calculation. Doing this would mean we have additional uniforms and vector calculations. Since in the view space $\mathbf{eye} = (0,0,0)$ then it is also $(0,0,0)$ in the tangent space so by transforming the vectors to the view space we do nt need to worry about this.
-```
-
-So now we can calculate the tangent space fragment position, light position and direction vector using the $TBN$ matrix. Replace the code used to calculate the view space fragment position and normal vector with the following.
-
-```cpp
-// Output tangent space fragment position, light positions and directions
-fragmentPosition = TBN * vec3(MV * vec4(position, 1.0));
-for (int i = 0; i < maxLights; i++)
-{
-    tangentSpaceLightPosition[i]  = TBN * lightSources[i].position;
-    tangentSpaceLightDirection[i] = TBN * lightSources[i].direction;
-}
-```
-
-### Fragment shader
-
-Now that we have transformed the vectors to the tangent space in the vertex shader we need to make a few changes to the fragment shader. The beauty of the tangent space is that it is orthogonal so we don't need to change any of our lighting calculations. This means we only need to make a few changes to the fragment shader.
-
-First, comment out the command used to input the normal vector from the vertex shader, since we will be getting the normal vector from the normal map, and declare the inputs for the array of tangent space light source position and direction
+And add the uniform for the normal map.
 
 ```glsl
-// in vec3 Normal;
-in vec3 tangentSpaceLightPosition[maxLights];
-in vec3 tangentSpaceLightDirection[maxLights];
+uniform sampler2D uNormalMap;
 ```
 
-We have an additional texture for the normal map so we use a sampler uniform. Add the following where we declared the diffuse map uniform.
+Then in the `main()` function, add the following
 
 ```glsl
-uniform sampler2D normalMap;
+// Construct tangent space basis
+vec3 T = normalize(vTangent);
+vec3 B = cross(N, T);
+mat3 TBN = mat3(T, B, N);
+
+// Calculate world space normal
+vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
+N = normalize(TBN * normalSample);
 ```
 
-Within the main function we obtain the normal vector from the normal map. Since the values in a texture are between 0 and 1 and we need the values of a normal vector to be between -1 and 1 we scale using the following
+:::
 
-$$ \mathbf{n} = 2 \times \mathbf{normal\,map} - 1. $$
+Refresh your web browser and move the camera around to see the effects of the normal map.
 
-Before the `main()` function add the following code
+```{figure} ../_images/08_cubes_specular_1.png
+:width: 80%
 
-```glsl
-// Get the normal vector from the normal map
-vec3 Normal = normalize(2.0 * vec3(texture(normalMap, UV)) - 1.0);
+The crate specular map applied to the cubes.
 ```
 
-and replace the code used to extract the light position and direction from the `lightSources` array with the following
+The lighting properties of our cubes makes the surfaces look shiny. Since these should be wooden, we can reduce the specular coefficient to give a more realistic result.
 
-```glsl
-vec3 lightPosition  = tangentSpaceLightPosition[i];
-vec3 lightDirection = tangentSpaceLightDirection[i];
+:::{admonition} Task
+:class: tip
+
+Change the `ks` attribute of the cube objects to the following.
+
+```javascript
+ks        : 0.2,
 ```
 
-In the **Lab09_Normal_maps.cpp** file add the normal map texture to the `teapot` object where we added the diffuse map.
+:::
 
-```cpp
-teapot.addTexture("../assets/diamond_normal.png", "normal");
+Refresh your web browser and you should see that the cubes are now less shiny and more realistic.
+
+```{figure} ../_images/08_cubes_specular_2.png
+:width: 80%
+
+The crate specular map applied to the cubes ($k_s = 0.2$). 
 ```
-
-Compile and run the program and you should see the following.
-
-```{figure} ../_images/08_normal_map.png
-:width: 500
-:name: 09-normal-map-figure
-
-Normal map applied to teapot objects.
-```
-
-The surfaces of the teapots which are smooth now have the appearance of bumpy diamond plate simply by getting the normal vectors from a texture and performing the lighting calculations in the tangent space. {numref}`09-normal-map-closeup-figure` shows a closeup of the surface so we can see the detail.
-
-```{figure} ../_images/08_normal_map_closeup.png
-:width: 500
-:name: 09-normal-map-closeup-figure
-
-Close up of the normal map applied to teapot objects.
-```
-
----
-
-## Re-orthogonalising the tangent space vectors
-
-In the close up view of the normal mapped teapot in {numref}`09-normal-map-closeup-figure` we can see a distinct line in the specular highlights where polygons that form the surface of the teapot join. The reason for this is that the tangent vector is not exactly perpendicular to the normal vector.
-
-When a vertex is shared by multiple triangles the 3D modelling software (e.g., Blender) calculates a single normal vector for the vertex by averaging of the normal vectors for the triangles ({numref}`averaged-normal-figure`). This saves memory and ensures that there is a smooth transition between the normal vectors across the surface. 
-
-```{figure} ../_images/08_averaged_normal.svg
-:width: 350
-:name: averaged-normal-figure
-
-The vertex normal is the average of the normal of the triangles sharing that vertex.
-```
-
-A problem with this is that when using a normal map we assume that the vertex normals are perpendicular to the triangle we are rendering. Since this is not the case so calculating the tangents and bitangents using equation {eq}`TB-equation` will not give an orthogonal set of vectors. We can get around this problem by **re-orthogonalising** the three vectors by adjusting the tangent vector a bit so that it is orthongonal to the normal vector.
-
-```{figure} ../_images/08_reorthogonalise_T.svg
-:width: 300
-:name: reorthogonalise-T-figure
-
-Re-orthogonalising the tangent vector using the Gram-Schmidt process.
-```
-
-Consider {numref}`reorthogonalise-T-figure` where the tangent vector $\mathbf{t}$ is non-orthogonal to the normal vector $\mathbf{n}$. If $\mathbf{n}$ and $\mathbf{t}$ are unit vectors then if we subtract $(\mathbf{t} \cdot \mathbf{n}) \mathbf{n}$ from $\mathbf{t}$ then this creates a vector $\mathbf{t}_{new}$ that is orthogonal to $\mathbf{n}$ (this is known as the <a href="https://en.wikipedia.org/wiki/Gram–Schmidt_process" target="_blank">Gram-Schmidt process</a>). We can then use the cross product between $\mathbf{n}$ and $\mathbf{t}$ to calculate the bitangent vector $\mathbf{b}$.
-
-Edit the vertex shader so that we re-orthogonalise $\mathbf{t}$ and $\mathbf{b}$.
-
-```cpp
-// Calculate the TBN matrix that transforms view space to tangent space
-mat3 invMV = transpose(inverse(mat3(MV)));
-vec3 t     = normalize(invMV * tangent);
-vec3 n     = normalize(invMV * normal);
-t          = normalize(t - dot(t, n) * n);
-vec3 b     = cross(n, t);
-mat3 TBN   = transpose(mat3(t, b, n));
-```
-
-Compile and run the code once against and you should see a screen similar to the one below.
-
-```{figure} ../_images/08_normal_map_orthogonalised.png
-:width: 500
-:name: 09-normal-map-orthogonalised-figure
-
-A normal map with orthogonalised tangent and bitangent vectors.
-```
-
-Now our tangent space vectors are orthogonal and we have a correct normal map applied.
 
 ---
 
@@ -456,106 +394,120 @@ Specular map
 ````
 `````
 
-To add our stone floor we are going to load in a simple 2D plane model, add diffuse, normal textures, define lighting and world space properties and add it to the list of objects.
+To add our stone floor we are going to load in a simple 2D plane model, add diffuse and normal textures, define lighting and world space properties and draw it.
 
-```cpp
-// Load a 2D plane model for the floor and add textures
-Model floor("../assets/plane.obj");
-floor.addTexture("../assets/stones_diffuse.png", "diffuse");
-floor.addTexture("../assets/stones_normal.png", "normal");
+:::{admonition} Task
+:class: tip
 
-// Define floor light properties
-floor.ka = 0.2f;
-floor.kd = 1.0f;
-floor.ks = 1.0f;
-floor.Ns = 20.0f;
+Add the following code after we load the crate textures.
 
-// Add floor model to objects vector
-object.position = glm::vec3(0.0f, -0.85f, 0.0f);
-object.scale    = glm::vec3(1.0f, 1.0f, 1.0f);
-object.rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-object.angle    = 0.0f;
-object.name     = "floor";
-objects.push_back(object);
+```javascript
+// Define floor vertices
+const floorVertices = new Float32Array([
+  // x  y   z      r  g  b     u  v     nx  ny  nz
+   -1,  0,  1,     0, 0, 0,    0, 0,    0,  1,  0,
+    1,  0,  1,     0, 0, 0,    8, 0,    0,  1,  0,
+    1,  0, -1,     0, 0, 0,    8, 8,    0,  1,  0,
+   -1,  0, -1,     0, 0, 0,    0, 8,    0,  1,  0,
+]);
+
+// Define floor indices
+const floorIndices = new Uint16Array([
+   0,  1,  2,  
+   0,  2,  3,
+]);
+
+// Define floor VAO
+const floorVao = createVao(gl, program, floorVertices, floorIndices);
+
+// Load floor textures
+const floorTexture = loadTexture(gl, "assets/stones.png");
+const floorNormalMap = loadTexture(gl, "assets/stones_normal.png");
 ```
 
-We also need to draw the floor object so add the following after we have drawn the teapot objects.
+And add the following after we have drawn the cubes.
 
-```cpp
-if (objects[i].name == "floor")
-    floor.draw(shaderID);
+```javascript
+// Draw floor
+// Bind texture
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, floorTexture);
+gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
+
+// Bind normal map
+gl.activeTexture(gl.TEXTURE1);
+gl.bindTexture(gl.TEXTURE_2D, floorNormalMap);
+gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
+
+// Send object light properties to the shader
+gl.uniform1f(gl.getUniformLocation(program, "uKa"), 0.2);
+gl.uniform1f(gl.getUniformLocation(program, "uKd"), 0.7);
+gl.uniform1f(gl.getUniformLocation(program, "uKs"), 1.0);
+gl.uniform1f(gl.getUniformLocation(program, "uShininess"), 32);
+
+// Calculate the model matrix
+const translate = new Mat4().translate(6, -0.5, -6);
+const scale     = new Mat4().scale(10, 1, 10);
+const rotate    = new Mat4().rotate(0, 1, 0, 0);
+const model     = translate.multiply(rotate).multiply(scale);
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+// Draw the triangles
+gl.bindVertexArray(floorVao);
+gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 ```
+:::
 
-Compile and run the program and you should see a scene resembling the following.
+Here we have added another object ot our scene that consists of a simple flat plane which has been scaled up and translated so that it forms a floor underneath the cubes. All of the this code is similar to what we have done previously. Refresh your web browser and move the camera around to see the effect of normal mapping on the stone floor.
 
 ```{figure} ../_images/08_floor_no_specular.png
-:width: 500
-:name: stone-floor-no-specular-figure
+:width: 80%
 
-Stone floor with no specular map applied.
+A the floor object with normal mapping.
 ```
 
-Move the camera around the floor and note how the mortar between the stones have specular highlights (an example of this can be seen in the bottom left-hand corner of {numref}`stone-floor-no-specular-figure`). This isn't very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map to switch off the specular highlights for certain fragments.
+Note how the mortar between the stones have specular highlights. This isn't very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map ({numref}`stones-specular-map-figure`) to switch off the specular highlights for certain fragments.
 
-To apply the specular map we added to the `floor` object we first need to add a specular map to the `floor` model. Where we added the diffuse and normal maps add a specular map using the following code
+:::{admonition} Task
+:class: tip
 
-```cpp
-floor.addTexture("../assets/stones_specular.png", "specular");
+Download the file [stones_specular.png](../_downloads/Lab%208%20-%20Normal%20Mapping/crate_specular.png) and save it in your ***Lab 9 - Normal Mapping/assets/*** folder.
+
+Add the following code after we have loaded the floor textures.
+
+```javascript
+const floorSpecularMap = loadTexture(gl, "assets/stones_specular.png");
 ```
 
-We now need to make minor changes to the fragment shader. First, declare a sampler uniform for the specular map near to where we did the same for the diffuse and normal maps.
+And add the following after we bind the normal map for the floor.
 
-```cpp
-uniform sampler2D specularMap;
+```javascript
+// Bind specular map
+gl.activeTexture(gl.TEXTURE2);
+gl.bindTexture(gl.TEXTURE_2D, floorSpecularMap);
+gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
 ```
 
-Then, whenever we calculate the specular lighting in the `calculatePointLight()`, `calculateSpotlight()` and `calculateDirectionalLight()` functions multiply by the colour of the textel from the specular map.
+Then in the fragment shader, add a declaration for the specular map
 
-```cpp
-vec3 specular   = ks * lightColour * pow(cosAlpha, Ns) * vec3(texture(specularMap, UV));
+```glsl
+uniform sampler2D uSpecularMap;
 ```
 
-Compile and run the program and now you will notice that the mortar between the stones no longer have specular highlights.
+And add the following after the specular lighting is calculated.
+
+```glsl
+specular *= texture(uSpecularMap, vTexCoords).rgb;
+```
+
+:::
+
+Refresh your web browser and position the camera to see the effect of the specular map. Note how the mortar between the stones no longer appears to be shiny.
 
 ```{figure} ../_images/08_floor_specular.png
-:width: 500
-:name: stone-floor-specular-figure
+:width: 80%
 
-Stone floor with specular map applied.
-```
-
-### Neutral maps
-
-We may not always want to apply a normal map or specular map to an object. If you look at your teapots after applying the specular map for the floor you can see that it has also been applied to the teapot.
-
-```{figure} ../_images/08_teapot_specular.png
-:width: 500
-:name: teapot-specular-map-figure
-
-The specular map for the floor has been applied to the teapot.
-```
-
-Rather than writing a fragment shader for each case we can apply **neutral maps** which is a texture that when normal and specular mapping is applied it has no affect. Since the normal vector is calculated using
-
-$$ \mathsf{normal} = \mathsf{normalise}(2 \times \mathbf{normal\, map} - 1), $$
-
-then if the normal maps has pixels with the RGB colour code $(0.5, 0.5, 1)$ then all fragments will have a normal vector of $(0, 0, 1)$ which is perpendicular to the surface.
-
-A neutral specular map is simply a texture with all white pixels that have the RGB colour code $(1, 1, 1)$ so multiplying this by the specular colour has no affect.
-
-The neutral maps for normal and specular mapping are contained in the **neutral_normal.png** and **neutral_specular.png** files in the **assets/** folder and are applied to a model when it is created. Add the neutral specular map to the teapot model by adding the following code.
-
-```cpp
-teapot.addTexture("../assets/neutral_specular.png", "specular");
-```
-
-Compile and run the program and you should see the teapot no longer has the floor specular map applied to it.
-
-```{figure} ../_images/08_neutral_map.png
-:width: 500
-:name: teapot-neutral-map-figure
-
-A neutral specular map applied to the teapot.
+A the floor object with normal and specular mapping.
 ```
 
 ---

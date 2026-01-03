@@ -149,7 +149,7 @@ vTexCoord = aTexCoord;
 
 :::
 
-Here we declare a 2-element input vector `aTexCoord` and a 2-element output vector `vTexCoord` for the texture coordinates of the vertex (recall that standard convention is that the prefix `a` stands for attribute and `v` stands for vertex). The texture coordinates are outputted without us doing anything to them.
+Here we declare a 2-element input vector `aTexCoord` and a 2-element output vector `vTexCoord` for the texture coordinates of the vertex (recall that standard convention is that the prefix `a` stands for attribute and `v` stands for varying). The texture coordinates are outputted without us doing anything to them.
 
 The fragment shader needs to read in the texture coordinates of the fragment and get the colour of the fragment from the texture.
 

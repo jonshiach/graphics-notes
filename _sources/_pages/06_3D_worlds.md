@@ -18,7 +18,7 @@ A unit cube centred at $(0,0,0)$ with side lengths of 2.
 :::{admonition} Task
 :class: tip
 
-Download [Lab 6.zip](../_downloads/Lab%205%20-%203D%20Worlds.zip) and extract the files to your computer.
+Download [Lab 6.zip](../_downloads/Lab%206%20-%203D%20Worlds.zip) and extract the files to your computer.
 :::
 
 Open the ***3D_worlds.js*** file, and you will see that the vertices and indices have been defined for a unit cube.
