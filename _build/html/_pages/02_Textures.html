@@ -782,10 +782,10 @@ document.write(`
 <p><span class="caption-number">Fig. 19 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code>.</span><a class="headerlink" href="#mario-clamp-to-edge-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</section>
 <hr class="docutils" />
+</section>
 <section id="multiple-textures">
-<h2>Multiple textures<a class="headerlink" href="#multiple-textures" title="Link to this heading">#</a></h2>
+<span id="multiple-textures-section"></span><h2>Multiple textures<a class="headerlink" href="#multiple-textures" title="Link to this heading">#</a></h2>
 <p>WebGL allows us to use up to 16 textures in a single fragment shader. For each new texture we use we need to create and bind the texture to a target, load the texture data from an image file and set the texture wrapping and filtering options.</p>
 <p>A <strong>texture unit</strong> is a location value used by fragment shader for the texture sampler we are using. The default texture unit for a texture is <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code> which is what we have been using up to now. We can have up to 16 texture units, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE1</span></code> up to <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE15</span></code>. Alternatively we could use <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE0</span> <span class="pre">+</span> <span class="pre">2</span></code> up to <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE</span> <span class="pre">+</span> <span class="pre">15</span></code>.</p>
 <div class="tip admonition">

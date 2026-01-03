@@ -1425,19 +1425,19 @@
 %     \draw [->,line width=1pt,shorten >= 2pt] (fragment) -- ($(1)+(-1,0)$);
 % \end{tikzpicture}
 
-\begin{tikzpicture}[domain=0:8,samples=200]
-    \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
-    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
-    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
-    \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
-    \node [left] at (-0.1,\yl) {1};
-    \node [left] at (-0.1,0) {0};
-    \node [below] at (-0.1,-0.1) {0};
-    \node [below] at (\p,-0.1) {cutoff};
-    \node [below] at (\p-\w,-0.1) {inner cutoff};
-    \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
-    \draw [<->] (\p-\w,3.2) -- ++(\w,0) node [pos=0.5,above] {$\epsilon$};
-\end{tikzpicture}
+% \begin{tikzpicture}[domain=0:8,samples=200]
+%     \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
+%     \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
+%     \node [left] at (-0.1,\yl) {1};
+%     \node [left] at (-0.1,0) {0};
+%     \node [below] at (-0.1,-0.1) {0};
+%     \node [below] at (\p,-0.1) {cutoff};
+%     \node [below] at (\p-\w,-0.1) {inner cutoff};
+%     \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
+%     \draw [<->] (\p-\w,3.2) -- ++(\w,0) node [pos=0.5,above] {$\epsilon$};
+% \end{tikzpicture}
 
 % Directional light
 % \begin{tikzpicture}
@@ -1456,14 +1456,14 @@
 % 	\coordinate (1) at (\x:\l-1);
 % 	\coordinate (2) at ($(1)+(\y:\l-1)$);
 % 	\coordinate (3) at ($(\y:\l-1)$);
-%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
-%     \draw [axis] (0,0) -- (\y:\l) node at (\y:\l+0.2) {$y$};
-%     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
-% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
-% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
-% 	\draw [vector,red] (0,0) -- (\x:\l-1) node [below] {$x$};
-% 	\draw [vector,mygreen] (0,0) -- (\y:\l-1) node [left] {$y$};
-% 	\draw [vector,blue] (0,0) -- (\z:\l-1) node [below] {$z$};
+%     \draw [axis] (0,0) -- (\x:2.4) node at (\x:2.6) {$x$};
+%     \draw [axis] (0,0) -- (\y:2.4) node at (\y:2.6) {$y$};
+%     \draw [axis] (0,0) -- (\z:2.4) node at (\z:2.6) {$z$};
+% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {crate_normal.png}
+% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
+% 	\draw [vector,red] (0,0) -- (\x:1) node [below] {$n_x$};
+% 	\draw [vector,mygreen] (0,0) -- (\y:1) node [left] {$n_y$};
+% 	\draw [vector,blue] (0,0) -- (\z:1) node [below] {$n_z$};
 % \end{tikzpicture}
 
 % Normal mapping
@@ -1504,53 +1504,53 @@
 
 % T, B, N vectors
 % \begin{tikzpicture}
-% 	\tikzmath{\a1=20;\a2=150;\w=3;\h=3;}
+% 	\tikzmath{\a1=10;\a2=120;\w=3;\h=3;}
 % 	\coordinate (1) at (\a1:\w);
 % 	\coordinate (2) at ($(1)+(\a2:\h)$);
 % 	\coordinate (3) at (\a2:\h);
-% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
-% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
-% 	\draw [vector,red,line width=2pt] (0,0) -- (1) node [below right,pos=0.5] {$\vec{t}$};
-% 	\draw [vector,mygreen,line width=2pt] (0,0) -- (3) node [below left,pos=0.5] {$\vec{b}$};
-% 	\draw [vector,blue,line width=2pt] (0,0) -- (85:3.2) node [above] {$\vec{n}$};
+% 	\texturedtriangle{(0,0)}{(1)}{(2)} {(0,0)}{(1,0)}{(1,1)} {crate_normal.png}
+% 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
+% 	\draw [vector,red,line width=2pt] (0,0) -- (1) node [below right,pos=0.5] {$\vec{T}$};
+% 	\draw [vector,mygreen,line width=2pt] (0,0) -- (3) node [below left,pos=0.5] {$\vec{B}$};
+% 	\draw [vector,blue,line width=2pt] (0,0) -- (65:2.5) node [above] {$\vec{N}$};
 % \end{tikzpicture}
 
 % UV deltas
-% \begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
-% 	\tikzmath{\a1=0;\a2=90;\l=5.5;\h=5.5;}
-% 	\coordinate (0) at (\a1:\l);
-% 	\coordinate (1) at ($(0)+(\a2:\h)$);
-% 	\coordinate (2) at (\a2:\h);
-% 	\coordinate (P2) at (3,1);
-% 	\coordinate (P3) at (4,4);
-% 	\coordinate (P1) at (1.,3);
-% 	\texturedtrianglelight{(0,0)}{(0)}{(1)} {(0,0)}{(1,0)}{(1,1)} {diamond_plate.jpeg}
-% 	\texturedtrianglelight{(0,0)}{(1)}{(2)} {(0,0)}{(1,1)}{(0,1)} {diamond_plate.jpeg}
-% 	\draw [vector,red] (0,0) -- (\a1:\l) node [right] {$\vec{t}$};
-% 	\draw [vector,mygreen] (0,0) -- (\a2:\h) node [left] {$\vec{b}$};
-% 	\draw [line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
-% 	\node [above,xshift=-0.4cm] at (P1) {$(u_0, v_0)$}; 
-% 	\node [below] at (P2) {$(u_1, v_1)$}; 
-% 	\node [above] at (P3) {$(u_2, v_2)$}; 
-% 	\draw [<->] ($(0:1)+(90:-0.25)$) -- ++(\a1:0.5*\l-1) node [pos=0.5,below] {$\Delta u_1$};
-% 	\draw [<->] ($(\a2:-0.25)+(\a1:0.5*\l)$) -- ++(1.5,0) node [pos=0.5,below] {$\Delta u_2$};
-% 	\draw [<->] ($(\a2:0.2*\h)+(\a1:-0.25)$) -- ++(\a2:2) node [pos=0.5,left] {$\Delta v_1$};
-% 	\draw [<->] ($(\a1:\l+0.2)+(\a2:1)$) -- ++(\a2:3) node [pos=0.5,right] {$\Delta v_2$};
-% 	\draw [vector,blue] (P1) -- (P2) node [pos=0.5,below left] {$(\Delta u_1, \Delta v_1)$};
-% 	\draw [vector,blue] (P2) -- (P3) node [pos=0.5,below right] {$(\Delta u_2, \Delta v_2)$};
-% 	\node at (2.5,-1) {tangent space};
+\begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
+	\tikzmath{\a1=0;\a2=90;\l=5.5;\h=5.5;}
+	\coordinate (0) at (\a1:\l);
+	\coordinate (1) at ($(0)+(\a2:\h)$);
+	\coordinate (2) at (\a2:\h);
+	\coordinate (P2) at (3,1);
+	\coordinate (P3) at (4,4);
+	\coordinate (P1) at (1.,3);
+	\texturedtrianglelight{(0,0)}{(0)}{(1)} {(0,0)}{(1,0)}{(1,1)} {crate_normal.png}
+	\texturedtrianglelight{(0,0)}{(1)}{(2)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
+	\draw [vector,red] (0,0) -- (\a1:\l) node [right] {$\vec{T}$};
+	\draw [vector,mygreen] (0,0) -- (\a2:\h) node [left] {$\vec{B}$};
+	\draw [line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
+	\node [above,xshift=-0.4cm] at (P1) {$(u_0, v_0)$}; 
+	\node [below] at (P2) {$(u_1, v_1)$}; 
+	\node [above] at (P3) {$(u_2, v_2)$}; 
+	\draw [<->] ($(0:1)+(90:-0.25)$) -- ++(\a1:0.5*\l-1) node [pos=0.5,below] {$\Delta u_1$};
+	\draw [<->] ($(\a2:-0.25)+(\a1:0.5*\l)$) -- ++(1.5,0) node [pos=0.5,below] {$\Delta u_2$};
+	\draw [<->] ($(\a2:0.2*\h)+(\a1:-0.25)$) -- ++(\a2:2) node [pos=0.5,left] {$\Delta v_1$};
+	\draw [<->] ($(\a1:\l+0.2)+(\a2:1)$) -- ++(\a2:3) node [pos=0.5,right] {$\Delta v_2$};
+	\draw [vector,blue] (P1) -- (P2) node [pos=0.5,below left] {$(\Delta u_1, \Delta v_1)$};
+	\draw [vector,blue] (P2) -- (P3) node [pos=0.5,below right] {$(\Delta u_2, \Delta v_2)$};
+	\node at (2.5,-1) {tangent space};
 
-% 	\coordinate (O) at (7,0);
-% 	\draw [axis] (O) -- ++(6.5,0) node [right] {$x$};
-% 	\draw [axis] (O) -- ++(0,5.5) node [above] {$y$};
-% 	\draw [line width=1pt] ($(O)+(2,3)$) coordinate (0) -- ++(2,-2) coordinate (1) -- ++(1,3) coordinate(2) -- cycle;
-% 	\node [left] at (0) {$(x_0,y_0,z_0)$};
-% 	\node [below] at (1) {$(x_1,y_1,z_1)$};
-% 	\node [above] at (2) {$(x_2,y_2,z_2)$};
-% 	\draw [vector,blue] (0) -- (1) node [pos=0.5,below left] {$\vec{e}_1$};
-% 	\draw [vector,blue] (1) -- (2) node [pos=0.5,below right] {$\vec{e}_2$};
-% 	\node at (10,-1) {model/view space};
-% \end{tikzpicture}
+	\coordinate (O) at (7,0);
+	\draw [axis] (O) -- ++(6.5,0) node [right] {$x$};
+	\draw [axis] (O) -- ++(0,5.5) node [above] {$y$};
+	\draw [line width=1pt] ($(O)+(2,3)$) coordinate (0) -- ++(2,-2) coordinate (1) -- ++(1,3) coordinate(2) -- cycle;
+	\node [left] at (0) {$(x_0,y_0,z_0)$};
+	\node [below] at (1) {$(x_1,y_1,z_1)$};
+	\node [above] at (2) {$(x_2,y_2,z_2)$};
+	\draw [vector,blue] (0) -- (1) node [pos=0.5,below left] {$\vec{e}_1$};
+	\draw [vector,blue] (1) -- (2) node [pos=0.5,below right] {$\vec{e}_2$};
+	\node at (10,-1) {model space};
+\end{tikzpicture}
 
 % Reorthogonising
 % \begin{tikzpicture}

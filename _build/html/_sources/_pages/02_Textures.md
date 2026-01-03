@@ -1,6 +1,6 @@
 (textures-section)=
 
-# Lab 2: Textures
+# Lab 3: Textures
 
 Texture mapping is a technique for applying a 2D image known as a **texture** onto a 3D surface. Applying a texture adds detail and complexity to the appearance of 3D objects without the need for modelling intricate geometry.
 
@@ -18,11 +18,11 @@ The texture is a 2D image where each pixel within the texture, known as a **text
 :::{admonition} Task
 :class: tip
 
-Copy your ***Lab 1 Basic Shapes*** folder you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 2 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
+Copy your ***Lab 2 Basic Shapes*** folder you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 3 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
 
 :::
 
-Start the live server, and you should see a colourful rectangle similar to the one you created in [Lab 1: Basic Shapes in WebGL](basic-shapes-section). We are going to apply a texture to this rectangle.
+Start the live server, and you should see a colourful rectangle similar to the one you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section). We are going to apply a texture to this rectangle.
 
 ```{figure} ../_images/02_colourful_rectangle.png
 :width: 80%
@@ -436,6 +436,8 @@ Texture wrapping using `GL_CLAMP_TO_EDGE`.
 ```
 
 ---
+
+(multiple-textures-section)=
 
 ## Multiple textures
 

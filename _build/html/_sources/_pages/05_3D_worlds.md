@@ -1,8 +1,8 @@
 (3D-worlds-section)=
 
-# Lab 5: 3D Worlds
+# Lab 6: 3D Worlds
 
-In [Lab 4: Transformations](transformations-section) we looked at the transformations can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
+In [Lab 5: Transformations](transformations-section) we looked at the transformations can be applied to the vertex coordinates $(x, y, z, 1)$ but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.
 
 ## 3D models
 
@@ -18,7 +18,7 @@ A unit cube centred at $(0,0,0)$ with side lengths of 2.
 :::{admonition} Task
 :class: tip
 
-Download [Lab 5.zip](../_downloads/Lab%205%20-%203D%20Worlds.zip) and extract the files to your computer.
+Download [Lab 6.zip](../_downloads/Lab%205%20-%203D%20Worlds.zip) and extract the files to your computer.
 :::
 
 Open the ***3D_worlds.js*** file, and you will see that the vertices and indices have been defined for a unit cube.
@@ -146,7 +146,7 @@ The screen space.
 
 ## Model, view and projection matrices
 
-We saw in [Lab 4: Transformations](transformations-section) that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices:
+We saw in [Lab 5: Transformations](transformations-section) that we apply a transformation by multiplying the object coordinates by a transformation matrix. Since we are transforming between difference coordinate spaces we have 3 main transformation matrices:
 
 - **Model matrix** - transforms the model space coordinates for the objects to the world space
 - **View matrix** - transforms the world space coordinates to the view space coordinates
@@ -156,7 +156,7 @@ We saw in [Lab 4: Transformations](transformations-section) that we apply a tran
 
 ### The Model matrix
 
-In [Lab 4: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. 
+In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. 
 
 :::{admonition} Task
 :class: tip

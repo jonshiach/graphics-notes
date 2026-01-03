@@ -2,12 +2,12 @@
 
 # Lab 8: More Lights
 
-In [Lab 7: Lighting](lighting-section) we saw how to add a single point light source to a scene using the Phong reflection model. In this lab we will extend this to multiple light sources of different types including point lights, spotlights and directional lights.
+In [Lab 8: Lighting](lighting-section) we saw how to add a single point light source to a scene using the Phong reflection model. In this lab we will extend this to multiple light sources of different types including point lights, spotlights and directional lights.
 
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***Lab 7 Lighting*** folder, rename it ***Lab 8 More Lights***, rename the file ***lighting.js*** to ***more_lights.js*** and change ***index.html*** so that the page title is "Lab 8 - More Lights" and it uses the ***more_lights.js*** file.
+Create a copy of your ***Lab 8 Lighting*** folder, rename it ***Lab 8 More Lights***, rename the file ***lighting.js*** to ***more_lights.js*** and change ***index.html*** so that the page title is "Lab 8 - More Lights" and it uses the ***more_lights.js*** file.
 :::
 
 Open the ***index.html*** file in a live server to check everything is working as expected.

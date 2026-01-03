@@ -1,21 +1,129 @@
-## Core Computer Graphics Concepts
+# Core Computer Graphics Concepts
 
-### The Graphics Pipeline
+Computer graphics is the study of how computers generate, manipulate, and display visual images. At its core, the field combines mathematics, programming, and visual perception to transform abstract data into images that can be displayed on a screen. Computer graphics underpins modern applications ranging from video games and films to scientific visualisation, virtual reality, medical imaging, and web-based interactive media.
 
-The **graphics pipeline** (or rendering pipeline) is a sequence of steps the GPU takes to convert 3D scene data (e.g., vertices, textures, lighting information, etc.) into a 2D image displayed on the screen. Like many graphics APIs, WebGL uses **vertex shaders** and **fragment shaders**, small programs that are written in **GLSL (OpenGL Shading Language)** which are run directly on the GPU to perform these steps.
+This course focuses on real-time computer graphics, where images are generated interactively at high frame rates, typically using the graphics processing unit (GPU).
+
+---
+
+## The Graphics Pipeline
+
+The **graphics pipeline** is a sequence of steps the GPU takes to convert 3D scene data (e.g., vertices, textures, lighting information, etc.) into a set of pixels that are displayed on the screen. Like many graphics APIs, WebGL uses **vertex shaders** and **fragment shaders**, small programs that are written in **GLSL (OpenGL Shading Language)** which are run directly on the GPU to perform these steps.
 
 The stages of the graphics pipeline are:
 
-1. **Vertex specification** -- the geometry of objects that construct a 3D scene are defined using arrays of vertices. Each vertex is a collection of data, typically the co-ordinates of the vertex position but can also include texture co-ordinates, surface normal vectors and other attributes (more on these later). In WebGL we create **Vertex Buffer Objects (VBO)** to store this data and tell WebGL how to interpret them.
+1. Application stage (CPU) -- the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.
+  
+2. Vertex processing (GPU) -- each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.
 
-2. **Vertex shader** -- each vertex is processed by a vertex shader whose job it is to transform the 3D co-ordinates from the **model space** (the local object co-ordinates) into **clip space** (the co-ordinate system the GPU uses to determine what is visible on screen). The vertex shader is called once per vertex.
+3. Rasterisation -- geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.
 
-3. **Clipping** -- the vertex outputs from the vertex shader are grouped into **primitives** (usually triangles) and clipped to the clip space such that any primitive that lie outside the clip space are ignored. Primitives that lie partially outside the clip space are cut so that the part that is within the clip space is retained.
+4. Fragment processing (GPU) -- each fragment is shaded to determine its final colour, typically using lighting and texture calculations.
 
-4. **Rasterisation** -- the primitives are converted into grids of pixels known as **fragments**. The interior fragments of a primitive are "filled in" by interpolating the vertex data across the surface.
+5. Framebuffer -- the coloured fragments are written to the framebuffer, which is displayed on the screen.
 
-5. **Fragment shader** -- each fragment is processed by the fragment shader which computes the final colour. This can be based on vertex data, texture mapping, lighting models and other visual effects.
+Understanding this pipeline is fundamental: computer graphics is not about drawing objects directly, but about **transforming and processing data through a series of well-defined stages**.
 
-6. **Per-fragment operations** -- before a fragment is displayed (i.e., becomes a pixel on the screen), depth testing (is it hidden by something else), alpha testing (for transparency) and stencil testing (for masking). Fragments can be discarded at this stage.
+---
 
-7. **Frame buffer** -- after processing the fragment is written to the **frame buffer** which is then is sent to the display.
+## Geometry and primitives
+
+All complex graphical objects are built from simple geometric primitives. In real-time graphics, these primitives are almost always triangles.
+
+Triangles are used because:
+
+- Three points always define a plane
+- They are efficient for hardware processing
+- They can approximate any surface when used in sufficient numbers
+
+More complex shapes -- such as spheres, characters, and landscapes -- are represented as **meshes**, which are collections of vertices connected into triangles.
+
+Each vertex typically contains:
+
+- A position in space
+- Texture coordinates
+- A surface normal (direction)
+- Optional colour or other attributes
+
+---
+
+## Coordinate systems and transformations
+
+A key challenge in computer graphics is managing multiple coordinate systems. Objects must be positioned relative to one another, viewed from a camera, and projected onto a 2D screen.
+
+The main coordinate spaces are:
+
+- **Object (model) space** -- coordinates relative to an object’s local origin
+- **World space** -- coordinates within the overall scene
+- **View (camera) space** -- coordinates relative to the camera
+- **Clip and Normalised Device Coordinates (NDC)** -- standardised coordinates used for rendering
+- **Screen space** -- final pixel positions on the display
+
+Transformations between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.
+
+---
+
+## The Role of the GPU
+
+The GPU is a specialised processor designed for massively parallel computation. Unlike the CPU, which excels at sequential logic and control flow, the GPU performs the same operations on large amounts of data simultaneously.
+
+In graphics programming:
+
+- The CPU sets up data and state
+- The GPU executes small programs, called shaders, on many vertices or pixels in parallel
+
+This division of labour enables real-time rendering of complex scenes at high frame rates.
+
+---
+
+## Shaders and Programmability
+
+Shaders are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:
+
+- **Vertex shaders**, which process individual vertices
+- **Fragment shaders**, which compute the colour of each pixel-sized fragment
+
+Shaders give developers fine-grained control over how objects appear, enabling effects such as lighting, shading, texturing, and animation. Each shader invocation operates independently, with no shared state between executions.
+
+---
+
+## Real-Time Constraints and Performance
+
+Real-time graphics must generate images within a strict time budget, typically 16 milliseconds per frame for 60 frames per second. This constraint influences every design decision in graphics systems.
+
+- Key performance considerations include:
+- Minimising data transfer between CPU and GPU
+- Reducing the number of draw calls
+- Efficient use of shaders and memory
+
+Understanding these constraints helps explain why graphics systems are structured the way they are.
+
+---
+
+## The RGB Colour Model
+
+The RGB colour model is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.
+
+RGB is an additive colour model, meaning that colours are created by adding light together rather than mixing pigments, for example
+
+- Red + Green = Yellow
+- Red + Blue = Magenta
+- Green + Blue = Cyan
+- Red + Green + Blue = White
+- No light at all = Black
+
+Each primary colour contributes light to the final result. Increasing the intensity of a channel makes the colour brighter; decreasing it makes the colour darker.
+
+RGB values are represented numerically. If each primary colour is represented using 8-bits then a total of $2^8 \times 2^8 \times 2^8 = 16,777,216$ colours. It is estimated that the human eye can distinguish between approximately 10 million colours so 8-bit colour is sufficient.
+
+The most common numerical representations are:
+
+- 8-bit per channel: integer values range from 0 to 255
+  - Example: (255, 0, 0) which is pure red
+  - Example: (255, 255, 255) which is pure white
+
+- Normalised floating-point: values range from 0.0 to 1.0
+  - Example: (1.0, 0.0, 0.0) which is pure red
+  - Example: (0.5, 0.5, 0.5) which is mid-gray
+
+Graphics APIs and shaders typically use the normalised form, while image files and user interfaces often use 8-bit integers.

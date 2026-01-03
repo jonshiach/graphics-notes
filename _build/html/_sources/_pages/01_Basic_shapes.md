@@ -1,6 +1,6 @@
 (basic-shapes-section)=
 
-# Lab 1: Drawing Basic Shapes in WebGL
+# Lab 2: Drawing Basic Shapes in WebGL
 
 For our first WebGL example we are going to display a simple triangle to the screen, this "hello triangle" is the computer graphics version of the classic "hello world!" example.
 
@@ -13,7 +13,7 @@ These notes use a code-along principle in that as you work through these notes y
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 1 Basic Shapes*** inside which create an HTML file called ***index.html***.
+Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file called ***index.html***.
 
 Open the ***index.html*** in Visual Studio Code (this is installed on PCs in the Dalton Building).
 
@@ -24,7 +24,7 @@ Open the ***index.html*** in Visual Studio Code (this is installed on PCs in the
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lab 1 - Basic Shapes in WebGL</title>
+    <title>Lab 2 - Basic Shapes in WebGL</title>
     <style>
       html, head, body {
         margin: 0;
@@ -48,7 +48,7 @@ Install the <a href="https://marketplace.visualstudio.com/items?itemName=ritwick
 
 ::::
 
-If everything has gone to plan you should be looking at a web browser with a page titled 'Lab 1 - Basic Shapes in WebGL' that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.
+If everything has gone to plan you should be looking at a web browser with a page titled 'Lab 2 - Basic Shapes in WebGL' that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.
 
 :::{figure} ../_images/01_Canvas.png
 :width: 80%
@@ -60,7 +60,7 @@ The lurid green canvas element.
 :::{admonition} Task
 :class: tip
 
-Inside your ***Lab 1 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following.
+Inside your ***Lab 2 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following.
 
 ```javascript
 // Main function
@@ -455,7 +455,7 @@ Looking at our `main()` function we see that the code to compile and link the sh
 ::::{admonition} Task
 :class: tip
 
-Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 1 Basic Shapes*** folder and enter the following code.
+Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder and enter the following code.
 
 ```javascript
 // Initialize WebGL context
