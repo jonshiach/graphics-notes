@@ -184,10 +184,11 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Visual Studio Code</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_to_javascript.html">Lab 1: Introduction to JavaScript</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Basic_shapes.html">Lab 2: Drawing Basic Shapes in WebGL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Textures.html">Lab 3: Textures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_Vectors_and_matrices.html">Lab 4: Vectors and Matrices</a></li>
@@ -196,7 +197,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 7: Moving the Camera</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">Lab 8: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 20: Quaternions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
 <ul class="nav bd-sidenav">
@@ -427,7 +428,7 @@ document.write(`
 </div>
 <p>Load <em><strong>index.html</strong></em> in a live server to check everything is working ok.</p>
 <figure class="align-default" id="moving-the-camera-figure">
-<a class="reference internal image-reference" href="../_images/06_moving_the_camera.png"><img alt="../_images/06_moving_the_camera.png" src="../_images/06_moving_the_camera.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/07_moving_the_camera.png"><img alt="../_images/07_moving_the_camera.png" src="../_images/07_moving_the_camera.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 57 </span><span class="caption-text">The cubes from <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a>.</span><a class="headerlink" href="#moving-the-camera-figure" title="Link to this image">#</a></p>
@@ -438,7 +439,7 @@ document.write(`
 <h2>Using keyboard input to move the camera<a class="headerlink" href="#using-keyboard-input-to-move-the-camera" title="Link to this heading">#</a></h2>
 <p>We are going to use keyboard input to change the coordinates of the eye vector (i.e., the camera position). Recall the view matrix from <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 4: 3D Worlds</span></a> where we introduced the camera vectors seen in <a class="reference internal" href="#camera-vectors-figure-2"><span class="std std-numref">Fig. 58</span></a>.</p>
 <figure class="align-default" id="camera-vectors-figure-2">
-<a class="reference internal image-reference" href="../_images/05_view_space_alignment.svg"><img alt="../_images/05_view_space_alignment.svg" src="../_images/05_view_space_alignment.svg" style="width: 400px;" />
+<a class="reference internal image-reference" href="_images/05_view_space_alignment.svg"><img alt="_images/05_view_space_alignment.svg" src="_images/05_view_space_alignment.svg" style="width: 400px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 58 </span><span class="caption-text">Camera vectors</span><a class="headerlink" href="#camera-vectors-figure-2" title="Link to this image">#</a></p>
@@ -446,7 +447,7 @@ document.write(`
 </figure>
 <p>Since these three vectors point to the right, up and to the front of the camera we can use these to move the camera in those directions. For example, to move the camera forwards and backwards we simply add and subtract the front vector to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector (<a class="reference internal" href="#camera-movement-figure"><span class="std std-numref">Fig. 59</span></a>).</p>
 <figure class="align-default" id="camera-movement-figure">
-<a class="reference internal image-reference" href="../_images/06_camera_movement.svg"><img alt="../_images/06_camera_movement.svg" src="../_images/06_camera_movement.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/07_camera_movement.svg"><img alt="../_images/07_camera_movement.svg" src="../_images/07_camera_movement.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 59 </span><span class="caption-text">Moving the camera forwards and backwards.</span><a class="headerlink" href="#camera-movement-figure" title="Link to this image">#</a></p>
@@ -570,7 +571,7 @@ document.write(`
 <h3>Yaw, pitch and roll<a class="headerlink" href="#yaw-pitch-and-roll" title="Link to this heading">#</a></h3>
 <p>The direction which the camera is pointing is governed by three angles called <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank"><strong>Euler angles</strong></a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its <span class="math notranslate nohighlight">\(yaw\)</span> angle. Then on take off it can point its nose upwards in the vertical direction by changing its <span class="math notranslate nohighlight">\(pitch\)</span> angle. Once airborne the plane can move its wingtips up and down thus changing its <span class="math notranslate nohighlight">\(roll\)</span> angle. Our camera is analogous to the plane (<a class="reference internal" href="#yaw-pitch-roll-figure"><span class="std std-numref">Fig. 60</span></a>).</p>
 <figure class="align-default" id="yaw-pitch-roll-figure">
-<a class="reference internal image-reference" href="../_images/06_yaw_pitch_roll.svg"><img alt="../_images/06_yaw_pitch_roll.svg" src="../_images/06_yaw_pitch_roll.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/07_yaw_pitch_roll.svg"><img alt="../_images/07_yaw_pitch_roll.svg" src="../_images/07_yaw_pitch_roll.svg" style="width: 300px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 60 </span><span class="caption-text">Yaw, pitch and roll</span><a class="headerlink" href="#yaw-pitch-roll-figure" title="Link to this image">#</a></p>
@@ -578,7 +579,7 @@ document.write(`
 </figure>
 <p>To point our camera we only need the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles which we are going to change using mouse inputs such that when the mouse is moved left and right the <span class="math notranslate nohighlight">\(yaw\)</span> angle changes and when the mouse is moved up and down the <span class="math notranslate nohighlight">\(pitch\)</span> angle changes. Our <code class="docutils literal notranslate"><span class="pre">.lookAt()</span></code> method uses the front vector to calculate the view matrix so we need some way of calculating the front vector from the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles.</p>
 <figure class="align-default" id="yaw-figure">
-<a class="reference internal image-reference" href="../_images/06_yaw.svg"><img alt="../_images/06_yaw.svg" src="../_images/06_yaw.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/07_yaw.svg"><img alt="../_images/07_yaw.svg" src="../_images/07_yaw.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 61 </span><span class="caption-text">Looking down the <span class="math notranslate nohighlight">\(y\)</span>-axis.</span><a class="headerlink" href="#yaw-figure" title="Link to this image">#</a></p>
@@ -591,7 +592,7 @@ document.write(`
     \vec{front}_z &amp;= \cos(yaw).
 \end{align*} \end{split}\]</div>
 <figure class="align-default" id="pitch-figure">
-<a class="reference internal image-reference" href="../_images/06_pitch.svg"><img alt="../_images/06_pitch.svg" src="../_images/06_pitch.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/07_pitch.svg"><img alt="../_images/07_pitch.svg" src="../_images/07_pitch.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 62 </span><span class="caption-text">Looking down the <span class="math notranslate nohighlight">\(x\)</span>-axis.</span><a class="headerlink" href="#pitch-figure" title="Link to this image">#</a></p>
@@ -700,7 +701,7 @@ document.write(`
 <p>Whilst moving your camera around your 3D world you may notice that we can move through objects and view them from the inside. All surfaces of the cubes are rendered, including those not visible from the camera because they are on the far side of the cubes. This is a waste of resources as WebGL is calculating the vertex and fragment shaders for objects that won’t be shown in the frame. To overcome this we can cull (omit) any surface of an object that is <strong>back facing</strong> the camera in a method called <strong>back face culling</strong>.</p>
 <p id="normal-vector-section">A <strong>normal vector</strong> (often just referred to as a <strong>normal</strong>) is a vector denoted by <span class="math notranslate nohighlight">\(\vec{n}\)</span> that is perpendicular to a surface at a given point (<a class="reference internal" href="#normal-vector-figure"><span class="std std-numref">Fig. 63</span></a>).</p>
 <figure class="align-default" id="normal-vector-figure">
-<a class="reference internal image-reference" href="../_images/06_normal_vector.svg"><img alt="../_images/06_normal_vector.svg" src="../_images/06_normal_vector.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/07_normal_vector.svg"><img alt="../_images/07_normal_vector.svg" src="../_images/07_normal_vector.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 63 </span><span class="caption-text">The surface normal vector.</span><a class="headerlink" href="#normal-vector-figure" title="Link to this image">#</a></p>
@@ -711,7 +712,7 @@ document.write(`
 \[ \vec{n} = (\vec{v}_1 - \vec{v}_0) \times (\vec{v}_2 - \vec{v}_1). \]</div>
 <p>A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference and we have halved the number of surfaces the shader has to deal with (<a class="reference internal" href="#backface-culling-figure"><span class="std std-numref">Fig. 64</span></a>).</p>
 <figure class="align-default" id="backface-culling-figure">
-<a class="reference internal image-reference" href="../_images/06_backface_culling.svg"><img alt="../_images/06_backface_culling.svg" src="../_images/06_backface_culling.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/07_backface_culling.svg"><img alt="../_images/07_backface_culling.svg" src="../_images/07_backface_culling.svg" style="width: 300px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 64 </span><span class="caption-text">Back face culling removes surfaces with vectors pointing away from the camera.</span><a class="headerlink" href="#backface-culling-figure" title="Link to this image">#</a></p>
@@ -719,7 +720,7 @@ document.write(`
 </figure>
 <p>But how do we know if a surface is back facing? Consider <a class="reference internal" href="#back-facing-figure"><span class="std std-numref">Fig. 65</span></a> which shows a back facing surface.</p>
 <figure class="align-default" id="back-facing-figure">
-<a class="reference internal image-reference" href="../_images/06_back_facing_polygon.svg"><img alt="../_images/06_back_facing_polygon.svg" src="../_images/06_back_facing_polygon.svg" style="width: 400px;" />
+<a class="reference internal image-reference" href="../_images/07_back_facing_polygon.svg"><img alt="../_images/07_back_facing_polygon.svg" src="../_images/07_back_facing_polygon.svg" style="width: 400px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 65 </span><span class="caption-text">A back facing surface.</span><a class="headerlink" href="#back-facing-figure" title="Link to this image">#</a></p>

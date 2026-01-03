@@ -469,7 +469,7 @@ document.write(`
 </div>
 <p>If everything has gone to plan you should be looking at a web browser with a page titled ‘Lab 2 - Basic Shapes in WebGL’ that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.</p>
 <figure class="align-default" id="canvas-figure">
-<a class="reference internal image-reference" href="../_images/01_Canvas.png"><img alt="../_images/01_Canvas.png" src="../_images/01_Canvas.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_Canvas.png"><img alt="../_images/02_Canvas.png" src="../_images/02_Canvas.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 1 </span><span class="caption-text">The lurid green canvas element.</span><a class="headerlink" href="#canvas-figure" title="Link to this image">#</a></p>
@@ -515,7 +515,7 @@ document.write(`
 </div>
 <p>Now if you refresh your browser you should see a dark grey background. If something has gone wrong, and you still see the green background, open up the JavaScript console (if you are using Chrome then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>⌥</kbd> + <kbd>⌘</kbd> + <kbd>J</kbd> on a Mac) and it should give you an indication of what has gone wrong. The life of a graphics programmer is mostly problem-solving and debugging, so get used to doing this.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_colour_buffer.png"><img alt="../_images/01_colour_buffer.png" src="../_images/01_colour_buffer.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_colour_buffer.png"><img alt="../_images/02_colour_buffer.png" src="../_images/02_colour_buffer.png" style="width: 80%;" />
 </a>
 </figure>
 </section>
@@ -540,7 +540,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span id="triangle-coordinates-section"></span><h3>Define the Triangle Co-ordinates<a class="headerlink" href="#define-the-triangle-co-ordinates" title="Link to this heading">#</a></h3>
 <p>Our triangle will have co-ordinates at <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span> (lower-left vertex), <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span> (lower-right vertex) and <span class="math notranslate nohighlight">\((0, 0.5, 0)\)</span> (top vertex).</p>
 <figure class="align-default" id="triangle-figure">
-<a class="reference internal image-reference" href="../_images/01_Triangle.svg"><img alt="../_images/01_Triangle.svg" src="../_images/01_Triangle.svg" style="width: 70%;" />
+<a class="reference internal image-reference" href="../_images/02_Triangle.svg"><img alt="../_images/02_Triangle.svg" src="../_images/02_Triangle.svg" style="width: 70%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 2 </span><span class="caption-text">The vertex co-ordinates for the red triangle example.</span><a class="headerlink" href="#triangle-figure" title="Link to this image">#</a></p>
@@ -776,7 +776,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> function tells the GPU to draw the primitives. The inputs are the type of primitive (we have a triangle), the index of the first vertex and the number of vertices to draw (we have one triangle, so we want to draw 3 vertices). Refresh your browser window, pray to the programming gods and if everything has gone to plan you should see the red triangle displayed on the canvas.</p>
 <figure class="align-default" id="hello-triangle-figure">
-<a class="reference internal image-reference" href="../_images/01_hello_triangle.png"><img alt="../_images/01_hello_triangle.png" src="../_images/01_hello_triangle.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_hello_triangle.png"><img alt="../_images/02_hello_triangle.png" src="../_images/02_hello_triangle.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 3 </span><span class="caption-text">Hello triangle!</span><a class="headerlink" href="#hello-triangle-figure" title="Link to this image">#</a></p>
@@ -934,7 +934,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas (<a class="reference internal" href="#skewed-triangle-figure"><span class="std std-numref">Fig. 4</span></a>). The reason why its skewed is that when we told WebGL how to read the vertex buffer using <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(colourLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>. This means that WebGL is expected no gaps between the vertex co-ordinate data since the stride input (the second to last input) is <code class="docutils literal notranslate"><span class="pre">0</span></code>, so it thinks the 3 vertex co-ordinates are <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span>.</p>
 <figure class="align-default" id="skewed-triangle-figure">
-<a class="reference internal image-reference" href="../_images/01_skewed_triangle.png"><img alt="../_images/01_skewed_triangle.png" src="../_images/01_skewed_triangle.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_skewed_triangle.png"><img alt="../_images/02_skewed_triangle.png" src="../_images/02_skewed_triangle.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 4 </span><span class="caption-text">Oops, something has gone wrong.</span><a class="headerlink" href="#skewed-triangle-figure" title="Link to this image">#</a></p>
@@ -942,7 +942,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </figure>
 <p>The stride is the number of bytes from the start of the attribute, in our case the <span class="math notranslate nohighlight">\(x\)</span> vertex co-ordinate, for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the <span class="math notranslate nohighlight">\((x, y, z)\)</span> values and 3 for the RGB values.</p>
 <figure class="align-default" id="stride-offset-figure">
-<a class="reference internal image-reference" href="../_images/01_stride_offset.svg"><img alt="../_images/01_stride_offset.svg" src="../_images/01_stride_offset.svg" style="width: 70%;" />
+<a class="reference internal image-reference" href="../_images/02_stride_offset.svg"><img alt="../_images/02_stride_offset.svg" src="../_images/02_stride_offset.svg" style="width: 70%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">The stride and offset of a vertex array.</span><a class="headerlink" href="#stride-offset-figure" title="Link to this image">#</a></p>
@@ -964,7 +964,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>Refresh your browser, and you should see that the triangle vertices has returned to its previous state, but it’s still black (<a class="reference internal" href="#black-triangle-figure"><span class="std std-numref">Fig. 6</span></a>). The reason for this is that we have not yet told WebGL about our new vertex colours. To do this we get the location of the <code class="docutils literal notranslate"><span class="pre">aColour</span></code> attribute from the vertex shader, enable the attribute array and point WebGL to where it can find the colour data.</p>
 <figure class="align-default" id="black-triangle-figure">
-<a class="reference internal image-reference" href="../_images/01_black_triangle.png"><img alt="../_images/01_black_triangle.png" src="../_images/01_black_triangle.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_black_triangle.png"><img alt="../_images/02_black_triangle.png" src="../_images/02_black_triangle.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 6 </span><span class="caption-text">Sorted the vertex co-ordinates but not the colour.</span><a class="headerlink" href="#black-triangle-figure" title="Link to this image">#</a></p>
@@ -989,7 +989,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Note that here the <code class="docutils literal notranslate"><span class="pre">offset</span></code> value is 3 times of the number of bytes used to store a 32-bit float. This is because the colour data comes after the 3 floats for the co-ordinate values.</p>
 <p>Refresh your browser you should see the triangle in all its glorious colourfulness.</p>
 <figure class="align-default" id="colurful-triangle-figure">
-<a class="reference internal image-reference" href="../_images/01_colourful_triangle.png"><img alt="../_images/01_colourful_triangle.png" src="../_images/01_colourful_triangle.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_colourful_triangle.png"><img alt="../_images/02_colourful_triangle.png" src="../_images/02_colourful_triangle.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 7 </span><span class="caption-text">Hello colourful triangle!</span><a class="headerlink" href="#colurful-triangle-figure" title="Link to this image">#</a></p>
@@ -1042,7 +1042,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two triangles, we change the 3 to a 6 in the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> function.</p>
 <figure class="align-default" id="colourful-shapes-figure">
-<a class="reference internal image-reference" href="../_images/01_triangle_and_square.png"><img alt="../_images/01_triangle_and_square.png" src="../_images/01_triangle_and_square.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/02_triangle_and_square.png"><img alt="../_images/02_triangle_and_square.png" src="../_images/02_triangle_and_square.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 8 </span><span class="caption-text">Our triangle now has a friend.</span><a class="headerlink" href="#colourful-shapes-figure" title="Link to this image">#</a></p>
@@ -1213,7 +1213,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </ol>
 <p>  (a) The triangle is shifted by 0.75 to the right.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex1a.png"><img alt="../_images/01_ex1a.png" src="../_images/01_ex1a.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex1a.png"><img alt="../_images/02_ex1a.png" src="../_images/02_ex1a.png" style="width: 60%;" />
 </a>
 </figure>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -1223,26 +1223,26 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 </details><p>  (b) The triangle is drawn upside-down.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex1b.png"><img alt="../_images/01_ex1b.png" src="../_images/01_ex1b.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex1b.png"><img alt="../_images/02_ex1b.png" src="../_images/02_ex1b.png" style="width: 60%;" />
 </a>
 </figure>
 <p>  (c) The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> co-ordinates are swapped.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex1c.png"><img alt="../_images/01_ex1c.png" src="../_images/01_ex1c.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex1c.png"><img alt="../_images/02_ex1c.png" src="../_images/02_ex1c.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="2">
 <li><p>Use two triangles to draw a green rectangle with lower-left vertex at <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span> and the upper-right vertex at <span class="math notranslate nohighlight">\((0.5, 0.5, 0)\)</span>.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex2.png"><img alt="../_images/01_ex2.png" src="../_images/01_ex2.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex2.png"><img alt="../_images/02_ex2.png" src="../_images/02_ex2.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="3">
 <li><p>Use triangles to draw a blue hexagon.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex3.png"><img alt="../_images/01_ex3.png" src="../_images/01_ex3.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex3.png"><img alt="../_images/02_ex3.png" src="../_images/02_ex3.png" style="width: 60%;" />
 </a>
 </figure>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -1250,7 +1250,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <p class="sd-card-text">We can draw a hexagon using 6 triangles where each triangle has one vertex at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and two outer vertices that lie on the circumference of a circle.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_hexagon.svg"><img alt="../_images/01_hexagon.svg" src="../_images/01_hexagon.svg" style="width: 450px;" />
+<a class="reference internal image-reference" href="../_images/02_hexagon.svg"><img alt="../_images/02_hexagon.svg" src="../_images/02_hexagon.svg" style="width: 450px;" />
 </a>
 </figure>
 <p class="sd-card-text">The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> vertices of the two outer vertices are</p>
@@ -1270,7 +1270,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <li><p>Use lots of triangles to draw a yellow circle.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/01_ex4.png"><img alt="../_images/01_ex4.png" src="../_images/01_ex4.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/02_ex4.png"><img alt="../_images/02_ex4.png" src="../_images/02_ex4.png" style="width: 60%;" />
 </a>
 </figure>
 </section>

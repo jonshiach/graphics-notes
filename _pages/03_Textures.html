@@ -184,7 +184,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="P_Core_concepts.html">Core Computer Graphics Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Visual Studio Code</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="current nav bd-sidenav">
@@ -421,7 +421,7 @@ document.write(`
 <span id="textures-section"></span><h1>Lab 3: Textures<a class="headerlink" href="#lab-3-textures" title="Link to this heading">#</a></h1>
 <p>Texture mapping is a technique for applying a 2D image known as a <strong>texture</strong> onto a 3D surface. Applying a texture adds detail and complexity to the appearance of 3D objects without the need for modelling intricate geometry.</p>
 <figure class="align-default" id="texture-mapping-figure">
-<a class="reference internal image-reference" href="../_images/02_texture_mapping.svg"><img alt="../_images/02_texture_mapping.svg" src="../_images/02_texture_mapping.svg" style="width: 700px;" />
+<a class="reference internal image-reference" href="../_images/03_texture_mapping.svg"><img alt="../_images/03_texture_mapping.svg" src="../_images/03_texture_mapping.svg" style="width: 700px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 9 </span><span class="caption-text">Mapping a texture to a polygon.</span><a class="headerlink" href="#texture-mapping-figure" title="Link to this image">#</a></p>
@@ -435,7 +435,7 @@ document.write(`
 </div>
 <p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
 <figure class="align-default" id="colour-rectangle-figure">
-<a class="reference internal image-reference" href="../_images/02_colourful_rectangle.png"><img alt="../_images/02_colourful_rectangle.png" src="../_images/02_colourful_rectangle.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/03_colourful_rectangle.png"><img alt="../_images/03_colourful_rectangle.png" src="../_images/03_colourful_rectangle.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 10 </span><span class="caption-text">A colourful rectangle.</span><a class="headerlink" href="#colour-rectangle-figure" title="Link to this image">#</a></p>
@@ -562,7 +562,7 @@ document.write(`
 </div>
 <p>Refresh your web browser, and you should see that we now have applied a texture to the rectangle.</p>
 <figure class="align-default" id="mario-texture-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_texture.png"><img alt="../_images/02_mario_texture.png" src="../_images/02_mario_texture.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/03_mario_texture.png"><img alt="../_images/03_mario_texture.png" src="../_images/03_mario_texture.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 11 </span><span class="caption-text">It’s a me, Mario!</span><a class="headerlink" href="#mario-texture-figure" title="Link to this image">#</a></p>
@@ -584,7 +584,7 @@ document.write(`
 <li><p><strong>Nearest-neighbour interpolation</strong> - where the colour of the nearest textel to the <span class="math notranslate nohighlight">\((u,v)\)</span> texture coordinates is used as the colour sample.</p></li>
 </ul>
 <figure class="align-default" id="nearest-neighbour-interpolation-figure">
-<a class="reference internal image-reference" href="../_images/02_nearest_neighbour.svg"><img alt="../_images/02_nearest_neighbour.svg" src="../_images/02_nearest_neighbour.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_nearest_neighbour.svg"><img alt="../_images/03_nearest_neighbour.svg" src="../_images/03_nearest_neighbour.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 12 </span><span class="caption-text">Nearest neighbour interpolation.</span><a class="headerlink" href="#nearest-neighbour-interpolation-figure" title="Link to this image">#</a></p>
@@ -594,7 +594,7 @@ document.write(`
 <li><p><strong>Bilinear interpolation</strong> - where the distance between <span class="math notranslate nohighlight">\((u,v)\)</span> coordinate and the centre of a textel determines how much that textel contributes to the colour sample.</p></li>
 </ul>
 <figure class="align-default" id="bilinear-interpolation-figure">
-<a class="reference internal image-reference" href="../_images/02_bilinear.svg"><img alt="../_images/02_bilinear.svg" src="../_images/02_bilinear.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_bilinear.svg"><img alt="../_images/03_bilinear.svg" src="../_images/03_bilinear.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 13 </span><span class="caption-text">Bilinear interpolation.</span><a class="headerlink" href="#bilinear-interpolation-figure" title="Link to this image">#</a></p>
@@ -621,7 +621,7 @@ document.write(`
 </div>
 <p>Here we have changed the texture to a low resolution <span class="math notranslate nohighlight">\(64 \times 64\)</span> pixel version of the Mario texture and the texture filtering to nearest-neighbour interpolation. Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-nearest-figure"><span class="std std-numref">Fig. 14</span></a>.</p>
 <figure class="align-default" id="mario-nearest-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_nearest.png"><img alt="../_images/02_mario_nearest.png" src="../_images/02_mario_nearest.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/03_mario_nearest.png"><img alt="../_images/03_mario_nearest.png" src="../_images/03_mario_nearest.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 14 </span><span class="caption-text">Nearest neighbour interpolation</span><a class="headerlink" href="#mario-nearest-figure" title="Link to this image">#</a></p>
@@ -634,7 +634,7 @@ document.write(`
 </div>
 <p>Refresh your web browser, and you should see the image shown in <a class="reference internal" href="#mario-linear-figure"><span class="std std-numref">Fig. 15</span></a>. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment. Our texture mapped rectangle looks slightly blurry since we are using a low resolution texture.</p>
 <figure class="align-default" id="mario-linear-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_linear.png"><img alt="../_images/02_mario_linear.png" src="../_images/02_mario_linear.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/03_mario_linear.png"><img alt="../_images/03_mario_linear.png" src="../_images/03_mario_linear.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 15 </span><span class="caption-text">Bilinear interpolation</span><a class="headerlink" href="#mario-linear-figure" title="Link to this image">#</a></p>
@@ -647,7 +647,7 @@ document.write(`
 <p>Another issue that may occur is when the fragment is a lot smaller than the texture which can happen when an object that is far away from the viewer. In these cases WebGL will struggle to get the colour sample from a high resolution texture since a single fragment covers a large part of the texture.</p>
 <p>To solve this issue WebGL uses <a href="https://www.khronos.org/WebGL/wiki/Texture#Mip_maps" target="_blank"><strong>mipmaps</strong></a> (mip is short for the latin phrase <em>“multum in parvo”</em> or “much in little”) which are a series of textures, each one half the size of the previous one. WebGL will use a mipmap texture most suitable based on the size of the fragment relative to the texture. This way the fragment does not span a large part of the texture.</p>
 <figure class="align-default" id="mipmaps-figure">
-<a class="reference internal image-reference" href="../_images/02_mipmaps.svg"><img alt="../_images/02_mipmaps.svg" src="../_images/02_mipmaps.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_mipmaps.svg"><img alt="../_images/03_mipmaps.svg" src="../_images/03_mipmaps.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 16 </span><span class="caption-text">Mipmaps</span><a class="headerlink" href="#mipmaps-figure" title="Link to this image">#</a></p>
@@ -732,7 +732,7 @@ document.write(`
 </div>
 <p>Refresh your web browser, and you see something like the following.</p>
 <figure class="align-default" id="mario-repeat-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_repeat.png"><img alt="../_images/02_mario_repeat.png" src="../_images/02_mario_repeat.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_mario_repeat.png"><img alt="../_images/03_mario_repeat.png" src="../_images/03_mario_repeat.png" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 17 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_REPEAT</span></code>.</span><a class="headerlink" href="#mario-repeat-figure" title="Link to this image">#</a></p>
@@ -769,7 +769,7 @@ document.write(`
 </div>
 <p>Here we have specified the wrapping in the horizontal (<code class="docutils literal notranslate"><span class="pre">S</span></code>) and vertical (<code class="docutils literal notranslate"><span class="pre">T</span></code>) directions (some people use <span class="math notranslate nohighlight">\((S,T)\)</span> for the vertex coordinates instead of <span class="math notranslate nohighlight">\((u,v)\)</span>) to <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>. Refresh your web browser, and you should see the image shown below.</p>
 <figure class="align-default" id="mario-mirrored-repeat-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_mirrored_repeat.png"><img alt="../_images/02_mario_mirrored_repeat.png" src="../_images/02_mario_mirrored_repeat.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_mario_mirrored_repeat.png"><img alt="../_images/03_mario_mirrored_repeat.png" src="../_images/03_mario_mirrored_repeat.png" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 18 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_MIRRORED_REPEAT</span></code>.</span><a class="headerlink" href="#mario-mirrored-repeat-figure" title="Link to this image">#</a></p>
@@ -777,7 +777,7 @@ document.write(`
 </figure>
 <p>Using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code> results in the images shown below.</p>
 <figure class="align-default" id="mario-clamp-to-edge-figure">
-<a class="reference internal image-reference" href="../_images/02_mario_clamp_to_edge.png"><img alt="../_images/02_mario_clamp_to_edge.png" src="../_images/02_mario_clamp_to_edge.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/03_mario_clamp_to_edge.png"><img alt="../_images/03_mario_clamp_to_edge.png" src="../_images/03_mario_clamp_to_edge.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 19 </span><span class="caption-text">Texture wrapping using <code class="docutils literal notranslate"><span class="pre">GL_CLAMP_TO_EDGE</span></code>.</span><a class="headerlink" href="#mario-clamp-to-edge-figure" title="Link to this image">#</a></p>
@@ -816,7 +816,7 @@ document.write(`
 </div>
 <p>Here we have used the <code class="docutils literal notranslate"><span class="pre">mix()</span></code> function to combine the two textures so that 60% is from the first texture (Mario) and the and the remaining 40% is from the second texture (the crate).</p>
 <figure class="align-default" id="two-textures-figure">
-<a class="reference internal image-reference" href="../_images/02_two_textures.png"><img alt="../_images/02_two_textures.png" src="../_images/02_two_textures.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/03_two_textures.png"><img alt="../_images/03_two_textures.png" src="../_images/03_two_textures.png" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 20 </span><span class="caption-text">A rectangle with a mix of two textures applied.</span><a class="headerlink" href="#two-textures-figure" title="Link to this image">#</a></p>
@@ -830,42 +830,42 @@ document.write(`
 <li><p>Change the <code class="docutils literal notranslate"><span class="pre">uv</span></code> array to create a texture rectangle consisting of a 6 by 4 grid of Mario’s.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex1.png"><img alt="../_images/02_Ex1.png" src="../_images/02_Ex1.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex1.png"><img alt="../_images/03_Ex1.png" src="../_images/03_Ex1.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="2">
 <li><p>Modify the fragment shader so that Mario is facing to the right instead of the left. Hint: the command <code class="docutils literal notranslate"><span class="pre">vec2(vector.x,</span> <span class="pre">vector.y)</span></code> creates a 2-element vector using the elements of <code class="docutils literal notranslate"><span class="pre">vector</span></code>.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex2.png"><img alt="../_images/02_Ex2.png" src="../_images/02_Ex2.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex2.png"><img alt="../_images/03_Ex2.png" src="../_images/03_Ex2.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="3">
 <li><p>Modify the fragment shader so that the red and green colour components of the pixel are switched.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex3.png"><img alt="../_images/02_Ex3.png" src="../_images/02_Ex3.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex3.png"><img alt="../_images/03_Ex3.png" src="../_images/03_Ex3.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="4">
 <li><p>Apply a texture of your choice to the rectangle (e.g., a selfie or a picture of cute kitten).</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex4.png"><img alt="../_images/02_Ex4.png" src="../_images/02_Ex4.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex4.png"><img alt="../_images/03_Ex4.png" src="../_images/03_Ex4.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="5">
 <li><p>Modify the fragment shader so that the colours of the vertices are multiplied by the Mario texture.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex5.png"><img alt="../_images/02_Ex5.png" src="../_images/02_Ex5.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex5.png"><img alt="../_images/03_Ex5.png" src="../_images/03_Ex5.png" style="width: 60%;" />
 </a>
 </figure>
 <ol class="arabic simple" start="6">
 <li><p>Change the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates so that the textured rectangle shows a zoomed in image of Mario’s eye.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="../_images/02_Ex6.png"><img alt="../_images/02_Ex6.png" src="../_images/02_Ex6.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="../_images/03_Ex6.png"><img alt="../_images/03_Ex6.png" src="../_images/03_Ex6.png" style="width: 60%;" />
 </a>
 </figure>
 </section>

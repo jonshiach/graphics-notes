@@ -431,7 +431,7 @@ document.write(`
 <h2>3D models<a class="headerlink" href="#d-models" title="Link to this heading">#</a></h2>
 <p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 41</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).</p>
 <figure class="align-default" id="unit-cube-figure">
-<a class="reference internal image-reference" href="../_images/05_unit_cube.svg"><img alt="../_images/05_unit_cube.svg" src="../_images/05_unit_cube.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/06_unit_cube.svg"><img alt="../_images/06_unit_cube.svg" src="../_images/06_unit_cube.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 41 </span><span class="caption-text">A unit cube centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> with side lengths of 2.</span><a class="headerlink" href="#unit-cube-figure" title="Link to this image">#</a></p>
@@ -502,7 +502,7 @@ document.write(`
 </div>
 <p>If you compile and run this program you will see that a crate texture fills the canvas. This is because the coordinates of the cube vertices are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>.</p>
 <figure class="align-default" id="cube-figure">
-<a class="reference internal image-reference" href="../_images/05_unit_cube.png"><img alt="../_images/05_unit_cube.png" src="../_images/05_unit_cube.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/06_unit_cube.png"><img alt="../_images/06_unit_cube.png" src="../_images/06_unit_cube.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 42 </span><span class="caption-text">The unit cube.</span><a class="headerlink" href="#cube-figure" title="Link to this image">#</a></p>
@@ -514,7 +514,7 @@ document.write(`
 <h2>Coordinate systems<a class="headerlink" href="#coordinate-systems" title="Link to this heading">#</a></h2>
 <p>WebGL uses a coordinate system with the <span class="math notranslate nohighlight">\(x\)</span>-axis pointing horizontally to the right, the <span class="math notranslate nohighlight">\(y\)</span>-axis pointing vertically upwards and the <span class="math notranslate nohighlight">\(z\)</span>-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(1\)</span>, so any object outside this range will not be shown on the display. These are known as <strong>Normalised Device Coordinates (NDC)</strong>.</p>
 <figure class="align-default" id="ndc-figure">
-<a class="reference internal image-reference" href="../_images/05_NDC.svg"><img alt="../_images/05_NDC.svg" src="../_images/05_NDC.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/06_NDC.svg"><img alt="../_images/06_NDC.svg" src="../_images/06_NDC.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 43 </span><span class="caption-text">Normalised Device Coordinates (NDC)</span><a class="headerlink" href="#ndc-figure" title="Link to this image">#</a></p>
@@ -525,7 +525,7 @@ document.write(`
 <li><p><strong>Model space</strong> – each individual 3D object that will appear in the 3D world is defined in its own space usually with the volume centre of the object at <span class="math notranslate nohighlight">\((0,0,0)\)</span> to make the transformations easier</p></li>
 </ul>
 <figure class="align-default" id="model-space-figure">
-<a class="reference internal image-reference" href="../_images/05_model_space.svg"><img alt="../_images/05_model_space.svg" src="../_images/05_model_space.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/06_model_space.svg"><img alt="../_images/06_model_space.svg" src="../_images/06_model_space.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 44 </span><span class="caption-text">The model space.</span><a class="headerlink" href="#model-space-figure" title="Link to this image">#</a></p>
@@ -535,7 +535,7 @@ document.write(`
 <li><p><strong>World space</strong> – the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations.</p></li>
 </ul>
 <figure class="align-default" id="world-space-figure">
-<a class="reference internal image-reference" href="../_images/05_world_space.svg"><img alt="../_images/05_world_space.svg" src="../_images/05_world_space.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/06_world_space.svg"><img alt="../_images/06_world_space.svg" src="../_images/06_world_space.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 45 </span><span class="caption-text">The world space.</span><a class="headerlink" href="#world-space-figure" title="Link to this image">#</a></p>
@@ -545,7 +545,7 @@ document.write(`
 <li><p><strong>View space</strong> – the world space is transformed so that it is viewed from <span class="math notranslate nohighlight">\((0,0,0)\)</span> looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
 </ul>
 <figure class="align-default" id="view-space-figure">
-<a class="reference internal image-reference" href="../_images/05_view_space.svg"><img alt="../_images/05_view_space.svg" src="../_images/05_view_space.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 46 </span><span class="caption-text">The view space.</span><a class="headerlink" href="#view-space-figure" title="Link to this image">#</a></p>
@@ -555,7 +555,7 @@ document.write(`
 <li><p><strong>Screen space</strong> –the 3D view space is projected onto a 2D projection plane.</p></li>
 </ul>
 <figure class="align-default" id="screen-space-figure">
-<a class="reference internal image-reference" href="../_images/05_screen_space.svg"><img alt="../_images/05_screen_space.svg" src="../_images/05_screen_space.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/06_screen_space.svg"><img alt="../_images/06_screen_space.svg" src="../_images/06_screen_space.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 47 </span><span class="caption-text">The screen space.</span><a class="headerlink" href="#screen-space-figure" title="Link to this image">#</a></p>
@@ -598,7 +598,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\vec{worldUp}\)</span>: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually <span class="math notranslate nohighlight">\((0, 1, 0)\)</span></p></li>
 </ul>
 <figure class="align-default" id="camera-vectors-figure">
-<a class="reference internal image-reference" href="../_images/05_view_space_alignment.svg"><img alt="../_images/05_view_space_alignment.svg" src="../_images/05_view_space_alignment.svg" style="width: 400px;" />
+<a class="reference internal image-reference" href="../_images/06_view_space_alignment.svg"><img alt="../_images/06_view_space_alignment.svg" src="../_images/06_view_space_alignment.svg" style="width: 400px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 48 </span><span class="caption-text">The vectors used in the transformation to the view space.</span><a class="headerlink" href="#camera-vectors-figure" title="Link to this image">#</a></p>
@@ -738,7 +738,7 @@ document.write(`
 <p>The next step is to project the view space onto the screen space. The simplest type of projection is <strong>orthographic projection</strong> where the coordinates in the view space are transformed to the screen space by simple translation and scaling transformations.</p>
 <p>The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped (<a class="reference internal" href="#orthographic-projection-figure"><span class="std std-numref">Fig. 49</span></a>).</p>
 <figure class="align-default" id="orthographic-projection-figure">
-<a class="reference internal image-reference" href="../_images/05_orthographic_projection.svg"><img alt="../_images/05_orthographic_projection.svg" src="../_images/05_orthographic_projection.svg" style="width: 700px;" />
+<a class="reference internal image-reference" href="../_images/06_orthographic_projection.svg"><img alt="../_images/06_orthographic_projection.svg" src="../_images/06_orthographic_projection.svg" style="width: 700px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 49 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-projection-figure" title="Link to this image">#</a></p>
@@ -881,7 +881,7 @@ document.write(`
 <h2>The depth test<a class="headerlink" href="#the-depth-test" title="Link to this heading">#</a></h2>
 <p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 50</span></a>).</p>
 <figure class="align-default" id="depth-test-1-figure">
-<a class="reference internal image-reference" href="../_images/05_depth_test.svg"><img alt="../_images/05_depth_test.svg" src="../_images/05_depth_test.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/06_depth_test.svg"><img alt="../_images/06_depth_test.svg" src="../_images/06_depth_test.svg" style="width: 300px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 50 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Link to this image">#</a></p>
@@ -951,7 +951,7 @@ document.write(`
 </div>
 <p>Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.</p>
 <figure class="align-default" id="orthographic-cubes-figure">
-<a class="reference internal image-reference" href="../_images/05_orthographic_cubes.png"><img alt="../_images/05_orthographic_cubes.png" src="../_images/05_orthographic_cubes.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/06_orthographic_cubes.png"><img alt="../_images/06_orthographic_cubes.png" src="../_images/06_orthographic_cubes.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 51 </span><span class="caption-text">Orthographic projection.</span><a class="headerlink" href="#orthographic-cubes-figure" title="Link to this image">#</a></p>
@@ -960,7 +960,7 @@ document.write(`
 <p>The cube in the front is centred at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span> and the cube behind is centred at <span class="math notranslate nohighlight">\((0, 0, -6)\)</span>. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at <span class="math notranslate nohighlight">\((1, 1, 1)\)</span>.</p>
 <p>Perspective projection is used to render objects where the further an object is from the camera, the small it appears in the canvas. It use the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#perspective-projection-figure"><span class="std std-numref">Fig. 52</span></a>). The clipping volume bounded by the size clipping planes is called the <strong>viewing frustum</strong>.</p>
 <figure class="align-default" id="perspective-projection-figure">
-<a class="reference internal image-reference" href="../_images/05_perspective_projection.svg"><img alt="../_images/05_perspective_projection.svg" src="../_images/05_perspective_projection.svg" style="width: 700px;" />
+<a class="reference internal image-reference" href="../_images/06_perspective_projection.svg"><img alt="../_images/06_perspective_projection.svg" src="../_images/06_perspective_projection.svg" style="width: 700px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 52 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-projection-figure" title="Link to this image">#</a></p>
@@ -990,7 +990,7 @@ document.write(`
 <span class="sd-summary-text">Derivation of the perspective projection matrix</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <p class="sd-card-text">The mapping of a point in the view space with coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> onto the near clipping plane to the point <span class="math notranslate nohighlight">\((x', y', -near)\)</span> is shown in <a class="reference internal" href="#perspective-mapping-figure"><span class="std std-numref">Fig. 53</span></a>.</p>
 <figure class="align-default" id="perspective-mapping-figure">
-<a class="reference internal image-reference" href="../_images/05_perspective_projection_mapping.svg"><img alt="../_images/05_perspective_projection_mapping.svg" src="../_images/05_perspective_projection_mapping.svg" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/06_perspective_projection_mapping.svg"><img alt="../_images/06_perspective_projection_mapping.svg" src="../_images/06_perspective_projection_mapping.svg" style="width: 500px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 53 </span><span class="caption-text">Mapping of the point at <span class="math notranslate nohighlight">\((x,y,z)\)</span> onto the near plane using perspective.</span><a class="headerlink" href="#perspective-mapping-figure" title="Link to this image">#</a></p>
@@ -1121,7 +1121,7 @@ document.write(`
 </div>
 <p>Refresh your web browser and you should see something similar to the following.</p>
 <figure class="align-default" id="perspective-cubes-figure">
-<a class="reference internal image-reference" href="../_images/05_perspective_cubes.png"><img alt="../_images/05_perspective_cubes.png" src="../_images/05_perspective_cubes.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/06_perspective_cubes.png"><img alt="../_images/06_perspective_cubes.png" src="../_images/06_perspective_cubes.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 54 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-cubes-figure" title="Link to this image">#</a></p>
@@ -1136,7 +1136,7 @@ document.write(`
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="id1">
-<img alt="../_images/05_fov_15.png" src="../_images/05_fov_15.png" />
+<img alt="../_images/06_fov_15.png" src="../_images/06_fov_15.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 55 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 15^\circ\)</span></span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
@@ -1144,7 +1144,7 @@ document.write(`
 </div>
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="id2">
-<img alt="../_images/05_fov_120.png" src="../_images/05_fov_120.png" />
+<img alt="../_images/06_fov_120.png" src="../_images/06_fov_120.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 56 </span><span class="caption-text"><span class="math notranslate nohighlight">\(fov = 120^\circ\)</span></span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
@@ -1185,7 +1185,7 @@ document.write(`
 <li><p>Create a <span class="math notranslate nohighlight">\(10 \times 10\)</span> grid of cubes in the world space.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/05_Ex5.png"><img alt="_images/05_Ex5.png" src="_images/05_Ex5.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/06_Ex5.png"><img alt="_images/06_Ex5.png" src="_images/06_Ex5.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="6">
