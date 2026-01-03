@@ -141,3 +141,4 @@ function checkGameOver(lives) {
 }
 
 console.log(checkGameOver(player.lives));
+

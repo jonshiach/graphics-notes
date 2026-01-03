@@ -46,7 +46,7 @@ gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 Here we have defined an array called `cubes` that contains JavaScript objects that define the positions of the centre coordinates of a set of cubes. Refresh your browser, and you can see that we have created a $5 \times 5$ grid of cubes. We have also changed the background colour to black so that we can better see the lighting effects.
 
-```{figure} ../_images/07_cubes.png
+```{figure} ../_images/08_cubes.png
 :width: 80%
 :name: 5x5-cubes-figure
 
@@ -137,7 +137,7 @@ gl.uniform1f(gl.getUniformLocation(program, "uKa"), cubes[i].ka);
 
 Refresh your web browser and you should see that the cubes are appear duller than compared to {numref}`5x5-cubes-figure`.
 
-```{figure} ../_images/07_cubes_ambient_0.2.png
+```{figure} ../_images/08_cubes_ambient_0.2.png
 :width: 80%
 :name: cubes-ambient-figure
 
@@ -149,13 +149,13 @@ Changing the value of $k_a$ will make the colour of the cubes appear lighter or 
 `````{grid}
 
 ````{grid-item}
-```{figure} ../_images/07_cubes_ambient_0.5.png
+```{figure} ../_images/08_cubes_ambient_0.5.png
 $k_a=0.5$
 ```
 ````
 
 ````{grid-item}
-```{figure} ../_images/07_cubes_ambient_0.8.png
+```{figure} ../_images/08_cubes_ambient_0.8.png
 $k_a=0.8$
 ```
 ````
@@ -165,7 +165,7 @@ $k_a=0.8$
 
 Diffuse lighting is where light is reflected off a rough surface. Consider {numref}`diffuse-reflection-figure` that shows parallel light rays hitting a surface where light is scattered in multiple directions.
 
-```{figure} ../_images/07_diffuse_reflection.svg
+```{figure} ../_images/08_diffuse_reflection.svg
 :width: 400
 :name: diffuse-reflection-figure
 
@@ -174,7 +174,7 @@ Light rays hitting a rough surface are scattered in all directions.
 
 To model diffuse lighting Phong's model assumes that light is reflected equally in all directions ({numref}`diffuse-figure`).
 
-```{figure} ../_images/07_diffuse.svg
+```{figure} ../_images/08_diffuse.svg
 :width: 350
 :name: diffuse-figure
 
@@ -205,7 +205,7 @@ Recall that $A^\mathsf{T}$ is the [transpose](transpose-section) and $A^{-1}$ is
 
 Consider the diagram in {numref}`world-space-normal-1-figure` that shows the normal and tangent vectors to a surface in the model space (a tangle vector points along a surface). If the model transformation preserves the scaling of the edge such the equal scaling is used in the $x$, $y$ and $z$ axes then the normal and tangent vectors are perpendicular in the world space.
 
-```{figure} ../_images/07_world_space_normal_1.svg
+```{figure} ../_images/08_world_space_normal_1.svg
 :width: 250
 :name: world-space-normal-1-figure
 
@@ -214,7 +214,7 @@ Normal and tangent vectors in the model space.
 
 If the model transformation does not preserve the scaling then the world space normal vector is no longer perpendicular to the tangent vector ({numref}`world-space-normal-2-figure`).
 
-```{figure} ../_images/07_world_space_normal_2.svg
+```{figure} ../_images/08_world_space_normal_2.svg
 :width: 250
 :name: world-space-normal-2-figure
 
@@ -256,7 +256,7 @@ The matrix $(M^{-1})^\mathsf{T}$ is the transformation matrix to transform the m
 
 Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0, 0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1, 0, 0)$, and similar for the other faces of the cube.
 
-```{figure} ../_images/07_cube_normals.svg
+```{figure} ../_images/08_cube_normals.svg
 :width: 250
 :name: cube-normals-figure
 
@@ -389,7 +389,7 @@ fragColour = vec4(vNormal, objectColour.a);
 
 Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`. The sides of the cubes that have been rotated are varying shades of red, green and blue based on the direction their normals are pointing.
 
-```{figure} ../_images/07_cubes_normals.png
+```{figure} ../_images/08_cubes_normals.png
 :width: 80%
 :name: cube-normals-screenshot-figure
 
@@ -547,7 +547,7 @@ gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
 
 Refresh your web browser, and you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
 
-```{figure} ../_images/07_cubes_diffuse.png
+```{figure} ../_images/08_cubes_diffuse.png
 :width: 80%
 :name: cubes-diffuse-figure
 
@@ -569,7 +569,7 @@ fragColour = vec4(ambient + diffuse, objectColour.a);
 
 Refresh your web browser, and you should see the cubes rendered with both ambient and diffuse lighting ({numref}`cubes-diffuse-ambient-figure`).
 
-```{figure} ../_images/07_cubes_ambient_diffuse.png
+```{figure} ../_images/08_cubes_ambient_diffuse.png
 :width: 80%
 :name: cubes-diffuse-ambient-figure
 
@@ -580,7 +580,7 @@ Ambient and diffuse lighting: $k_a = 0.2$, $k_d = 0.7$.
 
 Consider {numref}`specular-reflection-figure` that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).
 
-```{figure} ../_images/07_specular_reflection.svg
+```{figure} ../_images/08_specular_reflection.svg
 :width: 400
 :name: specular-reflection-figure
 
@@ -589,7 +589,7 @@ Light rays hitting a smooth surface are reflected in the same direction.
 
 Specular lighting depends upon the position of the light source and the fragment in the world space. Consider {numref}`reflection-figure` that shows a surface with a normal vector $\vec{n}$, a vector $\vec{L}$ pointing from the surface to a light source and a vector $\vec{R}$ pointing in the direction of reflected light off the surface. The angle between $\vec{L}$ and $\vec{n}$, $\theta$ which is known as the incidence angle, and the angle between $\vec{R}$ and $\vec{n}$ are the same.
 
-```{figure} ../_images/07_reflection.svg
+```{figure} ../_images/08_reflection.svg
 :width: 350
 :name: reflection-figure
 
@@ -607,7 +607,7 @@ If you are interested in the derivation of this formula, click on the dropdown b
 ````{dropdown} Derivation of the reflection vector
 The <a href="https://en.wikipedia.org/wiki/Vector_projection" target="_blank">vector projection</a> of a vector $\vec{a}$ onto another vector $\vec{b}$ is the vector $\operatorname{proj}_\vec{b} \vec{a}$ that points in the same direction as $\vec{b}$ with a length that is equal to the adjacent side of a right-angled triangle where $\vec{a}$ is the hypotenuse and the vector $\operatorname{proj}_\vec{b} \vec{a}$ is the adjacent side {numref}`vector-projection-figure`.
 
-```{figure} ../_images/07_vector_projection.svg
+```{figure} ../_images/08_vector_projection.svg
 :width: 250
 :name: vector-projection-figure
 
@@ -634,7 +634,7 @@ $$ \begin{align*}
 
 Consider {numref}`reflection-vector-figure` that shows a surface with a normal vector $\vec{n}$, a light source vector $\vec{L}$ and a reflection vector $\vec{R}$. 
 
-```{figure} ../_images/07_reflection_vector.svg
+```{figure} ../_images/08_reflection_vector.svg
 :width: 325
 :name: reflection-vector-figure
 
@@ -648,7 +648,7 @@ $$ \vec{R} = 2 (\vec{L} \cdot \vec{n}) \vec{n} - \vec{L}$$
 
 For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. This is determined by the angle $\phi$ between the $\vec{R}$ vector and the $\vec{V}$ vector. The closer the viewing vector is to the reflection vector, the smaller the value of $\phi$ will be and the more of the light will be reflected towards the camera.
 
-```{figure} ../_images/07_specular.svg
+```{figure} ../_images/08_specular.svg
 :width: 400
 :name: specular-figure
 
@@ -719,7 +719,7 @@ fragColour = vec4(specular, objectColour.a);
 
 Refresh your web browser and your scene should be very dark. Move the camera so that the cubes are between the camera and the light source and you should start to see the specular highlights where light is being reflected off the cube {numref}`cubes-specular-figure`.
 
-```{figure} ../_images/07_cubes_specular.png
+```{figure} ../_images/08_cubes_specular.png
 :width: 80%
 :name: cubes-specular-figure
 
@@ -739,7 +739,7 @@ fragColour = vec4(ambient + diffuse + specular, objectColour.a);
 
 :::
 
-```{figure} ../_images/07_cubes_phong.png
+```{figure} ../_images/08_cubes_phong.png
 :width: 80%
 :name: cubes-phong-figure
 
@@ -754,7 +754,7 @@ $$ attenuation = \frac{1}{constant + linear \cdot d + quadratic \cdot d^2}, $$
 
 where $d$ is the distance between the light source and the fragment and $constant$, $linear$ and $quadratic$ are coefficients that determine how quickly the light intensity decreases. The graph in {numref}`attenuation-figure` shows a typical attenuation profile where the light intensity rapidly decreases when the distance is small levelling off as the distance gets larger.
 
-```{figure} ../_images/07_attenuation.svg
+```{figure} ../_images/08_attenuation.svg
 :width: 500
 :name: attenuation-figure
 
@@ -804,7 +804,7 @@ fragColour = vec4(attenuation * (ambient + diffuse + specular), objectColour.a);
 
 These values used the attenuation ceofficients here depend on the type of light source being modelled. In this case we have a weak light source to demonstrate the loss of light intensity over space but for stronger light sources you may wish to experiment with these values. Refresh your web browser and you should see that the cubes further away from the light source are darker as shown in {numref}`cubes-attenuation-figure`.
 
-```{figure} ../_images/07_cubes_attenuation.png
+```{figure} ../_images/08_cubes_attenuation.png
 :width: 80%
 :name: cubes-attenuation-figure
 
@@ -1000,7 +1000,7 @@ for (let i = 0; i < numLights; i++) {
 
 Here we have defined two light sources, with an additional yellow light source positioned further back in the scene. The code to send the light source properties to the shader and to draw the light sources has been updated to loop over the number of light sources defined in the `lightSources` array. Refresh your web browser, and you should see the following. Move the camera around the scene to see the effects of the light sources on the cubes.
 
-```{figure} ../_images/07_cubes_multiple_lights.png
+```{figure} ../_images/08_cubes_multiple_lights.png
 :width: 80%
 :name: cubes-multiple-lights-figure
 
@@ -1013,7 +1013,7 @@ The cubes lit from two light sources.
 
 Our light sources we have in our scene emit light in all directions. A spotlight is a light source that emits light along a specific direction so that only those objects that are within some distance of this vector are illuminated. These are useful for modelling light sources such as flashlights, streetlights, car headlights etc.
 
-```{figure} ../_images/07_spot_light.svg
+```{figure} ../_images/08_spot_light.svg
 :width: 350
 :name: spot-light-figure
 
@@ -1079,7 +1079,7 @@ gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].cutoff`), lightSource
 
 Here we have changed the first light source to be a spotlight that is pointing downwards and slightly towards the back of the scene. The cutoff angle is set to $30^\circ$ by calculating $\cos(30^\circ)$. The second light source has been switched off by commenting out the code that defines it. Refresh your web browser and you should see the following.
 
-```{figure} ../_images/07_cubes_spotlight_harsh.png
+```{figure} ../_images/08_cubes_spotlight_harsh.png
 :width: 80%
 :name: directional-light-harsh-figure
 
@@ -1090,7 +1090,7 @@ Use the keyboard and mouse to move the camera around the cubes and see the effec
 
 We can model this softening by gradually reducing the intensity of the light as we approach the cutoff angle. Introducing a new inner cutoff angle that is slightly less than the cutoff angle then we can have full intensity for angles less than the inner cutoff angle and zero intensity for angles greater than the cutoff angle. Between these two angles we can gradually reduce the intensity from 1 to 0.
 
-```{figure} ../_images/07_soft_edge.svg
+```{figure} ../_images/08_soft_edge.svg
 :width: 500
 :name: soft-edge-figure
 
@@ -1135,7 +1135,7 @@ gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].innerCutoff`), lightS
 
 Here we have defined an inner cutoff angle of $25^\circ$ which is slightly less than the cutoff angle of $30^\circ$. Refresh your web browser and you should see the following.
 
-```{figure} ../_images/07_cubes_spotlight_soft.png
+```{figure} ../_images/08_cubes_spotlight_soft.png
 :width: 500
 :name: spotlight-soft-figure
 
@@ -1148,7 +1148,7 @@ The edges of the spotlight have been softened.
 
 The final light source type we will look at is **directional light**. When a light source is far away the light rays are very close to being parallel. It does not matter where the object is in the view space as all objects are lit from the same direction.
 
-```{figure} ../_images/07_directional_light.svg
+```{figure} ../_images/08_directional_light.svg
 :width: 400
 :name: directional-light-figure
 
@@ -1200,7 +1200,7 @@ Finally, uncomment the code defining the other two light sources.
 
 Here we have defined a directional light source with the direction vector $(2, -1, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. The light source colour has been set to magenta using the RGB values $(1, 0, 1)$. Refresh your web browser and you should see the following.
 
-```{figure} ../_images/07_cubes_directional_light.png
+```{figure} ../_images/08_cubes_directional_light.png
 :width: 80%
 :name: cubes-directional-light-figure
 

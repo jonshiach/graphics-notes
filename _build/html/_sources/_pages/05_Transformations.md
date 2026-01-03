@@ -19,7 +19,7 @@ Create a folder called ***Lab 5 Transformations*** and copy across the files fro
 
 Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 4 - Textures](textures-section).
 
-```{figure} ../_images/04_transformations.png
+```{figure} ../_images/05_transformations.png
 :width: 80%
 ```
 
@@ -39,7 +39,7 @@ The other way of representing 3D space is to use a left-hand coordinate system w
 
 **WebGL uses the right-handed coordinate system** where the $x$-axis points to the right of the screen, the $y$-axis points towards the top of the screen and the $z$-axis points out of the screen towards you ({numref}`WebGL-co-ordinate-figure`). 
 
-```{figure} ../_images/04_webgl_axes.svg
+```{figure} ../_images/05_webgl_axes.svg
 :width: 300
 :name: WebGL-co-ordinate-figure
 
@@ -56,7 +56,7 @@ Other graphics libraries that use the right-handed coordinate system include Ope
 
 The **translation** transformation when applied to a set of points moves each point by the same amount. For example, consider the triangle in {numref}`translation-figure`, each of the vertices has been translated by the same vector $\vec{t}$ which has that effect of moving the triangle.
 
-```{figure} ../_images/04_translation.svg
+```{figure} ../_images/05_translation.svg
 :height: 400
 :name: translation-figure
 
@@ -205,7 +205,7 @@ gl_Position = uModel * vec4(aPosition, 1.0);
 
 Refresh your web browser and you should see that our rectangle has been translated to the right and up a bit as shown in {numref}`translate-rectangle-figure`.
 
-```{figure} ../_images/04_translation.png
+```{figure} ../_images/05_translation.png
 :width: 80%
 :name: translate-rectangle-figure
 
@@ -218,7 +218,7 @@ The rectangle is translated by the vector $(0.4, 0.3, 0)$.
 
 Scaling is one of the simplest transformation we can apply. Multiplying the $x$, $y$ and $z$ coordinates of a point by a scalar quantity (a number) has the effect of moving the point closer or further away from the origin (0,0). For example, consider the triangle in {numref}`scaling-about-origin-figure`. The $x$, $y$ and $z$ coordinates of each vertex has been multiplied by $s_x$, $s_y$ and $s_y$ respectively which has the effect of scaling the triangle and moving the vertices further away from the origin (in this case because $s_x$, $s_y$ and $s_z$ are all greater than 1).
 
-```{figure} ../_images/04_scaling.svg
+```{figure} ../_images/05_scaling.svg
 :height: 350
 :name: scaling-about-origin-figure
 
@@ -299,7 +299,7 @@ const model = scale;
 
 Refresh your web browser and you should see that our rectangle has been scaled down as shown in {numref}`scaling-rectangle-figure`.
 
-```{figure} ../_images/04_scaling.png
+```{figure} ../_images/05_scaling.png
 :width: 80%
 :name: scaling-rectangle-figure
 
@@ -309,7 +309,7 @@ The rectangle is scaled by the vector $(0.5, 0.4, 1)$.
 ````{note}
 If scaling is applied to a shape that is not centred at $(0,0,0)$ then the transformed shape is distorted and its centre is moved from its original position ({numref}`scaling-not-centred-figure`).
 
-```{figure} ../_images/04_scaling_not_centred.svg
+```{figure} ../_images/05_scaling_not_centred.svg
 :width: 550
 :name: scaling-not-centred-figure
 
@@ -318,7 +318,7 @@ Scaling applied to a triangle not centred at $(0,0,0)$.
 
 If the desired result is to resize the shape whilst keeping its dimensions and location the same we first need to translate the vertex coordinates by $-\vec{c}$ where $\vec{c}$ is the centre of volume for the shape so that it is at $(0,0,0)$. Then we can apply the scaling before translating by $\vec{c}$ so that the centre of volume is back at the original position ({numref}`scaling-about-centre-figure`).
 
-```{figure} ../_images/04_scaling_about_centre.svg
+```{figure} ../_images/05_scaling_about_centre.svg
 :width: 700
 :name: scaling-about-centre-figure
 
@@ -334,7 +334,7 @@ The steps required to scale a shape about its centre.
 
 As well as translating and scaling objects, the next most common transformation is the rotation of objects around the three co-ordinate axes $x$, $y$ and $z$. We define the rotation **anti-clockwise** around each of the co-ordinate axes by an angle $\theta$ when looking down the axes ({numref}`3D-rotation-figure`).
 
-```{figure} ../_images/04_3D_rotation.svg
+```{figure} ../_images/05_3D_rotation.svg
 :height: 450
 :name: 3D-rotation-figure
 
@@ -373,7 +373,7 @@ You don't really need to know how these are derived but if you are curious you c
 
 We will consider rotation about the $z$-axis and will restrict our coordinates to 2D.
 
-```{figure} ../_images/04_rotation.svg
+```{figure} ../_images/05_rotation.svg
 :height: 300
 :name: rotation-figure
 
@@ -532,7 +532,7 @@ const model = rotate;
 
 Here we defined a function to the matrix class to calculate the rotation matrix. Refresh your web browser, and you should see that our rectangle has been rotated $45^\circ$ degrees in the anti-clockwise direction as shown in {numref}`rotation-rectangle-figure`.
 
-```{figure} ../_images/04_rotation.png
+```{figure} ../_images/05_rotation.png
 :width: 80%
 :name: rotation-rectangle-figure
 
@@ -547,7 +547,7 @@ Rectangle rotated anti-clockwise about the $z$-axis by $45^\circ$.
 
 The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector $\hat{v}$ which has its tail at $(0,0,0)$ ({numref}`axis-angle-rotation-figure`).
 
-```{figure} ../_images/04_axis_angle_rotation.svg
+```{figure} ../_images/05_axis_angle_rotation.svg
 :height: 300
 :name: axis-angle-rotation-figure
 
@@ -591,7 +591,7 @@ The rotation about the unit vector $\hat{v} = (v_x, v_y, v_z)$ by angle $\theta$
 
 1. The rotation around the $x$-axis is achieved by forming a right-angled triangle in the $yz$-plane where the angle of rotation $\theta$ has an adjacent side of length $v_z$, an opposite side of length $v_y$ and a hypotenuse of length $\sqrt{v_y^2 + v_z^2}$ ({numref}`axis-angle-rotation1-figure`).
 
-```{figure} ../_images/04_axis_angle_rotation_1.svg
+```{figure} ../_images/05_axis_angle_rotation_1.svg
 :height: 250
 :name: axis-angle-rotation1-figure
 
@@ -615,7 +615,7 @@ R_1 =
 
 2. The rotation around the $y$-axis is achieved by forming another right-angled triangle in the $xz$-plane where $\theta$ has an adjacent side of length $\sqrt{v_y^2 + v_z^2}$, an opposite side of length $v_x$ and a hypotenuse of length 1 since $\hat{v}$ is a unit vector ({numref}`axis-angle-rotation2-figure`).
 
-```{figure} ../_images/04_axis_angle_rotation_2.svg
+```{figure} ../_images/05_axis_angle_rotation_2.svg
 :height: 250
 :name: axis-angle-rotation2-figure
 
@@ -823,7 +823,7 @@ const model = translate.multiply(rotate).multiply(scale);
 
 Refresh your web browser, and you should see that the rectangle has been scaled down, rotated anti-clockwise and then translated as shown in {numref}`composite-transformation-figure`.
 
-```{figure} ../_images/04_composite_transformation.png
+```{figure} ../_images/05_composite_transformation.png
 :width: 80%
 :name: composite-transformation-figure
 

@@ -12,7 +12,7 @@ Create a folder called ***Lab 7_Moving the Camera*** and copy across the content
 
 Load ***index.html*** in a live server to check everything is working ok.
 
-```{figure} ../_images/06_moving_the_camera.png
+```{figure} ../_images/07_moving_the_camera.png
 :width: 80%
 :name: moving-the-camera-figure
 
@@ -34,7 +34,7 @@ Camera vectors
 
 Since these three vectors point to the right, up and to the front of the camera we can use these to move the camera in those directions. For example, to move the camera forwards and backwards we simply add and subtract the front vector to the $\vec{eye}$ vector ({numref}`camera-movement-figure`).
 
-```{figure} ../_images/06_camera_movement.svg
+```{figure} ../_images/07_camera_movement.svg
 :width: 500
 :name: camera-movement-figure
 
@@ -200,7 +200,7 @@ We can now move the camera position using keyboard inputs but we cannot yet poin
 
 The direction which the camera is pointing is governed by three angles called $yaw$, $pitch$ and $roll$ which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">**Euler angles**</a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its $yaw$ angle. Then on take off it can point its nose upwards in the vertical direction by changing its $pitch$ angle. Once airborne the plane can move its wingtips up and down thus changing its $roll$ angle. Our camera is analogous to the plane ({numref}`yaw-pitch-roll-figure`).
 
-```{figure} /_images/06_yaw_pitch_roll.svg
+```{figure} /_images/07_yaw_pitch_roll.svg
 :width: 300
 :name: yaw-pitch-roll-figure
 
@@ -209,7 +209,7 @@ Yaw, pitch and roll
 
 To point our camera we only need the $yaw$ and $pitch$ angles which we are going to change using mouse inputs such that when the mouse is moved left and right the $yaw$ angle changes and when the mouse is moved up and down the $pitch$ angle changes. Our `.lookAt()` method uses the front vector to calculate the view matrix so we need some way of calculating the front vector from the $yaw$ and $pitch$ angles.
 
-```{figure} /_images/06_yaw.svg
+```{figure} /_images/07_yaw.svg
 :name: yaw-figure
 :width: 350
 
@@ -223,7 +223,7 @@ $$ \begin{align*}
     \vec{front}_z &= \cos(yaw).
 \end{align*} $$
 
-```{figure} /_images/06_pitch.svg
+```{figure} /_images/07_pitch.svg
 :name: pitch-figure
 :width: 350
 
@@ -363,7 +363,7 @@ Whilst moving your camera around your 3D world you may notice that we can move t
 
 A **normal vector** (often just referred to as a **normal**) is a vector denoted by $\vec{n}$ that is perpendicular to a surface at a given point ({numref}`normal-vector-figure`).
 
-```{figure} /_images/06_normal_vector.svg
+```{figure} /_images/07_normal_vector.svg
 :width: 350
 :name: normal-vector-figure
 
@@ -376,7 +376,7 @@ $$ \vec{n} = (\vec{v}_1 - \vec{v}_0) \times (\vec{v}_2 - \vec{v}_1). $$
 
 A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference and we have halved the number of surfaces the shader has to deal with ({numref}`backface-culling-figure`).
 
-```{figure} /_images/06_backface_culling.svg
+```{figure} /_images/07_backface_culling.svg
 :width: 300
 :name: backface-culling-figure
 
@@ -385,7 +385,7 @@ Back face culling removes surfaces with vectors pointing away from the camera.
 
 But how do we know if a surface is back facing? Consider {numref}`back-facing-figure` which shows a back facing surface.
 
-```{figure} /_images/06_back_facing_polygon.svg
+```{figure} /_images/07_back_facing_polygon.svg
 :width: 400
 :name: back-facing-figure
 

@@ -48,7 +48,7 @@ Install the <a href="https://marketplace.visualstudio.com/items?itemName=ritwick
 
 If everything has gone to plan you should be looking at a web browser with a page titled 'Lab 2 - Basic Shapes in WebGL' that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.
 
-:::{figure} ../_images/01_Canvas.png
+:::{figure} ../_images/02_Canvas.png
 :width: 80%
 :name: canvas-figure
 
@@ -106,7 +106,7 @@ Edit the `<body>` tag near the bottom of the ***index.html*** file so that it lo
 
 Now if you refresh your browser you should see a dark grey background. If something has gone wrong, and you still see the green background, open up the JavaScript console (if you are using Chrome then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>&#8997;</kbd> + <kbd>&#8984;</kbd> + <kbd>J</kbd> on a Mac) and it should give you an indication of what has gone wrong. The life of a graphics programmer is mostly problem-solving and debugging, so get used to doing this.
 
-:::{figure} ../_images/01_colour_buffer.png
+:::{figure} ../_images/02_colour_buffer.png
 :width: 80%
 :::
 
@@ -139,7 +139,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 
 Our triangle will have co-ordinates at $(-0.5, -0.5, 0)$ (lower-left vertex), $(0.5, -0.5, 0)$ (lower-right vertex) and $(0, 0.5, 0)$ (top vertex).
 
-:::{figure} ../_images/01_Triangle.svg
+:::{figure} ../_images/02_Triangle.svg
 :width: 70%
 :name: triangle-figure
 
@@ -424,7 +424,7 @@ gl.drawArrays(gl.TRIANGLES, 0, 3);
 
 The `gl.drawArrays()` function tells the GPU to draw the primitives. The inputs are the type of primitive (we have a triangle), the index of the first vertex and the number of vertices to draw (we have one triangle, so we want to draw 3 vertices). Refresh your browser window, pray to the programming gods and if everything has gone to plan you should see the red triangle displayed on the canvas.
 
-:::{figure} ../_images/01_hello_triangle.png
+:::{figure} ../_images/02_hello_triangle.png
 :width: 80%
 :name: hello-triangle-figure
 
@@ -611,7 +611,7 @@ const vertices = new Float32Array([
 
 Here we have specified vertex 0 is pure red, vertex 1 is pure green and vertex 2 is pure blue. If you refresh your web browser you should see that the red triangle is black and skewed, where it appears that the top vertex has been moved to the right-hand edge of the canvas ({numref}`skewed-triangle-figure`). The reason why its skewed is that when we told WebGL how to read the vertex buffer using `gl.vertexAttribPointer(colourLocation, 3, gl.FLOAT, false, 0, 0);`. This means that WebGL is expected no gaps between the vertex co-ordinate data since the stride input (the second to last input) is `0`, so it thinks the 3 vertex co-ordinates are $(-0.5, -0.5, 0)$, $(1, 0, 0)$ and $(0.5, -0.5, 0)$.
 
-```{figure} ../_images/01_skewed_triangle.png
+```{figure} ../_images/02_skewed_triangle.png
 :width: 80%
 :name: skewed-triangle-figure
 
@@ -620,7 +620,7 @@ Oops, something has gone wrong.
 
 The stride is the number of bytes from the start of the attribute, in our case the $x$ vertex co-ordinate, for one vertex to the start of the same attribute of the next vertex. We added 3 floats for the RGB data, so our stride is the number of bytes used to store 6 float values, i.e., 3 for the $(x, y, z)$ values and 3 for the RGB values.
 
-```{figure} ../_images/01_stride_offset.svg
+```{figure} ../_images/02_stride_offset.svg
 :width: 70%
 :name: stride-offset-figure
 
@@ -647,7 +647,7 @@ gl.vertexAttribPointer(
 
 Refresh your browser, and you should see that the triangle vertices has returned to its previous state, but it's still black ({numref}`black-triangle-figure`). The reason for this is that we have not yet told WebGL about our new vertex colours. To do this we get the location of the `aColour` attribute from the vertex shader, enable the attribute array and point WebGL to where it can find the colour data.
 
-```{figure} ../_images/01_black_triangle.png
+```{figure} ../_images/02_black_triangle.png
 :width: 80%
 :name: black-triangle-figure
 
@@ -678,7 +678,7 @@ Note that here the `offset` value is 3 times of the number of bytes used to stor
 
 Refresh your browser you should see the triangle in all its glorious colourfulness.
 
-```{figure} ../_images/01_colourful_triangle.png
+```{figure} ../_images/02_colourful_triangle.png
 :width: 80%
 :name: colurful-triangle-figure
 
@@ -742,7 +742,7 @@ gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 This is very similar to what we did for the triangle object, i.e., we bind the vertex buffer for the square, enable the vertex attribute array and tell WebGL where the data is. Note that we already know the location of the position and colour attributes. Since we are drawing two triangles, we change the 3 to a 6 in the `gl.drawArrays()` function.
 
-```{figure} ../_images/01_triangle_and_square.png
+```{figure} ../_images/02_triangle_and_square.png
 :width: 80%
 :name: colourful-shapes-figure
 
@@ -947,7 +947,7 @@ Refresh your browser, and you should see that the output has not changed, but we
 
 &emsp; (a) The triangle is shifted by 0.75 to the right.
 
-:::{figure} ../_images/01_ex1a.png
+:::{figure} ../_images/02_ex1a.png
 :width: 60%
 :::
 
@@ -957,25 +957,25 @@ We can access individual elements of the `aPosition` vectors using `aPosition.x`
 
 &emsp; (b) The triangle is drawn upside-down.
 
-:::{figure} ../_images/01_ex1b.png
+:::{figure} ../_images/02_ex1b.png
 :width: 60%
 :::
 
 &emsp; (c) The $x$ and $y$ co-ordinates are swapped.
 
-:::{figure} ../_images/01_ex1c.png
+:::{figure} ../_images/02_ex1c.png
 :width: 60%
 :::
 
 2. Use two triangles to draw a green rectangle with lower-left vertex at $(-0.5, -0.5, 0)$ and the upper-right vertex at $(0.5, 0.5, 0)$.
   
-:::{figure} ../_images/01_ex2.png
+:::{figure} ../_images/02_ex2.png
 :width: 60%
 :::
 
 3. Use triangles to draw a blue hexagon.
 
-:::{figure} ../_images/01_ex3.png
+:::{figure} ../_images/02_ex3.png
 :width: 60%
 :::
 
@@ -983,7 +983,7 @@ We can access individual elements of the `aPosition` vectors using `aPosition.x`
 
 We can draw a hexagon using 6 triangles where each triangle has one vertex at $(0,0,0)$ and two outer vertices that lie on the circumference of a circle.
 
-:::{figure} ../_images/01_hexagon.svg
+:::{figure} ../_images/02_hexagon.svg
 :width: 450
 :::
 
@@ -1011,6 +1011,6 @@ where $r$ is the radius and the angles $\theta_i$ and $\theta_{i+1}$ are calcula
 
 4. Use lots of triangles to draw a yellow circle.
 
-:::{figure} ../_images/01_ex4.png
+:::{figure} ../_images/02_ex4.png
 :width: 60%
 :::

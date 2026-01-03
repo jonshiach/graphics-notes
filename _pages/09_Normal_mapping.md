@@ -4,7 +4,7 @@
 
 In [Lab 8: Lighting](lighting-section) we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don't get the benefits of highlights and shadow. **Normal mapping** is technique that uses a [texture map](textures-section) to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.
 
-```{figure} ../_images/08_normal_mapping.svg
+```{figure} ../_images/09_normal_mapping.svg
 :width: 600
 
 Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.
@@ -12,7 +12,7 @@ Normal mapping applies a texture of normals for each fragment giving the appeara
 
 A **normal map** is a texture where the RGB colour values of each textel is used for the normal vector $\vec{n} = (n_x, n_y, n_z)$ where $n_x$, $n_y$ and $n_z$ values are determined by the red, green and blue colours values respectively. A normal map for the crate texture is shown in {numref}`crate-normal-map-figure`.
 
-```{figure} ../_images/08_crate_normal.png
+```{figure} ../_images/09_crate_normal.png
 :width: 400
 :name: crate-normal-map-figure
 
@@ -21,7 +21,7 @@ A normal map for the crate texture.
 
 Normal maps tend to have a blue tinge to them because the normal vectors are pointing away from the surface so the $z$ component dominates. Any red on a normal map suggests that the normal is pointing to the right and green suggests the normal is pointing upwards.
 
-```{figure} ../_images/08_normal_map.svg
+```{figure} ../_images/09_normal_map.svg
 :width: 350
 :name: normal-map-figure
 
@@ -36,7 +36,7 @@ Create a copy of your ***Lab 8 Lighting*** folder, rename it ***Lab 9 Normal Map
 
 Load ***index.html*** in a live server, and you should see the cubes from [Lab 8: Lighting](lighting-section) lit using a point light, a spotlight and a directional light source.
 
-```{figure} ../_images/08_cubes.png
+```{figure} ../_images/09_cubes.png
 :width: 80%
 
 The cubes lit using three light sources from [Lab 8: Lighting].
@@ -76,7 +76,7 @@ We have already seen in [Lab 6: 3D worlds](3D-worlds-section) that we can use tr
 - **Tangent**, $\vec{T}$ - this is a vector that points in the direction of increasing texture coordinate $u$.
 - **Bitangent**, $\vec{B}$ - this is a vector that points in the direction of increasing texture coordinate $v$.
 
-```{figure} ../_images/08_TBN.svg
+```{figure} ../_images/09_TBN.svg
 :width: 250
 :name: TBN-figure
 
@@ -85,7 +85,7 @@ The tangent space is defined by the tangent, bitangent and normal vectors.
 
 The world space tangent vector $\vec{T}$ is calculated using the model space vertex coordinates of the triangle $(x_0,y_0,z_0)$, $(x_1,y_1,z_1)$ and $(x_2,y_2,z_2)$ and their corresponding texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$.
 
-```{figure} ../_images/08_UV_deltas.svg
+```{figure} ../_images/09_UV_deltas.svg
 :width: 800
 :name: UV-deltas-figure
 
@@ -334,7 +334,7 @@ N = normalize(TBN * normalSample);
 
 Refresh your web browser and move the camera around to see the effects of the normal map.
 
-```{figure} ../_images/08_cubes_specular_1.png
+```{figure} ../_images/09_cubes_specular_1.png
 :width: 80%
 
 The crate specular map applied to the cubes.
@@ -355,7 +355,7 @@ ks        : 0.2,
 
 Refresh your web browser and you should see that the cubes are now less shiny and more realistic.
 
-```{figure} ../_images/08_cubes_specular_2.png
+```{figure} ../_images/09_cubes_specular_2.png
 :width: 80%
 
 The crate specular map applied to the cubes ($k_s = 0.2$). 
@@ -370,7 +370,7 @@ In addition to diffuse (texture) and normal maps we can also apply a **specular 
 `````{grid}
 
 ````{grid-item}
-```{figure} ../_images/08_stones_diffuse.png
+```{figure} ../_images/09_stones_diffuse.png
 :name: stones-diffuse-map-figure
 
 Diffuse map
@@ -378,7 +378,7 @@ Diffuse map
 ````
 
 ````{grid-item}
-```{figure} ../_images/08_stones_normal.png
+```{figure} ../_images/09_stones_normal.png
 :name: stones-normal-map-figure
 
 Normal map
@@ -386,7 +386,7 @@ Normal map
 ````
 
 ````{grid-item}
-```{figure} ../_images/08_stones_specular.png
+```{figure} ../_images/09_stones_specular.png
 :name: stones-specular-map-figure
 
 Specular map
@@ -460,7 +460,7 @@ gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 
 Here we have added another object ot our scene that consists of a simple flat plane which has been scaled up and translated so that it forms a floor underneath the cubes. All of the this code is similar to what we have done previously. Refresh your web browser and move the camera around to see the effect of normal mapping on the stone floor.
 
-```{figure} ../_images/08_floor_no_specular.png
+```{figure} ../_images/09_floor_no_specular.png
 :width: 80%
 
 A the floor object with normal mapping.
@@ -504,7 +504,7 @@ specular *= texture(uSpecularMap, vTexCoords).rgb;
 
 Refresh your web browser and position the camera to see the effect of the specular map. Note how the mortar between the stones no longer appears to be shiny.
 
-```{figure} ../_images/08_floor_specular.png
+```{figure} ../_images/09_floor_specular.png
 :width: 80%
 
 A the floor object with normal and specular mapping.
@@ -515,19 +515,19 @@ A the floor object with normal and specular mapping.
 
 1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at $(0, 4, -5)$, scale it up by a factor of 5 in the $x$ and $z$ directions and rotate it $90^\circ$ about the $x$-axis. Apply the diffuse map **assets/bricks_diffuse.png**.
 
-```{figure} ../_images/08_ex1.png
+```{figure} ../_images/09_ex1.png
 :width: 500
 ```
 
 2. Apply the normal map **assets/bricks_normal.png** to the wall object.
 
-```{figure} ../_images/08_ex2.png
+```{figure} ../_images/09_ex2.png
 :width: 500
 ```
 
 3. Apply the specular map **assets/bricks_specular.png** to the wall object.
 
-```{figure} ../_images/08_ex3.png
+```{figure} ../_images/09_ex3.png
 :width: 500
 ```
 ---

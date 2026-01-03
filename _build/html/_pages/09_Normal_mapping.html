@@ -420,7 +420,7 @@ document.write(`
 <span id="normal-mapping-section"></span><h1>Lab 9: Normal Mapping<a class="headerlink" href="#lab-9-normal-mapping" title="Link to this heading">#</a></h1>
 <p>In <a class="reference internal" href="08_Lighting.html#lighting-section"><span class="std std-ref">Lab 8: Lighting</span></a> we saw that the diffuse and specular reflection models used the light source position and surface normal vector to determine the colour of a fragment. The vertex shader was used to interpolate the normal vectors for each fragment based on the normal vectors at the vertices of a triangle. This works well for smooth objects, but for objects with a rough or patterned surface we don’t get the benefits of highlights and shadow. <strong>Normal mapping</strong> is technique that uses a <a class="reference internal" href="03_Textures.html#textures-section"><span class="std std-ref">texture map</span></a> to define the normal vectors for each fragment so that when a lighting model is applied it gives the appearance of a non-flat surface.</p>
 <figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../_images/08_normal_mapping.svg"><img alt="../_images/08_normal_mapping.svg" src="../_images/08_normal_mapping.svg" style="width: 600px;" />
+<a class="reference internal image-reference" href="../_images/09_normal_mapping.svg"><img alt="../_images/09_normal_mapping.svg" src="../_images/09_normal_mapping.svg" style="width: 600px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 94 </span><span class="caption-text">Normal mapping applies a texture of normals for each fragment giving the appearance of a non-flat surface.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
@@ -428,7 +428,7 @@ document.write(`
 </figure>
 <p>A <strong>normal map</strong> is a texture where the RGB colour values of each textel is used for the normal vector <span class="math notranslate nohighlight">\(\vec{n} = (n_x, n_y, n_z)\)</span> where <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span> and <span class="math notranslate nohighlight">\(n_z\)</span> values are determined by the red, green and blue colours values respectively. A normal map for the crate texture is shown in <a class="reference internal" href="#crate-normal-map-figure"><span class="std std-numref">Fig. 95</span></a>.</p>
 <figure class="align-default" id="crate-normal-map-figure">
-<a class="reference internal image-reference" href="../_images/08_crate_normal.png"><img alt="../_images/08_crate_normal.png" src="../_images/08_crate_normal.png" style="width: 400px;" />
+<a class="reference internal image-reference" href="../_images/09_crate_normal.png"><img alt="../_images/09_crate_normal.png" src="../_images/09_crate_normal.png" style="width: 400px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 95 </span><span class="caption-text">A normal map for the crate texture.</span><a class="headerlink" href="#crate-normal-map-figure" title="Link to this image">#</a></p>
@@ -436,7 +436,7 @@ document.write(`
 </figure>
 <p>Normal maps tend to have a blue tinge to them because the normal vectors are pointing away from the surface so the <span class="math notranslate nohighlight">\(z\)</span> component dominates. Any red on a normal map suggests that the normal is pointing to the right and green suggests the normal is pointing upwards.</p>
 <figure class="align-default" id="normal-map-figure">
-<a class="reference internal image-reference" href="../_images/08_normal_map.svg"><img alt="../_images/08_normal_map.svg" src="../_images/08_normal_map.svg" style="width: 350px;" />
+<a class="reference internal image-reference" href="../_images/09_normal_map.svg"><img alt="../_images/09_normal_map.svg" src="../_images/09_normal_map.svg" style="width: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 96 </span><span class="caption-text">The RBG values of a normal map give the values of the normal vectors.</span><a class="headerlink" href="#normal-map-figure" title="Link to this image">#</a></p>
@@ -448,7 +448,7 @@ document.write(`
 </div>
 <p>Load <em><strong>index.html</strong></em> in a live server, and you should see the cubes from <a class="reference internal" href="08_Lighting.html#lighting-section"><span class="std std-ref">Lab 8: Lighting</span></a> lit using a point light, a spotlight and a directional light source.</p>
 <figure class="align-default" id="id2">
-<a class="reference internal image-reference" href="../_images/08_cubes.png"><img alt="../_images/08_cubes.png" src="../_images/08_cubes.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/09_cubes.png"><img alt="../_images/09_cubes.png" src="../_images/09_cubes.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 97 </span><span class="caption-text">The cubes lit using three light sources from [Lab 8: Lighting].</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
@@ -480,7 +480,7 @@ document.write(`
 <li><p><strong>Bitangent</strong>, <span class="math notranslate nohighlight">\(\vec{B}\)</span> - this is a vector that points in the direction of increasing texture coordinate <span class="math notranslate nohighlight">\(v\)</span>.</p></li>
 </ul>
 <figure class="align-default" id="tbn-figure">
-<a class="reference internal image-reference" href="../_images/08_TBN.svg"><img alt="../_images/08_TBN.svg" src="../_images/08_TBN.svg" style="width: 250px;" />
+<a class="reference internal image-reference" href="../_images/09_TBN.svg"><img alt="../_images/09_TBN.svg" src="../_images/09_TBN.svg" style="width: 250px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 98 </span><span class="caption-text">The tangent space is defined by the tangent, bitangent and normal vectors.</span><a class="headerlink" href="#tbn-figure" title="Link to this image">#</a></p>
@@ -488,7 +488,7 @@ document.write(`
 </figure>
 <p>The world space tangent vector <span class="math notranslate nohighlight">\(\vec{T}\)</span> is calculated using the model space vertex coordinates of the triangle <span class="math notranslate nohighlight">\((x_0,y_0,z_0)\)</span>, <span class="math notranslate nohighlight">\((x_1,y_1,z_1)\)</span> and <span class="math notranslate nohighlight">\((x_2,y_2,z_2)\)</span> and their corresponding texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>.</p>
 <figure class="align-default" id="uv-deltas-figure">
-<a class="reference internal image-reference" href="../_images/08_UV_deltas.svg"><img alt="../_images/08_UV_deltas.svg" src="../_images/08_UV_deltas.svg" style="width: 800px;" />
+<a class="reference internal image-reference" href="../_images/09_UV_deltas.svg"><img alt="../_images/09_UV_deltas.svg" src="../_images/09_UV_deltas.svg" style="width: 800px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 99 </span><span class="caption-text">The tangent, <span class="math notranslate nohighlight">\(\vec{T}\)</span>, and bitangent, <span class="math notranslate nohighlight">\(\vec{B}\)</span>, vectors are calculated by mapping the model space triangle onto the normal map space.</span><a class="headerlink" href="#uv-deltas-figure" title="Link to this image">#</a></p>
@@ -703,7 +703,7 @@ document.write(`
 </div>
 <p>Refresh your web browser and move the camera around to see the effects of the normal map.</p>
 <figure class="align-default" id="id3">
-<a class="reference internal image-reference" href="../_images/08_cubes_specular_1.png"><img alt="../_images/08_cubes_specular_1.png" src="../_images/08_cubes_specular_1.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/09_cubes_specular_1.png"><img alt="../_images/09_cubes_specular_1.png" src="../_images/09_cubes_specular_1.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 100 </span><span class="caption-text">The crate specular map applied to the cubes.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
@@ -719,7 +719,7 @@ document.write(`
 </div>
 <p>Refresh your web browser and you should see that the cubes are now less shiny and more realistic.</p>
 <figure class="align-default" id="id4">
-<a class="reference internal image-reference" href="../_images/08_cubes_specular_2.png"><img alt="../_images/08_cubes_specular_2.png" src="../_images/08_cubes_specular_2.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/09_cubes_specular_2.png"><img alt="../_images/09_cubes_specular_2.png" src="../_images/09_cubes_specular_2.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 101 </span><span class="caption-text">The crate specular map applied to the cubes (<span class="math notranslate nohighlight">\(k_s = 0.2\)</span>).</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
@@ -734,7 +734,7 @@ document.write(`
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-diffuse-map-figure">
-<img alt="../_images/08_stones_diffuse.png" src="../_images/08_stones_diffuse.png" />
+<img alt="../_images/09_stones_diffuse.png" src="../_images/09_stones_diffuse.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 102 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
 </figcaption>
@@ -742,7 +742,7 @@ document.write(`
 </div>
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-normal-map-figure">
-<img alt="../_images/08_stones_normal.png" src="../_images/08_stones_normal.png" />
+<img alt="../_images/09_stones_normal.png" src="../_images/09_stones_normal.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 103 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
@@ -750,7 +750,7 @@ document.write(`
 </div>
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-specular-map-figure">
-<img alt="../_images/08_stones_specular.png" src="../_images/08_stones_specular.png" />
+<img alt="../_images/09_stones_specular.png" src="../_images/09_stones_specular.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 104 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
 </figcaption>
@@ -818,7 +818,7 @@ document.write(`
 </div>
 <p>Here we have added another object ot our scene that consists of a simple flat plane which has been scaled up and translated so that it forms a floor underneath the cubes. All of the this code is similar to what we have done previously. Refresh your web browser and move the camera around to see the effect of normal mapping on the stone floor.</p>
 <figure class="align-default" id="id5">
-<a class="reference internal image-reference" href="../_images/08_floor_no_specular.png"><img alt="../_images/08_floor_no_specular.png" src="../_images/08_floor_no_specular.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/09_floor_no_specular.png"><img alt="../_images/09_floor_no_specular.png" src="../_images/09_floor_no_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 105 </span><span class="caption-text">A the floor object with normal mapping.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
@@ -850,7 +850,7 @@ document.write(`
 </div>
 <p>Refresh your web browser and position the camera to see the effect of the specular map. Note how the mortar between the stones no longer appears to be shiny.</p>
 <figure class="align-default" id="id6">
-<a class="reference internal image-reference" href="../_images/08_floor_specular.png"><img alt="../_images/08_floor_specular.png" src="../_images/08_floor_specular.png" style="width: 80%;" />
+<a class="reference internal image-reference" href="../_images/09_floor_specular.png"><img alt="../_images/09_floor_specular.png" src="../_images/09_floor_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 106 </span><span class="caption-text">A the floor object with normal and specular mapping.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
@@ -864,21 +864,21 @@ document.write(`
 <li><p>Add another object using the .obj model <strong>../assets/wall.obj</strong> to your scene and position it at <span class="math notranslate nohighlight">\((0, 4, -5)\)</span>, scale it up by a factor of 5 in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> directions and rotate it <span class="math notranslate nohighlight">\(90^\circ\)</span> about the <span class="math notranslate nohighlight">\(x\)</span>-axis. Apply the diffuse map <strong>assets/bricks_diffuse.png</strong>.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/08_ex1.png"><img alt="_images/08_ex1.png" src="_images/08_ex1.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/09_ex1.png"><img alt="_images/09_ex1.png" src="_images/09_ex1.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="2">
 <li><p>Apply the normal map <strong>assets/bricks_normal.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/08_ex2.png"><img alt="_images/08_ex2.png" src="_images/08_ex2.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/09_ex2.png"><img alt="_images/09_ex2.png" src="_images/09_ex2.png" style="width: 500px;" />
 </a>
 </figure>
 <ol class="arabic simple" start="3">
 <li><p>Apply the specular map <strong>assets/bricks_specular.png</strong> to the wall object.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/08_ex3.png"><img alt="_images/08_ex3.png" src="_images/08_ex3.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/09_ex3.png"><img alt="_images/09_ex3.png" src="_images/09_ex3.png" style="width: 500px;" />
 </a>
 </figure>
 </section>

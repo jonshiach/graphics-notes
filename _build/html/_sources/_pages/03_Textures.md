@@ -4,7 +4,7 @@
 
 Texture mapping is a technique for applying a 2D image known as a **texture** onto a 3D surface. Applying a texture adds detail and complexity to the appearance of 3D objects without the need for modelling intricate geometry.
 
-```{figure} ../_images/02_texture_mapping.svg
+```{figure} ../_images/03_texture_mapping.svg
 :width: 700
 :name: texture-mapping-figure
 
@@ -24,7 +24,7 @@ Copy your ***Lab 2 Basic Shapes*** folder you created in [Lab 2: Basic Shapes in
 
 Start the live server, and you should see a colourful rectangle similar to the one you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section). We are going to apply a texture to this rectangle.
 
-```{figure} ../_images/02_colourful_rectangle.png
+```{figure} ../_images/03_colourful_rectangle.png
 :width: 80%
 :name: colour-rectangle-figure
 
@@ -196,7 +196,7 @@ gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
 Refresh your web browser, and you should see that we now have applied a texture to the rectangle.
 
-```{figure} ../_images/02_mario_texture.png
+```{figure} ../_images/03_mario_texture.png
 :name: mario-texture-figure
 :width: 80%
 
@@ -220,7 +220,7 @@ There are two types of texture filtering:
 
 - **Nearest-neighbour interpolation** - where the colour of the nearest textel to the $(u,v)$ texture coordinates is used as the colour sample.
 
-```{figure} ../_images/02_nearest_neighbour.svg
+```{figure} ../_images/03_nearest_neighbour.svg
 :width: 500
 :name: nearest-neighbour-interpolation-figure
 
@@ -229,7 +229,7 @@ Nearest neighbour interpolation.
 
 - **Bilinear interpolation** - where the distance between $(u,v)$ coordinate and the centre of a textel determines how much that textel contributes to the colour sample.
 
-```{figure} ../_images/02_bilinear.svg
+```{figure} ../_images/03_bilinear.svg
 :width: 500
 :name: bilinear-interpolation-figure
 
@@ -266,7 +266,7 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
 Here we have changed the texture to a low resolution $64 \times 64$ pixel version of the Mario texture and the texture filtering to nearest-neighbour interpolation. Refresh your web browser, and you should see the image shown in {numref}`mario-nearest-figure`.
 
-```{figure} ../_images/02_mario_nearest.png
+```{figure} ../_images/03_mario_nearest.png
 :width: 80%
 :name: mario-nearest-figure
 
@@ -284,7 +284,7 @@ Change the texture filtering back to bilinear interpolation for both minificatio
 
 Refresh your web browser, and you should see the image shown in {numref}`mario-linear-figure`. Here we have told WebGL to use bilinear interpolation to get the colour sample for each fragment. This results in a smoother appearance since the colours of multiple textels are blended together to get the colour sample for each fragment. Our texture mapped rectangle looks slightly blurry since we are using a low resolution texture.
 
-```{figure} ../_images/02_mario_linear.png
+```{figure} ../_images/03_mario_linear.png
 :width: 80%
 :name: mario-linear-figure
 
@@ -301,7 +301,7 @@ Another issue that may occur is when the fragment is a lot smaller than the text
 
 To solve this issue WebGL uses <a href="https://www.khronos.org/WebGL/wiki/Texture#Mip_maps" target="_blank">**mipmaps**</a> (mip is short for the latin phrase *"multum in parvo"* or "much in little") which are a series of textures, each one half the size of the previous one. WebGL will use a mipmap texture most suitable based on the size of the fragment relative to the texture. This way the fragment does not span a large part of the texture.
 
-```{figure} ../_images/02_mipmaps.svg
+```{figure} ../_images/03_mipmaps.svg
 :width: 500
 :name: mipmaps-figure
 
@@ -388,7 +388,7 @@ const vertices = new Float32Array([
 
 Refresh your web browser, and you see something like the following.
 
-```{figure} ../_images/02_mario_repeat.png
+```{figure} ../_images/03_mario_repeat.png
 :width: 500
 :name: mario-repeat-figure
 
@@ -419,7 +419,7 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
 
 Here we have specified the wrapping in the horizontal (`S`) and vertical (`T`) directions (some people use $(S,T)$ for the vertex coordinates instead of $(u,v)$) to `GL_MIRRORED_REPEAT`. Refresh your web browser, and you should see the image shown below.
 
-```{figure} ../_images/02_mario_mirrored_repeat.png
+```{figure} ../_images/03_mario_mirrored_repeat.png
 :width: 500
 :name: mario-mirrored-repeat-figure
 
@@ -428,7 +428,7 @@ Texture wrapping using `GL_MIRRORED_REPEAT`.
 
 Using `GL_CLAMP_TO_EDGE` results in the images shown below.
 
-```{figure} ../_images/02_mario_clamp_to_edge.png
+```{figure} ../_images/03_mario_clamp_to_edge.png
 :width: 80%
 :name: mario-clamp-to-edge-figure
 
@@ -485,7 +485,7 @@ fragColour = mix(texture(uTexture, vTexCoord), texture(uTexture2, vTexCoord), 0.
 
 Here we have used the `mix()` function to combine the two textures so that 60% is from the first texture (Mario) and the and the remaining 40% is from the second texture (the crate).
 
-```{figure} ../_images/02_two_textures.png
+```{figure} ../_images/03_two_textures.png
 :width: 500
 :name: two-textures-figure
 
@@ -498,38 +498,38 @@ A rectangle with a mix of two textures applied.
 
 1. Change the `uv` array to create a texture rectangle consisting of a 6 by 4 grid of Mario's.
 
-```{figure} ../_images/02_Ex1.png
+```{figure} ../_images/03_Ex1.png
 :width: 60%
 ```
 
 2. Modify the fragment shader so that Mario is facing to the right instead of the left. Hint: the command `vec2(vector.x, vector.y)` creates a 2-element vector using the elements of `vector`.
 
-```{figure} ../_images/02_Ex2.png
+```{figure} ../_images/03_Ex2.png
 :width: 60%
 ```
 
 3. Modify the fragment shader so that the red and green colour components of the pixel are switched.
    
-```{figure} ../_images/02_Ex3.png
+```{figure} ../_images/03_Ex3.png
 :width: 60%
 ```
 
 4. Apply a texture of your choice to the rectangle (e.g., a selfie or a picture of cute kitten).
 
-```{figure} ../_images/02_Ex4.png
+```{figure} ../_images/03_Ex4.png
 :width: 60%
 ```
 
 5. Modify the fragment shader so that the colours of the vertices are multiplied by the Mario texture.
 
-```{figure} ../_images/02_Ex5.png
+```{figure} ../_images/03_Ex5.png
 :width: 60%
 ```
 
 
 6. Change the $(u,v)$ coordinates so that the textured rectangle shows a zoomed in image of Mario's eye.
 
-```{figure} ../_images/02_Ex6.png
+```{figure} ../_images/03_Ex6.png
 :width: 60%
 ```
 

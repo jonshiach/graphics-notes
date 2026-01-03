@@ -68,7 +68,7 @@ A vector in is an object with magnitude (length) and direction. A vector is deno
 
 Here $\vec{a}$ has 3 elements so is a vector in 3D space where $a_x$, $a_y$ and $a_z$ are the lengths of the vector in the $x$, $y$, and $z$ directions.
 
-```{figure} ../_images/03_vector.svg
+```{figure} ../_images/04_vector.svg
 :height: 200
 :name: 3d-vector
 
@@ -177,7 +177,7 @@ For example, given the vectors $\vec{a} = (3,0,4)$ and $\vec{b} = (1, 2, 3)$
 
 What is happening in a geometrical sense when we add and subtract vectors? Take a look at {numref}`vector-addition-figure`, here the vector $\vec{b}$ has been added to the vector $\vec{a}$ where the tail of $\vec{b}$ is placed at the head of $\vec{a}$. The resulting vector $\vec{a} + \vec{b}$ points from the tail of $\vec{a}$ to the head of $\vec{b}$.
 
-```{figure} ../_images/03_vector_addition.svg
+```{figure} ../_images/04_vector_addition.svg
 :height: 150
 :name: vector-addition-figure
 
@@ -186,7 +186,7 @@ Vector addition.
 
 The subtraction of the vector $\vec{b}$ does similar, but since $\vec{a} - \vec{b} = \vec{a} + (-1)\vec{b}$ then the direction of $\vec{b}$ is reversed so $\vec{a} - \vec{b}$ is the same as placing the tail of $-\vec{b}$ at the head of $\vec{a}$.
 
-```{figure} ../_images/03_vector_subtraction.svg
+```{figure} ../_images/04_vector_subtraction.svg
 :height: 180
 :name: vector-subtraction-figure
 
@@ -268,7 +268,7 @@ If we wanted to divide by a scale $k$ then we simply multiply by $\dfrac{1}{k}$.
 
 Multiplying a vector by a positive scalar has the effect of scaling the length of the vector. Multiplying by a negative scalar reverses the direction of the vector.
 
-```{figure} ../_images/03_vector_scalar_multiplication.svg
+```{figure} ../_images/04_vector_scalar_multiplication.svg
 :height: 180
 ```
 
@@ -306,7 +306,7 @@ b/3   = [ 0.3333, 0.6667, 1.0000 ]
 
 The length or **magnitude** of a vector $\vec{a} = (a_x, a_y, a_z)$ is denoted by $\|\vec{a}\|$ is the length from the tail of the vector to the head.
 
-```{figure} ../_images/03_vector_magnitude.svg
+```{figure} ../_images/04_vector_magnitude.svg
 :height: 100
 :name: magnitude-figure
 
@@ -438,7 +438,7 @@ The dot product is related to the angle $\theta$ between the two vectors ({numre
 
 $$ \vec{a} \cdot \vec{b} = \|\vec{a}\| \|\vec{b}\| \cos(\theta). $$(eq:dot-product-geometric)
 
-```{figure} ../_images/03_dot_product.svg
+```{figure} ../_images/04_dot_product.svg
 :height: 125
 :name: angle-between-vectors-figure
 
@@ -507,7 +507,7 @@ $$ \vec{a} \times \vec{b} = (a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x).
 
 The cross product between two vectors produces another vector that is perpendicular to both of the vectors ({numref}`cross-product-figure`). This is another incredibly useful result as it allows us to calculate a [**normal vector**](normal-vector-section) to a polygon which are used in calculating how light is reflected off surfaces (see [Lab 8: Lighting](lighting-section)).
 
-```{figure} ../_images/03_cross_product.svg
+```{figure} ../_images/04_cross_product.svg
 :height: 220
 :name: cross-product-figure
 
@@ -895,13 +895,13 @@ Linear memory is a contiguous block of addresses that can be sequentially access
 
 Using column-major order this will be stored in the memory as
 
-```{figure} ../_images/03_column_major_order.svg
+```{figure} ../_images/04_column_major_order.svg
 :width: 650
 ```
 
 i.e., we move down and across the matrix. Alternatively, using row-major order the matrix will be stored as
 
-```{figure} ../_images/03_row_major_order.svg
+```{figure} ../_images/04_row_major_order.svg
 :width: 650
 ```
 

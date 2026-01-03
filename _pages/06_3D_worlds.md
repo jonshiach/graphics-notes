@@ -8,7 +8,7 @@ In [Lab 5: Transformations](transformations-section) we looked at the transforma
 
 To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a **unit cube** which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes ({numref}`unit-cube-figure`) so the coordinates of the 8 corners of the cube are combinations of $-1$ and $1$. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).
 
-```{figure} ../_images/05_unit_cube.svg
+```{figure} ../_images/06_unit_cube.svg
 :width: 350
 :name: unit-cube-figure
 
@@ -84,7 +84,7 @@ const indices = new Uint16Array([
 
 If you compile and run this program you will see that a crate texture fills the canvas. This is because the coordinates of the cube vertices are $-1$ and $1$.
 
-```{figure} ../_images/05_unit_cube.png
+```{figure} ../_images/06_unit_cube.png
 :width: 80%
 :name: cube-figure
 
@@ -97,7 +97,7 @@ The unit cube.
 
 WebGL uses a coordinate system with the $x$-axis pointing horizontally to the right, the $y$-axis pointing vertically upwards and the $z$-axis pointing horizontally towards the viewer. To simplify things when it comes to displaying the 3D world, the axes are limited to a range from $-1$ to $1$, so any object outside this range will not be shown on the display. These are known as **Normalised Device Coordinates (NDC)**.
 
-```{figure} ../_images/05_NDC.svg
+```{figure} ../_images/06_NDC.svg
 :width: 500
 :name: NDC-figure
 
@@ -108,7 +108,7 @@ The steps used in the creation of a 3D world and eventually displaying it on scr
 
 - **Model space** -- each individual 3D object that will appear in the 3D world is defined in its own space usually with the volume centre of the object at $(0,0,0)$ to make the transformations easier
 
-```{figure} ../_images/05_model_space.svg
+```{figure} ../_images/06_model_space.svg
 :width: 350
 :name: model-space-figure
 
@@ -117,7 +117,7 @@ The model space.
 
 - **World space** -- the 3D world is constructed by transforming the individual 3D objects using translation, rotation and scaling transformations.
 
-```{figure} ../_images/05_world_space.svg
+```{figure} ../_images/06_world_space.svg
 :width: 350
 :name: world-space-figure
 
@@ -126,7 +126,7 @@ The world space.
 
 - **View space** -- the world space is transformed so that it is viewed from $(0,0,0)$ looking down the $z$-axis.
 
-```{figure} ../_images/05_view_space.svg
+```{figure} ../_images/06_view_space.svg
 :width: 350
 :name: view-space-figure
 
@@ -135,7 +135,7 @@ The view space.
 
 - **Screen space** --the 3D view space is projected onto a 2D projection plane.
 
-```{figure} ../_images/05_screen_space.svg
+```{figure} ../_images/06_screen_space.svg
 :width: 350
 :name: screen-space-figure
 
@@ -188,7 +188,7 @@ To view the world space we create a virtual camera and place it in the world spa
 - $\vec{target}$: the coordinates of the target point that the camera is pointing,
 - $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
 
-```{figure} ../_images/05_view_space_alignment.svg
+```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
 :name: camera-vectors-figure
 
@@ -348,7 +348,7 @@ The next step is to project the view space onto the screen space. The simplest t
 
 The region of the view space that will form the screen space is defined by a cuboid bounded by a left, right, bottom, top, near and far clipping planes. Any objects outside the cuboid are clipped ({numref}`orthographic-projection-figure`).
 
-```{figure} ../_images/05_orthographic_projection.svg
+```{figure} ../_images/06_orthographic_projection.svg
 :width: 700
 :name: orthographic-projection-figure
 
@@ -515,7 +515,7 @@ Here we have added the two uniforms for the view and projection matrices to the 
 
 Our rendering of the cube doesn't look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us ({numref}`depth-test-1-figure`).
 
-```{figure} ../_images/05_depth_test.svg
+```{figure} ../_images/06_depth_test.svg
 :width: 300
 :name: depth-test-1-figure
 
@@ -605,7 +605,7 @@ const angle     = 0;
 
 Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
 
-```{figure} ../_images/05_orthographic_cubes.png
+```{figure} ../_images/06_orthographic_cubes.png
 :width: 80%
 :name: orthographic-cubes-figure
 
@@ -616,7 +616,7 @@ The cube in the front is centred at $(0, 0, -2)$ and the cube behind is centred 
 
 Perspective projection is used to render objects where the further an object is from the camera, the small it appears in the canvas. It use the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at $(0,0,0)$ ({numref}`perspective-projection-figure`). The clipping volume bounded by the size clipping planes is called the **viewing frustum**.
 
-```{figure} ../_images/05_perspective_projection.svg
+```{figure} ../_images/06_perspective_projection.svg
 :width: 700
 :name: perspective-projection-figure
 
@@ -648,7 +648,7 @@ where $top = near \times \tan\left(\dfrac{fov}{2}\right)$ and $right = aspect \t
 
 The mapping of a point in the view space with coordinates $(x, y, z)$ onto the near clipping plane to the point $(x', y', -near)$ is shown in {numref}`perspective-mapping-figure`.
 
-```{figure} ../_images/05_perspective_projection_mapping.svg
+```{figure} ../_images/06_perspective_projection_mapping.svg
 :width: 500
 :name: perspective-mapping-figure
 
@@ -798,7 +798,7 @@ const projection = camera.perspective();
 
 Refresh your web browser and you should see something similar to the following.
 
-```{figure} ../_images/05_perspective_cubes.png
+```{figure} ../_images/06_perspective_cubes.png
 :width: 80%
 :name: perspective-cubes-figure
 
@@ -817,14 +817,14 @@ Experiment with the affect of changing the field of view angle.
 
 `````{grid}
 ````{grid-item}
-```{figure} ../_images/05_fov_15.png
+```{figure} ../_images/06_fov_15.png
 
 $fov = 15^\circ$
 ```
 ````
 
 ````{grid-item}
-```{figure} ../_images/05_fov_120.png
+```{figure} ../_images/06_fov_120.png
 
 $fov = 120^\circ$
 ```
@@ -861,7 +861,7 @@ $fov = 120^\circ$
 
 5. Create a $10 \times 10$ grid of cubes in the world space.
 
-```{figure} ../_images/05_Ex5.png
+```{figure} ../_images/06_Ex5.png
 :width: 500
 ```
 
