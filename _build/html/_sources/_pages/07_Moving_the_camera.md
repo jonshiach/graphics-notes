@@ -25,7 +25,7 @@ The cubes from [Lab 6: 3D Worlds](3D-worlds-section).
 
 We are going to use keyboard input to change the coordinates of the eye vector (i.e., the camera position). Recall the view matrix from [Lab 4: 3D Worlds](3D-worlds-section) where we introduced the camera vectors seen in {numref}`camera-vectors-figure-2`.
 
-```{figure} ../_images/05_view_space_alignment.svg
+```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
 :name: camera-vectors-figure-2
 
