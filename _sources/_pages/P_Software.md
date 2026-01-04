@@ -13,7 +13,7 @@ Install the Live Server extension.
 Live Server allows you to run web pages locally and automatically reload them when files change.
 
 1. Open VS Code
-2. Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>x</kbd> on Windows or Linux, or <kbd>&#8984;</kbd> + <kbd>shift</kbd> + <kbd>x</kbd> on macOS)
+2. Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>&#8984;</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)
 3. Search for Live Server
 4. Install Live Server by Ritwick Dey
 

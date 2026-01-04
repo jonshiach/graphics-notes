@@ -17,7 +17,7 @@ Where you are asked to enter code into your files, you are strongly encouraged t
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 1 Intro to Javascripts*** inside which create a file called ***index.html*** and enter the following into it.
+Create a folder called ***Lab 1 Intro to JavaScript***. In Visual Studio Code, create a new file by clicking on **File > New File...** and enter the following code.
 
 ```html
 <!doctype html>
@@ -35,7 +35,9 @@ Create a folder called ***Lab 1 Intro to Javascripts*** inside which create a fi
 </html>
 ```
 
-Create another file called ***intro_to_javascript.js*** and enter the following into it.
+Save the file using **File > Save** (<kbd>ctrl</kbd> + <kbd>S</kbd> on Windows or Linux or <kbd>&#8984;</kbd> + <kbd>S</kbd> on MacOS), give it the filename ***index.html*** and save it to your ***Lab 1 Intro to JavaScript*** folder.
+
+Create another file and enter the following code
 
 ```javascript
 function setupConsoleOutput(elementId) {
@@ -53,14 +55,28 @@ setupConsoleOutput("console-output");
 console.log('Lab 1 - Intro to JavaScript\n---------------------------');
 ```
 
+Save it to your folder using the filename ***intro_to_javascript.js*** .
+
 :::
 
-Here we have the function `setupConsoleOutput()` in the ***intro_to_javascript.js*** file which means that any call to `console.log()` will output to the HTML page (`console.log()` is a debugging tool that prints information to the browswer's developer console). Open ***index.html*** using a live server, and you should see a plain webpage with the following.
+Here we have created a basic HTML file which we will open in a web browser (Goodle Chrome is recommended) along with a JavaScript file in which have defined the function `setupConsoleOutput()`. This means that any call to `console.log()` will output to the HTML page (`console.log()` is a debugging tool that prints information to the browser's developer console). Open ***index.html*** using a live server, and you should see a plain webpage with the following.
 
 ```text
 Lab 1 - Intro to JavaScript
 ---------------------------
 ```
+
+:::{important}
+If you don't have the Live Server extension installed in Visual Studio Code follow these steps
+
+1. Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>&#8984;</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)
+2. Search for Live Server
+3. Install Live Server by Ritwick Dey
+
+Once installed, VS Code may prompt you to reload.
+:::
+
+---
 
 ## Variables
 
@@ -220,6 +236,30 @@ The assigned value of myVariable is level one
 The data type of myVariable is string
 ```
 
+### Arithmetic operators
+
+Arithmetic operators are used to perform mathematical calculations on numbers. The arithmetic operators in JavaScript are similar to those used in other languages.
+
+| Operator | Description | Example | Result |
+|:--:|:--|:--|:--|
+| `+` | Addition | `5 + 3` | `8` |
+| `-` | Subtraction | `5 - 3` | `2` |
+| `*` | Multiplication | `5 * 3` | `15` |
+| `/` | Division | `6 / 3` | `2` |
+| `%` | Modulus (remainder) | `7 % 3` | `1`
+|
+
+There are also shorthand versions for common operations.
+
+| Operator | Description | Example | Equivalent |
+|:--:|:--|:--|:--|
+| `+=` | Add to | `x += 5` | `x = x + 5` |
+| `-=` | Subtract from | `x -= 2` | `x = x - 2` |
+| `*=` | Multiply by | `x *= 3` | `x = x * 3` |
+| `/=` | Divide by | `x /= 2` | `x = x / 2` |
+| `++` | Increment by 1 | `x++` | `x = x + 1` |
+| `--` | Decrement by 1 | `x--` | `x = x - 1` |
+
 ---
 
 ## Arrays
@@ -241,7 +281,7 @@ console.log("colours = " + colours);
 
 :::
 
-Here we have declared the variable `colours` which is assigned to an array containing the strings of the three primary colours. Refresh your browswer, and you should see the following is added to your web page.
+Here we have declared the variable `colours` which is assigned to an array containing the strings of the three primary colours. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Arrays
@@ -264,7 +304,7 @@ console.log(`\nthe colours array contains ${colours.length} values`);
 
 :::
 
-Refresh your browswer, and you should see the following is added to your web page.
+Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 the colours array contains 3 values
@@ -286,7 +326,7 @@ console.log("colours = ", colours);
 
 :::
 
-Here we have reassigned the second value in the `colours` array to the number 2. Refresh your browswer, and you should see the following is added to your web page.
+Here we have reassigned the second value in the `colours` array to the number 2. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 colours = red,2,blue
@@ -307,7 +347,7 @@ console.log("\nThe first two values of the array colours is: " + colours.slice(0
 
 :::
 
-Refresh your browswer, and you should see the following is added to your web page.
+Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 colours = red,2,blue
@@ -315,7 +355,7 @@ colours = red,2,blue
 
 ### Appending to an array
 
-Additional values can be appended to the end of an array using `array.push(value)`. 
+Additional values can be appended to the end of an array using `array.push(value)`.
 
 :::{admonition} Task
 :class: tip
@@ -329,7 +369,7 @@ console.log("\ncolours = " + colours);
 
 :::
 
-Refresh your browswer, and you should see the following is added to your web page.
+Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 colours = red,2,blue,3.1416
@@ -372,7 +412,7 @@ console.log("Lives:    " + player["lives"]);
 
 :::
 
-Here we print the value of two of the `player` object properties. Refresh your browswer, and you should see the following is added to your web page.
+Here we print the value of two of the `player` object properties. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Objects
@@ -399,7 +439,7 @@ console.log("Score:    " + player.score);
 
 :::
 
-Here we have added the property `powerUp` and incremented the `score` property by 10. Refresh your browswer, and you should see the following is added to your web page.
+Here we have added the property `powerUp` and incremented the `score` property by 10. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Power up: super
@@ -500,7 +540,7 @@ if (player.powerUp === "fire") {
 
 :::
 
-Here we have used a `if...else if...else` statement to print the current power up state of the `player` object. Refresh your browswer, and you should see the following is added to your web page.
+Here we have used a `if...else if...else` statement to print the current power up state of the `player` object. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Conditional statments
@@ -536,7 +576,7 @@ if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
 
 :::
 
-Here we have written a more sophisticated `if...else if...else` statement using conjuctions. Refresh your browswer, and you should see the following is added to your web page.
+Here we have written a more sophisticated `if...else if...else` statement using conjuctions. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Mario jumps on enemy and defeats it.
@@ -582,7 +622,7 @@ for (let i = 0; i < enemies.length; i++) {
 
 :::
 
-Here we have created a for loop to print the names of the objects in the `enemies` array. A loop counter variable `i` is initialised to the value of 0. The for loop condition terminates the loop when the loop counter is greater than the length of the `enemies` array, and the loop counter is incremented by one by the update argument. Refresh your browswer, and you should see the following is added to your web page.
+Here we have created a for loop to print the names of the objects in the `enemies` array. A loop counter variable `i` is initialised to the value of 0. The for loop condition terminates the loop when the loop counter is greater than the length of the `enemies` array, and the loop counter is incremented by one by the update argument. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Loops
@@ -618,7 +658,7 @@ while (time < maxTime) {
 
 :::
 
-Here we have defined two variables for the time and maximum time. Then we have written a while loop that checks if the time variable is less than the maximum time, if this is true the time is incremented by 10 and the current time is outputted. Refresh your browswer, and you should see the following is added to your web page.
+Here we have defined two variables for the time and maximum time. Then we have written a while loop that checks if the time variable is less than the maximum time, if this is true the time is incremented by 10 and the current time is outputted. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 time = 10
@@ -667,7 +707,7 @@ function jump() {
 
 :::
 
-Here we have defined a function called `jump()` that has no parameters and outputs a text string. Refresh your browswer, and you should see the following is added to your web page.
+Here we have defined a function called `jump()` that has no parameters and outputs a text string. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Functions
@@ -687,7 +727,7 @@ jump();
 
 :::
 
-Refresh your browswer, and you should see the following is added to your web page.
+Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Mario jumps!
@@ -711,7 +751,7 @@ moveRight(10);
 
 :::
 
-Here we have defined a function that has one parameter for the number of steps that Mario moves. Refresh your browswer, and you should see the following is added to your web page.
+Here we have defined a function that has one parameter for the number of steps that Mario moves. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Mario moves 5 steps to the right.
@@ -738,7 +778,7 @@ console.log(checkGameOver(player.lives));
 
 :::
 
-Here we have defined a function that returns a string based on the value of the `lives` parameter. Refresh your browswer, and you should see the following is added to your web page.
+Here we have defined a function that returns a string based on the value of the `lives` parameter. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Continue playing.
@@ -1017,380 +1057,54 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
 
 ## Exercises
 
-1. You are tasked with writing a C++ program to help the university store students' details (name, ID number, course, marks etc.). Create a class called `Student` in the header file **Student.hpp** which has the following attributes:
+1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information.
+<br>
+First create a class called `Student` that stores a student's name, ID number and degree course they are currently in. Use a constructor to initialise these values.
 
-- first name - string;
-- last name - string;
-- ID number - integer;
-- course - string;
-- level - integer;
-- marks - 12-element integer array (marks for four units over the three years);
-
-2. Create a Student object called `ellie` and assign the following attribute values:
-
-- first name: Ellie
-- last name: Williams
-- ID number: 12345678
-- course: Computer Science
-- level: 5
-
-3. Create a method called `print()` that prints a students details. Use your function to print the details of the `ellie` object. Your output should look like the following:
+1. Create an object of your `Student` class called `ellie` with the following details.
 
 ```text
-Student Details
------------------------------
-Name   : Ellie Williams
-ID     : 12345678
-Course : Computer Science
-Level  : 5
+Ellie Williams, 12345678, Computer Science
 ```
 
-4. Add a constructor for your class with parameters for creating an object with attribute values specified. Use your constructor to create the `ellie` object from exercise 2 and use the `print()` method to output the student details.
-
-5. Create a method called `addLevelMarks()` which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the `marks` array for the object. For example, if the level 4 unit marks are `40, 50, 60, 70` then `marks[0] = 40`, `marks[1] = 50` etc. Use your method to updates Ellie's marks with the following.
-
-    - level 4 marks: 55, 60, 72, 64;
-    - level 5 marks: 68, 62, 74, 70.
-
-6. Amend the `print()` method so that the module marks for each level which a student has been enrolled are outputted, e.g.,
+3. Add a method called `print()` that prints the details of the student in the format shown below. Use this method to print the details of Ellie Williams.
 
 ```text
-Student Details
------------------------------
-Name   : Ellie Williams
-ID     : 12345678
-Course : Computer Science
-Level  : 5
-
-Marks
-
-Level 4: 55, 60, 72, 64
-Level 5: 68, 62, 74, 70
+Student Information
+-------------------
+Name:
+ID:
+Course:
 ```
 
-7. Create a static member function called `levelAverage()` which takes in inputs of an integer specifying a level and the marks for that level and returns the average level mark. Use this method to output the level 4 average mark for the `ellie` object.
+4. Create an array called `students` that contains multiple `Student` objects with the following details.
 
-8. A student's degree classification is determined by calculating a weighted average of the level 5 and 6 marks such that
+```text
+Ellie Williams, 12345678, Computer Science
+Joel Miller, 24680135, Computer Science
+Arthur Morgan, 87654321, Computer Games Development
+Geralt of Rivia, 13579246, Mathematics
+```
 
-$$\textsf{weighted average} = 0.25 \times \textsf{level 5 average} + 0.75 \times \textsf{level 6 average},$$
+5. Add a property called `marks` initialised as an empty array and add a method called `addMarks()` that accepts an array containing module marks and appends it to the `marks` property. Use this method to add the following marks and amend the `print()` method so that a student marks are printed.
 
-and then checked against the table below.
+```text
+Ellie Williams: 65, 72, 92, 75
+Joel Miller: 52, 68, 75, 62
+Arthur Morgan: 38, 52, 48, 45
+Geralt of Rivia: 92, 75, 68, 78
+```
 
-| Weighted average | Degree classification |
+6. Add a method to the Student class called `calculateAverage()` that calculates a student's average mark. Amend the `print()` method to output the average mark.
+
+7. Add a method that determines the degree classification of a student based on the criteria below. Amend the `print()` method to include this.
+
+| Average mark | Degree classification |
 |:--:|:--|
-| $\geq 70$ | First-class |
-| $\geq 60$ | Upper second-class |
-| $\geq 50$ | Lower second-class |
-| $\geq 40$ | Third-class |
-| $< 40$    | Fail |
-
-Create a method called `classification()` which uses your static member function from exercise 5 to calculate the weighted average for a student object and outputs the degree classification and the weighted average to the nearest integer.
-
-```text
-Classification: xxxx (weighted average = xx).
-```
-
-9. Ellie has evaded the infected and survived another year. In level 6 they achieved marks of 72, 68, 76 and 65 (it is impressive that the university is still functioning during a worldwide cordyceps pandemic). Update the `ellie` object and output their degree classification.
-
-````{dropdown} Solutions
-**Lab01_Intro_to_c++.cpp**
-
-```cpp
-// ------------------------------------------------------------------------
-std::cout << "\nExercises\n----------------------\n" << std::endl;
- 
-//    // Exercise 2
-//    Student ellie;
-//    ellie.firstName = "Ellie";
-//    ellie.lastName  = "Williams";
-//    ellie.id        = 12345678;
-//    ellie.course    = "Computer Science";
-//    ellie.level     = 5;
- 
-// Exercise 3
-ellie.print();
- 
-// Exercise 4
-Student ellie("Ellie", "Williams", 12345678, "Computer Science", 5);
-
-// Exercise 5
-unsigned int level4Marks[] = {55, 60, 72, 64};
-unsigned int level5Marks[] = {68, 62, 74, 70};
-ellie.addLevelMarks(4, level4Marks);
-ellie.addLevelMarks(5, level5Marks);
-
-// Exercise 6
-ellie.print();
-
-// Exercise 7
-std::cout << "\nLevel 4 mark averge = " << Student::levelAverage(4, ellie.marks) << std::endl;
-
-// Exercise 9
-ellie.level = 6;
-unsigned int level6Marks[] = {72, 68, 76, 65};
-ellie.addLevelMarks(6, level6Marks);
-ellie.classification();
-```
-
-**Student.hpp**
-
-```cpp
-#pragma once
-
-#include <iostream>
-
-class Student
-{
-public:
-    std::string firstName;
-    std::string lastName;
-    unsigned int id;
-    std::string course;
-    unsigned int level;
-    unsigned int marks[12];
-    
-    // Constructors
-    Student();
-    Student(const std::string,  // firstName
-            const std::string,  // lastName
-            const unsigned int, // id
-            const std::string,  // course
-            unsigned int);      // level
-    
-    // Methods
-    void print();
-    void addLevelMarks(unsigned int,     // level
-                       unsigned int []); // level marks
-    static float levelAverage(unsigned int,     // level
-                              unsigned int []); // level marks
-    void classification();
-};
-```
-
-**Student.cpp**
-
-```cpp
-#include "Student.hpp"
-
-Student::Student(){};
-
-Student::Student(const std::string inFirstName,
-                 const std::string inLastName,
-                 const unsigned int inId,
-                 const std::string inCourse,
-                 unsigned int inLevel)
-{
-    firstName = inFirstName;
-    lastName  = inLastName;
-    id        = inId;
-    course    = inCourse;
-    level     = inLevel;
-}
-
-void Student::print()
-{
-    std::cout << "\nStudent Details\n-----------------------------" << std::endl;
-    std::cout << "Name   : " << firstName << " " << lastName << std::endl;
-    std::cout << "ID     : " << id << std::endl;
-    std::cout << "Course : " << course << std::endl;
-    std::cout << "Level  : " << level << "\n" << std::endl;
-    std::cout << "Marks\n" << std::endl;
-    
-    for (unsigned int i = 0; i < level - 3; i++)
-    {
-        std::cout << "Level " << i + 4 << ": ";
-        for (unsigned int j = 0; j < 4; j++)
-        {
-            std::cout << marks[4 * i + j] << ", ";
-        }
-        std::cout << "\n";
-    }
-}
-
-void Student::addLevelMarks(unsigned int inLevel, unsigned int levelMarks[])
-{
-    for (unsigned int i = 0; i < 4; i++)
-        marks[4 * (inLevel - 4) + i] = levelMarks[i];
-}
-
-float Student::levelAverage(unsigned int inLevel, unsigned int levelMarks[])
-{
-    float avg = 0;
-    for (unsigned int i = 0; i < 4; i++)
-        avg += levelMarks[4 * (inLevel - 4) + i];
-    
-    return avg / 4;
-}
-
-void Student::classification()
-{
-    if (level < 6)
-    {
-        std::cout << firstName << " " << lastName << " is not a level 6 student.\n";
-        return;
-    }
-    
-    float weightedAvg = 0.25f * levelAverage(5, marks) + 0.75f * levelAverage(6, marks);
-    std::string text;
-    if (weightedAvg >= 70)
-        text = "First class";
-    else if (weightedAvg >= 60)
-        text = "Upper second-class";
-    else if (weightedAvg >= 50)
-        text = "Lower second-class";
-    else if (weightedAvg >= 40)
-        text = "Third class";
-    else
-        text = "Fail";
-    
-    std::cout << "Classification: " << text << " (weighted average = " << weightedAvg << ")\n";
-}
-
-In this first lab we will be introducing/revisiting the fundamentals of the C++ language. C++ (pronounced "C-plus-plus") is a general purpose high performance programming language developed by Bjarne Stroustrup in 1979. It's an extension of the C programming language with added classes (the original name for C++ was "C with classes") so it shares the same syntax as C. It is also similar to Java, so it won't be too difficult to make the switch from Java to C++.
-
-In this semester we will be using OpenGL to create graphics applications. OpenGL uses C++ so its important you are comfortable with the syntax and the use of classes.
-
-## IDEs
-
-A C++ program is simply a set of plain text files that we instruct a compiler to convert to machine code and produce an executable. As long as you have installed the compiler, and you have a text editor program you can program away to your hearts content. However, as your programs start to become increasingly sophisticated, and you experience syntax errors and bugs, you will start to yearn for a better way. Fortunately there is, and we can use an Integrated Development Environment (IDE).
-
-An IDE provides a way of writing and organising your code files as well as a number of useful tools for debugging and organising your code projects. There are a number of IDEs available for working with C++ but we will be using Visual Studio for Windows, although you can use Xcode for macOS.
-
----
-
-(getting-the-files-section)= 
-
-## Getting the lab files
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SBwSNu9BVkY?si=ddHD0dU0pN2aBzWm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-To help walk you through this module I have written template files that setup each of the labs shown on the left. You will need to download the files from GitHub and also build the project files to work through these notes.
-
-1. Run GitHub Desktop (if you don't have it installed you can download it from <a href="https://desktop.github.com/download/" target="_blank">here</a>).
-1. Click on **Clone a Repository from the Internet..**
-1. Select the **URL** tab and paste in the following URL
-
-```text
-https://github.com/jonshiach/Computer-Graphics-Labs
-```
-
-1. Change **Local path** to a folder on your machine where you want to store the files.
-1. Click **Clone**
-
-<!-- ### Using the terminal/command line
-
-1. Open the command line in Windows (press the Windows key and search for 'cmd') or the terminal in macOS.
-2. Navigate to the parent folder on your machine where you want to store the files.
-3. Enter the following command and press the enter key.
-
-```text
-git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
-``` -->
-
-### Build the project files
-
-After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the **Computer-Graphics-Labs/** folder you have just downloaded you will see a file called **CMakeLists.txt** which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.
-
-1. In the **Computer-Graphics-Labs** folder create a folder and call it **build/**.
-2. Run **Cmake** (if you don't have Cmake installed on your machine your can download it from <a href="https://www.cmake.org" target="_blank">here</a>)
-3. Click on **Browse Source...** next to 'Where is the source code?' and select the **Computer-Graphics-Labs/** folder.
-4. Do the same for 'Where to build the binaries?' and select the **Computer-Graphics-Labs/build/** folder.
-5. Click **Configure** and select Visual Studio (Windows) or Xcode (macOS) and click **Done**. Once the configuration is complete click **Configure** again.
-6. Click **Generate**.
-
-This will create a Visual Studio (extension **.sln**) or Xcode project (extension **.xcodeproj**) file in the **Computer-Graphics-Labs/build/** folder. Double-click on it to open the project and edit the source code.
-
-```{important}
-Since different hardware requires different compilers and libraries, the build folder that you create on one machine will not work on another. If you are syncing your code between machines, e.g., using GitHub, you will need to build the project files into a different folder. The name of the folder **build/** is not special, you can name this anything you like, e.g., **build_homePC/**, **build_uniPC/**, **fred/** etc.
-```
-
-When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select **Lab01_Intro_to_c++** as the project we will be working on, depending on your IDE this is slightly different.
-
-- **Visual Studio** -- right-click on the **Lab01_Intro_to_c++** project in the project viewer on the right-hand side of the window and select 'Set as Startup Project'.
-- **Xcode** -- click on the project select dropdown at the top of the window and select **Lab01_Intro_to_c++** from the list of projects (there are quite a few to choose from, but it's there).
-
----
-
-## C++ basics
-
-### hello world
-
-We will start with the classic hello world example. Open the file **Lab01_Intro_to_c++.cpp** and edit it so that it looks like following.
-
-```cpp
-#include <iostream>
-
-int main() 
-{
-    std::cout << "hello world\n" << std::endl;
-    return 0;
-}
-```
-
-```{important}
-As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copied and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as developing your coding skills.
-```
-
-Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.
-
-```text
-hello world
-```
-
-Let's run through the code and see what each line does
-
-- `// Lab01 - Introduction to C++` -- Any text between `//` and the end of the current line is a comment and is ignored by the compiler. For multiline comments, any text between ``/*`` and `*/` is considered a comment.
-- `#include <iostream>` -- Imports the iostream library allowing us to input and output data to the terminal.
-- `int main() {}` -- Defines a [function](functions-section) called `main` which has no inputs and will output an integer value. All C++ programs must contain a function called `main` which is the designated entry point to a program.
-- `std::cout` -- Calls the `cout` (pronounced "see-out") object from the iostream library. This is used to output text.
-- `<< "hello world\n"` -- Sends the text string "hello world" to the `cout` object for printing. `\n` is the newline character which inserts a newline.
-- `<< std::endl;` -- Sends the end line character to the `cout` object, so the line is printed. Note that every C++ statement must end in a semicolon `;` (get used to doing this).
-- `return 0;` -- Returns the integer 0. This is because in the function definition we specified that the function `main` would return a 0. The convention is that a 0 is returned if the program has executed successfully and a 1 is returned if not.
-
-### Variables
-
-A variable is a portion of memory used to store a value. C++ uses the following types of variables.
-
-| Type | Explanation |
-|:---- |:------------|
-| `int` | integers (whole numbers), e.g., 1, -2, 3 |
-| `unsigned int` | positive integers, e.g., 1, 2, 3 |
-| `float` | floating point numbers, e.g., 1.23. |
-| `char` | single character, e.g., 'a' (character values are surrounded by single quotes). |
-| `string` | text consisting of multiple characters, e.g., "hello world" (strings are surrounded by double quotes). |
-| `bool` | Boolean values, e.g., true or false. |
-
-Variables must be identified by unique names which are called **identifiers**. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don't use an identifier that conflicts with a C++ keyword (e.g., `char`) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., `position`, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., `framesPerSecond`.
-
-Let's write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your `main()` function before the `return 0;` command.
-
-```cpp
-// Degrees to radians conversion
-float angleInDegrees = 45.0f;
-float pi = 3.1415927f;
-
-float angleInRadians = angleInDegrees * pi / 180.0f;
-
-// Output result
-std::cout << angleInDegrees << " degrees is equal to "
-          << angleInRadians << " radians." << std::endl;
-```
-
-Output:
-
-```text
-45 degrees is equal to 0.785398 radians.
-```
-
-When working with variables we first need to define the variable types. For example `float angleInDegrees;` defined a variable with the identifier `angleInDegrees` as a float.
-
-````{note}
-When declaring float variables we should use the syntax `1.0f` instead of `1`. For example
-
-```cpp
-float myVariable = 1.0f;
-```
-
-This is because is we were to use `float myVariable = 1;` the compiler would need to generate extra code to convert from an integer value to a floating point value.
-````
-
+| 70 -- 100 | First class |
+| 60 -- 69 | Upper-second class |
+| 50 -- 59 | Lower-second class |
+| 40 -- 49 | Third class |
+|  0 -- 40 | Fail |
+
+1. Write a function called `printAllStudents()` that prints all student records and use it on the `students` array.
