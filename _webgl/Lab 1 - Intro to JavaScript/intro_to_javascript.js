@@ -142,3 +142,33 @@ function checkGameOver(lives) {
 
 console.log(checkGameOver(player.lives));
 
+// EXercises 
+console.log("\nExercise 1\n----------")
+
+class Student {
+  constructor(firstName, lastName, id, course, level) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.id = id;
+    this.course = course;
+    this.level = level;
+  }
+
+  print() {
+    console.log(
+`
+Student Details
+---------------
+Name   : ${this.firstName} ${this.lastName}
+ID     : ${this.id}
+Course : ${this.course}
+Level  : ${this.level}
+`
+    );
+  }
+}
+
+const ellie = new Student("Ellie", "Williams", 12345678, "Computer Science", 5);
+
+
+ellie.print();

@@ -57,8 +57,6 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/01_intro_to_javascript';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -401,6 +399,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-names">Variable names</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operators">Arithmetic operators</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
@@ -455,7 +454,7 @@ document.write(`
 <p>Where you are asked to enter code into your files, you are strongly encouraged to type the code yourself rather than copying and pasting. Although this may lead to occasional typographical errors or bugs, the process of writing the code line by line helps reinforce how the code works and what each part is doing. Making and fixing mistakes is a normal and valuable part of learning to program, and will help deepen your understanding of the material.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 1 Intro to Javascripts</strong></em> inside which create a file called <em><strong>index.html</strong></em> and enter the following into it.</p>
+<p>Create a folder called <em><strong>Lab 1 Intro to JavaScript</strong></em>. In Visual Studio Code, create a new file by clicking on <strong>File &gt; New File…</strong> and enter the following code.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
@@ -471,7 +470,8 @@ document.write(`
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>Create another file called <em><strong>intro_to_javascript.js</strong></em> and enter the following into it.</p>
+<p>Save the file using <strong>File &gt; Save</strong> (<kbd>ctrl</kbd> + <kbd>S</kbd> on Windows or Linux or <kbd>⌘</kbd> + <kbd>S</kbd> on MacOS), give it the filename <em><strong>index.html</strong></em> and save it to your <em><strong>Lab 1 Intro to JavaScript</strong></em> folder.</p>
+<p>Create another file and enter the following code</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="nx">elementId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
 
@@ -487,13 +487,25 @@ document.write(`
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Lab 1 - Intro to JavaScript\n---------------------------&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Save it to your folder using the filename <em><strong>intro_to_javascript.js</strong></em> .</p>
 </div>
-<p>Here we have the function <code class="docutils literal notranslate"><span class="pre">setupConsoleOutput()</span></code> in the <em><strong>intro_to_javascript.js</strong></em> file which means that any call to <code class="docutils literal notranslate"><span class="pre">console.log()</span></code> will output to the HTML page (<code class="docutils literal notranslate"><span class="pre">console.log()</span></code> is a debugging tool that prints information to the browswer’s developer console). Open <em><strong>index.html</strong></em> using a live server, and you should see a plain webpage with the following.</p>
+<p>Here we have created a basic HTML file which we will open in a web browser (Goodle Chrome is recommended) along with a JavaScript file in which have defined the function <code class="docutils literal notranslate"><span class="pre">setupConsoleOutput()</span></code>. This means that any call to <code class="docutils literal notranslate"><span class="pre">console.log()</span></code> will output to the HTML page (<code class="docutils literal notranslate"><span class="pre">console.log()</span></code> is a debugging tool that prints information to the browser’s developer console). Open <em><strong>index.html</strong></em> using a live server, and you should see a plain webpage with the following.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lab 1 - Intro to JavaScript
 ---------------------------
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you don’t have the Live Server extension installed in Visual Studio Code follow these steps</p>
+<ol class="arabic simple">
+<li><p>Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>⌘</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)</p></li>
+<li><p>Search for Live Server</p></li>
+<li><p>Install Live Server by Ritwick Dey</p></li>
+</ol>
+<p>Once installed, VS Code may prompt you to reload.</p>
+</div>
 </section>
+<hr class="docutils" />
 <section id="variables">
 <h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h2>
 <p>A <strong>variable</strong> is a named reference to a value stored in memory. Variables allow programs to store data, reuse it and change it over time. In JavaScript variables are used to store</p>
@@ -648,6 +660,95 @@ The data type of myVariable is string
 </pre></div>
 </div>
 </section>
+<section id="arithmetic-operators">
+<h3>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Link to this heading">#</a></h3>
+<p>Arithmetic operators are used to perform mathematical calculations on numbers. The arithmetic operators in JavaScript are similar to those used in other languages.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Operator</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Example</p></th>
+<th class="head text-left"><p>Result</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">+</span></code></p></td>
+<td class="text-left"><p>Addition</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">+</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+<td class="text-left"><p>Subtraction</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">-</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">*</span></code></p></td>
+<td class="text-left"><p>Multiplication</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">*</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">15</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td class="text-left"><p>Division</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">/</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">%</span></code></p></td>
+<td class="text-left"><p>Modulus (remainder)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">%</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>There are also shorthand versions for common operations.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Operator</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Example</p></th>
+<th class="head text-left"><p>Equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">+=</span></code></p></td>
+<td class="text-left"><p>Add to</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+=</span> <span class="pre">5</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">5</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-=</span></code></p></td>
+<td class="text-left"><p>Subtract from</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">-=</span> <span class="pre">2</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">-</span> <span class="pre">2</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">*=</span></code></p></td>
+<td class="text-left"><p>Multiply by</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*=</span> <span class="pre">3</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">*</span> <span class="pre">3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">/=</span></code></p></td>
+<td class="text-left"><p>Divide by</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">/=</span> <span class="pre">2</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">/</span> <span class="pre">2</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">++</span></code></p></td>
+<td class="text-left"><p>Increment by 1</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x++</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">--</span></code></p></td>
+<td class="text-left"><p>Decrement by 1</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x--</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">-</span> <span class="pre">1</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 <hr class="docutils" />
 <section id="arrays">
@@ -664,7 +765,7 @@ The data type of myVariable is string
 </pre></div>
 </div>
 </div>
-<p>Here we have declared the variable <code class="docutils literal notranslate"><span class="pre">colours</span></code> which is assigned to an array containing the strings of the three primary colours. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have declared the variable <code class="docutils literal notranslate"><span class="pre">colours</span></code> which is assigned to an array containing the strings of the three primary colours. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Arrays
 ------
 colours = red,green,blue
@@ -680,7 +781,7 @@ colours = red,green,blue
 </pre></div>
 </div>
 </div>
-<p>Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>the colours array contains 3 values
 </pre></div>
 </div>
@@ -696,7 +797,7 @@ colours = red,green,blue
 </pre></div>
 </div>
 </div>
-<p>Here we have reassigned the second value in the <code class="docutils literal notranslate"><span class="pre">colours</span></code> array to the number 2. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have reassigned the second value in the <code class="docutils literal notranslate"><span class="pre">colours</span></code> array to the number 2. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>colours = red,2,blue
 </pre></div>
 </div>
@@ -709,7 +810,7 @@ colours = red,green,blue
 </pre></div>
 </div>
 </div>
-<p>Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>colours = red,2,blue
 </pre></div>
 </div>
@@ -725,7 +826,7 @@ colours = red,green,blue
 </pre></div>
 </div>
 </div>
-<p>Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>colours = red,2,blue,3.1416
 </pre></div>
 </div>
@@ -758,7 +859,7 @@ colours = red,green,blue
 </pre></div>
 </div>
 </div>
-<p>Here we print the value of two of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object properties. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we print the value of two of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object properties. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Objects
 -------
 Name:     Mario
@@ -778,7 +879,7 @@ Lives:    3
 </pre></div>
 </div>
 </div>
-<p>Here we have added the property <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> and incremented the <code class="docutils literal notranslate"><span class="pre">score</span></code> property by 10. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have added the property <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> and incremented the <code class="docutils literal notranslate"><span class="pre">score</span></code> property by 10. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Power up: super
 Score:    10
 </pre></div>
@@ -897,7 +998,7 @@ Score:    10
 </pre></div>
 </div>
 </div>
-<p>Here we have used a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement to print the current power up state of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have used a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement to print the current power up state of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Conditional statments
 ---------------------
 Mario is bigger and can break blocks.
@@ -926,7 +1027,7 @@ Mario is bigger and can break blocks.
 </pre></div>
 </div>
 </div>
-<p>Here we have written a more sophisticated <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement using conjuctions. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have written a more sophisticated <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement using conjuctions. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mario jumps on enemy and defeats it.
 </pre></div>
 </div>
@@ -962,7 +1063,7 @@ Mario is bigger and can break blocks.
 </pre></div>
 </div>
 </div>
-<p>Here we have created a for loop to print the names of the objects in the <code class="docutils literal notranslate"><span class="pre">enemies</span></code> array. A loop counter variable <code class="docutils literal notranslate"><span class="pre">i</span></code> is initialised to the value of 0. The for loop condition terminates the loop when the loop counter is greater than the length of the <code class="docutils literal notranslate"><span class="pre">enemies</span></code> array, and the loop counter is incremented by one by the update argument. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have created a for loop to print the names of the objects in the <code class="docutils literal notranslate"><span class="pre">enemies</span></code> array. A loop counter variable <code class="docutils literal notranslate"><span class="pre">i</span></code> is initialised to the value of 0. The for loop condition terminates the loop when the loop counter is greater than the length of the <code class="docutils literal notranslate"><span class="pre">enemies</span></code> array, and the loop counter is incremented by one by the update argument. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Loops
 -----
 Goomba
@@ -991,7 +1092,7 @@ Koopa Troopa
 </pre></div>
 </div>
 </div>
-<p>Here we have defined two variables for the time and maximum time. Then we have written a while loop that checks if the time variable is less than the maximum time, if this is true the time is incremented by 10 and the current time is outputted. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have defined two variables for the time and maximum time. Then we have written a while loop that checks if the time variable is less than the maximum time, if this is true the time is incremented by 10 and the current time is outputted. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>time = 10
 time = 20
 time = 30
@@ -1029,7 +1130,7 @@ time = 100
 </pre></div>
 </div>
 </div>
-<p>Here we have defined a function called <code class="docutils literal notranslate"><span class="pre">jump()</span></code> that has no parameters and outputs a text string. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have defined a function called <code class="docutils literal notranslate"><span class="pre">jump()</span></code> that has no parameters and outputs a text string. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Functions
 ---------
 </pre></div>
@@ -1042,7 +1143,7 @@ time = 100
 </pre></div>
 </div>
 </div>
-<p>Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mario jumps!
 </pre></div>
 </div>
@@ -1059,7 +1160,7 @@ time = 100
 </pre></div>
 </div>
 </div>
-<p>Here we have defined a function that has one parameter for the number of steps that Mario moves. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have defined a function that has one parameter for the number of steps that Mario moves. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mario moves 5 steps to the right.
 Mario moves 10 steps to the right.
 </pre></div>
@@ -1080,7 +1181,7 @@ Mario moves 10 steps to the right.
 </pre></div>
 </div>
 </div>
-<p>Here we have defined a function that returns a string based on the value of the <code class="docutils literal notranslate"><span class="pre">lives</span></code> parameter. Refresh your browswer, and you should see the following is added to your web page.</p>
+<p>Here we have defined a function that returns a string based on the value of the <code class="docutils literal notranslate"><span class="pre">lives</span></code> parameter. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Continue playing.
 </pre></div>
 </div>
@@ -1307,399 +1408,75 @@ Year: 1981
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>You are tasked with writing a C++ program to help the university store students’ details (name, ID number, course, marks etc.). Create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> in the header file <strong>Student.hpp</strong> which has the following attributes:</p></li>
+<li><p>You are tasked with writing a JavaScript program to help the university store students’ details (name, ID number, course, marks etc.) and perform operations on this information.
+<br>
+First create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> that stores a student’s name, ID number and degree course they are currently in. Use a constructor to initialise these values.</p></li>
+<li><p>Create an object of your <code class="docutils literal notranslate"><span class="pre">Student</span></code> class called <code class="docutils literal notranslate"><span class="pre">ellie</span></code> with the following details.</p></li>
 </ol>
-<ul class="simple">
-<li><p>first name - string;</p></li>
-<li><p>last name - string;</p></li>
-<li><p>ID number - integer;</p></li>
-<li><p>course - string;</p></li>
-<li><p>level - integer;</p></li>
-<li><p>marks - 12-element integer array (marks for four units over the three years);</p></li>
-</ul>
-<ol class="arabic simple" start="2">
-<li><p>Create a Student object called <code class="docutils literal notranslate"><span class="pre">ellie</span></code> and assign the following attribute values:</p></li>
-</ol>
-<ul class="simple">
-<li><p>first name: Ellie</p></li>
-<li><p>last name: Williams</p></li>
-<li><p>ID number: 12345678</p></li>
-<li><p>course: Computer Science</p></li>
-<li><p>level: 5</p></li>
-</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Ellie Williams, 12345678, Computer Science
+</pre></div>
+</div>
 <ol class="arabic simple" start="3">
-<li><p>Create a method called <code class="docutils literal notranslate"><span class="pre">print()</span></code> that prints a students details. Use your function to print the details of the <code class="docutils literal notranslate"><span class="pre">ellie</span></code> object. Your output should look like the following:</p></li>
+<li><p>Add a method called <code class="docutils literal notranslate"><span class="pre">print()</span></code> that prints the details of the student in the format shown below. Use this method to print the details of Ellie Williams.</p></li>
 </ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Student Details
------------------------------
-Name   : Ellie Williams
-ID     : 12345678
-Course : Computer Science
-Level  : 5
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Student Information
+-------------------
+Name:
+ID:
+Course:
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
-<li><p>Add a constructor for your class with parameters for creating an object with attribute values specified. Use your constructor to create the <code class="docutils literal notranslate"><span class="pre">ellie</span></code> object from exercise 2 and use the <code class="docutils literal notranslate"><span class="pre">print()</span></code> method to output the student details.</p></li>
-<li><p>Create a method called <code class="docutils literal notranslate"><span class="pre">addLevelMarks()</span></code> which uses input parameters of a 4-element integer array containing unit marks and an integer variable containing the level and places the unit marks into the correct elements of the <code class="docutils literal notranslate"><span class="pre">marks</span></code> array for the object. For example, if the level 4 unit marks are <code class="docutils literal notranslate"><span class="pre">40,</span> <span class="pre">50,</span> <span class="pre">60,</span> <span class="pre">70</span></code> then <code class="docutils literal notranslate"><span class="pre">marks[0]</span> <span class="pre">=</span> <span class="pre">40</span></code>, <code class="docutils literal notranslate"><span class="pre">marks[1]</span> <span class="pre">=</span> <span class="pre">50</span></code> etc. Use your method to updates Ellie’s marks with the following.</p>
-<ul class="simple">
-<li><p>level 4 marks: 55, 60, 72, 64;</p></li>
-<li><p>level 5 marks: 68, 62, 74, 70.</p></li>
-</ul>
-</li>
-<li><p>Amend the <code class="docutils literal notranslate"><span class="pre">print()</span></code> method so that the module marks for each level which a student has been enrolled are outputted, e.g.,</p></li>
+<li><p>Create an array called <code class="docutils literal notranslate"><span class="pre">students</span></code> that contains multiple <code class="docutils literal notranslate"><span class="pre">Student</span></code> objects with the following details.</p></li>
 </ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Student Details
------------------------------
-Name   : Ellie Williams
-ID     : 12345678
-Course : Computer Science
-Level  : 5
-
-Marks
-
-Level 4: 55, 60, 72, 64
-Level 5: 68, 62, 74, 70
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Ellie Williams, 12345678, Computer Science
+Joel Miller, 24680135, Computer Science
+Arthur Morgan, 87654321, Computer Games Development
+Geralt of Rivia, 13579246, Mathematics
 </pre></div>
 </div>
-<ol class="arabic simple" start="7">
-<li><p>Create a static member function called <code class="docutils literal notranslate"><span class="pre">levelAverage()</span></code> which takes in inputs of an integer specifying a level and the marks for that level and returns the average level mark. Use this method to output the level 4 average mark for the <code class="docutils literal notranslate"><span class="pre">ellie</span></code> object.</p></li>
-<li><p>A student’s degree classification is determined by calculating a weighted average of the level 5 and 6 marks such that</p></li>
+<ol class="arabic simple" start="5">
+<li><p>Add a property called <code class="docutils literal notranslate"><span class="pre">marks</span></code> initialised as an empty array and add a method called <code class="docutils literal notranslate"><span class="pre">addMarks()</span></code> that accepts an array containing module marks and appends it to the <code class="docutils literal notranslate"><span class="pre">marks</span></code> property. Use this method to add the following marks and amend the <code class="docutils literal notranslate"><span class="pre">print()</span></code> method so that a student marks are printed.</p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[\textsf{weighted average} = 0.25 \times \textsf{level 5 average} + 0.75 \times \textsf{level 6 average},\]</div>
-<p>and then checked against the table below.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Ellie Williams: 65, 72, 92, 75
+Joel Miller: 52, 68, 75, 62
+Arthur Morgan: 38, 52, 48, 45
+Geralt of Rivia: 92, 75, 68, 78
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Add a method to the Student class called <code class="docutils literal notranslate"><span class="pre">calculateAverage()</span></code> that calculates a student’s average mark. Amend the <code class="docutils literal notranslate"><span class="pre">print()</span></code> method to output the average mark.</p></li>
+<li><p>Add a method that determines the degree classification of a student based on the criteria below. Amend the <code class="docutils literal notranslate"><span class="pre">print()</span></code> method to include this.</p></li>
+</ol>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head text-center"><p>Weighted average</p></th>
+<tr class="row-odd"><th class="head text-center"><p>Average mark</p></th>
 <th class="head text-left"><p>Degree classification</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\geq 70\)</span></p></td>
-<td class="text-left"><p>First-class</p></td>
+<tr class="row-even"><td class="text-center"><p>70 – 100</p></td>
+<td class="text-left"><p>First class</p></td>
 </tr>
-<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\geq 60\)</span></p></td>
-<td class="text-left"><p>Upper second-class</p></td>
+<tr class="row-odd"><td class="text-center"><p>60 – 69</p></td>
+<td class="text-left"><p>Upper-second class</p></td>
 </tr>
-<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\geq 50\)</span></p></td>
-<td class="text-left"><p>Lower second-class</p></td>
+<tr class="row-even"><td class="text-center"><p>50 – 59</p></td>
+<td class="text-left"><p>Lower-second class</p></td>
 </tr>
-<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\geq 40\)</span></p></td>
-<td class="text-left"><p>Third-class</p></td>
+<tr class="row-odd"><td class="text-center"><p>40 – 49</p></td>
+<td class="text-left"><p>Third class</p></td>
 </tr>
-<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(&lt; 40\)</span></p></td>
+<tr class="row-even"><td class="text-center"><p>0 – 40</p></td>
 <td class="text-left"><p>Fail</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Create a method called <code class="docutils literal notranslate"><span class="pre">classification()</span></code> which uses your static member function from exercise 5 to calculate the weighted average for a student object and outputs the degree classification and the weighted average to the nearest integer.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Classification: xxxx (weighted average = xx).
-</pre></div>
-</div>
-<ol class="arabic simple" start="9">
-<li><p>Ellie has evaded the infected and survived another year. In level 6 they achieved marks of 72, 68, 76 and 65 (it is impressive that the university is still functioning during a worldwide cordyceps pandemic). Update the <code class="docutils literal notranslate"><span class="pre">ellie</span></code> object and output their degree classification.</p></li>
-</ol>
-<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
-<summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">Solutions</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text"><strong>Lab01_Intro_to_c++.cpp</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// ------------------------------------------------------------------------</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Exercises</span><span class="se">\n</span><span class="s">----------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w"> </span>
-<span class="c1">//    // Exercise 2</span>
-<span class="c1">//    Student ellie;</span>
-<span class="c1">//    ellie.firstName = &quot;Ellie&quot;;</span>
-<span class="c1">//    ellie.lastName  = &quot;Williams&quot;;</span>
-<span class="c1">//    ellie.id        = 12345678;</span>
-<span class="c1">//    ellie.course    = &quot;Computer Science&quot;;</span>
-<span class="c1">//    ellie.level     = 5;</span>
-<span class="w"> </span>
-<span class="c1">// Exercise 3</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
-<span class="w"> </span>
-<span class="c1">// Exercise 4</span>
-<span class="n">Student</span><span class="w"> </span><span class="n">ellie</span><span class="p">(</span><span class="s">&quot;Ellie&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Williams&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">12345678</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Computer Science&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
-
-<span class="c1">// Exercise 5</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level4Marks</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">72</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">};</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level5Marks</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"> </span><span class="mi">74</span><span class="p">,</span><span class="w"> </span><span class="mi">70</span><span class="p">};</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">addLevelMarks</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">level4Marks</span><span class="p">);</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">addLevelMarks</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">level5Marks</span><span class="p">);</span>
-
-<span class="c1">// Exercise 6</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
-
-<span class="c1">// Exercise 7</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Level 4 mark averge = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">Student</span><span class="o">::</span><span class="n">levelAverage</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">ellie</span><span class="p">.</span><span class="n">marks</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-
-<span class="c1">// Exercise 9</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level6Marks</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">72</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">76</span><span class="p">,</span><span class="w"> </span><span class="mi">65</span><span class="p">};</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">addLevelMarks</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">level6Marks</span><span class="p">);</span>
-<span class="n">ellie</span><span class="p">.</span><span class="n">classification</span><span class="p">();</span>
-</pre></div>
-</div>
-<p class="sd-card-text"><strong>Student.hpp</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Student</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">firstName</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">lastName</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">course</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">marks</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Constructors</span>
-<span class="w">    </span><span class="n">Student</span><span class="p">();</span>
-<span class="w">    </span><span class="n">Student</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w">  </span><span class="c1">// firstName</span>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w">  </span><span class="c1">// lastName</span>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="c1">// id</span>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w">  </span><span class="c1">// course</span>
-<span class="w">            </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span><span class="w">      </span><span class="c1">// level</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Methods</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">();</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addLevelMarks</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w">     </span><span class="c1">// level</span>
-<span class="w">                       </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">[]);</span><span class="w"> </span><span class="c1">// level marks</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">levelAverage</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w">     </span><span class="c1">// level</span>
-<span class="w">                              </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">[]);</span><span class="w"> </span><span class="c1">// level marks</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">classification</span><span class="p">();</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<p class="sd-card-text"><strong>Student.cpp</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Student.hpp&quot;</span>
-
-<span class="n">Student</span><span class="o">::</span><span class="n">Student</span><span class="p">(){};</span>
-
-<span class="n">Student</span><span class="o">::</span><span class="n">Student</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">inFirstName</span><span class="p">,</span>
-<span class="w">                 </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">inLastName</span><span class="p">,</span>
-<span class="w">                 </span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">inId</span><span class="p">,</span>
-<span class="w">                 </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">inCourse</span><span class="p">,</span>
-<span class="w">                 </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">inLevel</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">firstName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inFirstName</span><span class="p">;</span>
-<span class="w">    </span><span class="n">lastName</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">inLastName</span><span class="p">;</span>
-<span class="w">    </span><span class="n">id</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">inId</span><span class="p">;</span>
-<span class="w">    </span><span class="n">course</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">inCourse</span><span class="p">;</span>
-<span class="w">    </span><span class="n">level</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">inLevel</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="n">Student</span><span class="o">::</span><span class="n">print</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Student Details</span><span class="se">\n</span><span class="s">-----------------------------&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Name   : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">firstName</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">lastName</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;ID     : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Course : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Level  : &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Marks</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Level &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">marks</span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="n">Student</span><span class="o">::</span><span class="n">addLevelMarks</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">inLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">levelMarks</span><span class="p">[])</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="w">        </span><span class="n">marks</span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">inLevel</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">levelMarks</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="kt">float</span><span class="w"> </span><span class="n">Student</span><span class="o">::</span><span class="n">levelAverage</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">inLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">levelMarks</span><span class="p">[])</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">avg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="w">        </span><span class="n">avg</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">levelMarks</span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">inLevel</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">];</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">avg</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="n">Student</span><span class="o">::</span><span class="n">classification</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">level</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">firstName</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">lastName</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; is not a level 6 student.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">levelAverage</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">marks</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.75f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">levelAverage</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">marks</span><span class="p">);</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">text</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">70</span><span class="p">)</span>
-<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;First class&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span>
-<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Upper second-class&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span>
-<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Lower second-class&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">40</span><span class="p">)</span>
-<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Third class&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Fail&quot;</span><span class="p">;</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Classification: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (weighted average = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">weightedAvg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">In</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">lab</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">introducing</span><span class="o">/</span><span class="n">revisiting</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fundamentals</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">language</span><span class="p">.</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="p">(</span><span class="n">pronounced</span><span class="w"> </span><span class="s">&quot;C-plus-plus&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">general</span><span class="w"> </span><span class="n">purpose</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="n">performance</span><span class="w"> </span><span class="n">programming</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="n">developed</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">Bjarne</span><span class="w"> </span><span class="n">Stroustrup</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="mf">1979.</span><span class="w"> </span><span class="n">It</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">extension</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">programming</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="p">(</span><span class="n">the</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="s">&quot;C with classes&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">shares</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">similar</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">Java</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">won</span><span class="err">&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">too</span><span class="w"> </span><span class="n">difficult</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">switch</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Java</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="p">.</span>
-
-<span class="n">In</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">semester</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">OpenGL</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">graphics</span><span class="w"> </span><span class="n">applications</span><span class="p">.</span><span class="w"> </span><span class="n">OpenGL</span><span class="w"> </span><span class="n">uses</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">important</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">comfortable</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">classes</span><span class="p">.</span>
-
-<span class="cp">## IDEs</span>
-
-<span class="n">A</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">simply</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">plain</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">instruct</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">compiler</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">convert</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">machine</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">produce</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">executable</span><span class="p">.</span><span class="w"> </span><span class="n">As</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">installed</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">compiler</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">editor</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">away</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">hearts</span><span class="w"> </span><span class="n">content</span><span class="p">.</span><span class="w"> </span><span class="n">However</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">programs</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">become</span><span class="w"> </span><span class="n">increasingly</span><span class="w"> </span><span class="n">sophisticated</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">bugs</span><span class="p">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">yearn</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">better</span><span class="w"> </span><span class="n">way</span><span class="p">.</span><span class="w"> </span><span class="n">Fortunately</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">Integrated</span><span class="w"> </span><span class="n">Development</span><span class="w"> </span><span class="n">Environment</span><span class="w"> </span><span class="p">(</span><span class="n">IDE</span><span class="p">).</span>
-
-<span class="n">An</span><span class="w"> </span><span class="n">IDE</span><span class="w"> </span><span class="n">provides</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">way</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">writing</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">organising</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">well</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">useful</span><span class="w"> </span><span class="n">tools</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">debugging</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">organising</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">projects</span><span class="p">.</span><span class="w"> </span><span class="n">There</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">IDEs</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">Visual</span><span class="w"> </span><span class="n">Studio</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Windows</span><span class="p">,</span><span class="w"> </span><span class="n">although</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">Xcode</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">macOS</span><span class="p">.</span>
-
-<span class="o">---</span>
-
-<span class="p">(</span><span class="n">getting</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">files</span><span class="o">-</span><span class="n">section</span><span class="p">)</span><span class="o">=</span><span class="w"> </span>
-
-<span class="cp">## Getting the lab files</span>
-
-<span class="o">&lt;</span><span class="n">iframe</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="s">&quot;560&quot;</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="s">&quot;315&quot;</span><span class="w"> </span><span class="n">src</span><span class="o">=</span><span class="s">&quot;https://www.youtube.com/embed/SBwSNu9BVkY?si=ddHD0dU0pN2aBzWm&quot;</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;YouTube video player&quot;</span><span class="w"> </span><span class="n">frameborder</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="w"> </span><span class="n">allow</span><span class="o">=</span><span class="s">&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot;</span><span class="w"> </span><span class="n">referrerpolicy</span><span class="o">=</span><span class="s">&quot;strict-origin-when-cross-origin&quot;</span><span class="w"> </span><span class="n">allowfullscreen</span><span class="o">&gt;&lt;/</span><span class="n">iframe</span><span class="o">&gt;</span>
-
-<span class="n">To</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="k">module</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="k">template</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">setup</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">labs</span><span class="w"> </span><span class="n">shown</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">left</span><span class="p">.</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">download</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">GitHub</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">notes</span><span class="p">.</span>
-
-<span class="mf">1.</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">GitHub</span><span class="w"> </span><span class="n">Desktop</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">don</span><span class="err">&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">installed</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">download</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">a</span><span class="w"> </span><span class="n">href</span><span class="o">=</span><span class="s">&quot;https://desktop.github.com/download/&quot;</span><span class="w"> </span><span class="n">target</span><span class="o">=</span><span class="s">&quot;_blank&quot;</span><span class="o">&gt;</span><span class="n">here</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">).</span>
-<span class="mf">1.</span><span class="w"> </span><span class="n">Click</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="o">**</span><span class="n">Clone</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">Repository</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Internet</span><span class="p">..</span><span class="o">**</span>
-<span class="mf">1.</span><span class="w"> </span><span class="n">Select</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">**</span><span class="n">URL</span><span class="o">**</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">paste</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">URL</span>
-
-<span class="err">```</span><span class="n">text</span>
-<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/jonshiach/Computer-Graphics-Labs</span>
-</pre></div>
-</div>
 <ol class="arabic simple">
-<li><p class="sd-card-text">Change <strong>Local path</strong> to a folder on your machine where you want to store the files.</p></li>
-<li><p class="sd-card-text">Click <strong>Clone</strong></p></li>
+<li><p>Write a function called <code class="docutils literal notranslate"><span class="pre">printAllStudents()</span></code> that prints all student records and use it on the <code class="docutils literal notranslate"><span class="pre">students</span></code> array.</p></li>
 </ol>
-<!-- ### Using the terminal/command line
-
-1. Open the command line in Windows (press the Windows key and search for 'cmd') or the terminal in macOS.
-2. Navigate to the parent folder on your machine where you want to store the files.
-3. Enter the following command and press the enter key.
-
-```text
-git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
-``` -->
-<h3 class="rubric" id="build-the-project-files">Build the project files</h3>
-<p class="sd-card-text">After you have downloaded the files to your machine, the next thing you need to do is build the project files. If you take a look at the <strong>Computer-Graphics-Labs/</strong> folder you have just downloaded you will see a file called <strong>CMakeLists.txt</strong> which tells a program called CMake to build the project files and linker various libraries so that we can use our IDEs (Visual Studio or Xcode) to compile our code.</p>
-<ol class="arabic simple">
-<li><p class="sd-card-text">In the <strong>Computer-Graphics-Labs</strong> folder create a folder and call it <strong>build/</strong>.</p></li>
-<li><p class="sd-card-text">Run <strong>Cmake</strong> (if you don’t have Cmake installed on your machine your can download it from <a href="https://www.cmake.org" target="_blank">here</a>)</p></li>
-<li><p class="sd-card-text">Click on <strong>Browse Source…</strong> next to ‘Where is the source code?’ and select the <strong>Computer-Graphics-Labs/</strong> folder.</p></li>
-<li><p class="sd-card-text">Do the same for ‘Where to build the binaries?’ and select the <strong>Computer-Graphics-Labs/build/</strong> folder.</p></li>
-<li><p class="sd-card-text">Click <strong>Configure</strong> and select Visual Studio (Windows) or Xcode (macOS) and click <strong>Done</strong>. Once the configuration is complete click <strong>Configure</strong> again.</p></li>
-<li><p class="sd-card-text">Click <strong>Generate</strong>.</p></li>
-</ol>
-<p class="sd-card-text">This will create a Visual Studio (extension <strong>.sln</strong>) or Xcode project (extension <strong>.xcodeproj</strong>) file in the <strong>Computer-Graphics-Labs/build/</strong> folder. Double-click on it to open the project and edit the source code.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p class="sd-card-text">Since different hardware requires different compilers and libraries, the build folder that you create on one machine will not work on another. If you are syncing your code between machines, e.g., using GitHub, you will need to build the project files into a different folder. The name of the folder <strong>build/</strong> is not special, you can name this anything you like, e.g., <strong>build_homePC/</strong>, <strong>build_uniPC/</strong>, <strong>fred/</strong> etc.</p>
-</div>
-<p class="sd-card-text">When you open your Visual Studio or Xcode project file you will be presented with 10 different projects, one for each of the labs shown on the left of this page. Since this is lab 1 we need to select <strong>Lab01_Intro_to_c++</strong> as the project we will be working on, depending on your IDE this is slightly different.</p>
-<ul class="simple">
-<li><p class="sd-card-text"><strong>Visual Studio</strong> – right-click on the <strong>Lab01_Intro_to_c++</strong> project in the project viewer on the right-hand side of the window and select ‘Set as Startup Project’.</p></li>
-<li><p class="sd-card-text"><strong>Xcode</strong> – click on the project select dropdown at the top of the window and select <strong>Lab01_Intro_to_c++</strong> from the list of projects (there are quite a few to choose from, but it’s there).</p></li>
-</ul>
-<hr class="docutils" />
-<h2 class="rubric" id="c-basics">C++ basics</h2>
-<h3 class="rubric" id="hello-world">hello world</h3>
-<p class="sd-card-text">We will start with the classic hello world example. Open the file <strong>Lab01_Intro_to_c++.cpp</strong> and edit it so that it looks like following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p class="sd-card-text">As you work through these lab materials you will be asked to enter code and edit files. Whilst the code can be copied and pasted directly into your IDE, you will find that if you type in the code it helps to develop your understanding of what the code is doing as well as developing your coding skills.</p>
-</div>
-<p class="sd-card-text">Compile and run the code by pressing the F5 (Visual Studio) key or ⌘R in Xcode. If you do not have any syntax errors a command window should appear with the following output.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world
-</pre></div>
-</div>
-<p class="sd-card-text">Let’s run through the code and see what each line does</p>
-<ul class="simple">
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">Lab01</span> <span class="pre">-</span> <span class="pre">Introduction</span> <span class="pre">to</span> <span class="pre">C++</span></code> – Any text between <code class="docutils literal notranslate"><span class="pre">//</span></code> and the end of the current line is a comment and is ignored by the compiler. For multiline comments, any text between <code class="docutils literal notranslate"><span class="pre">/*</span></code> and <code class="docutils literal notranslate"><span class="pre">*/</span></code> is considered a comment.</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> – Imports the iostream library allowing us to input and output data to the terminal.</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main()</span> <span class="pre">{}</span></code> – Defines a <a class="reference internal" href="#functions-section"><span class="std std-ref">function</span></a> called <code class="docutils literal notranslate"><span class="pre">main</span></code> which has no inputs and will output an integer value. All C++ programs must contain a function called <code class="docutils literal notranslate"><span class="pre">main</span></code> which is the designated entry point to a program.</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">std::cout</span></code> – Calls the <code class="docutils literal notranslate"><span class="pre">cout</span></code> (pronounced “see-out”) object from the iostream library. This is used to output text.</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span> <span class="pre">&quot;hello</span> <span class="pre">world\n&quot;</span></code> – Sends the text string “hello world” to the <code class="docutils literal notranslate"><span class="pre">cout</span></code> object for printing. <code class="docutils literal notranslate"><span class="pre">\n</span></code> is the newline character which inserts a newline.</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span> <span class="pre">std::endl;</span></code> – Sends the end line character to the <code class="docutils literal notranslate"><span class="pre">cout</span></code> object, so the line is printed. Note that every C++ statement must end in a semicolon <code class="docutils literal notranslate"><span class="pre">;</span></code> (get used to doing this).</p></li>
-<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">0;</span></code> – Returns the integer 0. This is because in the function definition we specified that the function <code class="docutils literal notranslate"><span class="pre">main</span></code> would return a 0. The convention is that a 0 is returned if the program has executed successfully and a 1 is returned if not.</p></li>
-</ul>
-<h3 class="rubric" id="id1">Variables</h3>
-<p class="sd-card-text">A variable is a portion of memory used to store a value. C++ uses the following types of variables.</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head text-left"><p class="sd-card-text">Type</p></th>
-<th class="head text-left"><p class="sd-card-text">Explanation</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">integers (whole numbers), e.g., 1, -2, 3</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">positive integers, e.g., 1, 2, 3</p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">floating point numbers, e.g., 1.23.</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">char</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">single character, e.g., ‘a’ (character values are surrounded by single quotes).</p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">text consisting of multiple characters, e.g., “hello world” (strings are surrounded by double quotes).</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td class="text-left"><p class="sd-card-text">Boolean values, e.g., true or false.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p class="sd-card-text">Variables must be identified by unique names which are called <strong>identifiers</strong>. An identifier can be a sequence of one or more letters, digits and underscores but must begin with a character and cannot contain spaces, punctuation marks and symbols. As long as you don’t use an identifier that conflicts with a C++ keyword (e.g., <code class="docutils literal notranslate"><span class="pre">char</span></code>) you are free to choose whatever identifier you wish. It is good practice to use descriptive identifiers, e.g., <code class="docutils literal notranslate"><span class="pre">position</span></code>, and where an identifier contains multiple words is it standard practice for the first letter of each additional word to be an uppercase character, e.g., <code class="docutils literal notranslate"><span class="pre">framesPerSecond</span></code>.</p>
-<p class="sd-card-text">Let’s write a simple program which converts an angle from degrees to radians (a <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radian</a> is an angle measure where 1 radian is the angle subtended at the centre of a circle by an arc equal to the radius (it is the preferred unit of measurement when working with angles). Add the following code to your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function before the <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">0;</span></code> command.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Degrees to radians conversion</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">45.0f</span><span class="p">;</span>
-<span class="kt">float</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.1415927f</span><span class="p">;</span>
-
-<span class="kt">float</span><span class="w"> </span><span class="n">angleInRadians</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span>
-
-<span class="c1">// Output result</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angleInDegrees</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; degrees is equal to &quot;</span>
-<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">angleInRadians</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; radians.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</pre></div>
-</div>
-<p class="sd-card-text">Output:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>45 degrees is equal to 0.785398 radians.
-</pre></div>
-</div>
-<p class="sd-card-text">When working with variables we first need to define the variable types. For example <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">angleInDegrees;</span></code> defined a variable with the identifier <code class="docutils literal notranslate"><span class="pre">angleInDegrees</span></code> as a float.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p class="sd-card-text">When declaring float variables we should use the syntax <code class="docutils literal notranslate"><span class="pre">1.0f</span></code> instead of <code class="docutils literal notranslate"><span class="pre">1</span></code>. For example</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">myVariable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
-</pre></div>
-</div>
-<p class="sd-card-text">This is because is we were to use <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">myVariable</span> <span class="pre">=</span> <span class="pre">1;</span></code> the compiler would need to generate extra code to convert from an integer value to a floating point value.</p>
-</div>
-</div>
-</details></section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1770,6 +1547,7 @@ git clone https://github.com/jonshiach/Computer-Graphics-Labs.git
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-names">Variable names</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operators">Arithmetic operators</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
