@@ -406,6 +406,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#array-length">Array length</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-and-modifying-array-values">Accessing and modifying array values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#appending-to-an-array">Appending to an array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenating-arrays">Concatenating arrays</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objects">Objects</a><ul class="nav section-nav flex-column">
@@ -424,11 +425,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-orientated-programming">Object orientated programming</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes-objects">Classes/objects</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-methods">Class methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">Constructors</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-member-functions">Static member functions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">Header files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-objects">Creating objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
@@ -471,7 +470,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Save the file using <strong>File &gt; Save</strong> (<kbd>ctrl</kbd> + <kbd>S</kbd> on Windows or Linux or <kbd>⌘</kbd> + <kbd>S</kbd> on MacOS), give it the filename <em><strong>index.html</strong></em> and save it to your <em><strong>Lab 1 Intro to JavaScript</strong></em> folder.</p>
-<p>Create another file and enter the following code</p>
+<p>Create another file called <em><strong>intro_to_javascript.js</strong></em> and enter the following code into it.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="nx">elementId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
 
@@ -484,12 +483,15 @@ document.write(`
 <span class="p">}</span>
 
 <span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="s2">&quot;console-output&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Lab 1 - Intro to JavaScript\n---------------------------&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Lab 1 - Intro to JavaScript\n---------------------------&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Save it to your folder using the filename <em><strong>intro_to_javascript.js</strong></em> .</p>
+<p>Select the <em><strong>index.html</strong></em> file and launcha live server by clicking on “Go Live” in the bottom right-hand corner of the window.</p>
+<figure class="align-default">
+<img alt="../_images/01_VScode.png" src="../_images/01_VScode.png" />
+</figure>
 </div>
-<p>Here we have created a basic HTML file which we will open in a web browser (Goodle Chrome is recommended) along with a JavaScript file in which have defined the function <code class="docutils literal notranslate"><span class="pre">setupConsoleOutput()</span></code>. This means that any call to <code class="docutils literal notranslate"><span class="pre">console.log()</span></code> will output to the HTML page (<code class="docutils literal notranslate"><span class="pre">console.log()</span></code> is a debugging tool that prints information to the browser’s developer console). Open <em><strong>index.html</strong></em> using a live server, and you should see a plain webpage with the following.</p>
+<p>Here we have created a basic HTML file along with a JavaScript file in which have defined the function <code class="docutils literal notranslate"><span class="pre">setupConsoleOutput()</span></code>. This means that any call to <code class="docutils literal notranslate"><span class="pre">console.log()</span></code> will output to the HTML page (<code class="docutils literal notranslate"><span class="pre">console.log()</span></code> is a debugging tool that prints information to the browser’s developer console). If everything has gone to plan you should see a plain web page with the following.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lab 1 - Intro to JavaScript
 ---------------------------
 </pre></div>
@@ -524,12 +526,12 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Enter the following into the <em><strong>intro_to_javascript.js</strong></em> file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Variables</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;\nVariables\n---------&#39;</span><span class="p">)</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">score</span><span class="p">;</span>
-<span class="nx">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;score: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">score</span><span class="p">);</span>
-<span class="nx">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">20</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;score: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">score</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nVariables\n---------&#39;)</span>
+<span class="s2">let score;</span>
+<span class="s2">score = 10;</span>
+<span class="s2">console.log(&quot;</span><span class="nx">score</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot; + score);</span>
+<span class="s2">score += 20;</span>
+<span class="s2">console.log(&quot;</span><span class="nx">score</span><span class="o">:</span><span class="w"> </span><span class="err">&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">score</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -545,7 +547,7 @@ score: 30
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">lives</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
-<span class="nx">lives</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="nx">lives</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;lives: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lives</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -556,7 +558,7 @@ score: 30
 <p>Uncaught TypeError: Assignment to constant variable.
 at intro_to_javascript.js:24:7</p>
 </div>
-<p>Here the error message is telling us we have an error in the <em><strong>intro_to_javascript.js</strong></em> on line 24 (this may vary depending on your code). The error we have here is we have declared <code class="docutils literal notranslate"><span class="pre">lives</span></code> using the <code class="docutils literal notranslate"><span class="pre">const</span></code> keyword, set it equal to 3 and then try to delete 1 from its value. To resolve this error simply change the <code class="docutils literal notranslate"><span class="pre">const</span></code> to <code class="docutils literal notranslate"><span class="pre">let</span></code> and refresh your browser, and you should see the following added to the web page.</p>
+<p>Here the error message is telling us we have an error in the <em><strong>intro_to_javascript.js</strong></em> on line 24 (this may vary depending on your code). The error we have here is we have declared <code class="docutils literal notranslate"><span class="pre">lives</span></code> using the <code class="docutils literal notranslate"><span class="pre">const</span></code> keyword, set it equal to 3 and then try to reasssign it to 1. To resolve this error simply change the <code class="docutils literal notranslate"><span class="pre">const</span></code> to <code class="docutils literal notranslate"><span class="pre">let</span></code> and refresh your browser, and you should see the following added to the web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>lives: 2
 </pre></div>
 </div>
@@ -817,7 +819,7 @@ colours = red,green,blue
 </section>
 <section id="appending-to-an-array">
 <h3>Appending to an array<a class="headerlink" href="#appending-to-an-array" title="Link to this heading">#</a></h3>
-<p>Additional values can be appended to the end of an array using <code class="docutils literal notranslate"><span class="pre">array.push(value)</span></code>.</p>
+<p>Additional values can be <strong>appended</strong> to the end of an array using <code class="docutils literal notranslate"><span class="pre">array.push(value)</span></code>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
@@ -831,11 +833,28 @@ colours = red,green,blue
 </pre></div>
 </div>
 </section>
+<section id="concatenating-arrays">
+<h3>Concatenating arrays<a class="headerlink" href="#concatenating-arrays" title="Link to this heading">#</a></h3>
+<p>We can join, or <strong>concatenate</strong>, two or more arrays together to form a new array using <code class="docutils literal notranslate"><span class="pre">array1.concat(array2)</span></code>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to your JavaScript file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">moreColours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;white&quot;</span><span class="p">];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">concatenatedArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">colours</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">moreColours</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nconcatenatedArray = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">concatenatedArray</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Refresh your browser, and you should see the following is added to your web page.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>concatenatedArray = red,2,blue,3.1416,black,white
+</pre></div>
+</div>
+</section>
 </section>
 <hr class="docutils" />
 <section id="objects">
 <h2>Objects<a class="headerlink" href="#objects" title="Link to this heading">#</a></h2>
-<p>An <strong>object</strong> in JavaScript is like dictionary in Python or a data structure in C where a single variable can hold many variables. Objects are a collection of key value pairs where each key has a value. Objects are defined using curly braces <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code>, property names and values separated with a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> and commas are used to separate properties.</p>
+<p>An <strong>object</strong> in JavaScript is like dictionary in Python or a data structure in C where a single variable can hold many variables known as <strong>properties</strong>. Objects are defined using curly braces <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code>, with property names and values separated with a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> and each property is separated by a comma <code class="docutils literal notranslate"><span class="pre">,</span></code>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
@@ -1073,7 +1092,7 @@ Koopa Troopa
 </section>
 <section id="while-loops">
 <h3>While loops<a class="headerlink" href="#while-loops" title="Link to this heading">#</a></h3>
-<p><strong>While loops</strong> are used to repeat code when the number of iterations is unknown. The basic syntax of a while loop is</p>
+<p>A <strong>while</strong> loop is used to repeat code when the number of iterations is unknown. The basic syntax of a while loop is</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// code to repeat whilst condition is true</span>
 <span class="p">}</span>
@@ -1135,7 +1154,7 @@ time = 100
 ---------
 </pre></div>
 </div>
-<p>Note that the text “Mario jumps!” has not been outputted. This is because despite defining the function we haven’t <strong>called</strong> it.</p>
+<p>Note that the text “Mario jumps!” has not been outputted. This is because despite defining the function we haven’t <strong>called</strong> it yet.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
@@ -1170,6 +1189,7 @@ Mario moves 10 steps to the right.
 <p>Functions can return a value using the keyword <code class="docutils literal notranslate"><span class="pre">return</span></code> which will terminate the function at that point.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
+<p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">checkGameOver</span><span class="p">(</span><span class="nx">lives</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">lives</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Game Over!&quot;</span><span class="p">;</span>
@@ -1191,217 +1211,140 @@ Mario moves 10 steps to the right.
 </section>
 <section id="object-orientated-programming">
 <span id="oop-section"></span><h2>Object orientated programming<a class="headerlink" href="#object-orientated-programming" title="Link to this heading">#</a></h2>
-<p>The main difference between C++ and its predecessor C is that C++ has <strong>classes</strong> which allow us to use <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank"><strong>Object Orientated Programming (OOP)</strong></a>. Procedural programming requires use to write code that performs operations on data whereas object orientated programming allows us to create objects that include both data and code. Object orientated programming makes code easier to write and modify and is often faster than procedural programming.</p>
-<section id="classes-objects">
-<h3>Classes/objects<a class="headerlink" href="#classes-objects" title="Link to this heading">#</a></h3>
-<p>A <strong>class</strong> defines the <strong>attributes</strong> (like variables) and <strong>methods</strong> (like functions) that the objects within the class will possess. For example, Let’s create Car class which has the attributes for the <code class="docutils literal notranslate"><span class="pre">make</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">speed</span></code> of a car. The methods that apply to objects in our class may include <code class="docutils literal notranslate"><span class="pre">accelerate()</span></code>, <code class="docutils literal notranslate"><span class="pre">brake()</span></code> etc.</p>
-<p>Add the following code to your program outside any of the functions previously defined.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="w"> </span><span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">make</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">year</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-<span class="p">};</span>
-</pre></div>
-</div>
+<p><strong>Object Orientated Programming (OOP)</strong> is a way of designing programs by organising code around objects rather than isolated variables and functions. An <strong>object</strong> refers to a real or conceptual thing that combines data associated with the object and actions that can be performed on an object.</p>
+<p>For example in the game Mario Kart, each racer can have the following properties</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">Car</span></code> – Keyword used to create the Car class.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">public:</span></code> – An <strong>access specifier</strong> that specifies which attributes and methods can be accessed outside of the class.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">make;</span></code> – Defines the attribute <code class="docutils literal notranslate"><span class="pre">make</span></code> which is a string. The other attributes are the string <code class="docutils literal notranslate"><span class="pre">model</span></code>, the integer <code class="docutils literal notranslate"><span class="pre">year</span></code> and the floating point number <code class="docutils literal notranslate"><span class="pre">speed</span></code> which is initially set to zero for any new object which is created.</p></li>
+<li><p>name</p></li>
+<li><p>kart speed</p></li>
+<li><p>current race position</p></li>
+<li><p>power up</p></li>
 </ul>
-<p>We can then create an object from our Car class and set its attributes. Let’s create an object called <code class="docutils literal notranslate"><span class="pre">delorean</span></code> for a 1981 DeLorean DMC-12. In your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function add the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define car object</span>
-<span class="n">Car</span><span class="w"> </span><span class="n">delorean</span><span class="p">;</span>
-<span class="n">delorean</span><span class="p">.</span><span class="n">make</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Delorean&quot;</span><span class="p">;</span>
-<span class="n">delorean</span><span class="p">.</span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;DMC-12&quot;</span><span class="p">;</span>
-<span class="n">delorean</span><span class="p">.</span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1981</span><span class="p">;</span>
+<p>and may perform the following actions</p>
+<ul class="simple">
+<li><p>accelerate</p></li>
+<li><p>brake</p></li>
+<li><p>update position</p></li>
+<li><p>use power up</p></li>
+</ul>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<p>A <strong>class</strong> is a blueprint for creating objects, it defines:</p>
+<ul class="simple">
+<li><p><strong>Properties</strong> – the data an object stores</p></li>
+<li><p><strong>Methods</strong> – the actions that an object can perform.</p></li>
+</ul>
+<p>Classes allow us to create many similar objects in a consistent and organised way. Classes are defined using</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">parmeters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// declaration of class/object properties</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Here to create the object we specified the class name and the name of our object, e.g., <code class="docutils literal notranslate"><span class="pre">Car</span> <span class="pre">delorean;</span></code>. Then we define the car attributes using the name of the object followed by the name of the attribute, e.g., <code class="docutils literal notranslate"><span class="pre">delorean.make</span></code>.</p>
+<p>It is common practice to start a class name with an uppercase character. The <strong>constructor</strong> is a special function inside a class that runs automatically when a new obect is created. Its purpose is to initialise the object’s properties.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to your JavaScript file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Classes</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nClasses\n-------&quot;</span><span class="p">)</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nx">Racer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">position</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">position</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have defined a class called <code class="docutils literal notranslate"><span class="pre">Racer</span></code> along with a constructor that defines the properties of a Mario Kart raceer. Note that the values of <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> are parsed to the constructor, <code class="docutils literal notranslate"><span class="pre">speed</span></code> and <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> are given default values. Note that <code class="docutils literal notranslate"><span class="pre">this</span></code> is a keyword that refers to the object that is currently being used.</p>
 </section>
-<section id="class-methods">
-<h3>Class methods<a class="headerlink" href="#class-methods" title="Link to this heading">#</a></h3>
-<p>The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don’t have a way of seeing what the make, model or year of the object are. Let’s create a method to print out the attributes. Inside the Car class definition add the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Methods</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">outputDetails</span><span class="p">();</span>
+<section id="creating-objects">
+<h3>Creating objects<a class="headerlink" href="#creating-objects" title="Link to this heading">#</a></h3>
+<p>Once a class has been defined we can create objects from the class using the syntax</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">objectName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ClassName</span><span class="p">(</span><span class="nx">parameters</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This declares a method called <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> which does not have any inputs. To define the method itself we use the syntax</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;return type&gt; &lt;class name&gt; :: &lt;method name&gt;()
-{
-    // commands
-}
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to your JavaScript file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">toad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Racer</span><span class="p">(</span><span class="s2">&quot;Toad&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">toad</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Speed: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">toad</span><span class="p">.</span><span class="nx">speed</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Position: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">toad</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Power up: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">toad</span><span class="p">[</span><span class="s2">&quot;powerUp&quot;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>So to define the <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> method add the following code outside of the Car class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Car::outputDetails</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
-<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
-<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">Car::</span></code> bit tells the compiler that this method belongs to the Car class. We could define the method inside of the class where we would not need <code class="docutils literal notranslate"><span class="pre">Car::</span></code> but this is not recommended practice.</p>
-<p>To call a method we use the syntax <code class="docutils literal notranslate"><span class="pre">&lt;object</span> <span class="pre">name&gt;</span> <span class="pre">.</span> <span class="pre">&lt;method</span> <span class="pre">name&gt;(&lt;inputs&gt;)</span></code>. We can now print the details of the car object using the following code.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Classes</span><span class="se">\n</span><span class="s">-------&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">delorean</span><span class="p">.</span><span class="n">outputDetails</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Make: DeLorean
-Model: DMC-12
-Year: 1981
-</pre></div>
-</div>
-<p>Our <code class="docutils literal notranslate"><span class="pre">outputDetails()</span></code> method does not require any inputs because the attributes are known to all objects of the class. Let’s define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Now define the method.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Car::accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">increment</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="n">increment</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">The car has accelerated to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; mph.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the <code class="docutils literal notranslate"><span class="pre">acceleration()</span></code> method Let’s accelerate our car to 88 mph.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Accelerate the Delorean up to 88 mph</span>
-<span class="n">delorean</span><span class="p">.</span><span class="n">accelerate</span><span class="p">(</span><span class="mf">88.0f</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Compile and run your program and you should see the following outputted to the terminal.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>The car has accelerated to 88 mph.
+<p>Here we have created a Racer object called <code class="docutils literal notranslate"><span class="pre">toad</span></code>, given it a name and race position and outputted the values of the object properties. Note that object properties are accessed using either dot or bracket notation. Refresh your browser, and you should see the following is added to your web page.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Classes
+-------
+Name: Toad
+Speed: 0
+Position: 3
+Power up: undefined
 </pre></div>
 </div>
 </section>
-<section id="constructors">
-<h3>Constructors<a class="headerlink" href="#constructors" title="Link to this heading">#</a></h3>
-<p>A <strong>constructor</strong> is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our Car class we declare the constructor using <code class="docutils literal notranslate"><span class="pre">Car();</span></code> inside the Car class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constructor</span>
-<span class="n">Car</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Now Let’s define the constructor so that a message is printed to the terminal.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">()</span><span class="w"> </span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h3>
+<p>A <strong>method</strong> is a function that belongs to an object and are used to perform operations on the object. A method is defined in a class similarly to a function with the exception we do not need to use the <code class="docutils literal notranslate"><span class="pre">function</span></code> keyword. A method is called by using dot notation.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to your Racer class.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">accelerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When we create our <code class="docutils literal notranslate"><span class="pre">delorean</span></code> object the following is outputted</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Car object created
+<p>And add the following at the end of the file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">toad</span><span class="p">.</span><span class="nx">accelerate</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Speed: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">toad</span><span class="p">.</span><span class="nx">speed</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Constructors are more useful when we use parameters to set the values of the class attributes. Declare another constructor to include input parameters</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+</div>
+<p>Here we have defined a method to accelerate the kart by adding 5 to the speed property (note that we use the <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword to refer to the current object’s speed property). We have then called this function and outputted the current speed. Refresh your browser, and you should see the following is added to your web page.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">Speed</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span>
 </pre></div>
 </div>
-<p>and add the following constructor definition so that the attributes are specified.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">makeInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">yearInput</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modelInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yearInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to the Racer class.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">addPowerUp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">powerUps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;Mushroom&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Green Shell&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Red Shell&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Banana&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="s2">&quot;Star&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="nx">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nRacer details\n-------------&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Speed: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Position: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Power up: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now we can define the object attributes when we create the object. Comment out the code used to create the <code class="docutils literal notranslate"><span class="pre">delorean</span></code> object and define the make, model and year and enter the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Car</span><span class="w"> </span><span class="n">delorean</span><span class="p">(</span><span class="s">&quot;DeLorean&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DMC-12&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1981</span><span class="p">);</span>
+</div>
+<p>Here we have defined two methods for assigning a randomly selected power up and printing the object properties. Refresh your browser, and you should see the following is added to your web page (of course your power up may be different).</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Racer details
+-------------
+Name: Toad
+Speed: 5
+Position: 3
+Power up: Banana
 </pre></div>
 </div>
-<p>Compiling and running the code you should see nothing changes.</p>
-</section>
-<section id="static-member-functions">
-<h3>Static member functions<a class="headerlink" href="#static-member-functions" title="Link to this heading">#</a></h3>
-<p>A <strong>static member function</strong> is a function that belongs to a class rather than an instance of the class. Static member functions are useful because we can call them without needing an object of that class. Static member functions can be declared simply by prepending the keyword <code class="docutils literal notranslate"><span class="pre">static</span></code> to the function declaration.</p>
-<p>Let’s say we want to define a function in the Car class that converts speed from miles per hour to kilometers per hour. We declare a static member function in the class</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">mph2kph</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>and then define the function outside of the Car class</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">Car::mph2kph</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.60934f</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>We can now convert from miles per hour to kilometers per hour without needing to have a Car object declared. If Back to the Future had been set in Europe what would the speed be required for time travel? Let’s call our static member function <code class="docutils literal notranslate"><span class="pre">mph2kph()</span></code> to find out.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Convert speed from mph to kph</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">88</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; mph is equivalent to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">Car</span><span class="o">::</span><span class="n">mph2kph</span><span class="p">(</span><span class="mf">88.0f</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; kph.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>Which gives the output</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>88 mph is equivalent to 141.622 kph.
-</pre></div>
-</div>
-<p>“<em>141.622 kilometers per hour!</em>” doesn’t quite have the same ring to it as “<em>88 miles per hour!</em>” does it.</p>
-</section>
-<section id="header-files">
-<h3>Header files<a class="headerlink" href="#header-files" title="Link to this heading">#</a></h3>
-<p>When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a <strong>header file</strong> which usually have the extension <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> (this isn’t a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension <code class="docutils literal notranslate"><span class="pre">.cpp</span></code>.</p>
-<p>Cut and paste the Car class from the <strong>Lab01_Intro_to_c++.cpp</strong> file into the <strong>Car.hpp</strong> header file in the <strong>Lab01_Intro_to_c++/</strong> folder so that it looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="w"> </span><span class="p">{</span>
-
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">make</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">year</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-
-<span class="w">    </span><span class="c1">// Constructor</span>
-<span class="w">    </span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Methods</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">outputDetails</span><span class="p">();</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">mph2kph</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="p">);</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<p>Note that we also need the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> library so we can use strings and input/output commands. Cut and paste your Car class methods from the <strong>Lab01_Intro_to_c++.cpp</strong> file into the <strong>Car.cpp</strong> file so it looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Car.hpp&quot;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">Car::outputDetails</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Make: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">make</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Model: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">model</span>
-<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Year: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">Car::accelerate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">increment</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="n">increment</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">The car has accelerated to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; mph.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">Car</span><span class="o">::</span><span class="n">Car</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">makeInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelInput</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">yearInput</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modelInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yearInput</span><span class="p">;</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Car object created&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">float</span><span class="w"> </span><span class="n">Car</span><span class="o">::</span><span class="n">mph2kph</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.60934f</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Here we have included the <strong>Car.hpp</strong> header file so that the compiler knows where the class is defined. Make sure you also include this in the <strong>Lab01_Intro_to_c++.cpp</strong> file, compile and run the program to check everything works ok.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -1410,14 +1353,14 @@ Year: 1981
 <ol class="arabic simple">
 <li><p>You are tasked with writing a JavaScript program to help the university store students’ details (name, ID number, course, marks etc.) and perform operations on this information.
 <br>
-First create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> that stores a student’s name, ID number and degree course they are currently in. Use a constructor to initialise these values.</p></li>
-<li><p>Create an object of your <code class="docutils literal notranslate"><span class="pre">Student</span></code> class called <code class="docutils literal notranslate"><span class="pre">ellie</span></code> with the following details.</p></li>
+First create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> that stores a student’s name, ID number and degree course they are currently in.</p></li>
+<li><p>Create an object of your Student class called <code class="docutils literal notranslate"><span class="pre">ellie</span></code> with the following details and output the property values.</p></li>
 </ol>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Ellie Williams, 12345678, Computer Science
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p>Add a method called <code class="docutils literal notranslate"><span class="pre">print()</span></code> that prints the details of the student in the format shown below. Use this method to print the details of Ellie Williams.</p></li>
+<li><p>Add a method called <code class="docutils literal notranslate"><span class="pre">print()</span></code> that prints the details of the student in the format shown below. Use this method to print the details of the <code class="docutils literal notranslate"><span class="pre">ellie</span></code> object.</p></li>
 </ol>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Student Information
 -------------------
@@ -1473,7 +1416,7 @@ Geralt of Rivia: 92, 75, 68, 78
 </tbody>
 </table>
 </div>
-<ol class="arabic simple">
+<ol class="arabic simple" start="8">
 <li><p>Write a function called <code class="docutils literal notranslate"><span class="pre">printAllStudents()</span></code> that prints all student records and use it on the <code class="docutils literal notranslate"><span class="pre">students</span></code> array.</p></li>
 </ol>
 </section>
@@ -1554,6 +1497,7 @@ Geralt of Rivia: 92, 75, 68, 78
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#array-length">Array length</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-and-modifying-array-values">Accessing and modifying array values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#appending-to-an-array">Appending to an array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenating-arrays">Concatenating arrays</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objects">Objects</a><ul class="nav section-nav flex-column">
@@ -1572,11 +1516,9 @@ Geralt of Rivia: 92, 75, 68, 78
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-orientated-programming">Object orientated programming</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes-objects">Classes/objects</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-methods">Class methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">Constructors</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-member-functions">Static member functions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header-files">Header files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-objects">Creating objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>

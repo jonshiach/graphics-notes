@@ -141,7 +141,7 @@ Sorted the vertex co-ordinates but not the colour.
 Enter the following code after we told WebGL how to read the co-ordinate data.
 
 ```javascript
-const colourLocation = gl.getAttribLocation(shaderProgram, 'aColour');
+const colourLocation = gl.getAttribLocation(shaderProgram, 'aColour");
 gl.enableVertexAttribArray(colourLocation);
 gl.vertexAttribPointer(
   colourLocation,                      // index

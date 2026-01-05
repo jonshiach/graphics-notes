@@ -43,7 +43,7 @@ function setupConsoleOutput(elementId) {
 }
 
 setupConsoleOutput("console-output");
-console.log('Lab 5 - Vectors and Matrices\n----------------------------');
+console.log("Lab 5 - Vectors and Matrices\n----------------------------");
 ```
 
 :::
@@ -130,7 +130,7 @@ Add the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
 // Define vector objects
-console.log('\nVectors\n-------');
+console.log("\nVectors\n-------");
 const a = new Vec3(3, 0, 4)
 const b = new Vec3(1, 2, 3);
 console.log("x = " + a.x + ", y = " + a.y + ", z = " + a.z);
@@ -222,7 +222,7 @@ Add the following to the ***Vectors_and_matrices.js*** file.
 
 ```javascript
 // Arithmetic operations on vectors
-console.log('\nArithmetic operations on vectors\n--------------------------------');
+console.log("\nArithmetic operations on vectors\n--------------------------------");
 console.log("a + b = " + a.add(b).print());
 console.log("a - b = " + a.subtract(b).print());
 ```

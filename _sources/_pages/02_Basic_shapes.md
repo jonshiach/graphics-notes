@@ -66,8 +66,8 @@ function main() {
 
   // Setup WebGL
   const canvas = document.getElementById("canvasId");
-  const gl = canvas.getContext('webgl2');
-  if (!gl) throw new Error('WebGL not supported');
+  const gl = canvas.getContext("webgl2");
+  if (!gl) throw new Error("WebGL not supported");
   
   gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(0.2, 0.2, 0.2, 1.0);
@@ -391,7 +391,7 @@ gl.vertexAttribPointer(
 
 The functions used here are explained below;
 
-- `const positionLocation = gl.getAttribLocation(program, 'aPosition');`: Gets the location of the `aPosition` attribute from the WebGL shader program.
+- `const positionLocation = gl.getAttribLocation(program, 'aPosition");`: Gets the location of the `aPosition` attribute from the WebGL shader program.
 
 - `gl.enableVertexAttribArray(0);`: Enables a vertex attribute with location `0` so that WebGL knows to read data from the VBO and pass it to the vertex shader.
 
@@ -458,8 +458,8 @@ Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Bas
 ```javascript
 // Initialize WebGL context
 function initWebGL(canvas) {
-  const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-  if (!gl) throw new Error('WebGL not supported');
+  const gl = canvas.getContext("webgl2') || canvas.getContext("webgl");
+  if (!gl) throw new Error("WebGL not supported");
   
   gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(0.2, 0.2, 0.2, 1.0);
@@ -660,7 +660,7 @@ Sorted the vertex co-ordinates but not the colour.
 Enter the following code after we told WebGL how to read the co-ordinate data.
 
 ```javascript
-const colourLocation = gl.getAttribLocation(program, 'aColour');
+const colourLocation = gl.getAttribLocation(program, 'aColour");
 gl.enableVertexAttribArray(colourLocation);
 gl.vertexAttribPointer(
   colourLocation,                      // index
