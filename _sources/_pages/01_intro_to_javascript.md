@@ -79,6 +79,10 @@ If you don't have the Live Server extension installed in Visual Studio Code foll
 Once installed, VS Code may prompt you to reload.
 :::
 
+:::{note}
+The live server will automatically refresh the webpage whenever a file in the project is saved.
+:::
+
 ---
 
 ## Variables
@@ -149,8 +153,8 @@ Here the error message is telling us we have an error in the ***intro_to_javascr
 lives: 2
 ```
 
-```{note} const vs let
-So if delcaring a variable using `let` allows you to change its value why do we need `const`? Many variables are assigned once and never reassigned, so using `const` prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use `const` unless you know for certain the you will be reassigning the variable later.
+```{note}
+So if declaring a variable using `let` allows you to change its value why do we need `const`? Many variables are assigned once and never reassigned, so using `const` prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use `const` unless you know for certain the you will be reassigning the variable later.
 ```
 
 ### Variable names
@@ -177,7 +181,7 @@ let height = 5;
 let area = width * height;
 ```
 
-does. Where variable names are a concatenation of two or more words it is common practice to use **camelCase** where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example
+does. Where variable names are a concatenation of two or more words it is common practice to use <a href="https://en.wikipedia.org/wiki/Camel_case" target="_blank">**camelCase**</a> where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example
 
 ```javascript
 let playerScore;
@@ -192,14 +196,14 @@ JavaScript has 8 core data types
 
 | Type | Description |
 |:--|:--|
-| `number` | Integer numbers (whole numbers) and floating-point numbers (decimals) |
-| `string` | Sequence of letters |
-| `boolean` | `true` or `false` logical values |
-| `undefined` | A variable that has been declared but not assigned a value |
-| `null` | Intentional absence of a value |
-| `symbol` | Used to represent a unique identifier (used mainly in advanced code) |
-| `bigint` | Integers larget than those that can be represented exactly |
-| `object` | Used for collections of data and more complex structures (e.g., arrays, functions) |
+| number | Integer numbers (whole numbers) and floating-point numbers (decimals) |
+| string | Sequence of letters |
+| boolean | `true` or `false` logical values |
+| undefined | A variable that has been declared but not assigned a value |
+| null | Intentional absence of a value |
+| symbol | Used to represent a unique identifier (used mainly in advanced code) |
+| bigint | Integers larger than those that can be represented exactly |
+| object | Used for collections of data and more complex structures (e.g., arrays, functions) |
 
 We can check data type using the `typeof` operator. JavaScript is a **dynamically typed** programming language which means we do not need to declare a variable's data type, the type comes from the value already stored.
 
@@ -244,7 +248,7 @@ The data type of myVariable is string
 Arithmetic operators are used to perform mathematical calculations on numbers. The arithmetic operators in JavaScript are similar to those used in other languages.
 
 | Operator | Description | Example | Result |
-|:--:|:--|:--|:--|
+| :--: | :-- | :-- | :-- |
 | `+` | Addition | `5 + 3` | `8` |
 | `-` | Subtraction | `5 - 3` | `2` |
 | `*` | Multiplication | `5 * 3` | `15` |
@@ -255,13 +259,86 @@ Arithmetic operators are used to perform mathematical calculations on numbers. T
 There are also shorthand versions for common operations.
 
 | Operator | Description | Example | Equivalent |
-|:--:|:--|:--|:--|
+| :--: | :-- | :-- | :-- |
 | `+=` | Add to | `x += 5` | `x = x + 5` |
 | `-=` | Subtract from | `x -= 2` | `x = x - 2` |
 | `*=` | Multiply by | `x *= 3` | `x = x * 3` |
 | `/=` | Divide by | `x /= 2` | `x = x / 2` |
 | `++` | Increment by 1 | `x++` | `x = x + 1` |
 | `--` | Decrement by 1 | `x--` | `x = x - 1` |
+
+---
+
+## The Math library
+
+JavaScript provides a built-in object called Math that contains properties and functions for common mathematical operations. All methods and constants from the Math library are accessed using the `Math.` prefix, for example
+
+```javascript
+const x = Math.sqrt(2);
+```
+
+Some useful methods from the Math library are
+
+| Method | Description | Example | Result |
+| :--: | :-- | :-- | :-- |
+| `Math.sqrt()` | Square root | `x = Math.sqrt(9)` | `3` |
+| `Math.cos()` | Cosine | `x = Math.cos(0)` | `1` |
+| `Math.sin()` | Sine | `x = Math.sin(0)` | `0` |
+| `Math.abs()` | Absolute value (ignore sign) | `x = Math.abs(-1)` | `1` |
+| `Math.pos()` | Power | `x = Math.pos(3,2)` | `9` |
+| `Math.round()` | Round to nearest integer | `x = Math.round(1.23)` | `1` |
+| `Math.floor()` | Round down | `x = Math.round(2.718)` | `2` |
+| `Math.min()` | Minimum value | `x = Math.min(1, 2, 3)` | `1` |
+| `Math.max()` | Maximum value | `x = Math.max(1, 2, 3)` | `3` |
+| `Math.random()` | Random number between 0 and 1 | `x = Math.random()` | `0.4517` |
+
+The Math library also provides several useful mathematical constants and read-only properties (they cannot be reassigned)
+
+| Constant | Description |
+| :-- | :-- |
+| `Math.PI` | $\pi = 3.1416$ |
+| `Math.E`  | Eulers number $e = 2.7183$ |
+| `Math.SQRT2` | $\sqrt{2} = 1.4142$ |
+| `Math.SQRT1_2` | $\sqrt{2}/2 = 0.7071$ |
+| `Math.LN2` | $\log_e(2) = 0.6931$ |
+| `Math.LN10` | $\log_e(10) = 2.3026$ |
+
+An example of the use of Math library constants that is used a lot in computer graphics is the conversion of an angle from degrees to <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radians</a> which is
+
+$$ radians = degrees \times \frac{\pi}{180}. $$
+
+For example, to convert $90^\circ$ to radians we have
+
+$$ radians = 90 \times \frac{\pi}{180} = 1.5708$$
+
+Most languages, including JavaScript and GLSL (the language used by WebGL to program on the GPU), assumes angles are always expressed in radians.
+
+:::{admonition} Task
+:class: tip
+
+Add the following to your JavaScript file.
+
+```javascript
+// Math library
+console.log("\nMath library\n------------")
+const angleInDegress = 90;
+const angleInRadians = angleInDegress * Math.PI / 180;
+console.log(`${angleInDegress} degrees is ${angleInRadians.toFixed(4)} radians.`);
+console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians)s);
+```
+
+:::
+
+Here we have used the Math library constant `Math.PI` to convert $90^\circ$ to radians and also shown that $\cos(90^\circ) = 0$. The method `.toFixed(4)` outputs the floating point number using 4 decimal places. Refresh your browser, and you should see the following on your web page.
+
+```text
+Math library
+------------
+90 degrees is 1.5708 radians.
+cos(90 degrees) = 6.123233995736766e-17
+```
+
+Note that $\cos(90^\circ)$ is outputted as $6.12 \times 10^{-17}$ which is 0.0000000000000000612 showing that floating point arithmetic is never exact.
 
 ---
 
@@ -529,15 +606,15 @@ if (condition1) {
 The condition statments used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
 
 | Operator | Description |
-|:--:|:--|
+| :--: | :-- |
 | `===` | equal to |
 | `!==` | not equal to |
-| `>`   | greater than |
-| `<`   | less than    |
-| `>=`  | greater than or equal to |
-| `<=`  | less than or equal to |
+| `>` | greater than |
+| `<` | less than |
+| `>=` | greater than or equal to |
+| `<=` | less than or equal to |
 
-Multiple comparisors can be joined using conjunctions
+Multiple comparisons can be joined using conjunctions
 
 | Conjunction | Description | True when |
 |:--:|:--:|:--|

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/P_Core_concepts';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Software" href="P_Software.html" />
-    <link rel="prev" title="Computer Graphics" href="../intro.html" />
+    <link rel="next" title="Visual Studio Code" href="P_Software.html" />
+    <link rel="prev" title="Contents" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,14 +177,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Core Computer Graphics Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="P_Software.html">Visual Studio Code</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="nav bd-sidenav">
@@ -401,7 +401,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-and-primitives">Geometry and primitives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems-and-transformations">Coordinate systems and transformations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-the-gpu">The Role of the GPU</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders-and-programmability">Shaders and Programmability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-constraints-and-performance">Real-Time Constraints and Performance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-rgb-colour-model">The RGB Colour Model</a></li>
 </ul>
@@ -425,18 +425,18 @@ document.write(`
 <p>The <strong>graphics pipeline</strong> is a sequence of steps the GPU takes to convert 3D scene data (e.g., vertices, textures, lighting information, etc.) into a set of pixels that are displayed on the screen. Like many graphics APIs, WebGL uses <strong>vertex shaders</strong> and <strong>fragment shaders</strong>, small programs that are written in <strong>GLSL (OpenGL Shading Language)</strong> which are run directly on the GPU to perform these steps.</p>
 <p>The stages of the graphics pipeline are:</p>
 <ol class="arabic simple">
-<li><p>Application stage (CPU) – the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.</p></li>
-<li><p>Vertex processing (GPU) – each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.</p></li>
-<li><p>Rasterisation – geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.</p></li>
-<li><p>Fragment processing (GPU) – each fragment is shaded to determine its final colour, typically using lighting and texture calculations.</p></li>
-<li><p>Framebuffer – the coloured fragments are written to the framebuffer, which is displayed on the screen.</p></li>
+<li><p><strong>Application stage (CPU)</strong> – the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.</p></li>
+<li><p><strong>Vertex processing (GPU)</strong> – each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.</p></li>
+<li><p><strong>Rasterisation</strong> – geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.</p></li>
+<li><p><strong>Fragment processing (GPU)</strong> – each fragment is shaded to determine its final colour, typically using lighting and texture calculations.</p></li>
+<li><p><strong>Framebuffer</strong> – the coloured fragments are written to the framebuffer, which is displayed on the screen.</p></li>
 </ol>
 <p>Understanding this pipeline is fundamental: computer graphics is not about drawing objects directly, but about <strong>transforming and processing data through a series of well-defined stages</strong>.</p>
 </section>
 <hr class="docutils" />
 <section id="geometry-and-primitives">
 <h2>Geometry and primitives<a class="headerlink" href="#geometry-and-primitives" title="Link to this heading">#</a></h2>
-<p>All complex graphical objects are built from simple geometric primitives. In real-time graphics, these primitives are almost always triangles.</p>
+<p>All complex graphical objects are built from simple <strong>geometric primitives</strong>. In real-time graphics, these primitives are almost always <strong>triangles</strong>.</p>
 <p>Triangles are used because:</p>
 <ul class="simple">
 <li><p>Three points always define a plane</p></li>
@@ -464,7 +464,7 @@ document.write(`
 <li><p><strong>Clip and Normalised Device Coordinates (NDC)</strong> – standardised coordinates used for rendering</p></li>
 <li><p><strong>Screen space</strong> – final pixel positions on the display</p></li>
 </ul>
-<p>Transformations between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.</p>
+<p><strong>Transformations</strong> between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.</p>
 </section>
 <hr class="docutils" />
 <section id="the-role-of-the-gpu">
@@ -478,9 +478,9 @@ document.write(`
 <p>This division of labour enables real-time rendering of complex scenes at high frame rates.</p>
 </section>
 <hr class="docutils" />
-<section id="shaders-and-programmability">
-<h2>Shaders and Programmability<a class="headerlink" href="#shaders-and-programmability" title="Link to this heading">#</a></h2>
-<p>Shaders are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:</p>
+<section id="shaders">
+<h2>Shaders<a class="headerlink" href="#shaders" title="Link to this heading">#</a></h2>
+<p><strong>Shaders</strong> are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:</p>
 <ul class="simple">
 <li><p><strong>Vertex shaders</strong>, which process individual vertices</p></li>
 <li><p><strong>Fragment shaders</strong>, which compute the colour of each pixel-sized fragment</p></li>
@@ -502,7 +502,7 @@ document.write(`
 <hr class="docutils" />
 <section id="the-rgb-colour-model">
 <h2>The RGB Colour Model<a class="headerlink" href="#the-rgb-colour-model" title="Link to this heading">#</a></h2>
-<p>The RGB colour model is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.</p>
+<p>The <strong>RGB colour model</strong> is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.</p>
 <p>RGB is an additive colour model, meaning that colours are created by adding light together rather than mixing pigments, for example</p>
 <ul class="simple">
 <li><p>Red + Green = Yellow</p></li>
@@ -568,7 +568,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Computer Graphics</p>
+        <p class="prev-next-title">Contents</p>
       </div>
     </a>
     <a class="right-next"
@@ -576,7 +576,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Software</p>
+        <p class="prev-next-title">Visual Studio Code</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -600,7 +600,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-and-primitives">Geometry and primitives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems-and-transformations">Coordinate systems and transformations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-the-gpu">The Role of the GPU</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders-and-programmability">Shaders and Programmability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-constraints-and-performance">Real-Time Constraints and Performance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-rgb-colour-model">The RGB Colour Model</a></li>
 </ul>

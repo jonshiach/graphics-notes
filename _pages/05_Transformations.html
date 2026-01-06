@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -427,9 +427,9 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\((x',y',z')\)</span> are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 5 Transformations</strong></em> and copy across the files from your <em><strong>Lab 3 Textures</strong></em> folder. Rename <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em>, change the title of the web page to ‘Lab 04 - Transformations’ and add a script for the <em><strong>maths.js</strong></em> file.</p>
+<p>Copy your <em><strong>Lab 3 Textures</strong></em> folder you created in <a class="reference internal" href="03_Textures.html#textures-section"><span class="std std-ref">Lab 3: Textures</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>Lab 5 Transformations</strong></em>, change the name of <em><strong>textures.js</strong></em> to <em><strong>transformations.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
 </div>
-<p>Load <em><strong>index.html</strong></em> using a live server and you should see the textured rectangle from <a class="reference internal" href="03_Textures.html#textures-section"><span class="std std-ref">Lab 4 - Textures</span></a>.</p>
+<p>Load <em><strong>index.html</strong></em> using a live server and you should see the textured rectangle from <a class="reference internal" href="03_Textures.html#textures-section"><span class="std std-ref">Lab 3 - Textures</span></a>.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/05_transformations.png"><img alt="../_images/05_transformations.png" src="../_images/05_transformations.png" style="width: 80%;" />
 </a>
@@ -453,7 +453,7 @@ document.write(`
 <p><span class="caption-number">Fig. 27 </span><span class="caption-text">The WebGL co-ordinate system.</span><a class="headerlink" href="#webgl-co-ordinate-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraies that use the left-handed coordinate system include DirectX, Direct3D and Unity.</p>
+<p>Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraries that use the left-handed coordinate system include DirectX, Direct3D and Unity.</p>
 <hr class="docutils" />
 </section>
 <section id="translation">
@@ -517,8 +517,8 @@ Translate = \begin{pmatrix}
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following function definition to the matrix class in the <em><strong>maths.js</strong></em> file.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Transformation matrices</span>
-<span class="nx">translate</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">translate</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">t</span><span class="p">;</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
 <span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
@@ -530,18 +530,18 @@ Translate = \begin{pmatrix}
 </div>
 <p>And add the following to the <em><strong>translations.js</strong></em> file before we draw the rectangle.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate transformation matrices</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
 <p>Here we have defined the function <code class="docutils literal notranslate"><span class="pre">translate()</span></code> that results the translation matrix for a given translation vector and have called this function to compute <code class="docutils literal notranslate"><span class="pre">translateMatrix</span></code>.</p>
-<p>The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  <strong>uniform</strong>, like we did in the lab on <a class="reference internal" href="#uniforms-section"><span class="xref myst">texture maps</span></a>.</p>
+<p>The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  <strong>uniform</strong>, like we did in <a class="reference internal" href="#uniforms-section"><span class="xref myst">Lab 3: Textures</span></a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following code after we have calculated the translation matrix.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send transformation matrices to the shader</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">;</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">elements</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -613,7 +613,8 @@ Translate = \begin{pmatrix}
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Enter the following function definition to the matrix class.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">scale</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">scale</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
 <span class="w">    </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
@@ -623,8 +624,8 @@ Translate = \begin{pmatrix}
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Enter the following code to the <em><strong>tranformations.js</strong></em> file after we calcuate the translation matrix.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<p>Enter the following code to the <em><strong>transformations.js</strong></em> file after we calculate the translation matrix.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>And change the model matrix to the following.</p>
@@ -665,7 +666,7 @@ Translate = \begin{pmatrix}
 <span id="rotation-section"></span><h2>Rotation<a class="headerlink" href="#rotation" title="Link to this heading">#</a></h2>
 <p>As well as translating and scaling objects, the next most common transformation is the rotation of objects around the three co-ordinate axes <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>. We define the rotation <strong>anti-clockwise</strong> around each of the co-ordinate axes by an angle <span class="math notranslate nohighlight">\(\theta\)</span> when looking down the axes (<a class="reference internal" href="#d-rotation-figure"><span class="std std-numref">Fig. 34</span></a>).</p>
 <figure class="align-default" id="d-rotation-figure">
-<a class="reference internal image-reference" href="../_images/05_3D_rotation.svg"><img alt="../_images/05_3D_rotation.svg" src="../_images/05_3D_rotation.svg" style="height: 450px;" />
+<a class="reference internal image-reference" href="../_images/05_3D_rotation.svg"><img alt="../_images/05_3D_rotation.svg" src="../_images/05_3D_rotation.svg" style="height: 400px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 34 </span><span class="caption-text">Rotation is assumed to be in the anti-clockwise direction when looking down the axis.</span><a class="headerlink" href="#d-rotation-figure" title="Link to this image">#</a></p>
@@ -789,14 +790,14 @@ Translate = \begin{pmatrix}
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Enter the following function definition to the matrix class.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotateZ</span><span class="p">(</span><span class="nx">rad</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">rad</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">rad</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotateZ</span><span class="p">(</span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">c</span><span class="p">,</span><span class="w">  </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="o">-</span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">    </span><span class="nx">c</span><span class="p">,</span><span class="w">  </span><span class="nx">s</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="o">-</span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">  </span><span class="mf">1</span>
 <span class="w">  </span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -819,7 +820,6 @@ Translate = \begin{pmatrix}
 <p><span class="caption-number">Fig. 36 </span><span class="caption-text">Rectangle rotated anti-clockwise about the <span class="math notranslate nohighlight">\(z\)</span>-axis by <span class="math notranslate nohighlight">\(45^\circ\)</span>.</span><a class="headerlink" href="#rotation-rectangle-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<hr class="docutils" />
 <section id="axis-angle-rotation">
 <span id="axis-angle-rotation-section"></span><h3>Axis-angle rotation<a class="headerlink" href="#axis-angle-rotation" title="Link to this heading">#</a></h3>
 <p>The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector <span class="math notranslate nohighlight">\(\hat{v}\)</span> which has its tail at <span class="math notranslate nohighlight">\((0,0,0)\)</span> (<a class="reference internal" href="#axis-angle-rotation-figure"><span class="std std-numref">Fig. 37</span></a>).</p>
@@ -984,26 +984,24 @@ Translate = \begin{pmatrix}
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> function in the <em><strong>maths.js</strong></em> file so that it looks like the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="nx">rad</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">);</span>
-<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="nx">x</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nx">len</span><span class="p">;</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nx">len</span><span class="p">;</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nx">len</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
-<span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">rad</span><span class="p">);</span>
-<span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">rad</span><span class="p">);</span>
-<span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">c</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">axis</span><span class="p">);</span>
+<span class="w">   </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axis</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
+<span class="w">   </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
+<span class="w">   </span><span class="kd">const</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">c</span><span class="p">;</span>
 
-<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
-<span class="w">   </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">   </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">   </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span>
-<span class="w"> </span><span class="p">);</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
+<span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">   </span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>And change the calculation of the rotation matrix to the following</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1065,15 +1063,15 @@ Translate = \begin{pmatrix}
 </div>
 <p>Then change the command used to calculate the rotation matrix to the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">angle</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="o">/</span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.001</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <p>Here we calculate the rotation angle so that the rectangle will complete one full rotation every 2 seconds. Note that <code class="docutils literal notranslate"><span class="pre">time</span></code> is the time in milliseconds since the application was started hence we multiply the number of radians in a circle, <span class="math notranslate nohighlight">\(2\pi\)</span>, by 0.001.</p>
 <p>Refresh your browser, and you should see something similar to below.</p>
 <center>
-<video controls muted="true" loop="true" width="80%">
-    <source src="../_static/videos/04_transformations_1.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/05_transformations_1.mp4" type="video/mp4">
 </video>
 </center>
 <p>When calculating the composite transformation matrix the order in which we multiply the individual transformations will determine the effects of the composite transformation. To see this lets translate the rectangle first before rotating it.</p>
@@ -1089,8 +1087,8 @@ Translate = \begin{pmatrix}
 \[Model = Rotate \cdot Translate \cdot Scale,\]</div>
 <p>which has the effect of moving the rectangle so that it is centred at coordinates <span class="math notranslate nohighlight">\((0.4, 0.3, 0)\)</span> and then rotated about <span class="math notranslate nohighlight">\((0, 0, 0)\)</span>. Refresh your browser and you should see something similar to below.</p>
 <center>
-<video controls muted="true" loop="true" width="80%">
-    <source src="../_static/videos/04_transformations_2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/05_transformations_2.mp4" type="video/mp4">
 </video>
 </center>
 </section>
@@ -1101,32 +1099,32 @@ Translate = \begin{pmatrix}
 <li><p>Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the coordinates of points on a circle centered at <span class="math notranslate nohighlight">\((0,0)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span> can be calculated using <span class="math notranslate nohighlight">\(x = r\cos(t)\)</span> and <span class="math notranslate nohighlight">\(y = r\sin(t)\)</span> where <span class="math notranslate nohighlight">\(t\)</span> is some number.</p></li>
 </ol>
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex1.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex1.mp4" type="video/mp4">
 </video>
 </center>
 <ol class="arabic simple" start="2">
 <li><p>Rotate your rectangle from exercise 1 in a clockwise rotation about its centre at twice the rotation speed used in exercise 1.</p></li>
 </ol>
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex2.mp4" type="video/mp4">
 </video>
 </center>
 <ol class="arabic simple" start="3">
 <li><p>Scale your rectangle from exercise 2 so that it grows and shrinks about its centre. Hint: The <span class="math notranslate nohighlight">\(\sin(t)\)</span> function oscillates between 0 and 1 as <span class="math notranslate nohighlight">\(t\)</span> increases.</p></li>
 </ol>
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex3.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex3.mp4" type="video/mp4">
 </video>
 </center>
 <ol class="arabic simple" start="4">
-<li><p>Transform the rectangle so that it moves around the canvas and bounces off the borders.</p></li>
+<li><p>Transform the rectangle so that it moves around the canvas and bounces off the edges of the canvas.</p></li>
 </ol>
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex4.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex4.mp4" type="video/mp4">
 </video>
 </center></section>
 </section>

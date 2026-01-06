@@ -79,7 +79,7 @@ A 3D vector.
 The reason the diagram above has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see [Lab 5: Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
 ```
 
-Since we will be using vectors (and matrices) a lot over the rest of the labs we will create a vector class to define vectors and perform operations on them.
+Since we will be using vectors (and matrices) a lot over the rest of the labs we will create a file containing helper functions to perform operations.
 
 :::{admonition} Task
 :class: tip
@@ -87,33 +87,15 @@ Since we will be using vectors (and matrices) a lot over the rest of the labs we
 Create file called ***maths.js*** and enter the following class definition.
 
 ```javascript
-// 3-element vector class
-class Vec3 {
-
-  constructor(x = 0, y = 0, z = 0) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-
-  // Print vector
-  print() {
-    return `[ ${this.x.toFixed(4)}, ${this.y.toFixed(4)}, ${this.z.toFixed(4)} ]`;
-  }
+// Vector operations
+function printVector(v) {
+  return `[ ${v[0].toFixed(4)}, ${v[1].toFixed(4)}, ${v[2].toFixed(4)} ]`;
 }
 ```
 
 :::
 
-Here we have declared a class called `Vec3` inside which we have defined the constructor method and a method to print the vector. To create a 3-element vector object we use the syntax
-
-```javascript
-const a = new Vec3(ax, ay, az);
-```
-
-To access the individual elements of the vector object we use `a.x`, `a.y` and `a.z`. The `.print()` method outputs a string where the elements of the vector are printed to 4 decimal places.
-
-Now let's create the following vector objects in JavaScript and print them.
+Here we have defined a function that prints a 3-element vector. Now let's create the following vectors in JavaScript and print them.
 
 ```{math}
 :numbered: false
@@ -129,30 +111,27 @@ Now let's create the following vector objects in JavaScript and print them.
 Add the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-// Define vector objects
-console.log("\nVectors\n-------");
-const a = new Vec3(3, 0, 4)
-const b = new Vec3(1, 2, 3);
-console.log("x = " + a.x + ", y = " + a.y + ", z = " + a.z);
-console.log("a = " + a.print());
-console.log("b = " + b.print());
+// Vectors
+console.log('\nVectors\n-------');
+
+const a = [3, 0, 4];
+const b = [1, 2, 3];
+console.log("a = " + printVector(a));
+console.log("b = " + printVector(b));
 ```
 
 :::
 
-Here we have created two vector objects `a` and `b` that contain the elements of $\vec{a}$ and $\vec{b}$ and printed these to our webpage which should now look like
+Here we have created the two vectors `a` and `b` and printed these to our webpage which should now look like
 
 ```text
 Vectors
 -------
-x = 3, y = 0, z = 4
-a = [ 3.0000, 0.0000, 4.0000 ]
-b = [ 1.0000, 2.0000, 3.0000 ]
+a = [ 3.00, 0.00, 4.00 ]
+b = [ 1.00, 2.00, 3.00 ]
 ```
 
----
-
-## Arithmetic operations on vectors
+### Arithmetic operations on vectors
 
 Like numbers, we can define the arithmetic operations of addition, subtraction for vectors as well as multiplication and division by a scalar.
 
@@ -201,19 +180,18 @@ To calculate the addition and subtraction of vectors we are going to write metho
 Add the following methods to your `Vec3` class.
 
 ```javascript
-// Arithmetic operations
-add(v) {
-  return new Vec3(this.x + v.x, this.y + v.y, this.z + v.z);
+function addVector(a, b) {
+  return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
 }
 
-subtract(v) {
-  return new Vec3(this.x - v.x, this.y - v.y, this.z - v.z);
+function subtractVector(a, b) {
+  return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
 }
 ```
 
 :::
 
-Here we have defined two similar methods `add()` and `subtract()` that add and subtract two vectors. Both methods return a new vector object so that we don't change the values of the current vector.
+Here we have defined two similar functions `addVector()` and `subtractVector()` that add and subtract two vectors.
 
 :::{admonition} Task
 :class: tip
@@ -222,9 +200,9 @@ Add the following to the ***Vectors_and_matrices.js*** file.
 
 ```javascript
 // Arithmetic operations on vectors
-console.log("\nArithmetic operations on vectors\n--------------------------------");
-console.log("a + b = " + a.add(b).print());
-console.log("a - b = " + a.subtract(b).print());
+console.log('\nArithmetic operations on vectors\n--------------------------------');
+console.log("a + b =", printVector(addVector(a, b)));
+console.log("a - b =", printVector(subtractVector(a, b)));
 ```
 
 :::
@@ -234,8 +212,8 @@ Refresh your web page, and you should see the following has been added.
 ```text
 Arithmetic operations on vectors
 --------------------------------
-a + b = [ 4.0000, 2.0000, 7.0000 ]
-a - b = [ 2.0000, -2.0000, 1.0000 ]
+a + b = [ 4.00, 2.00, 7.00 ]
+a - b = [ 2.00, -2.00, 1.00 ]
 ```
 
 ---
@@ -277,16 +255,16 @@ Multiplying a vector by a positive scalar has the effect of scaling the length o
 Add the following method definition to the vector class.
 
 ```javascript
-scale(s) {
-  return new Vec3(this.x * s, this.y * s, this.z * s);
+function scaleVector(v, k) {
+  return [ k * v[0], k * v[1], k * v[2] ];
 }
 ```
 
 Now add the following to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-console.log("2a    = " + a.scale(2).print());
-console.log("b/3   = " + b.scale(1/3).print());
+console.log("2a    =", printVector(scaleVector(a, 2)));
+console.log("b/3   =", printVector(scaleVector(b, 1/3)));
 ```
 
 :::
@@ -294,8 +272,8 @@ console.log("b/3   = " + b.scale(1/3).print());
 Refresh your web page, and you should see the following has been added.
 
 ```text
-2a    = [ 6.0000, 0.0000, 8.0000 ]
-b/3   = [ 0.3333, 0.6667, 1.0000 ]
+2a    = [ 6.00, 0.00, 8.00 ]
+b/3   = [ 0.33, 0.67, 1.00 ]
 ```
 
 ---
@@ -323,7 +301,7 @@ For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magni
 :numbered: false
 \begin{align*}
     \| \vec{a} \| &= \sqrt{3^2 + 0^2 + 4^2} = \sqrt{9 + 0 + 16} = \sqrt{25} = 5, \\
-    \| \vec{b} \| &= \sqrt{1^2 + 2^2 + 3^2} = \sqrt{1 + 4 + 9} = \sqrt{14} = 3.7416\ldots
+    \| \vec{b} \| &= \sqrt{1^2 + 2^2 + 3^2} = \sqrt{1 + 4 + 9} = \sqrt{14} = 3.74\ldots
 \end{align*}
 ```
 
@@ -333,9 +311,8 @@ For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magni
 Add the following method definition to the vector class.
 
 ```javascript
-// Length and normalization
-length() {
-  return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+function length(v) {
+  return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 ```
 
@@ -344,8 +321,8 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 ```javascript
 // Vector magnitude and normalization
 console.log("\nVector magnitude and normalization\n----------------------------------");
-console.log("length(a)    = " + a.length());
-console.log("length(b)    = " + b.length());
+console.log("length(a)    = " + length(a));
+console.log("length(b)    = " + length(b));
 ```
 
 :::
@@ -392,23 +369,22 @@ Normalizing a vector is an operation that is used a lot in graphics programming,
 Add the following method definition to the vector class.
 
 ```javascript
-normalize() {
-  const len = this.length();
-  if (len === 0) return new Vec3(0, 0, 0);
-  const inv = 1 / len;
-  return new Vec3(this.x * inv, this.y * inv, this.z * inv);
+function normalize(v) {
+  const len = length(v);
+  if (len === 0) return [0, 0, 0];
+  return scaleVector(v, 1 / len);
 }
 ```
 
 Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-const aHat = a.normalize();
-const bHat = b.normalize();
-console.log("aHat         = " +  aHat.print());
-console.log("bHat         = " +  bHat.print());
-console.log("length(aHat) = " +  aHat.length());
-console.log("length(bHat) = " +  bHat.length());
+const aHat = normalize(a);
+const bHat = normalize(b);
+console.log("aHat         = " + printVector(aHat));
+console.log("bHat         = " + printVector(bHat));
+console.log("length(aHat) = " + length(aHat));
+console.log("length(bHat) = " + length(bHat));
 ```
 
 :::
@@ -416,8 +392,8 @@ console.log("length(bHat) = " +  bHat.length());
 Refresh your web page, and you should see the following has been added.
 
 ```text
-aHat         = [ 0.6000, 0.0000, 0.8000 ]
-bHat         = [ 0.2673, 0.5345, 0.8018 ]
+aHat         = [ 0.60, 0.00, 0.80 ]
+bHat         = [ 0.27, 0.53, 0.80 ]
 length(aHat) = 1
 length(bHat) = 1
 ```
@@ -471,9 +447,8 @@ In order words, if the dot product of two vectors is zero then the two vectors a
 Add the following method definition to the vector class.
 
 ```javascript
-// Dot and cross products
-dot(v) {
-  return this.x * v.x + this.y * v.y + this.z * v.z;
+function dot(a, b) {
+  return [ a[0] * b[0], a[1] * b[1], a[2] * b[2] ];
 }
 ```
 
@@ -482,7 +457,7 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 ```javascript
 // Dot and cross products
 console.log("\nDot and cross products\n----------------------");
-console.log("a . b       = " + a.dot(b));
+console.log("a . b = " +  dot(a, b));
 ```
 
 :::
@@ -541,22 +516,22 @@ We can show that $\vec{a} \times \vec{b}$ is perpendicular to both $\vec{a}$ and
 Add the following method definition to the vector class.
 
 ```javascript
-cross(v) {
-  return new Vec3(
-    this.y * v.z - this.z * v.y,
-    this.z * v.x - this.x * v.z,
-    this.x * v.y - this.y * v.x
-  )
+function cross(a, b) {
+  return [
+    a[1] * b[2] - a[2] * b[1],
+    a[2] * b[0] - a[0] * b[2],
+    a[0] * b[1] - a[1] * b[0]
+  ];
 }
 ```
 
 Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-const aCrossB = a.cross(b);
-console.log("a x b       = " + aCrossB.print());
-console.log("a . (a x b) = " + a.dot(aCrossB));
-console.log("b . (a x b) = " + b.dot(aCrossB));
+const aCrossB = cross(a, b);
+console.log("a x b = " + printVector(aCrossB));
+console.log("a . (a x b) = " + dot(a, aCrossB));
+console.log("b . (a x b) = " + dot(b, aCrossB));
 ```
 
 :::
@@ -564,7 +539,7 @@ console.log("b . (a x b) = " + b.dot(aCrossB));
 Refresh your web page, and you should see the following has been added.
 
 ```text
-a x b       = [ -8.0000, -5.0000, 6.0000 ]
+a x b = [ -8.00, -5.00, 6.00 ]
 a . (a x b) = 0
 b . (a x b) = 0
 ```
@@ -603,31 +578,30 @@ Add the following class declaration to the ***maths.js*** file.
 // 4x4 Matrix class
 class Mat4 {
   constructor() {
-    this.m = new Float32Array(16);
+    this.elements = new Float32Array(16);
   }
 
-  // Print matrix
   print() {
+    const e = this.elements;
     let string = "";
     for (let i = 0; i < 4; i++) {
       const row = [
-        this.m[i * 4 + 0].toFixed(4),
-        this.m[i * 4 + 1].toFixed(4),
-        this.m[i * 4 + 2].toFixed(4),
-        this.m[i * 4 + 3].toFixed(4),
+        e[i * 4 + 0].toFixed(2).padStart(8),
+        e[i * 4 + 1].toFixed(2).padStart(8),
+        e[i * 4 + 2].toFixed(2).padStart(8),
+        e[i * 4 + 3].toFixed(2).padStart(8),
       ];
-      string += "  [ " + row.join("  ") + " ]\n";
+      string += "  [" + row.join(" ") + " ]\n";
     }
     return string;
   }
   
-  // Set
   set(...values) {
     if (values.length !== 16) {
       throw new Error("Mat4.set() requires 16 values");
     }
     for (let i = 0; i < 16; i++) {
-      this.m[i] = values[i];
+      this.elements[i] = values[i];
     }
     return this;
   }
@@ -669,13 +643,11 @@ And printed the matrix. Refresh your web page, and you should see the following 
 Matrices
 --------
 A =
-  [ 1.0000  2.0000  3.0000  4.0000 ]
-  [ 5.0000  6.0000  7.0000  8.0000 ]
-  [ 9.0000  10.0000  11.0000  12.0000 ]
-  [ 13.0000  14.0000  15.0000  16.0000 ]
+  [    1.00     2.00     3.00     4.00 ]
+  [    5.00     6.00     7.00     8.00 ]
+  [    9.00    10.00    11.00    12.00 ]
+  [   13.00    14.00    15.00    16.00 ]
 ```
-
----
 
 (transpose-section)=
 
@@ -717,14 +689,13 @@ A^\mathsf{T} =
 Add the following method definition to the matrix class.
 
 ```javascript
-// Arithmetic operations
 transpose() {
-  let m = this.m;
+  let e = this.elements;
   return new Mat4().set(
-    m[0], m[4], m[8],  m[12],
-    m[1], m[5], m[6],  m[13],
-    m[2], m[6], m[10], m[14],
-    m[3], m[7], m[11], m[15]
+    e[0], e[4], e[8],  e[12],
+    e[1], e[5], e[6],  e[13],
+    e[2], e[6], e[10], e[14],
+    e[3], e[7], e[11], e[15]
   );
 }
 ```
@@ -741,13 +712,11 @@ Refresh your web page, and you should see the following has been added.
 
 ```text
 A^T =
-  [ 1.0000  5.0000  9.0000  13.0000 ]
-  [ 2.0000  6.0000  10.0000  14.0000 ]
-  [ 3.0000  7.0000  11.0000  15.0000 ]
-  [ 4.0000  8.0000  12.0000  16.0000 ]
+  [    1.00     5.00     9.00    13.00 ]
+  [    2.00     6.00     7.00    14.00 ]
+  [    3.00     7.00    11.00    15.00 ]
+  [    4.00     8.00    12.00    16.00 ]
 ```
-
----
 
 (matrix-multiplication-section)=
 
@@ -828,16 +797,18 @@ $$ \begin{pmatrix}
 Add the following method definition to the matrix class.
 
 ```javascript
-multiply(mat) {
-  const c = new Float32Array(16);
+multiply(matB) {
+  const a = this.elements;
+  const b = matB.elements;
+  const c = new Mat4();
   for (let col = 0; col < 4; col++) {
     for (let row = 0; row < 4; row++) {
       for (let i  = 0; i < 4; i++) {
-        c[col * 4 + row] += this.m[i * 4 + row] * mat.m[col * 4 + i];
+        c.elements[col * 4 + row] += a[i * 4 + row] * b[col * 4 + i];
       }
     }
   }
-  return new Mat4().set(...c);
+  return c;
 }
 ```
 
@@ -860,21 +831,19 @@ Refresh your web page, and you should see the following has been added.
 
 ```text
 B =
-  [ 17.0000  18.0000  19.0000  20.0000 ]
-  [ 21.0000  22.0000  23.0000  24.0000 ]
-  [ 25.0000  26.0000  27.0000  28.0000 ]
-  [ 29.0000  30.0000  31.0000  32.0000 ]
+  [   17.00    18.00    19.00    20.00 ]
+  [   21.00    22.00    23.00    24.00 ]
+  [   25.00    26.00    27.00    28.00 ]
+  [   29.00    30.00    31.00    32.00 ]
 
 AB =
-  [ 538.0000  612.0000  686.0000  760.0000 ]
-  [ 650.0000  740.0000  830.0000  920.0000 ]
-  [ 762.0000  868.0000  974.0000  1080.0000 ]
-  [ 874.0000  996.0000  1118.0000  1240.0000 ]
+  [  538.00   612.00   686.00   760.00 ]
+  [  650.00   740.00   830.00   920.00 ]
+  [  762.00   868.00   974.00  1080.00 ]
+  [  874.00   996.00  1118.00  1240.00 ]
 ```
 
 What... wait... hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-matrix-multiplication-example`. Our `.multiply()` method hasn't given us the result shown above. The reason for this is something called column-major order.
-
----
 
 (column-major-order-section)=
 
@@ -924,10 +893,10 @@ Refresh your browser and you should now see that we have the matrix seen in equa
 
 ```text
 AB =
-   [ 250.0000  260.0000  270.0000  280.0000 ]
-  [ 618.0000  644.0000  670.0000  696.0000 ]
-  [ 986.0000  1028.0000  1070.0000  1112.0000 ]
-  [ 1354.0000  1412.0000  1470.0000  1528.0000 ]
+  [  250.00   260.00   270.00   280.00 ]
+  [  618.00   644.00   670.00   696.00 ]
+  [  986.00  1028.00  1070.00  1112.00 ]
+  [ 1354.00  1412.00  1470.00  1528.00 ]
 ```
 
 :::{note}
@@ -935,9 +904,7 @@ AB =
 Microsoft's graphics library directX and Unreal Engine uses row-major order whilst WebGL, OpenGL, Vulkan (successor to OpenGL), Metal (Apple's graphics library) and Unity all use column-major order. This means when porting code between the graphics libraries developers have to change all of their matrix calculations.
 :::
 
----
-
-## The Identity Matrix
+### The Identity Matrix
 
 The identity matrix is a special square matrix where all the elements are zero apart from the elements on the diagonal line from the top-left element down to the bottom-right element (known as the main diagonal). For example the $4 \times 4$ identity matrix is
 
@@ -977,9 +944,7 @@ IA =
 = A.
 ```
 
----
-
-## Matrix Inverse
+### Matrix Inverse
 
 Whilst matrix multiplication is defined for certain matrices there is no way of dividing one matrix by another. However, for certain square matrices we can calculate an **inverse matrix** that performs a similar function to divide. Consider the division of two numbers, 4 and 2 say. If we wanted to divide 4 by two we could write
 
@@ -1040,30 +1005,30 @@ Add the following method to the Matrix class (you may wish to use copy and paste
 
 ```javascript
 inverse() {
-  let m = this.m;
+  let e = this.elements;
   const inv = new Float32Array([
-    m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
-    -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],      
-    m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],      
-    -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
+    e[5] * e[10] * e[15] - e[5] * e[11] * e[14] - e[9] * e[6] * e[15] + e[9] * e[7] * e[14] + e[13] * e[6] * e[11] - e[13] * e[7] * e[10],
+    -e[1] * e[10] * e[15] + e[1] * e[11] * e[14] + e[9] * e[2] * e[15] - e[9] * e[3] * e[14] - e[13] * e[2] * e[11] + e[13] * e[3] * e[10],
+    e[1] * e[6] * e[15] - e[1] * e[7] * e[14] - e[5] * e[2] * e[15] + e[5] * e[3] * e[14] + e[13] * e[2] * e[7]  - e[13] * e[3] * e[6],
+    -e[1] * e[6] * e[11] + e[1] * e[7] * e[10] + e[5] * e[2] * e[11] - e[5] * e[3] * e[10] - e[9] * e[2] * e[7]  + e[9] * e[3] * e[6],
 
-    -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
-    m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
-    -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
-    m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
+    -e[4] * e[10] * e[15] + e[4] * e[11] * e[14] + e[8] * e[6] * e[15] - e[8] * e[7] * e[14] - e[12] * e[6] * e[11] + e[12] * e[7] * e[10],
+    e[0] * e[10] * e[15] - e[0] * e[11] * e[14] - e[8] * e[2] * e[15] + e[8] * e[3] * e[14] + e[12] * e[2] * e[11] - e[12] * e[3] * e[10],
+    -e[0] * e[6] * e[15] + e[0] * e[7] * e[14] + e[4] * e[2] * e[15] - e[4] * e[3] * e[14] - e[12] * e[2] * e[7]  + e[12] * e[3] * e[6],
+    e[0] * e[6] * e[11] - e[0] * e[7] * e[10] - e[4] * e[2] * e[11] + e[4] * e[3] * e[10] + e[8] * e[2] * e[7]  - e[8] * e[3] * e[6],
 
-    m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
-    -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
-    m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
-    -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
+    e[4] * e[9] * e[15] - e[4] * e[11] * e[13] - e[8] * e[5] * e[15] + e[8] * e[7] * e[13] + e[12] * e[5] * e[11] - e[12] * e[7] * e[9],
+    -e[0] * e[9] * e[15] + e[0] * e[11] * e[13] + e[8] * e[1] * e[15] - e[8] * e[3] * e[13] - e[12] * e[1] * e[11] + e[12] * e[3] * e[9],
+    e[0] * e[5] * e[15] - e[0] * e[7] * e[13] - e[4] * e[1] * e[15] + e[4] * e[3] * e[13] + e[12] * e[1] * e[7]  - e[12] * e[3] * e[5],
+    -e[0] * e[5] * e[11] + e[0] * e[7] * e[9]  + e[4] * e[1] * e[11] - e[4] * e[3] * e[9]  - e[8] * e[1] * e[7]  + e[8] * e[3] * e[5],
 
-    -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
-    m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
-    -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
-    m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
+    -e[4] * e[9] * e[14] + e[4] * e[10] * e[13] + e[8] * e[5] * e[14] - e[8] * e[6] * e[13] - e[12] * e[5] * e[10] + e[12] * e[6] * e[9],
+    e[0] * e[9] * e[14] - e[0] * e[10] * e[13] - e[8] * e[1] * e[14] + e[8] * e[2] * e[13] + e[12] * e[1] * e[10] - e[12] * e[2] * e[9],
+    -e[0] * e[5] * e[14] + e[0] * e[6] * e[13] + e[4] * e[1] * e[14] - e[4] * e[2] * e[13] - e[12] * e[1] * e[6]  + e[12] * e[2] * e[5],
+    e[0] * e[5] * e[10] - e[0] * e[6] * e[9]  - e[4] * e[1] * e[10] + e[4] * e[2] * e[9]  + e[8] * e[1] * e[6]  - e[8] * e[2] * e[5]
   ]);
 
-  let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+  let det = e[0] * inv[0] + e[1] * inv[4] + e[2] * inv[8] + e[3] * inv[12];
   if (det === 0) {
     console.error("Matrix is singular, no inverse exists");
     return null;
@@ -1097,22 +1062,22 @@ Refresh your browser and you should now see that we have calculated the inverse 
 
 ```text
 C =
-  [ 1.0000  3.0000  2.0000  1.0000 ]
-  [ 1.0000  1.0000  2.0000  2.0000 ]
-  [ 1.0000  3.0000  3.0000  2.0000 ]
-  [ 3.0000  1.0000  3.0000  2.0000 ]
+  [    1.00     3.00     2.00     1.00 ]
+  [    1.00     1.00     2.00     2.00 ]
+  [    1.00     3.00     3.00     2.00 ]
+  [    3.00     1.00     3.00     2.00 ]
 
 inv(C) =
-  [ 1.0000  0.5000  -1.2500  0.2500 ]
-  [ 1.0000  0.5000  -0.7500  -0.2500 ]
-  [ -2.0000  -2.0000  2.5000  0.5000 ]
-  [ 1.0000  2.0000  -1.5000  -0.5000 ]
+  [    1.00     0.50    -1.25     0.25 ]
+  [    1.00     0.50    -0.75    -0.25 ]
+  [   -2.00    -2.00     2.50     0.50 ]
+  [    1.00     2.00    -1.50    -0.50 ]
 
 inv(C)C =
-  [ 1.0000  0.0000  0.0000  0.0000 ]
-  [ 0.0000  1.0000  0.0000  0.0000 ]
-  [ 0.0000  0.0000  1.0000  0.0000 ]
-  [ 0.0000  0.0000  0.0000  1.0000 ]
+  [    1.00     0.00     0.00     0.00 ]
+  [    0.00     1.00     0.00     0.00 ]
+  [    0.00     0.00     1.00     0.00 ]
+  [    0.00     0.00     0.00     1.00 ]
 ```
 
 ---
@@ -1176,7 +1141,7 @@ $$ \begin{align*}
 
 &emsp;&emsp; For each one, describe what effect the transformation has on $\vec{v}$.
 
-````{dropdown} Solutions
+<!-- ````{dropdown} Solutions
 1. (a) &emsp; $\vec{p} = (5, 6, 1)$ <br>
    (b) &emsp; $\vec{q} = (-10, -2, -7)$ <br>
    (c) &emsp; $\vec{r} = (5, -4, 6)$ <br>
@@ -1228,5 +1193,4 @@ Exercise 2
    &emsp; The first three elements of $\vec{v}$ have been increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 5 + 3 \\ 8 + 2 \\ 10 - 1 \\ 1 \end{pmatrix}$.<br>
    (c) &emsp; $T \, S \, \vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}$
    &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor or 2 and then increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 2 \times 5 + 3 \\ 2 \times 8 + 2 \\ 2 \times 10 - 1 \\ 1\end{pmatrix}$.
-
-````
+```` -->

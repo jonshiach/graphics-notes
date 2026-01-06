@@ -49,9 +49,7 @@ We need to get keyboard input from the user and use it to move the camera. To do
 Change the constructor declaration in the ***camera.js*** file so that a canvas object is inputted.
 
 ```javascript
-class Camera {
-
-  constructor(canvas) {
+constructor(canvas) {
 ```
 
 Then add the following to the Camera class constructor.
@@ -78,27 +76,34 @@ We now need to change the position of the camera, i.e., the $\vec{eye}$ vector, 
 Add the following method definition to the Camera class.
 
 ```javascript
-// Update movement
 update () {
 
   // Update camera vectors
-  this.updateVectors();
+  const cy = Math.cos(this.yaw);
+  const cp = Math.cos(this.pitch);
+  const sy = Math.sin(this.yaw);
+  const sp = Math.sin(this.pitch);
+  this.front = normalize([cp * sy, sp, -cp * cy]);
+  this.right = normalize(cross(this.front, this.worldUp));
+  this.up    = normalize(cross(this.right, this.front));
 
   // Camera movement
-  let vel = new Vec3(0, 0, 0);
-
-  if (this.keys["w"]) vel = vel.add(this.front);
-  if (this.keys["s"]) vel = vel.subtract(this.front);
-  if (this.keys["a"]) vel = vel.subtract(this.right);
-  if (this.keys["d"]) vel = vel.add(this.right);
+  let vel = [0, 0, 0];
+  if (this.keys["w"]) vel = addVector(vel, this.front);
+  if (this.keys["s"]) vel = subtractVector(vel, this.front);
+  if (this.keys["a"]) vel = subtractVector(vel, this.right);
+  if (this.keys["d"]) vel = addVector(vel, this.right);
   
-  if (vel.length() > 0) this.eye = this.eye.add(vel.normalize());
+  const move = this.speed * dt;
+  if (vel.length > 0 && dt > 0) {
+    this.eye = addVector(this.eye, normalize(vel));
+  }
 }
 ```
 
 :::
 
-Here we created a method to update the camera vectors based on the keyboard input. After we call the `.updateVectors()` method to calculate the $\vec{right}$ and $\vec{up}$ vectors, we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. This is normalized and then added to the $\vec{eye}$ vector.
+Here we created a method to update the camera vectors based on the keyboard input. After we calculate the $\vec{front}$, $\vec{right}$ and $\vec{up}$ vectors, we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. This is normalized and then added to the $\vec{eye}$ vector.
 
 :::{admonition} Task
 :class: tip
@@ -119,10 +124,10 @@ camera.update();
 
 :::
 
-Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around. 
+Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_keyboard_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -156,7 +161,7 @@ camera.update(dt);
 
 :::
 
-Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames `dt` in second which we have entered this as an input in the `.update()` Camera class method, so we now need to update that.
+Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames `dt` in second which we have entered this as an input in the `update()` Camera class method, so we now need to update that.
 
 :::{admonition} Task
 :class: tip
@@ -167,7 +172,7 @@ First add the following to the Camera class constructor.
 this.speed     = 5;
 ```
 
-Then change the `.update()` method declaration so that it takes in the `dt` input.
+Then change the `update()` method declaration so that it takes in the `dt` input.
 
 ```javascript
 // Update movement
@@ -178,14 +183,17 @@ Finally, change the calculation of the new $\vec{eye}$ vector to the following.
 
 ```javascript
 const move = this.speed * dt;
-if (vel.length() > 0) this.eye = this.eye.add(vel.normalize().scale(move));
+if (vel.length > 0 && dt > 0) {
+  this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
+}
 ```
+
 :::
 
 So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed before it is added to the $\vec{eye}$ vector. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_keyboard_2.mp4" type="video/mp4">
 </video>
 </center>
@@ -207,7 +215,7 @@ The direction which the camera is pointing is governed by three angles called $y
 Yaw, pitch and roll
 ```
 
-To point our camera we only need the $yaw$ and $pitch$ angles which we are going to change using mouse inputs such that when the mouse is moved left and right the $yaw$ angle changes and when the mouse is moved up and down the $pitch$ angle changes. Our `.lookAt()` method uses the front vector to calculate the view matrix so we need some way of calculating the front vector from the $yaw$ and $pitch$ angles.
+To point our camera we only need the $yaw$ and $pitch$ angles which we are going to change using mouse inputs such that when the mouse is moved left and right the $yaw$ angle changes and when the mouse is moved up and down the $pitch$ angle changes. Our `getViewMatrix()` method uses the front vector to calculate the view matrix, so we need some way of calculating the front vector from the $yaw$ and $pitch$ angles.
 
 ```{figure} /_images/07_yaw.svg
 :name: yaw-figure
@@ -264,19 +272,18 @@ this.pitch = 0;
 this.turnSpeed = 0.005;
 ```
 
-And edit the `.updateVectors()` method so that it looks like the following.
+And edit the `updateVectors()` method so that it looks like the following.
 
 ```javascript
-// Update camera vectors
 updateVectors() {
   const cy = Math.cos(this.yaw);
   const cp = Math.cos(this.pitch);
   const sy = Math.sin(this.yaw);
   const sp = Math.sin(this.pitch);
 
-  this.front = new Vec3(cp * sy, sp, -cp * cy).normalize();
-  this.right = this.front.cross(this.worldUp).normalize();
-  this.up    = this.right.cross(this.front).normalize();
+  this.front = normalize([cp * sy, sp, -cp * cy]);
+  this.right = normalize(cross(this.front, this.worldUp));
+  this.up    = normalize(cross(this.right, this.front));
 }
 ```
 
@@ -300,7 +307,7 @@ document.addEventListener("mousemove", e => this.mouseMove(e));
 
 :::
 
-Here we have added two event listeners. The first detects whether the mouse has been clicked in the browser window and if so, hides the mouse pointed and locks it to the canvas using `.requestPointerLock()`. The second uses the `.mouseMove()` method which we will now write to return the $x$ and $y$ coordinates (in pixels) of the mouse pointer.
+Here we have added two event listeners. The first detects whether the mouse has been clicked in the browser window and if so, hides the mouse pointed and locks it to the canvas using `requestPointerLock()`. The second uses the `mouseMove()` method which we will now write to return the $x$ and $y$ coordinates (in pixels) of the mouse pointer.
 
 :::{admonition} Task
 :class: tip
@@ -322,7 +329,7 @@ Here we have defined a simple method to update the $pitch$ and $yaw$ angles base
 Running the program and we can now move around our world space and point the camera using the mouse.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_mouse_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -332,17 +339,17 @@ Running the program and we can now move around our world space and point the cam
 A problem that we have with our camera is that when we try to look straight up or straight down the orientation of the world flips. Position the camera above (or below) the crates and move the camera past $90^\circ$ and $-90^\circ$.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/06_mouse_3.mp4" type="video/mp4">
 </video>
 </center>
 
-This is due to the calculation of $\cos(pitch)$ and $\sin(pitch)$ in equation {eq}`eq-euler-to-vector`. To prevent this we can limit the $pitch$ angle in the `.mouseMove()` Camera class method.
+This is due to the calculation of $\cos(pitch)$ and $\sin(pitch)$ in equation {eq}`eq-euler-to-vector`. To prevent this we can limit the $pitch$ angle in the `mouseMove()` Camera class method.
 
 :::{admonition} Task
 :class: tip
 
-Add the following code to the `.mouseMove()` method in the ***camera.js*** file. 
+Add the following code to the `mouseMove()` method in the ***camera.js*** file. 
 
 ```javascript
 // Limit the pitch angle to -89 degrees < pitch < 89 degrees
@@ -374,7 +381,7 @@ Since in computer graphics are surfaces are triangles, we can easily calculate a
 
 $$ \vec{n} = (\vec{v}_1 - \vec{v}_0) \times (\vec{v}_2 - \vec{v}_1). $$
 
-A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference and we have halved the number of surfaces the shader has to deal with ({numref}`backface-culling-figure`).
+A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference, and we have halved the number of surfaces the shader has to deal with ({numref}`backface-culling-figure`).
 
 ```{figure} /_images/07_backface_culling.svg
 :width: 300
@@ -417,8 +424,8 @@ gl.enable(gl.CULL_FACE);
 Refresh your web browser and use the keyboard and mouse to put the camera inside a cube. You will now see that the back faces haven't been rendered.
 
 <center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/videos/07_mouse_2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/07_mouse_3.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -426,7 +433,7 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
 ## Exercises
 
-1. Make it so that the camera position always has a $y$ co-ordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
+1. Make it so that the camera position always has a $y$ coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
 2. Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function $y = h \sin(\pi t)$ produces values of $y=0$ when $t = 0$ or $t = 1$ and $y = h$ when $t = 0.5$.
 3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
 
@@ -439,5 +446,3 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 ## Video walkthrough
 
 The video below walks you through these lab materials.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Au7U-dJobM8?si=1Ajdd3NEsGcbf1cJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

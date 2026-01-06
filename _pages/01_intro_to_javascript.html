@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"macros": {"vec": ["\\mathbf{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/01_intro_to_javascript';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -153,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -175,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -402,6 +404,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operators">Arithmetic operators</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-math-library">The Math library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#array-length">Array length</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-and-modifying-array-values">Accessing and modifying array values</a></li>
@@ -506,6 +509,10 @@ document.write(`
 </ol>
 <p>Once installed, VS Code may prompt you to reload.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The live server will automatically refresh the webpage whenever a file in the project is saved.</p>
+</div>
 </section>
 <hr class="docutils" />
 <section id="variables">
@@ -564,8 +571,7 @@ at intro_to_javascript.js:24:7</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>const vs let
-So if delcaring a variable using <code class="docutils literal notranslate"><span class="pre">let</span></code> allows you to change its value why do we need <code class="docutils literal notranslate"><span class="pre">const</span></code>? Many variables are assigned once and never reassigned, so using <code class="docutils literal notranslate"><span class="pre">const</span></code> prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use <code class="docutils literal notranslate"><span class="pre">const</span></code> unless you know for certain the you will be reassigning the variable later.</p>
+<p>So if declaring a variable using <code class="docutils literal notranslate"><span class="pre">let</span></code> allows you to change its value why do we need <code class="docutils literal notranslate"><span class="pre">const</span></code>? Many variables are assigned once and never reassigned, so using <code class="docutils literal notranslate"><span class="pre">const</span></code> prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use <code class="docutils literal notranslate"><span class="pre">const</span></code> unless you know for certain the you will be reassigning the variable later.</p>
 </div>
 <section id="variable-names">
 <h3>Variable names<a class="headerlink" href="#variable-names" title="Link to this heading">#</a></h3>
@@ -587,7 +593,7 @@ So if delcaring a variable using <code class="docutils literal notranslate"><spa
 <span class="kd">let</span><span class="w"> </span><span class="nx">area</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">height</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>does. Where variable names are a concatenation of two or more words it is common practice to use <strong>camelCase</strong> where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example</p>
+<p>does. Where variable names are a concatenation of two or more words it is common practice to use <a href="https://en.wikipedia.org/wiki/Camel_case" target="_blank"><strong>camelCase</strong></a> where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">playerScore</span><span class="p">;</span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">framesPerSecond</span><span class="p">;</span>
 </pre></div>
@@ -604,28 +610,28 @@ So if delcaring a variable using <code class="docutils literal notranslate"><spa
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p>number</p></td>
 <td class="text-left"><p>Integer numbers (whole numbers) and floating-point numbers (decimals)</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p>string</p></td>
 <td class="text-left"><p>Sequence of letters</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p>boolean</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code> logical values</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">undefined</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p>undefined</p></td>
 <td class="text-left"><p>A variable that has been declared but not assigned a value</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p>null</p></td>
 <td class="text-left"><p>Intentional absence of a value</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">symbol</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p>symbol</p></td>
 <td class="text-left"><p>Used to represent a unique identifier (used mainly in advanced code)</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">bigint</span></code></p></td>
-<td class="text-left"><p>Integers larget than those that can be represented exactly</p></td>
+<tr class="row-even"><td class="text-left"><p>bigint</p></td>
+<td class="text-left"><p>Integers larger than those that can be represented exactly</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">object</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p>object</p></td>
 <td class="text-left"><p>Used for collections of data and more complex structures (e.g., arrays, functions)</p></td>
 </tr>
 </tbody>
@@ -751,6 +757,133 @@ The data type of myVariable is string
 </table>
 </div>
 </section>
+</section>
+<hr class="docutils" />
+<section id="the-math-library">
+<h2>The Math library<a class="headerlink" href="#the-math-library" title="Link to this heading">#</a></h2>
+<p>JavaScript provides a built-in object called Math that contains properties and functions for common mathematical operations. All methods and constants from the Math library are accessed using the <code class="docutils literal notranslate"><span class="pre">Math.</span></code> prefix, for example</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Some useful methods from the Math library are</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Method</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Example</p></th>
+<th class="head text-left"><p>Result</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.sqrt()</span></code></p></td>
+<td class="text-left"><p>Square root</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.sqrt(9)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.cos()</span></code></p></td>
+<td class="text-left"><p>Cosine</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.cos(0)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.sin()</span></code></p></td>
+<td class="text-left"><p>Sine</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.sin(0)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.abs()</span></code></p></td>
+<td class="text-left"><p>Absolute value (ignore sign)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.abs(-1)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.pos()</span></code></p></td>
+<td class="text-left"><p>Power</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.pos(3,2)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.round()</span></code></p></td>
+<td class="text-left"><p>Round to nearest integer</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.round(1.23)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.floor()</span></code></p></td>
+<td class="text-left"><p>Round down</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.round(2.718)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.min()</span></code></p></td>
+<td class="text-left"><p>Minimum value</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.min(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.max()</span></code></p></td>
+<td class="text-left"><p>Maximum value</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.max(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">Math.random()</span></code></p></td>
+<td class="text-left"><p>Random number between 0 and 1</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">Math.random()</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0.4517</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The Math library also provides several useful mathematical constants and read-only properties (they cannot be reassigned)</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Constant</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.PI</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\pi = 3.1416\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.E</span></code></p></td>
+<td class="text-left"><p>Eulers number <span class="math notranslate nohighlight">\(e = 2.7183\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.SQRT2</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\sqrt{2} = 1.4142\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.SQRT1_2</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\sqrt{2}/2 = 0.7071\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.LN2</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\log_e(2) = 0.6931\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Math.LN10</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\log_e(10) = 2.3026\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>An example of the use of Math library constants that is used a lot in computer graphics is the conversion of an angle from degrees to <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radians</a> which is</p>
+<div class="math notranslate nohighlight">
+\[ radians = degrees \times \frac{\pi}{180}. \]</div>
+<p>For example, to convert <span class="math notranslate nohighlight">\(90^\circ\)</span> to radians we have</p>
+<div class="math notranslate nohighlight">
+\[ radians = 90 \times \frac{\pi}{180} = 1.5708\]</div>
+<p>Most languages, including JavaScript and GLSL (the language used by WebGL to program on the GPU), assumes angles are always expressed in radians.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following to your JavaScript file.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Math library</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nMath library\n------------&quot;</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">angleInDegress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">90</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">angleInRadians</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">angleInDegress</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">angleInDegress</span><span class="si">}</span><span class="sb"> degrees is </span><span class="si">${</span><span class="nx">angleInRadians</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">4</span><span class="p">)</span><span class="si">}</span><span class="sb"> radians.`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`cos(</span><span class="si">${</span><span class="nx">angleInDegress</span><span class="si">}</span><span class="sb"> degrees) = `</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">angleInRadians</span><span class="p">)</span><span class="nx">s</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have used the Math library constant <code class="docutils literal notranslate"><span class="pre">Math.PI</span></code> to convert <span class="math notranslate nohighlight">\(90^\circ\)</span> to radians and also shown that <span class="math notranslate nohighlight">\(\cos(90^\circ) = 0\)</span>. The method <code class="docutils literal notranslate"><span class="pre">.toFixed(4)</span></code> outputs the floating point number using 4 decimal places. Refresh your browser, and you should see the following on your web page.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Math library
+------------
+90 degrees is 1.5708 radians.
+cos(90 degrees) = 6.123233995736766e-17
+</pre></div>
+</div>
+<p>Note that <span class="math notranslate nohighlight">\(\cos(90^\circ)\)</span> is outputted as <span class="math notranslate nohighlight">\(6.12 \times 10^{-17}\)</span> which is 0.0000000000000000612 showing that floating point arithmetic is never exact.</p>
 </section>
 <hr class="docutils" />
 <section id="arrays">
@@ -976,7 +1109,7 @@ Score:    10
 </tbody>
 </table>
 </div>
-<p>Multiple comparisors can be joined using conjunctions</p>
+<p>Multiple comparisons can be joined using conjunctions</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>Conjunction</p></th>
@@ -1493,6 +1626,7 @@ Geralt of Rivia: 92, 75, 68, 78
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operators">Arithmetic operators</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-math-library">The Math library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#array-length">Array length</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-and-modifying-array-values">Accessing and modifying array values</a></li>

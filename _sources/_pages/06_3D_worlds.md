@@ -156,7 +156,7 @@ We saw in [Lab 5: Transformations](transformations-section) that we apply a tran
 
 ### The Model matrix
 
-In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$. 
+In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$.
 
 :::{admonition} Task
 :class: tip
@@ -165,18 +165,16 @@ Edit the `render()` function in the ***3D_worlds.js*** file so that the transfor
 
 ```javascript
 // Calculate the model matrix
-const translate = new Mat4().translate(0, 0, -2);
-const scale     = new Mat4().scale(0.5, 0.5, 1);
+const translate = new Mat4().translate([0, 0, -2]);
+const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
 const angle     = 1/3 * time * 2 * Math.PI * 0.001;
-const rotate    = new Mat4().rotate(0, 0, 1, angle);
+const rotate    = new Mat4().rotate([0, 1, 0], angle);
 const model     = translate.multiply(rotate).multiply(scale);
 ```
 
 :::
 
 Here we have calculated the individual transformation matrices for translation, scaling and rotation and multiply them together to create the model matrix. The rotation angle has been calculated using the time of the current frame so that the cube will perform one full rotation every 3 seconds.
-
----
 
 (view-matrix-section)=
 
@@ -282,28 +280,26 @@ class Camera {
 
   constructor() {
     // Camera vectors
-    this.eye     = new Vec3(0, 0, 0);
-    this.worldUp = new Vec3(0, 1, 0);
-    this.front   = new Vec3(0, 0, -1);
-    this.right   = new Vec3(1, 0, 0);
-    this.up      = new Vec3(0, 1, 0);
+    this.eye     = [0, 0, 0];
+    this.worldUp = [0, 1, 0];
+    this.front   = [0, 0, -1];
+    this.right   = [1, 0, 0];
+    this.up      = [0, 1, 0];
   }
 
-  // Update camera vectors
-  updateVectors() {
-    this.right = this.front.cross(this.worldUp).normalize();
-    this.up    = this.right.cross(this.front).normalize();
+  updateCameraVectors() {
+    this.right = normalize(cross(this.front, this.worldUp));
+    this.up    = normalize(cross(this.right, this.front));
   }
 
-  // LookAt
-  lookAt() {
+  getViewMatrix() {
     return new Mat4().set(
-      this.right.x, this.up.x, -this.front.x, 0,
-      this.right.y, this.up.y, -this.front.y, 0,
-      this.right.z, this.up.z, -this.front.z, 0,
-      -this.eye.dot(this.right),
-      -this.eye.dot(this.up),
-       this.eye.dot(this.front),
+      this.right[0], this.up[0], -this.front[0], 0,
+      this.right[1], this.up[1], -this.front[1], 0,
+      this.right[2], this.up[2], -this.front[2], 0,
+      -dot(this.eye, this.right),
+      -dot(this.eye, this.up),
+       dot(this.eye, this.front),
       1
     );
   }
@@ -324,17 +320,17 @@ Enter the following code before the `render()` function in the ***3D_worlds.js**
 const camera = new Camera();
 ```
 
-And add the following to the `render()` function after we clear the frame buffers.
+And add the following to the `render()` function after we bind the texture.
 
 ```javascript
-  // Update camera vectors
-  const target = new Vec3(0, 0, -2);
-  camera.eye   = new Vec3(1, 1, 1);
-  camera.front = target.subtract(camera.eye).normalize();
-  camera.updateVectors();
+// Update camera vectors
+const target = [0, 0, -2];
+camera.eye   = [1, 1, 1];
+camera.front = normalize(subtractVector(target, camera.eye));
+camera.updateCameraVectors();
 
-  // Calculate view and projection matrices
-  const view       = camera.lookAt();
+// Calculate view matrix
+const view = camera.getViewMatrix();
 ```
 :::
 
@@ -417,8 +413,7 @@ This matrix is transposed when coding in JavaScript.
 Add the following method definition to the Camera class.
 
 ```javascript
-// Orthographic projection
-orthographic(left, right, bottom, top, near, far) {
+getOrthographicMatrix(left, right, bottom, top, near, far) {
   const rl = 1 / (right - left);
   const tb = 1 / (top - bottom);
   const fn = 1 / (far - near);
@@ -432,13 +427,14 @@ orthographic(left, right, bottom, top, near, far) {
     -(far + near) * fn,
     1
   );
-  }
+}
 ```
 
 And add the following to the `render()` function file after we have calculated the view matrix.
 
 ```javascript
-const projection = camera.orthographic(-2, 2, -2, 2, 0, 100);
+// Calculate projection matrix
+const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
 ```
 
 :::
@@ -461,8 +457,9 @@ Recall that the transformations are applied to the object coordinates in the ver
 Add the following code after we have calculated the view and projection matrices.
 
 ```javascript
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), view.m);
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), projection.m);
+// Send view and project matrices to the shaders
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
 ```
 
 :::
@@ -504,7 +501,7 @@ Edit the vertex shader code at the top of the ***3D_worlds.js*** file so that it
 Here we have added the two uniforms for the view and projection matrices to the vertex shader and then used these, along with the model matrix to transform the object coordinates to the screen space. Refresh your web browser and you should the rotating cube below.
 
 <center>
-<video controls muted="true" loop="true" width="80%">
+<video autoplay controls muted="true" loop="true" width="60%">
     <source src="../_static/videos/05_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
 </video>
 </center>
@@ -519,7 +516,7 @@ Our rendering of the cube doesn't look quite right. What is happening here is th
 :width: 300
 :name: depth-test-1-figure
 
-Rendering the far triangle after the near triangle.
+Fragments further away rendered after closer fragments.
 ```
 
 To overcome this issue WebGL uses a **depth test** when computing the fragment shader. When WebGL creates a frame buffer it also creates another buffer called a **z buffer** (or **depth buffer**) where the $z$ coordinate of each pixel in the frame buffer is stored and initialises all the values to $-1$ (the furthest possible $z$ coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a $z$ coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its $z$ coordinate in the depth-buffer as the current nearest fragment (if the fragment has a $z$ coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.
@@ -544,7 +541,7 @@ gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 Here we first enabled WebGL's depth test and then we clear the depth buffer at the start of the rendering of each frame. Refresh your web browser and you should get a much better result.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/05_orthogonal_cube_depth_test.mp4" type="video/mp4">
 </video>
 </center>
@@ -576,12 +573,12 @@ Now put the commands used to calculate the model matrix to draw the cube inside 
 for (let i = 0; i < numberCubes; i++){
   
   // Calculate the model matrix
-  const translate = new Mat4().translate(0, 0, -2);
-  const scale     = new Mat4().scale(0.5, 0.5, 0.5);
-  const angle     = 1/3 * time * 2 * Math.PI * 0.001;
-  const rotate    = new Mat4().rotate(0, 1, 0, angle);
+  const translate = new Mat4().translate(cubes[i].position);
+  const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
+  const angle     = 0;
+  const rotate    = new Mat4().rotate([0, 1, 0], angle);
   const model     = translate.multiply(rotate).multiply(scale);
-  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
   // Draw the rectangle
   gl.bindVertexArray(vao);
@@ -592,7 +589,7 @@ for (let i = 0; i < numberCubes; i++){
 Change the translation matrix so that it uses the new cube centre coordinates.
 
 ```javascript
-const translate = new Mat4().translate(...cubes[i].position);
+const translate = new Mat4().translate(cubes[i].position);
 ```
 
 Finally change the rotation angle to zero.
@@ -752,7 +749,7 @@ $$ \begin{align*}
     \end{pmatrix}.
 \end{align*} $$
 
-We now need to calculate the values of $r$ and $t$. The $t$ coordinate is the opposite side of a right angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$ so it is easily calculated using trigonometry
+We now need to calculate the values of $r$ and $t$. The $t$ coordinate is the opposite side of a right-angled triangle with angle $\dfrac{fov}{2}$ and adjacent side $n$, so it is easily calculated using trigonometry
 
 $$ \begin{align*}
     \tan \left( \frac{fov}{2} \right)
@@ -774,16 +771,15 @@ $$ \begin{align*}
 Add the following method definition to the Camera class.
 
 ```javascript
-// Perspective projection
-perspective() {
-  const top = this.near * Math.tan(0.5 * this.fov * Math.PI / 180);
-  const right = this.aspect * top;
+getPerspectiveMatrix() {
+  const t  = this.near * Math.tan(this.fov / 2);
+  const r  = this.aspect * t;
   const fn = 1 / (this.far - this.near);
 
   return new Mat4().set(
-    this.near / right, 0, 0, 0,
-    0, this.near / top, 0, 0,
-    0, 0, -(this.near + this.far) * fn, -1,
+    this.near / r, 0, 0, 0,
+    0, this.near / t, 0, 0,
+    0, 0, -(this.far + this.near) * fn, -1,
     0, 0, -2 * this.far * this.near * fn, 0
   );
 }
@@ -792,7 +788,7 @@ perspective() {
 Comment out the command used to calculate the projection matrix in the `render()` function and add the following.
 
 ```javascript
-const projection = camera.perspective();
+const projection = camera.getPerspectiveMatrix();
 ```
 :::
 
@@ -804,8 +800,6 @@ Refresh your web browser and you should see something similar to the following.
 
 Perspective projection.
 ```
-
----
 
 (changing-the-fov-section)=
 
@@ -835,42 +829,30 @@ $fov = 120^\circ$
 
 ## Exercises
 
-1. Move the camera so that it circles the first cube centred at $(0, 0, -2)$ with radius of 5 and a height of 2. The camera should perform one full rotation every 5 seconds. Hint: $x = c_x + r\cos(\theta)$ and $z = c_z + r\sin(\theta)$ gives the $x$ and $y$ coordinates on a circle centred at $(c_x, c_y, c_z)$ with radius $r$.
+1. Create a $5 \times 5$ grid of cubes where the centres of the cubes are 3 units apart.
 
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex2.mp4" type="video/mp4">
-</video>
-</center>
-
-1. Rotate the cubes that have an odd index number about the vector $(1,1,1)$ so that they complete one full rotation every 2 seconds. Hint: `x % y` returns the remainder when `x` is divided by `y`, e.g., `3 % 2` will return `1`.
-
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex3.mp4" type="video/mp4">
-</video>
-</center>
-
-4. Add a feature to your program that allows the user to increase or decrease the field of view angle using the up and down arrow keys. Your code should limit the field of view angle so it is never less than $10^\circ$ or greater than $90^\circ$. Hint: The `keyboardInput()` function at the bottom of the **Lab06_3D_worlds.cpp** file checks if the <a href="https://www.glfw.org/docs/3.3/group__keys.html" target="_blank">escape key</a> has been pressed and quits the application if it has.
-
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex4.mp4" type="video/mp4">
-</video>
-</center>
-
-5. Create a $10 \times 10$ grid of cubes in the world space.
-
-```{figure} ../_images/06_Ex5.png
-:width: 500
+```{figure} ../_images/06_Ex1.png
+:width: 60%
 ```
 
-6. Add functions called `lookAt()` and `perspective()` to your `Maths` class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.
+2. Move the camera to that its position moves in a circular orbit around the centre cube at a height of 3 units off the ground. The camera should complete one full rotation every 10 seconds whilst also looking at the centre cube.
+
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/06_Ex2.mp4" type="video/mp4">
+</video>
+</center>
+
+3. Rotate every other cube about a random vector so that they complete one full rotation every 2 seconds.
+
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/06_Ex3.mp4" type="video/mp4">
+</video>
+</center>
 
 ---
 
 ## Video walkthrough
 
 The video below walks you through these lab materials.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jVCftc0pojI?si=yC9sx6TlUDkomqvu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

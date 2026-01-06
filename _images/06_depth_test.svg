@@ -25,13 +25,13 @@
 <path clip-rule="nonzero" d="M 22 0 L 142.132812 0 L 142.132812 102.390625 L 22 102.390625 Z M 22 0 "/>
 </clipPath>
 </defs>
-<path fill-rule="nonzero" fill="rgb(100%, 50%, 50%)" fill-opacity="1" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -28.346781 28.34825 L 56.692281 28.34825 L 14.17275 101.992781 Z M -28.346781 28.34825 " transform="matrix(1, 0, 0, -1, 28.546, 102.192)"/>
 <g clip-path="url(#clip-0)">
 <path fill-rule="nonzero" fill="rgb(50%, 50%, 100%)" fill-opacity="1" d="M 28.546875 102.191406 L 141.933594 102.191406 L 85.238281 3.996094 Z M 28.546875 102.191406 "/>
 </g>
 <g clip-path="url(#clip-1)">
 <path fill="none" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 100%)" stroke-opacity="1" stroke-miterlimit="10" d="M 0.000875 0.00059375 L 113.387594 0.00059375 L 56.692281 98.195906 Z M 0.000875 0.00059375 " transform="matrix(1, 0, 0, -1, 28.546, 102.192)"/>
 </g>
+<path fill-rule="nonzero" fill="rgb(100%, 50%, 50%)" fill-opacity="1" stroke-width="0.3985" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -28.346781 28.34825 L 56.692281 28.34825 L 14.17275 101.992781 Z M -28.346781 28.34825 " transform="matrix(1, 0, 0, -1, 28.546, 102.192)"/>
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-0-0" x="76.496" y="90.218"/>
 <use xlink:href="#glyph-0-1" x="81.641683" y="90.218"/>

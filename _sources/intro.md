@@ -1,4 +1,4 @@
-# Computer Graphics
+# Contents
 
 This site contains the notes used for the lab sessions for the Computer Graphics module. They are designed for students to work through in the labs with the help of the tutors. The content of each of the labs have been organised such that each one uses code from the preceding labs, so you will need to make sure you have completed each lab before moving onto the next one.
 
