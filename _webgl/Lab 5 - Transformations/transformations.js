@@ -83,14 +83,15 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Calculate transformation matrices
-    const translate = new Mat4().translate(0.4, 0.3, 0);
-    const scale     = new Mat4().scale(0.5, 0.4, 1);
+    const translate = new Mat4().translate([0.4, 0.3, 0]);
+    const scale     = new Mat4().scale([0.5, 0.4, 1]);
     const angle     = 1/2 * time * 0.001 * 2 * Math.PI;
-    const rotate    = new Mat4().rotate(0, 0, 1, angle);
+    const rotate    = new Mat4().rotate([0, 0, 1], angle);
 
     // Send transformation matrices to the shader
+    // const model = translate.multiply(rotate).multiply(scale);
     const model = rotate.multiply(translate).multiply(scale);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
     // Draw the rectangle
     gl.bindVertexArray(vao);

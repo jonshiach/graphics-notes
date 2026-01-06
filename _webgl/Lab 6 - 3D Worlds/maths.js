@@ -1,115 +1,136 @@
-// 3-element vector class
-class Vec3 {
+// Vector operations
+function printVector(v) {
+  return `[ ${v[0].toFixed(2)}, ${v[1].toFixed(2)}, ${v[2].toFixed(2)} ]`;
+}
 
-  constructor(x = 0, y = 0, z = 0) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-    this.array = [x, y, z];
-  }
+function addVector(a, b) {
+  return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
+}
 
-  // Print vector
-  print() {
-    return `[ ${this.x.toFixed(4)}, ${this.y.toFixed(4)}, ${this.z.toFixed(4)} ]`;
-  }
+function subtractVector(a, b) {
+  return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
+}
 
-  // Arithmetic operations
-  add(v) {
-    return new Vec3(this.x + v.x, this.y + v.y, this.z + v.z);
-  }
+function scaleVector(v, k) {
+  return [ k * v[0], k * v[1], k * v[2] ];
+}
 
-  subtract(v) {
-    return new Vec3(this.x - v.x, this.y - v.y, this.z - v.z);
-  }
+function length(v) {
+  return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+}
 
-  scale(s) {
-    return new Vec3(this.x * s, this.y * s, this.z * s);
-  }
+function normalize(v) {
+  const len = length(v);
+  if (len === 0) return [0, 0, 0];
+  return scaleVector(v, 1 / len);
+}
 
-  // Length and normalization
-  length() {
-    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-  }
+function dot(a, b) {
+  return  a[0] * b[0] + a[1] * b[1] +a[2] * b[2];
+}
 
-  normalize() {
-    const len = this.length();
-    if (len === 0) return new Vec3(0, 0, 0);
-    const inv = 1 / len;
-    return new Vec3(this.x * inv, this.y * inv, this.z * inv);
-  }
-
-  // Dot and cross products
-  dot(v) {
-    return this.x * v.x + this.y * v.y + this.z * v.z;
-  }
-
-  cross(v) {
-    return new Vec3(
-      this.y * v.z - this.z * v.y,
-      this.z * v.x - this.x * v.z,
-      this.x * v.y - this.y * v.x
-    )
-  }
-
+function cross(a, b) {
+  return [ 
+    a[1] * b[2] - a[2] * b[1], 
+    a[2] * b[0] - a[0] * b[2], 
+    a[0] * b[1] - a[1] * b[0] 
+  ];
 }
 
 // 4x4 Matrix class
 class Mat4 {
   constructor() {
-    this.m = new Float32Array(16);
+    this.elements = new Float32Array(16);
   }
 
-  // Print matrix
   print() {
+    const e = this.elements;
     let string = "";
     for (let i = 0; i < 4; i++) {
       const row = [
-        this.m[i * 4 + 0].toFixed(4),
-        this.m[i * 4 + 1].toFixed(4),
-        this.m[i * 4 + 2].toFixed(4),
-        this.m[i * 4 + 3].toFixed(4),
+        e[i * 4 + 0].toFixed(2).padStart(8),
+        e[i * 4 + 1].toFixed(2).padStart(8),
+        e[i * 4 + 2].toFixed(2).padStart(8),
+        e[i * 4 + 3].toFixed(2).padStart(8),
       ];
-      string += "  [ " + row.join("  ") + " ]\n";
+      string += "  [" + row.join(" ") + " ]\n";
     }
     return string;
   }
   
-  // Set
   set(...values) {
     if (values.length !== 16) {
       throw new Error("Mat4.set() requires 16 values");
     }
     for (let i = 0; i < 16; i++) {
-      this.m[i] = values[i];
+      this.elements[i] = values[i];
     }
     return this;
   }
 
-  // Arithmetic operations
   transpose() {
-    let m = this.m;
+    let e = this.elements;
     return new Mat4().set(
-      m[0], m[4], m[8],  m[12],
-      m[1], m[5], m[6],  m[13],
-      m[2], m[6], m[10], m[14],
-      m[3], m[7], m[11], m[15]
+      e[0], e[4], e[8],  e[12],
+      e[1], e[5], e[6],  e[13],
+      e[2], e[6], e[10], e[14],
+      e[3], e[7], e[11], e[15]
     );
   }
 
-  multiply(mat) {
-    const c = new Float32Array(16);
+  multiply(matB) {
+    const a = this.elements;
+    const b = matB.elements;
+    const c = new Mat4();
     for (let col = 0; col < 4; col++) {
       for (let row = 0; row < 4; row++) {
         for (let i  = 0; i < 4; i++) {
-          c[col * 4 + row] += this.m[i * 4 + row] * mat.m[col * 4 + i];
+          c.elements[col * 4 + row] += a[i * 4 + row] * b[col * 4 + i];
         }
       }
     }
-    return new Mat4().set(...c);
+    return c;
   }
 
-  // Transformation matrices
-  translate(x, y, z) {
+  inverse() {
+    let e = this.elements;
+    const inv = new Float32Array([
+      e[5] * e[10] * e[15] - e[5] * e[11] * e[14] - e[9] * e[6] * e[15] + e[9] * e[7] * e[14] + e[13] * e[6] * e[11] - e[13] * e[7] * e[10],
+      -e[1] * e[10] * e[15] + e[1] * e[11] * e[14] + e[9] * e[2] * e[15] - e[9] * e[3] * e[14] - e[13] * e[2] * e[11] + e[13] * e[3] * e[10],      
+      e[1] * e[6] * e[15] - e[1] * e[7] * e[14] - e[5] * e[2] * e[15] + e[5] * e[3] * e[14] + e[13] * e[2] * e[7]  - e[13] * e[3] * e[6],      
+      -e[1] * e[6] * e[11] + e[1] * e[7] * e[10] + e[5] * e[2] * e[11] - e[5] * e[3] * e[10] - e[9] * e[2] * e[7]  + e[9] * e[3] * e[6],
+
+      -e[4] * e[10] * e[15] + e[4] * e[11] * e[14] + e[8] * e[6] * e[15] - e[8] * e[7] * e[14] - e[12] * e[6] * e[11] + e[12] * e[7] * e[10],
+      e[0] * e[10] * e[15] - e[0] * e[11] * e[14] - e[8] * e[2] * e[15] + e[8] * e[3] * e[14] + e[12] * e[2] * e[11] - e[12] * e[3] * e[10],
+      -e[0] * e[6] * e[15] + e[0] * e[7] * e[14] + e[4] * e[2] * e[15] - e[4] * e[3] * e[14] - e[12] * e[2] * e[7]  + e[12] * e[3] * e[6],
+      e[0] * e[6] * e[11] - e[0] * e[7] * e[10] - e[4] * e[2] * e[11] + e[4] * e[3] * e[10] + e[8] * e[2] * e[7]  - e[8] * e[3] * e[6],
+
+      e[4] * e[9] * e[15] - e[4] * e[11] * e[13] - e[8] * e[5] * e[15] + e[8] * e[7] * e[13] + e[12] * e[5] * e[11] - e[12] * e[7] * e[9],
+      -e[0] * e[9] * e[15] + e[0] * e[11] * e[13] + e[8] * e[1] * e[15] - e[8] * e[3] * e[13] - e[12] * e[1] * e[11] + e[12] * e[3] * e[9],
+      e[0] * e[5] * e[15] - e[0] * e[7] * e[13] - e[4] * e[1] * e[15] + e[4] * e[3] * e[13] + e[12] * e[1] * e[7]  - e[12] * e[3] * e[5],
+      -e[0] * e[5] * e[11] + e[0] * e[7] * e[9]  + e[4] * e[1] * e[11] - e[4] * e[3] * e[9]  - e[8] * e[1] * e[7]  + e[8] * e[3] * e[5],
+
+      -e[4] * e[9] * e[14] + e[4] * e[10] * e[13] + e[8] * e[5] * e[14] - e[8] * e[6] * e[13] - e[12] * e[5] * e[10] + e[12] * e[6] * e[9],
+      e[0] * e[9] * e[14] - e[0] * e[10] * e[13] - e[8] * e[1] * e[14] + e[8] * e[2] * e[13] + e[12] * e[1] * e[10] - e[12] * e[2] * e[9],
+      -e[0] * e[5] * e[14] + e[0] * e[6] * e[13] + e[4] * e[1] * e[14] - e[4] * e[2] * e[13] - e[12] * e[1] * e[6]  + e[12] * e[2] * e[5],
+      e[0] * e[5] * e[10] - e[0] * e[6] * e[9]  - e[4] * e[1] * e[10] + e[4] * e[2] * e[9]  + e[8] * e[1] * e[6]  - e[8] * e[2] * e[5]
+    ]);
+
+    let det = e[0] * inv[0] + e[1] * inv[4] + e[2] * inv[8] + e[3] * inv[12];
+    if (det === 0) {
+      console.error("Matrix is singular, no inverse exists");
+      return null;
+    }
+
+    det = 1 / det;
+    for (let i = 0; i < 16; i++) {
+      inv[i] *= det;
+    }
+    return new Mat4().set(...inv);
+  }
+
+  translate(t) {
+    const [x, y, z] = t;
     return new Mat4().set(
       1, 0, 0, 0,
       0, 1, 0, 0,
@@ -118,7 +139,8 @@ class Mat4 {
     );
   }
 
-  scale(x, y, z) {
+  scale(s) {
+    const [x, y, z] = s;
     return new Mat4().set(
       x, 0, 0, 0,
       0, y, 0, 0,
@@ -127,24 +149,22 @@ class Mat4 {
     );
   }
 
-  rotateZ(rad) {
-    const c = Math.cos(rad);
-    const s = Math.sin(rad);
+  rotateZ(angle) {
+    const c = Math.cos(angle);
+    const s = Math.sin(angle);
     return new Mat4().set(
-      c,  s, 0, 0,
-      -s, c, 0, 0,
-      0,  0, 1, 0,
-      0,  0, 0, 1
+      c,  s,  0,  0,
+      -s, c,  0,  0,
+      0,  0,  1,  0,
+      0,  0,  0,  1
     );
   }
 
-  rotate(x, y, z, rad) {
-    const len = Math.sqrt(x * x + y * y + z * z);
-    if (len > 0) {
-      x /= len; y /= len; z /= len;
-    }
-    const c = Math.cos(rad);
-    const s = Math.sin(rad);
+  rotate(axis, angle) {   
+    axis = normalize(axis);
+    const [x, y, z] = axis;
+    const c = Math.cos(angle);
+    const s = Math.sin(angle);
     const t = 1 - c;
 
     return new Mat4().set(

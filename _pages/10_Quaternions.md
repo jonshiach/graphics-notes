@@ -282,7 +282,7 @@ Quaternion::Quaternion(const float pitch, const float yaw)
 We are currently using Euler angles rotation to calculate the view matrix in the `calculateMatrices()` Camera class function (see [6. 3D worlds](camera-class-section)). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90$^\circ$ or 270$^\circ$ (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around -- see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
@@ -351,7 +351,7 @@ camera.quaternionCamera();
 Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90$^\circ$ or 270$^\circ$ without the orientation flipping around.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_with_quaternion.mp4" type="video/mp4">
 </video>
 </center>
@@ -468,7 +468,7 @@ $$ View = Translate(\mathbf{offset}) \cdot View $$
 The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -478,7 +478,7 @@ Moving the camera around we see that our character model is always facing in the
 $$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
@@ -502,7 +502,7 @@ The Suzanne model and textures can be downloaded from the <a href="https://githu
 2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a character $yaw$ angle that can be altered by the A and D keys.
 
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_3.mp4" type="video/mp4">
 </video>
 </center>

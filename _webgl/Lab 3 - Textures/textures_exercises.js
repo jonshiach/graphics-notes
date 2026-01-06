@@ -34,7 +34,7 @@ uniform sampler2D uTexture;
 uniform sampler2D uTexture2;
 
 void main() {
-  // fragColour = texture(uTexture, vTexCoord);
+  fragColour = texture(uTexture, vTexCoord);
 
   // Exercise 2 - right facing mario
   // fragColour = texture(uTexture, vec2(-vTexCoord.x, vTexCoord.y));
@@ -43,7 +43,7 @@ void main() {
   // fragColour = texture(uTexture, vTexCoord).grba;
 
   // Exercise 5 - multiply vertex colours and texture
-  fragColour = vec4(vColour, 1.0) * texture(uTexture, vTexCoord);
+  // fragColour = vec4(vColour, 1.0) * texture(uTexture, vTexCoord);
 }`;
 
 // Main function
@@ -59,16 +59,16 @@ function main() {
   // Set the shader program
   gl.useProgram(program);
 
-  // Define vertices
-  const vertices = new Float32Array([
-  //  x     y    z       r    g    b      u  v            
-    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
-     0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
-     0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
-    -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0, 1, // vertex 3     0 -- 1 
-  ]);
+  // // Define vertices
+  // const vertices = new Float32Array([
+  // //  x     y    z       r    g    b      u  v            
+  //   -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
+  //    0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
+  //    0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
+  //   -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0, 1, // vertex 3     0 -- 1 
+  // ]);
 
-  // Exercise 1 - 4 x 6 array of marios
+  // // Exercise 1 - 4 x 6 array of marios
   // // Define vertices
   // const vertices = new Float32Array([
   // //  x     y    z       r    g    b      u  v            
@@ -78,15 +78,15 @@ function main() {
   //   -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0, 4, // vertex 3     0 -- 1 
   // ]);
 
-  // // Exercise 6 - zoom in on Mario's eye
-  // // Define vertices
-  // const vertices = new Float32Array([
-  // //  x     y    z       r    g    b      u  v            
-  //   -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.4, 0.35, // vertex 0     3 -- 2
-  //    0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    0.55, 0.35, // vertex 1     |  / |    
-  //    0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    0.55, 0.6, // vertex 2     | /  | 
-  //   -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.4, 0.6, // vertex 3     0 -- 1 
-  // ]);
+  // Exercise 6 - zoom in on Mario's eye
+  // Define vertices
+  const vertices = new Float32Array([
+  //  x     y    z       r    g    b      u  v            
+    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.4, 0.35, // vertex 0     3 -- 2
+     0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    0.55, 0.35, // vertex 1     |  / |    
+     0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    0.55, 0.6, // vertex 2     | /  | 
+    -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.4, 0.6, // vertex 3     0 -- 1 
+  ]);
 
   
   // Define indices

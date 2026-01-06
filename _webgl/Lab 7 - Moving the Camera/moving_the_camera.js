@@ -45,7 +45,7 @@ void main() {
 function main() {
 
   // Setup WebGL
-  const canvas = document.getElementById("canvasId");
+  const canvas = document.getElementById("canvas");
   const gl = initWebGL(canvas);
   
   // Create WebGL program 
@@ -54,7 +54,7 @@ function main() {
   // Set the shader program
   gl.useProgram(program);
 
-// Define cube vertices
+  // Define cube vertices
   const vertices = new Float32Array([
     // x  y  z      r  g  b     u  v                    + ------ +
     // front                                           /|       /|
@@ -128,12 +128,25 @@ function main() {
   const camera = new Camera(canvas);
 
   // Timer
-  let lastTime = 0;
+  let lastTime = null;
+
+  camera.eye = [0, 4, -2];
+  camera.pitch = -45 * Math.PI /180;
 
   // Render function
   function render(time) {
+
+    // Manual init call, no timing yet
+    if (time == null) {
+        requestAnimationFrame(render);
+        return;
+    }
+
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // Set the shader program
+    gl.useProgram(program);
 
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
@@ -145,23 +158,26 @@ function main() {
     lastTime = time;
     camera.update(dt);
 
-    // Calculate view and projection matrices
-    const view       = camera.lookAt();
-    // const projection = camera.orthographic(-2, 2, -2, 2, 0, 100);
-    const projection = camera.perspective();
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
+    // Calculate view matrix
+    const view = camera.getViewMatrix();
+
+    // Calculate projection matrix
+    const projection = camera.getPerspectiveMatrix();
+
+    // Send view and projection matrix to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
 
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
       
       // Calculate the model matrix
-      const translate = new Mat4().translate(...cubes[i].position);
-      const scale     = new Mat4().scale(0.5, 0.5, 0.5);
+      const translate = new Mat4().translate(cubes[i].position);
+      const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
       const angle     = 0;
-      const rotate    = new Mat4().rotate(0, 1, 0, angle);
+      const rotate    = new Mat4().rotate([0, 1, 0], angle);
       const model     = translate.multiply(rotate).multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
       // Draw the rectangle
       gl.bindVertexArray(vao);

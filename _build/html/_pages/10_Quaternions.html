@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -660,7 +660,7 @@ document.write(`
 <h2>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Link to this heading">#</a></h2>
 <p>We are currently using Euler angles rotation to calculate the view matrix in the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> Camera class function (see <a class="reference internal" href="#camera-class-section"><span class="xref myst">6. 3D worlds</span></a>). As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (try looking at the cubes from directly above or below, you will notice the orientation suddenly flipping around – see the video below). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_without_quaternion.mp4" type="video/mp4">
 </video>
 </center>
@@ -714,7 +714,7 @@ document.write(`
 </div>
 <p>Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> without the orientation flipping around.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Camera_with_quaternion.mp4" type="video/mp4">
 </video>
 </center>
@@ -814,7 +814,7 @@ document.write(`
 \[ View = Translate(\mathbf{offset}) \cdot View \]</div>
 <p>The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -822,7 +822,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ Rotate = R_y(yaw) \cdot R_x(pitch).\]</div>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
@@ -846,7 +846,7 @@ document.write(`
 <li><p>Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. The character movement direction should be governed by a character <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered by the A and D keys.</p></li>
 </ol>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/10_Third_person_camera_3.mp4" type="video/mp4">
 </video>
 </center>

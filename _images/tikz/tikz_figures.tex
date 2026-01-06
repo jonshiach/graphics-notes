@@ -276,13 +276,13 @@
 % \end{tikzpicture}
 
 % Cross product
-\begin{tikzpicture}[auto]
-    \draw [vector, blue] (0,0) -- (-20:3) node [pos=0.5,below left] {$\vec{a}$};
-    \draw [vector, red] (0,0) -- (20:3) node [pos=0.5,above left] {$\vec{b}$};
-    \draw [vector, mygreen] (0,0) -- (90:2) node [above] {$\vec{a} \times \vec{b}$};
-    \draw [blue,thin] (-20:0.25) -- ++(90:0.25) -- ++(160:0.25);
-    \draw [red,thin] (20:0.25) -- ++(90:0.25) -- ++(200:0.25);
-\end{tikzpicture}
+% \begin{tikzpicture}[auto]
+%     \draw [vector, blue] (0,0) -- (-20:3) node [pos=0.5,below left] {$\vec{a}$};
+%     \draw [vector, red] (0,0) -- (20:3) node [pos=0.5,above left] {$\vec{b}$};
+%     \draw [vector, mygreen] (0,0) -- (90:2) node [above] {$\vec{a} \times \vec{b}$};
+%     \draw [blue,thin] (-20:0.25) -- ++(90:0.25) -- ++(160:0.25);
+%     \draw [red,thin] (20:0.25) -- ++(90:0.25) -- ++(200:0.25);
+% \end{tikzpicture}
 
 % Column major order
 % \begin{tikzpicture}
@@ -974,14 +974,14 @@
 % \end{tikzpicture}
 
 % Depth test
-% \begin{tikzpicture}
-%     \tikzmath{\l1=4;\l2=3;};
-%     \coordinate (origin) at (0,0);
-%     \draw [red, fill=red!50] ($(origin)+(-1,1)$) -- ++(\l2, 0) -- ++(-0.5*\l2, {sqrt(0.75*\l2*\l2)}) -- cycle;
-%     \draw [blue, fill=blue!50] (origin) -- ++(\l1, 0) -- ++(-0.5*\l1, {sqrt(0.75*\l1*\l1)}) -- cycle;
-%     \node at ($(origin)+(0.5*\l1,0.5)$) {near};
-%     \node at ($(origin)+(-1,1)+(0.5*\l2,0.5)$) {far};
-% \end{tikzpicture}
+\begin{tikzpicture}
+    \tikzmath{\l1=4;\l2=3;};
+    \coordinate (origin) at (0,0);
+    \draw [blue, fill=blue!50] (origin) -- ++(\l1, 0) -- ++(-0.5*\l1, {sqrt(0.75*\l1*\l1)}) -- cycle;
+    \draw [red, fill=red!50] ($(origin)+(-1,1)$) -- ++(\l2, 0) -- ++(-0.5*\l2, {sqrt(0.75*\l2*\l2)}) -- cycle;
+    \node at ($(origin)+(0.5*\l1,0.5)$) {near};
+    \node at ($(origin)+(-1,1)+(0.5*\l2,0.5)$) {far};
+\end{tikzpicture}
 
 % Orthographic projection
 % \begin{tikzpicture}

@@ -69,7 +69,7 @@ function main() {
   const vao = createVao(gl, program, vertices, indices);
 
   // Load texture
-  const texture = loadTexture(gl, "assets/mario.png");
+  const texture = loadTexture(gl, "assets/mario_small.png");
   const texture2 = loadTexture(gl, "assets/crate.png");
 
   // Bind texture

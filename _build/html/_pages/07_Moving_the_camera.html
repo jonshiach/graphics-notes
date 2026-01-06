@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -457,9 +457,7 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Change the constructor declaration in the <em><strong>camera.js</strong></em> file so that a canvas object is inputted.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Camera</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">constructor</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </pre></div>
 </div>
 <p>Then add the following to the Camera class constructor.</p>
@@ -478,26 +476,33 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method definition to the Camera class.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update movement</span>
-<span class="nx">update</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">update</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="c1">// Update camera vectors</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">updateVectors</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">);</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">([</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sy</span><span class="p">,</span><span class="w"> </span><span class="nx">sp</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cy</span><span class="p">]);</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">));</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">));</span>
 
 <span class="w">  </span><span class="c1">// Camera movement</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vel</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vel</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vel</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vel</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
 <span class="w">  </span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">normalize</span><span class="p">());</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">move</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dt</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">dt</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<p>Here we created a method to update the camera vectors based on the keyboard input. After we call the <code class="docutils literal notranslate"><span class="pre">.updateVectors()</span></code> method to calculate the <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> vectors, we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the velocity vector. This is normalized and then added to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
+<p>Here we created a method to update the camera vectors based on the keyboard input. After we calculate the <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> vectors, we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the velocity vector. This is normalized and then added to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Change the creation of the Camera object so that it now takes in the canvas input.</p>
@@ -513,7 +518,7 @@ document.write(`
 </div>
 <p>Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_keyboard_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -538,27 +543,29 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have created the variable <code class="docutils literal notranslate"><span class="pre">lastFrame</span></code> which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames <code class="docutils literal notranslate"><span class="pre">dt</span></code> in second which we have entered this as an input in the <code class="docutils literal notranslate"><span class="pre">.update()</span></code> Camera class method, so we now need to update that.</p>
+<p>Here we have created the variable <code class="docutils literal notranslate"><span class="pre">lastFrame</span></code> which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames <code class="docutils literal notranslate"><span class="pre">dt</span></code> in second which we have entered this as an input in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method, so we now need to update that.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>First add the following to the Camera class constructor.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Then change the <code class="docutils literal notranslate"><span class="pre">.update()</span></code> method declaration so that it takes in the <code class="docutils literal notranslate"><span class="pre">dt</span></code> input.</p>
+<p>Then change the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method declaration so that it takes in the <code class="docutils literal notranslate"><span class="pre">dt</span></code> input.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update movement</span>
 <span class="nx">update</span><span class="p">(</span><span class="nx">dt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </pre></div>
 </div>
 <p>Finally, change the calculation of the new <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector to the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">move</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dt</span><span class="p">;</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">normalize</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="nx">move</span><span class="p">));</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">vel</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">dt</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">),</span><span class="w"> </span><span class="nx">move</span><span class="p">));</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <p>So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed before it is added to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_keyboard_2.mp4" type="video/mp4">
 </video>
 </center>
@@ -577,7 +584,7 @@ document.write(`
 <p><span class="caption-number">Fig. 60 </span><span class="caption-text">Yaw, pitch and roll</span><a class="headerlink" href="#yaw-pitch-roll-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To point our camera we only need the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles which we are going to change using mouse inputs such that when the mouse is moved left and right the <span class="math notranslate nohighlight">\(yaw\)</span> angle changes and when the mouse is moved up and down the <span class="math notranslate nohighlight">\(pitch\)</span> angle changes. Our <code class="docutils literal notranslate"><span class="pre">.lookAt()</span></code> method uses the front vector to calculate the view matrix so we need some way of calculating the front vector from the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles.</p>
+<p>To point our camera we only need the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles which we are going to change using mouse inputs such that when the mouse is moved left and right the <span class="math notranslate nohighlight">\(yaw\)</span> angle changes and when the mouse is moved up and down the <span class="math notranslate nohighlight">\(pitch\)</span> angle changes. Our <code class="docutils literal notranslate"><span class="pre">getViewMatrix()</span></code> method uses the front vector to calculate the view matrix, so we need some way of calculating the front vector from the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles.</p>
 <figure class="align-default" id="yaw-figure">
 <a class="reference internal image-reference" href="../_images/07_yaw.svg"><img alt="../_images/07_yaw.svg" src="../_images/07_yaw.svg" style="width: 350px;" />
 </a>
@@ -625,17 +632,16 @@ document.write(`
 <span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.005</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And edit the <code class="docutils literal notranslate"><span class="pre">.updateVectors()</span></code> method so that it looks like the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update camera vectors</span>
-<span class="nx">updateVectors</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<p>And edit the <code class="docutils literal notranslate"><span class="pre">updateVectors()</span></code> method so that it looks like the following.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">updateVectors</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sy</span><span class="p">,</span><span class="w"> </span><span class="nx">sp</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cy</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">([</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sy</span><span class="p">,</span><span class="w"> </span><span class="nx">sp</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cy</span><span class="p">]);</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">));</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -653,7 +659,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have added two event listeners. The first detects whether the mouse has been clicked in the browser window and if so, hides the mouse pointed and locks it to the canvas using <code class="docutils literal notranslate"><span class="pre">.requestPointerLock()</span></code>. The second uses the <code class="docutils literal notranslate"><span class="pre">.mouseMove()</span></code> method which we will now write to return the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates (in pixels) of the mouse pointer.</p>
+<p>Here we have added two event listeners. The first detects whether the mouse has been clicked in the browser window and if so, hides the mouse pointed and locks it to the canvas using <code class="docutils literal notranslate"><span class="pre">requestPointerLock()</span></code>. The second uses the <code class="docutils literal notranslate"><span class="pre">mouseMove()</span></code> method which we will now write to return the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates (in pixels) of the mouse pointer.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Camera class.</p>
@@ -669,7 +675,7 @@ document.write(`
 <p>Here we have defined a simple method to update the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles based on the mouse cursor movement. Note that we subtract the <span class="math notranslate nohighlight">\(y\)</span> coordinate from the <span class="math notranslate nohighlight">\(pitch\)</span> angle becase the mouse coordinates are relative to the top left-hand corner of the canvas.</p>
 <p>Running the program and we can now move around our world space and point the camera using the mouse.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_mouse_1.mp4" type="video/mp4">
 </video>
 </center>
@@ -678,14 +684,14 @@ document.write(`
 <h3>Limiting the pitch angle<a class="headerlink" href="#limiting-the-pitch-angle" title="Link to this heading">#</a></h3>
 <p>A problem that we have with our camera is that when we try to look straight up or straight down the orientation of the world flips. Position the camera above (or below) the crates and move the camera past <span class="math notranslate nohighlight">\(90^\circ\)</span> and <span class="math notranslate nohighlight">\(-90^\circ\)</span>.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/06_mouse_3.mp4" type="video/mp4">
 </video>
 </center>
-<p>This is due to the calculation of <span class="math notranslate nohighlight">\(\cos(pitch)\)</span> and <span class="math notranslate nohighlight">\(\sin(pitch)\)</span> in equation <a class="reference internal" href="#equation-eq-euler-to-vector">(21)</a>. To prevent this we can limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle in the <code class="docutils literal notranslate"><span class="pre">.mouseMove()</span></code> Camera class method.</p>
+<p>This is due to the calculation of <span class="math notranslate nohighlight">\(\cos(pitch)\)</span> and <span class="math notranslate nohighlight">\(\sin(pitch)\)</span> in equation <a class="reference internal" href="#equation-eq-euler-to-vector">(21)</a>. To prevent this we can limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle in the <code class="docutils literal notranslate"><span class="pre">mouseMove()</span></code> Camera class method.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following code to the <code class="docutils literal notranslate"><span class="pre">.mouseMove()</span></code> method in the <em><strong>camera.js</strong></em> file.</p>
+<p>Add the following code to the <code class="docutils literal notranslate"><span class="pre">mouseMove()</span></code> method in the <em><strong>camera.js</strong></em> file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Limit the pitch angle to -89 degrees &lt; pitch &lt; 89 degrees</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">pitchLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">89</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="o">-</span><span class="nx">pitchLimit</span><span class="p">,</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">pitchLimit</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">));</span>
@@ -710,7 +716,7 @@ document.write(`
 <p>Since in computer graphics are surfaces are triangles, we can easily calculate a normal vector using a <a class="reference internal" href="04_Vectors_and_matrices.html#cross-product-section"><span class="std std-ref">cross product</span></a>. If a triangle has vertices <span class="math notranslate nohighlight">\(\vec{v}_0\)</span>, <span class="math notranslate nohighlight">\(\vec{v}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{v}_2\)</span> then the normal vector can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \vec{n} = (\vec{v}_1 - \vec{v}_0) \times (\vec{v}_2 - \vec{v}_1). \]</div>
-<p>A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference and we have halved the number of surfaces the shader has to deal with (<a class="reference internal" href="#backface-culling-figure"><span class="std std-numref">Fig. 64</span></a>).</p>
+<p>A surface is said to be back facing it its normal vector is pointing away from the camera position. If we only render the front facing surfaces then, assuming the surfaces are opaque, we should not notice any difference, and we have halved the number of surfaces the shader has to deal with (<a class="reference internal" href="#backface-culling-figure"><span class="std std-numref">Fig. 64</span></a>).</p>
 <figure class="align-default" id="backface-culling-figure">
 <a class="reference internal image-reference" href="../_images/07_backface_culling.svg"><img alt="../_images/07_backface_culling.svg" src="../_images/07_backface_culling.svg" style="width: 300px;" />
 </a>
@@ -744,8 +750,8 @@ document.write(`
 </div>
 <p>Refresh your web browser and use the keyboard and mouse to put the camera inside a cube. You will now see that the back faces haven’t been rendered.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
-    <source src="../_static/videos/07_mouse_2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/07_mouse_3.mp4" type="video/mp4">
 </video>
 </center>
 </section>
@@ -753,7 +759,7 @@ document.write(`
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Make it so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> co-ordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.</p></li>
+<li><p>Make it so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.</p></li>
 <li><p>Add the ability for the user to perform a jump by pressing the space bar. The jump should last for 1 second and the camera should follow a smooth arc. Hint: the function <span class="math notranslate nohighlight">\(y = h \sin(\pi t)\)</span> produces values of <span class="math notranslate nohighlight">\(y=0\)</span> when <span class="math notranslate nohighlight">\(t = 0\)</span> or <span class="math notranslate nohighlight">\(t = 1\)</span> and <span class="math notranslate nohighlight">\(y = h\)</span> when <span class="math notranslate nohighlight">\(t = 0.5\)</span>.</p></li>
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
 <ul class="simple">
@@ -771,7 +777,7 @@ document.write(`
 <section id="video-walkthrough">
 <h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
 <p>The video below walks you through these lab materials.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Au7U-dJobM8?si=1Ajdd3NEsGcbf1cJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

@@ -29,7 +29,7 @@ class Camera {
     window.addEventListener("keydown", e => this.keys[e.key] = true);
     window.addEventListener("keyup"  , e => this.keys[e.key] = false);
     canvas.addEventListener("click", () => canvas.requestPointerLock());
-    document.addEventListener("mousemove", e => this.mouseMove(e));
+    document.addEventListener("mousemove", e => this.mouseMove(e))
   }
 
   // Update camera vectors
@@ -117,10 +117,51 @@ class Camera {
       0, 0, -2 * this.far * this.near * fn, 0
     );
   }
+}
 
-  // Quaternion camera
-  quaternionCamera() {
+class quaternionCamera{
+  constructor(canvas) {
+    this.eye = new Vec3(0, 0, 0);
+    this.orientation = new Quaternion(1, 0, 0, 1);
 
-    const q = Quaternion.fromEuler(this.pitch, this.yaw, this.roll);
+    // Projection settings
+    this.fov    = 45 * Math.PI / 180;
+    this.aspect = 800 / 600;
+    this.near   = 0.1;
+    this.far    = 1000;
+
+    // Movement
+    this.speed = 5;
+    this.keys  = [];
+
+    // Mouse sensitivity
+    this.turnSpeed = 0.005;
+
+    // Keyboard and mouse Input
+    this.canvas = canvas;
+    window.addEventListener("keydown", e => this.keys[e.key] = true);
+    window.addEventListener("keyup"  , e => this.keys[e.key] = false);
+    canvas.addEventListener("click", () => canvas.requestPointerLock());
+    document.addEventListener("mousemove", e => this.mouseMove(e))
   }
+
+  // Update camera position
+  update(dt) {
+
+    // Update camera vectors
+    this.updateVectors();
+
+    // Camera movement
+    let vel = new Vec3(0, 0, 0);
+
+    if (this.keys["w"]) vel = vel.add(this.front);
+    if (this.keys["s"]) vel = vel.subtract(this.front);
+    if (this.keys["a"]) vel = vel.subtract(this.right);
+    if (this.keys["d"]) vel = vel.add(this.right);
+    
+    const move = this.speed * dt;
+    if (vel.length() > 0) this.eye = this.eye.add(vel.normalize().scale(
+    move));
+  }
+
 }

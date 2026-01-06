@@ -301,15 +301,25 @@ function main() {
 
   // Create camera object
   const camera = new Camera(canvas);
-  camera.eye = new Vec3(6, 2, 5);
+  camera.eye = [6, 2, 5];
 
   // Timer
   let lastTime = 0;
 
   // Render function
   function render(time) {
+
+    // Manual init call, no timing yet
+    if (time == null) {
+        requestAnimationFrame(render);
+        return;
+    }
+
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // Set the shader program
+    gl.useProgram(program);
 
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
@@ -321,17 +331,18 @@ function main() {
     lastTime = time;
     camera.update(dt);
 
-    // Use shader program
-    gl.useProgram(program);
+    // Calculate view matrix
+    const view = camera.getViewMatrix();
 
-    // Calculate view and projection matrices
-    const view       = camera.lookAt();
-    const projection = camera.perspective();
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
+    // Calculate projection matrix
+    const projection = camera.getPerspectiveMatrix();
+
+    // Send view and projection matrix to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
 
     // Send camera position to the shader
-    gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye.array);
+    gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye);
 
     // Send light source properties to the shader
     gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), numLights);
@@ -351,11 +362,11 @@ function main() {
     for (let i = 0; i < numCubes; i++){
       
       // Calculate the model matrix
-      const translate = new Mat4().translate(...cubes[i].position);
-      const scale     = new Mat4().scale(0.5, 0.5, 0.5);
-      const rotate    = new Mat4().rotate(0, 1, 0, 0);
+      const translate = new Mat4().translate(cubes[i].position);
+      const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
+      const rotate    = new Mat4().rotate([0, 1, 0], 0);
       const model     = translate.multiply(rotate).multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
       // Send object light properties to the shader
       gl.uniform1f(gl.getUniformLocation(program, "uKa"), cubes[i].ka);
@@ -373,19 +384,19 @@ function main() {
 
     for (let i = 0; i < numLights; i++) {
       // Calculate model matrix for light source
-      const translate = new Mat4().translate(...lightSources[i].position);
-      const scale     = new Mat4().scale(0.1, 0.1, 0.1);
+      const translate = new Mat4().translate(lightSources[i].position);
+      const scale     = new Mat4().scale([0.1, 0.1, 0.1]);
       const model     = translate.multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
-      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
-      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.elements);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.elements);
+      gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.elements);
 
       // Send light colour to the shader
       gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
 
       // Draw light source cube
       gl.bindVertexArray(vao);
-      gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
     }
 
     // Render next frame

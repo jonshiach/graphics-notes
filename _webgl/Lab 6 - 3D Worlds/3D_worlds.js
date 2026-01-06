@@ -54,7 +54,7 @@ function main() {
   // Set the shader program
   gl.useProgram(program);
 
-// Define cube vertices
+  // Define cube vertices
   const vertices = new Float32Array([
     // x  y  z      r  g  b     u  v                    + ------ +
     // front                                           /|       /|
@@ -112,12 +112,11 @@ function main() {
   ]);
 
   // Define cube positions
-  const cubes = [
+  const pos = [
     { position : [0, 0, -2] },
     { position : [0, 0, -6] }
   ];
   const numCubes = cubes.length;
-
 
   // Create VAOs
   const vao = createVao(gl, program, vertices, indices);
@@ -130,6 +129,13 @@ function main() {
 
   // Render function
   function render(time) {
+    
+    // Manual init call, no timing yet
+    if (time == null) {
+        requestAnimationFrame(render);
+        return;
+    }
+
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -139,28 +145,34 @@ function main() {
     gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
     // Update camera vectors
-    const target = new Vec3(0, 0, -2);
-    camera.eye   = new Vec3(1, 1, 1);
-    camera.front = target.subtract(camera.eye).normalize();
-    camera.updateVectors();
+    const target = [0, 0, -2];
+    camera.eye   = [1, 1, 1];
+    camera.front = normalize(subtractVector(target, camera.eye));
+    camera.right = normalize(cross(camera.front, camera.worldUp));
+    camera.up    = normalize(cross(camera.right, camera.front));
 
-    // Calculate view and projection matrices
-    const view       = camera.lookAt();
-    // const projection = camera.orthographic(-2, 2, -2, 2, 0, 100);
-    const projection = camera.perspective();
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
+    // Calculate view matrix
+    const view = camera.getViewMatrix();
+
+    // Calculate projection matrix
+    // const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
+    camera.fov = 120 * Math.PI / 180;
+    const  projection = camera.getPerspectiveMatrix();
+
+    // Send view and project matrices to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
 
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
       
       // Calculate the model matrix
-      const translate = new Mat4().translate(...cubes[i].position);
-      const scale     = new Mat4().scale(0.5, 0.5, 0.5);
+      const translate = new Mat4().translate(cubes[i].position);
+      const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
       const angle     = 0;
-      const rotate    = new Mat4().rotate(0, 1, 0, angle);
+      const rotate    = new Mat4().rotate([0, 1, 0], angle);
       const model     = translate.multiply(rotate).multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
       // Draw the rectangle
       gl.bindVertexArray(vao);

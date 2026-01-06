@@ -109,7 +109,7 @@ function main() {
     30, 31, 32, 33, 34, 35   // top
   ]);
 
-  // Create VAOs
+  // Create VAO
   const vao = createVao(gl, program, vertices, indices);
 
   // Load texture
@@ -117,16 +117,21 @@ function main() {
 
   // Render function
   function render(time) {
+
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);
 
+    // Set the shader program
+    gl.useProgram(program);
+
     // Calculate the model matrix
-    const translate = new Mat4().translate(0, 0, 0);
-    const scale     = new Mat4().scale(1, 1, 1);
-    const angle     = 0;
-    const rotate    = new Mat4().rotate(0, 1, 0, angle);
+    const translate = new Mat4().translate([0, 0, 0]);
+    const scale     = new Mat4().scale([1, 1, 1]);
+    const rotate    = new Mat4().rotate([0, 1, 0], 0);
     const model     = translate.multiply(rotate).multiply(scale);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+    // Send the model matrix to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
@@ -135,7 +140,7 @@ function main() {
 
     // Draw the rectangle
     gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 
     // Render next frame
     requestAnimationFrame(render);

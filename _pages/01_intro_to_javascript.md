@@ -37,7 +37,7 @@ Create a folder called ***Lab 1 Intro to JavaScript***. In Visual Studio Code, c
 
 Save the file using **File > Save** (<kbd>ctrl</kbd> + <kbd>S</kbd> on Windows or Linux or <kbd>&#8984;</kbd> + <kbd>S</kbd> on MacOS), give it the filename ***index.html*** and save it to your ***Lab 1 Intro to JavaScript*** folder.
 
-Create another file and enter the following code
+Create another file called ***intro_to_javascript.js*** and enter the following code into it.
 
 ```javascript
 function setupConsoleOutput(elementId) {
@@ -52,14 +52,17 @@ function setupConsoleOutput(elementId) {
 }
 
 setupConsoleOutput("console-output");
-console.log('Lab 1 - Intro to JavaScript\n---------------------------');
+console.log("Lab 1 - Intro to JavaScript\n---------------------------");
 ```
 
-Save it to your folder using the filename ***intro_to_javascript.js*** .
+Select the ***index.html*** file and launcha live server by clicking on "Go Live" in the bottom right-hand corner of the window.
+
+```{figure} ../_images/01_VScode.png
+```
 
 :::
 
-Here we have created a basic HTML file which we will open in a web browser (Goodle Chrome is recommended) along with a JavaScript file in which have defined the function `setupConsoleOutput()`. This means that any call to `console.log()` will output to the HTML page (`console.log()` is a debugging tool that prints information to the browser's developer console). Open ***index.html*** using a live server, and you should see a plain webpage with the following.
+Here we have created a basic HTML file along with a JavaScript file in which have defined the function `setupConsoleOutput()`. This means that any call to `console.log()` will output to the HTML page (`console.log()` is a debugging tool that prints information to the browser's developer console). If everything has gone to plan you should see a plain web page with the following.
 
 ```text
 Lab 1 - Intro to JavaScript
@@ -74,6 +77,10 @@ If you don't have the Live Server extension installed in Visual Studio Code foll
 3. Install Live Server by Ritwick Dey
 
 Once installed, VS Code may prompt you to reload.
+:::
+
+:::{note}
+The live server will automatically refresh the webpage whenever a file in the project is saved.
 :::
 
 ---
@@ -99,7 +106,7 @@ Enter the following into the ***intro_to_javascript.js*** file.
 
 ```javascript
 // Variables
-console.log('\nVariables\n---------')
+console.log("\nVariables\n---------')
 let score;
 score = 10;
 console.log("score: " + score);
@@ -127,7 +134,7 @@ Add the following to your JavaScript file.
 
 ```javascript
 const lives = 3;
-lives -= 1;
+lives = 1;
 console.log("lives: " + lives);
 ```
 
@@ -140,14 +147,14 @@ Uncaught TypeError: Assignment to constant variable.
     at intro_to_javascript.js:24:7
 ```
 
-Here the error message is telling us we have an error in the ***intro_to_javascript.js*** on line 24 (this may vary depending on your code). The error we have here is we have declared `lives` using the `const` keyword, set it equal to 3 and then try to delete 1 from its value. To resolve this error simply change the `const` to `let` and refresh your browser, and you should see the following added to the web page.
+Here the error message is telling us we have an error in the ***intro_to_javascript.js*** on line 24 (this may vary depending on your code). The error we have here is we have declared `lives` using the `const` keyword, set it equal to 3 and then try to reasssign it to 1. To resolve this error simply change the `const` to `let` and refresh your browser, and you should see the following added to the web page.
 
 ```text
 lives: 2
 ```
 
-```{note} const vs let
-So if delcaring a variable using `let` allows you to change its value why do we need `const`? Many variables are assigned once and never reassigned, so using `const` prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use `const` unless you know for certain the you will be reassigning the variable later.
+```{note}
+So if declaring a variable using `let` allows you to change its value why do we need `const`? Many variables are assigned once and never reassigned, so using `const` prevents bugs caused by accidental reassignment and also communicates intent to someone reading the code. In practice, always use `const` unless you know for certain the you will be reassigning the variable later.
 ```
 
 ### Variable names
@@ -174,7 +181,7 @@ let height = 5;
 let area = width * height;
 ```
 
-does. Where variable names are a concatenation of two or more words it is common practice to use **camelCase** where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example
+does. Where variable names are a concatenation of two or more words it is common practice to use <a href="https://en.wikipedia.org/wiki/Camel_case" target="_blank">**camelCase**</a> where the first word starts with a lowercase letter and all subsequent words start with an uppercase letter, for example
 
 ```javascript
 let playerScore;
@@ -189,14 +196,14 @@ JavaScript has 8 core data types
 
 | Type | Description |
 |:--|:--|
-| `number` | Integer numbers (whole numbers) and floating-point numbers (decimals) |
-| `string` | Sequence of letters |
-| `boolean` | `true` or `false` logical values |
-| `undefined` | A variable that has been declared but not assigned a value |
-| `null` | Intentional absence of a value |
-| `symbol` | Used to represent a unique identifier (used mainly in advanced code) |
-| `bigint` | Integers larget than those that can be represented exactly |
-| `object` | Used for collections of data and more complex structures (e.g., arrays, functions) |
+| number | Integer numbers (whole numbers) and floating-point numbers (decimals) |
+| string | Sequence of letters |
+| boolean | `true` or `false` logical values |
+| undefined | A variable that has been declared but not assigned a value |
+| null | Intentional absence of a value |
+| symbol | Used to represent a unique identifier (used mainly in advanced code) |
+| bigint | Integers larger than those that can be represented exactly |
+| object | Used for collections of data and more complex structures (e.g., arrays, functions) |
 
 We can check data type using the `typeof` operator. JavaScript is a **dynamically typed** programming language which means we do not need to declare a variable's data type, the type comes from the value already stored.
 
@@ -241,7 +248,7 @@ The data type of myVariable is string
 Arithmetic operators are used to perform mathematical calculations on numbers. The arithmetic operators in JavaScript are similar to those used in other languages.
 
 | Operator | Description | Example | Result |
-|:--:|:--|:--|:--|
+| :--: | :-- | :-- | :-- |
 | `+` | Addition | `5 + 3` | `8` |
 | `-` | Subtraction | `5 - 3` | `2` |
 | `*` | Multiplication | `5 * 3` | `15` |
@@ -252,13 +259,86 @@ Arithmetic operators are used to perform mathematical calculations on numbers. T
 There are also shorthand versions for common operations.
 
 | Operator | Description | Example | Equivalent |
-|:--:|:--|:--|:--|
+| :--: | :-- | :-- | :-- |
 | `+=` | Add to | `x += 5` | `x = x + 5` |
 | `-=` | Subtract from | `x -= 2` | `x = x - 2` |
 | `*=` | Multiply by | `x *= 3` | `x = x * 3` |
 | `/=` | Divide by | `x /= 2` | `x = x / 2` |
 | `++` | Increment by 1 | `x++` | `x = x + 1` |
 | `--` | Decrement by 1 | `x--` | `x = x - 1` |
+
+---
+
+## The Math library
+
+JavaScript provides a built-in object called Math that contains properties and functions for common mathematical operations. All methods and constants from the Math library are accessed using the `Math.` prefix, for example
+
+```javascript
+const x = Math.sqrt(2);
+```
+
+Some useful methods from the Math library are
+
+| Method | Description | Example | Result |
+| :--: | :-- | :-- | :-- |
+| `Math.sqrt()` | Square root | `x = Math.sqrt(9)` | `3` |
+| `Math.cos()` | Cosine | `x = Math.cos(0)` | `1` |
+| `Math.sin()` | Sine | `x = Math.sin(0)` | `0` |
+| `Math.abs()` | Absolute value (ignore sign) | `x = Math.abs(-1)` | `1` |
+| `Math.pos()` | Power | `x = Math.pos(3,2)` | `9` |
+| `Math.round()` | Round to nearest integer | `x = Math.round(1.23)` | `1` |
+| `Math.floor()` | Round down | `x = Math.round(2.718)` | `2` |
+| `Math.min()` | Minimum value | `x = Math.min(1, 2, 3)` | `1` |
+| `Math.max()` | Maximum value | `x = Math.max(1, 2, 3)` | `3` |
+| `Math.random()` | Random number between 0 and 1 | `x = Math.random()` | `0.4517` |
+
+The Math library also provides several useful mathematical constants and read-only properties (they cannot be reassigned)
+
+| Constant | Description |
+| :-- | :-- |
+| `Math.PI` | $\pi = 3.1416$ |
+| `Math.E`  | Eulers number $e = 2.7183$ |
+| `Math.SQRT2` | $\sqrt{2} = 1.4142$ |
+| `Math.SQRT1_2` | $\sqrt{2}/2 = 0.7071$ |
+| `Math.LN2` | $\log_e(2) = 0.6931$ |
+| `Math.LN10` | $\log_e(10) = 2.3026$ |
+
+An example of the use of Math library constants that is used a lot in computer graphics is the conversion of an angle from degrees to <a href="https://en.wikipedia.org/wiki/Radian" target="_blank">radians</a> which is
+
+$$ radians = degrees \times \frac{\pi}{180}. $$
+
+For example, to convert $90^\circ$ to radians we have
+
+$$ radians = 90 \times \frac{\pi}{180} = 1.5708$$
+
+Most languages, including JavaScript and GLSL (the language used by WebGL to program on the GPU), assumes angles are always expressed in radians.
+
+:::{admonition} Task
+:class: tip
+
+Add the following to your JavaScript file.
+
+```javascript
+// Math library
+console.log("\nMath library\n------------")
+const angleInDegress = 90;
+const angleInRadians = angleInDegress * Math.PI / 180;
+console.log(`${angleInDegress} degrees is ${angleInRadians.toFixed(4)} radians.`);
+console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians)s);
+```
+
+:::
+
+Here we have used the Math library constant `Math.PI` to convert $90^\circ$ to radians and also shown that $\cos(90^\circ) = 0$. The method `.toFixed(4)` outputs the floating point number using 4 decimal places. Refresh your browser, and you should see the following on your web page.
+
+```text
+Math library
+------------
+90 degrees is 1.5708 radians.
+cos(90 degrees) = 6.123233995736766e-17
+```
+
+Note that $\cos(90^\circ)$ is outputted as $6.12 \times 10^{-17}$ which is 0.0000000000000000612 showing that floating point arithmetic is never exact.
 
 ---
 
@@ -355,7 +435,7 @@ colours = red,2,blue
 
 ### Appending to an array
 
-Additional values can be appended to the end of an array using `array.push(value)`.
+Additional values can be **appended** to the end of an array using `array.push(value)`.
 
 :::{admonition} Task
 :class: tip
@@ -375,11 +455,34 @@ Refresh your browser, and you should see the following is added to your web page
 colours = red,2,blue,3.1416
 ```
 
+### Concatenating arrays
+
+We can join, or **concatenate**, two or more arrays together to form a new array using `array1.concat(array2)`.
+
+:::{admonition} Task
+:class: tip
+
+Add the following to your JavaScript file.
+
+```javascript
+const moreColours = ["black", "white"];
+const concatenatedArray = colours.concat(moreColours);
+console.log("\nconcatenatedArray = " + concatenatedArray);
+```
+
+:::
+
+Refresh your browser, and you should see the following is added to your web page.
+
+```text
+concatenatedArray = red,2,blue,3.1416,black,white
+```
+
 ---
 
 ## Objects
 
-An **object** in JavaScript is like dictionary in Python or a data structure in C where a single variable can hold many variables. Objects are a collection of key value pairs where each key has a value. Objects are defined using curly braces `{ }`, property names and values separated with a colon `:` and commas are used to separate properties.
+An **object** in JavaScript is like dictionary in Python or a data structure in C where a single variable can hold many variables known as **properties**. Objects are defined using curly braces `{ }`, with property names and values separated with a colon `:` and each property is separated by a comma `,`.
 
 :::{admonition} Task
 :class: tip
@@ -503,15 +606,15 @@ if (condition1) {
 The condition statments used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
 
 | Operator | Description |
-|:--:|:--|
+| :--: | :-- |
 | `===` | equal to |
 | `!==` | not equal to |
-| `>`   | greater than |
-| `<`   | less than    |
-| `>=`  | greater than or equal to |
-| `<=`  | less than or equal to |
+| `>` | greater than |
+| `<` | less than |
+| `>=` | greater than or equal to |
+| `<=` | less than or equal to |
 
-Multiple comparisors can be joined using conjunctions
+Multiple comparisons can be joined using conjunctions
 
 | Conjunction | Description | True when |
 |:--:|:--:|:--|
@@ -633,7 +736,7 @@ Koopa Troopa
 
 ### While loops
 
-**While loops** are used to repeat code when the number of iterations is unknown. The basic syntax of a while loop is
+A **while** loop is used to repeat code when the number of iterations is unknown. The basic syntax of a while loop is
 
 ```javascript
 while (condition) {
@@ -714,7 +817,7 @@ Functions
 ---------
 ```
 
-Note that the text "Mario jumps!" has not been outputted. This is because despite defining the function we haven't **called** it.
+Note that the text "Mario jumps!" has not been outputted. This is because despite defining the function we haven't **called** it yet.
 
 :::{admonition} Task
 :class: tip
@@ -765,6 +868,8 @@ Functions can return a value using the keyword `return` which will terminate the
 :::{admonition} Task
 :class: tip
 
+Add the following to your JavaScript file.
+
 ```javascript
 function checkGameOver(lives) {
   if (lives <= 0) {
@@ -792,266 +897,169 @@ Make changes to the `lives` property of the player object to check that the func
 
 ## Object orientated programming
 
-The main difference between C++ and its predecessor C is that C++ has **classes** which allow us to use <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank">**Object Orientated Programming (OOP)**</a>. Procedural programming requires use to write code that performs operations on data whereas object orientated programming allows us to create objects that include both data and code. Object orientated programming makes code easier to write and modify and is often faster than procedural programming.
+**Object Orientated Programming (OOP)** is a way of designing programs by organising code around objects rather than isolated variables and functions. An **object** refers to a real or conceptual thing that combines data associated with the object and actions that can be performed on an object.
 
-### Classes/objects
+For example in the game Mario Kart, each racer can have the following properties
 
-A **class** defines the **attributes** (like variables) and **methods** (like functions) that the objects within the class will possess. For example, Let's create Car class which has the attributes for the `make`, `model`, `year` and `speed` of a car. The methods that apply to objects in our class may include `accelerate()`, `brake()` etc.
+- name
+- kart speed
+- current race position
+- power up
 
-Add the following code to your program outside any of the functions previously defined.
+and may perform the following actions
 
-```cpp
-class Car {
-public:
-    std::string make;
-    std::string model;
-    int year;
-    float speed = 0.0f;
-};
+- accelerate
+- brake
+- update position
+- use power up
+
+### Classes
+
+A **class** is a blueprint for creating objects, it defines:
+
+- **Properties** -- the data an object stores
+- **Methods** -- the actions that an object can perform.
+
+Classes allow us to create many similar objects in a consistent and organised way. Classes are defined using
+
+```javascript
+class Name {
+  constructor(parmeters) {
+    // declaration of class/object properties
+  }
+}
 ```
 
-- `class Car` -- Keyword used to create the Car class.
-- `public:` -- An **access specifier** that specifies which attributes and methods can be accessed outside of the class.
-- `std::string make;` -- Defines the attribute `make` which is a string. The other attributes are the string `model`, the integer `year` and the floating point number `speed` which is initially set to zero for any new object which is created.
+It is common practice to start a class name with an uppercase character. The **constructor** is a special function inside a class that runs automatically when a new obect is created. Its purpose is to initialise the object's properties.
 
-We can then create an object from our Car class and set its attributes. Let's create an object called `delorean` for a 1981 DeLorean DMC-12. In your `main()` function add the following code.
+:::{admonition} Task
+:class: tip
 
-```cpp
-// Define car object
-Car delorean;
-delorean.make = "Delorean";
-delorean.model = "DMC-12";
-delorean.year = 1981;
+Add the following to your JavaScript file.
+
+```javascript
+// Classes
+console.log("\nClasses\n-------")
+
+class Racer {
+  constructor(name, position) {
+    this.name = name;
+    this.speed = 0; 
+    this.position = position;
+    this.powerUp = null;
+  }
+}
 ```
 
-Here to create the object we specified the class name and the name of our object, e.g., `Car delorean;`. Then we define the car attributes using the name of the object followed by the name of the attribute, e.g., `delorean.make`.
+:::
 
-### Class methods
+Here we have defined a class called `Racer` along with a constructor that defines the properties of a Mario Kart raceer. Note that the values of `name` and `position` are parsed to the constructor, `speed` and `powerUp` are given default values. Note that `this` is a keyword that refers to the object that is currently being used.
 
-The methods for a class a functions that the objects in the class share. At the moment we have created a Car object but don't have a way of seeing what the make, model or year of the object are. Let's create a method to print out the attributes. Inside the Car class definition add the following code.
+### Creating objects
 
-```cpp
-// Methods
-void outputDetails();
+Once a class has been defined we can create objects from the class using the syntax
+
+```javascript
+const objectName = new ClassName(parameters);
 ```
 
-This declares a method called `outputDetails()` which does not have any inputs. To define the method itself we use the syntax
+:::{admonition} Task
+:class: tip
+
+Add the following to your JavaScript file.
+
+```javascript
+const toad = new Racer("Toad", 3);
+
+console.log("Name: " + toad.name);
+console.log("Speed: " + toad.speed);
+console.log("Position: " + toad["position"]);
+console.log("Power up: " + toad["powerUp"]);
+```
+
+:::
+
+Here we have created a Racer object called `toad`, given it a name and race position and outputted the values of the object properties. Note that object properties are accessed using either dot or bracket notation. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
-<return type> <class name> :: <method name>()
-{
-    // commands
+Classes
+-------
+Name: Toad
+Speed: 0
+Position: 3
+Power up: undefined
+```
+
+### Methods
+
+A **method** is a function that belongs to an object and are used to perform operations on the object. A method is defined in a class similarly to a function with the exception we do not need to use the `function` keyword. A method is called by using dot notation.
+
+:::{admonition} Task
+:class: tip
+
+Add the following to your Racer class.
+
+```javascript
+accelerate() {
+  this.speed += 5;
 }
 ```
 
-So to define the `outputDetails()` method add the following code outside of the Car class.
+And add the following at the end of the file.
 
-```cpp
-void Car::outputDetails()
-{
-std::cout << "\nMake: " << make
-          << "\nModel: " << model
-          << "\nYear: " << year << std::endl;
+```javascript
+toad.accelerate();
+console.log("Speed: " + toad.speed);
+```
+
+:::
+
+Here we have defined a method to accelerate the kart by adding 5 to the speed property (note that we use the `this` keyword to refer to the current object's speed property). We have then called this function and outputted the current speed. Refresh your browser, and you should see the following is added to your web page.
+
+```javascript
+Speed: 5
+```
+
+:::{admonition} Task
+:class: tip
+
+Add the following to the Racer class.
+
+```javascript
+addPowerUp() {
+  const powerUps = [
+    "Mushroom",
+    "Green Shell",
+    "Red Shell",
+    "Banana", 
+    "Star"
+  ]
+
+  const index = Math.floor(Math.random() * powerUps.length);
+  this.powerUp = powerUps[index];
+}
+
+print() {
+  console.log("\nRacer details\n-------------")
+  console.log("Name: " + this.name);
+  console.log("Speed: " + this.speed);
+  console.log("Position: " + this.position);
+  console.log("Power up: " + this.powerUp);
 }
 ```
 
-The `Car::` bit tells the compiler that this method belongs to the Car class. We could define the method inside of the class where we would not need `Car::` but this is not recommended practice.
+:::
 
-To call a method we use the syntax `<object name> . <method name>(<inputs>)`. We can now print the details of the car object using the following code.
-
-```cpp
-std::cout << "\nClasses\n-------" << std::endl;
-delorean.outputDetails();
-```
-
-Output:
+Here we have defined two methods for assigning a randomly selected power up and printing the object properties. Refresh your browser, and you should see the following is added to your web page (of course your power up may be different).
 
 ```text
-Make: DeLorean
-Model: DMC-12
-Year: 1981
+Racer details
+-------------
+Name: Toad
+Speed: 5
+Position: 3
+Power up: Banana
 ```
-
-Our `outputDetails()` method does not require any inputs because the attributes are known to all objects of the class. Let's define a method for accelerating the car which has an input argument for the amount of acceleration. Add the following to your Car class.
-
-```cpp
-void accelerate(const float);
-```
-
-Now define the method.
-
-```cpp
-void Car::accelerate(const float increment)
-{
-    speed = +increment;
-    std::cout << "\nThe car has accelerated to " << speed << " mph." << std::endl;
-}
-```
-
-Note that we do not have to give the name of the input in the method declaration (some people choose to do so to help with the readability of the code). Now we have created the `acceleration()` method Let's accelerate our car to 88 mph.
-
-```cpp
-// Accelerate the Delorean up to 88 mph
-delorean.accelerate(88.0f);
-```
-
-Compile and run your program and you should see the following outputted to the terminal.
-
-```text
-The car has accelerated to 88 mph.
-```
-
-### Constructors
-
-A **constructor** is a special method that is automatically called when an object of a class is created. A constructor has the same name as that of the class, so for our Car class we declare the constructor using `Car();` inside the Car class.
-
-```cpp
-// Constructor
-Car();
-```
-
-Now Let's define the constructor so that a message is printed to the terminal.
-
-```cpp
-Car::Car() 
-{
-    std::cout << "\nCar object created" << std::endl;
-}
-```
-
-When we create our `delorean` object the following is outputted
-
-```text
-Car object created
-```
-
-Constructors are more useful when we use parameters to set the values of the class attributes. Declare another constructor to include input parameters
-
-```cpp
-Car(const std::string, const std::string, const int);
-```
-
-and add the following constructor definition so that the attributes are specified.
-
-```cpp
-Car::Car(const std::string makeInput, const std::string modelInput, const int yearInput)
-{
-    make = makeInput;
-    model = modelInput;
-    year = yearInput;
-    std::cout << "\nCar object created" << std::endl;
-}
-```
-
-Now we can define the object attributes when we create the object. Comment out the code used to create the `delorean` object and define the make, model and year and enter the following.
-
-```cpp
-Car delorean("DeLorean", "DMC-12", 1981);
-```
-
-Compiling and running the code you should see nothing changes.
-
-### Static member functions
-
-A **static member function** is a function that belongs to a class rather than an instance of the class. Static member functions are useful because we can call them without needing an object of that class. Static member functions can be declared simply by prepending the keyword `static` to the function declaration.
-
-Let's say we want to define a function in the Car class that converts speed from miles per hour to kilometers per hour. We declare a static member function in the class
-
-```cpp
-static float mph2kph(const float);
-```
-
-and then define the function outside of the Car class
-
-```cpp
-float Car::mph2kph(const float speed)
-{
-    return speed * 1.60934f;
-}
-```
-
-We can now convert from miles per hour to kilometers per hour without needing to have a Car object declared. If Back to the Future had been set in Europe what would the speed be required for time travel? Let's call our static member function `mph2kph()` to find out.
-
-```cpp
-// Convert speed from mph to kph
-std::cout << "\n" << 88 << " mph is equivalent to " << Car::mph2kph(88.0f) << " kph." << std::endl;
-```
-
-Which gives the output
-
-```text
-88 mph is equivalent to 141.622 kph.
-```
-
-"*141.622 kilometers per hour!*" doesn't quite have the same ring to it as "*88 miles per hour!*" does it.
-
-### Header files
-
-When dealing with larger programs and larger classes it becomes necessary to split the code over multiple files. Classes are declared in a **header file** which usually have the extension `.hpp` (this isn't a requirement but has become standard practice in C++ programming). The methods of a class are then defined in a separate source files which have the extension `.cpp`.
-
-Cut and paste the Car class from the **Lab01_Intro_to_c++.cpp** file into the **Car.hpp** header file in the **Lab01_Intro_to_c++/** folder so that it looks like the following.
-
-```cpp
-#pragma once
-
-#include <iostream>
-
-class Car {
-
-public:
-    std::string make;
-    std::string model;
-    int year;
-    float speed = 0.0f;
-
-    // Constructor
-    Car(const std::string, const std::string, const int);
-
-    // Methods
-    void outputDetails();
-    void accelerate(const float);
-    static float mph2kph(const float);
-};
-```
-
-Note that we also need the `#include <iostream>` library so we can use strings and input/output commands. Cut and paste your Car class methods from the **Lab01_Intro_to_c++.cpp** file into the **Car.cpp** file so it looks like the following.
-
-```cpp
-#include "Car.hpp"
-
-void Car::outputDetails()
-{
-    std::cout << "\nMake: " << make
-              << "\nModel: " << model
-              << "\nYear: " << year << std::endl;
-}
-
-void Car::accelerate(const float increment)
-{
-    speed = +increment;
-    std::cout << "\nThe car has accelerated to " << speed << " mph." << std::endl;
-}
-
-Car::Car()
-{
-    std::cout << "\nCar object created" << std::endl;
-}
-
-Car::Car(const std::string makeInput, const std::string modelInput, const int yearInput)
-{
-    make = makeInput;
-    model = modelInput;
-    year = yearInput;
-    std::cout << "\nCar object created" << std::endl;
-}
-
-float Car::mph2kph(const float speed)
-{
-    return speed * 1.60934f;
-}
-```
-
-Here we have included the **Car.hpp** header file so that the compiler knows where the class is defined. Make sure you also include this in the **Lab01_Intro_to_c++.cpp** file, compile and run the program to check everything works ok.
 
 ---
 
@@ -1059,15 +1067,15 @@ Here we have included the **Car.hpp** header file so that the compiler knows whe
 
 1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information.
 <br>
-First create a class called `Student` that stores a student's name, ID number and degree course they are currently in. Use a constructor to initialise these values.
+First create a class called `Student` that stores a student's name, ID number and degree course they are currently in.
 
-1. Create an object of your `Student` class called `ellie` with the following details.
+2. Create an object of your Student class called `ellie` with the following details and output the property values.
 
 ```text
 Ellie Williams, 12345678, Computer Science
 ```
 
-3. Add a method called `print()` that prints the details of the student in the format shown below. Use this method to print the details of Ellie Williams.
+3. Add a method called `print()` that prints the details of the student in the format shown below. Use this method to print the details of the `ellie` object.
 
 ```text
 Student Information
@@ -1107,4 +1115,4 @@ Geralt of Rivia: 92, 75, 68, 78
 | 40 -- 49 | Third class |
 |  0 -- 40 | Fail |
 
-1. Write a function called `printAllStudents()` that prints all student records and use it on the `students` array.
+8. Write a function called `printAllStudents()` that prints all student records and use it on the `students` array.

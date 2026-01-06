@@ -6,7 +6,7 @@
 title: Computer Graphics
 author: Dr Jon Shiach
 copyright: "2026"
-logo: _images/logo.svg
+logo: _images/logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

@@ -13,11 +13,11 @@ where $(x',y',z')$ are the coordinates of the transformed point. Note that all v
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 5 Transformations*** and copy across the files from your ***Lab 3 Textures*** folder. Rename ***textures.js*** to ***transformations.js***, change the title of the web page to 'Lab 04 - Transformations' and add a script for the ***maths.js*** file.
+Copy your ***Lab 3 Textures*** folder you created in [Lab 3: Textures](textures-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 5 Transformations***, change the name of ***textures.js*** to ***transformations.js*** and update ***index.html*** to reference the new JavaScript file.
 
 :::
 
-Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 4 - Textures](textures-section).
+Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 3 - Textures](textures-section).
 
 ```{figure} ../_images/05_transformations.png
 :width: 80%
@@ -35,9 +35,9 @@ The right-handed coordinate system is where on your right hand:
 - the index finger points along the positive $y$-axis,
 - the middle finger points along the positive $z$-axis.
 
-The other way of representing 3D space is to use a left-hand coordinate system which is the same but on your left hand. 
+The other way of representing 3D space is to use a left-hand coordinate system which is the same but on your left hand.
 
-**WebGL uses the right-handed coordinate system** where the $x$-axis points to the right of the screen, the $y$-axis points towards the top of the screen and the $z$-axis points out of the screen towards you ({numref}`WebGL-co-ordinate-figure`). 
+**WebGL uses the right-handed coordinate system** where the $x$-axis points to the right of the screen, the $y$-axis points towards the top of the screen and the $z$-axis points out of the screen towards you ({numref}`WebGL-co-ordinate-figure`).
 
 ```{figure} ../_images/05_webgl_axes.svg
 :width: 300
@@ -46,7 +46,7 @@ The other way of representing 3D space is to use a left-hand coordinate system w
 The WebGL co-ordinate system.
 ```
 
-Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraies that use the left-handed coordinate system include DirectX, Direct3D and Unity.
+Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraries that use the left-handed coordinate system include DirectX, Direct3D and Unity.
 
 ---
 
@@ -145,8 +145,8 @@ We are going to define matrix class to compute the various transformation matric
 Add the following function definition to the matrix class in the ***maths.js*** file.
 
 ```javascript
-// Transformation matrices
-translate(x, y, z) {
+translate(t) {
+  const [x, y, z] = t;
   return new Mat4().set(
     1, 0, 0, 0,
     0, 1, 0, 0,
@@ -160,14 +160,14 @@ And add the following to the ***translations.js*** file before we draw the recta
 
 ```javascript
 // Calculate transformation matrices
-const translate = new Mat4().translate(0.4, 0.3, 0);
+const translate = new Mat4().translate([0.4, 0.3, 0]);
 ```
 
 :::
 
 Here we have defined the function `translate()` that results the translation matrix for a given translation vector and have called this function to compute `translateMatrix`.
 
-The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  **uniform**, like we did in the lab on [texture maps](uniforms-section).
+The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  **uniform**, like we did in [Lab 3: Textures](uniforms-section).
 
 :::{admonition} Task
 :class: tip
@@ -177,7 +177,7 @@ Add the following code after we have calculated the translation matrix.
 ```javascript
 // Send transformation matrices to the shader
 const model = translate;
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 ```
 
 :::
@@ -273,7 +273,8 @@ We have already created a model matrix and the uniform in the vertex shader, so 
 Enter the following function definition to the matrix class.
 
 ```javascript
-scale(x, y, z) {
+scale(s) {
+  const [x, y, z] = s;
   return new Mat4().set(
     x, 0, 0, 0,
     0, y, 0, 0,
@@ -283,10 +284,10 @@ scale(x, y, z) {
 }
 ```
 
-Enter the following code to the ***tranformations.js*** file after we calcuate the translation matrix.
+Enter the following code to the ***transformations.js*** file after we calculate the translation matrix.
 
 ```javascript
-const scale     = new Mat4().scale(0.5, 0.4, 1);
+const scale     = new Mat4().scale([0.5, 0.4, 1]);
 ```
 
 And change the model matrix to the following.
@@ -335,7 +336,7 @@ The steps required to scale a shape about its centre.
 As well as translating and scaling objects, the next most common transformation is the rotation of objects around the three co-ordinate axes $x$, $y$ and $z$. We define the rotation **anti-clockwise** around each of the co-ordinate axes by an angle $\theta$ when looking down the axes ({numref}`3D-rotation-figure`).
 
 ```{figure} ../_images/05_3D_rotation.svg
-:height: 450
+:height: 400
 :name: 3D-rotation-figure
 
 Rotation is assumed to be in the anti-clockwise direction when looking down the axis.
@@ -503,14 +504,14 @@ radians = degrees \times \frac{\pi}{180}
 Enter the following function definition to the matrix class.
 
 ```javascript
-rotateZ(rad) {
-  const c = Math.cos(rad);
-  const s = Math.sin(rad);
+rotateZ(angle) {
+  const c = Math.cos(angle);
+  const s = Math.sin(angle);
   return new Mat4().set(
-    c,  s, 0, 0,
-    -s, c, 0, 0,
-    0,  0, 1, 0,
-    0,  0, 0, 1
+    c,  s,  0,  0,
+    -s, c,  0,  0,
+    0,  0,  1,  0,
+    0,  0,  0,  1
   );
 }
 ```
@@ -538,8 +539,6 @@ Here we defined a function to the matrix class to calculate the rotation matrix.
 
 Rectangle rotated anti-clockwise about the $z$-axis by $45^\circ$.
 ```
-
----
 
 (axis-angle-rotation-section)=
 
@@ -740,28 +739,26 @@ The rotations around the three coordinates axis can be calculated using the axis
 Edit the `rotate()` function in the ***maths.js*** file so that it looks like the following.
 
 ```javascript
-rotate(x, y, z, rad) {
- const len = Math.sqrt(x * x + y * y + z * z);
- if (len > 0) {
-   x /= len; y /= len; z /= len;
- }
- const c = Math.cos(rad);
- const s = Math.sin(rad);
- const t = 1 - c;
+rotate(axis, angle) {
+   axis = normalize(axis);
+   const [x, y, z] = axis;
+   const c = Math.cos(angle);
+   const s = Math.sin(angle);
+   const t = 1 - c;
 
- return new Mat4().set(
-   t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
-   t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
-   t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
-   0, 0, 0, 1
- );
+   return new Mat4().set(
+      t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+      t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+      t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+      0, 0, 0, 1
+   );
 }
 ```
 
 And change the calculation of the rotation matrix to the following
 
 ```javascript
-const rotate    = new Mat4().rotate(0, 0, 1, angle);
+const rotate    = new Mat4().rotate([0, 0, 1], angle);
 ```
 
 :::
@@ -855,7 +852,7 @@ Then change the command used to calculate the rotation matrix to the following.
 
 ```javascript
 const angle     = 1/2 * time * 0.001 * 2 * Math.PI;
-const rotate    = new Mat4().rotate(0, 0, 1, angle);
+const rotate    = new Mat4().rotate([0, 0, 1], angle);
 ```
 
 :::
@@ -865,8 +862,8 @@ Here we calculate the rotation angle so that the rectangle will complete one ful
 Refresh your browser, and you should see something similar to below.
 
 <center>
-<video controls muted="true" loop="true" width="80%">
-    <source src="../_static/videos/04_transformations_1.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/05_transformations_1.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -893,8 +890,8 @@ Model = Rotate \cdot Translate \cdot Scale,
 which has the effect of moving the rectangle so that it is centred at coordinates $(0.4, 0.3, 0)$ and then rotated about $(0, 0, 0)$. Refresh your browser and you should see something similar to below.
 
 <center>
-<video controls muted="true" loop="true" width="80%">
-    <source src="../_static/videos/04_transformations_2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/05_transformations_2.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -905,31 +902,31 @@ which has the effect of moving the rectangle so that it is centred at coordinate
 1. Scale the original rectangle so that it is a quarter of the original size and apply translation so that the rectangle moves anti-clockwise around a circle centred at the window centre with radius 0.5 and completes one full rotation every 5 seconds. Hint: the coordinates of points on a circle centered at $(0,0)$ with radius $r$ can be calculated using $x = r\cos(t)$ and $y = r\sin(t)$ where $t$ is some number.
 
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex1.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex1.mp4" type="video/mp4">
 </video>
 </center>
 
 2. Rotate your rectangle from exercise 1 in a clockwise rotation about its centre at twice the rotation speed used in exercise 1.
 
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex2.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex2.mp4" type="video/mp4">
 </video>
 </center>
 
 3. Scale your rectangle from exercise 2 so that it grows and shrinks about its centre. Hint: The $\sin(t)$ function oscillates between 0 and 1 as $t$ increases.
 
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex3.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex3.mp4" type="video/mp4">
 </video>
 </center>
 
-4. Transform the rectangle so that it moves around the canvas and bounces off the borders.
+4. Transform the rectangle so that it moves around the canvas and bounces off the edges of the canvas.
 
 <center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/04_Ex4.mp4" type="video/mp4">
+<video autoplay controls muted="true" loop="true" width="400">
+    <source src="../_static/videos/05_Ex4.mp4" type="video/mp4">
 </video>
 </center>

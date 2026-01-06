@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -578,16 +578,15 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function in the <em><strong>3D_worlds.js</strong></em> file so that the transformation matrices look like the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the model matrix</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">]);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">angle</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="o">/</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.001</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">rotate</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">scale</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <p>Here we have calculated the individual transformation matrices for translation, scaling and rotation and multiply them together to create the model matrix. The rotation angle has been calculated using the time of the current frame so that the cube will perform one full rotation every 3 seconds.</p>
-<hr class="docutils" />
 </section>
 <section id="the-view-matrix">
 <span id="view-matrix-section"></span><h3>The View matrix<a class="headerlink" href="#the-view-matrix" title="Link to this heading">#</a></h3>
@@ -681,28 +680,26 @@ document.write(`
 
 <span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Camera vectors</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">);</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">];</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// Update camera vectors</span>
-<span class="w">  </span><span class="nx">updateVectors</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">updateCameraVectors</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">));</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">));</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// LookAt</span>
-<span class="w">  </span><span class="nx">lookAt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">getViewMatrix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">.</span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">.</span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">.</span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">      </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">),</span>
-<span class="w">      </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">),</span>
-<span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">.</span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">),</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">[</span><span class="mf">2</span><span class="p">],</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">[</span><span class="mf">2</span><span class="p">],</span><span class="w"> </span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">[</span><span class="mf">2</span><span class="p">],</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="o">-</span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">),</span>
+<span class="w">      </span><span class="o">-</span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">),</span>
+<span class="w">       </span><span class="nx">dot</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">),</span>
 <span class="w">      </span><span class="mf">1</span>
 <span class="w">    </span><span class="p">);</span>
 <span class="w">  </span><span class="p">}</span>
@@ -718,15 +715,15 @@ document.write(`
 <span class="kd">const</span><span class="w"> </span><span class="nx">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Camera</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>And add the following to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function after we clear the frame buffers.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Update camera vectors</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">camera</span><span class="p">.</span><span class="nx">eye</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Vec3</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">camera</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">target</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">camera</span><span class="p">.</span><span class="nx">eye</span><span class="p">).</span><span class="nx">normalize</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">camera</span><span class="p">.</span><span class="nx">updateVectors</span><span class="p">();</span>
+<p>And add the following to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function after we bind the texture.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update camera vectors</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">];</span>
+<span class="nx">camera</span><span class="p">.</span><span class="nx">eye</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<span class="nx">camera</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">eye</span><span class="p">));</span>
+<span class="nx">camera</span><span class="p">.</span><span class="nx">updateCameraVectors</span><span class="p">();</span>
 
-<span class="w">  </span><span class="c1">// Calculate view and projection matrices</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">view</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">lookAt</span><span class="p">();</span>
+<span class="c1">// Calculate view matrix</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">getViewMatrix</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -798,8 +795,7 @@ document.write(`
 </details><div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method definition to the Camera class.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Orthographic projection</span>
-<span class="nx">orthographic</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span><span class="w"> </span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="nx">bottom</span><span class="p">,</span><span class="w"> </span><span class="nx">top</span><span class="p">,</span><span class="w"> </span><span class="nx">near</span><span class="p">,</span><span class="w"> </span><span class="nx">far</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">getOrthographicMatrix</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span><span class="w"> </span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="nx">bottom</span><span class="p">,</span><span class="w"> </span><span class="nx">top</span><span class="p">,</span><span class="w"> </span><span class="nx">near</span><span class="p">,</span><span class="w"> </span><span class="nx">far</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="nx">right</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">left</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="nx">top</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">bottom</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="nx">far</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">near</span><span class="p">);</span>
@@ -813,11 +809,12 @@ document.write(`
 <span class="w">    </span><span class="o">-</span><span class="p">(</span><span class="nx">far</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">near</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">fn</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">1</span>
 <span class="w">  </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>And add the following to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function file after we have calculated the view matrix.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">orthographic</span><span class="p">(</span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate projection matrix</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">getOrthographicMatrix</span><span class="p">(</span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -833,8 +830,9 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following code after we have calculated the view and projection matrices.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uView&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">view</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uProjection&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">projection</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send view and project matrices to the shaders</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uView&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="p">.</span><span class="nx">elements</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uProjection&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">projection</span><span class="p">.</span><span class="nx">elements</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -870,7 +868,7 @@ document.write(`
 </div>
 <p>Here we have added the two uniforms for the view and projection matrices to the vertex shader and then used these, along with the model matrix to transform the object coordinates to the screen space. Refresh your web browser and you should the rotating cube below.</p>
 <center>
-<video controls muted="true" loop="true" width="80%">
+<video autoplay controls muted="true" loop="true" width="60%">
     <source src="../_static/videos/05_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
 </video>
 </center>
@@ -884,7 +882,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/06_depth_test.svg"><img alt="../_images/06_depth_test.svg" src="../_images/06_depth_test.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Rendering the far triangle after the near triangle.</span><a class="headerlink" href="#depth-test-1-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Fragments further away rendered after closer fragments.</span><a class="headerlink" href="#depth-test-1-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>To overcome this issue WebGL uses a <strong>depth test</strong> when computing the fragment shader. When WebGL creates a frame buffer it also creates another buffer called a <strong>z buffer</strong> (or <strong>depth buffer</strong>) where the <span class="math notranslate nohighlight">\(z\)</span> coordinate of each pixel in the frame buffer is stored and initialises all the values to <span class="math notranslate nohighlight">\(-1\)</span> (the furthest possible <span class="math notranslate nohighlight">\(z\)</span> coordinate in the screen space). When the fragment shader is called it checks whether the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate more than that already stored in the depth buffer and if so it updates the colour of the fragment and stores its <span class="math notranslate nohighlight">\(z\)</span> coordinate in the depth-buffer as the current nearest fragment (if the fragment has a <span class="math notranslate nohighlight">\(z\)</span> coordinate less than what is already in the depth buffer the fragment shader does nothing). This means once the fragment shader has been called for all fragments of all objects, the pixels contain colours of the objects closest to the camera.</p>
@@ -902,7 +900,7 @@ document.write(`
 </div>
 <p>Here we first enabled WebGL’s depth test and then we clear the depth buffer at the start of the rendering of each frame. Refresh your web browser and you should get a much better result.</p>
 <center>
-<video controls muted="true" loop="true" width="500">
+<video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/05_orthogonal_cube_depth_test.mp4" type="video/mp4">
 </video>
 </center>
@@ -927,12 +925,12 @@ document.write(`
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">numberCubes</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
 <span class="w">  </span>
 <span class="w">  </span><span class="c1">// Calculate the model matrix</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">angle</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="o">/</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.001</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scale</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">scale</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">]);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">angle</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rotate</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nx">translate</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">rotate</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">scale</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">m</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniformMatrix4fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uModel&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">elements</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// Draw the rectangle</span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">vao</span><span class="p">);</span>
@@ -941,7 +939,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Change the translation matrix so that it uses the new cube centre coordinates.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(...</span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">(</span><span class="nx">cubes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">position</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Finally change the rotation angle to zero.</p>
@@ -1082,7 +1080,7 @@ document.write(`
         0 &amp; 0 &amp; -1 &amp; 0
     \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">We now need to calculate the values of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(t\)</span>. The <span class="math notranslate nohighlight">\(t\)</span> coordinate is the opposite side of a right angled triangle with angle <span class="math notranslate nohighlight">\(\dfrac{fov}{2}\)</span> and adjacent side <span class="math notranslate nohighlight">\(n\)</span> so it is easily calculated using trigonometry</p>
+<p class="sd-card-text">We now need to calculate the values of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(t\)</span>. The <span class="math notranslate nohighlight">\(t\)</span> coordinate is the opposite side of a right-angled triangle with angle <span class="math notranslate nohighlight">\(\dfrac{fov}{2}\)</span> and adjacent side <span class="math notranslate nohighlight">\(n\)</span>, so it is easily calculated using trigonometry</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \tan \left( \frac{fov}{2} \right)
@@ -1099,23 +1097,22 @@ document.write(`
 </details><div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method definition to the Camera class.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Perspective projection</span>
-<span class="nx">perspective</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">tan</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">fov</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">aspect</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">top</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">getPerspectiveMatrix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">t</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">tan</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">fov</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">r</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">aspect</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">t</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">far</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="p">);</span>
 
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">top</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">far</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">fn</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">far</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">fn</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">far</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">near</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">fn</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span>
 <span class="w">  </span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Comment out the command used to calculate the projection matrix in the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function and add the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">perspective</span><span class="p">();</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">camera</span><span class="p">.</span><span class="nx">getPerspectiveMatrix</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -1127,7 +1124,6 @@ document.write(`
 <p><span class="caption-number">Fig. 54 </span><span class="caption-text">Perspective projection.</span><a class="headerlink" href="#perspective-cubes-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<hr class="docutils" />
 <section id="changing-the-fov-angle">
 <span id="changing-the-fov-section"></span><h3>Changing the fov angle<a class="headerlink" href="#changing-the-fov-angle" title="Link to this heading">#</a></h3>
 <p>The field of view angle determines how much of the view space we can see in the screen space where the larger the angle the more we can see. When we increase the field of view angle it appears to the user that our view is zooming out whereas a decrease has the effect of zooming in (this is used a lot in first-person shooter games to model the effect of a pair of binoculars or a sniper scope).</p>
@@ -1158,45 +1154,34 @@ document.write(`
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Move the camera so that it circles the first cube centred at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span> with radius of 5 and a height of 2. The camera should perform one full rotation every 5 seconds. Hint: <span class="math notranslate nohighlight">\(x = c_x + r\cos(\theta)\)</span> and <span class="math notranslate nohighlight">\(z = c_z + r\sin(\theta)\)</span> gives the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> coordinates on a circle centred at <span class="math notranslate nohighlight">\((c_x, c_y, c_z)\)</span> with radius <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
-</ol>
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex2.mp4" type="video/mp4">
-</video>
-</center>
-<ol class="arabic simple">
-<li><p>Rotate the cubes that have an odd index number about the vector <span class="math notranslate nohighlight">\((1,1,1)\)</span> so that they complete one full rotation every 2 seconds. Hint: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> returns the remainder when <code class="docutils literal notranslate"><span class="pre">x</span></code> is divided by <code class="docutils literal notranslate"><span class="pre">y</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">%</span> <span class="pre">2</span></code> will return <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
-</ol>
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex3.mp4" type="video/mp4">
-</video>
-</center>
-<ol class="arabic simple" start="4">
-<li><p>Add a feature to your program that allows the user to increase or decrease the field of view angle using the up and down arrow keys. Your code should limit the field of view angle so it is never less than <span class="math notranslate nohighlight">\(10^\circ\)</span> or greater than <span class="math notranslate nohighlight">\(90^\circ\)</span>. Hint: The <code class="docutils literal notranslate"><span class="pre">keyboardInput()</span></code> function at the bottom of the <strong>Lab06_3D_worlds.cpp</strong> file checks if the <a href="https://www.glfw.org/docs/3.3/group__keys.html" target="_blank">escape key</a> has been pressed and quits the application if it has.</p></li>
-</ol>
-<center>
-<video controls muted="true" loop="true" width="400">
-    <source src="../_static/videos/videos/06_Ex4.mp4" type="video/mp4">
-</video>
-</center>
-<ol class="arabic simple" start="5">
-<li><p>Create a <span class="math notranslate nohighlight">\(10 \times 10\)</span> grid of cubes in the world space.</p></li>
+<li><p>Create a <span class="math notranslate nohighlight">\(5 \times 5\)</span> grid of cubes where the centres of the cubes are 3 units apart.</p></li>
 </ol>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/06_Ex5.png"><img alt="_images/06_Ex5.png" src="_images/06_Ex5.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="../_images/06_Ex1.png"><img alt="../_images/06_Ex1.png" src="../_images/06_Ex1.png" style="width: 60%;" />
 </a>
 </figure>
-<ol class="arabic simple" start="6">
-<li><p>Add functions called <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">perspective()</span></code> to your <code class="docutils literal notranslate"><span class="pre">Maths</span></code> class that calculate the view and perspective projection matrices. Replace the use of the equivalent glm functions with your own.</p></li>
+<ol class="arabic simple" start="2">
+<li><p>Move the camera to that its position moves in a circular orbit around the centre cube at a height of 3 units off the ground. The camera should complete one full rotation every 10 seconds whilst also looking at the centre cube.</p></li>
 </ol>
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/06_Ex2.mp4" type="video/mp4">
+</video>
+</center>
+<ol class="arabic simple" start="3">
+<li><p>Rotate every other cube about a random vector so that they complete one full rotation every 2 seconds.</p></li>
+</ol>
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/06_Ex3.mp4" type="video/mp4">
+</video>
+</center>
 </section>
 <hr class="docutils" />
 <section id="video-walkthrough">
 <h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
 <p>The video below walks you through these lab materials.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jVCftc0pojI?si=yC9sx6TlUDkomqvu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

@@ -107,6 +107,43 @@ class Mat4 {
     }
     return new Mat4().set(...c);
   }
+  
+  inverse() {
+    let m = this.m;
+    const inv = new Float32Array([
+      m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
+      -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],      
+      m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],      
+      -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
+
+      -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
+      m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
+      -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
+      m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
+
+      m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
+      -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
+      m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
+      -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
+
+      -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
+      m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
+      -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
+      m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
+    ]);
+
+    let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+    if (det === 0) {
+      console.error("Matrix is singular, no inverse exists");
+      return null;
+    }
+
+    det = 1 / det;
+    for (let i = 0; i < 16; i++) {
+      inv[i] *= det;
+    }
+    return new Mat4().set(...inv);
+  }
 
   // Transformation matrices
   translate(x, y, z) {
@@ -176,6 +213,11 @@ class Quaternion {
     this.z = z;
   }
 
+    // Print quaternion
+  print() {
+    return `[ ${this.w.toFixed(4)}, ${this.x.toFixed(4)}, ${this.y.toFixed(4)}, ${this.z.toFixed(4)} ]`;
+  }
+
   // Quaternion matrix
   matrix () {
     const x = this.x, y = this.y, z = this.z, w = this.w;
@@ -193,7 +235,7 @@ class Quaternion {
   }
 
   // Euler to quaternion
-  static fromEuler(pitch, yaw, roll) {
+  fromEuler(pitch, yaw, roll) {
     const cp = Math.cos(0.5 * pitch);
     const sp = Math.sin(0.5 * pitch);
     const cy = Math.cos(0.5 * yaw);
@@ -201,11 +243,9 @@ class Quaternion {
     const cr = Math.cos(0.5 * roll);
     const sr = Math.sin(0.5 * roll);
 
-    return new Quaternion(
-      cy * cp * cr + sy * sp * sr,
-      cy * cp * sr - sy * sp * cr,
-      cy * sp * cr + sy * cp * sr,
-      sy * cp * cr - cy * sp * sr
-    );
+    this.x = cy * cp * cr + sy * sp * sr;
+    this.y = cy * cp * sr - sy * sp * cr;
+    this.z = cy * sp * cr + sy * cp * sr;
+    this.w = sy * cp * cr - cy * sp * sr;
   }
 }

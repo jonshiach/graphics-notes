@@ -43,8 +43,8 @@ void main() {
 function main() {
 
   // Setup WebGL
-  const canvas = document.getElementById("canvasId");
-  const gl = initWebGL(canvasId);
+  const canvas = document.getElementById("canvas");
+  const gl = initWebGL(canvas);
   
   // Create WebGL program 
   const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
@@ -78,52 +78,75 @@ function main() {
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
-  // Exercise 4
-  // Position and velocity
-  let pos = new Vec3(0, 0, 0);
-  let vel = new Vec3(2, 1, 0);
+  // Position and velocity vectors
+  let pos = [0, 0, 0];
+  let vel = [2, 1, 0];
   let lastTime = 0;
 
   function render(time) {
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    // Calculate transformation matrices
+    // // Exercise 1
     // const radius = 0.5;
-    // let angle = 1/5 * time * 0.001 * 2 * Math.PI;
-    // const translate = new Mat4().translate(
-    //   radius * Math.cos(angle), 
-    //   radius * Math.sin(angle), 
-    //   0
-    // );
-    // angle = time * 0.001 * 2 * Math.PI;;
-    // const scale     = new Mat4().scale(
-    //   0.5 + 0.25 * Math.sin(angle), 
-    //   0.5 + 0.25 * Math.sin(angle), 
-    //   1);
-    // const scale = new Mat4().scale(0.5, 0.5, 0.5);
-    // angle = -2/5 * time * 0.001 * 2 * Math.PI;
-    // const rotate    = new Mat4().rotate(0, 0, 1, 0);
+    // const rotationsPerSecond = 1 / 5;
+    // const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
+    // pos = [radius * Math.cos(angle), radius * Math.sin(angle), 0];
+    // const translate = new Mat4().translate(pos);
+    // const scale = new Mat4().scale([0.25, 0.25, 0.25]);
+    // const rotate = new Mat4().rotate([0, 0, 1], 0);
+
+    // const model = translate.multiply(rotate).multiply(scale);
+    // gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+
+    // gl.bindVertexArray(vao);
+    // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+
+    // // Exercise 2
+    // const radius = 0.5;
+    // const rotationsPerSecond = 1 / 5;
+    // const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
+    // pos = [radius * Math.cos(angle), radius * Math.sin(angle), 0];
+    // const translate = new Mat4().translate(pos);
+    // const scale = new Mat4().scale([0.25, 0.25, 0.25]);
+    // const rotate = new Mat4().rotate([0, 0, 1], -2 * angle);
+
+    // const model = translate.multiply(rotate).multiply(scale);
+    // gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+
+    // gl.bindVertexArray(vao);
+    // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+
+    // // Exercise 3
+    // const radius = 0.5;
+    // const rotationsPerSecond = 1 / 5;
+    // const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
+    // pos = [radius * Math.cos(angle), radius * Math.sin(angle), 0];
+    // const translate = new Mat4().translate(pos);
+    // const scaleVector = [0.5 + 0.3 * Math.sin(4 * angle), 0.5 + 0.3 * Math.sin(4 * angle), 1];
+    // const scale = new Mat4().scale(scaleVector);
+    // const rotate = new Mat4().rotate([0, 0, 1], -2 * angle);
+
+    // const model = translate.multiply(rotate).multiply(scale);
+    // gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+
+    // gl.bindVertexArray(vao);
+    // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 
     // Exercise 4
-    // Calculate transformation matrices
     const dt = (time - lastTime) * 0.001;
     lastTime = time;
-    if (pos.x < -0.75 || pos.x > 0.75) vel.x *= -1;
-    if (pos.y < -0.75 || pos.y > 0.75) vel.y *= -1;
-    pos = pos.add(vel.scale(dt / 2));
+    if (Math.abs(pos[0]) > 0.875) vel[0] *= -1;
+    if (Math.abs(pos[1]) > 0.875) vel[1] *= -1;
+    pos = addVector(pos, scaleVector(vel, dt / 2));
 
-    console.log(pos.array);
+    const translate = new Mat4().translate(pos);
+    const scale     = new Mat4().scale([0.25, 0.25, 0.25]);
+    const rotate    = new Mat4().rotate([0, 0, 1], 0);
 
-    const translate = new Mat4().translate(pos.x, pos.y, pos.z);
-    const scale = new Mat4().scale(0.5, 0.5, 0.5);
-    const rotate    = new Mat4().rotate(0, 0, 1, 0);
-
-    // Send transformation matrices to the shader
     const model = translate.multiply(rotate).multiply(scale);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
-    // Draw the rectangle
     gl.bindVertexArray(vao);
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 

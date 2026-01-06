@@ -1,13 +1,12 @@
 class Camera {
-
   constructor(canvas) {
 
     // Camera vectors
-    this.eye     = new Vec3(0, 0, 0);
-    this.worldUp = new Vec3(0, 1, 0);
-    this.front   = new Vec3(0, 0, -1);
-    this.right   = new Vec3(1, 0, 0);
-    this.up      = new Vec3(0, 1, 0);
+    this.eye     = [0, 0, 0];
+    this.worldUp = [0, 1, 0];
+    this.front   = [0, 0, -1];
+    this.right   = [1, 0, 0];
+    this.up      = [0, 1, 0];
 
     // Projection settings
     this.fov    = 45 * Math.PI / 180;
@@ -32,38 +31,32 @@ class Camera {
     document.addEventListener("mousemove", e => this.mouseMove(e));
   }
 
-  // Update camera vectors
-  updateVectors() {
+  update (dt) {
+
+    // Update camera vectors
     const cy = Math.cos(this.yaw);
     const cp = Math.cos(this.pitch);
     const sy = Math.sin(this.yaw);
     const sp = Math.sin(this.pitch);
-
-    this.front = new Vec3(cp * sy, sp, -cp * cy).normalize();
-    this.right = this.front.cross(this.worldUp).normalize();
-    this.up    = this.right.cross(this.front).normalize();
-  }
-
-  // Update movement
-  update (dt) {
-
-    // Update camera vectors
-    this.updateVectors();
+    this.front = normalize([cp * sy, sp, -cp * cy]);
+    this.right = normalize(cross(this.front, this.worldUp));
+    this.up    = normalize(cross(this.right, this.front));
 
     // Camera movement
-    let vel = new Vec3(0, 0, 0);
-
-    if (this.keys["w"]) vel = vel.add(this.front);
-    if (this.keys["s"]) vel = vel.subtract(this.front);
-    if (this.keys["a"]) vel = vel.subtract(this.right);
-    if (this.keys["d"]) vel = vel.add(this.right);
+    let vel = [0, 0, 0];
+    if (this.keys["w"]) vel = addVector(vel, this.front);
+    if (this.keys["s"]) vel = subtractVector(vel, this.front);
+    if (this.keys["a"]) vel = subtractVector(vel, this.right);
+    if (this.keys["d"]) vel = addVector(vel, this.right);
+    vel[1] = 0;
     
     const move = this.speed * dt;
-    if (vel.length() > 0) this.eye = this.eye.add(vel.normalize().scale(
-    move));
+    if (vel.length > 0 && dt > 0) {
+      // this.eye = addVector(this.eye, normalize(vel));ss
+      this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
+    }
   }
 
-  // Move look
   mouseMove(e) {
     if (document.pointerLockElement !== this.canvas) return;
     this.yaw   += e.movementX * this.turnSpeed;
@@ -74,21 +67,19 @@ class Camera {
     this.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, this.pitch));
   }
 
-  // LookAt
-  lookAt() {
+  getViewMatrix() {
     return new Mat4().set(
-      this.right.x, this.up.x, -this.front.x, 0,
-      this.right.y, this.up.y, -this.front.y, 0,
-      this.right.z, this.up.z, -this.front.z, 0,
-      -this.eye.dot(this.right), 
-      -this.eye.dot(this.up), 
-       this.eye.dot(this.front), 
+      this.right[0], this.up[0], -this.front[0], 0,
+      this.right[1], this.up[1], -this.front[1], 0,
+      this.right[2], this.up[2], -this.front[2], 0,
+      -dot(this.eye, this.right),
+      -dot(this.eye, this.up),
+       dot(this.eye, this.front),
       1
     );
   }
 
-  // Orthographic projection
-  orthographic(left, right, bottom, top, near, far) {
+  getOrthographicMatrix(left, right, bottom, top, near, far) {
     const rl = 1 / (right - left);
     const tb = 1 / (top - bottom);
     const fn = 1 / (far - near);
@@ -104,8 +95,7 @@ class Camera {
     );
   }
 
-  // Perspective projection
-  perspective() {
+  getPerspectiveMatrix() {
     const t  = this.near * Math.tan(this.fov / 2);
     const r  = this.aspect * t;
     const fn = 1 / (this.far - this.near);

@@ -12,15 +12,15 @@ The **graphics pipeline** is a sequence of steps the GPU takes to convert 3D sce
 
 The stages of the graphics pipeline are:
 
-1. Application stage (CPU) -- the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.
+1. **Application stage (CPU)** -- the program running on the CPU prepares the scene by defining geometry, camera parameters, lighting information and material properies.
   
-2. Vertex processing (GPU) -- each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.
+2. **Vertex processing (GPU)** -- each vertex of a geometric object is processed independently. Operations such as coordinate transformations are applied here.
 
-3. Rasterisation -- geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.
+3. **Rasterisation** -- geometric primitives (usually triangles) are converted into fragments corresponding to potential screen pixels.
 
-4. Fragment processing (GPU) -- each fragment is shaded to determine its final colour, typically using lighting and texture calculations.
+4. **Fragment processing (GPU)** -- each fragment is shaded to determine its final colour, typically using lighting and texture calculations.
 
-5. Framebuffer -- the coloured fragments are written to the framebuffer, which is displayed on the screen.
+5. **Framebuffer** -- the coloured fragments are written to the framebuffer, which is displayed on the screen.
 
 Understanding this pipeline is fundamental: computer graphics is not about drawing objects directly, but about **transforming and processing data through a series of well-defined stages**.
 
@@ -28,7 +28,7 @@ Understanding this pipeline is fundamental: computer graphics is not about drawi
 
 ## Geometry and primitives
 
-All complex graphical objects are built from simple geometric primitives. In real-time graphics, these primitives are almost always triangles.
+All complex graphical objects are built from simple **geometric primitives**. In real-time graphics, these primitives are almost always **triangles**.
 
 Triangles are used because:
 
@@ -59,7 +59,7 @@ The main coordinate spaces are:
 - **Clip and Normalised Device Coordinates (NDC)** -- standardised coordinates used for rendering
 - **Screen space** -- final pixel positions on the display
 
-Transformations between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.
+**Transformations** between these spaces are performed using matrices, which represent operations such as translation, rotation, scaling, and projection. The order in which these transformations are applied is critical and affects the final result.
 
 ---
 
@@ -76,9 +76,9 @@ This division of labour enables real-time rendering of complex scenes at high fr
 
 ---
 
-## Shaders and Programmability
+## Shaders
 
-Shaders are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:
+**Shaders** are small programs that run on the GPU and define how geometry and pixels are processed. The two most important types are:
 
 - **Vertex shaders**, which process individual vertices
 - **Fragment shaders**, which compute the colour of each pixel-sized fragment
@@ -102,7 +102,7 @@ Understanding these constraints helps explain why graphics systems are structure
 
 ## The RGB Colour Model
 
-The RGB colour model is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.
+The **RGB colour model** is a method for representing colours using combinations of red (R), green (G), and blue (B) light. It is the foundation of almost all digital displays, including computer monitors, televisions, mobile phones, and graphics systems used in real-time rendering.
 
 RGB is an additive colour model, meaning that colours are created by adding light together rather than mixing pigments, for example
 

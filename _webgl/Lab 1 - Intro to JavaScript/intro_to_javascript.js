@@ -21,7 +21,7 @@ score += 20;
 console.log("score: " + score);
 
 let lives = 3;
-lives -= 1;
+lives = 1;
 console.log("lives: " + lives);
 
 let myVariable;
@@ -35,6 +35,13 @@ The data type of myVariable is ${typeof(myVariable)}`);
 myVariable = "level one";
 console.log(`\nThe assigned value of myVariable is ${myVariable}
 The data type of myVariable is ${typeof(myVariable)}`);
+
+// Math library
+console.log("\nMath library\n------------")
+const angleInDegress = 90;
+const angleInRadians = angleInDegress * Math.PI / 180;
+console.log(`${angleInDegress} degrees is ${angleInRadians.toFixed(4)} radians.`);
+console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians));
 
 // Arrays
 console.log("\nArrays\n------");
@@ -50,6 +57,10 @@ console.log("\nThe first two values of the array colours is: " + colours.slice(0
 
 colours.push(3.1416);
 console.log("\ncolours = " + colours);
+
+const moreColours = ["black", "white"];
+const concatenatedArray = colours.concat(moreColours);
+console.log("\nconcatenatedArray = " + concatenatedArray);
 
 // Objects
 console.log("\nObjects\n-------");
@@ -142,33 +153,138 @@ function checkGameOver(lives) {
 
 console.log(checkGameOver(player.lives));
 
-// EXercises 
-console.log("\nExercise 1\n----------")
+// Classes
+console.log("\nClasses\n--------")
 
-class Student {
-  constructor(firstName, lastName, id, course, level) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.id = id;
-    this.course = course;
-    this.level = level;
+class Racer {
+  constructor(name, position) {
+    this.name = name;
+    this.speed = 0;
+    this.position = position;
+  }
+
+  accelerate() {
+    this.speed += 5;
+  }
+
+  addPowerUp() {
+    const powerUps = [
+      "Mushroom",
+      "Green Shell",
+      "Red Shell",
+      "Banana", 
+      "Star"
+    ]
+
+    const index = Math.floor(Math.random() * powerUps.length);
+    this.powerUp = powerUps[index];
   }
 
   print() {
-    console.log(
-`
-Student Details
----------------
-Name   : ${this.firstName} ${this.lastName}
-ID     : ${this.id}
-Course : ${this.course}
-Level  : ${this.level}
-`
-    );
+    console.log("\nRacer details\n-------------")
+    console.log("Name: " + this.name);
+    console.log("Speed: " + this.speed);
+    console.log("Position: " + this.position);
+    console.log("Power up: " + this.powerUp);
   }
 }
 
-const ellie = new Student("Ellie", "Williams", 12345678, "Computer Science", 5);
+const toad = new Racer("Toad", 3);
+console.log("Name: " + toad.name);
+console.log("Speed: " + toad.speed);
+console.log("Position: " + toad["position"]);
+console.log("Power up: " + toad["powerUp"]);
+
+toad.accelerate();
+console.log("Speed: " + toad.speed);
+
+toad.addPowerUp();
+toad.print();
 
 
+
+// Exercises 
+console.log("\nExercises\n---------")
+
+class Student {
+  constructor(name, id, course) {
+    this.name = name;
+    this.id = id;
+    this.course = course;
+    this.marks = [];
+  }
+
+  // Exercise 3
+  print() {
+    console.log("\nStudent details\n---------------");
+    console.log("Name:           " + this.name);
+    console.log("ID:             " + this.id);
+    console.log("Course:         " + this.course);
+    console.log("Marks:          " + this.marks);
+    console.log("Avg. mark:      " + this.calculateAverage().toFixed(1));
+    console.log("Classification: " + this.classification());
+  }
+
+  // Exercise 5
+  addMarks(marks) {
+    this.marks = this.marks.concat(marks)
+  }
+
+  // Exercise 6
+  calculateAverage() {
+    let total = 0;
+    for (const mark of this.marks) {
+      total += mark;
+    }
+    return total / this.marks.length;
+  }
+
+  // Exercise 7
+  classification() {
+    if (this.marks.length === 0) return "n/a";
+    const averageMark = this.calculateAverage();
+    if (averageMark >= 70) {
+      return "First class";
+    } else if (averageMark >= 60) {
+      return "Upper-second class";
+    } else if (averageMark >= 50) {
+      return "Lower-second class";
+    } else if (averageMark >= 40) {
+      return "Third class";
+    } else {
+      return "Fail";
+    }
+  }
+}
+
+// Exercise 2
+const ellie = new Student("Ellie Williams", 12345678, "Computer Science");
+console.log("Name: " + ellie.name);
+console.log("ID: " + ellie.id);
+console.log("Course: " + ellie.course);
+
+// Exercise 3
 ellie.print();
+
+// Exercise 4
+const students = [
+  new Student("Ellie Williams", 12345678, "Computer Science"),
+  new Student("Joel Miller", 24680135, "Computer Science"),
+  new Student("Arthur Morgan", 87654321, "Computer Games Development"),
+  new Student("Geralt of Rivia", 13579246, "Mathematics"),
+];
+
+// Exercise 5
+students[0].addMarks([65, 72, 92, 75]);
+students[1].addMarks([52, 68, 75, 62]);
+students[2].addMarks([38, 52, 48, 45]);
+students[3].addMarks([92, 75, 68, 78]);
+
+// Exercise 8
+function printAllStudents(students) {
+  for (let i = 0; i < students.length; i++) {
+    students[i].print();
+  }
+}
+
+printAllStudents(students);

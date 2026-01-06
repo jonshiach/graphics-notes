@@ -12,42 +12,41 @@ function setupConsoleOutput(elementId) {
 setupConsoleOutput("console-output");
 console.log('Lab 4 - Vectors and Matrices\n----------------------------');
 
-// Define vector objects
+// Vectors
 console.log('\nVectors\n-------');
-const a = new Vec3(3, 0, 4)
-const b = new Vec3(1, 2, 3);
-console.log("x = " + a.x + ", y = " + a.y + ", z = " + a.z);
-console.log("x,y,z = " + a.array);
-console.log("a = " + a.print());
-console.log("b = " + b.print());
+
+const a = [3, 0, 4];
+const b = [1, 2, 3];
+console.log("a = " + printVector(a));
+console.log("b = " + printVector(b));
 
 // Arithmetic operations on vectors
 console.log('\nArithmetic operations on vectors\n--------------------------------');
-console.log("a + b = " + a.add(b).print());
-console.log("a - b = " + a.subtract(b).print());
-console.log("2a    = " + a.scale(2).print());
-console.log("b/3   = " + b.scale(1/3).print());
+console.log("a + b =", printVector(addVector(a, b)));
+console.log("a - b =", printVector(subtractVector(a, b)));
+console.log("2a    =", printVector(scaleVector(a, 2)));
+console.log("b/3   =", printVector(scaleVector(b, 1/3)));
 
 // Vector magnitude and normalization
 console.log("\nVector magnitude and normalization\n----------------------------------");
-console.log("length(a)    = " + a.length());
-console.log("length(b)    = " + b.length());
+console.log("length(a)    = " + length(a));
+console.log("length(b)    = " + length(b));
 
-const aHat = a.normalize();
-const bHat = b.normalize();
-console.log("aHat         = " + aHat.print());
-console.log("bHat         = " + bHat.print());
-console.log("length(aHat) = " + aHat.length());
-console.log("length(bHat) = " + bHat.length());
+const aHat = normalize(a);
+const bHat = normalize(b);
+console.log("aHat         = " + printVector(aHat));
+console.log("bHat         = " + printVector(bHat));
+console.log("length(aHat) = " + length(aHat));
+console.log("length(bHat) = " + length(bHat));
 
 // Dot and cross products
 console.log("\nDot and cross products\n----------------------");
-console.log("a . b       = " +  a.dot(b));
+console.log("a . b = " +  dot(a, b));
 
-const aCrossB = a.cross(b);
-console.log("a x b       = " + aCrossB.print());
-console.log("a . (a x b) = " + a.dot(aCrossB));
-console.log("b . (a x b) = " + b.dot(aCrossB));
+const aCrossB = cross(a, b);
+console.log("a x b = " + printVector(aCrossB));
+console.log("a . (a x b) = " + dot(a, aCrossB));
+console.log("b . (a x b) = " + dot(b, aCrossB));
 
 // Matrices
 console.log("\nMatrices\n--------");

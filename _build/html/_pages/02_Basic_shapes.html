@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -155,8 +155,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Computer Graphics - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Computer Graphics - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Computer Graphics - Home"/>`);</script>
   
   
 </a></div>
@@ -177,7 +177,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Computer Graphics
+                    Contents
                 </a>
             </li>
         </ul>
@@ -431,14 +431,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lab-2-drawing-basic-shapes-in-webgl">
 <span id="basic-shapes-section"></span><h1>Lab 2: Drawing Basic Shapes in WebGL<a class="headerlink" href="#lab-2-drawing-basic-shapes-in-webgl" title="Link to this heading">#</a></h1>
-<p>For our first WebGL example we are going to display a simple triangle to the screen, this “hello triangle” is the computer graphics version of the classic “hello world!” example.</p>
+<p>We are going to begin our study of WebGL with the simplest complete example: drawing a single triangle. This “hello triangle” is the computer graphics version of the classic “hello world!” example.</p>
 <section id="setup-html-and-javascript-files">
 <h2>Setup HTML and JavaScript Files<a class="headerlink" href="#setup-html-and-javascript-files" title="Link to this heading">#</a></h2>
 <p>To start with we need two files, an HTML file that includes a canvas element which acts as a rendering surface for WebGL, and JavaScript file that controls everything that happens inside the canvas using the WebGL API.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 2 Basic Shapes</strong></em> inside which create an HTML file called <em><strong>index.html</strong></em>.</p>
-<p>Open the <em><strong>index.html</strong></em> in Visual Studio Code (this is installed on PCs in the Dalton Building).</p>
+<p>Create a folder called <em><strong>Lab 2 Basic Shapes</strong></em> inside which create an HTML file called <em><strong>index.html</strong></em>. Open the <em><strong>index.html</strong></em> file in Visual Studio Code.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;!doctype html&gt;
 
 &lt;html lang=&quot;en&quot;&gt;
@@ -460,14 +459,14 @@ document.write(`
     &lt;/style&gt;
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;canvas id=&quot;canvasId&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
+    &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </pre></div>
 </div>
-<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank">Live Server</a> extension for Visual Studio Code and click on ‘Go Live’ in the status bar (bottom right-hand corner).</p>
+<p>Start a live server by clicking on “Go Live” in the bottom right-hand corner of the window.</p>
 </div>
-<p>If everything has gone to plan you should be looking at a web browser with a page titled ‘Lab 2 - Basic Shapes in WebGL’ that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.</p>
+<p>If everything has gone to plan you should be looking at a web browser with a page titled “Lab 2 - Basic Shapes in WebGL” that displays a canvas element that is 800 pixels wide by 600 pixels high which is a particularly lurid shade of green. The reason for this horrible colour is that we will be clearing the canvas in our WebGL app so if we see this green colour we know something has gone wrong.</p>
 <figure class="align-default" id="canvas-figure">
 <a class="reference internal image-reference" href="../_images/02_Canvas.png"><img alt="../_images/02_Canvas.png" src="../_images/02_Canvas.png" style="width: 80%;" />
 </a>
@@ -482,9 +481,9 @@ document.write(`
 <span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="c1">// Setup WebGL</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvasId&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl2&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;WebGL not supported&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
 <span class="w">  </span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
@@ -498,16 +497,16 @@ document.write(`
 </div>
 <p>Here we have created our main function <code class="docutils literal notranslate"><span class="pre">main()</span></code> inside which we have set up the WebGL canvas. Some functions used here are defined below</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.viewport(0,</span> <span class="pre">0,</span> <span class="pre">canvas.width,</span> <span class="pre">canvas.height);</span></code>: Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes). Here our viewport fills the <code class="docutils literal notranslate"><span class="pre">&lt;canvas&gt;</span></code> element.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.clearColor(0.2,</span> <span class="pre">0.2,</span> <span class="pre">0.2,</span> <span class="pre">1.0);</span></code>: Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.clear(gl.COLOR_BUFFER_BIT);</span></code>: Clears the specified buffer, in this case it’s the colour buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.viewport(0,</span> <span class="pre">0,</span> <span class="pre">canvas.width,</span> <span class="pre">canvas.height);</span></code> – Defines the rectangular area of the canvas where rendering will take place that maps to the normalized device co-ordinates (-1 to 1 in the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes). Here our viewport fills the <code class="docutils literal notranslate"><span class="pre">&lt;canvas&gt;</span></code> element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.clearColor(0.2,</span> <span class="pre">0.2,</span> <span class="pre">0.2,</span> <span class="pre">1.0);</span></code> – Defines the background colour. Colours are defined using RGBA values (Red, Green, Blue and Alpha) so here our background is dark grey.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.clear(gl.COLOR_BUFFER_BIT);</span></code> – Clears the specified buffer, in this case it’s the colour buffer.</p></li>
 </ul>
-<p>Refresh the browser window, and you should still see that the horrible lurid green background. But hang on, haven’t we defined our background colour to be dark grey? The reason for this is that we haven’t embedded the JavaScript file into our HTML file.</p>
+<p>Refresh your web browser (this is done by the live server whenever you save a file), and you should still see that the horrible lurid green background. But hang on, haven’t we defined our background colour to be dark grey? The reason for this is that we haven’t embedded the JavaScript file into our HTML file.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag near the bottom of the <em><strong>index.html</strong></em> file so that it looks like the following.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;body&gt;
-  &lt;canvas id=&quot;canvasId&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
+  &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
   &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
 </pre></div>
@@ -540,7 +539,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span id="triangle-coordinates-section"></span><h3>Define the Triangle Co-ordinates<a class="headerlink" href="#define-the-triangle-co-ordinates" title="Link to this heading">#</a></h3>
 <p>Our triangle will have co-ordinates at <span class="math notranslate nohighlight">\((-0.5, -0.5, 0)\)</span> (lower-left vertex), <span class="math notranslate nohighlight">\((0.5, -0.5, 0)\)</span> (lower-right vertex) and <span class="math notranslate nohighlight">\((0, 0.5, 0)\)</span> (top vertex).</p>
 <figure class="align-default" id="triangle-figure">
-<a class="reference internal image-reference" href="../_images/02_Triangle.svg"><img alt="../_images/02_Triangle.svg" src="../_images/02_Triangle.svg" style="width: 70%;" />
+<a class="reference internal image-reference" href="../_images/02_Triangle.svg"><img alt="../_images/02_Triangle.svg" src="../_images/02_Triangle.svg" style="width: 60%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 2 </span><span class="caption-text">The vertex co-ordinates for the red triangle example.</span><a class="headerlink" href="#triangle-figure" title="Link to this image">#</a></p>
@@ -577,9 +576,9 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>The commands used here are explained below</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">vbo</span> <span class="pre">=</span> <span class="pre">gl.createBuffer();</span></code>: Creates a buffer object on the GPU.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">vbo);</span></code>: Binds our VBO to an array buffer so that WebGL knows where to send the data. The word <em>bind</em> in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.bufferData(gl.ARRAY_BUFFER,</span> <span class="pre">vertices,</span> <span class="pre">gl.STATIC_DRAW);</span></code>: Copies the data from the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array into the VBO which is the currently bound buffer. The <code class="docutils literal notranslate"><span class="pre">gl.STATIC_DRAW</span></code> input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">vbo</span> <span class="pre">=</span> <span class="pre">gl.createBuffer();</span></code> – Creates a buffer object on the GPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">vbo);</span></code> – Binds our VBO to an array buffer so that WebGL knows where to send the data. The word <em>bind</em> in graphics programming means to make it the currently active resource for a particular purpose so subsequent WebGL operations affect it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bufferData(gl.ARRAY_BUFFER,</span> <span class="pre">vertices,</span> <span class="pre">gl.STATIC_DRAW);</span></code> – Copies the data from the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array into the VBO which is the currently bound buffer. The <code class="docutils literal notranslate"><span class="pre">gl.STATIC_DRAW</span></code> input is a performance hint to WebGL, here we are saying that that triangle vertices will not change.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.ARRAY_BUFFER,</span> <span class="pre">null);</span></code> Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.</p></li>
 </ul>
 </section>
@@ -599,10 +598,10 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>This code is explained below</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">#version</span> <span class="pre">300</span> <span class="pre">es</span></code>: Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">precision</span> <span class="pre">mediump</span> <span class="pre">float;</span></code>: Sets the default float precision to medium (16-bit).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">vec3</span> <span class="pre">aPosition;</span></code>: Tells the shader that we are inputting a 3-element vector for the vertex position (the <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> is short for attribute).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl_Position</span> <span class="pre">=</span> <span class="pre">vec4(aPosition,</span> <span class="pre">1.0);</span></code>: Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it’s a 4-element vector will be covered later when we look at transformations). The <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> variable is a required output of every vertex shader.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#version</span> <span class="pre">300</span> <span class="pre">es</span></code> – Tells the shader we are using GLSL ES 3.00, the shader language used with WebGL 2.0.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">precision</span> <span class="pre">mediump</span> <span class="pre">float;</span></code> – Sets the default float precision to medium (16-bit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">vec3</span> <span class="pre">aPosition;</span></code> – Tells the shader that we are inputting a 3-element vector for the vertex position (the <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> is short for attribute).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl_Position</span> <span class="pre">=</span> <span class="pre">vec4(aPosition,</span> <span class="pre">1.0);</span></code> – Outputs a 4-element vector for the clip space co-ordinates of the vertex (there reason why it’s a 4-element vector will be covered later when we look at transformations). The <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> variable is a required output of every vertex shader.</p></li>
 </ul>
 <p>The simplest way of entering shader code into our JavaScript file is to define it as a multiline string.</p>
 <div class="tip admonition">
@@ -732,10 +731,10 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 <p>The functions used here are explained below;</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">positionLocation</span> <span class="pre">=</span> <span class="pre">gl.getAttribLocation(program,</span> <span class="pre">'aPosition');</span></code>: Gets the location of the <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> attribute from the WebGL shader program.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.enableVertexAttribArray(0);</span></code>: Enables a vertex attribute with location <code class="docutils literal notranslate"><span class="pre">0</span></code> so that WebGL knows to read data from the VBO and pass it to the vertex shader.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.Array_BUFFER,</span> <span class="pre">vbo);</span></code>: Make the VBO the currently active buffer.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(positionLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code>: Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution <code class="docutils literal notranslate"><span class="pre">0</span></code>. The inputs are explained in the table below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">positionLocation</span> <span class="pre">=</span> <span class="pre">gl.getAttribLocation(program,</span> <span class="pre">&quot;aPosition&quot;);</span></code> – Gets the location of the <code class="docutils literal notranslate"><span class="pre">aPosition</span></code> attribute from the WebGL shader program.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.enableVertexAttribArray(0);</span></code> – Enables a vertex attribute with location <code class="docutils literal notranslate"><span class="pre">0</span></code> so that WebGL knows to read data from the VBO and pass it to the vertex shader.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.bindBuffer(gl.Array_BUFFER,</span> <span class="pre">vbo);</span></code> – Make the VBO the currently active buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer(positionLocation,</span> <span class="pre">3,</span> <span class="pre">gl.FLOAT,</span> <span class="pre">false,</span> <span class="pre">0,</span> <span class="pre">0);</span></code> – Tells WebGL how to read the data from the currently bound buffer and pass it to the vertex shader attribution <code class="docutils literal notranslate"><span class="pre">0</span></code>. The inputs are explained in the table below.</p></li>
 </ul>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -806,8 +805,8 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Create a new JavaScript files called <em><strong>webGLUtils.js</strong></em> within the <em><strong>Lab 2 Basic Shapes</strong></em> folder and enter the following code.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Initialize WebGL context</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl2&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;WebGL not supported&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
 <span class="w">  </span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
@@ -863,7 +862,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p class="admonition-title">Task</p>
 <p>Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Setup WebGL</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvasId&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -973,7 +972,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Enter the following code after we told WebGL how to read the co-ordinate data.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">colourLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;aColour&#39;</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">colourLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aColour&quot;</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span>
 <span class="w">  </span><span class="nx">colourLocation</span><span class="p">,</span><span class="w">                      </span><span class="c1">// index</span>
@@ -1107,7 +1106,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="c1">// Setup WebGL</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvasId&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// Create WebGL program </span>
@@ -1188,18 +1187,18 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </pre></div>
 </div>
 </div>
-<p>These commands a similar those used for the vertex buffer. Note that here we need to specify that we have an element array buffer instead of a standard array buffer. The index buffer does not contain any data specific to the vertices, so we don’t need to add it to a VAO, instead we bind it whilst the VAO is bound and WebGL ‘remembers’ it as part of the VAO’s state.</p>
+<p>These commands a similar those used for the vertex buffer. Note that here we need to specify that we have an element array buffer instead of a standard array buffer. The index buffer does not contain any data specific to the vertices, so we don’t need to add it to a VAO, instead we bind it whilst the VAO is bound and WebGL “remembers” it as part of the VAO’s state.</p>
 <p>Finally, we need to tell WebGL that our data for the square is defined using indices, so we need to change the draw commands.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Replace the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> command for the square with the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw the triangle</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVao</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 
 <span class="c1">// Draw the square</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">squareVao</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="nx">squareIndices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>

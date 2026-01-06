@@ -33,7 +33,7 @@ void main() {
 function main() {
 
   // Setup WebGL
-  const gl = initWebGL("canvasId");
+  const gl = initWebGL("canvas");
   
   // Create WebGL program 
   const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
@@ -75,11 +75,11 @@ function main() {
 
   // Draw the triangle
   gl.bindVertexArray(triangleVao);
-  gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 
   // Draw the square
   gl.bindVertexArray(squareVao);
-  gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, squareIndices.length, gl.UNSIGNED_SHORT, 0);
 }
 
 main();
