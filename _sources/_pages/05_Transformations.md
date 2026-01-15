@@ -147,12 +147,13 @@ Add the following function definition to the matrix class in the ***maths.js*** 
 ```javascript
 translate(t) {
   const [x, y, z] = t;
-  return new Mat4().set(
+  const transMatrix = new Mat4().set([
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
     x, y, z, 1
-  );
+  ]);
+  return this.multiply(transMatrix);
 }
 ```
 
@@ -165,7 +166,7 @@ const translate = new Mat4().translate([0.4, 0.3, 0]);
 
 :::
 
-Here we have defined the function `translate()` that results the translation matrix for a given translation vector and have called this function to compute `translateMatrix`.
+Here we have defined the function `translate()` that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.
 
 The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  **uniform**, like we did in [Lab 3: Textures](uniforms-section).
 
@@ -175,16 +176,18 @@ The multiplication of the vertex coordinates by the transformation matrices is d
 Add the following code after we have calculated the translation matrix.
 
 ```javascript
-// Send transformation matrices to the shader
-const model = translate;
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+// Calculate the model matrix
+const model = new Mat4().translate([0.4, 0.3, 0])
+
+// Send model matrix to the shader
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 ```
 
 :::
 
-Here we have created another matrix called `model` and have sent this to the shader using the uniform name `uModel` (it is standard practice to call the matrix that applies transformations to an object as the "model" matrix). We will be applying multiple transformations to our object vertices. Rather then sending multiple matrices to the shaders, we multiply them in the CPU and send a single $4 \times 4$ matrix to the shaders. The **model matrix** is the combination of transformations that are applied to each vertex of the object.
+Here we have created a matrix called `model` and have sent this to the shader using the uniform name `uModel`. The model matrix is a matrix that combines all of the transformations that will be applied to an object, so rather then sending multiple transformation matrices to the shaders, we just send the single model matrix. The **model matrix** is the combination of transformations that are applied to each vertex of the object.
 
-We now have to do is modify the vertex shader to use our new transformation matrix.
+We now have to modify the vertex shader to use our new transformation matrix.
 
 :::{admonition} Task
 :class: tip
@@ -275,25 +278,20 @@ Enter the following function definition to the matrix class.
 ```javascript
 scale(s) {
   const [x, y, z] = s;
-  return new Mat4().set(
+  const scaleMatrix = new Mat4().set([
     x, 0, 0, 0,
     0, y, 0, 0,
     0, 0, z, 0,
     0, 0, 0, 1
-  );
+  ]);
+  return this.multiply(scaleMatrix);
 }
 ```
 
-Enter the following code to the ***transformations.js*** file after we calculate the translation matrix.
+Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
-const scale     = new Mat4().scale([0.5, 0.4, 1]);
-```
-
-And change the model matrix to the following.
-
-```javascript
-const model = scale;
+const model = new Mat4().scale([0.5, 0.4, 1]);
 ```
 
 :::
@@ -501,37 +499,37 @@ radians = degrees \times \frac{\pi}{180}
 :::{admonition} Task
 :class: tip
 
-Enter the following function definition to the matrix class.
+Enter the following method to the matrix class.
 
 ```javascript
-rotateZ(angle) {
+rotate(angle) {
   const c = Math.cos(angle);
   const s = Math.sin(angle);
-  return new Mat4().set(
-    c,  s,  0,  0,
-    -s, c,  0,  0,
-    0,  0,  1,  0,
-    0,  0,  0,  1
-  );
+  const rotateMatrix = new Mat4().set([
+     c, s, 0, 0,
+    -s, c, 0, 0,
+    0,  0, 1, 0,
+    0,  0, 0, 1
+  ]);
+  return this.multiply(rotateMatrix);
 }
 ```
 
 Add the following to the ***transformations.js*** file after we calculate the scaling matrix
 
 ```javascript
-const angle     = 45 * Math.PI / 180;
-const rotate    = new Mat4().rotateZ(angle);
+const model = new Mat4().rotate(45 * Math.PI / 180);
 ```
 
-And change the model matrix to the following.
+Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
-const model = rotate;
+const model = rotate(45 * Math.PI / 180);
 ```
 
 :::
 
-Here we defined a function to the matrix class to calculate the rotation matrix. Refresh your web browser, and you should see that our rectangle has been rotated $45^\circ$ degrees in the anti-clockwise direction as shown in {numref}`rotation-rectangle-figure`.
+Here we defined a Mat4 class method that calculates the rotation matrix and multiplies the current matrix object by the rotation matrix. Refresh your web browser, and you should see that our rectangle has been rotated $45^\circ$ degrees in the anti-clockwise direction as shown in {numref}`rotation-rectangle-figure`.
 
 ```{figure} ../_images/05_rotation.png
 :width: 80%
@@ -544,7 +542,7 @@ Rectangle rotated anti-clockwise about the $z$-axis by $45^\circ$.
 
 ### Axis-angle rotation
 
-The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector $\hat{v}$ which has its tail at $(0,0,0)$ ({numref}`axis-angle-rotation-figure`).
+The three rotation transformations are only useful if we want to only rotate around one of the three coordinate axes. A more useful transformation is the rotation around the axis that points in the direction of a unit vector $\hat{\vec{v}}$ which has its tail at $(0,0,0)$ ({numref}`axis-angle-rotation-figure`).
 
 ```{figure} ../_images/05_axis_angle_rotation.svg
 :height: 300
@@ -553,7 +551,7 @@ The three rotation transformations are only useful if we want to only rotate aro
 Axis-angle rotation.
 ```
 
-The transposed transformation matrix for rotation around a unit vector $\hat{v} = (v_x, v_y, v_z)$, anti-clockwise by angle $\theta$ when looking down the vector is.
+The transposed transformation matrix for rotation around a unit vector $\hat{\vec{v}} = (v_x, v_y, v_z)$, anti-clockwise by angle $\theta$ when looking down the vector is.
 
 $$ \begin{align*}
     Rotate =
@@ -578,9 +576,9 @@ Where $c = \cos(\theta)$ and $s = \sin(\theta)$. Again, you don't really need to
 
 :::{dropdown} Derivation of the axis-angle rotation matrix (click to show)
 
-The rotation about the unit vector $\hat{v} = (v_x, v_y, v_z)$ by angle $\theta$ is the [composition](composite-transformations-section) of 5 separate rotations:
+The rotation about the unit vector $\hat{\vec{v}} = (v_x, v_y, v_z)$ by angle $\theta$ is the [composition](composite-transformations-section) of 5 separate rotations:
 
-1. Rotate $\hat{v}$ around the $x$-axis so that it is in the $xz$-plane (the $y$ component of the vector is 0);
+1. Rotate $\hat{\vec{v}}$ around the $x$-axis so that it is in the $xz$-plane (the $y$ component of the vector is 0);
 2. Rotate the vector around the $y$-axis so that it points along the $z$-axis (the $x$ and $y$ components are 0 and the $z$ component is a positive number);
 3. Perform the rotation around the $z$-axis;
 4. Reverse the rotation around the $y$-axis;
@@ -600,7 +598,6 @@ Rotate $\vec{v}$ around the $x$-axis
 Therefore, $\cos(\theta) = \dfrac{v_z}{\sqrt{v_y^2 + v_z^2}}$ and $\sin(\theta) = \dfrac{v_y}{\sqrt{v_y^2 + v_z^2}}$ so the rotation matrix is
 
 ```{math}
-
 R_1 =
 \begin{pmatrix}
     1 & 0 & 0 & 0 \\
@@ -612,7 +609,7 @@ R_1 =
 
 ---
 
-2. The rotation around the $y$-axis is achieved by forming another right-angled triangle in the $xz$-plane where $\theta$ has an adjacent side of length $\sqrt{v_y^2 + v_z^2}$, an opposite side of length $v_x$ and a hypotenuse of length 1 since $\hat{v}$ is a unit vector ({numref}`axis-angle-rotation2-figure`).
+2. The rotation around the $y$-axis is achieved by forming another right-angled triangle in the $xz$-plane where $\theta$ has an adjacent side of length $\sqrt{v_y^2 + v_z^2}$, an opposite side of length $v_x$ and a hypotenuse of length 1 since $\hat{\vec{v}}$ is a unit vector ({numref}`axis-angle-rotation2-figure`).
 
 ```{figure} ../_images/05_axis_angle_rotation_2.svg
 :height: 250
@@ -728,42 +725,62 @@ Where $c = \cos(\theta)$ and $s = \sin(\theta)$. Substituting $v_y^2 + v_z^2 = 1
 \end{align*}
 ```
 
-Note that this matrix is transposed when we code it into JavaScript.
+This matrix is transposed when working with column-major ordering to give our final axis-angle rotation matrix.
+
+$$ \begin{align*}
+    Rotate =
+    \begin{pmatrix}
+        (1 - c) v_x^2  + c &
+        (1 - c) v_x v_y + v_zs &
+        (1 - c) v_x v_z - v_ys &
+        0 \\
+        (1 - c) v_x v_y - v_zs &
+        (1 - c) v_y^2 + c &
+        (1 - c) v_y v_z + v_xs &
+        0 \\
+        (1 - c) v_x v_z + v_ys &
+        (1 - c) v_y v_z - v_xs &
+        (1 - c) v_z^2 + c &
+        0 \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}.
+\end{align*} $$
+
 :::
 
-The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{v}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so we can edit our `rotate()` function so that it uses equation {eq}`eq:axis-angle-rotation-matrix`.
+The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{\vec{v}}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so we can edit our `rotate()` function so that it uses equation {eq}`eq:axis-angle-rotation-matrix`.
 
 :::{admonition} Task
 :class: tip
 
-Edit the `rotate()` function in the ***maths.js*** file so that it looks like the following.
+Edit the `rotate()` method so that it looks like the following
 
 ```javascript
 rotate(axis, angle) {
-   axis = normalize(axis);
-   const [x, y, z] = axis;
-   const c = Math.cos(angle);
-   const s = Math.sin(angle);
-   const t = 1 - c;
-
-   return new Mat4().set(
-      t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
-      t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
-      t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
-      0, 0, 0, 1
-   );
+  axis = normalize(axis);
+  const [x, y, z] = axis;
+  const c = Math.cos(angle);
+  const s = Math.sin(angle);
+  const t = 1 - c;
+  const rotateMatrix = new Mat4().set([
+    t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+    t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+    t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+    0, 0, 0, 1
+  ]);
+  return this.multiply(rotateMatrix);
 }
 ```
 
-And change the calculation of the rotation matrix to the following
+Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
-const rotate    = new Mat4().rotate([0, 0, 1], angle);
+const model = rotate([0, 0, 1], 45 * Math.PI / 180);
 ```
 
 :::
 
-Here we have changed our function for calculating the rotation matrix so that it uses axis-angle rotation and have used it to rotate the rectangle by $45^\circ$ anti-clockwise about a vector pointing along the $z$-axis (i.e., straight out of the screen towards you). Refreshing your browser, and you should see that the output doesn't change ({numref}`rotation-rectangle-figure`).
+Here we have changed the `rotate()` method so that we can now use axis-angle rotation, and have used it to rotate the rectangle by $45^\circ$ anti-clockwise about a vector pointing along the $z$-axis (i.e., straight out of the screen towards you). Refreshing your browser, and you should see that the output doesn't change ({numref}`rotation-rectangle-figure`).
 
 ---
 
@@ -810,10 +827,13 @@ Let's apply scaling, rotation and translation (in that order) to our rectangle. 
 :::{admonition} Task
 :class: tip
 
-Change the model matrix to the following.
+Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
-const model = translate.multiply(rotate).multiply(scale);
+const model = new Mat4()
+   .translate([0.4, 0.3, 0])
+   .rotate([0, 0, 1], 45 * Math.PI / 180)
+   .scale([0.5, 0.4, 1]);
 ```
 
 :::
@@ -833,7 +853,7 @@ Scaling, rotation and translation applied to the textured rectangle.
 
 ## Animation
 
-We are now going to introduce animation to our WebGL application so that we can better see the effects of animations. Animation is done by redrawing the scene while updating values that represent motion or change, such as the position and size of an object. In WebGL this is done using the brower's built-in `requestAnimationFrame()` function which schedules the rendering function to run before the next screen refresh (typically 60 times per second).
+We are now going to introduce animation to our WebGL application so that we can better see the effects of animations. Animation is done by redrawing the scene while updating values that represent motion or change, such as the position and size of an object. In WebGL this is done using the browser's built-in `requestAnimationFrame()` function which schedules the rendering function to run before the next screen refresh (typically 60 times per second).
 
 Our `render()` function is used to update the animation state and draw the frame. The callback recieves a timestamp that is the time in milliseconds since the rendering of the last frame which is useful for controlling movement speed. So what is happening is that whilst the rectangle may look like a static image, it is continously being redrawn every 60th of a second.
 
@@ -848,11 +868,16 @@ Change the `render()` function declaration so that it takes in an input of the t
 function render(time) {
 ```
 
-Then change the command used to calculate the rotation matrix to the following.
+Then change the code used to calculate the model matrix to the following
 
 ```javascript
-const angle     = 1/2 * time * 0.001 * 2 * Math.PI;
-const rotate    = new Mat4().rotate([0, 0, 1], angle);
+// Calculate the model matrix
+const rotationsPerSecond = 1/2;
+const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
+const model = new Mat4()
+   .translate([0.4, 0.3, 0])
+   .rotate([0, 0, 1], angle)
+   .scale([0.5, 0.4, 1]);
 ```
 
 :::
@@ -875,7 +900,10 @@ When calculating the composite transformation matrix the order in which we multi
 Change the calculation of the model matrix so that it looks like the following.
 
 ```javascript
-const model = rotate.multiply(translate).multiply(scale);
+const model = new Mat4()
+   .rotate([0, 0, 1], angle)
+   .translate([0.4, 0.3, 0])
+   .scale([0.5, 0.4, 1]);
 ```
 
 :::

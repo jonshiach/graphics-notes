@@ -345,7 +345,7 @@ A **unit vector** is a vector that has a length of 1. We can find a unit vector 
 
 $$ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq:unit-vector)
 
-This process is called **normalising a vector**. For example, to determine a unit vector pointing in the same direction as the vector $\vec{a} = (3, 0, 4)$, we normalize it by dividing by its magnitude which is 5.
+This process is called **normalising a vector**. For example, to determine a unit vector pointing in the same direction as the vector $\vec{a} = (3, 0, 4)$, we normalise it by dividing by its magnitude which is 5.
 
 ```{math}
 :numbered: false
@@ -354,11 +354,11 @@ This process is called **normalising a vector**. For example, to determine a uni
 \end{align*}
 ```
 
-Checking that $\hat{a}$ has a magnitude of 1
+Checking that $\hat{\vec{a}}$ has a magnitude of 1
 
 ```{math}
 :numbered: false
-\|\hat{a}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
+\|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
 ```
 
 Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a method that does this.
@@ -578,31 +578,50 @@ Add the following class declaration to the ***maths.js*** file.
 // 4x4 Matrix class
 class Mat4 {
   constructor() {
-    this.elements = new Float32Array(16);
+    this.m = new Float32Array(16);
+    this.identity();
+  }
+
+  identity() {
+    const m = this.m;
+    m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
+    m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
+    m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
+    m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
+    return this;
+  }
+
+  set(
+    m00, m01, m02, m03,
+    m10, m11, m12, m13,
+    m20, m21, m22, m23,
+    m30, m31, m32, m33
+  ) {
+    const m = this.m;
+    m[0]  = m00; m[4]  = m01; m[8]  = m02; m[12] = m03;
+    m[1]  = m10; m[5]  = m11; m[9]  = m12; m[13] = m13;
+    m[2]  = m20; m[6]  = m21; m[10] = m22; m[14] = m23;
+    m[3]  = m30; m[7]  = m31; m[11] = m32; m[15] = m33;
+    return this;
   }
 
   print() {
-    const e = this.elements;
+    const m = this.m;
     let string = "";
     for (let i = 0; i < 4; i++) {
       const row = [
-        e[i * 4 + 0].toFixed(2).padStart(8),
-        e[i * 4 + 1].toFixed(2).padStart(8),
-        e[i * 4 + 2].toFixed(2).padStart(8),
-        e[i * 4 + 3].toFixed(2).padStart(8),
+        m[i * 4 + 0].toFixed(2).padStart(8),
+        m[i * 4 + 1].toFixed(2).padStart(8),
+        m[i * 4 + 2].toFixed(2).padStart(8),
+        m[i * 4 + 3].toFixed(2).padStart(8),
       ];
       string += "  [" + row.join(" ") + " ]\n";
     }
     return string;
   }
-  
-  set(...values) {
-    if (values.length !== 16) {
-      throw new Error("Mat4.set() requires 16 values");
-    }
-    for (let i = 0; i < 16; i++) {
-      this.elements[i] = values[i];
-    }
+
+  copy (mat) {
+    this.m.set(mat.m);
     return this;
   }
 }
@@ -613,18 +632,26 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 ```javascript
 // Matrices
 console.log("\nMatrices\n--------");
-const A = new Mat4().set(
+const A = new Mat4().set([
    1,  2,  3,  4,
    5,  6,  7,  8,
    9, 10, 11, 12,
   13, 14, 15, 16
-);
+]);
 console.log("A =\n" + A.print());
 ```
 
 :::
 
-Here we have declared a class called `Mat4` inside which we have defined the constructor method that defines a $4\times 4$ matrix of zeros, a print method and a set method that sets the elements of a matrix to values from a 16-element array. We have then created a matrix object and set the values equal to
+Here we have declared a class called `Mat4` inside which we have defined the following methods
+
+- `constructor()` -- the constructor method that defines a $4\times 4$ identity matrix (we discuss identity matrices [below](identity-matrix-section))
+- `identity()` -- returns an identity matrix
+- `set()` -- sets the values of the matrix equal to 16 inputted values
+- `print()` -- prints the matrix (when used with `console.log()`)
+- `copy()` -- makes a copy of the matrix (useful to avoid overwriting the matrix)
+
+We have then created a matrix object and set the values equal to the matrix below and printed the matrix.
 
 ```{math}
 :numbered: false
@@ -637,7 +664,7 @@ A =
 \end{pmatrix}.
 ```
 
-And printed the matrix. Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added.
 
 ```text
 Matrices
@@ -690,13 +717,15 @@ Add the following method definition to the matrix class.
 
 ```javascript
 transpose() {
-  let e = this.elements;
-  return new Mat4().set(
-    e[0], e[4], e[8],  e[12],
-    e[1], e[5], e[6],  e[13],
-    e[2], e[6], e[10], e[14],
-    e[3], e[7], e[11], e[15]
-  );
+  const m = this.m;
+  let tmp;
+  tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
+  tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
+  tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
+  tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
+  tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
+  tmp = m[11]; m[11] = m[14]; m[14] = tmp;
+  return this
 }
 ```
 
@@ -713,9 +742,40 @@ Refresh your web page, and you should see the following has been added.
 ```text
 A^T =
   [    1.00     5.00     9.00    13.00 ]
-  [    2.00     6.00     7.00    14.00 ]
+  [    2.00     6.00    10.00    14.00 ]
   [    3.00     7.00    11.00    15.00 ]
   [    4.00     8.00    12.00    16.00 ]
+```
+
+So here we have transposed the matrix $A$ and printed it. Note that the call `A.transpose()` has changed the elements in the matrix `A` so if we want to work with the original matrix we must first make a copy.
+
+:::{admonition} Task
+:class: tip
+
+Edit the code used to print the transpose of the matrix `A` to the following
+
+```javascript
+const AT = new Mat4().copy(A);
+console.log("\nA^T =\n" + AT.transpose().print());
+console.log("\nA =\n" + A.print());
+```
+
+:::
+
+Here we have created a new matrix `AT` and copied the elements of `A` into it and printed the transpose of the new matrix. We have also printed the original `A` matrix to check that its elements are still the original values. Refresh your web browser and you should set the following.
+
+```text
+A^T =
+  [    1.00     5.00     9.00    13.00 ]
+  [    2.00     6.00    10.00    14.00 ]
+  [    3.00     7.00    11.00    15.00 ]
+  [    4.00     8.00    12.00    16.00 ]
+
+A =
+  [    1.00     2.00     3.00     4.00 ]
+  [    5.00     6.00     7.00     8.00 ]
+  [    9.00    10.00    11.00    12.00 ]
+  [   13.00    14.00    15.00    16.00 ]
 ```
 
 (matrix-multiplication-section)=
@@ -797,32 +857,35 @@ $$ \begin{pmatrix}
 Add the following method definition to the matrix class.
 
 ```javascript
-multiply(matB) {
-  const a = this.elements;
-  const b = matB.elements;
-  const c = new Mat4();
+multiply(mat) {
+  const result = new Float32Array(16);
   for (let col = 0; col < 4; col++) {
     for (let row = 0; row < 4; row++) {
-      for (let i  = 0; i < 4; i++) {
-        c.elements[col * 4 + row] += a[i * 4 + row] * b[col * 4 + i];
+      let sum = 0;
+      for (let k  = 0; k < 4; k++) {
+        sum += this.m[row + k * 4] * mat.m[k + col * 4];
       }
+      result[row + col * 4] = sum;
     }
   }
-  return c;
+  this.set(result);
+  return this;
 }
 ```
 
 Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-const B = new Mat4().set(
+const B = new Mat4().set([
   17, 18, 19, 20,
   21, 22, 23, 24,
   25, 26, 27, 28,
   29, 30, 31, 32
-);
+]);
+
+const AB = new Mat4().copy(A).multiply(B);
 console.log("\nB =\n" + B.print());
-console.log("\nAB =\n" + A.multiply(B).print());
+console.log("\nAB =\n" + AB.print());
 ```
 
 :::
@@ -843,7 +906,7 @@ AB =
   [  874.00   996.00  1118.00  1240.00 ]
 ```
 
-What... wait... hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-matrix-multiplication-example`. Our `.multiply()` method hasn't given us the result shown above. The reason for this is something called column-major order.
+Hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-matrix-multiplication-example`. Our `multiply()` method hasn't given us the result shown above. The reason for this is how the elements of a matrix are stored in memory.
 
 (column-major-order-section)=
 
@@ -874,17 +937,17 @@ i.e., we move down and across the matrix. Alternatively, using row-major order t
 :width: 650
 ```
 
-i.e., we move across and down the matrix. **WebGL uses column-major order** because it is based upon OpenGL which was written for early GPUs that treated vertex data as column vectors. So a matrix containing vertices is stored column-by-column which means, when working with WebGL, we need to switch the rows and columns around when multiplying matrices. This is why our `.multiply()` method produced the wrong result.
+i.e., we move across and down the matrix. **WebGL uses column-major order** because it is based upon OpenGL which was written for early GPUs that treated vertex data as column vectors. So a matrix containing vertices is stored column-by-column which means, when working with WebGL, we need to switch the rows and columns around when multiplying matrices. This is why our `multiply()` method produced the wrong result.
 
 To output the matrix multiplication $AB$ as we would expect it to appear, we can swap `A` and `B`.
 
 :::{admonition} Task
 :class: tip
 
-Edit the last line you entered so the `A` and `B` are swapped.
+Edit the line that computes the matrix `AB` so that `A` and `B` are swapped.
 
 ```javascript
-console.log("\nAB =\n" + B.multiply(A).print());
+const AB = new Mat4().copy(B).multiply(A);
 ```
 
 :::
@@ -899,10 +962,16 @@ AB =
   [ 1354.00  1412.00  1470.00  1528.00 ]
 ```
 
+:::{important}
+When working with column-major ordering, matrix multiplication is read from right-to-left, so to calculate the multiplication $AB$ we would reverse the order, i.e., $BA$.
+:::
+
 :::{note}
 :class: note
 Microsoft's graphics library directX and Unreal Engine uses row-major order whilst WebGL, OpenGL, Vulkan (successor to OpenGL), Metal (Apple's graphics library) and Unity all use column-major order. This means when porting code between the graphics libraries developers have to change all of their matrix calculations.
 :::
+
+(identity-matrix-section)=
 
 ### The Identity Matrix
 
@@ -997,7 +1066,7 @@ $$ \begin{align*}
   \end{pmatrix}.
 \end{align*} $$
 
-So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating the inverse of a matrix is quite involved process and not all square matrices have an inverse.
+So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating the inverse of a matrix is quite involved process and outside the scope of this course.
 
 :::{admonition} Task
 
@@ -1005,30 +1074,30 @@ Add the following method to the Matrix class (you may wish to use copy and paste
 
 ```javascript
 inverse() {
-  let e = this.elements;
+  let m = this.m;
   const inv = new Float32Array([
-    e[5] * e[10] * e[15] - e[5] * e[11] * e[14] - e[9] * e[6] * e[15] + e[9] * e[7] * e[14] + e[13] * e[6] * e[11] - e[13] * e[7] * e[10],
-    -e[1] * e[10] * e[15] + e[1] * e[11] * e[14] + e[9] * e[2] * e[15] - e[9] * e[3] * e[14] - e[13] * e[2] * e[11] + e[13] * e[3] * e[10],
-    e[1] * e[6] * e[15] - e[1] * e[7] * e[14] - e[5] * e[2] * e[15] + e[5] * e[3] * e[14] + e[13] * e[2] * e[7]  - e[13] * e[3] * e[6],
-    -e[1] * e[6] * e[11] + e[1] * e[7] * e[10] + e[5] * e[2] * e[11] - e[5] * e[3] * e[10] - e[9] * e[2] * e[7]  + e[9] * e[3] * e[6],
+    m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
+    -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],
+    m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],
+    -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
 
-    -e[4] * e[10] * e[15] + e[4] * e[11] * e[14] + e[8] * e[6] * e[15] - e[8] * e[7] * e[14] - e[12] * e[6] * e[11] + e[12] * e[7] * e[10],
-    e[0] * e[10] * e[15] - e[0] * e[11] * e[14] - e[8] * e[2] * e[15] + e[8] * e[3] * e[14] + e[12] * e[2] * e[11] - e[12] * e[3] * e[10],
-    -e[0] * e[6] * e[15] + e[0] * e[7] * e[14] + e[4] * e[2] * e[15] - e[4] * e[3] * e[14] - e[12] * e[2] * e[7]  + e[12] * e[3] * e[6],
-    e[0] * e[6] * e[11] - e[0] * e[7] * e[10] - e[4] * e[2] * e[11] + e[4] * e[3] * e[10] + e[8] * e[2] * e[7]  - e[8] * e[3] * e[6],
+    -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
+    m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
+    -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
+    m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
 
-    e[4] * e[9] * e[15] - e[4] * e[11] * e[13] - e[8] * e[5] * e[15] + e[8] * e[7] * e[13] + e[12] * e[5] * e[11] - e[12] * e[7] * e[9],
-    -e[0] * e[9] * e[15] + e[0] * e[11] * e[13] + e[8] * e[1] * e[15] - e[8] * e[3] * e[13] - e[12] * e[1] * e[11] + e[12] * e[3] * e[9],
-    e[0] * e[5] * e[15] - e[0] * e[7] * e[13] - e[4] * e[1] * e[15] + e[4] * e[3] * e[13] + e[12] * e[1] * e[7]  - e[12] * e[3] * e[5],
-    -e[0] * e[5] * e[11] + e[0] * e[7] * e[9]  + e[4] * e[1] * e[11] - e[4] * e[3] * e[9]  - e[8] * e[1] * e[7]  + e[8] * e[3] * e[5],
+    m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
+    -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
+    m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
+    -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
 
-    -e[4] * e[9] * e[14] + e[4] * e[10] * e[13] + e[8] * e[5] * e[14] - e[8] * e[6] * e[13] - e[12] * e[5] * e[10] + e[12] * e[6] * e[9],
-    e[0] * e[9] * e[14] - e[0] * e[10] * e[13] - e[8] * e[1] * e[14] + e[8] * e[2] * e[13] + e[12] * e[1] * e[10] - e[12] * e[2] * e[9],
-    -e[0] * e[5] * e[14] + e[0] * e[6] * e[13] + e[4] * e[1] * e[14] - e[4] * e[2] * e[13] - e[12] * e[1] * e[6]  + e[12] * e[2] * e[5],
-    e[0] * e[5] * e[10] - e[0] * e[6] * e[9]  - e[4] * e[1] * e[10] + e[4] * e[2] * e[9]  + e[8] * e[1] * e[6]  - e[8] * e[2] * e[5]
+    -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
+    m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
+    -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
+    m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
   ]);
 
-  let det = e[0] * inv[0] + e[1] * inv[4] + e[2] * inv[8] + e[3] * inv[12];
+  let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
   if (det === 0) {
     console.error("Matrix is singular, no inverse exists");
     return null;
@@ -1038,27 +1107,30 @@ inverse() {
   for (let i = 0; i < 16; i++) {
     inv[i] *= det;
   }
-  return new Mat4().set(...inv);
+  this.set(inv);
+  return this;
 }
 ```
 
 Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-const C = new Mat4().set(
-  1, 3, 2, 1, 
-  1, 1, 2, 2, 
+const C = new Mat4().set([
+  1, 3, 2, 1,
+  1, 1, 2, 2,
   1, 3, 3, 2,
   3, 1, 3, 2
-);
+]);
+const invC = new Mat4().copy(C).inverse();
+
 console.log("\nC =\n" + C.print());
-console.log("\ninv(C) =\n" + C.inverse().print());
-console.log("\ninv(C)C =\n" + C.inverse().multiply(C).print());
+console.log("\ninv(C) =\n" + invC.print());
+console.log("\ninv(C)C =\n" + invC.multiply(C).print());
 ```
 
 :::
 
-Refresh your browser and you should now see that we have calculated the inverse matrix $C^{-1}$ and shown that $C^{-1}C = I$.
+Here we have computed and printed the inverse of the matrix `C` (remembering to take a copy) as well printing the matrix multiplication of `C`, and it's inverse to check that we get an identity matrix. Refresh your browser, and you should see the following.
 
 ```text
 C =

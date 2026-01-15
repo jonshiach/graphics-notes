@@ -161,15 +161,16 @@ In [Lab 5: Transformations](transformations-section) we saw that we can combine 
 :::{admonition} Task
 :class: tip
 
-Edit the `render()` function in the ***3D_worlds.js*** file so that the transformation matrices look like the following.
+Edit the `render()` function in the ***3D_worlds.js*** file so that the calculation of the model matrix looks like the following
 
 ```javascript
 // Calculate the model matrix
-const translate = new Mat4().translate([0, 0, -2]);
-const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
-const angle     = 1/3 * time * 2 * Math.PI * 0.001;
-const rotate    = new Mat4().rotate([0, 1, 0], angle);
-const model     = translate.multiply(rotate).multiply(scale);
+const rotationsPerSecond = 1/3;
+const angle = rotationsPerSecond * time * 2 * Math.PI * 0.001;
+const model = new Mat4()
+  .translate([0, 0, -2])
+  .rotate([0, 1, 0], angle)
+  .scale([0.5, 0.5, 0.5]);
 ```
 
 :::
@@ -279,21 +280,28 @@ Create a file called ***camera.js*** inside which enter the following code.
 class Camera {
 
   constructor() {
+
     // Camera vectors
     this.eye     = [0, 0, 0];
     this.worldUp = [0, 1, 0];
     this.front   = [0, 0, -1];
     this.right   = [1, 0, 0];
     this.up      = [0, 1, 0];
+
+    // Projection settings
+    this.fov    = 45 * Math.PI / 180;
+    this.aspect = 800 / 600;
+    this.near   = 0.1;
+    this.far    = 1000;
   }
 
-  updateCameraVectors() {
+  update() {
     this.right = normalize(cross(this.front, this.worldUp));
     this.up    = normalize(cross(this.right, this.front));
   }
 
   getViewMatrix() {
-    return new Mat4().set(
+    return new Mat4().set([
       this.right[0], this.up[0], -this.front[0], 0,
       this.right[1], this.up[1], -this.front[1], 0,
       this.right[2], this.up[2], -this.front[2], 0,
@@ -301,14 +309,19 @@ class Camera {
       -dot(this.eye, this.up),
        dot(this.eye, this.front),
       1
-    );
+    ]);
   }
 }
 ```
 
+And add the following to the ***index.html*** file before the ***3D_worlds.js*** file is embedded
+
+```html
+<script src="camera.js"></script>
+```
 :::
 
-Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the methods `.updateVectors()` which calculates the $\vec{right}$ and $\vec{up}$ camera vectors using equations {eq}`eq-right-camera-vector` and {eq}`eq-up-camera-vector`, and `.lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
 
 :::{admonition} Task
 :class: tip
@@ -320,21 +333,21 @@ Enter the following code before the `render()` function in the ***3D_worlds.js**
 const camera = new Camera();
 ```
 
-And add the following to the `render()` function after we bind the texture.
+And add the following to the `render()` function before we calculate the model matrix.
 
 ```javascript
 // Update camera vectors
 const target = [0, 0, -2];
-camera.eye   = [1, 1, 1];
+camera.eye = [1, 1, 1];
 camera.front = normalize(subtractVector(target, camera.eye));
-camera.updateCameraVectors();
+camera.update();
 
 // Calculate view matrix
 const view = camera.getViewMatrix();
 ```
 :::
 
-Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `.lookAt()` method.
+Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
 
 ---
 
@@ -410,7 +423,7 @@ This matrix is transposed when coding in JavaScript.
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the Camera class.
+Add the following method definition to the Camera class
 
 ```javascript
 getOrthographicMatrix(left, right, bottom, top, near, far) {
@@ -418,7 +431,7 @@ getOrthographicMatrix(left, right, bottom, top, near, far) {
   const tb = 1 / (top - bottom);
   const fn = 1 / (far - near);
 
-  return new Mat4().set(
+  return new Mat4().set([
     2 * rl, 0, 0, 0,
     0, 2 * tb, 0, 0,
     0, 0, -2 * fn, 0,
@@ -426,11 +439,11 @@ getOrthographicMatrix(left, right, bottom, top, near, far) {
     -(top + bottom) * tb,
     -(far + near) * fn,
     1
-  );
+  ]);
 }
 ```
 
-And add the following to the `render()` function file after we have calculated the view matrix.
+And add the following to the `render()` function file after we have calculated the view matrix
 
 ```javascript
 // Calculate projection matrix
@@ -439,7 +452,7 @@ const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
 
 :::
 
-Here we have defined the method `.orthographic()` that returns the orthographic projection matrix from equation {eq}`eq-orthographic-projection-matrix` and used it to calculate the projection matrix.
+Here we have defined the method `orthographic()` that returns the orthographic projection matrix from equation {eq}`eq-orthographic-projection-matrix` and used it to calculate the projection matrix.
 
 ---
 
@@ -458,8 +471,8 @@ Add the following code after we have calculated the view and projection matrices
 
 ```javascript
 // Send view and project matrices to the shaders
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
-gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
+gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 ```
 
 :::
@@ -502,7 +515,7 @@ Here we have added the two uniforms for the view and projection matrices to the 
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">
-    <source src="../_static/videos/05_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
+    <source src="../_static/videos/06_orthogonal_cube_no_depth_test.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -542,7 +555,7 @@ Here we first enabled WebGL's depth test and then we clear the depth buffer at t
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/videos/05_orthogonal_cube_depth_test.mp4" type="video/mp4">
+    <source src="../_static/videos/06_orthogonal_cube_depth_test.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -555,7 +568,7 @@ The problem with using orthographic projection is that is does not give us any c
 :::{admonition} Task
 :class: tip
 
-Add the following code after the cube indices are defined.
+Add the following code after the cube indices are defined
 
 ```javascript
 // Define cube positions
@@ -566,41 +579,31 @@ const cubes = [
 const numCubes = cubes.length;
 ```
 
-Now put the commands used to calculate the model matrix to draw the cube inside a for loop.
+Now edit the code used to calculate the model matrix and draw the cubes so that it looks like the following
 
 ```javascript
 // Draw cubes
-for (let i = 0; i < numberCubes; i++){
-  
+for (let i = 0; i < numCubes; i++) {
+
   // Calculate the model matrix
-  const translate = new Mat4().translate(cubes[i].position);
-  const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
-  const angle     = 0;
-  const rotate    = new Mat4().rotate([0, 1, 0], angle);
-  const model     = translate.multiply(rotate).multiply(scale);
-  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+  const angle = 0;
+  const model = new Mat4()
+    .translate(cubes[i].position)
+    .rotate([0, 1, 0], angle)
+    .scale([0.5, 0.5, 0.5]);
 
-  // Draw the rectangle
+  // Send model matrix to the shader
+  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+  // Draw the triangles
   gl.bindVertexArray(vao);
-  gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
-```
-
-Change the translation matrix so that it uses the new cube centre coordinates.
-
-```javascript
-const translate = new Mat4().translate(cubes[i].position);
-```
-
-Finally change the rotation angle to zero.
-
-```javascript
-const angle     = 0;
 ```
 
 :::
 
-Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. We have also stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
+Here we first define an array of JavaScript objects where the position attribute are 3-element arrays containing the centre coordinates of the two cubes. We then loop through the two cubes, calculate the model matrix for each one and draw the cube. Note that have stopped the cubes from rotating by setting the rotation angle to zero. Refresh your web browser and you should see something like the following.
 
 ```{figure} ../_images/06_orthographic_cubes.png
 :width: 80%
@@ -776,12 +779,12 @@ getPerspectiveMatrix() {
   const r  = this.aspect * t;
   const fn = 1 / (this.far - this.near);
 
-  return new Mat4().set(
+  return new Mat4().set([
     this.near / r, 0, 0, 0,
     0, this.near / t, 0, 0,
     0, 0, -(this.far + this.near) * fn, -1,
     0, 0, -2 * this.far * this.near * fn, 0
-  );
+  ]);
 }
 ```
 

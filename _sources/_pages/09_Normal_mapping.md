@@ -39,7 +39,7 @@ Load ***index.html*** in a live server, and you should see the cubes from [Lab 8
 ```{figure} ../_images/09_cubes.png
 :width: 80%
 
-The cubes lit using three light sources from [Lab 8: Lighting].
+The cubes lit using three light sources from [Lab 8: Lighting](lighting-section).
 ```
 
 :::{admonition} Task
@@ -47,7 +47,7 @@ The cubes lit using three light sources from [Lab 8: Lighting].
 
 Download the file [crate_normal.png](../_downloads/Lab%209%20-%20Normal%20Mapping/crate_normal.png) and save it to the ***Lab 9 - Normal Mapping/assets/*** folder.
 
-Add the following just after we have loadied the crate texture.
+Add the following just after we have loaded the crate texture.
 
 ```javascript
 const normalMap = loadTexture(gl, "assets/crate_normal.png");
@@ -114,9 +114,7 @@ $$ \begin{align*}
     \vec{T} &= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$(eq-tangent)
 
-To see the derivation of these equations click on the dropdown below. Since the bitangent vector $\vec{B}$ is perpendicular to the normal vector $\vec{N}$ and the tangent vector $\vec{T}$ we can calculate this using 
-
-$$ \vec{B} = \vec{N} \times \vec{T}. $$
+To see the derivation of these equations click on the dropdown below.
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
@@ -161,6 +159,10 @@ $$ \begin{align*}
     \vec{T} &= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
 \end{align*} $$
 ````
+
+Since the bitangent vector $\vec{B}$ is perpendicular to the normal vector $\vec{N}$ and the tangent vector $\vec{T}$ we can calculate this using 
+
+$$ \vec{B} = \vec{N} \times \vec{T}. $$
 
 Once we have the tangent, bitangent and normal vectors we can form a matrix that transforms from the tangent space to the world space. The matrix that achieves this a 3 $\times$ 3 matrix known as the $TBN$ matrix
 
@@ -317,7 +319,7 @@ And add the uniform for the normal map.
 uniform sampler2D uNormalMap;
 ```
 
-Then in the `main()` function, add the following
+Then in the `main()` function, add the following before we calculate the lighting for each light source
 
 ```glsl
 // Construct tangent space basis
@@ -439,6 +441,11 @@ gl.activeTexture(gl.TEXTURE1);
 gl.bindTexture(gl.TEXTURE_2D, floorNormalMap);
 gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
+// Bind specular map
+gl.activeTexture(gl.TEXTURE2);
+gl.bindTexture(gl.TEXTURE_2D, floorSpecularMap);
+gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
+
 // Send object light properties to the shader
 gl.uniform1f(gl.getUniformLocation(program, "uKa"), 0.2);
 gl.uniform1f(gl.getUniformLocation(program, "uKd"), 0.7);
@@ -446,15 +453,14 @@ gl.uniform1f(gl.getUniformLocation(program, "uKs"), 1.0);
 gl.uniform1f(gl.getUniformLocation(program, "uShininess"), 32);
 
 // Calculate the model matrix
-const translate = new Mat4().translate(6, -0.5, -6);
-const scale     = new Mat4().scale(10, 1, 10);
-const rotate    = new Mat4().rotate(0, 1, 0, 0);
-const model     = translate.multiply(rotate).multiply(scale);
+const model = new Mat4()
+  .translate([6, -0.5, -6])
+  .scale([10, 1, 10]);
 gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
 // Draw the triangles
 gl.bindVertexArray(floorVao);
-gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+gl.drawElements(gl.TRIANGLES, floorIndices.length, gl.UNSIGNED_SHORT, 0);
 ```
 :::
 
@@ -535,5 +541,3 @@ A the floor object with normal and specular mapping.
 ## Video walkthrough
 
 The video below walks you through these lab materials.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5ZNO5SV-cKU?si=W1uXu90e6a5_-Prg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
