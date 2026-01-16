@@ -18,11 +18,10 @@ The texture is a 2D image where each pixel within the texture, known as a **text
 :::{admonition} Task
 :class: tip
 
-Copy your ***Lab 2 Basic Shapes*** folder you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 3 Textures***, change the name of ***basic_shapes.js*** to ***textures.js*** and update ***index.html*** to reference the new JavaScript file.
-
+Download [Lab 3.zip](../_downloads/Lab%203%20-%20Textures.zip) and extract the files to your computer.
 :::
 
-Start the live server, and you should see a colourful rectangle similar to the one you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section). We are going to apply a texture to this rectangle.
+Load ***index.html*** in a live server, and you should see a colourful rectangle similar to the one you created in [Lab 2: Basic Shapes in WebGL](basic-shapes-section). We are going to apply a texture to this rectangle.
 
 ```{figure} ../_images/03_colourful_rectangle.png
 :width: 80%
@@ -64,7 +63,7 @@ function loadTexture(gl, url) {
 }
 ```
 
-Add the following code to the ***textures.js*** file after the VAO is creates.
+Add the following code to the ***textures.js*** file after the VAO is created.
 
 ```javascript
 // Load texture
@@ -89,11 +88,11 @@ Edit the `vertices` array so that the $(u,v)$ coordinates are defined for each v
 ```javascript
 // Define vertices
 const vertices = new Float32Array([
-// x    y    z       r    g    b      u  v            
--0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
- 0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
- 0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
--0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0, 1, // vertex 3     0 -- 1 
+// x    y     z       r    g    b      u  v            
+-0.5, -0.5,  0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
+ 0.5, -0.5,  0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
+ 0.5,  0.5,  0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
+-0.5,  0.5,  0.0,    1.0, 1.0, 1.0,    0, 1, // vertex 3     0 -- 1 
 ]);
 ```
 
@@ -537,4 +536,11 @@ A rectangle with a mix of two textures applied.
 
 ## Video walkthrough
 
-The video below walks you through these lab materials.
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/19L9ir8Aly0?si=QiQmUOTycjDPYKpE" title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
