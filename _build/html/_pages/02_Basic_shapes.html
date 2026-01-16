@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -418,6 +418,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-array-objects-vao">Vertex Array Objects (VAO)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#element-buffer-objects">Element Buffer Objects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -476,7 +477,7 @@ document.write(`
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Inside your <em><strong>Lab 2 Basic Shapes</strong></em> folder, create a JavaScript file <em><strong>basic_shapes.js</strong></em> that contains the following.</p>
+<p>Inside your <em><strong>Lab 2 Basic Shapes</strong></em> folder, create a JavaScript file <em><strong>basic_shapes.js</strong></em> that contains the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Main function</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
@@ -504,7 +505,7 @@ document.write(`
 <p>Refresh your web browser (this is done by the live server whenever you save a file), and you should still see that the horrible lurid green background. But hang on, haven’t we defined our background colour to be dark grey? The reason for this is that we haven’t embedded the JavaScript file into our HTML file.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag near the bottom of the <em><strong>index.html</strong></em> file so that it looks like the following.</p>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag near the bottom of the <em><strong>index.html</strong></em> file so that it looks like the following</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;body&gt;
   &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
   &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
@@ -547,7 +548,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Enter the following just before we clear the canvas.</p>
+<p>Enter the following we have cleared the canvas.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
 <span class="w">  </span><span class="c1">// x    y    z</span>
@@ -860,13 +861,13 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>We can now tidy up the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function and make a call to out new <code class="docutils literal notranslate"><span class="pre">createprogram()</span></code> function.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following.</p>
+<p>Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Setup WebGL</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Comment out (or delete) the code used to compile and link the shaders and replace it with the following.</p>
+<p>Comment out (or delete) the code used to compile and link the shaders and replace it with the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create WebGL program </span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShaderSource</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentShaderSource</span><span class="p">);</span>
 </pre></div>
@@ -920,7 +921,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>To add colour data to the triangle vertices we add 3 more float values for the red, green and blue colours to the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Amend the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that it looks like the following.</p>
+<p>Amend the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that it looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
 <span class="w"> </span><span class="c1">// x     y    z      r    g    b</span>
@@ -949,7 +950,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Change the <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer();</span></code> function so that it looks like the following.</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer();</span></code> function so that it looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span>
 <span class="w">  </span><span class="nx">positionLocation</span><span class="p">,</span><span class="w">                    </span><span class="c1">// index</span>
 <span class="w">  </span><span class="mf">3</span><span class="p">,</span><span class="w">                                   </span><span class="c1">// size</span>
@@ -1091,18 +1092,22 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Here we create a VAO using the <code class="docutils literal notranslate"><span class="pre">gl.createVertexArray()</span></code> function and bind it. Then we create the VBO and tell WebGL how to access the data using the same commands as before. The last thing we do before returning the VAO is to unbind it so that we don’t accidentally make changes with subsequent code.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Delete (or comment out) any commands used to create VBOs for the triangle and square as well as commands used to tell WebGL how to read the data.</p>
-<p>The use the following commands to draw the triangle and square.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw triangle</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVAO</span><span class="p">);</span>
+<p>Delete (or comment out) any commands used to create the VAOs and VBOs for the triangle and square, commands used to tell WebGL how to read the data and commands used to draw the triangle and square.</p>
+<p>Then use the following commands to create the VAOs for the triangle and square and draw them.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create VAOs</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">triangleVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">squareVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">squareVertices</span><span class="p">);</span>
+
+<span class="c1">// Draw triangle</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVao</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
 
 <span class="c1">// Draw square</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">squareVAO</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">squareVao</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function should not look something like the following.</p>
+<p>Your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function should not look something like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="c1">// Setup WebGL</span>
@@ -1157,7 +1162,18 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>To add the square to our scene we used 6 vertices, 3 for each of the triangle. Two of these vertices, 0 and 2, are shared by both triangles, so we are using more memory than required. To avoid redundant vertex data being created and using up memory, we can define an array of the <strong>indices</strong> for each triangle which maps to the vertex data. The buffer that we use to store the indices is called the <strong>Element Buffer Object (EBO)</strong>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following arrays after the square vertices have been defined.</p>
+<p>Edit the code used to define the vertices for the square so that it looks like the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define square vertices</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">squareVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="w"> </span><span class="c1">// x  y    z       r    g    b             </span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
+<span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
+<span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+<p>And add the following arrays after the square vertices have been defined.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle indices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint16Array</span><span class="p">([</span>
 <span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span>
@@ -1171,7 +1187,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </pre></div>
 </div>
 </div>
-<p>Here we have defined two 16-bit integer arrays for the indices of the triangle and square. We now need to update the <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> utility function to use these index arrays.</p>
+<p>Here we have reduced the square vertices array to only include one instance of the four vertices and have defined two 16-bit integer arrays for the indices of the triangle and square. We now need to update the <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> utility function to use these index arrays.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add an input for the index array in the <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> function.</p>
@@ -1188,10 +1204,16 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </div>
 </div>
 <p>These commands a similar those used for the vertex buffer. Note that here we need to specify that we have an element array buffer instead of a standard array buffer. The index buffer does not contain any data specific to the vertices, so we don’t need to add it to a VAO, instead we bind it whilst the VAO is bound and WebGL “remembers” it as part of the VAO’s state.</p>
-<p>Finally, we need to tell WebGL that our data for the square is defined using indices, so we need to change the draw commands.</p>
+<p>Finally, we need to tell WebGL that our data for the square is defined using indices.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Replace the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> command for the square with the following.</p>
+<p>Change the function calls to <code class="docutils literal notranslate"><span class="pre">createVao()</span></code> so that they include the indices arrays</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create VAOs</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">triangleVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">indices</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">squareVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">squareVertices</span><span class="p">,</span><span class="w"> </span><span class="nx">squareIndices</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Replace the <code class="docutils literal notranslate"><span class="pre">gl.drawArrays()</span></code> command for the square with the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw the triangle</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVao</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
@@ -1272,6 +1294,20 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <a class="reference internal image-reference" href="../_images/02_ex4.png"><img alt="../_images/02_ex4.png" src="../_images/02_ex4.png" style="width: 60%;" />
 </a>
 </figure>
+</section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
 </section>
 </section>
 
@@ -1360,6 +1396,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-array-objects-vao">Vertex Array Objects (VAO)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#element-buffer-objects">Element Buffer Objects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
   </nav></div>
 

@@ -122,23 +122,25 @@
 % \end{tikzpicture}
 
 % Hexagon
-% \begin{tikzpicture}
-%   \tikzmath{\r=3;\al=\r+0.5;\ns=6;\angle = 360 / \ns;};
-%   \draw [axis] (0:-\al) -- (0:\al) node [below] {$x$};
-%   \draw [axis] (90:-\al) -- (90:\al) node [left] {$y$};
-%   \draw [line width=1pt] circle (\r);
-%   \foreach \i in {1,...,{\ns}} {
-%     \draw [line width=1pt, blue, fill=blue, opacity=0.2] (0,0) -- 
-%         ({\r*cos(\i * \angle)}, {\r*sin(\i * \angle)}) coordinate (1) -- 
-%         ({\r*cos((\i + 1) * \angle)}, {\r * sin((\i + 1) * \angle)}) coordinate (2) --
-%         cycle;
+\begin{tikzpicture}
+  \tikzmath{\r=3;\al=\r+0.5;\ns=6;\angle = 360 / \ns;};
+  \draw [axis] (0:-\al) -- (0:\al) node [below] {$x$};
+  \draw [axis] (90:-\al) -- (90:\al) node [left] {$y$};
+  \draw [line width=1pt] circle (\r);
+  \foreach \i in {1,...,{\ns}} {
+    \draw [line width=1pt, blue, fill=blue, opacity=0.2] (0,0) -- 
+        ({\r*cos(\i * \angle)}, {\r*sin(\i * \angle)}) coordinate (1) -- 
+        ({\r*cos((\i + 1) * \angle)}, {\r * sin((\i + 1) * \angle)}) coordinate (2) --
+        cycle;
     
-%     \node [point,blue] at ({\r*cos(\i*\angle)}, {\r*sin(\i*\angle)}) {};
-%   };
-%   \node [point,blue] at (0,0) {};
-%   \node [above right] at (\angle:\r) {$(r\cos(\theta_1), r\sin(\theta_1))$};
-%   \draw [<->] (0,0) -- (150:\r) node [pos=0.5,below left] {$r$};
-% \end{tikzpicture}
+    \node [point,blue] at ({\r*cos(\i*\angle)}, {\r*sin(\i*\angle)}) {};
+  };
+  \node [point,blue] at (0,0) {};
+  \node [above right] at (\angle:\r) {$(r\cos(\theta), r\sin(\theta))$};
+  \draw [<->,thick,shorten >= 2pt,shorten <= 2pt] (0,0) -- (150:\r) node [pos=0.5,below left] {$r$};
+  \node at (0.5*\angle:0.5) {$\theta$};
+  \draw [thick] (0:0.75) arc (0:\angle:0.75);
+\end{tikzpicture}
 
 % Circle
 % \begin{tikzpicture}
@@ -516,11 +518,11 @@
 %     \draw [axis,red] (0,0) -- (\x:\al) node at (\x:\al+0.2) {$x$};
 %     \draw [axis,mygreen] (0,0) -- (\y:\al-1) node at (\y:\al-1+0.2) {$y$};
 %     \draw [axis,blue] (0,0) -- (\z:\al) node at (\z:\al+0.2) {$z$};
-%     \draw [vector] (0,0) -- (1) node [above right] {$\hat{v}$};
+%     \draw [vector] (0,0) -- (1) node [above right] {$\hat{\vec{v}}$};
 %     \draw [help lines] (1) -- (2) -- (0,0) (2) -- (3) (2) -- (\x:\vx);
 %     \draw [dashed] (3) -- (4) -- (0,0);
 %     \draw [help lines] ($(3)+(\z:-0.2)$) -- ++(\y:0.2) -- ++(\z:0.2);
-%     \draw [->,bend right,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(4)$) to (\z:1);
+%     \draw [->,thick,bend right,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(4)$) to (\z:1);
 %     \node at (180:0.67) {$\theta$};
 %     \node [below] at ($(0,0)!0.5!(3)$) {$v_z$};
 %     \node [left] at ($(3)!0.5!(4)$) {$v_y$};
@@ -539,7 +541,7 @@
 %     \draw [vector] (0,0) -- (1);
 %     \draw [help lines] (1) -- (2) -- (0,0) (2) -- (3) (2) -- (\x:\vx);
 %     \draw [help lines] ($(3)+(\z:-0.2)$) -- ++(\x:0.2) -- ++(\z:0.2);
-%     \draw [->,bend left,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(2)$) to (\z:1);
+%     \draw [->,thick,bend left,shorten >= 2pt,shorten <= 2pt] ($(0,0)!0.4!(2)$) to (\z:1);
 %     \node at (220:0.67) {$\theta$};
 %     \node [below] at ($(2)!0.5!(3)$) {$v_x$};
 %     \node [right] at ($(0,0)!0.5!(2)$) {$1$};
@@ -974,14 +976,14 @@
 % \end{tikzpicture}
 
 % Depth test
-\begin{tikzpicture}
-    \tikzmath{\l1=4;\l2=3;};
-    \coordinate (origin) at (0,0);
-    \draw [blue, fill=blue!50] (origin) -- ++(\l1, 0) -- ++(-0.5*\l1, {sqrt(0.75*\l1*\l1)}) -- cycle;
-    \draw [red, fill=red!50] ($(origin)+(-1,1)$) -- ++(\l2, 0) -- ++(-0.5*\l2, {sqrt(0.75*\l2*\l2)}) -- cycle;
-    \node at ($(origin)+(0.5*\l1,0.5)$) {near};
-    \node at ($(origin)+(-1,1)+(0.5*\l2,0.5)$) {far};
-\end{tikzpicture}
+% \begin{tikzpicture}
+%     \tikzmath{\l1=4;\l2=3;};
+%     \coordinate (origin) at (0,0);
+%     \draw [blue, fill=blue!50] (origin) -- ++(\l1, 0) -- ++(-0.5*\l1, {sqrt(0.75*\l1*\l1)}) -- cycle;
+%     \draw [red, fill=red!50] ($(origin)+(-1,1)$) -- ++(\l2, 0) -- ++(-0.5*\l2, {sqrt(0.75*\l2*\l2)}) -- cycle;
+%     \node at ($(origin)+(0.5*\l1,0.5)$) {near};
+%     \node at ($(origin)+(-1,1)+(0.5*\l2,0.5)$) {far};
+% \end{tikzpicture}
 
 % Orthographic projection
 % \begin{tikzpicture}
@@ -1512,45 +1514,45 @@
 % 	\texturedtriangle{(0,0)}{(2)}{(3)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
 % 	\draw [vector,red,line width=2pt] (0,0) -- (1) node [below right,pos=0.5] {$\vec{T}$};
 % 	\draw [vector,mygreen,line width=2pt] (0,0) -- (3) node [below left,pos=0.5] {$\vec{B}$};
-% 	\draw [vector,blue,line width=2pt] (0,0) -- (65:2.5) node [above] {$\vec{N}$};
+% 	\draw [vector,blue,line width=2pt] (0,0) -- (60:4) node [above] {$\vec{N}$};
 % \end{tikzpicture}
 
 % UV deltas
-\begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
-	\tikzmath{\a1=0;\a2=90;\l=5.5;\h=5.5;}
-	\coordinate (0) at (\a1:\l);
-	\coordinate (1) at ($(0)+(\a2:\h)$);
-	\coordinate (2) at (\a2:\h);
-	\coordinate (P2) at (3,1);
-	\coordinate (P3) at (4,4);
-	\coordinate (P1) at (1.,3);
-	\texturedtrianglelight{(0,0)}{(0)}{(1)} {(0,0)}{(1,0)}{(1,1)} {crate_normal.png}
-	\texturedtrianglelight{(0,0)}{(1)}{(2)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
-	\draw [vector,red] (0,0) -- (\a1:\l) node [right] {$\vec{T}$};
-	\draw [vector,mygreen] (0,0) -- (\a2:\h) node [left] {$\vec{B}$};
-	\draw [line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
-	\node [above,xshift=-0.4cm] at (P1) {$(u_0, v_0)$}; 
-	\node [below] at (P2) {$(u_1, v_1)$}; 
-	\node [above] at (P3) {$(u_2, v_2)$}; 
-	\draw [<->] ($(0:1)+(90:-0.25)$) -- ++(\a1:0.5*\l-1) node [pos=0.5,below] {$\Delta u_1$};
-	\draw [<->] ($(\a2:-0.25)+(\a1:0.5*\l)$) -- ++(1.5,0) node [pos=0.5,below] {$\Delta u_2$};
-	\draw [<->] ($(\a2:0.2*\h)+(\a1:-0.25)$) -- ++(\a2:2) node [pos=0.5,left] {$\Delta v_1$};
-	\draw [<->] ($(\a1:\l+0.2)+(\a2:1)$) -- ++(\a2:3) node [pos=0.5,right] {$\Delta v_2$};
-	\draw [vector,blue] (P1) -- (P2) node [pos=0.5,below left] {$(\Delta u_1, \Delta v_1)$};
-	\draw [vector,blue] (P2) -- (P3) node [pos=0.5,below right] {$(\Delta u_2, \Delta v_2)$};
-	\node at (2.5,-1) {tangent space};
+% \begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
+% 	\tikzmath{\a1=0;\a2=90;\l=5.5;\h=5.5;}
+% 	\coordinate (0) at (\a1:\l);
+% 	\coordinate (1) at ($(0)+(\a2:\h)$);
+% 	\coordinate (2) at (\a2:\h);
+% 	\coordinate (P2) at (3,1);
+% 	\coordinate (P3) at (4,4);
+% 	\coordinate (P1) at (1.,3);
+% 	\texturedtrianglelight{(0,0)}{(0)}{(1)} {(0,0)}{(1,0)}{(1,1)} {crate_normal.png}
+% 	\texturedtrianglelight{(0,0)}{(1)}{(2)} {(0,0)}{(1,1)}{(0,1)} {crate_normal.png}
+% 	\draw [vector,red] (0,0) -- (\a1:\l) node [right] {$\vec{T}$};
+% 	\draw [vector,mygreen] (0,0) -- (\a2:\h) node [left] {$\vec{B}$};
+% 	\draw [line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
+% 	\node [above,xshift=-0.4cm] at (P1) {$(u_0, v_0)$}; 
+% 	\node [below] at (P2) {$(u_1, v_1)$}; 
+% 	\node [above] at (P3) {$(u_2, v_2)$}; 
+% 	\draw [<->] ($(0:1)+(90:-0.25)$) -- ++(\a1:0.5*\l-1) node [pos=0.5,below] {$\Delta u_1$};
+% 	\draw [<->] ($(\a2:-0.25)+(\a1:0.5*\l)$) -- ++(1.5,0) node [pos=0.5,below] {$\Delta u_2$};
+% 	\draw [<->] ($(\a2:0.2*\h)+(\a1:-0.25)$) -- ++(\a2:2) node [pos=0.5,left] {$\Delta v_1$};
+% 	\draw [<->] ($(\a1:\l+0.2)+(\a2:1)$) -- ++(\a2:3) node [pos=0.5,right] {$\Delta v_2$};
+% 	\draw [vector,blue] (P1) -- (P2) node [pos=0.5,below left] {$(\Delta u_1, \Delta v_1)$};
+% 	\draw [vector,blue] (P2) -- (P3) node [pos=0.5,below right] {$(\Delta u_2, \Delta v_2)$};
+% 	\node at (2.5,-1) {tangent space};
 
-	\coordinate (O) at (7,0);
-	\draw [axis] (O) -- ++(6.5,0) node [right] {$x$};
-	\draw [axis] (O) -- ++(0,5.5) node [above] {$y$};
-	\draw [line width=1pt] ($(O)+(2,3)$) coordinate (0) -- ++(2,-2) coordinate (1) -- ++(1,3) coordinate(2) -- cycle;
-	\node [left] at (0) {$(x_0,y_0,z_0)$};
-	\node [below] at (1) {$(x_1,y_1,z_1)$};
-	\node [above] at (2) {$(x_2,y_2,z_2)$};
-	\draw [vector,blue] (0) -- (1) node [pos=0.5,below left] {$\vec{e}_1$};
-	\draw [vector,blue] (1) -- (2) node [pos=0.5,below right] {$\vec{e}_2$};
-	\node at (10,-1) {model space};
-\end{tikzpicture}
+% 	\coordinate (O) at (7,0);
+% 	\draw [axis] (O) -- ++(6.5,0) node [right] {$x$};
+% 	\draw [axis] (O) -- ++(0,5.5) node [above] {$y$};
+% 	\draw [line width=1pt] ($(O)+(2,3)$) coordinate (0) -- ++(2,-2) coordinate (1) -- ++(1,3) coordinate(2) -- cycle;
+% 	\node [left] at (0) {$(x_0,y_0,z_0)$};
+% 	\node [below] at (1) {$(x_1,y_1,z_1)$};
+% 	\node [above] at (2) {$(x_2,y_2,z_2)$};
+% 	\draw [vector,blue] (0) -- (1) node [pos=0.5,below left] {$\vec{e}_1$};
+% 	\draw [vector,blue] (1) -- (2) node [pos=0.5,below right] {$\vec{e}_2$};
+% 	\node at (10,-1) {model space};
+% \end{tikzpicture}
 
 % Reorthogonising
 % \begin{tikzpicture}

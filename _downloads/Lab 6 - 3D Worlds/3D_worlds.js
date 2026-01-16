@@ -11,6 +11,8 @@ out vec3 vColour;
 out vec2 vTexCoords;
 
 uniform mat4 uModel;
+uniform mat4 uView;
+uniform mat4 uProjection;
 
 void main() {
   gl_Position = uModel * vec4(aPosition, 1.0);
@@ -117,28 +119,28 @@ function main() {
 
   // Render function
   function render(time) {
+    
+    // Manual init call, no timing yet
+    if (time == null) {
+        requestAnimationFrame(render);
+        return;
+    }
 
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);
-
-    // Set the shader program
-    gl.useProgram(program);
-
-    // Calculate the model matrix
-    const translate = new Mat4().translate([0, 0, 0]);
-    const scale     = new Mat4().scale([1, 1, 1]);
-    const rotate    = new Mat4().rotate([0, 1, 0], 0);
-    const model     = translate.multiply(rotate).multiply(scale);
-
-    // Send the model matrix to the shaders
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
 
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
-    // Draw the rectangle
+    // Calculate the model matrix
+    const model = new Mat4();
+        
+    // Send model matrix to the shader
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+    // Draw the triangles
     gl.bindVertexArray(vao);
     gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 

@@ -56,7 +56,7 @@ The lurid green canvas element.
 :::{admonition} Task
 :class: tip
 
-Inside your ***Lab 2 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following.
+Inside your ***Lab 2 Basic Shapes*** folder, create a JavaScript file ***basic_shapes.js*** that contains the following
 
 ```javascript
 // Main function
@@ -91,7 +91,7 @@ Refresh your web browser (this is done by the live server whenever you save a fi
 ::::{admonition} Task
 :class: tip
 
-Edit the `<body>` tag near the bottom of the ***index.html*** file so that it looks like the following.
+Edit the `<body>` tag near the bottom of the ***index.html*** file so that it looks like the following
 
 ```text
 <body>
@@ -147,7 +147,7 @@ The vertex co-ordinates for the red triangle example.
 :::{admonition} Task
 :class: tip
 
-Enter the following just before we clear the canvas.
+Enter the following we have cleared the canvas.
 
 ```javascript
 // Define triangle vertices
@@ -519,7 +519,7 @@ We can now tidy up the `main()` function and make a call to out new `createprogr
 ::::{admonition} Task
 :class: tip
 
-Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following.
+Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following
 
 ```javascript
 // Setup WebGL
@@ -527,7 +527,7 @@ const canvas = document.getElementById("canvas");
 const gl = initWebGL(canvas);
 ```
 
-Comment out (or delete) the code used to compile and link the shaders and replace it with the following.
+Comment out (or delete) the code used to compile and link the shaders and replace it with the following
 
 ```javascript
 // Create WebGL program 
@@ -593,7 +593,7 @@ To add colour data to the triangle vertices we add 3 more float values for the r
 ::::{admonition} Task
 :class: tip
 
-Amend the `vertices` array so that it looks like the following.
+Amend the `vertices` array so that it looks like the following
 
 ```javascript
 // Define triangle vertices
@@ -628,7 +628,7 @@ The stride and offset of a vertex array.
 ::::{admonition} Task
 :class: tip
 
-Change the `gl.vertexAttribPointer();` function so that it looks like the following.
+Change the `gl.vertexAttribPointer();` function so that it looks like the following
 
 ```javascript
 gl.vertexAttribPointer(
@@ -799,21 +799,25 @@ Here we create a VAO using the `gl.createVertexArray()` function and bind it. Th
 ::::{admonition} Task
 :class: tip
 
-Delete (or comment out) any commands used to create VBOs for the triangle and square as well as commands used to tell WebGL how to read the data.
+Delete (or comment out) any commands used to create the VAOs and VBOs for the triangle and square, commands used to tell WebGL how to read the data and commands used to draw the triangle and square.
 
-The use the following commands to draw the triangle and square.
+Then use the following commands to create the VAOs for the triangle and square and draw them.
 
 ```javascript
+// Create VAOs
+const triangleVao = createVao(gl, program, vertices);
+const squareVao = createVao(gl, program, squareVertices);
+
 // Draw triangle
-gl.bindVertexArray(triangleVAO);
+gl.bindVertexArray(triangleVao);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 
 // Draw square
-gl.bindVertexArray(squareVAO);
+gl.bindVertexArray(squareVao);
 gl.drawArrays(gl.TRIANGLES, 0, 6);
 ```
 
-Your `main()` function should not look something like the following.
+Your `main()` function should not look something like the following
 
 ```javascript
 function main() {
@@ -874,7 +878,20 @@ To add the square to our scene we used 6 vertices, 3 for each of the triangle. T
 ::::{admonition} Task
 :class: tip
 
-Add the following arrays after the square vertices have been defined.
+Edit the code used to define the vertices for the square so that it looks like the following
+
+```javascript
+// Define square vertices
+const squareVertices = new Float32Array([
+ // x  y    z       r    g    b             
+ 0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     3 -- 2
+ 0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
+ 0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2     | /  | 
+ 0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3     0 -- 1 
+]);
+```
+
+And add the following arrays after the square vertices have been defined.
 
 ```javascript
 // Define triangle indices
@@ -891,7 +908,7 @@ const squareIndices = new Uint16Array([
 
 ::::
 
-Here we have defined two 16-bit integer arrays for the indices of the triangle and square. We now need to update the `createVao()` utility function to use these index arrays.
+Here we have reduced the square vertices array to only include one instance of the four vertices and have defined two 16-bit integer arrays for the indices of the triangle and square. We now need to update the `createVao()` utility function to use these index arrays.
 
 ::::{admonition} Task
 :class: tip
@@ -916,12 +933,20 @@ gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
 These commands a similar those used for the vertex buffer. Note that here we need to specify that we have an element array buffer instead of a standard array buffer. The index buffer does not contain any data specific to the vertices, so we don't need to add it to a VAO, instead we bind it whilst the VAO is bound and WebGL "remembers" it as part of the VAO's state.
 
-Finally, we need to tell WebGL that our data for the square is defined using indices, so we need to change the draw commands.
+Finally, we need to tell WebGL that our data for the square is defined using indices.
 
 ::::{admonition} Task
 :class: tip
 
-Replace the `gl.drawArrays()` command for the square with the following.
+Change the function calls to `createVao()` so that they include the indices arrays
+
+```javascript
+// Create VAOs
+const triangleVao = createVao(gl, program, vertices, indices);
+const squareVao = createVao(gl, program, squareVertices, squareIndices);
+```
+
+Replace the `gl.drawArrays()` command for the square with the following
 
 ```javascript
 // Draw the triangle
@@ -988,7 +1013,6 @@ We can draw a hexagon using 6 triangles where each triangle has one vertex at $(
 The $x$ and $y$ vertices of the two outer vertices are
 
 :::{math}
-:enumerated: false
 \begin{align*}
   x_i &= r \cos(\theta_i), & y_i &= r \sin(\theta_i), \\
   x_{i+1} &= r \cos(\theta_{i+1}), & y_{i+1} &= r \sin(\theta_{i+1}),
@@ -998,7 +1022,6 @@ The $x$ and $y$ vertices of the two outer vertices are
 where $r$ is the radius and the angles $\theta_i$ and $\theta_{i+1}$ are calculated using
 
 :::{math}
-:enumerated: false
 \begin{align*}
   \theta_i &= \frac{i2\pi}{6}, \\
   \theta_{i+1} &= \frac{(i+1)2\pi}{6}.
@@ -1012,3 +1035,18 @@ where $r$ is the radius and the angles $\theta_i$ and $\theta_{i+1}$ are calcula
 :::{figure} ../_images/02_ex4.png
 :width: 60%
 :::
+
+---
+
+## Video walkthrough
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>

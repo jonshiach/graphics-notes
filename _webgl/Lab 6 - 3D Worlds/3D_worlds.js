@@ -112,7 +112,7 @@ function main() {
   ]);
 
   // Define cube positions
-  const pos = [
+  const cubes = [
     { position : [0, 0, -2] },
     { position : [0, 0, -6] }
   ];
@@ -124,7 +124,7 @@ function main() {
   // Load texture
   const texture = loadTexture(gl, "assets/crate.png");
 
-  // Create camera object
+  // Camera object
   const camera = new Camera();
 
   // Render function
@@ -137,7 +137,7 @@ function main() {
     }
 
     // Clear frame buffers
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
@@ -146,37 +146,37 @@ function main() {
 
     // Update camera vectors
     const target = [0, 0, -2];
-    camera.eye   = [1, 1, 1];
+    camera.eye = [1, 1, 1];
     camera.front = normalize(subtractVector(target, camera.eye));
-    camera.right = normalize(cross(camera.front, camera.worldUp));
-    camera.up    = normalize(cross(camera.right, camera.front));
+    camera.update();
 
     // Calculate view matrix
     const view = camera.getViewMatrix();
 
     // Calculate projection matrix
     // const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
-    camera.fov = 120 * Math.PI / 180;
-    const  projection = camera.getPerspectiveMatrix();
+    const projection = camera.getPerspectiveMatrix();
 
     // Send view and project matrices to the shaders
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 
     // Draw cubes
-    for (let i = 0; i < numCubes; i++){
-      
-      // Calculate the model matrix
-      const translate = new Mat4().translate(cubes[i].position);
-      const scale     = new Mat4().scale([0.5, 0.5, 0.5]);
-      const angle     = 0;
-      const rotate    = new Mat4().rotate([0, 1, 0], angle);
-      const model     = translate.multiply(rotate).multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+    for (let i = 0; i < numCubes; i++) {
 
-      // Draw the rectangle
+      // Calculate the model matrix
+      const angle = 0;
+      const model = new Mat4()
+        .translate(cubes[i].position)
+        .rotate([0, 1, 0], angle)
+        .scale([0.5, 0.5, 0.5]);
+          
+      // Send model matrix to the shader
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+      // Draw the triangles
       gl.bindVertexArray(vao);
-      gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
     }
 
     // Render next frame

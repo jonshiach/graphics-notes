@@ -163,6 +163,10 @@ function main() {
     camera.eye[1] = jumpHeight;
   }
 
+  function collision() {
+    
+  }
+
   // Render function
   function render(time) {
 

@@ -36,10 +36,16 @@ for (let i = 0; i < numCubes; i++) {
 }
 ```
 
-Also, change the `gl.clearColor()` command in the `initWebGL()` function.
+Change the `gl.clearColor()` command in the `initWebGL()` function (in the ***webGLUtils.js*** file).
 
 ```javascript
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
+```
+
+Move the camera position by adding the following line of code after the camera object has been created.
+
+```javascript
+camera.eye = [6, 2, 5];
 ```
 
 :::
@@ -291,7 +297,6 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
 
 ````{dropdown} Click to reveal the vertex coordinates for the cube
 ```javascript
-```{code-cell} javascript
 // Define cube vertices
 const vertices = new Float32Array([
   // x  y  z      r  g  b     u  v     nx  ny  nz                   + ------ +
@@ -341,7 +346,7 @@ const vertices = new Float32Array([
 ```
 ````
 
-In the `createVao()` method in the ***webGLUtils.js*** file, change the stride to 11 since we now have an additional 3 elements per vertex.
+In the `createVao()` function in the ***webGLUtils.js*** file, change the stride to 11 since we now have an additional 3 elements per vertex.
 
 ```javascript
 const stride = 11 * Float32Array.BYTES_PER_ELEMENT;
@@ -387,7 +392,7 @@ fragColour = vec4(vNormal, objectColour.a);
 
 :::
 
-Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`. The sides of the cubes that have been rotated are varying shades of red, green and blue based on the direction their normals are pointing.
+Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
 
 ```{figure} ../_images/08_cubes_normals.png
 :width: 80%
@@ -412,7 +417,7 @@ Now define a JavaScript object for the light source properties just after where 
 ```javascript
 // Define light source properties
 const light = {
-  position  : [2, 2, 2],
+  position  : [6, 2, 0],
   colour    : [1, 1, 1],
 }
 ```
@@ -524,13 +529,15 @@ const lightProgram = createProgram(gl, lightVertexShader, lightFragmentShader);
 In the `render()` loop, after rendering the cubes, add the following code to render the light source cube.
 
 ```javascript
-// Render light source
+// Render light sources
 gl.useProgram(lightProgram);
 
-// Calculate model matrix for light source
-const translate = new Mat4().translate(...light.position);
-const scale     = new Mat4().scale(0.1, 0.1, 0.1);
-const model     = translate.multiply(scale);
+// Calculate model matrix for the light source
+const model = new Mat4()
+  .translate(light.position)
+  .scale([0.1, 0.1, 0.1]);
+
+// Send model, view and projection matrices to the shaders
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
@@ -540,12 +547,26 @@ gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), light.colour)
 
 // Draw light source cube
 gl.bindVertexArray(vao);
-gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 ```
 
 :::
 
-Refresh your web browser, and you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
+Refresh your web browser, and you will see a black canvas, so something has gone wrong. If you open up the developer console you should see errors stating that the uniform locations are not from the associated program. This is because we now have two shader programs, `program` which is used to render the cubes and `lightProgram` which is used to render the light source. In adding the code above we now have `lightProgram` as our current shader for the light sources, so we need to tell WebGL to use the other shader program for the cubes.
+
+:::{admonition} Task
+:class: tip
+
+Add the following code before we bind the textures for the cube objects
+
+```javascript
+// Set the shader program
+gl.useProgram(program);
+```
+
+:::
+
+Now when you refresh your browser you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
 
 ```{figure} ../_images/08_cubes_diffuse.png
 :width: 80%
@@ -673,18 +694,11 @@ ks        : 1.0,
 shininess : 32,
 ```
 
-And send them to the shader where we did this for the ambient and diffuse coefficients.
-
-```javascript
-gl.uniform1f(gl.getUniformLocation(program, "uKs"), cubes[i].ks);
-gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
-```
-
 Send the camera position to the shader after we sent the light position and colour.
 
 ```javascript
 // Send camera position to the shader
-gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye.array);
+gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye);
 ```
 
 And send the specular coefficient and exponent to the shader where we did this for the ambient and diffuse coefficients.
@@ -955,6 +969,7 @@ const lightSources = [
     quadratic   : 0.02,
   },
 ];
+const numLights = lightSources.length;
 ```
 
 Edit the code where the light source properties are sent to the shader to loop over the `lightSources` array and send each light source's properties to the shader.
@@ -980,9 +995,11 @@ gl.useProgram(lightProgram);
 
 for (let i = 0; i < numLights; i++) {
   // Calculate model matrix for light source
-  const translate = new Mat4().translate(...lightSources[i].position);
-  const scale     = new Mat4().scale(0.1, 0.1, 0.1);
-  const model     = translate.multiply(scale);
+  const model = new Mat4()
+    .translate(lightSources[i].position)
+    .scale([0.1, 0.1, 0.1]);
+
+  // Send model, view and projection matrices to the shaders
   gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
   gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
   gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
@@ -992,7 +1009,7 @@ for (let i = 0; i < numLights; i++) {
 
   // Draw light source cube
   gl.bindVertexArray(vao);
-  gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
 ```
 
@@ -1060,7 +1077,7 @@ And apply the spotlight to the fragment colour calculation.
 return spotlight * attenuation * (ambient + diffuse + specular);
 ```
 
-In the `main()` function, add the light direction and cutoff attributes to both light sources. In the first light source add the following and comment out the code definining the second light source.
+In the `main()` function further down, add the light direction and cutoff attributes to both light sources. Comment out the second light source object and change the first light source, add the following and comment out the code defining the second light source and comment out
 
 ```javascript
 type      : 2,
@@ -1077,7 +1094,7 @@ gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].cutoff`), lightSource
 
 :::
 
-Here we have changed the first light source to be a spotlight that is pointing downwards and slightly towards the back of the scene. The cutoff angle is set to $30^\circ$ by calculating $\cos(30^\circ)$. The second light source has been switched off by commenting out the code that defines it. Refresh your web browser and you should see the following.
+Here we have changed the first light source to be a spotlight that is pointing downwards and slightly towards the back of the scene. The cutoff angle is set to $40^\circ$ by calculating $\cos(40^\circ)$. The second light source has been switched off by commenting out the code that defines it. Refresh your web browser and you should see the following.
 
 ```{figure} ../_images/08_cubes_spotlight_harsh.png
 :width: 80%
@@ -1119,7 +1136,7 @@ if (light.type == 2) {
 }
 ```
 
-Now add the attibute to the light source definitions in the ***more_lights.js*** file.
+Now add the attribute to the light source definitions
 
 ```javascript
 innerCutoff : Math.cos(30 * Math.PI / 180),
@@ -1179,7 +1196,7 @@ if (light.type != 3) {
 }
 ```
 
-In the ***more_lights.js*** file, add an additional light source to the light sources array.
+Add an additional light source to the light sources array.
 
 ```javascript
 {
@@ -1195,7 +1212,7 @@ In the ***more_lights.js*** file, add an additional light source to the light so
 },
 ```
 
-Finally, uncomment the code defining the other two light sources.
+Finally, uncomment the code for the second light source.
 :::
 
 Here we have defined a directional light source with the direction vector $(2, -1, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. The light source colour has been set to magenta using the RGB values $(1, 0, 1)$. Refresh your web browser and you should see the following.

@@ -87,7 +87,6 @@ function createVao(gl, program, vertices, indices) {
 
   // Tangents
   const tangents = computeTangents(vertices, indices);
-
   const tangentLocation = gl.getAttribLocation(program, "aTangent");
   const tangentBuffer = gl.createBuffer();
 
@@ -105,32 +104,30 @@ function createVao(gl, program, vertices, indices) {
 function loadTexture(gl, url) {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-  // Temporary 1×1 magenta pixel while image loads
+  // Temporary 1×1 pixel while image loads
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
 
   const image = new Image();
   image.src = url;
   image.onload = () => {
     gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  
 
     // Auto-generate mipmaps (requires power-of-2 image)
     if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
       gl.generateMipmap(gl.TEXTURE_2D);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     } else {
-      // Non power-of-2 textures must be clamped & non-mipmapped
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      // Non-POT textures must be clamped & non-mipmapped
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     }
-  };
 
-  gl.bindTexture(gl.TEXTURE_2D, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  };
 
   return texture;
 }
@@ -200,81 +197,4 @@ function computeTangents(vertices, indices) {
   }
 
   return tangents;
-}
-
-async function loadOBJ(url) {
-  const response = await fetch(url);
-  const text = await response.text();
-
-  const positions = [];
-  const texcoords = [];
-  const normals   = [];
-
-  const vertices = [];
-  const indices  = [];
-
-  let index = 0;
-
-  const lines = text.split('\n');
-
-  for (let line of lines) {
-    line = line.trim();
-
-    if (line === '' || line.startsWith('#')) continue;
-
-    const parts = line.split(/\s+/);
-
-    // Vertex position
-    if (parts[0] === 'v') {
-      positions.push([
-        parseFloat(parts[1]),
-        parseFloat(parts[2]),
-        parseFloat(parts[3]),
-      ]);
-    }
-
-    // Texture coordinate
-    else if (parts[0] === 'vt') {
-      texcoords.push([
-        parseFloat(parts[1]),
-        parseFloat(parts[2]),
-      ]);
-    }
-
-    // Normal
-    else if (parts[0] === 'vn') {
-      normals.push([
-        parseFloat(parts[1]),
-        parseFloat(parts[2]),
-        parseFloat(parts[3]),
-      ]);
-    }
-
-    // Face (assumes triangles)
-    else if (parts[0] === 'f') {
-      // f v/vt/vn v/vt/vn v/vt/vn
-      for (let i = 1; i <= 3; i++) {
-        const [v, vt, vn] = parts[i].split('/').map(n => parseInt(n) - 1);
-
-        const pos = positions[v];
-        const uv  = texcoords[vt];
-        const nor = normals[vn];
-
-        // Push interleaved vertex
-        vertices.push(
-          pos[0], pos[1], pos[2],
-          0, 0, 0,
-          uv[0],  uv[1],
-          nor[0], nor[1], nor[2]
-        );
-
-        indices.push(index++);
-      }
-    }
-  }
-
-  return {
-    vertices: new Float32Array(vertices),
-    indices:  new Uint16Array(indices),
-  };
 }

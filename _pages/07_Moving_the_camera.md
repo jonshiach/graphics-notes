@@ -73,37 +73,24 @@ We now need to change the position of the camera, i.e., the $\vec{eye}$ vector, 
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the Camera class.
+Add the following code to the `update()` Camera class method after the camera vectors have been calculated
 
 ```javascript
-update () {
+// Camera movement
+let vel = [0, 0, 0];
+if (this.keys["w"]) vel = addVector(vel, this.front);
+if (this.keys["s"]) vel = subtractVector(vel, this.front);
+if (this.keys["a"]) vel = subtractVector(vel, this.right);
+if (this.keys["d"]) vel = addVector(vel, this.right);
 
-  // Update camera vectors
-  const cy = Math.cos(this.yaw);
-  const cp = Math.cos(this.pitch);
-  const sy = Math.sin(this.yaw);
-  const sp = Math.sin(this.pitch);
-  this.front = normalize([cp * sy, sp, -cp * cy]);
-  this.right = normalize(cross(this.front, this.worldUp));
-  this.up    = normalize(cross(this.right, this.front));
-
-  // Camera movement
-  let vel = [0, 0, 0];
-  if (this.keys["w"]) vel = addVector(vel, this.front);
-  if (this.keys["s"]) vel = subtractVector(vel, this.front);
-  if (this.keys["a"]) vel = subtractVector(vel, this.right);
-  if (this.keys["d"]) vel = addVector(vel, this.right);
-  
-  const move = this.speed * dt;
-  if (vel.length > 0 && dt > 0) {
-    this.eye = addVector(this.eye, normalize(vel));
-  }
+if (length(vel) > 0) {
+  this.eye = addVector(this.eye, normalize(vel));
 }
 ```
 
 :::
 
-Here we created a method to update the camera vectors based on the keyboard input. After we calculate the $\vec{front}$, $\vec{right}$ and $\vec{up}$ vectors, we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. This is normalized and then added to the $\vec{eye}$ vector.
+Here we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. This is normalized and then added to the $\vec{eye}$ vector.
 
 :::{admonition} Task
 :class: tip
@@ -115,7 +102,7 @@ Change the creation of the Camera object so that it now takes in the canvas inpu
 const camera = new Camera(canvas);
 ```
 
-Then replace the code used to update the camera vectors with the following.
+And delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors so that the code now looks like
 
 ```javascript
 // Update camera vectors
@@ -183,7 +170,7 @@ Finally, change the calculation of the new $\vec{eye}$ vector to the following.
 
 ```javascript
 const move = this.speed * dt;
-if (vel.length > 0 && dt > 0) {
+if (length(vel) > 0) {
   this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
 }
 ```
@@ -202,7 +189,7 @@ So here we have set the speed of our camera to 5 units per second and have scale
 
 ## Using the mouse to point the camera
 
-We can now move the camera position using keyboard inputs but we cannot yet point the camera in a different direction. This is usually done using mouse inputs but can also done using keyboard or game controllers.
+We can now move the camera position using keyboard inputs, but we cannot yet point the camera in a different direction. This is usually done using mouse inputs but can also be done using keyboard or game controllers.
 
 ### Yaw, pitch and roll
 
@@ -267,29 +254,24 @@ Add the following to the Camera class constructor.
 
 ```javascript
 // Rotation
-this.yaw   = 0;
-this.pitch = 0;
-this.turnSpeed = 0.005;
+this.yaw       = 0;
+this.pitch     = 0;
+this.turnSpeed = 0.005;  
 ```
 
-And edit the `updateVectors()` method so that it looks like the following.
+And add the following before the $\vec{right}$ and $\vec{front}$ camera vectors are calculated in the `update()` method
 
 ```javascript
-updateVectors() {
-  const cy = Math.cos(this.yaw);
-  const cp = Math.cos(this.pitch);
-  const sy = Math.sin(this.yaw);
-  const sp = Math.sin(this.pitch);
-
-  this.front = normalize([cp * sy, sp, -cp * cy]);
-  this.right = normalize(cross(this.front, this.worldUp));
-  this.up    = normalize(cross(this.right, this.front));
-}
+const cy = Math.cos(this.yaw);
+const cp = Math.cos(this.pitch);
+const sy = Math.sin(this.yaw);
+const sp = Math.sin(this.pitch);
+this.front = normalize([cp * sy, sp, -cp * cy]);
 ```
 
 :::
 
-Here, along with declaring variables for the $yaw$ and $pitch$ angles, we have decalared a variable that governs the speed at which the camera turns when we move the mouse. We have also calculated the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`.
+Here, along with declaring variables for the $yaw$ and $pitch$ angles, we have declared a variable that governs the speed at which the camera turns when we move the mouse. We have also calculated the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`.
 
 ### Getting the mouse input
 
@@ -315,7 +297,6 @@ Here we have added two event listeners. The first detects whether the mouse has 
 Add the following method to the Camera class.
 
 ```javascript
-// Move look
 mouseMove(e) {
   if (document.pointerLockElement !== this.canvas) return;
   this.yaw   += e.movementX * this.turnSpeed;
@@ -324,7 +305,7 @@ mouseMove(e) {
 ```
 :::
 
-Here we have defined a simple method to update the $pitch$ and $yaw$ angles based on the mouse cursor movement. Note that we subtract the $y$ coordinate from the $pitch$ angle becase the mouse coordinates are relative to the top left-hand corner of the canvas.
+Here we have defined a simple method to update the $pitch$ and $yaw$ angles based on the mouse cursor movement. `movementX` and `movementY` are move properties that are the number of horizontal and vertical pixels that the mouse pointer has moved since the last frame. Note that we subtract the $y$ coordinate from the $pitch$ angle because `movementY` is measured from the top of the canvas.
 
 Running the program and we can now move around our world space and point the camera using the mouse.
 
@@ -340,7 +321,7 @@ A problem that we have with our camera is that when we try to look straight up o
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/videos/06_mouse_3.mp4" type="video/mp4">
+    <source src="../_static/videos/07_mouse_2.mp4" type="video/mp4">
 </video>
 </center>
 
@@ -349,7 +330,7 @@ This is due to the calculation of $\cos(pitch)$ and $\sin(pitch)$ in equation {e
 :::{admonition} Task
 :class: tip
 
-Add the following code to the `mouseMove()` method in the ***camera.js*** file. 
+Add the following code to the `mouseMove()` Camera class method
 
 ```javascript
 // Limit the pitch angle to -89 degrees < pitch < 89 degrees
@@ -439,9 +420,9 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
 3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
 
- - Loop through all the cubes
-   - Calculate the distance between the $\vec{eye}$ vector and the centre of the current cube
-   - If this distance is less than 1, move the $\vec{eye}$ away from the centre of the current cube so that the distance is now 1
+    - Loop through all the cubes
+      - Calculate the distance between the $\vec{eye}$ vector and the centre of the current cube
+      - If this distance is less than 1, move the $\vec{eye}$ away from the centre of the current cube so that the distance is now 1
 
 ---
 

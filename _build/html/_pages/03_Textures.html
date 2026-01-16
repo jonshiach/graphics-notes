@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -431,9 +431,9 @@ document.write(`
 <hr class="docutils" />
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Copy your <em><strong>Lab 2 Basic Shapes</strong></em> folder you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a> (you will have needed to have completed this lab before continuing here), rename it to <em><strong>Lab 3 Textures</strong></em>, change the name of <em><strong>basic_shapes.js</strong></em> to <em><strong>textures.js</strong></em> and update <em><strong>index.html</strong></em> to reference the new JavaScript file.</p>
+<p>Download <a class="reference download internal" download="" href="../_downloads/6ded83f362f2523b8602c23034c7a706/Lab%203%20-%20Textures.zip"><span class="xref download myst">Lab 3.zip</span></a> and extract the files to your computer.</p>
 </div>
-<p>Start the live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
+<p>Load <em><strong>index.html</strong></em> in a live server, and you should see a colourful rectangle similar to the one you created in <a class="reference internal" href="02_Basic_shapes.html#basic-shapes-section"><span class="std std-ref">Lab 2: Basic Shapes in WebGL</span></a>. We are going to apply a texture to this rectangle.</p>
 <figure class="align-default" id="colour-rectangle-figure">
 <a class="reference internal image-reference" href="../_images/03_colourful_rectangle.png"><img alt="../_images/03_colourful_rectangle.png" src="../_images/03_colourful_rectangle.png" style="width: 80%;" />
 </a>
@@ -469,7 +469,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Add the following code to the <em><strong>textures.js</strong></em> file after the VAO is creates.</p>
+<p>Add the following code to the <em><strong>textures.js</strong></em> file after the VAO is created.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load texture</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/mario.png&quot;</span><span class="p">);</span>
 </pre></div>
@@ -486,11 +486,11 @@ document.write(`
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that the <span class="math notranslate nohighlight">\((u,v)\)</span> coordinates are defined for each vertex.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="c1">// x    y    z       r    g    b      u  v            </span>
-<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
-<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
-<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
-<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
+<span class="c1">// x    y     z       r    g    b      u  v            </span>
+<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
+<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
+<span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -872,7 +872,14 @@ document.write(`
 <hr class="docutils" />
 <section id="video-walkthrough">
 <h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
-<p>The video below walks you through these lab materials.</p>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/19L9ir8Aly0?si=QiQmUOTycjDPYKpE" title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
 </section>
 </section>
 

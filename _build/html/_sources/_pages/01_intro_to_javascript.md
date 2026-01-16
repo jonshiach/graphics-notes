@@ -106,7 +106,7 @@ Enter the following into the ***intro_to_javascript.js*** file.
 
 ```javascript
 // Variables
-console.log("\nVariables\n---------')
+console.log("\nVariables\n---------")
 let score;
 score = 10;
 console.log("score: " + score);

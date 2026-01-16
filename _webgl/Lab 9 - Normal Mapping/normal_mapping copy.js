@@ -1,5 +1,5 @@
 // Define vertex shader
-const vertexShader = 
+const vertexShaderSource = 
 `#version 300 es
 precision mediump float;
 
@@ -35,11 +35,11 @@ void main() {
   vPosition = vec3(uModel * vec4(aPosition, 1.0));
 
   // Output world space tangent vector
-  vTangent   = normalize(mat3(uModel) * aTangent);
+  vTangent = normalize(mat3(uModel) * aTangent);
 }`;
 
 // Define fragment shader
-const fragmentShader = 
+const fragmentShaderSource = 
 `#version 300 es
 precision mediump float;
 
@@ -82,7 +82,7 @@ uniform int uNumLights;
 uniform Light uLights[16];
 
 // Function to calculate diffuse and specular reflection
-vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour, vec3 specularMap){
+vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
 
   // Light vector
   vec3 L = normalize(light.position - vPosition);
@@ -115,7 +115,8 @@ vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour, vec3 specularM
   vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
   // Specular
-  vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour * specularMap;
+  vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
+  specular *= texture(uSpecularMap, vTexCoords).rgb;
 
   // Output fragment colour
   return spotLight * attenuation * (ambient + diffuse + specular);
@@ -127,14 +128,11 @@ void main() {
   // Object colour
   vec4 objectColour = texture(uTexture, vTexCoords);
 
-  // Specular map
-  vec3 specularMap = texture(uSpecularMap, vTexCoords).rgb;
-
   // Lighting vectors
   vec3 N = normalize(vNormal);
   vec3 V = normalize(uCameraPosition - vPosition);
 
-  // Construct tangent space basis
+    // Construct tangent space basis
   vec3 T = normalize(vTangent);
   vec3 B = cross(N, T);
   mat3 TBN = mat3(T, B, N);
@@ -142,12 +140,12 @@ void main() {
   // Calculate world space normal
   vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
   N = normalize(TBN * normalSample);
-
+  
   // Calculate lighting for each light source
-  vec3 result = vec3(0.0);
+  vec3 result;
   for (int i = 0; i < 16; i++) {
     if (i >= uNumLights) break;
-    result += computeLight(uLights[i], N, V, objectColour.rgb, specularMap);
+    result += computeLight(uLights[i], N, V, objectColour.rgb);
   }
 
   // Fragment colour
@@ -182,14 +180,14 @@ void main() {
 }`;
 
 // Main function
-async function main() {
+function main() {
 
   // Setup WebGL
   const canvas = document.getElementById("canvasId");
   const gl = initWebGL(canvas);
   
   // Create WebGL program 
-  const program = createProgram(gl, vertexShader, fragmentShader);
+  const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
   const lightProgram = createProgram(gl, lightVertexShader, lightFragmentShader);
 
   // Set the shader program
@@ -313,14 +311,12 @@ async function main() {
   // Number of lights
   const numLights = lightSources.length;
 
-  // Create VAO
-  // const mesh = await loadOBJ('assets/teapot.obj');
+  // Create VAOs
   const vao = createVao(gl, program, vertices, indices);
 
-  // Load textures
+  // Load texture
   const texture = loadTexture(gl, "assets/crate.png");
   const normalMap = loadTexture(gl, "assets/crate_normal.png");
-  const specularMap = loadTexture(gl, "assets/crate_specular.png");
 
   // Define floor vertices
   const floorVertices = new Float32Array([
@@ -398,11 +394,6 @@ async function main() {
     gl.bindTexture(gl.TEXTURE_2D, normalMap);
     gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
-    // Bind specular map
-    gl.activeTexture(gl.TEXTURE2);
-    gl.bindTexture(gl.TEXTURE_2D, specularMap);
-    gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
-
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
       
@@ -421,10 +412,10 @@ async function main() {
 
       // Draw the rectangle
       gl.bindVertexArray(vao);
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+      gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }
 
-    // Draw floor
+        // Draw floor
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, floorTexture);
@@ -461,8 +452,6 @@ async function main() {
     gl.useProgram(lightProgram);
 
     for (let i = 0; i < numLights; i++) {
-      if (lightSources[i].type === 3) continue;
-
       // Calculate model matrix for light source
       const translate = new Mat4().translate(...lightSources[i].position);
       const scale     = new Mat4().scale(0.1, 0.1, 0.1);
@@ -476,7 +465,7 @@ async function main() {
 
       // Draw light source cube
       gl.bindVertexArray(vao);
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+      gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }
 
     // Render next frame

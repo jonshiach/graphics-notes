@@ -16,8 +16,13 @@ class Camera {
     this.far    = 1000;
   }
 
+  update() {
+    this.right = normalize(cross(this.front, this.worldUp));
+    this.up    = normalize(cross(this.right, this.front));
+  }
+
   getViewMatrix() {
-    return new Mat4().set(
+    return new Mat4().set([
       this.right[0], this.up[0], -this.front[0], 0,
       this.right[1], this.up[1], -this.front[1], 0,
       this.right[2], this.up[2], -this.front[2], 0,
@@ -25,7 +30,7 @@ class Camera {
       -dot(this.eye, this.up),
        dot(this.eye, this.front),
       1
-    );
+    ]);
   }
 
   getOrthographicMatrix(left, right, bottom, top, near, far) {
@@ -33,7 +38,7 @@ class Camera {
     const tb = 1 / (top - bottom);
     const fn = 1 / (far - near);
 
-    return new Mat4().set(
+    return new Mat4().set([
       2 * rl, 0, 0, 0,
       0, 2 * tb, 0, 0,
       0, 0, -2 * fn, 0,
@@ -41,7 +46,7 @@ class Camera {
       -(top + bottom) * tb,
       -(far + near) * fn,
       1
-    );
+    ]);
   }
 
   getPerspectiveMatrix() {
@@ -49,11 +54,11 @@ class Camera {
     const r  = this.aspect * t;
     const fn = 1 / (this.far - this.near);
 
-    return new Mat4().set(
+    return new Mat4().set([
       this.near / r, 0, 0, 0,
       0, this.near / t, 0, 0,
       0, 0, -(this.far + this.near) * fn, -1,
       0, 0, -2 * this.far * this.near * fn, 0
-    );
+    ]);
   }
 }
