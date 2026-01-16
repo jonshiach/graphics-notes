@@ -76,7 +76,7 @@ A 3D vector.
 ```
 
 ```{note}
-The reason the diagram above has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way OpenGL represents 3D space (see [Lab 5: Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
+The reason the diagram above has the $y$-axis pointing upwards and the $z$-axis pointing along the horizontal is because this is the way WebGL represents 3D space (see [Lab 5: Transformations](transformations-section) for more details). The configuration of the axes does not matter for the calculations we will be performing in this lab, but I wanted to be consistent. 
 ```
 
 Since we will be using vectors (and matrices) a lot over the rest of the labs we will create a file containing helper functions to perform operations.
@@ -89,7 +89,7 @@ Create file called ***maths.js*** and enter the following class definition.
 ```javascript
 // Vector operations
 function printVector(v) {
-  return `[ ${v[0].toFixed(4)}, ${v[1].toFixed(4)}, ${v[2].toFixed(4)} ]`;
+  return `[ ${v[0].toFixed(2)}, ${v[1].toFixed(2)}, ${v[2].toFixed(2)} ]`;
 }
 ```
 
@@ -448,7 +448,7 @@ Add the following method definition to the vector class.
 
 ```javascript
 function dot(a, b) {
-  return [ a[0] * b[0], a[1] * b[1], a[2] * b[2] ];
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 ```
 
@@ -591,17 +591,8 @@ class Mat4 {
     return this;
   }
 
-  set(
-    m00, m01, m02, m03,
-    m10, m11, m12, m13,
-    m20, m21, m22, m23,
-    m30, m31, m32, m33
-  ) {
-    const m = this.m;
-    m[0]  = m00; m[4]  = m01; m[8]  = m02; m[12] = m03;
-    m[1]  = m10; m[5]  = m11; m[9]  = m12; m[13] = m13;
-    m[2]  = m20; m[6]  = m21; m[10] = m22; m[14] = m23;
-    m[3]  = m30; m[7]  = m31; m[11] = m32; m[15] = m33;
+  set(values) {
+    this.m.set(values);
     return this;
   }
 
