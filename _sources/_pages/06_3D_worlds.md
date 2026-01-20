@@ -274,7 +274,7 @@ $$ View = \begin{pmatrix}
 :::{admonition} Task
 :class: tip
 
-Create a file called ***camera.js*** inside which enter the following code.
+Create a file called ***camera.js*** inside which enter the following code
 
 ```javascript
 class Camera {
@@ -287,12 +287,6 @@ class Camera {
     this.front   = [0, 0, -1];
     this.right   = [1, 0, 0];
     this.up      = [0, 1, 0];
-
-    // Projection settings
-    this.fov    = 45 * Math.PI / 180;
-    this.aspect = 800 / 600;
-    this.near   = 0.1;
-    this.far    = 1000;
   }
 
   update() {
@@ -345,6 +339,7 @@ camera.update();
 // Calculate view matrix
 const view = camera.getViewMatrix();
 ```
+
 :::
 
 Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
@@ -543,7 +538,7 @@ Add the following to the `initWebGL()` function in the ***webGLUtils.js*** file.
 gl.enable(gl.DEPTH_TEST);
 ```
 
-And change command to clear the frame buffers in the `render()` function to the following.
+And change command to clear the frame buffers in the `render()` function to the following
 
 ```javascript
 // Clear frame buffers
@@ -771,7 +766,17 @@ $$ \begin{align*}
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the Camera class.
+Add the following properties to the Camera class constructor
+
+```javascript
+// Projection settings
+this.fov    = 45 * Math.PI / 180;
+this.aspect = 800 / 600;
+this.near   = 0.1;
+this.far    = 1000;
+```
+
+And add the following method definition to the Camera class
 
 ```javascript
 getPerspectiveMatrix() {
