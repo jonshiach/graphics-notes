@@ -563,7 +563,7 @@ Another type of mathematical object that is fundamental to computer graphics is 
 
 It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an **index** which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so $a_{ij}$ is the element in row $i$ and column $j$ of the matrix $A$.  
 
-We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix $A$ has $m$ rows and $n$ columns, so we call this matrix a $m \times n$ matrix. Computer graphics mostly works with $4 \times 4$ matrices (see [Lab 6: Transformations](transformations-section) for why this is) so we will create a matrix class to define $4 \times 4$ matrices and perform operations on them.
+We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix $A$ has $m$ rows and $n$ columns, so we call this matrix a $m \times n$ matrix. Computer graphics mostly works with $4 \times 4$ matrices (see [Lab 5: Transformations](transformations-section) for why this is) so we will create a matrix class to define $4 \times 4$ matrices and perform operations on them.
 
 :::{admonition} Task
 :class: tip
