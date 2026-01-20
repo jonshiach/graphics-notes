@@ -15,6 +15,8 @@ where $(x',y',z')$ are the coordinates of the transformed point. Note that all v
 
 Copy your ***Lab 3 Textures*** folder you created in [Lab 3: Textures](textures-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 5 Transformations***, change the name of ***textures.js*** to ***transformations.js*** and update ***index.html*** to reference the new JavaScript file.
 
+Also, copy the file ***maths.js*** from your ***Lab 4 Vectors and Matrices*** folder into the ***Lab 5 Transformation*** folder and embed this into the ***index.html*** file using a script tag.
+
 :::
 
 Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 3 - Textures](textures-section).
