@@ -947,3 +947,18 @@ which has the effect of moving the rectangle so that it is centred at coordinate
     <source src="../_static/videos/05_Ex4.mp4" type="video/mp4">
 </video>
 </center>
+
+---
+
+## Video Walkthrough
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/FcgW5Cm6Et8?si=Yze5ecqntzCOSZMD"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
