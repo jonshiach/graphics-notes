@@ -398,7 +398,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operations-on-vectors">Arithmetic operations on vectors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-addition-and-subtraction">Vector addition and subtraction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-by-a-scalar">Multiplication by a scalar</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-magnitude">Vector magnitude</a></li>
@@ -416,6 +415,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video Walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -493,7 +493,7 @@ document.write(`
 <p>Since we will be using vectors (and matrices) a lot over the rest of the labs we will create a file containing helper functions to perform operations.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create file called <em><strong>maths.js</strong></em> and enter the following class definition.</p>
+<p>Create file called <em><strong>maths.js</strong></em> and enter the following function definition.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Vector operations</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="sb">`[ </span><span class="si">${</span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, </span><span class="si">${</span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, </span><span class="si">${</span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb"> ]`</span><span class="p">;</span>
@@ -527,13 +527,9 @@ a = [ 3.00, 0.00, 4.00 ]
 b = [ 1.00, 2.00, 3.00 ]
 </pre></div>
 </div>
-<section id="arithmetic-operations-on-vectors">
-<h3>Arithmetic operations on vectors<a class="headerlink" href="#arithmetic-operations-on-vectors" title="Link to this heading">#</a></h3>
-<p>Like numbers, we can define the arithmetic operations of addition, subtraction for vectors as well as multiplication and division by a scalar.</p>
-</section>
 <section id="vector-addition-and-subtraction">
 <h3>Vector addition and subtraction<a class="headerlink" href="#vector-addition-and-subtraction" title="Link to this heading">#</a></h3>
-<p>The addition and subtraction of two vectors <span class="math notranslate nohighlight">\(\vec{a} = (a_x, a_y, a_z)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (b_x, b_y, b_z)\)</span> is defined by</p>
+<p>Like numbers, we can define the arithmetic operations of addition, subtraction for vectors as well as multiplication and division by a scalar. The addition and subtraction of two vectors <span class="math notranslate nohighlight">\(\vec{a} = (a_x, a_y, a_z)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (b_x, b_y, b_z)\)</span> is defined by</p>
 <div class="math notranslate nohighlight" id="equation-eq-vector-addition">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-vector-addition" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     \vec{a} + \vec{b} &amp;= (a_x + b_x, a_y + b_y, a_z + b_z), \\
@@ -561,10 +557,10 @@ b = [ 1.00, 2.00, 3.00 ]
 <p><span class="caption-number">Fig. 23 </span><span class="caption-text">Vector subtraction.</span><a class="headerlink" href="#vector-subtraction-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To calculate the addition and subtraction of vectors we are going to write methods to do this.</p>
+<p>To calculate the addition and subtraction of vectors we are going to write functions to do this.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following methods to your <code class="docutils literal notranslate"><span class="pre">Vec3</span></code> class.</p>
+<p>Add the following functions to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="p">];</span>
 <span class="p">}</span>
@@ -578,7 +574,7 @@ b = [ 1.00, 2.00, 3.00 ]
 <p>Here we have defined two similar functions <code class="docutils literal notranslate"><span class="pre">addVector()</span></code> and <code class="docutils literal notranslate"><span class="pre">subtractVector()</span></code> that add and subtract two vectors.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following to the <em><strong>Vectors_and_matrices.js</strong></em> file.</p>
+<p>Add the following to the <em><strong>Vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Arithmetic operations on vectors</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;\nArithmetic operations on vectors\n--------------------------------&#39;</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a + b =&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">addVector</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)));</span>
@@ -586,7 +582,7 @@ b = [ 1.00, 2.00, 3.00 ]
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Arithmetic operations on vectors
 --------------------------------
 a + b = [ 4.00, 2.00, 7.00 ]
@@ -616,19 +612,19 @@ a - b = [ 2.00, -2.00, 1.00 ]
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following method definition to the vector class.</p>
+<p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now add the following to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
+<p>Now add the following to the <em><strong>vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;2a    =&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">)));</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;b/3   =&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="o">/</span><span class="mf">3</span><span class="p">)));</span>
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>2a    = [ 6.00, 0.00, 8.00 ]
 b/3   = [ 0.33, 0.67, 1.00 ]
 </pre></div>
@@ -656,13 +652,13 @@ b/3   = [ 0.33, 0.67, 1.00 ]
 \end{align*}\end{split}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following method definition to the vector class.</p>
+<p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">length</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">]);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
+<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Vector magnitude and normalization</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nVector magnitude and normalization\n----------------------------------&quot;</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;length(a)    = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">length</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
@@ -670,7 +666,7 @@ b/3   = [ 0.33, 0.67, 1.00 ]
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Vector magnitude and normalization
 ----------------------------------
 length(a)    = 5
@@ -692,10 +688,10 @@ length(b)    = 3.7416573867739413
 <p>Checking that <span class="math notranslate nohighlight">\(\hat{\vec{a}}\)</span> has a magnitude of 1</p>
 <div class="math notranslate nohighlight">
 \[\|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.\]</div>
-<p>Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a method that does this.</p>
+<p>Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a function that does this.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following method definition to the vector class.</p>
+<p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">length</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">len</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
@@ -703,7 +699,7 @@ length(b)    = 3.7416573867739413
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
+<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">aHat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">bHat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;aHat         = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">aHat</span><span class="p">));</span>
@@ -713,7 +709,7 @@ length(b)    = 3.7416573867739413
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>aHat         = [ 0.60, 0.00, 0.80 ]
 bHat         = [ 0.27, 0.53, 0.80 ]
 length(aHat) = 1
@@ -750,20 +746,20 @@ length(bHat) = 1
 \end{align*}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following method definition to the vector class.</p>
+<p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">dot</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">2</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
+<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dot and cross products</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nDot and cross products\n----------------------&quot;</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a . b = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="nx">dot</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Dot and cross products
 ----------------------
 a . b = 15
@@ -799,7 +795,7 @@ a . b = 15
 \end{align*}\end{split}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following method definition to the vector class.</p>
+<p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">cross</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="nx">a</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">a</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span>
@@ -809,7 +805,7 @@ a . b = 15
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
+<p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">aCrossB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cross</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a x b = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">aCrossB</span><span class="p">));</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a . (a x b) = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">dot</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">aCrossB</span><span class="p">));</span>
@@ -817,7 +813,7 @@ a . b = 15
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>a x b = [ -8.00, -5.00, 6.00 ]
 a . (a x b) = 0
 b . (a x b) = 0
@@ -918,7 +914,7 @@ b . (a x b) = 0
   9 &amp; 10 &amp; 11 &amp; 12 \\
   13 &amp; 14 &amp; 15 &amp; 16
 \end{pmatrix}.\end{split}\]</div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Matrices
 --------
 A =
@@ -972,7 +968,7 @@ A =
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A^T =
   [    1.00     5.00     9.00    13.00 ]
   [    2.00     6.00    10.00    14.00 ]
@@ -1095,7 +1091,7 @@ A =
 </pre></div>
 </div>
 </div>
-<p>Refresh your web page, and you should see the following has been added.</p>
+<p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>B =
   [   17.00    18.00    19.00    20.00 ]
   [   21.00    22.00    23.00    24.00 ]
@@ -1424,6 +1420,19 @@ Exercise 2
    &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor or 2 and then increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 2 \times 5 + 3 \\ 2 \times 8 + 2 \\ 2 \times 10 - 1 \\ 1\end{pmatrix}$.
 ```` -->
 </section>
+<hr class="docutils" />
+<section id="video-walkthrough">
+<h2>Video Walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X" title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1491,7 +1500,6 @@ Exercise 2
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-operations-on-vectors">Arithmetic operations on vectors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-addition-and-subtraction">Vector addition and subtraction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-by-a-scalar">Multiplication by a scalar</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-magnitude">Vector magnitude</a></li>
@@ -1509,6 +1517,7 @@ Exercise 2
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video Walkthrough</a></li>
 </ul>
   </nav></div>
 

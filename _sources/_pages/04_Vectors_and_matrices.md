@@ -84,7 +84,7 @@ Since we will be using vectors (and matrices) a lot over the rest of the labs we
 :::{admonition} Task
 :class: tip
 
-Create file called ***maths.js*** and enter the following class definition.
+Create file called ***maths.js*** and enter the following function definition.
 
 ```javascript
 // Vector operations
@@ -131,13 +131,9 @@ a = [ 3.00, 0.00, 4.00 ]
 b = [ 1.00, 2.00, 3.00 ]
 ```
 
-### Arithmetic operations on vectors
-
-Like numbers, we can define the arithmetic operations of addition, subtraction for vectors as well as multiplication and division by a scalar.
-
 ### Vector addition and subtraction
 
-The addition and subtraction of two vectors $\vec{a} = (a_x, a_y, a_z)$ and $\vec{b} = (b_x, b_y, b_z)$ is defined by
+Like numbers, we can define the arithmetic operations of addition, subtraction for vectors as well as multiplication and division by a scalar. The addition and subtraction of two vectors $\vec{a} = (a_x, a_y, a_z)$ and $\vec{b} = (b_x, b_y, b_z)$ is defined by
 
 $$ \begin{align*}
     \vec{a} + \vec{b} &= (a_x + b_x, a_y + b_y, a_z + b_z), \\
@@ -172,12 +168,12 @@ The subtraction of the vector $\vec{b}$ does similar, but since $\vec{a} - \vec{
 Vector subtraction.
 ```
 
-To calculate the addition and subtraction of vectors we are going to write methods to do this.
+To calculate the addition and subtraction of vectors we are going to write functions to do this.
 
 :::{admonition} Task
 :class: tip
 
-Add the following methods to your `Vec3` class.
+Add the following functions to the ***maths.js*** file
 
 ```javascript
 function addVector(a, b) {
@@ -196,7 +192,7 @@ Here we have defined two similar functions `addVector()` and `subtractVector()` 
 :::{admonition} Task
 :class: tip
 
-Add the following to the ***Vectors_and_matrices.js*** file.
+Add the following to the ***Vectors_and_matrices.js*** file
 
 ```javascript
 // Arithmetic operations on vectors
@@ -207,7 +203,7 @@ console.log("a - b =", printVector(subtractVector(a, b)));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 Arithmetic operations on vectors
@@ -252,7 +248,7 @@ Multiplying a vector by a positive scalar has the effect of scaling the length o
 
 :::{admonition} Task
 :class: tip
-Add the following method definition to the vector class.
+Add the following function to the ***maths.js*** file
 
 ```javascript
 function scaleVector(v, k) {
@@ -260,7 +256,7 @@ function scaleVector(v, k) {
 }
 ```
 
-Now add the following to the ***vectors_and_matrices.js*** file.
+Now add the following to the ***vectors_and_matrices.js*** file
 
 ```javascript
 console.log("2a    =", printVector(scaleVector(a, 2)));
@@ -269,7 +265,7 @@ console.log("b/3   =", printVector(scaleVector(b, 1/3)));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 2a    = [ 6.00, 0.00, 8.00 ]
@@ -308,7 +304,7 @@ For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magni
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the vector class.
+Add the following function to the ***maths.js*** file
 
 ```javascript
 function length(v) {
@@ -316,7 +312,7 @@ function length(v) {
 }
 ```
 
-Now add enter the following code to the ***vectors_and_matrices.js*** file.
+Now add enter the following code to the ***vectors_and_matrices.js*** file
 
 ```javascript
 // Vector magnitude and normalization
@@ -327,7 +323,7 @@ console.log("length(b)    = " + length(b));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 Vector magnitude and normalization
@@ -361,12 +357,12 @@ Checking that $\hat{\vec{a}}$ has a magnitude of 1
 \|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
 ```
 
-Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a method that does this.
+Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a function that does this.
 
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the vector class.
+Add the following function to the ***maths.js*** file
 
 ```javascript
 function normalize(v) {
@@ -376,7 +372,7 @@ function normalize(v) {
 }
 ```
 
-Now add enter the following code to the ***vectors_and_matrices.js*** file.
+Now add enter the following code to the ***vectors_and_matrices.js*** file
 
 ```javascript
 const aHat = normalize(a);
@@ -389,7 +385,7 @@ console.log("length(bHat) = " + length(bHat));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 aHat         = [ 0.60, 0.00, 0.80 ]
@@ -444,7 +440,7 @@ In order words, if the dot product of two vectors is zero then the two vectors a
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the vector class.
+Add the following function to the ***maths.js*** file
 
 ```javascript
 function dot(a, b) {
@@ -452,7 +448,7 @@ function dot(a, b) {
 }
 ```
 
-Now add enter the following code to the ***vectors_and_matrices.js*** file.
+Now add enter the following code to the ***vectors_and_matrices.js*** file
 
 ```javascript
 // Dot and cross products
@@ -462,7 +458,7 @@ console.log("a . b = " +  dot(a, b));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 Dot and cross products
@@ -513,7 +509,7 @@ We can show that $\vec{a} \times \vec{b}$ is perpendicular to both $\vec{a}$ and
 :::{admonition} Task
 :class: tip
 
-Add the following method definition to the vector class.
+Add the following function to the ***maths.js*** file
 
 ```javascript
 function cross(a, b) {
@@ -525,7 +521,7 @@ function cross(a, b) {
 }
 ```
 
-Now add enter the following code to the ***vectors_and_matrices.js*** file.
+Now add enter the following code to the ***vectors_and_matrices.js*** file
 
 ```javascript
 const aCrossB = cross(a, b);
@@ -536,7 +532,7 @@ console.log("b . (a x b) = " + dot(b, aCrossB));
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 a x b = [ -8.00, -5.00, 6.00 ]
@@ -655,7 +651,7 @@ A =
 \end{pmatrix}.
 ```
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 Matrices
@@ -728,7 +724,7 @@ console.log("\nA^T =\n" + A.transpose().print());
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 A^T =
@@ -881,7 +877,7 @@ console.log("\nAB =\n" + AB.print());
 
 :::
 
-Refresh your web page, and you should see the following has been added.
+Refresh your web page, and you should see the following has been added
 
 ```text
 B =
@@ -1257,3 +1253,17 @@ Exercise 2
    (c) &emsp; $T \, S \, \vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}$
    &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor or 2 and then increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 2 \times 5 + 3 \\ 2 \times 8 + 2 \\ 2 \times 10 - 1 \\ 1\end{pmatrix}$.
 ```` -->
+
+---
+
+## Video Walkthrough
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X" title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
