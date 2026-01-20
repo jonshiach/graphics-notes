@@ -517,7 +517,7 @@ Translate = \begin{pmatrix}
 <p>We are going to define matrix class to compute the various transformation matrices.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following function definition to the matrix class in the <em><strong>maths.js</strong></em> file.</p>
+<p>Add the following method to the Mat4 class in the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">translate</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">t</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">transMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">([</span>
@@ -530,17 +530,12 @@ Translate = \begin{pmatrix}
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>And add the following to the <em><strong>translations.js</strong></em> file before we draw the rectangle.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate transformation matrices</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">translate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]);</span>
-</pre></div>
 </div>
-</div>
-<p>Here we have defined the function <code class="docutils literal notranslate"><span class="pre">translate()</span></code> that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.</p>
+<p>Here we have defined the method <code class="docutils literal notranslate"><span class="pre">translate()</span></code> that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.</p>
 <p>The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  <strong>uniform</strong>, like we did in <a class="reference internal" href="#uniforms-section"><span class="xref myst">Lab 3: Textures</span></a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following code after we have calculated the translation matrix.</p>
+<p>Add the following code after we have calculated the translation matrix</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the model matrix</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">])</span>
 
@@ -616,7 +611,7 @@ Translate = \begin{pmatrix}
 <p>We have already created a model matrix and the uniform in the vertex shader, so we just need to calculate the scaling matrix and use it instead of the translation matrix.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Enter the following function definition to the matrix class.</p>
+<p>Enter the following method to the Mat4 class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">scale</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">scaleMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">([</span>
@@ -790,7 +785,7 @@ Translate = \begin{pmatrix}
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Enter the following method to the matrix class.</p>
+<p>Add the following method to the Mat4 class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">angle</span><span class="p">);</span>
@@ -804,12 +799,8 @@ Translate = \begin{pmatrix}
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Add the following to the <em><strong>transformations.js</strong></em> file after we calculate the scaling matrix</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">);</span>
-</pre></div>
-</div>
 <p>Edit the code that calculates the model matrix so that it looks like the following</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rotate</span><span class="p">(</span><span class="mf">45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">rotate</span><span class="p">(</span><span class="mf">45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
