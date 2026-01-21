@@ -15,6 +15,8 @@ where $(x',y',z')$ are the coordinates of the transformed point. Note that all v
 
 Copy your ***Lab 3 Textures*** folder you created in [Lab 3: Textures](textures-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 5 Transformations***, change the name of ***textures.js*** to ***transformations.js*** and update ***index.html*** to reference the new JavaScript file.
 
+Also, copy the file ***maths.js*** from your ***Lab 4 Vectors and Matrices*** folder into the ***Lab 5 Transformation*** folder and embed this into the ***index.html*** file using a script tag.
+
 :::
 
 Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 3 - Textures](textures-section).
@@ -142,7 +144,7 @@ We are going to define matrix class to compute the various transformation matric
 :::{admonition} Task
 :class: tip
 
-Add the following function definition to the matrix class in the ***maths.js*** file.
+Add the following method to the Mat4 class in the ***maths.js*** file
 
 ```javascript
 translate(t) {
@@ -157,23 +159,16 @@ translate(t) {
 }
 ```
 
-And add the following to the ***translations.js*** file before we draw the rectangle.
-
-```javascript
-// Calculate transformation matrices
-const translate = new Mat4().translate([0.4, 0.3, 0]);
-```
-
 :::
 
-Here we have defined the function `translate()` that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.
+Here we have defined the method `translate()` that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.
 
 The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  **uniform**, like we did in [Lab 3: Textures](uniforms-section).
 
 :::{admonition} Task
 :class: tip
 
-Add the following code after we have calculated the translation matrix.
+Add the following code after we have calculated the translation matrix
 
 ```javascript
 // Calculate the model matrix
@@ -273,7 +268,7 @@ We have already created a model matrix and the uniform in the vertex shader, so 
 :::{admonition} Task
 :class: tip
 
-Enter the following function definition to the matrix class.
+Enter the following method to the Mat4 class
 
 ```javascript
 scale(s) {
@@ -499,7 +494,7 @@ radians = degrees \times \frac{\pi}{180}
 :::{admonition} Task
 :class: tip
 
-Enter the following method to the matrix class.
+Add the following method to the Mat4 class
 
 ```javascript
 rotate(angle) {
@@ -515,16 +510,10 @@ rotate(angle) {
 }
 ```
 
-Add the following to the ***transformations.js*** file after we calculate the scaling matrix
-
-```javascript
-const model = new Mat4().rotate(45 * Math.PI / 180);
-```
-
 Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
-const model = rotate(45 * Math.PI / 180);
+const model = new Mat4().rotate(45 * Math.PI / 180);
 ```
 
 :::
@@ -958,3 +947,18 @@ which has the effect of moving the rectangle so that it is centred at coordinate
     <source src="../_static/videos/05_Ex4.mp4" type="video/mp4">
 </video>
 </center>
+
+---
+
+## Video Walkthrough
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/FcgW5Cm6Et8?si=Yze5ecqntzCOSZMD"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
