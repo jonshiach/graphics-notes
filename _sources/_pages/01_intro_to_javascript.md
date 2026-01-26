@@ -140,7 +140,7 @@ console.log("lives: " + lives);
 
 :::
 
-Refresh the web browser, and you should see that nothing has changed despite adding a call to `console.log()`. Open the browser's developer console (if you are using Chrome then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>&#8997;</kbd> + <kbd>&#8984;</kbd> + <kbd>J</kbd> on a Mac) and it should give you an indication of what has gone wrong. Here it should say something like the following
+Refresh the web browser, and you should see that nothing has changed despite adding a call to `console.log()`. Open the browser's developer console (if you are using Chrome or Edge then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>&#8997;</kbd> + <kbd>&#8984;</kbd> + <kbd>J</kbd> for Chrome on a Mac) and it should give you an indication of what has gone wrong. Here it should say something like the following
 
 ```{error}
 Uncaught TypeError: Assignment to constant variable.
