@@ -324,7 +324,7 @@ console.log("\nMath library\n------------")
 const angleInDegress = 90;
 const angleInRadians = angleInDegress * Math.PI / 180;
 console.log(`${angleInDegress} degrees is ${angleInRadians.toFixed(4)} radians.`);
-console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians)s);
+console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians));
 ```
 
 :::
