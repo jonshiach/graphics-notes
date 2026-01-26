@@ -560,8 +560,8 @@ Add the following to your JavaScript file.
 
 ```javascript
 const enemies = [
+  { name: "Goomba", hitPoints: 1},
   { name: "Koopa Trooper", hitPoints: 2 },
-  { name: "Gomoba", hitPoints: 1},
 ]
 ```
 
@@ -573,7 +573,7 @@ Here we have created an array containing two enemy objects.
 
 ## Conditional statements
 
-**Conditional statements** allow your program to make decisions and run different code depending on whether a logical condition is true or false. The basic conditional statement is a `if` statment
+**Conditional statements** allow your program to make decisions and run different code depending on whether a logical condition is true or false. The basic conditional statement is a `if` statement
 
 ```javascript
 if (condition) {
@@ -691,7 +691,7 @@ Make changes to the `powerUp` property and the `jumpedOnEnemy` and `enemyIndex` 
 
 ## Loops
 
-**Loops** allow a program to repeat a block of code multiple times. They are essential when working with arrays of objcets, rendering graphics and processing data.
+**Loops** allow a program to repeat a block of code multiple times. They are essential when working with arrays of objects, rendering graphics and processing data.
 
 ### For loops
 
