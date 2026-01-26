@@ -559,10 +559,10 @@ Arrays are often used to store collections of objects which allows a program to 
 Add the following to your JavaScript file.
 
 ```javascript
-const nonPlayerCharacters = [
-  { name: "Toad", friend: true },
-  { name: "Koopa Troopa", friend: false},
-];
+const enemies = [
+  { name: "Koopa Trooper", hitPoints: 2 },
+  { name: "Gomoba", hitPoints: 1},
+]
 ```
 
 :::
@@ -591,7 +591,7 @@ if (condition) {
 }
 ```
 
-For more complicated cases where you want to use multiple conditions we can use a `if...else if...else` statment
+For more complicated cases where you want to use multiple conditions we can use a `if...else if...else` statement
 
 ```javascript
 if (condition1) {
@@ -603,7 +603,7 @@ if (condition1) {
 }
 ```
 
-The condition statments used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
+The condition statements used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
 
 | Operator | Description |
 | :--: | :-- |
@@ -629,7 +629,7 @@ Add the following to your JavaScript file.
 
 ```javascript
 // Conditional statements
-console.log("\nConditional statments\n---------------------")
+console.log("\nConditional statements\n---------------------")
 
 // Power up state
 if (player.powerUp === "fire") {
@@ -646,12 +646,12 @@ if (player.powerUp === "fire") {
 Here we have used a `if...else if...else` statement to print the current power up state of the `player` object. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
-Conditional statments
+Conditional statements
 ---------------------
 Mario is bigger and can break blocks.
 ```
 
-Make changes to the `powerUp` propery to check this code works as expected.
+Make changes to the `powerUp` property to check this code works as expected.
 
 :::{admonition} Task
 :class: tip
@@ -679,7 +679,7 @@ if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
 
 :::
 
-Here we have written a more sophisticated `if...else if...else` statement using conjuctions. Refresh your browser, and you should see the following is added to your web page.
+Here we have written a more sophisticated `if...else if...else` statement using conjunctions. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Mario jumps on enemy and defeats it.

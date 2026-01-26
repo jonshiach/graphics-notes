@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -1043,10 +1043,10 @@ Score:    10
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">nonPlayerCharacters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Toad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">friend</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Koopa Troopa&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">friend</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="p">];</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">enemies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Koopa Trooper&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Gomoba&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">},</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1070,7 +1070,7 @@ Score:    10
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>For more complicated cases where you want to use multiple conditions we can use a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statment</p>
+<p>For more complicated cases where you want to use multiple conditions we can use a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// runs if condition1 is true</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1080,7 +1080,7 @@ Score:    10
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The condition statments used in the examples above need to have a boolean value. Any declared variable is considered <code class="docutils literal notranslate"><span class="pre">true</span></code> unless it has a value of <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code> or <code class="docutils literal notranslate"><span class="pre">NaN</span></code> (non a number). We can use the following comparison operators</p>
+<p>The condition statements used in the examples above need to have a boolean value. Any declared variable is considered <code class="docutils literal notranslate"><span class="pre">true</span></code> unless it has a value of <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code> or <code class="docutils literal notranslate"><span class="pre">NaN</span></code> (non a number). We can use the following comparison operators</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>Operator</p></th>
@@ -1137,7 +1137,7 @@ Score:    10
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Conditional statements</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nConditional statments\n---------------------&quot;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nConditional statements\n---------------------&quot;</span><span class="p">)</span>
 
 <span class="c1">// Power up state</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;fire&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1151,12 +1151,12 @@ Score:    10
 </div>
 </div>
 <p>Here we have used a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement to print the current power up state of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object. Refresh your browser, and you should see the following is added to your web page.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Conditional statments
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Conditional statements
 ---------------------
 Mario is bigger and can break blocks.
 </pre></div>
 </div>
-<p>Make changes to the <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> propery to check this code works as expected.</p>
+<p>Make changes to the <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> property to check this code works as expected.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
@@ -1179,7 +1179,7 @@ Mario is bigger and can break blocks.
 </pre></div>
 </div>
 </div>
-<p>Here we have written a more sophisticated <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement using conjuctions. Refresh your browser, and you should see the following is added to your web page.</p>
+<p>Here we have written a more sophisticated <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement using conjunctions. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mario jumps on enemy and defeats it.
 </pre></div>
 </div>
