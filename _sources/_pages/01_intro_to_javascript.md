@@ -561,7 +561,7 @@ Add the following to your JavaScript file.
 ```javascript
 const enemies = [
   { name: "Goomba", hitPoints: 1},
-  { name: "Koopa Trooper", hitPoints: 2 },
+  { name: "Koopa Troopa", hitPoints: 2 },
 ]
 ```
 
