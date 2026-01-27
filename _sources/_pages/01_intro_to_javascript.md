@@ -1049,6 +1049,12 @@ print() {
 }
 ```
 
+Then, add the following to the end of the JavaScript file.
+
+```javascript
+toad.print();
+```
+
 :::
 
 Here we have defined two methods for assigning a randomly selected power up and printing the object properties. Refresh your browser, and you should see the following is added to your web page (of course your power up may be different).
