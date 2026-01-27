@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -456,7 +456,7 @@ document.write(`
 <p>Where you are asked to enter code into your files, you are strongly encouraged to type the code yourself rather than copying and pasting. Although this may lead to occasional typographical errors or bugs, the process of writing the code line by line helps reinforce how the code works and what each part is doing. Making and fixing mistakes is a normal and valuable part of learning to program, and will help deepen your understanding of the material.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 1 Intro to JavaScript</strong></em>. In Visual Studio Code, create a new file by clicking on <strong>File &gt; New File…</strong> and enter the following code.</p>
+<p>Create a folder called <em><strong>Lab 1 Intro to JavaScript</strong></em> then open your folder in Visual Studio Code by clicking on <strong>File &gt; Open Folder…</strong>. Create a new file by clicking on <strong>File &gt; New File…</strong> (or press <kbd>ctrl</kbd> + <kbd>N</kbd> on Windows or <kbd>⌘</kbd> + <kbd>N</kbd> on MacOS) and enter the following code.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
@@ -504,10 +504,10 @@ document.write(`
 <p>If you don’t have the Live Server extension installed in Visual Studio Code follow these steps</p>
 <ol class="arabic simple">
 <li><p>Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>⌘</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)</p></li>
-<li><p>Search for Live Server</p></li>
-<li><p>Install Live Server by Ritwick Dey</p></li>
+<li><p>Search for “Live server”</p></li>
+<li><p>Install <strong>Live Server</strong> by Ritwick Dey</p></li>
 </ol>
-<p>Once installed, VS Code may prompt you to reload.</p>
+<p>Once installed, Visual Studio Code may prompt you to reload.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1163,6 +1163,7 @@ Mario is bigger and can break blocks.
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Enemy interaction</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">jumpedOnEnemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">enemyIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">jumpedOnEnemy</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">enemies</span><span class="p">[</span><span class="nx">enemyIndex</span><span class="p">].</span><span class="nx">hitPoints</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nx">enemies</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">hitPoints</span><span class="o">--</span><span class="p">;</span>
 <span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario jumps on enemy and defeats it.&quot;</span><span class="p">);</span>
@@ -1183,7 +1184,7 @@ Mario is bigger and can break blocks.
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mario jumps on enemy and defeats it.
 </pre></div>
 </div>
-<p>Make changes to the <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> property and the <code class="docutils literal notranslate"><span class="pre">jumpedOnEnemy</span></code> and <code class="docutils literal notranslate"><span class="pre">enemyIndex</span></code> to check this code works as expected.</p>
+<p>Make changes to the <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> property and the <code class="docutils literal notranslate"><span class="pre">jumpedOnEnemy</span></code> and <code class="docutils literal notranslate"><span class="pre">enemyIndex</span></code> variables to check this code works as expected.</p>
 </section>
 <hr class="docutils" />
 <section id="loops">
@@ -1484,9 +1485,7 @@ Power up: Banana
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>You are tasked with writing a JavaScript program to help the university store students’ details (name, ID number, course, marks etc.) and perform operations on this information.
-<br>
-First create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> that stores a student’s name, ID number and degree course they are currently in.</p></li>
+<li><p>You are tasked with writing a JavaScript program to help the university store students’ details (name, ID number, course, marks etc.) and perform operations on this information. Create a class called <code class="docutils literal notranslate"><span class="pre">Student</span></code> that stores a student’s name, ID number and degree course they are currently in.</p></li>
 <li><p>Create an object of your Student class called <code class="docutils literal notranslate"><span class="pre">ellie</span></code> with the following details and output the property values.</p></li>
 </ol>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Ellie Williams, 12345678, Computer Science

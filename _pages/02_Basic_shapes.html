@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -584,7 +584,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </ul>
 </section>
 <section id="write-and-compile-the-vertex-shader">
-<span id="lab01-vertex-shader"></span><h3>Write and Compile the Vertex Shader<a class="headerlink" href="#write-and-compile-the-vertex-shader" title="Link to this heading">#</a></h3>
+<span id="vertex-shader-section"></span><h3>Write and Compile the Vertex Shader<a class="headerlink" href="#write-and-compile-the-vertex-shader" title="Link to this heading">#</a></h3>
 <p>The next step is create a shader program that runs on the GPU and uses WebGL to determine which pixels on the display are to be rendered and in what colour. This shader program comprises two separate programs known as “shaders”: the <strong>vertex shader</strong> and the <strong>fragment shader</strong>. Shaders are written in <strong>GLSL (webGL Shader Language)</strong> which is similar to C.</p>
 <p>The vertex shader is called once for each vertex and transforms the vertex co-ordinates from model space (the local object co-ordinates) to the clip space that defines the region that is displayed on the canvas. We have defined our triangle using co-ordinates between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, so they are already in clip space and our vertex shader just needs to output each vertex. The shader code for a simple vertex shader is</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
@@ -791,7 +791,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#triangle-coordinates-section"><span class="std std-ref">Define the Triangle Co-ordinates</span></a> - we defined a 9-element array that contained the <span class="math notranslate nohighlight">\((x, y, z)\)</span> co-ordinates of the 3 triangle vertices.</p></li>
 <li><p><a class="reference internal" href="#lab01-triangle-buffer"><span class="std std-ref">Create a Vertex Buffer Object (VBO) for the Triangle</span></a> - the buffer objects are stored in the GPU so we needed to create one for the triangle and copy across the triangle co-ordinates so WebGL can work with them.</p></li>
-<li><p><a class="reference internal" href="#lab01-vertex-shader"><span class="std std-ref">Write and Compile the Vertex Shader</span></a> - a vertex shader is used to transform the vertex co-ordinates to the clip space. The output is sent to the WebGL rasteriser that passes the fragment co-ordinates to the fragment shader.</p></li>
+<li><p><a class="reference internal" href="#vertex-shader-section"><span class="std std-ref">Write and Compile the Vertex Shader</span></a> - a vertex shader is used to transform the vertex co-ordinates to the clip space. The output is sent to the WebGL rasteriser that passes the fragment co-ordinates to the fragment shader.</p></li>
 <li><p><a class="reference internal" href="#lab01-fragment-shader"><span class="std std-ref">Write and Compile the Fragment Shader</span></a> - a fragment shader is used to determine the colour that the fragment should be rendered on the display.</p></li>
 <li><p><a class="reference internal" href="#lab01-webgl-program"><span class="std std-ref">Link the Shaders into a WebGL Program</span></a> - the vertex and fragment shaders are linked into a single program that we tell WebGL to use to draw the triangle.</p></li>
 <li><p><a class="reference internal" href="#lab01-draw-triangle"><span class="std std-ref">Draw the Triangle</span></a> - we need to tell WebGL how to access the data in the triangle buffer and instruct it to draw the triangle.</p></li>

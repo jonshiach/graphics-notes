@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -415,7 +415,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video Walkthrough</a></li>
 </ul>
             </nav>
         </div>
@@ -503,10 +502,12 @@ document.write(`
 </div>
 <p>Here we have defined a function that prints a 3-element vector. Now let’s create the following vectors in JavaScript and print them.</p>
 <div class="math notranslate nohighlight">
-\[\begin{align*}
+\[
+\begin{align*}
     \vec{a} &amp;= (3, 0, 4), &amp;
     \vec{b} &amp;= (1, 2, 3).
-\end{align*}\]</div>
+\end{align*}
+\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
@@ -537,10 +538,12 @@ b = [ 1.00, 2.00, 3.00 ]
 \end{align*} \end{split}\]</div>
 <p>For example, given the vectors <span class="math notranslate nohighlight">\(\vec{a} = (3,0,4)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (1, 2, 3)\)</span></p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     \vec{a} + \vec{b} &amp;= (3, 0, 4) + (1, 2, 3) = (3 + 1, 0 + 2, 4 + 3) = (4, 2, 7), \\
     \vec{a} - \vec{b} &amp;= (3, 0, 4) - (1, 2, 3) = (3 - 1, 0 - 2, 4 - 3) = (2, -2, 1).
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <p>What is happening in a geometrical sense when we add and subtract vectors? Take a look at <a class="reference internal" href="#vector-addition-figure"><span class="std std-numref">Fig. 22</span></a>, here the vector <span class="math notranslate nohighlight">\(\vec{b}\)</span> has been added to the vector <span class="math notranslate nohighlight">\(\vec{a}\)</span> where the tail of <span class="math notranslate nohighlight">\(\vec{b}\)</span> is placed at the head of <span class="math notranslate nohighlight">\(\vec{a}\)</span>. The resulting vector <span class="math notranslate nohighlight">\(\vec{a} + \vec{b}\)</span> points from the tail of <span class="math notranslate nohighlight">\(\vec{a}\)</span> to the head of <span class="math notranslate nohighlight">\(\vec{b}\)</span>.</p>
 <figure class="align-default" id="vector-addition-figure">
 <a class="reference internal image-reference" href="../_images/04_vector_addition.svg"><img alt="../_images/04_vector_addition.svg" src="../_images/04_vector_addition.svg" style="height: 150px;" />
@@ -595,16 +598,22 @@ a - b = [ 2.00, -2.00, 1.00 ]
 <h3>Multiplication by a scalar<a class="headerlink" href="#multiplication-by-a-scalar" title="Link to this heading">#</a></h3>
 <p>Multiplication of a vector <span class="math notranslate nohighlight">\(\vec{a} = (a_x, a_y, a_z)\)</span> by a scalar (a number) <span class="math notranslate nohighlight">\(k\)</span> are defined by</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     k \vec{a} &amp;= (ka_x, ka_y, ka_z), \\
     \frac{\vec{a}}{k} &amp;= \left(\frac{a_x}{k}, \frac{a_y}{k}, \frac{a_z}{k} \right).
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <p>For example, multiplying the vector <span class="math notranslate nohighlight">\(\vec{a} = (3, 0, 4)\)</span> by the scalar 2 gives</p>
 <div class="math notranslate nohighlight">
-\[2\vec{a} = 2(3,0,4) = (6, 0, 8).\]</div>
+\[
+2\vec{a} = 2(3,0,4) = (6, 0, 8).
+\]</div>
 <p>If we wanted to divide by a scale <span class="math notranslate nohighlight">\(k\)</span> then we simply multiply by <span class="math notranslate nohighlight">\(\dfrac{1}{k}\)</span>. For example, dividing the vector <span class="math notranslate nohighlight">\(\vec{b} = (1, 2, 3)\)</span> by 3 gives</p>
 <div class="math notranslate nohighlight">
-\[\frac{\vec{b}}{3} = \frac{1}{3} \vec{b} = \left( \frac{1}{3}, \frac{2}{3}, \frac{3}{3} \right) = (0.3333, 0.6667, 1).\]</div>
+\[
+\frac{\vec{b}}{3} = \frac{1}{3} \vec{b} = \left( \frac{1}{3}, \frac{2}{3}, \frac{3}{3} \right) = (0.3333, 0.6667, 1).
+\]</div>
 <p>Multiplying a vector by a positive scalar has the effect of scaling the length of the vector. Multiplying by a negative scalar reverses the direction of the vector.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/04_vector_scalar_multiplication.svg"><img alt="../_images/04_vector_scalar_multiplication.svg" src="../_images/04_vector_scalar_multiplication.svg" style="height: 180px;" />
@@ -646,10 +655,12 @@ b/3   = [ 0.33, 0.67, 1.00 ]
 <span class="eqno">(2)<a class="headerlink" href="#equation-eq-vector-magnitude" title="Link to this equation">#</a></span>\[\|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2}. \]</div>
 <p>For example, if <span class="math notranslate nohighlight">\(\vec{a} = (3, 0, 4)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (1, 2, 3)\)</span> then their magnitudes are</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     \| \vec{a} \| &amp;= \sqrt{3^2 + 0^2 + 4^2} = \sqrt{9 + 0 + 16} = \sqrt{25} = 5, \\
     \| \vec{b} \| &amp;= \sqrt{1^2 + 2^2 + 3^2} = \sqrt{1 + 4 + 9} = \sqrt{14} = 3.74\ldots
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
@@ -682,12 +693,16 @@ length(b)    = 3.7416573867739413
 <span class="eqno">(3)<a class="headerlink" href="#equation-eq-unit-vector" title="Link to this equation">#</a></span>\[ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. \]</div>
 <p>This process is called <strong>normalising a vector</strong>. For example, to determine a unit vector pointing in the same direction as the vector <span class="math notranslate nohighlight">\(\vec{a} = (3, 0, 4)\)</span>, we normalise it by dividing by its magnitude which is 5.</p>
 <div class="math notranslate nohighlight">
-\[\begin{align*}
+\[
+\begin{align*}
     \hat{\vec{a}} &amp;= \frac{(3, 0, 4)}{5} = \left( \frac{3}{5}, 0, \frac{4}{5} \right) = (0.6, 0, 0.8).
-\end{align*}\]</div>
+\end{align*}
+\]</div>
 <p>Checking that <span class="math notranslate nohighlight">\(\hat{\vec{a}}\)</span> has a magnitude of 1</p>
 <div class="math notranslate nohighlight">
-\[\|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.\]</div>
+\[
+\|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
+\]</div>
 <p>Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a function that does this.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
@@ -736,14 +751,18 @@ length(bHat) = 1
 </figure>
 <p>A useful result for computer graphics is that if <span class="math notranslate nohighlight">\(\theta=90^\circ\)</span> then <span class="math notranslate nohighlight">\(\cos(\theta) = 0\)</span> and equation <a class="reference internal" href="#equation-eq-dot-product-geometric">(5)</a> becomes</p>
 <div class="math notranslate nohighlight">
-\[\vec{a} \cdot \vec{b} = 0.\]</div>
+\[
+\vec{a} \cdot \vec{b} = 0.
+\]</div>
 <p>In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors <span class="math notranslate nohighlight">\(\vec{a} = (3, 0, 4)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (1, 2, 3)\)</span> the dot product between these are</p>
 <div class="math notranslate nohighlight">
-\[\begin{align*}
+\[
+\begin{align*}
     \vec{a} \cdot \vec{b} &amp;= (3, 0, 4) \cdot (1, 2, 3)
     = 3 + 0 + 12
     = 15.
-\end{align*}\]</div>
+\end{align*}
+\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
@@ -782,17 +801,21 @@ a . b = 15
 </figure>
 <p>For example, given the vectors <span class="math notranslate nohighlight">\(\vec{a} = (3,0,4)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (1, 2, 3)\)</span> the cross product <span class="math notranslate nohighlight">\(\vec{a} \times \vec{b}\)</span> is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     \vec{a} \times \vec{b} &amp;= (3, 0, 4) \times (1, 2, 3) \\
     &amp;= (0 \times 3 - 4 \times 2, 4 \times 1 - 3 \times 3, 3 \times 2 - 0 \times 3) \\
     &amp;= (-8, -5, 6).
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <p>We can show that <span class="math notranslate nohighlight">\(\vec{a} \times \vec{b}\)</span> is perpendicular to both <span class="math notranslate nohighlight">\(\vec{a}\)</span> and <span class="math notranslate nohighlight">\(\vec{b}\)</span> using the dot product</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     \vec{a} \cdot (\vec{a} \times \vec{b}) &amp;= (3, 0, 4) \cdot (-8, -5, 6) = -24 + 0 + 24 = 0, \\
     \vec{b} \cdot (\vec{a} \times \vec{b}) &amp;= (1, 2, 3) \cdot (-8, -5, 6) = - 8 - 10 + 18 = 0.
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following function to the <em><strong>maths.js</strong></em> file</p>
@@ -827,7 +850,8 @@ b . (a x b) = 0
 <h2>Matrices<a class="headerlink" href="#matrices" title="Link to this heading">#</a></h2>
 <p>Another type of mathematical object that is fundamental to computer graphics is the matrix. A matrix is a rectangular array of numbers.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+\[\begin{split}
+\begin{align*}
     A =
     \begin{pmatrix}
         a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
@@ -835,7 +859,8 @@ b . (a x b) = 0
         \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
         a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
     \end{pmatrix}
-\end{align*}\end{split}\]</div>
+\end{align*}
+\end{split}\]</div>
 <p>It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an <strong>index</strong> which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so <span class="math notranslate nohighlight">\(a_{ij}\)</span> is the element in row <span class="math notranslate nohighlight">\(i\)</span> and column <span class="math notranslate nohighlight">\(j\)</span> of the matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix <span class="math notranslate nohighlight">\(A\)</span> has <span class="math notranslate nohighlight">\(m\)</span> rows and <span class="math notranslate nohighlight">\(n\)</span> columns, so we call this matrix a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix. Computer graphics mostly works with <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices (see <a class="reference internal" href="05_Transformations.html#transformations-section"><span class="std std-ref">Lab 5: Transformations</span></a> for why this is) so we will create a matrix class to define <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices and perform operations on them.</p>
 <div class="tip admonition">
@@ -907,13 +932,15 @@ b . (a x b) = 0
 </ul>
 <p>We have then created a matrix object and set the values equal to the matrix below and printed the matrix.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}A =
+\[\begin{split}
+A =
 \begin{pmatrix}
   1 &amp; 2 &amp; 3 &amp; 4 \\
   5 &amp; 6 &amp; 7 &amp; 8 \\
   9 &amp; 10 &amp; 11 &amp; 12 \\
   13 &amp; 14 &amp; 15 &amp; 16
-\end{pmatrix}.\end{split}\]</div>
+\end{pmatrix}.
+\end{split}\]</div>
 <p>Refresh your web page, and you should see the following has been added</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Matrices
 --------
@@ -931,22 +958,26 @@ A =
 \[A_{ij}^\mathsf{T} = A_{ji}\]</div>
 <p>i.e., the rows and columns of <span class="math notranslate nohighlight">\(A\)</span> are swapped so row <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(A\)</span> is column <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(A^\mathsf{T}\)</span>. For example, the matrix <span class="math notranslate nohighlight">\(A\)</span> we defined above</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}A =
+\[\begin{split}
+A =
 \begin{pmatrix}
   1 &amp; 2 &amp; 3 &amp; 4 \\
   5 &amp; 6 &amp; 7 &amp; 8 \\
   9 &amp; 10 &amp; 11 &amp; 12 \\
   13 &amp; 14 &amp; 15 &amp; 16
-\end{pmatrix},\end{split}\]</div>
+\end{pmatrix},
+\end{split}\]</div>
 <p>then <span class="math notranslate nohighlight">\(A^\mathsf{T}\)</span> is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}A^\mathsf{T} =
+\[\begin{split}
+A^\mathsf{T} =
 \begin{pmatrix}
   1 &amp; 5 &amp; 9 &amp; 13 \\
   2 &amp; 6 &amp; 10 &amp; 14 \\
   3 &amp; 7 &amp; 11 &amp; 15 \\
   4 &amp; 8 &amp; 12 &amp; 16
-\end{pmatrix}.\end{split}\]</div>
+\end{pmatrix}.
+\end{split}\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method definition to the matrix class.</p>
@@ -1008,7 +1039,8 @@ A =
 <span class="eqno">(7)<a class="headerlink" href="#equation-eq-matrix-multiplication" title="Link to this equation">#</a></span>\[ [AB]_{ij} = \vec{a}_i \cdot \vec{b}_j, \]</div>
 <p>Where <span class="math notranslate nohighlight">\(\vec{a}_i\)</span> is the vector formed from row <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(\vec{b}_j\)</span> is the vector formed from column <span class="math notranslate nohighlight">\(j\)</span> of <span class="math notranslate nohighlight">\(B\)</span>. In computer graphics we mainly work with <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices, so consider the following matrix multiplication</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{pmatrix}
+\[\begin{split}
+\begin{pmatrix}
   1 &amp; 2 &amp; 3 &amp; 4 \\
   5 &amp; 6 &amp; 7 &amp; 8 \\
   9 &amp; 10 &amp; 11 &amp; 12 \\
@@ -1019,10 +1051,12 @@ A =
   21 &amp; 22 &amp; 23 &amp; 24 \\
   25 &amp; 26 &amp; 27 &amp; 28 \\
   29 &amp; 30 &amp; 31 &amp; 32
-\end{pmatrix}\end{split}\]</div>
+\end{pmatrix}
+\end{split}\]</div>
 <p>For the element in row 2 and column 3, <span class="math notranslate nohighlight">\([AB]_{23}\)</span>, we have the dot product between row 2 of the left-hand matrix and column 3 of the right-hand matrix</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{pmatrix}
+\[\begin{split}
+\begin{pmatrix}
   \color{lightgray}1 &amp; \color{lightgray}2 &amp; \color{lightgray}3 &amp; \color{lightgray}4 \\
   5 &amp; 6 &amp; 7 &amp; 8 \\
   \color{lightgray}9 &amp; \color{lightgray}10 &amp; \color{lightgray}11 &amp; \color{lightgray}12 \\
@@ -1033,10 +1067,13 @@ A =
   \color{lightgray}21 &amp; \color{lightgray}22 &amp; 23 &amp; \color{lightgray}24 \\
   \color{lightgray}25 &amp; \color{lightgray}26 &amp; 27 &amp; \color{lightgray}28 \\
   \color{lightgray}29 &amp; \color{lightgray}30 &amp; 31 &amp; \color{lightgray}32
-\end{pmatrix}\end{split}\]</div>
+\end{pmatrix}
+\end{split}\]</div>
 <p>so</p>
 <div class="math notranslate nohighlight">
-\[(5, 6, 7, 8) \cdot (19, 23, 27, 31) = 5 \times 19 + 6 \times 23 + 7 \times 27 + 8 \times 31 = 670.\]</div>
+\[
+(5, 6, 7, 8) \cdot (19, 23, 27, 31) = 5 \times 19 + 6 \times 23 + 7 \times 27 + 8 \times 31 = 670.
+\]</div>
 <p>Doing similar for the other elements gives</p>
 <div class="math notranslate nohighlight" id="equation-eq-matrix-multiplication-example">
 <span class="eqno">(8)<a class="headerlink" href="#equation-eq-matrix-multiplication-example" title="Link to this equation">#</a></span>\[\begin{split} \begin{pmatrix}
@@ -1111,12 +1148,14 @@ AB =
 <span id="column-major-order-section"></span><h3>Column-major order<a class="headerlink" href="#column-major-order" title="Link to this heading">#</a></h3>
 <p>Linear memory is a contiguous block of addresses that can be sequentially accessed. So a 1D array is stored in adjacent memory locations. Since matrices are 2D we have a choice whether to store the elements in the rows or columns in adjacent locations. These are known as <strong>column-major order</strong> and <strong>row-major order</strong>. Consider the <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrix</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{pmatrix}
+\[\begin{split}
+\begin{pmatrix}
     a &amp; b &amp; c &amp; d \\
     e &amp; f &amp; g &amp; h \\
     i &amp; j &amp; k &amp; l \\
     m &amp; n &amp; o &amp; p
-\end{pmatrix}.\end{split}\]</div>
+\end{pmatrix}.
+\end{split}\]</div>
 <p>Using column-major order this will be stored in the memory as</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/04_column_major_order.svg"><img alt="../_images/04_column_major_order.svg" src="../_images/04_column_major_order.svg" style="width: 650px;" />
@@ -1157,16 +1196,19 @@ AB =
 <span id="identity-matrix-section"></span><h3>The Identity Matrix<a class="headerlink" href="#the-identity-matrix" title="Link to this heading">#</a></h3>
 <p>The identity matrix is a special square matrix where all the elements are zero apart from the elements on the diagonal line from the top-left element down to the bottom-right element (known as the main diagonal). For example the <span class="math notranslate nohighlight">\(4 \times 4\)</span> identity matrix is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}I =
+\[\begin{split}
+I =
 \begin{pmatrix}
   1 &amp; 0 &amp; 0 &amp; 0 \\
   0 &amp; 1 &amp; 0 &amp; 0 \\
   0 &amp; 0 &amp; 1 &amp; 0 \\
   0 &amp; 0 &amp; 0 &amp; 1
-\end{pmatrix}.\end{split}\]</div>
+\end{pmatrix}.
+\end{split}\]</div>
 <p>The identity matrix is similar to the number 1 in that if we multiply any matrix by an identity matrix the result is unchanged. For example,</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}IA =
+\[\begin{split}
+IA =
 \begin{pmatrix}
   1 &amp; 0 &amp; 0 &amp; 0 \\
   0 &amp; 1 &amp; 0 &amp; 0 \\
@@ -1186,10 +1228,11 @@ AB =
    9 &amp; 10 &amp; 11 &amp; 12 \\
   13 &amp; 14 &amp; 15 &amp; 16
 \end{pmatrix}
-= A.\end{split}\]</div>
+= A.
+\end{split}\]</div>
 </section>
 <section id="matrix-inverse">
-<h3>Matrix Inverse<a class="headerlink" href="#matrix-inverse" title="Link to this heading">#</a></h3>
+<span id="inverse-matrix-section"></span><h3>Matrix Inverse<a class="headerlink" href="#matrix-inverse" title="Link to this heading">#</a></h3>
 <p>Whilst matrix multiplication is defined for certain matrices there is no way of dividing one matrix by another. However, for certain square matrices we can calculate an <strong>inverse matrix</strong> that performs a similar function to divide. Consider the division of two numbers, 4 and 2 say. If we wanted to divide 4 by two we could write</p>
 <div class="math notranslate nohighlight">
 \[ \frac{4}{2} = 2. \]</div>
@@ -1345,93 +1388,46 @@ inv(C)C =
 <ol class="arabic simple" start="4">
 <li><p>A transformation can be applied to a vector by matrix multiplication. If <span class="math notranslate nohighlight">\(T\)</span> is a transformation matrix and <span class="math notranslate nohighlight">\(\vec{v}\)</span> is a vector then the transformed vector is <span class="math notranslate nohighlight">\(T \vec{v}\)</span>. Given the following transformation matrices and vector</p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-  S &amp;= \begin{pmatrix}
-    2 &amp; 0 &amp; 0 &amp; 0 \\
-    0 &amp; 2 &amp; 0 &amp; 0 \\
-    0 &amp; 0 &amp; 2 &amp; 0 \\
-    0 &amp; 0 &amp; 0 &amp; 1
-  \end{pmatrix}, &amp;
-  T &amp;= \begin{pmatrix}
-    1 &amp; 0 &amp; 0 &amp; 3 \\
-    0 &amp; 1 &amp; 0 &amp; 2 \\
-    0 &amp; 0 &amp; 1 &amp; -1 \\
-    0 &amp; 0 &amp; 0 &amp; 1
-  \end{pmatrix}, &amp;
-  \vec{v} = \begin{pmatrix} 5 \\ 8 \\ 10 \\ 1 \end{pmatrix},
-\end{align*}\end{split}\]</div>
-<p>   use pen and paper to calculate the following transformations:</p>
-<p>   (a)   <span class="math notranslate nohighlight">\(S \, \vec{v}\)</span>;<br>
-   (b)   <span class="math notranslate nohighlight">\(T \, \vec{v}\)</span>;<br>
-   (c)   <span class="math notranslate nohighlight">\(T\,S\,\vec{v}\)</span>.<br></p>
-<p>   For each one, describe what effect the transformation has on <span class="math notranslate nohighlight">\(\vec{v}\)</span>.</p>
-<!-- ````{dropdown} Solutions
-1. (a) &emsp; $\vec{p} = (5, 6, 1)$ <br>
-   (b) &emsp; $\vec{q} = (-10, -2, -7)$ <br>
-   (c) &emsp; $\vec{r} = (5, -4, 6)$ <br>
-   (d) &emsp; $\| \vec{p} \| = 7.8740$ <br>
-   (e) &emsp; $\hat{q} = (-0.8085,   -0.1617,   -0.5659)$ <br>
-   (f) &emsp; $\vec{p} \cdot \vec{q} = -69$ <br>
-   (g) &emsp; $\vec{q} \times \vec{r} = (-40, 25, 50)$ <br>
+<p>$$</p>
+<p>\begin{align*}
+S &amp;= \begin{pmatrix}
+2 &amp; 0 &amp; 0 &amp; 0 \
+0 &amp; 2 &amp; 0 &amp; 0 \
+0 &amp; 0 &amp; 2 &amp; 0 \
+0 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}, &amp;
+T &amp;= \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 3 \
+0 &amp; 1 &amp; 0 &amp; 2 \
+0 &amp; 0 &amp; 1 &amp; -1 \
+0 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}, &amp;
+\vec{v} = \begin{pmatrix} 5 \ 8 \ 10 \ 1 \end{pmatrix},
+\end{align*}</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+&amp;emsp;&amp;emsp; use pen and paper to calculate the following transformations:
 
-2.
-```javascript
-// Exercise 2
-console.log("\nExercise 2\n----------");
+&amp;emsp;&amp;emsp; (a) &amp;emsp; $S \, \vec{v}$;&lt;br&gt;
+&amp;emsp;&amp;emsp; (b) &amp;emsp; $T \, \vec{v}$;&lt;br&gt;
+&amp;emsp;&amp;emsp; (c) &amp;emsp; $T\,S\,\vec{v}$.&lt;br&gt;
 
-const A1 = new Float32Array([5, 1, 3]);
-const B1 = new Float32Array([10, 7, 4]);
-const C1 = new Float32Array([0, 5, -3]);
+&amp;emsp;&amp;emsp; For each one, describe what effect the transformation has on $\vec{v}$.
 
-p = subtractVectors(B1, A1);
-printVector(p, "(a) p");
-q = subtractVectors(C1, B1);
-printVector(q, "(b) q");
-r = subtractVectors(A1, C1);
-printVector(r, "(c) r");
-console.log("(d) length(p) = " + length(p));
-printVector(normalize(q), "(e) qHat")
-console.log("(f) p . q = " + dot(p, q));
-printVector(cross(q, r), "(g) q x r")
-```
+---
 
-```text
-Exercise 2
-----------
-(a) p = [ 5.0000, 6.0000, 1.0000 ]
-(b) q = [ -10.0000, -2.0000, -7.0000 ]
-(c) r = [ 5.0000, -4.0000, 6.0000 ]
-(d) length(p) = 7.874007874011811
-(e) qHat = [ -0.8085, -0.1617, -0.5659 ]
-(f) p . q = -69
-(g) q x r = [ -40.0000, 25.0000, 50.0000 ]
-```
+## Video Walkthrough
 
-3. (a) &emsp; $AB = \begin{pmatrix} 21 & 1 \\ -35 & -1 \end{pmatrix}$<br>
-   (b) &emsp; $ABC = \begin{pmatrix} 60 & 38 \\ -102 & -66 \end{pmatrix}$<br>
-   (c) &emsp; $B^\textsf{T} A^\textsf{T} = \begin{pmatrix} 21 & -35 \\ 1 & -1 \end{pmatrix}$
-
-4. (a) &emsp; $S \vec{v} = \begin{pmatrix} 10 \\ 16 \\ 20 \\ 1 \end{pmatrix}$<br>
-    &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor of 2, i.e., $\begin{pmatrix} 2 \times 10 \\ 2 \times 16 \\ 2 \times 20 \\ 1 \end{pmatrix}$.<br>
-   (b) &emsp; $T \vec{v} = \begin{pmatrix} 8 \\ 10 \\ 9 \\ 1 \end{pmatrix}$<br>
-   &emsp; The first three elements of $\vec{v}$ have been increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 5 + 3 \\ 8 + 2 \\ 10 - 1 \\ 1 \end{pmatrix}$.<br>
-   (c) &emsp; $T \, S \, \vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}$
-   &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor or 2 and then increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 2 \times 5 + 3 \\ 2 \times 8 + 2 \\ 2 \times 10 - 1 \\ 1\end{pmatrix}$.
-```` -->
-</section>
-<hr class="docutils" />
-<section id="video-walkthrough">
-<h2>Video Walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X" title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
+&lt;iframe
+  width=&quot;560&quot;
+  height=&quot;315&quot;
+  src=&quot;https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X&quot; title=&quot;YouTube video player&quot;
+  frameborder=&quot;0&quot;
+  allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot;
+  referrerpolicy=&quot;strict-origin-when-cross-origin&quot;
   allowfullscreen
-></iframe>
+&gt;&lt;/iframe&gt;
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -1517,7 +1513,6 @@ Exercise 2
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video Walkthrough</a></li>
 </ul>
   </nav></div>
 

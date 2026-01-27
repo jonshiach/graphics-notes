@@ -61,10 +61,7 @@ Lab 5 - Vectors and Matrices
 
 A vector in is an object with magnitude (length) and direction. A vector is denoted by a lower case letter in boldface, e.g., $\vec{a}$ (or underlined when writing by hand), and represented mathematically by a tuple which is an ordered set of numbers. In geometry, each number in the vector represents the length along the co-ordinate axes. For example, consider the 3-element vector
 
-```{math}
-:numbered: false
-\vec{a} = (a_x, a_y, a_z).
-```
+$$\vec{a} = (a_x, a_y, a_z).$$
 
 Here $\vec{a}$ has 3 elements so is a vector in 3D space where $a_x$, $a_y$ and $a_z$ are the lengths of the vector in the $x$, $y$, and $z$ directions.
 
@@ -97,13 +94,12 @@ function printVector(v) {
 
 Here we have defined a function that prints a 3-element vector. Now let's create the following vectors in JavaScript and print them.
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \vec{a} &= (3, 0, 4), &
     \vec{b} &= (1, 2, 3).
 \end{align*}
-```
+$$
 
 :::{admonition} Task
 :class: tip
@@ -142,13 +138,12 @@ $$ \begin{align*}
 
 For example, given the vectors $\vec{a} = (3,0,4)$ and $\vec{b} = (1, 2, 3)$
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \vec{a} + \vec{b} &= (3, 0, 4) + (1, 2, 3) = (3 + 1, 0 + 2, 4 + 3) = (4, 2, 7), \\
     \vec{a} - \vec{b} &= (3, 0, 4) - (1, 2, 3) = (3 - 1, 0 - 2, 4 - 3) = (2, -2, 1).
 \end{align*}
-```
+$$
 
 What is happening in a geometrical sense when we add and subtract vectors? Take a look at {numref}`vector-addition-figure`, here the vector $\vec{b}$ has been added to the vector $\vec{a}$ where the tail of $\vec{b}$ is placed at the head of $\vec{a}$. The resulting vector $\vec{a} + \vec{b}$ points from the tail of $\vec{a}$ to the head of $\vec{b}$.
 
@@ -218,27 +213,24 @@ a - b = [ 2.00, -2.00, 1.00 ]
 
 Multiplication of a vector $\vec{a} = (a_x, a_y, a_z)$ by a scalar (a number) $k$ are defined by
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     k \vec{a} &= (ka_x, ka_y, ka_z), \\
     \frac{\vec{a}}{k} &= \left(\frac{a_x}{k}, \frac{a_y}{k}, \frac{a_z}{k} \right).
 \end{align*}
-```
+$$
 
 For example, multiplying the vector $\vec{a} = (3, 0, 4)$ by the scalar 2 gives
 
-```{math}
-:numbered: false
+$$
 2\vec{a} = 2(3,0,4) = (6, 0, 8).
-```
+$$
 
 If we wanted to divide by a scale $k$ then we simply multiply by $\dfrac{1}{k}$. For example, dividing the vector $\vec{b} = (1, 2, 3)$ by 3 gives
 
-```{math}
-:numbered: false
+$$
 \frac{\vec{b}}{3} = \frac{1}{3} \vec{b} = \left( \frac{1}{3}, \frac{2}{3}, \frac{3}{3} \right) = (0.3333, 0.6667, 1).
-```
+$$
 
 Multiplying a vector by a positive scalar has the effect of scaling the length of the vector. Multiplying by a negative scalar reverses the direction of the vector.
 
@@ -293,13 +285,12 @@ $$\|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2}. $$(eq:vector-magnitude)
 
 For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magnitudes are
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \| \vec{a} \| &= \sqrt{3^2 + 0^2 + 4^2} = \sqrt{9 + 0 + 16} = \sqrt{25} = 5, \\
     \| \vec{b} \| &= \sqrt{1^2 + 2^2 + 3^2} = \sqrt{1 + 4 + 9} = \sqrt{14} = 3.74\ldots
 \end{align*}
-```
+$$
 
 :::{admonition} Task
 :class: tip
@@ -343,19 +334,17 @@ $$ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq:unit-vector)
 
 This process is called **normalising a vector**. For example, to determine a unit vector pointing in the same direction as the vector $\vec{a} = (3, 0, 4)$, we normalise it by dividing by its magnitude which is 5.
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \hat{\vec{a}} &= \frac{(3, 0, 4)}{5} = \left( \frac{3}{5}, 0, \frac{4}{5} \right) = (0.6, 0, 0.8).
 \end{align*}
-```
+$$
 
 Checking that $\hat{\vec{a}}$ has a magnitude of 1
 
-```{math}
-:numbered: false
+$$
 \|\hat{\vec{a}}\| = \sqrt{0.6^2 + 0^2 + 0.8^2} = \sqrt{0.36 + 0.64} = \sqrt{1} = 1.
-```
+$$
 
 Normalizing a vector is an operation that is used a lot in graphics programming, so it would be useful to have a function that does this.
 
@@ -419,23 +408,19 @@ The angle $\theta$ between the vectors $\vec{a}$ and $\vec{b}$.
 
 A useful result for computer graphics is that if $\theta=90^\circ$ then $\cos(\theta) = 0$ and equation {eq}`eq:dot-product-geometric` becomes
 
-```{math}
-:numbered: false
-
+$$
 \vec{a} \cdot \vec{b} = 0.
-```
+$$
 
 In order words, if the dot product of two vectors is zero then the two vectors are perpendicular. For example, given the vectors $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ the dot product between these are
 
-```{math}
-:numbered: false
-
+$$
 \begin{align*}
     \vec{a} \cdot \vec{b} &= (3, 0, 4) \cdot (1, 2, 3)
     = 3 + 0 + 12
     = 15.
 \end{align*}
-```
+$$
 
 :::{admonition} Task
 :class: tip
@@ -487,24 +472,22 @@ The cross product between two vectors gives a vector that is perpendicular to bo
 
 For example, given the vectors $\vec{a} = (3,0,4)$ and $\vec{b} = (1, 2, 3)$ the cross product $\vec{a} \times \vec{b}$ is
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \vec{a} \times \vec{b} &= (3, 0, 4) \times (1, 2, 3) \\
     &= (0 \times 3 - 4 \times 2, 4 \times 1 - 3 \times 3, 3 \times 2 - 0 \times 3) \\
     &= (-8, -5, 6).
 \end{align*}
-```
+$$
 
 We can show that $\vec{a} \times \vec{b}$ is perpendicular to both $\vec{a}$ and $\vec{b}$ using the dot product
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     \vec{a} \cdot (\vec{a} \times \vec{b}) &= (3, 0, 4) \cdot (-8, -5, 6) = -24 + 0 + 24 = 0, \\
     \vec{b} \cdot (\vec{a} \times \vec{b}) &= (1, 2, 3) \cdot (-8, -5, 6) = - 8 - 10 + 18 = 0.
 \end{align*}
-```
+$$
 
 :::{admonition} Task
 :class: tip
@@ -548,8 +531,7 @@ Here we have also shown that the cross product of `a` and `b` is perpendicular t
 
 Another type of mathematical object that is fundamental to computer graphics is the matrix. A matrix is a rectangular array of numbers.
 
-```{math}
-:numbered: false
+$$
 \begin{align*}
     A =
     \begin{pmatrix}
@@ -559,7 +541,7 @@ Another type of mathematical object that is fundamental to computer graphics is 
         a_{m1} & a_{m2} & \cdots & a_{mn}
     \end{pmatrix}
 \end{align*}
-```
+$$
 
 It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an **index** which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so $a_{ij}$ is the element in row $i$ and column $j$ of the matrix $A$.  
 
@@ -640,8 +622,7 @@ Here we have declared a class called `Mat4` inside which we have defined the fol
 
 We have then created a matrix object and set the values equal to the matrix below and printed the matrix.
 
-```{math}
-:numbered: false
+$$
 A =
 \begin{pmatrix}
   1 & 2 & 3 & 4 \\
@@ -649,7 +630,7 @@ A =
   9 & 10 & 11 & 12 \\
   13 & 14 & 15 & 16
 \end{pmatrix}.
-```
+$$
 
 Refresh your web page, and you should see the following has been added
 
@@ -673,8 +654,7 @@ $$A_{ij}^\mathsf{T} = A_{ji}$$
 
 i.e., the rows and columns of $A$ are swapped so row $i$ of $A$ is column $i$ of $A^\mathsf{T}$. For example, the matrix $A$ we defined above
 
-```{math}
-
+$$
 A =
 \begin{pmatrix}
   1 & 2 & 3 & 4 \\
@@ -682,12 +662,11 @@ A =
   9 & 10 & 11 & 12 \\
   13 & 14 & 15 & 16
 \end{pmatrix},
-```
+$$
 
 then $A^\mathsf{T}$ is
 
-```{math}
-
+$$
 A^\mathsf{T} =
 \begin{pmatrix}
   1 & 5 & 9 & 13 \\
@@ -695,7 +674,7 @@ A^\mathsf{T} =
   3 & 7 & 11 & 15 \\
   4 & 8 & 12 & 16
 \end{pmatrix}.
-```
+$$
 
 :::{admonition} Task
 :class: tip
@@ -775,8 +754,7 @@ $$ [AB]_{ij} = \vec{a}_i \cdot \vec{b}_j, $$(eq:matrix-multiplication)
 
 Where $\vec{a}_i$ is the vector formed from row $i$ of $A$ and $\vec{b}_j$ is the vector formed from column $j$ of $B$. In computer graphics we mainly work with $4 \times 4$ matrices, so consider the following matrix multiplication
 
-```{math}
-:numbered: false
+$$
 \begin{pmatrix}
   1 & 2 & 3 & 4 \\
   5 & 6 & 7 & 8 \\
@@ -789,12 +767,11 @@ Where $\vec{a}_i$ is the vector formed from row $i$ of $A$ and $\vec{b}_j$ is th
   25 & 26 & 27 & 28 \\
   29 & 30 & 31 & 32
 \end{pmatrix}
-```
+$$
 
 For the element in row 2 and column 3, $[AB]_{23}$, we have the dot product between row 2 of the left-hand matrix and column 3 of the right-hand matrix
 
-```{math}
-:numbered: false
+$$
 \begin{pmatrix}
   \color{lightgray}1 & \color{lightgray}2 & \color{lightgray}3 & \color{lightgray}4 \\
   5 & 6 & 7 & 8 \\
@@ -807,14 +784,13 @@ For the element in row 2 and column 3, $[AB]_{23}$, we have the dot product betw
   \color{lightgray}25 & \color{lightgray}26 & 27 & \color{lightgray}28 \\
   \color{lightgray}29 & \color{lightgray}30 & 31 & \color{lightgray}32
 \end{pmatrix}
-```
+$$
 
 so
 
-```{math}
-:numbered: false
+$$
 (5, 6, 7, 8) \cdot (19, 23, 27, 31) = 5 \times 19 + 6 \times 23 + 7 \times 27 + 8 \times 31 = 670.
-```
+$$
 
 Doing similar for the other elements gives
 
@@ -901,16 +877,14 @@ Hang on a minute, this matrix isn't the same as the one from equation {eq}`eq-ma
 
 Linear memory is a contiguous block of addresses that can be sequentially accessed. So a 1D array is stored in adjacent memory locations. Since matrices are 2D we have a choice whether to store the elements in the rows or columns in adjacent locations. These are known as **column-major order** and **row-major order**. Consider the $4 \times 4$ matrix
 
-```{math}
-:numbered: false
-
+$$
 \begin{pmatrix}
     a & b & c & d \\
     e & f & g & h \\
     i & j & k & l \\
     m & n & o & p
 \end{pmatrix}.
-```
+$$
 
 Using column-major order this will be stored in the memory as
 
@@ -964,7 +938,7 @@ Microsoft's graphics library directX and Unreal Engine uses row-major order whil
 
 The identity matrix is a special square matrix where all the elements are zero apart from the elements on the diagonal line from the top-left element down to the bottom-right element (known as the main diagonal). For example the $4 \times 4$ identity matrix is
 
-```{math}
+$$
 I =
 \begin{pmatrix}
   1 & 0 & 0 & 0 \\
@@ -972,11 +946,11 @@ I =
   0 & 0 & 1 & 0 \\
   0 & 0 & 0 & 1
 \end{pmatrix}.
-```
+$$
 
 The identity matrix is similar to the number 1 in that if we multiply any matrix by an identity matrix the result is unchanged. For example,
 
-```{math}
+$$
 IA =
 \begin{pmatrix}
   1 & 0 & 0 & 0 \\
@@ -998,7 +972,9 @@ IA =
   13 & 14 & 15 & 16
 \end{pmatrix}
 = A.
-```
+$$
+
+(inverse-matrix-section)=
 
 ### Matrix Inverse
 
@@ -1173,8 +1149,8 @@ $$ \begin{align*}
 
 4. A transformation can be applied to a vector by matrix multiplication. If $T$ is a transformation matrix and $\vec{v}$ is a vector then the transformed vector is $T \vec{v}$. Given the following transformation matrices and vector
 
-```{math}
-:numbered: false
+$$
+
 \begin{align*}
   S &= \begin{pmatrix}
     2 & 0 & 0 & 0 \\
@@ -1199,60 +1175,6 @@ $$ \begin{align*}
 &emsp;&emsp; (c) &emsp; $T\,S\,\vec{v}$.<br>
 
 &emsp;&emsp; For each one, describe what effect the transformation has on $\vec{v}$.
-
-<!-- ````{dropdown} Solutions
-1. (a) &emsp; $\vec{p} = (5, 6, 1)$ <br>
-   (b) &emsp; $\vec{q} = (-10, -2, -7)$ <br>
-   (c) &emsp; $\vec{r} = (5, -4, 6)$ <br>
-   (d) &emsp; $\| \vec{p} \| = 7.8740$ <br>
-   (e) &emsp; $\hat{q} = (-0.8085,   -0.1617,   -0.5659)$ <br>
-   (f) &emsp; $\vec{p} \cdot \vec{q} = -69$ <br>
-   (g) &emsp; $\vec{q} \times \vec{r} = (-40, 25, 50)$ <br>
-
-2.
-```javascript
-// Exercise 2
-console.log("\nExercise 2\n----------");
-
-const A1 = new Float32Array([5, 1, 3]);
-const B1 = new Float32Array([10, 7, 4]);
-const C1 = new Float32Array([0, 5, -3]);
-
-p = subtractVectors(B1, A1);
-printVector(p, "(a) p");
-q = subtractVectors(C1, B1);
-printVector(q, "(b) q");
-r = subtractVectors(A1, C1);
-printVector(r, "(c) r");
-console.log("(d) length(p) = " + length(p));
-printVector(normalize(q), "(e) qHat")
-console.log("(f) p . q = " + dot(p, q));
-printVector(cross(q, r), "(g) q x r")
-```
-
-```text
-Exercise 2
-----------
-(a) p = [ 5.0000, 6.0000, 1.0000 ]
-(b) q = [ -10.0000, -2.0000, -7.0000 ]
-(c) r = [ 5.0000, -4.0000, 6.0000 ]
-(d) length(p) = 7.874007874011811
-(e) qHat = [ -0.8085, -0.1617, -0.5659 ]
-(f) p . q = -69
-(g) q x r = [ -40.0000, 25.0000, 50.0000 ]
-```
-
-3. (a) &emsp; $AB = \begin{pmatrix} 21 & 1 \\ -35 & -1 \end{pmatrix}$<br>
-   (b) &emsp; $ABC = \begin{pmatrix} 60 & 38 \\ -102 & -66 \end{pmatrix}$<br>
-   (c) &emsp; $B^\textsf{T} A^\textsf{T} = \begin{pmatrix} 21 & -35 \\ 1 & -1 \end{pmatrix}$
-
-4. (a) &emsp; $S \vec{v} = \begin{pmatrix} 10 \\ 16 \\ 20 \\ 1 \end{pmatrix}$<br>
-    &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor of 2, i.e., $\begin{pmatrix} 2 \times 10 \\ 2 \times 16 \\ 2 \times 20 \\ 1 \end{pmatrix}$.<br>
-   (b) &emsp; $T \vec{v} = \begin{pmatrix} 8 \\ 10 \\ 9 \\ 1 \end{pmatrix}$<br>
-   &emsp; The first three elements of $\vec{v}$ have been increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 5 + 3 \\ 8 + 2 \\ 10 - 1 \\ 1 \end{pmatrix}$.<br>
-   (c) &emsp; $T \, S \, \vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}$
-   &emsp; The first three elements of $\vec{v}$ have been scaled up by a factor or 2 and then increased by 3, 2 and $-$1 respectively, i.e., $\begin{pmatrix} 2 \times 5 + 3 \\ 2 \times 8 + 2 \\ 2 \times 10 - 1 \\ 1\end{pmatrix}$.
-```` -->
 
 ---
 

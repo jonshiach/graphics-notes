@@ -17,7 +17,7 @@ Where you are asked to enter code into your files, you are strongly encouraged t
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 1 Intro to JavaScript***. In Visual Studio Code, create a new file by clicking on **File > New File...** and enter the following code.
+Create a folder called ***Lab 1 Intro to JavaScript*** then open your folder in Visual Studio Code by clicking on **File > Open Folder...**. Create a new file by clicking on **File > New File...** (or press <kbd>ctrl</kbd> + <kbd>N</kbd> on Windows or <kbd>&#8984;</kbd> + <kbd>N</kbd> on MacOS) and enter the following code.
 
 ```html
 <!doctype html>
@@ -73,10 +73,10 @@ Lab 1 - Intro to JavaScript
 If you don't have the Live Server extension installed in Visual Studio Code follow these steps
 
 1. Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>&#8984;</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)
-2. Search for Live Server
-3. Install Live Server by Ritwick Dey
+2. Search for "Live server"
+3. Install **Live Server** by Ritwick Dey
 
-Once installed, VS Code may prompt you to reload.
+Once installed, Visual Studio Code may prompt you to reload.
 :::
 
 :::{note}
@@ -662,6 +662,7 @@ Add the following to your JavaScript file.
 // Enemy interaction
 const jumpedOnEnemy = true;
 const enemyIndex = 0;
+
 if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
   enemies[0].hitPoints--;
   console.log("Mario jumps on enemy and defeats it.");
@@ -685,7 +686,7 @@ Here we have written a more sophisticated `if...else if...else` statement using 
 Mario jumps on enemy and defeats it.
 ```
 
-Make changes to the `powerUp` property and the `jumpedOnEnemy` and `enemyIndex` to check this code works as expected.
+Make changes to the `powerUp` property and the `jumpedOnEnemy` and `enemyIndex` variables to check this code works as expected.
 
 ---
 
@@ -1065,9 +1066,7 @@ Power up: Banana
 
 ## Exercises
 
-1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information.
-<br>
-First create a class called `Student` that stores a student's name, ID number and degree course they are currently in.
+1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information. Create a class called `Student` that stores a student's name, ID number and degree course they are currently in.
 
 2. Create an object of your Student class called `ellie` with the following details and output the property values.
 
