@@ -12,7 +12,7 @@ This site contains the notes used for the lab sessions for the Computer Graphics
 | 6 | [3D Worlds](3D-worlds-section) |
 | 7 | [Moving the Camera](moving-the-camera-section) |
 | 8 | [Lighting](lighting-section) |
-| 9 | [Normal Maps](normal-maps-section) |
+| 9 | [Normal Maps](normal-mapping-section) |
 | 10 | [Quaternions](quaternions-section) |
 
 ---

@@ -1,5 +1,5 @@
 // Define vertex shader
-const vertexShader = 
+const vertexShaderSource = 
 `#version 300 es
 precision mediump float;
 
@@ -11,9 +11,11 @@ out vec3 vColour;
 out vec2 vTexCoords;
 
 uniform mat4 uModel;
+uniform mat4 uView;
+uniform mat4 uProjection;
 
 void main() {
-  gl_Position = uModel * vec4(aPosition, 1.0);
+  gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
 
   // Output vertex colour
   vColour = aColour;
@@ -23,7 +25,7 @@ void main() {
 }`;
 
 // Define fragment shader
-const fragmentShader = 
+const fragmentShaderSource = 
 `#version 300 es
 precision mediump float;
 
@@ -43,11 +45,11 @@ void main() {
 function main() {
 
   // Setup WebGL
-  const canvas = document.getElementById("canvasId");
+  const canvas = document.getElementById("canvas");
   const gl = initWebGL(canvas);
   
   // Create WebGL program 
-  const program = createProgram(gl, vertexShader, fragmentShader);
+  const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
 
   // Set the shader program
   gl.useProgram(program);
@@ -96,7 +98,7 @@ function main() {
      1,  1, -1,     0, 0, 0,    1, 1,
     -1,  1,  1,     0, 0, 0,    0, 0,
      1,  1, -1,     0, 0, 0,    1, 1,
-    -1,  1, -1,     0, 0, 0,    0, 1,
+    -1,  1, -1,     0, 0, 0,    0, 1
   ]);
 
   // Define cube indices
@@ -109,15 +111,46 @@ function main() {
     30, 31, 32, 33, 34, 35   // top
   ]);
 
-  // Create VAO
+  const cubePositions = [
+    [ 0.0,  0.0,   0.0],
+    [ 2.0,  5.0, -10.0],
+    [-3.0, -2.0,  -3.0],
+    [-4.0, -2.0,  -8.0],
+    [ 2.0,  2.0,  -6.0],
+    [-4.0,  3.0,  -8.0],
+    [ 0.0, -2.0,  -5.0],
+    [ 4.0,  2.0,  -4.0],
+    [ 2.0,  0.0,  -2.0],
+    [-1.0,  1.0,  -2.0],
+  ];
+
+  // Define cubes
+  const numCubes = cubePositions.length;
+  const cubes = [];
+  for (let i = 0; i < numCubes; i++) {
+    cubes.push({
+      position  : cubePositions[i],
+      vector    : [1, 1, 1],
+      angle     : 20 * i * Math.PI / 180,
+    });
+  }
+
+  // Create VAOs
   const vao = createVao(gl, program, vertices, indices);
 
   // Load texture
   const texture = loadTexture(gl, "assets/crate.png");
 
+  // Camera object
+  const camera = new Camera(canvas);
+  camera.eye = [0, 0, 5];
+
+  // Timer 
+  let lastTime = 0;
+
   // Render function
   function render(time) {
-
+    
     // Manual init call, no timing yet
     if (time == null) {
         requestAnimationFrame(render);
@@ -127,26 +160,50 @@ function main() {
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    // Set the shader program
-    gl.useProgram(program);
-
-    // Calculate the model matrix
-    const model = new Mat4()
-      .translate([0, 0, 0])
-      .rotate([0, 1, 0], 0)
-      .scale([1, 1, 1]);
-
-    // Send the model matrix to the shaders
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
-
     // Bind texture
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
-    // Draw the cube
-    gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+    // Update camera vectors;
+    const dt = (time - lastTime) * 0.001;
+    lastTime = time;
+    camera.update(dt);
+
+    // Calculate view matrix
+    const view = camera.getViewMatrix();
+
+    // Calculate projection matrix
+    // const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
+    const projection = camera.getPerspectiveMatrix();
+
+    // Send view and project matrices to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
+
+
+    const angle1 = 45 * Math.PI / 180;
+    const q1 = new Quaternion(0, 2, 0, 0);
+    const q2 = new Quaternion(0.707, 0.5, 0, 0.5);
+    const q3 = new Quaternion(0.707, 0.5, 0, 0.5).conjugate();
+    console.log(q2.multiply(q1).multiply(q3));
+
+    // Draw cubes
+    for (let i = 0; i < numCubes; i++) {
+
+      // Calculate the model matrix
+      const model = new Mat4()
+        .translate(cubes[i].position)
+        .rotate(cubes[i].vector, cubes[i].angle)
+        .scale([0.5, 0.5, 0.5]);
+          
+      // Send model matrix to the shader
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+      // Draw the triangles
+      gl.bindVertexArray(vao);
+      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+    }
 
     // Render next frame
     requestAnimationFrame(render);

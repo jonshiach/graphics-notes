@@ -4,7 +4,7 @@ function initWebGL(canvasId) {
   if (!gl) throw new Error('WebGL not supported');
   
   gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.1, 0.1, 0.1, 1.0);
+  gl.clearColor(0.2, 0.2, 0.2, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
   gl.enable(gl.CULL_FACE);
@@ -62,7 +62,7 @@ function createVao(gl, program, vertices, indices) {
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
   // Position attribute
-  const stride = 11 * Float32Array.BYTES_PER_ELEMENT;
+  const stride = 8 * Float32Array.BYTES_PER_ELEMENT;
   const positionLocation = gl.getAttribLocation(program, "aPosition");
   gl.enableVertexAttribArray(positionLocation);
   gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, stride, 0);
@@ -79,12 +79,6 @@ function createVao(gl, program, vertices, indices) {
   gl.enableVertexAttribArray(texCoordsLocation);
   gl.vertexAttribPointer(texCoordsLocation, 2, gl.FLOAT, false, stride, offset);
 
-  // Normal vectors
-  offset = 8 * Float32Array.BYTES_PER_ELEMENT;
-  const normalLocation = gl.getAttribLocation(program, "aNormal");
-  gl.enableVertexAttribArray(normalLocation);
-  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, stride, offset);
-
   // Unbind VAO
   gl.bindVertexArray(null);
 
@@ -94,32 +88,30 @@ function createVao(gl, program, vertices, indices) {
 function loadTexture(gl, url) {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-  // Temporary 1×1 magenta pixel while image loads
+  // Temporary 1×1 pixel while image loads
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
 
   const image = new Image();
   image.src = url;
   image.onload = () => {
     gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  
 
     // Auto-generate mipmaps (requires power-of-2 image)
     if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
       gl.generateMipmap(gl.TEXTURE_2D);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     } else {
-      // Non power-of-2 textures must be clamped & non-mipmapped
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      // Non-POT textures must be clamped & non-mipmapped
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     }
-  };
 
-  gl.bindTexture(gl.TEXTURE_2D, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  };
 
   return texture;
 }

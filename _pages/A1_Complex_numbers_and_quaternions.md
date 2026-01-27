@@ -2,38 +2,34 @@
 
 # Appendix A: Complex Numbers and Quaternions
 
-In [10. Quaternions](quaternions-section) we explored how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.
+In [Lab 10: Quaternions](quaternions-section) we look at how we can make use of quaternions to perform rotation calculations. You don't need to know exactly how the various equations are derived in order to use them in your programs, however, if you are curious their derivations are provided here.
 
-## Complex numbers
+## Imaginary and complex numbers
 
-The **imaginary number** $i$ is defined as $i = \sqrt{-1}$. A **complex number** is a real number plus a multiple of an imaginary number
+The **imaginary number** is denoted by $i$ and defined as $i = \sqrt{-1}$ such that $i^2 = -1$. A **complex number** is some real number $x$ plus a multiple of the imaginary number
 
 $$ z = x + yi.$$
 
-The following arithmetic operations can be applied to complex numbers.
-
-| Operation | Result |
-|:--|:--|
-| Addition | $(a + bi) + (c + di) = a + c + (b + d)i$ |
-| Subtraction | $(a + bi) - (c + di) = a - c + (b - d)i$ |
-| Scalar multiplication| $k(a + bi) = ak + bki$ |
-| Multiplication | $(a + bi)(c + di) = ac - bd + (ad - bc)i$ |
-
-For example, given the complex numbers $z_1 = 1 + 2i$ and $z_2 = 3 + 4i$
+We can perform arithmetic operations on complex numbers. For example, to multiple two complex numbers we multiply both real and imaginary parts of the first number by both the real and imaginary parts of the second number, e.g.,
 
 $$ \begin{align*}
-    z_1 + z_2 &= 1 + 3 + (2 + 4)i = 4 + 6i, \\
-    z_1 - z_2 &= 1 - 3 + (2 - 4)i = -2 - 2i, \\
-    3z_1 &= 3 \times 1 + 3 \times 2i = 3 + 6i, \\
-    z_1z_2 &= (1 + 2i) (3 + 4i) = 1 \times 3 - 2 \times 4 + (1 \times 4 - 2 \times 3) = -5 - 2i.
+  (a + bi) (c + di) &= ac + adi + bci + bdi^2.
+\end{align*} $$
+
+Since $i^2 = -1$, then $bdi^2 = -bd$ so
+
+$$ \begin{align*}
+  (a + bi) (c + di) &= ac - bd + (ad + bc)i.
 \end{align*} $$
 
 ### The complex plane
 
-Complex numbers can be represented using a 2D graph called a **complex plane** (also known as an Argand diagram) where the real part is mapped to the horizontal axis and the imaginary part mapped to the vertical axis. For example, consider the complex number $x + yi$
+Complex numbers can be represented using a 2D graph called a **complex plane** where the real part is mapped to the horizontal axis and the imaginary part mapped to the vertical axis. For example, consider the complex number $x + yi$
 
 ```{figure} ../_images/10_Complex_plane.svg
 :width: 400
+
+The complex plane.
 ```
 
 ### Absolute value of a complex number
@@ -48,18 +44,12 @@ The complex conjugate of a complex number $z = x + yi$ is denoted by $z^*$ and i
 
 $$ z^* = a - bi. $$
 
-When plotted on the complex plane the complex conjugate of $x + yi$ is reflected about the real axis.
-
-```{figure} ../_images/10_Complex_conjugate.svg
-:width: 250
-```
-
-Multiplying a complex number by its conjugate gives
+Multiplying a complex number $z = a + bi$ by its conjugate gives
 
 $$ \begin{align*}
-    zz^* &= (x + yi)(a - bi) \\
-    &= x^2 + abi - abi + x^2 \\
-    &= x^2 + x^2 \\
+    zz^* &= (a + bi)(a - bi) \\
+    &= a^2 + abi - abi - (b^2i^2) \\
+    &= a^2 + b^2 \\
     &= |z|^2.
 \end{align*} $$
 
@@ -131,15 +121,15 @@ $$ \begin{align*}
     ji &= -k, & kj &= -i, & ik &= -j.
 \end{align*} $$
 
-Consider the [cross products](cross-product-section) between the three unit vectors pointing in the $x$, $y$ and $z$ directions $\mathbf{i}$, $\mathbf{j}$ and $\mathbf{k}$
+Consider the [cross products](cross-product-section) between the three unit vectors pointing in the $x$, $y$ and $z$ directions $\vec{i}$, $\vec{j}$ and $\vec{k}$
 
 $$ \begin{align*}
-    \mathbf{i} \times \mathbf{j} &= \mathbf{k}, &
-    \mathbf{j} \times \mathbf{k} &= \mathbf{i}, &
-    \mathbf{k} \times \mathbf{i} &= \mathbf{j}, \\
-    \mathbf{j} \times \mathbf{i} &= -\mathbf{k}, &
-    \mathbf{k} \times \mathbf{j} &= -\mathbf{i}, &
-    \mathbf{i} \times \mathbf{k} &= -\mathbf{j}.
+    \vec{i} \times \vec{j} &= \vec{k}, &
+    \vec{j} \times \vec{k} &= \vec{i}, &
+    \vec{k} \times \vec{i} &= \vec{j}, \\
+    \vec{j} \times \vec{i} &= -\vec{k}, &
+    \vec{k} \times \vec{j} &= -\vec{i}, &
+    \vec{i} \times \vec{k} &= -\vec{j}.
 \end{align*} $$
 
 :::::{grid}
@@ -169,15 +159,15 @@ So the three imaginary numbers $i$, $j$ and $k$ can be used to represent the thr
 
 Quaternions can be expressed more conveniently as an ordered-pair consisting of the real part $w$ and a vector of the imaginary parts
 
-$$ q = [w, \mathbf{v}], $$
+$$ q = [w, \vec{v}], $$
 
-where $\mathbf{v} = x\mathbf{i} + y \mathbf{j} + z \mathbf{k}$. For example, the quaternion $q = 1 + 2i + 3j + 4k$ can be represented in scalar-vector form as
+where $\vec{v} = (x, y, z)$. For example, the quaternion $q = 1 + 2i + 3j + 4k$ can be represented in scalar-vector form as
 
 $$q = [1, (2, 3, 4)].$$
 
-### Absolute value of a quaternion
+### Quaternion magnitude
 
-The absolute value of a quaternion $q = [w, (x, y, z)]$ is denoted by $|q|$ and calculated using
+The **magnitude** of a quaternion $q = [w, (x, y, z)]$ is denoted by $|q|$ and calculated using
 
 $$ |q| = \sqrt{w^2 + x^2 + y^2 + z^2}.$$
 
@@ -187,19 +177,17 @@ A **unit quaternion**, denoted by $\hat{q}$, is a quaternion that has an absolut
 
 $$ \hat{q} = \frac{q}{|q|}. $$
 
-Proving that $|\hat{q}| = 1$
-
 ### Pure and real quaternions
 
 A **pure quaternion** is a quaternion where the real part has a value of zero, i.e.,
 
-$$ q = [0, \mathbf{v}]. $$
+$$ q = [0, \vec{v}]. $$
 
 A pure quaternion is equivalent to a 3-element vector.
 
-A **real quaternion** is a quaternion where the vector part is the zero vector $\mathbf{0} = 0\mathbf{i} + 0\mathbf{j} + 0\mathbf{k}$, i.e.,
+A **real quaternion** is a quaternion where the vector part is the zero vector $\vec{0} = (0, 0, 0)$, i.e.,
 
-$$ q = [w, \mathbf{0}]. $$
+$$ q = [w, \vec{0}]. $$
 
 A real quaternion is equivalent to a real number.
 
@@ -217,52 +205,48 @@ $$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right).$$(quatern
 
 ### Multiplying quaternions
 
-Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then
+Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then multiplying them gives
 
 $$ \begin{align*}
     q_1q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
-    &= (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1)i \\
-    & \qquad + (w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1)j \\
-    & \qquad + (w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1)k \\
-    & \qquad + (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2).
+    &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
+    & \quad + x_1w_2i + x_1x_2i^2 + x_1y_2ij + x_1z_2ik \\
+    & \quad + y_1w_2j + y_1x_2ji + y_1y_2j^2 + y_1z_2jk \\
+    & \quad + z_1w_2k + z_1x_2ki + z_1y_2kj + z_1z_2k^2.
 \end{align*} $$
 
-Substituting in the pure quaternions $[0,\mathbf{i}]$, $[0,\mathbf{j}]$ and $[0,\mathbf{k}]$ as well as the real quaternion $[1,\mathbf{0}]$ then
+Since $i^2 = j^2 = k^2 = -1$, $ij = k$, $ik = -j$, $ji = -k$, $jk = i$, $ki = j$, $kj = -i$ then
 
 $$ \begin{align*}
-    q_1q_2 &= (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1) [0,\mathbf{i}] \\
-    & \qquad + (w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1) [0,\mathbf{j}] \\
-    & \qquad + (w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1) [0,\mathbf{k}] \\
-    & \qquad + (-x_1x_2 - y_1y_2 - z_1z_2 + w_1w_2) [1,\mathbf{0}] \\
-    &=  [0, (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1) \mathbf{i}] \\
-    & \qquad + [0,(w_1y_2 + w_2y_1 + z_1x_2 - z_2x_1) \mathbf{j}] \\
-    & \qquad + [0,(w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1) \mathbf{k}] \\
-    & \qquad + [-x_1x_2 - y_1y_2 - z_1z_2 + w_1w_2, \mathbf{0}] \\
-    &= [(w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 + w_1w_2), \\
-    & \qquad w_1(x_2\mathbf{i} + y_2\mathbf{j} + z_2\mathbf{k}) + w_2(x_1 \mathbf{i} + y_1 \mathbf{j} + z_1\mathbf{k}) \\
-    & \qquad + (y_1z_2 - y_2z_1)\mathbf{i} + (z_1x_2 - z_2x_1)\mathbf{j} + (x_1y_2 - x_2y_1)\mathbf{k} ]
+  q_1q_2 &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
+  & \quad + x_1w_2i - x_1x_2 + x_1y_2k - x_1z_2j \\
+  & \quad + y_1w_2j - y_1x_2k - y_1y_2 + y_1z_2i \\
+  & \quad + z_1w_2k + z_1x_2j - z_1y_2i - z_1z_2.
 \end{align*} $$
 
-Substituting the dot and cross products
+Factorising the real and imaginary parts
 
 $$ \begin{align*}
-    \mathbf{v}_1 \cdot \mathbf{v}_2 &= x_1x_2 + y_1y_2 + z_1z_2, \\
-    \mathbf{v}_1 \times \mathbf{v}_2 &= (y_1z_2 - y_2z_1)\mathbf{i} + (z_1x_2 - z_2x_1)\mathbf{j} + (x_1y_2 - x_2y_1)\mathbf{k}
+  q_1q_2 &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
+  & \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)i \\
+  & \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)j \\
+  & \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)k.
 \end{align*} $$
 
-results in
+We can write this in scalar-vector form $q_1q_2 = [w, (x, y, z)]$ where
 
 $$ \begin{align*}
-    q_1q_2 &= [w_1w_2 - \mathbf{v}_1\cdot \mathbf{v}_2, w_1 \mathbf{v}_2 + w_2 \mathbf{v}_1 + \mathbf{v}_1 \times \mathbf{v}_2].
-\end{align*} $$(quaternion-product-equation)
-
-Equation {eq}`quaternion-product-equation` is the equation for the multiplication of two quaternions $q_1 = [w_1, \mathbf{v}_1]$ and $q_2 = [w_2, \mathbf{v}_2]$.
+  w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
+  x &= w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2, \\
+  y &= w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2, \\
+  z &= w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2.
+\end{align*}$$(quaternion-product-equation)
 
 ### Quaternion conjugate
 
-The **conjugate** of a quaternion $q$, denoted by $q^*$, is found by negating the vector part. For example, given the quaternion $q = [w, \mathbf{v}]$ then
+The **conjugate** of a quaternion $q$, denoted by $q^*$, is found by negating the vector part. For example, given the quaternion $q = [w, \vec{v}]$ then
 
-$$ q^* = [w, -\mathbf{v}].$$
+$$ q^* = [w, -\vec{v}].$$
 
 ### Quaternion inverse
 
@@ -286,9 +270,9 @@ $$ q^{-1} = q^*. $$
 
 ## Quaternion rotation
 
-In [Lab 5: Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\mathbf{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
+In [Lab 5: Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\vec{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
 
-```{figure} ../_images/04_axis_angle_rotation.svg
+```{figure} ../_images/05_axis_angle_rotation.svg
 :height: 300
 :name: axis-angle-rotation2-figure-3
 
@@ -301,13 +285,13 @@ $$ q = \cos(\theta) + \sin(\theta) i + \sin(\theta) j + \sin(\theta) k, $$
 
 or in scalar-vector form
 
-$$ q = [\cos(\theta), \sin(\theta) \mathbf{v}]. $$
+$$ q = [\cos(\theta), \sin(\theta) \vec{v}]. $$
 
-To demonstrate rotation using quaternion rotation consider the rotation of the vector $\mathbf{p} = (2, 0, 0)$ by 45$^\circ$ about the $z$-axis. The rotation quaternion for this is
+To demonstrate rotation using quaternion rotation consider the rotation of the vector $\vec{p} = (2, 0, 0)$ by 45$^\circ$ about the $z$-axis. The rotation quaternion for this is
 
 $$ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)], $$
 
-and expressing $\mathbf{p}$ as a pure quaternion we have $p = [0, (2, 0, 0)]$. Multiplying $p$ and $q$ using equation {eq}`quaternion-product-equation` gives
+and expressing $\vec{p}$ as a pure quaternion we have $p = [0, (2, 0, 0)]$. Multiplying $p$ and $q$ using equation {eq}`quaternion-product-equation` gives
 
 $$ \begin{align*}
     qp &=  [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
@@ -328,7 +312,7 @@ which is the same as the absolute value of $[0, (2, 0, 0)]$. This rotation is sh
 The quaternion $p = [0, (2, 0, 0)]$ is rotated $45^\circ$ by multiplying by the rotation quaternion $q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]$.
 ```
 
-In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn't perpendicular to the vector? Consider the rotation of the same vector $\mathbf{p} = (2, 0, 0)$ by angle 45$^\circ$ about the unit vector $\hat{\mathbf{v}} =  (0.707, 0, 0.707)$ which is not perpendicular to $\mathbf{p}$. The rotation quaternion is
+In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn't perpendicular to the vector? Consider the rotation of the same vector $\vec{p} = (2, 0, 0)$ by angle 45$^\circ$ about the unit vector $\hat{\vec{v}} =  (0.707, 0, 0.707)$ which is not perpendicular to $\vec{p}$. The rotation quaternion is
 
 $$ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
@@ -357,14 +341,14 @@ which is the same as $|p|$.
 :width: 450
 :name: quaternion-rotation-2-figure
 
-Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^\circ), \sin(45^\circ) \hat{\mathbf{v}}]$
+Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(45^\circ), \sin(45^\circ) \hat{\vec{v}}]$
 ```
 
-Plotting $p$ and $qpq^*$ we see that we have rotated by $90^\circ$ instead of the desired $45^\circ$ ({numref}`quaternion-rotation-2-figure`). This is because we have multiplied the quaternion $p$ by two rotation quaternions each using the angle $45^\circ$. So to rotate a quaternion $p$ about a vector $\hat{\mathbf{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where the rotation quaternion is
+Plotting $p$ and $qpq^*$ we see that we have rotated by $90^\circ$ instead of the desired $45^\circ$ ({numref}`quaternion-rotation-2-figure`). This is because we have multiplied the quaternion $p$ by two rotation quaternions each using the angle $45^\circ$. So to rotate a quaternion $p$ about a vector $\hat{\vec{v}}$ by angle $\theta$ whilst ensuring that we get a pure quaternion we perform $qpq^*$ where the rotation quaternion is
 
-$$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\mathbf{v}}].$$(appendix-rotation-quaternion-equation)
+$$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}}].$$(appendix-rotation-quaternion-equation)
 
-Returning to our example of rotating $\mathbf{p} = (2, 0, 0)$ by $45^\circ$ about the vector $\hat{\mathbf{v}} = (0.707, 0, 0.707)$ using equation {eq}`appendix-rotation-quaternion-equation` we have a rotation quaternion of
+Returning to our example of rotating $\vec{p} = (2, 0, 0)$ by $45^\circ$ about the vector $\hat{\vec{v}} = (0.707, 0, 0.707)$ using equation {eq}`appendix-rotation-quaternion-equation` we have a rotation quaternion of
 
 $$q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]$$
 
@@ -381,7 +365,7 @@ The effect of this rotation is shown in {numref}`quaternion-rotation-3-figure`.
 :width: 450
 :name: quaternion-rotation-3-figure
 
-Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(\frac{45^\circ}{2}), \sin(\frac{45^\circ}{2}) \hat{\mathbf{v}}]$.
+Rotating the quaternion $p=[0, (2, 0, 0)]$ using $qpq^*$ where $q = [\cos(\frac{45^\circ}{2}), \sin(\frac{45^\circ}{2}) \hat{\vec{v}}]$.
 ```
 
 (quaternion-rotation-matrix-derivation-section)=
@@ -397,7 +381,7 @@ $$ \begin{align*}
     &\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
 \end{align*} $$
 
-If we write the quaternion $p$ as a 4-element vector of the form $\mathbf{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous coordinates](homogeneous-coordinates-section)) then we have
+If we write the quaternion $p$ as a 4-element vector of the form $\vec{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous coordinates](homogeneous-coordinates-section)) then we have
 
 $$ \begin{align*}
     qp &=
@@ -431,7 +415,7 @@ $$ \begin{align*}
     & \qquad (wp_x - zp_y + yp_z - xp_w, zp_x + wp_y - xp_z - yp_w, -yp_x + xp_y + wp_z - zp_w)].
 \end{align*} $$
 
-Writing $p$ the form $\mathbf{p} = (p_x, p_y, p_z, p_w)$ as before gives
+Writing $p$ the form $\vec{p} = (p_x, p_y, p_z, p_w)$ as before gives
 
 $$ \begin{align*}
     pq^* =
@@ -500,7 +484,7 @@ $$ \begin{align*}
     \end{pmatrix}.
 \end{align*} $$(quaternion-rotation-matrix-2-equation)
 
-To demonstrate this lets return to our example of rotating the vector $\mathbf{p} = (2, 0, 0)$ about the unit vector $\hat{\mathbf{v}} = (0.707, 0, 0.707)$ by $45^\circ$. Recall that the rotation quaternion was
+To demonstrate this lets return to our example of rotating the vector $\vec{p} = (2, 0, 0)$ about the unit vector $\hat{\vec{v}} = (0.707, 0, 0.707)$ by $45^\circ$. Recall that the rotation quaternion was
 
 $$ \begin{align*}
     q &= [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2}) (0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)].
@@ -532,7 +516,7 @@ $$ \begin{align*}
     = \begin{pmatrix} 1.707 \\ 1 \\ 0.293 \\ 0 \end{pmatrix}.
 \end{align*} $$
 
-So the rotated vector is $(1.707, 1, 0.293)$ which was shown in {numref}`quaternion-rotation-3-figure`. We can see that the vector $\mathbf{p}$ has now been rotated $45^\circ$ about the vector $\mathbf{v}$.
+So the rotated vector is $(1.707, 1, 0.293)$ which was shown in {numref}`quaternion-rotation-3-figure`. We can see that the vector $\vec{p}$ has now been rotated $45^\circ$ about the vector $\vec{v}$.
 
 (euler-to-quaternion-derivation-section)=
 

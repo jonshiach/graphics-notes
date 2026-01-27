@@ -17,7 +17,7 @@ Where you are asked to enter code into your files, you are strongly encouraged t
 :::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 1 Intro to JavaScript***. In Visual Studio Code, create a new file by clicking on **File > New File...** and enter the following code.
+Create a folder called ***Lab 1 Intro to JavaScript*** then open your folder in Visual Studio Code by clicking on **File > Open Folder...**. Create a new file by clicking on **File > New File...** (or press <kbd>ctrl</kbd> + <kbd>N</kbd> on Windows or <kbd>&#8984;</kbd> + <kbd>N</kbd> on MacOS) and enter the following code.
 
 ```html
 <!doctype html>
@@ -73,10 +73,10 @@ Lab 1 - Intro to JavaScript
 If you don't have the Live Server extension installed in Visual Studio Code follow these steps
 
 1. Click the Extensions icon in the left sidebar (or press <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on Windows or Linux, or <kbd>&#8984;</kbd> + <kbd>shift</kbd> + <kbd>X</kbd> on macOS)
-2. Search for Live Server
-3. Install Live Server by Ritwick Dey
+2. Search for "Live server"
+3. Install **Live Server** by Ritwick Dey
 
-Once installed, VS Code may prompt you to reload.
+Once installed, Visual Studio Code may prompt you to reload.
 :::
 
 :::{note}
@@ -140,7 +140,7 @@ console.log("lives: " + lives);
 
 :::
 
-Refresh the web browser, and you should see that nothing has changed despite adding a call to `console.log()`. Open the browser's developer console (if you are using Chrome then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>&#8997;</kbd> + <kbd>&#8984;</kbd> + <kbd>J</kbd> on a Mac) and it should give you an indication of what has gone wrong. Here it should say something like the following
+Refresh the web browser, and you should see that nothing has changed despite adding a call to `console.log()`. Open the browser's developer console (if you are using Chrome or Edge then press <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> or <kbd>&#8997;</kbd> + <kbd>&#8984;</kbd> + <kbd>J</kbd> for Chrome on a Mac) and it should give you an indication of what has gone wrong. Here it should say something like the following
 
 ```{error}
 Uncaught TypeError: Assignment to constant variable.
@@ -324,7 +324,7 @@ console.log("\nMath library\n------------")
 const angleInDegress = 90;
 const angleInRadians = angleInDegress * Math.PI / 180;
 console.log(`${angleInDegress} degrees is ${angleInRadians.toFixed(4)} radians.`);
-console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians)s);
+console.log(`cos(${angleInDegress} degrees) = ` + Math.cos(angleInRadians));
 ```
 
 :::
@@ -559,10 +559,10 @@ Arrays are often used to store collections of objects which allows a program to 
 Add the following to your JavaScript file.
 
 ```javascript
-const nonPlayerCharacters = [
-  { name: "Toad", friend: true },
-  { name: "Koopa Troopa", friend: false},
-];
+const enemies = [
+  { name: "Goomba", hitPoints: 1},
+  { name: "Koopa Trooper", hitPoints: 2 },
+]
 ```
 
 :::
@@ -573,7 +573,7 @@ Here we have created an array containing two enemy objects.
 
 ## Conditional statements
 
-**Conditional statements** allow your program to make decisions and run different code depending on whether a logical condition is true or false. The basic conditional statement is a `if` statment
+**Conditional statements** allow your program to make decisions and run different code depending on whether a logical condition is true or false. The basic conditional statement is a `if` statement
 
 ```javascript
 if (condition) {
@@ -591,7 +591,7 @@ if (condition) {
 }
 ```
 
-For more complicated cases where you want to use multiple conditions we can use a `if...else if...else` statment
+For more complicated cases where you want to use multiple conditions we can use a `if...else if...else` statement
 
 ```javascript
 if (condition1) {
@@ -603,7 +603,7 @@ if (condition1) {
 }
 ```
 
-The condition statments used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
+The condition statements used in the examples above need to have a boolean value. Any declared variable is considered `true` unless it has a value of `false`, `0`, `""`, `null`, `undefined` or `NaN` (non a number). We can use the following comparison operators 
 
 | Operator | Description |
 | :--: | :-- |
@@ -629,7 +629,7 @@ Add the following to your JavaScript file.
 
 ```javascript
 // Conditional statements
-console.log("\nConditional statments\n---------------------")
+console.log("\nConditional statements\n---------------------")
 
 // Power up state
 if (player.powerUp === "fire") {
@@ -646,12 +646,12 @@ if (player.powerUp === "fire") {
 Here we have used a `if...else if...else` statement to print the current power up state of the `player` object. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
-Conditional statments
+Conditional statements
 ---------------------
 Mario is bigger and can break blocks.
 ```
 
-Make changes to the `powerUp` propery to check this code works as expected.
+Make changes to the `powerUp` property to check this code works as expected.
 
 :::{admonition} Task
 :class: tip
@@ -662,6 +662,7 @@ Add the following to your JavaScript file.
 // Enemy interaction
 const jumpedOnEnemy = true;
 const enemyIndex = 0;
+
 if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
   enemies[0].hitPoints--;
   console.log("Mario jumps on enemy and defeats it.");
@@ -679,19 +680,19 @@ if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
 
 :::
 
-Here we have written a more sophisticated `if...else if...else` statement using conjuctions. Refresh your browser, and you should see the following is added to your web page.
+Here we have written a more sophisticated `if...else if...else` statement using conjunctions. Refresh your browser, and you should see the following is added to your web page.
 
 ```text
 Mario jumps on enemy and defeats it.
 ```
 
-Make changes to the `powerUp` property and the `jumpedOnEnemy` and `enemyIndex` to check this code works as expected.
+Make changes to the `powerUp` property and the `jumpedOnEnemy` and `enemyIndex` variables to check this code works as expected.
 
 ---
 
 ## Loops
 
-**Loops** allow a program to repeat a block of code multiple times. They are essential when working with arrays of objcets, rendering graphics and processing data.
+**Loops** allow a program to repeat a block of code multiple times. They are essential when working with arrays of objects, rendering graphics and processing data.
 
 ### For loops
 
@@ -1065,9 +1066,7 @@ Power up: Banana
 
 ## Exercises
 
-1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information.
-<br>
-First create a class called `Student` that stores a student's name, ID number and degree course they are currently in.
+1. You are tasked with writing a JavaScript program to help the university store students' details (name, ID number, course, marks etc.) and perform operations on this information. Create a class called `Student` that stores a student's name, ID number and degree course they are currently in.
 
 2. Create an object of your Student class called `ellie` with the following details and output the property values.
 

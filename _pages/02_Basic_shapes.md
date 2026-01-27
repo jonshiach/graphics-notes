@@ -194,7 +194,7 @@ The commands used here are explained below
 
 - `gl.bindBuffer(gl.ARRAY_BUFFER, null);` Here we unbind the current array buffer, so no subsequent commands will mistakenly affect it.
 
-(lab01-vertex-shader)=
+(vertex-shader-section)=
 
 ### Write and Compile the Vertex Shader
 
@@ -437,7 +437,7 @@ Now that we have successfully drawn a triangle, let's recap the steps we used.
 
 1. {ref}`triangle-coordinates-section` - we defined a 9-element array that contained the $(x, y, z)$ co-ordinates of the 3 triangle vertices.
 2. {ref}`lab01-triangle-buffer` - the buffer objects are stored in the GPU so we needed to create one for the triangle and copy across the triangle co-ordinates so WebGL can work with them.
-3. {ref}`lab01-vertex-shader` - a vertex shader is used to transform the vertex co-ordinates to the clip space. The output is sent to the WebGL rasteriser that passes the fragment co-ordinates to the fragment shader.
+3. {ref}`vertex-shader-section` - a vertex shader is used to transform the vertex co-ordinates to the clip space. The output is sent to the WebGL rasteriser that passes the fragment co-ordinates to the fragment shader.
 4. {ref}`lab01-fragment-shader` - a fragment shader is used to determine the colour that the fragment should be rendered on the display.
 5. {ref}`lab01-webgl-program` - the vertex and fragment shaders are linked into a single program that we tell WebGL to use to draw the triangle.
 6. {ref}`lab01-draw-triangle` - we need to tell WebGL how to access the data in the triangle buffer and instruct it to draw the triangle.

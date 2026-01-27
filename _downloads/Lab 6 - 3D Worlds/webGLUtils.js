@@ -1,7 +1,7 @@
 // Initialize WebGL context
-function initWebGL(canvasId) {
-  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
-  if (!gl) throw new Error("WebGL not supported");
+function initWebGL(canvas) {
+  const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+  if (!gl) throw new Error('WebGL not supported');
   
   gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(0.2, 0.2, 0.2, 1.0);
