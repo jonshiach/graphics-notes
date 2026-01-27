@@ -561,7 +561,7 @@ Add the following to your JavaScript file.
 ```javascript
 const enemies = [
   { name: "Goomba", hitPoints: 1},
-  { name: "Koopa Trooper", hitPoints: 2 },
+  { name: "Koopa Troopa", hitPoints: 2 },
 ]
 ```
 
@@ -998,7 +998,7 @@ A **method** is a function that belongs to an object and are used to perform ope
 :::{admonition} Task
 :class: tip
 
-Add the following to your Racer class.
+Add the following to your Racer class (underneath the `constructor()` method and before the close brace `}` of the class definition)
 
 ```javascript
 accelerate() {
@@ -1047,6 +1047,12 @@ print() {
   console.log("Position: " + this.position);
   console.log("Power up: " + this.powerUp);
 }
+```
+
+Then, add the following to the end of the JavaScript file.
+
+```javascript
+toad.print();
 ```
 
 :::
