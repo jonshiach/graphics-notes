@@ -998,7 +998,7 @@ A **method** is a function that belongs to an object and are used to perform ope
 :::{admonition} Task
 :class: tip
 
-Add the following to your Racer class.
+Add the following to your Racer class (underneath the `constructor()` method and before the close brace `}` of the class definition)
 
 ```javascript
 accelerate() {
