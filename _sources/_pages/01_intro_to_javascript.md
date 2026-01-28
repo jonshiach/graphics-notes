@@ -1066,6 +1066,7 @@ print() {
 Then, add the following to the end of the JavaScript file.
 
 ```javascript
+toad.addPowerUp();
 toad.print();
 ```
 
