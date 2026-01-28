@@ -127,6 +127,20 @@ score: 10
 score: 30
 ```
 
+:::{note}
+Any code following a double forward slash `//` is a **comment** and is ignored by the web browser or JavaScript engine. Comments are useful to let someone (or yourself) know what or why a particular bit of code is being used.
+
+Longer multi-line comments can be entered using `/* ... */`
+
+```javascript
+/*
+  This is a
+  multi-line comment
+*/
+```
+
+:::
+
 :::{admonition} Task
 :class: tip
 
