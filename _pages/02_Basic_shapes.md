@@ -374,7 +374,7 @@ Enter the following after you have set the shader program.
 ```javascript
 // Tell WebGL how to read data from the vertex buffer  
 const positionLocation = gl.getAttribLocation(program, "aPosition");
-gl.enableVertexAttribArray(0);
+gl.enableVertexAttribArray(positionLocation);
 gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
 gl.vertexAttribPointer(
   positionLocation, // index
