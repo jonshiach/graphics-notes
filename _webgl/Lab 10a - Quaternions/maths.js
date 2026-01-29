@@ -252,7 +252,7 @@ class Quaternion {
   }
 
   rotateVector(v) {
-    const p = new Quaternion(0, ...v);
+    const p = new Quaternion(0, v[0], v[1], v[2]);
     const r = this.multiply(v).multiply(this.conjugate());
   }
 

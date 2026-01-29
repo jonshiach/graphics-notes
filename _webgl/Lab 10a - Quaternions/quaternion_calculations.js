@@ -40,10 +40,11 @@ const qInv = q.inverse();
 console.log("\nqInv = " + qInv.print())
 console.log("qInv * q = " + qInv.multiply(q).print())
 
-// Rotation quaternion
+// Quaternion rotation
 const qRot = new Quaternion().fromAxisAngle([0, 1, 0], 90 * Math.PI / 180);
 const p = new Quaternion(0, 1, 0, 0);
 const qRotInv = qRot.inverse();
+
 console.log("\nqRot = " + qRot.print());
 console.log("p = " + p.print());
 console.log("qRotInv = " + qRotInv.print());
