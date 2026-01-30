@@ -147,7 +147,7 @@ The vertex co-ordinates for the red triangle example.
 :::{admonition} Task
 :class: tip
 
-Enter the following we have cleared the canvas.
+Enter the following after we have cleared the canvas.
 
 ```javascript
 // Define triangle vertices
@@ -481,9 +481,9 @@ function compileShader(gl, source, type) {
 }
 
 // Create shader program
-function createProgram(gl, vertexSrc, fragmentSrc) {
-  const vertexShader = compileShader(gl, vertexSrc, gl.VERTEX_SHADER);
-  const fragmentShader = compileShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
+function createProgram(gl, vertexSource, fragmentSource) {
+  const vertexShader = compileShader(gl, vertexSource, gl.VERTEX_SHADER);
+  const fragmentShader = compileShader(gl, fragmentSource, gl.FRAGMENT_SHADER);
   
   const program = gl.createProgram();
   gl.attachShader(program, vertexShader);
@@ -968,7 +968,7 @@ Refresh your browser, and you should see that the output has not changed, but we
 
 1. Change the vertex shader so that the following results are achieved.
 
-&emsp; (a) The triangle is shifted by 0.75 to the right.
+&emsp; (a) The triangle is shifted by 0.75 to the right. Hint: individual elements of a GLSL vector `vector` can be accessed using `vector.x`, `vector.y` and `vector.z` for the $x$, $y$ and $z$ elements. This is known as <a href="https://en.wikipedia.org/wiki/Swizzling_(computer_graphics)" target="_blank">swizzling</a>.
 
 :::{figure} ../_images/02_ex1a.png
 :width: 60%

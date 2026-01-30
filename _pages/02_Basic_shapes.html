@@ -548,7 +548,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Enter the following we have cleared the canvas.</p>
+<p>Enter the following after we have cleared the canvas.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
 <span class="w">  </span><span class="c1">// x    y    z</span>
@@ -831,9 +831,9 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="p">}</span>
 
 <span class="c1">// Create shader program</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSrc</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSrc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertexShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSrc</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSrc</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSource</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertexShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
 <span class="w">  </span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
 <span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShader</span><span class="p">);</span>
@@ -1232,7 +1232,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <ol class="arabic simple">
 <li><p>Change the vertex shader so that the following results are achieved.</p></li>
 </ol>
-<p>  (a) The triangle is shifted by 0.75 to the right.</p>
+<p>  (a) The triangle is shifted by 0.75 to the right. Hint: individual elements of a GLSL vector <code class="docutils literal notranslate"><span class="pre">vector</span></code> can be accessed using <code class="docutils literal notranslate"><span class="pre">vector.x</span></code>, <code class="docutils literal notranslate"><span class="pre">vector.y</span></code> and <code class="docutils literal notranslate"><span class="pre">vector.z</span></code> for the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> elements. This is known as <a href="https://en.wikipedia.org/wiki/Swizzling_(computer_graphics)" target="_blank">swizzling</a>.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/02_ex1a.png"><img alt="../_images/02_ex1a.png" src="../_images/02_ex1a.png" style="width: 60%;" />
 </a>
