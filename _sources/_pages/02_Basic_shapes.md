@@ -451,7 +451,7 @@ Looking at our `main()` function we see that the code to compile and link the sh
 ::::{admonition} Task
 :class: tip
 
-Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder and enter the following code.
+Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder and copy and paste the following code into it
 
 ```javascript
 // Initialize WebGL context
