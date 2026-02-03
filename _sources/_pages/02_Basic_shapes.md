@@ -451,7 +451,7 @@ Looking at our `main()` function we see that the code to compile and link the sh
 ::::{admonition} Task
 :class: tip
 
-Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder and copy and paste the following code into it
+Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder, and copy and paste the following code into it
 
 ```javascript
 // Initialize WebGL context
@@ -758,7 +758,7 @@ We are going to create a utility function to create a VAO.
 ::::{admonition} Task
 :class: tip
 
-Enter the following function definition to the ***webGLUtils.js*** file.
+Copy and paste the following function definition to the ***webGLUtils.js*** file.
 
 ```javascript
 // Create VAO
