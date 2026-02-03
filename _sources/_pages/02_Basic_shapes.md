@@ -817,7 +817,7 @@ gl.bindVertexArray(squareVao);
 gl.drawArrays(gl.TRIANGLES, 0, 6);
 ```
 
-Your `main()` function should not look something like the following
+Your `main()` function should now look something like the following
 
 ```javascript
 function main() {
