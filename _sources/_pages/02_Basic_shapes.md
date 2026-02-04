@@ -506,7 +506,7 @@ This new file ***webGLUtils.js*** is used to contain any utility functions that 
 ::::{admonition} Task
 :class: tip
 
-Add the following just before the `basic_shapes.js` script tag.
+In the ***index.html*** file, add the following just before the `basic_shapes.js` script tag.
 
 ```text
  <script src="webGLUtils.js"></script>
@@ -519,7 +519,7 @@ We can now tidy up the `main()` function and make a call to out new `createprogr
 ::::{admonition} Task
 :class: tip
 
-Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following
+In the ***basic_shapes.js*** file, comment out (or delete) the code used to set up the WebGL canvas and replace it with the following
 
 ```javascript
 // Setup WebGL

@@ -853,7 +853,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>This new file <em><strong>webGLUtils.js</strong></em> is used to contain any utility functions that are required for WebGL. Here we have defined the functions <code class="docutils literal notranslate"><span class="pre">initWebGL()</span></code> which sets up the WebGL canvas and returns a <code class="docutils literal notranslate"><span class="pre">gl</span></code> object, <code class="docutils literal notranslate"><span class="pre">compileShader()</span></code> which compiles a vertex or fragment shader, and <code class="docutils literal notranslate"><span class="pre">createProgram()</span></code> links the shaders to create a WebGL program. If you compare them to the equivalent code in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function you can see that they are quite similar. To enable our main file to use these functions we also need to add <code class="docutils literal notranslate"><span class="pre">webGLUtils.js</span></code> to the <em><strong>index.html</strong></em> file using a script tag.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following just before the <code class="docutils literal notranslate"><span class="pre">basic_shapes.js</span></code> script tag.</p>
+<p>In the <em><strong>index.html</strong></em> file, add the following just before the <code class="docutils literal notranslate"><span class="pre">basic_shapes.js</span></code> script tag.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span> &lt;script src=&quot;webGLUtils.js&quot;&gt;&lt;/script&gt;
 </pre></div>
 </div>
@@ -861,7 +861,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>We can now tidy up the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function and make a call to out new <code class="docutils literal notranslate"><span class="pre">createprogram()</span></code> function.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following</p>
+<p>In the <em><strong>basic_shapes.js</strong></em> file, comment out (or delete) the code used to set up the WebGL canvas and replace it with the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Setup WebGL</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
