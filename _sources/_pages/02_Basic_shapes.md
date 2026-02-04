@@ -11,7 +11,7 @@ To start with we need two files, an HTML file that includes a canvas element whi
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file called ***index.html***. Open the ***index.html*** file in Visual Studio Code.
+Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file called ***index.html*** and paste in the following
 
 ```none
 <!doctype html>

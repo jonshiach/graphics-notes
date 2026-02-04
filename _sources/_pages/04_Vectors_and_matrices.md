@@ -1032,6 +1032,7 @@ $$ \begin{align*}
 So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating the inverse of a matrix is quite involved process and outside the scope of this course.
 
 :::{admonition} Task
+:class: tip
 
 Add the following method to the Matrix class (you may wish to use copy and paste here).
 
