@@ -11,7 +11,7 @@ To start with we need two files, an HTML file that includes a canvas element whi
 ::::{admonition} Task
 :class: tip
 
-Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file called ***index.html***. Open the ***index.html*** file in Visual Studio Code.
+Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file called ***index.html*** and paste in the following
 
 ```none
 <!doctype html>
@@ -506,7 +506,7 @@ This new file ***webGLUtils.js*** is used to contain any utility functions that 
 ::::{admonition} Task
 :class: tip
 
-Add the following just before the `basic_shapes.js` script tag.
+In the ***index.html*** file, add the following just before the `basic_shapes.js` script tag.
 
 ```text
  <script src="webGLUtils.js"></script>
@@ -519,7 +519,7 @@ We can now tidy up the `main()` function and make a call to out new `createprogr
 ::::{admonition} Task
 :class: tip
 
-Comment out (or delete) the code used to set up the WebGL canvas and replace it with the following
+In the ***basic_shapes.js*** file, comment out (or delete) the code used to set up the WebGL canvas and replace it with the following
 
 ```javascript
 // Setup WebGL
@@ -799,7 +799,7 @@ Here we create a VAO using the `gl.createVertexArray()` function and bind it. Th
 ::::{admonition} Task
 :class: tip
 
-Delete (or comment out) any commands used to create the VAOs and VBOs for the triangle and square, commands used to tell WebGL how to read the data and commands used to draw the triangle and square.
+Delete (or comment out) any commands used to create the VBOs for the triangle and square and commands used to tell WebGL how to read the data and draw the triangle and square.
 
 Then use the following commands to create the VAOs for the triangle and square and draw them.
 
