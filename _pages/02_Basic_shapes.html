@@ -1092,7 +1092,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Here we create a VAO using the <code class="docutils literal notranslate"><span class="pre">gl.createVertexArray()</span></code> function and bind it. Then we create the VBO and tell WebGL how to access the data using the same commands as before. The last thing we do before returning the VAO is to unbind it so that we don’t accidentally make changes with subsequent code.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Delete (or comment out) any commands used to create the VAOs and VBOs for the triangle and square, commands used to tell WebGL how to read the data and commands used to draw the triangle and square.</p>
+<p>Delete (or comment out) any commands used to create the VBOs for the triangle and square and commands used to tell WebGL how to read the data and draw the triangle and square.</p>
 <p>Then use the following commands to create the VAOs for the triangle and square and draw them.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create VAOs</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">triangleVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">);</span>

@@ -799,7 +799,7 @@ Here we create a VAO using the `gl.createVertexArray()` function and bind it. Th
 ::::{admonition} Task
 :class: tip
 
-Delete (or comment out) any commands used to create the VAOs and VBOs for the triangle and square, commands used to tell WebGL how to read the data and commands used to draw the triangle and square.
+Delete (or comment out) any commands used to create the VBOs for the triangle and square and commands used to tell WebGL how to read the data and draw the triangle and square.
 
 Then use the following commands to create the VAOs for the triangle and square and draw them.
 
