@@ -206,7 +206,7 @@ It's a me, Mario!
 
 ## Texture filtering
 
-Whe you apply a texture to a polygon, WebGL needs to determine the colour of each fragment from the texture. This is not always straightforward since the size of the texture and the size of the polygon may not match up. For example, if the texture is very high resolution and the polygon is small on the screen then a single fragment may cover multiple textels in the texture. Conversely, if the texture is low resolution and the polygon is large on the screen then a single textel may cover multiple fragments. To deal with these issues WebGL scales the texture.
+When we apply a texture to a polygon, WebGL needs to determine the colour of each fragment from the texture. This is not always straightforward since the size of the texture and the size of the polygon may not match up. For example, if the texture is very high resolution and the polygon is small on the screen then a single fragment may cover multiple textels in the texture. Conversely, if the texture is low resolution and the polygon is large on the screen then a single textel may cover multiple fragments. To deal with these issues WebGL scales the texture.
 
 There are two types of scaling:
 
