@@ -23,15 +23,15 @@ Create a folder called ***Lab 1 Intro to JavaScript*** then open your folder in 
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <title>Lab 1 - Intro to JavaScript</title>
-  </head>
-  <body>
-    <div id="console-output" 
-         style="font-family:monospace; white-space: pre; padding:10px;">
-    </div>
-    <script src="intro_to_javascript.js"></script>
-  </body>
+    <head>
+        <title>Lab 1 - Intro to JavaScript</title>
+    </head>
+    <body>
+        <div id="console-output" 
+                 style="font-family:monospace; white-space: pre; padding:10px;">
+        </div>
+        <script src="intro_to_javascript.js"></script>
+    </body>
 </html>
 ```
 
@@ -41,14 +41,14 @@ Create another file called ***intro_to_javascript.js*** and enter the following 
 
 ```javascript
 function setupConsoleOutput(elementId) {
-  const output = document.getElementById(elementId);
+    const output = document.getElementById(elementId);
 
-  function write(args) {
-    const line = document.createElement("div");
-    line.textContent = [...args].join(" ");
-    output.appendChild(line);
-  }
-  console.log = (...args) => write(args);
+    function write(args) {
+        const line = document.createElement("div");
+        line.textContent = [...args].join(" ");
+        output.appendChild(line);
+    }
+    console.log = (...args) => write(args);
 }
 
 setupConsoleOutput("console-output");
@@ -134,8 +134,8 @@ Longer multi-line comments can be entered using `/* ... */`
 
 ```javascript
 /*
-  This is a
-  multi-line comment
+    This is a
+    multi-line comment
 */
 ```
 
@@ -158,7 +158,7 @@ Refresh the web browser, and you should see that nothing has changed despite add
 
 ```{error}
 Uncaught TypeError: Assignment to constant variable.
-    at intro_to_javascript.js:24:7
+        at intro_to_javascript.js:24:7
 ```
 
 Here the error message is telling us we have an error in the ***intro_to_javascript.js*** on line 24 (this may vary depending on your code). The error we have here is we have declared `lives` using the `const` keyword, set it equal to 3 and then try to reasssign it to 1. To resolve this error simply change the `const` to `let` and refresh your browser, and you should see the following added to the web page.
@@ -311,7 +311,7 @@ The Math library also provides several useful mathematical constants and read-on
 | Constant | Description |
 | :-- | :-- |
 | `Math.PI` | $\pi = 3.1416$ |
-| `Math.E`  | Eulers number $e = 2.7183$ |
+| `Math.E`    | Eulers number $e = 2.7183$ |
 | `Math.SQRT2` | $\sqrt{2} = 1.4142$ |
 | `Math.SQRT1_2` | $\sqrt{2}/2 = 0.7071$ |
 | `Math.LN2` | $\log_e(2) = 0.6931$ |
@@ -507,9 +507,9 @@ Add the following to your JavaScript file.
 console.log("\nObjects\n-------");
 
 const player = {
-  name: "Mario",
-  lives: 3,
-  score: 0,
+    name: "Mario",
+    lives: 3,
+    score: 0,
 };
 ```
 
@@ -523,8 +523,8 @@ Here we have created the object `player` and given it some properties. To access
 Add the following to your JavaScript file.
 
 ```javascript
-console.log("Name:     " + player.name);
-console.log("Lives:    " + player["lives"]);
+console.log("Name:         " + player.name);
+console.log("Lives:        " + player["lives"]);
 ```
 
 :::
@@ -534,8 +534,8 @@ Here we print the value of two of the `player` object properties. Refresh your b
 ```text
 Objects
 -------
-Name:     Mario
-Lives:    3
+Name:         Mario
+Lives:        3
 ```
 
 ### Adding or updating properties
@@ -551,7 +551,7 @@ Add the following to your JavaScript file.
 player.powerUp = "super";
 player["score"] += 10;
 console.log("Power up: " + player.powerUp);
-console.log("Score:    " + player.score);
+console.log("Score:        " + player.score);
 ```
 
 :::
@@ -560,7 +560,7 @@ Here we have added the property `powerUp` and incremented the `score` property b
 
 ```text
 Power up: super
-Score:    10
+Score:        10
 ```
 
 ### Arrays of objects
@@ -574,8 +574,8 @@ Add the following to your JavaScript file.
 
 ```javascript
 const enemies = [
-  { name: "Goomba", hitPoints: 1},
-  { name: "Koopa Troopa", hitPoints: 2 },
+    { name: "Goomba", hitPoints: 1},
+    { name: "Koopa Troopa", hitPoints: 2 },
 ]
 ```
 
@@ -591,7 +591,7 @@ Here we have created an array containing two enemy objects.
 
 ```javascript
 if (condition) {
-  // runs if condition is true
+    // runs if condition is true
 }
 ```
 
@@ -599,9 +599,9 @@ This performs code only if the `condition` statement is true. If you want to run
 
 ```javascript
 if (condition) {
-  // runs if condition is true
+    // runs if condition is true
 } else {
-  // runs if condition is false
+    // runs if condition is false
 }
 ```
 
@@ -609,11 +609,11 @@ For more complicated cases where you want to use multiple conditions we can use 
 
 ```javascript
 if (condition1) {
-  // runs if condition1 is true
+    // runs if condition1 is true
 } else if (condition2) {
-  // runs fi condition2 is true
+    // runs fi condition2 is true
 } else {
-  // runs if neither condition1 or condition2 is true
+    // runs if neither condition1 or condition2 is true
 }
 ```
 
@@ -634,7 +634,7 @@ Multiple comparisons can be joined using conjunctions
 |:--:|:--:|:--|
 | `&&` | AND | all conditions are true |
 | <code>&#124;&#124;</code> | OR | at least one condition is true |
-| `!`  | NOT | condition is false |
+| `!`    | NOT | condition is false |
 
 :::{admonition} Task
 :class: tip
@@ -647,11 +647,11 @@ console.log("\nConditional statements\n---------------------")
 
 // Power up state
 if (player.powerUp === "fire") {
-  console.log("Mario can throw fireballs");
+    console.log("Mario can throw fireballs");
 } else if (player.powerUp === "super") {
-  console.log("Mario is bigger and can break blocks.");
+    console.log("Mario is bigger and can break blocks.");
 } else {
-  console.log("Mario is small.");
+    console.log("Mario is small.");
 }
 ```
 
@@ -678,17 +678,17 @@ const jumpedOnEnemy = true;
 const enemyIndex = 0;
 
 if (jumpedOnEnemy && enemies[enemyIndex].hitPoints === 1) {
-  enemies[0].hitPoints--;
-  console.log("Mario jumps on enemy and defeats it.");
+    enemies[0].hitPoints--;
+    console.log("Mario jumps on enemy and defeats it.");
 } else if (jumpedOnEnemy) {
-  enemies[0].hitPoints--;
-  console.log("Enemy takes damage.");
+    enemies[0].hitPoints--;
+    console.log("Enemy takes damage.");
 } else if (player.powerUp === "fire" || player.powerUp === "super") {
-  player.powerUp = null;
-  console.log("Mario has lost his power ups.");
+    player.powerUp = null;
+    console.log("Mario has lost his power ups.");
 } else {
-  player.lives--;
-  console.log("Mario has lost a life.")
+    player.lives--;
+    console.log("Mario has lost a life.")
 }
 ```
 
@@ -714,7 +714,7 @@ The most common loop is a **for** loop which has the basic syntax.
 
 ```javascript
 for (initialisation; condition; update) {
-  // code to repeat
+    // code to repeat
 }
 ```
 
@@ -734,7 +734,7 @@ Add the following to your JavaScript file.
 console.log("\nLoops\n-----")
 
 for (let i = 0; i < enemies.length; i++) {
-  console.log(enemies[i].name);
+    console.log(enemies[i].name);
 }
 ```
 
@@ -755,7 +755,7 @@ A **while** loop is used to repeat code when the number of iterations is unknown
 
 ```javascript
 while (condition) {
-  // code to repeat whilst condition is true
+    // code to repeat whilst condition is true
 }
 ```
 
@@ -769,8 +769,8 @@ let time = 0;
 const maxTime = 100;
 
 while (time < maxTime) {
-  time += 10;
-  console.log("time = " + time);
+    time += 10;
+    console.log("time = " + time);
 }
 ```
 
@@ -803,7 +803,7 @@ A function in JavaScript is defined using the following basic syntax
 
 ```javascript
 function functionName(parameters) {
-  // code to be run when the function is called.
+    // code to be run when the function is called.
 }
 ```
 
@@ -819,7 +819,7 @@ Add the following to your JavaScript file.
 console.log("\nFunctions\n---------")
 
 function jump() {
-  console.log("Mario jumps!");
+    console.log("Mario jumps!");
 }
 ```
 
@@ -860,7 +860,7 @@ Add the following to your JavaScript file.
 
 ```javascript
 function moveRight(steps) {
-  console.log(`Mario moves ${steps} steps to the right.`);
+    console.log(`Mario moves ${steps} steps to the right.`);
 }
 
 moveRight(5);
@@ -887,10 +887,10 @@ Add the following to your JavaScript file.
 
 ```javascript
 function checkGameOver(lives) {
-  if (lives <= 0) {
-    return "Game Over!";
-  }
-  return "Continue playing.";
+    if (lives <= 0) {
+        return "Game Over!";
+    }
+    return "Continue playing.";
 }
 
 console.log(checkGameOver(player.lives));
@@ -939,9 +939,9 @@ Classes allow us to create many similar objects in a consistent and organised wa
 
 ```javascript
 class Name {
-  constructor(parmeters) {
-    // declaration of class/object properties
-  }
+    constructor(parmeters) {
+        // declaration of class/object properties
+    }
 }
 ```
 
@@ -957,12 +957,12 @@ Add the following to your JavaScript file.
 console.log("\nClasses\n-------")
 
 class Racer {
-  constructor(name, position) {
-    this.name = name;
-    this.speed = 0; 
-    this.position = position;
-    this.powerUp = null;
-  }
+    constructor(name, position) {
+        this.name = name;
+        this.speed = 0; 
+        this.position = position;
+        this.powerUp = null;
+    }
 }
 ```
 
@@ -1016,7 +1016,7 @@ Add the following to your Racer class (underneath the `constructor()` method and
 
 ```javascript
 accelerate() {
-  this.speed += 5;
+    this.speed += 5;
 }
 ```
 
@@ -1042,24 +1042,24 @@ Add the following to the Racer class.
 
 ```javascript
 addPowerUp() {
-  const powerUps = [
-    "Mushroom",
-    "Green Shell",
-    "Red Shell",
-    "Banana", 
-    "Star"
-  ]
+    const powerUps = [
+        "Mushroom",
+        "Green Shell",
+        "Red Shell",
+        "Banana", 
+        "Star"
+    ]
 
-  const index = Math.floor(Math.random() * powerUps.length);
-  this.powerUp = powerUps[index];
+    const index = Math.floor(Math.random() * powerUps.length);
+    this.powerUp = powerUps[index];
 }
 
 print() {
-  console.log("\nRacer details\n-------------")
-  console.log("Name: " + this.name);
-  console.log("Speed: " + this.speed);
-  console.log("Position: " + this.position);
-  console.log("Power up: " + this.powerUp);
+    console.log("\nRacer details\n-------------")
+    console.log("Name: " + this.name);
+    console.log("Speed: " + this.speed);
+    console.log("Position: " + this.position);
+    console.log("Power up: " + this.powerUp);
 }
 ```
 
@@ -1133,6 +1133,6 @@ Geralt of Rivia: 92, 75, 68, 78
 | 60 -- 69 | Upper-second class |
 | 50 -- 59 | Lower-second class |
 | 40 -- 49 | Third class |
-|  0 -- 40 | Fail |
+|    0 -- 40 | Fail |
 
 8. Write a function called `printAllStudents()` that prints all student records and use it on the `students` array.

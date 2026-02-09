@@ -270,7 +270,7 @@ $$ q^{-1} = q^*. $$
 
 ## Quaternion rotation
 
-In [Lab 5: Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\vec{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq:axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
+In [Lab 5: Transformations](axis-angle-rotation-section) we saw that we can rotate about a vector $\vec{v}$ by an angle $\theta$ using a combination of a translation and rotations about the $x$, $y$ and $z$ axes. The resulting matrix shown in equation {eq}`eq-axis-angle-rotation-matrix` is quite complicated and requires lots of floating point computations. Quaternions gives us a away of performing similar calculation in a way that uses fewer computations and also does not suffer from gimbal lock.
 
 ```{figure} ../_images/05_axis_angle_rotation.svg
 :height: 300

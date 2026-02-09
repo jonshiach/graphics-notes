@@ -15,16 +15,16 @@ Create a folder called ***Lab 4 Vectors and Matrices*** inside which create a fi
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <title>Lab 4 - Vectors and Matrices</title>
-  </head>
-  <body>
-    <div id="console-output" 
-         style="font-family:monospace; white-space: pre; padding:10px;">
-    </div>
-    <script src="maths.js"></script>
-    <script src="vectors_and_matrices.js"></script>
-  </body>
+    <head>
+        <title>Lab 4 - Vectors and Matrices</title>
+    </head>
+    <body>
+        <div id="console-output" 
+                 style="font-family:monospace; white-space: pre; padding:10px;">
+        </div>
+        <script src="maths.js"></script>
+        <script src="vectors_and_matrices.js"></script>
+    </body>
 </html>
 ```
 
@@ -32,14 +32,14 @@ Create another file called ***vectors_and_matrices.js*** and enter the following
 
 ```javascript
 function setupConsoleOutput(elementId) {
-  const output = document.getElementById(elementId);
+    const output = document.getElementById(elementId);
 
-  function write(args) {
-    const line = document.createElement("div");
-    line.textContent = [...args].join(" ");
-    output.appendChild(line);
-  }
-  console.log = (...args) => write(args);
+    function write(args) {
+        const line = document.createElement("div");
+        line.textContent = [...args].join(" ");
+        output.appendChild(line);
+    }
+    console.log = (...args) => write(args);
 }
 
 setupConsoleOutput("console-output");
@@ -86,7 +86,7 @@ Create file called ***maths.js*** and enter the following function definition.
 ```javascript
 // Vector operations
 function printVector(v) {
-  return `[ ${v[0].toFixed(2)}, ${v[1].toFixed(2)}, ${v[2].toFixed(2)} ]`;
+    return `[ ${v[0].toFixed(2)}, ${v[1].toFixed(2)}, ${v[2].toFixed(2)} ]`;
 }
 ```
 
@@ -134,7 +134,7 @@ Like numbers, we can define the arithmetic operations of addition, subtraction f
 $$ \begin{align*}
     \vec{a} + \vec{b} &= (a_x + b_x, a_y + b_y, a_z + b_z), \\
     \vec{a} - \vec{b} &= (a_x - b_x, a_y - b_y, a_z - b_z).
-\end{align*} $$(eq:vector-addition)
+\end{align*} $$(eq-vector-addition)
 
 For example, given the vectors $\vec{a} = (3,0,4)$ and $\vec{b} = (1, 2, 3)$
 
@@ -172,11 +172,11 @@ Add the following functions to the ***maths.js*** file
 
 ```javascript
 function addVector(a, b) {
-  return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
+    return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
 }
 
 function subtractVector(a, b) {
-  return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
+    return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
 }
 ```
 
@@ -244,15 +244,15 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function scaleVector(v, k) {
-  return [ k * v[0], k * v[1], k * v[2] ];
+    return [ k * v[0], k * v[1], k * v[2] ];
 }
 ```
 
 Now add the following to the ***vectors_and_matrices.js*** file
 
 ```javascript
-console.log("2a    =", printVector(scaleVector(a, 2)));
-console.log("b/3   =", printVector(scaleVector(b, 1/3)));
+console.log("2a =", printVector(scaleVector(a, 2)));
+console.log("b/3 =", printVector(scaleVector(b, 1/3)));
 ```
 
 :::
@@ -260,8 +260,8 @@ console.log("b/3   =", printVector(scaleVector(b, 1/3)));
 Refresh your web page, and you should see the following has been added
 
 ```text
-2a    = [ 6.00, 0.00, 8.00 ]
-b/3   = [ 0.33, 0.67, 1.00 ]
+2a = [ 6.00, 0.00, 8.00 ]
+b/3 = [ 0.33, 0.67, 1.00 ]
 ```
 
 ---
@@ -281,7 +281,7 @@ Vector magnitude (length).
 
 The magnitude is calculated using an extension of Pythagoras' theorem, for example for 3D vectors the magnitude is
 
-$$\|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2}. $$(eq:vector-magnitude)
+$$\|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2}. $$(eq-vector-magnitude)
 
 For example, if $\vec{a} = (3, 0, 4)$ and $\vec{b} = (1, 2, 3)$ then their magnitudes are
 
@@ -299,7 +299,7 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function length(v) {
-  return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 ```
 
@@ -308,8 +308,8 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file
 ```javascript
 // Vector magnitude and normalization
 console.log("\nVector magnitude and normalization\n----------------------------------");
-console.log("length(a)    = " + length(a));
-console.log("length(b)    = " + length(b));
+console.log("length(a) = " + length(a));
+console.log("length(b) = " + length(b));
 ```
 
 :::
@@ -319,8 +319,8 @@ Refresh your web page, and you should see the following has been added
 ```text
 Vector magnitude and normalization
 ----------------------------------
-length(a)    = 5
-length(b)    = 3.7416573867739413
+length(a) = 5
+length(b) = 3.7416573867739413
 ```
 ---
 
@@ -330,7 +330,7 @@ length(b)    = 3.7416573867739413
 
 A **unit vector** is a vector that has a length of 1. We can find a unit vector that points in the same direction as a non-zero vector $\vec{a}$, which is denoted by $\hat{\vec{a}}$ (pronounced *a-hat*), by dividing by its magnitude, i.e.,
 
-$$ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq:unit-vector)
+$$ \hat{\vec{a}} = \frac{\vec{a}}{\|\vec{a}\|}. $$(eq-unit-vector)
 
 This process is called **normalising a vector**. For example, to determine a unit vector pointing in the same direction as the vector $\vec{a} = (3, 0, 4)$, we normalise it by dividing by its magnitude which is 5.
 
@@ -355,9 +355,9 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function normalize(v) {
-  const len = length(v);
-  if (len === 0) return [0, 0, 0];
-  return scaleVector(v, 1 / len);
+    const len = length(v);
+    if (len === 0) return [0, 0, 0];
+    return scaleVector(v, 1 / len);
 }
 ```
 
@@ -366,8 +366,8 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file
 ```javascript
 const aHat = normalize(a);
 const bHat = normalize(b);
-console.log("aHat         = " + printVector(aHat));
-console.log("bHat         = " + printVector(bHat));
+console.log("aHat = " + printVector(aHat));
+console.log("bHat = " + printVector(bHat));
 console.log("length(aHat) = " + length(aHat));
 console.log("length(bHat) = " + length(bHat));
 ```
@@ -377,8 +377,8 @@ console.log("length(bHat) = " + length(bHat));
 Refresh your web page, and you should see the following has been added
 
 ```text
-aHat         = [ 0.60, 0.00, 0.80 ]
-bHat         = [ 0.27, 0.53, 0.80 ]
+aHat = [ 0.60, 0.00, 0.80 ]
+bHat = [ 0.27, 0.53, 0.80 ]
 length(aHat) = 1
 length(bHat) = 1
 ```
@@ -393,11 +393,11 @@ Both `aHat` and `bHat` have magnitudes of 1 which shows they are both unit vecto
 
 The <a href="https://en.wikipedia.org/wiki/Dot_product" target="_blank">**dot product**</a> between two vectors $\vec{a} = (a_x, a_y, a_z)$ and $\vec{b} = (b_x, b_y, b_z)$ is denoted by $\vec{a} \cdot \vec{b}$ and returns a scalar. The dot product is calculated using
 
-$$ \vec{a} \cdot \vec{b} = a_xb_x + a_yb_y + a_zb_z. $$(eq:dot-product)
+$$ \vec{a} \cdot \vec{b} = a_xb_x + a_yb_y + a_zb_z. $$(eq-dot-product)
 
 The dot product is related to the angle $\theta$ between the two vectors ({numref}`angle-between-vectors-figure`) by
 
-$$ \vec{a} \cdot \vec{b} = \|\vec{a}\| \|\vec{b}\| \cos(\theta). $$(eq:dot-product-geometric)
+$$ \vec{a} \cdot \vec{b} = \|\vec{a}\| \|\vec{b}\| \cos(\theta). $$(eq-dot-product-geometric)
 
 ```{figure} ../_images/04_dot_product.svg
 :height: 125
@@ -406,7 +406,7 @@ $$ \vec{a} \cdot \vec{b} = \|\vec{a}\| \|\vec{b}\| \cos(\theta). $$(eq:dot-produ
 The angle $\theta$ between the vectors $\vec{a}$ and $\vec{b}$.
 ```
 
-A useful result for computer graphics is that if $\theta=90^\circ$ then $\cos(\theta) = 0$ and equation {eq}`eq:dot-product-geometric` becomes
+A useful result for computer graphics is that if $\theta=90^\circ$ then $\cos(\theta) = 0$ and equation {eq}`eq-dot-product-geometric` becomes
 
 $$
 \vec{a} \cdot \vec{b} = 0.
@@ -429,7 +429,7 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function dot(a, b) {
-  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 ```
 
@@ -438,7 +438,7 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file
 ```javascript
 // Dot and cross products
 console.log("\nDot and cross products\n----------------------");
-console.log("a . b = " +  dot(a, b));
+console.log("a . b = " + dot(a, b));
 ```
 
 :::
@@ -459,7 +459,7 @@ a . b = 15
 
 The <a href="https://en.wikipedia.org/wiki/Cross_product" target="_blank">**cross product**</a> between two 3-element vectors $\vec{a} = (a_x, a_y, a_z)$ and $\vec{b} = (b_x, b_y, b_z)$ is denoted by $\vec{a} \times \vec{b}$ and returns a vector. The cross product is calculated using
 
-$$ \vec{a} \times \vec{b} = (a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x). $$(eq:cross-product)
+$$ \vec{a} \times \vec{b} = (a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x). $$(eq-cross-product)
 
 The cross product between two vectors produces another vector that is perpendicular to both of the vectors ({numref}`cross-product-figure`). This is another incredibly useful result as it allows us to calculate a [**normal vector**](normal-vector-section) to a polygon which are used in calculating how light is reflected off surfaces (see [Lab 8: Lighting](lighting-section)).
 
@@ -496,11 +496,11 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function cross(a, b) {
-  return [
-    a[1] * b[2] - a[2] * b[1],
-    a[2] * b[0] - a[0] * b[2],
-    a[0] * b[1] - a[1] * b[0]
-  ];
+    return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0]
+    ];
 }
 ```
 
@@ -543,7 +543,7 @@ $$
 \end{align*}
 $$
 
-It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an **index** which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so $a_{ij}$ is the element in row $i$ and column $j$ of the matrix $A$.  
+It is common to use uppercase characters for the name of a matrix and lowercase characters for the individual elements. The elements of a matrix are referenced by an **index** which is a pair of numbers, the first of which is the horizontal row number and the second is the vertical column number so $a_{ij}$ is the element in row $i$ and column $j$ of the matrix $A$.
 
 We refer to the size of a matrix by the number of rows by the number of columns. Here the matrix $A$ has $m$ rows and $n$ columns, so we call this matrix a $m \times n$ matrix. Computer graphics mostly works with $4 \times 4$ matrices (see [Lab 5: Transformations](transformations-section) for why this is) so we will create a matrix class to define $4 \times 4$ matrices and perform operations on them.
 
@@ -555,44 +555,44 @@ Add the following class declaration to the ***maths.js*** file.
 ```javascript
 // 4x4 Matrix class
 class Mat4 {
-  constructor() {
-    this.m = new Float32Array(16);
-    this.identity();
-  }
-
-  identity() {
-    const m = this.m;
-    m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
-    m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
-    m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
-    m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
-    return this;
-  }
-
-  set(values) {
-    this.m.set(values);
-    return this;
-  }
-
-  print() {
-    const m = this.m;
-    let string = "";
-    for (let i = 0; i < 4; i++) {
-      const row = [
-        m[i * 4 + 0].toFixed(2).padStart(8),
-        m[i * 4 + 1].toFixed(2).padStart(8),
-        m[i * 4 + 2].toFixed(2).padStart(8),
-        m[i * 4 + 3].toFixed(2).padStart(8),
-      ];
-      string += "  [" + row.join(" ") + " ]\n";
+    constructor() {
+        this.m = new Float32Array(16);
+        this.identity();
     }
-    return string;
-  }
 
-  copy (mat) {
-    this.m.set(mat.m);
-    return this;
-  }
+    identity() {
+        const m = this.m;
+        m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
+        m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
+        m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
+        m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
+        return this;
+    }
+
+    set(values) {
+        this.m.set(values);
+        return this;
+    }
+
+    print() {
+        const m = this.m;
+        let string = "";
+        for (let i = 0; i < 4; i++) {
+            const row = [
+                m[i * 4 + 0].toFixed(2).padStart(8),
+                m[i * 4 + 1].toFixed(2).padStart(8),
+                m[i * 4 + 2].toFixed(2).padStart(8),
+                m[i * 4 + 3].toFixed(2).padStart(8),
+            ];
+            string += "    [" + row.join(" ") + " ]\n";
+        }
+        return string;
+    }
+
+    copy (mat) {
+        this.m.set(mat.m);
+        return this;
+    }
 }
 ```
 
@@ -602,10 +602,10 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 // Matrices
 console.log("\nMatrices\n--------");
 const A = new Mat4().set([
-   1,  2,  3,  4,
-   5,  6,  7,  8,
-   9, 10, 11, 12,
-  13, 14, 15, 16
+     1,  2,  3,  4,
+     5,  6,  7,  8,
+     9, 10, 11, 12,
+    13, 14, 15, 16
 ]);
 console.log("A =\n" + A.print());
 ```
@@ -625,10 +625,10 @@ We have then created a matrix object and set the values equal to the matrix belo
 $$
 A =
 \begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  5 & 6 & 7 & 8 \\
-  9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix}.
 $$
 
@@ -657,10 +657,10 @@ i.e., the rows and columns of $A$ are swapped so row $i$ of $A$ is column $i$ of
 $$
 A =
 \begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  5 & 6 & 7 & 8 \\
-  9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix},
 $$
 
@@ -669,10 +669,10 @@ then $A^\mathsf{T}$ is
 $$
 A^\mathsf{T} =
 \begin{pmatrix}
-  1 & 5 & 9 & 13 \\
-  2 & 6 & 10 & 14 \\
-  3 & 7 & 11 & 15 \\
-  4 & 8 & 12 & 16
+    1 & 5 & 9 & 13 \\
+    2 & 6 & 10 & 14 \\
+    3 & 7 & 11 & 15 \\
+    4 & 8 & 12 & 16
 \end{pmatrix}.
 $$
 
@@ -683,15 +683,15 @@ Add the following method definition to the matrix class.
 
 ```javascript
 transpose() {
-  const m = this.m;
-  let tmp;
-  tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
-  tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
-  tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
-  tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
-  tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
-  tmp = m[11]; m[11] = m[14]; m[14] = tmp;
-  return this
+    const m = this.m;
+    let tmp;
+    tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
+    tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
+    tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
+    tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
+    tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
+    tmp = m[11]; m[11] = m[14]; m[14] = tmp;
+    return this
 }
 ```
 
@@ -750,22 +750,22 @@ A =
 
 Scalar multiplication of a matrix by a scalar is the same for matrices as it is for vectors. However, the multiplication of two matrices $A$ and $B$ is defined in a very specific way. If $A$ and $B$ are two matrices then the element in row $i$ and column $j$ of the matrix $AB$ is calculated using
 
-$$ [AB]_{ij} = \vec{a}_i \cdot \vec{b}_j, $$(eq:matrix-multiplication)
+$$ [AB]_{ij} = \vec{a}_i \cdot \vec{b}_j, $$(eq-matrix-multiplication)
 
 Where $\vec{a}_i$ is the vector formed from row $i$ of $A$ and $\vec{b}_j$ is the vector formed from column $j$ of $B$. In computer graphics we mainly work with $4 \times 4$ matrices, so consider the following matrix multiplication
 
 $$
 \begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  5 & 6 & 7 & 8 \\
-  9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix}
 \begin{pmatrix}
-  17 & 18 & 19 & 20 \\
-  21 & 22 & 23 & 24 \\
-  25 & 26 & 27 & 28 \\
-  29 & 30 & 31 & 32
+    17 & 18 & 19 & 20 \\
+    21 & 22 & 23 & 24 \\
+    25 & 26 & 27 & 28 \\
+    29 & 30 & 31 & 32
 \end{pmatrix}
 $$
 
@@ -773,16 +773,16 @@ For the element in row 2 and column 3, $[AB]_{23}$, we have the dot product betw
 
 $$
 \begin{pmatrix}
-  \color{lightgray}1 & \color{lightgray}2 & \color{lightgray}3 & \color{lightgray}4 \\
-  5 & 6 & 7 & 8 \\
-  \color{lightgray}9 & \color{lightgray}10 & \color{lightgray}11 & \color{lightgray}12 \\
-  \color{lightgray}13 & \color{lightgray}14 & \color{lightgray}15 & \color{lightgray}16
+    \color{lightgray}1 & \color{lightgray}2 & \color{lightgray}3 & \color{lightgray}4 \\
+    5 & 6 & 7 & 8 \\
+    \color{lightgray}9 & \color{lightgray}10 & \color{lightgray}11 & \color{lightgray}12 \\
+    \color{lightgray}13 & \color{lightgray}14 & \color{lightgray}15 & \color{lightgray}16
 \end{pmatrix}
 \begin{pmatrix}
-  \color{lightgray}17 & \color{lightgray}18 & 19 & \color{lightgray}20 \\
-  \color{lightgray}21 & \color{lightgray}22 & 23 & \color{lightgray}24 \\
-  \color{lightgray}25 & \color{lightgray}26 & 27 & \color{lightgray}28 \\
-  \color{lightgray}29 & \color{lightgray}30 & 31 & \color{lightgray}32
+    \color{lightgray}17 & \color{lightgray}18 & 19 & \color{lightgray}20 \\
+    \color{lightgray}21 & \color{lightgray}22 & 23 & \color{lightgray}24 \\
+    \color{lightgray}25 & \color{lightgray}26 & 27 & \color{lightgray}28 \\
+    \color{lightgray}29 & \color{lightgray}30 & 31 & \color{lightgray}32
 \end{pmatrix}
 $$
 
@@ -795,23 +795,23 @@ $$
 Doing similar for the other elements gives
 
 $$ \begin{pmatrix}
-  1 & 2 & 3 & 4 \\
-  5 & 6 & 7 & 8 \\
-  9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix}
 \begin{pmatrix}
-  17 & 18 & 19 & 20 \\
-  21 & 22 & 23 & 24 \\
-  25 & 26 & 27 & 28 \\
-  29 & 30 & 31 & 32
+    17 & 18 & 19 & 20 \\
+    21 & 22 & 23 & 24 \\
+    25 & 26 & 27 & 28 \\
+    29 & 30 & 31 & 32
 \end{pmatrix}
 =
 \begin{pmatrix}
-   250 &  260 &  270 &  280 \\
-   618 &  644 &  670 &  696 \\
-   986 & 1028 & 1070 & 1112 \\
-  1354 & 1412 & 1470 & 1528 \\
+     250 &  260 &  270 &  280 \\
+     618 &  644 &  670 &  696 \\
+     986 & 1028 & 1070 & 1112 \\
+    1354 & 1412 & 1470 & 1528 \\
 \end{pmatrix}$$(eq-matrix-multiplication-example)
 
 :::{admonition} Task
@@ -821,18 +821,18 @@ Add the following method definition to the matrix class.
 
 ```javascript
 multiply(mat) {
-  const result = new Float32Array(16);
-  for (let col = 0; col < 4; col++) {
-    for (let row = 0; row < 4; row++) {
-      let sum = 0;
-      for (let k  = 0; k < 4; k++) {
-        sum += this.m[row + k * 4] * mat.m[k + col * 4];
-      }
-      result[row + col * 4] = sum;
+    const result = new Float32Array(16);
+    for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < 4; row++) {
+            let sum = 0;
+            for (let k = 0; k < 4; k++) {
+                sum += this.m[row + k * 4] * mat.m[k + col * 4];
+            }
+            result[row + col * 4] = sum;
+        }
     }
-  }
-  this.set(result);
-  return this;
+    this.set(result);
+    return this;
 }
 ```
 
@@ -840,10 +840,10 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
 const B = new Mat4().set([
-  17, 18, 19, 20,
-  21, 22, 23, 24,
-  25, 26, 27, 28,
-  29, 30, 31, 32
+    17, 18, 19, 20,
+    21, 22, 23, 24,
+    25, 26, 27, 28,
+    29, 30, 31, 32
 ]);
 
 const AB = new Mat4().copy(A).multiply(B);
@@ -941,10 +941,10 @@ The identity matrix is a special square matrix where all the elements are zero a
 $$
 I =
 \begin{pmatrix}
-  1 & 0 & 0 & 0 \\
-  0 & 1 & 0 & 0 \\
-  0 & 0 & 1 & 0 \\
-  0 & 0 & 0 & 1
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
 \end{pmatrix}.
 $$
 
@@ -953,23 +953,23 @@ The identity matrix is similar to the number 1 in that if we multiply any matrix
 $$
 IA =
 \begin{pmatrix}
-  1 & 0 & 0 & 0 \\
-  0 & 1 & 0 & 0 \\
-  0 & 0 & 1 & 0 \\
-  0 & 0 & 0 & 1
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
 \end{pmatrix}
 \begin{pmatrix}
-   1 &  2 &  3 &  4 \\
-   5 &  6 &  7 &  8 \\
-   9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+     1 &  2 &  3 &  4 \\
+     5 &  6 &  7 &  8 \\
+     9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix}
 =
 \begin{pmatrix}
-   1 &  2 &  3 &  4 \\
-   5 &  6 &  7 &  8 \\
-   9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
+     1 &  2 &  3 &  4 \\
+     5 &  6 &  7 &  8 \\
+     9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16
 \end{pmatrix}
 = A.
 $$
@@ -989,44 +989,44 @@ $$ \frac{1}{2} \times 4 = 2.$$
 Here we have shown that $\frac{1}{2}$ is the **multiplicative inverse** of 2. A multiplicative inverse of a number $x$ is denoted as $x^{-1}$ and satisfies $x \times x^{-1} = 1$. The inverse of a matrix $A$ is denoted by $A^{-1}$ and satisfies $A^{-1} A = AA^{-1} = I$ where $I$ is the identity matrix. For example, consider the matrix $C$
 
 $$ C = \begin{pmatrix}
-  1  &   3  &   2  &   1 \\
-  1  &   1  &   2  &   2 \\
-  1  &   3  &   3  &   2 \\
-  3  &   1  &   3  &   2 \\
+    1 & 3 & 2 & 1 \\
+    1 & 1 & 2 & 2 \\
+    1 & 3 & 3 & 2 \\
+    3 & 1 & 3 & 2 \\
 \end{pmatrix}, $$
 
 which has the inverse
 
 $$ C^{-1} = \begin{pmatrix}
-  1 & 1/2 & -5/4 & 1/4 \\
-  1 & 1/2 & -3/4 & -1/4 \\
-  -2 & -2 & 5/2 & 1/2 \\
-  1 & 2 & -3/2 & -1/2
+    1 & 1/2 & -5/4 & 1/4 \\
+    1 & 1/2 & -3/4 & -1/4 \\
+    -2 & -2 & 5/2 & 1/2 \\
+    1 & 2 & -3/2 & -1/2
 \end{pmatrix}. $$
 
 We can check whether this is the inverse of $A$ by calculating $A^{-1}A$ (or $A A^{-1}$)
 
 $$ \begin{align*}
     C^{-1} C &=
-  \begin{pmatrix}
-    1  &   3  &   2  &   1 \\
-    1  &   1  &   2  &   2 \\
-    1  &   3  &   3  &   2 \\
-    3  &   1  &   3  &   2 \\
-  \end{pmatrix}
-  \begin{pmatrix}
-    1 & 1/2 & -5/4 & 1/4 \\
-    1 & 1/2 & -3/4 & -1/4 \\
-    -2 & -2 & 5/2 & 1/2 \\
-    1 & 2 & -3/2 & -1/2
-  \end{pmatrix}
-  =
-  \begin{pmatrix}
-   1 & 0 & 0 & 0  \\
-   0 & 1 & 0 & 0 \\
-   0 & 0 & 1 & 0 \\
-   0 & 0 & 0 & 1
-  \end{pmatrix}.
+    \begin{pmatrix}
+      1 & 3 & 2 & 1 \\
+      1 & 1 & 2 & 2 \\
+      1 & 3 & 3 & 2 \\
+      3 & 1 & 3 & 2 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 1/2 & -5/4 & 1/4 \\
+        1 & 1/2 & -3/4 & -1/4 \\
+        -2 & -2 & 5/2 & 1/2 \\
+        1 & 2 & -3/2 & -1/2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+     1 & 0 & 0 & 0 \\
+     0 & 1 & 0 & 0 \\
+     0 & 0 & 1 & 0 \\
+     0 & 0 & 0 & 1
+    \end{pmatrix}.
 \end{align*} $$
 
 So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating the inverse of a matrix is quite involved process and outside the scope of this course.
@@ -1038,41 +1038,41 @@ Add the following method to the Matrix class (you may wish to use copy and paste
 
 ```javascript
 inverse() {
-  let m = this.m;
-  const inv = new Float32Array([
-    m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
-    -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],
-    m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],
-    -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
+    let m = this.m;
+    const inv = new Float32Array([
+        m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
+        -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],
+        m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]    - m[13] * m[3] * m[6],
+        -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]    + m[9] * m[3] * m[6],
 
-    -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
-    m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
-    -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
-    m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
+        -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
+        m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
+        -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]    + m[12] * m[3] * m[6],
+        m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]    - m[8] * m[3] * m[6],
 
-    m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
-    -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
-    m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
-    -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
+        m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
+        -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
+        m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]    - m[12] * m[3] * m[5],
+        -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]    + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]    - m[8] * m[1] * m[7]    + m[8] * m[3] * m[5],
 
-    -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
-    m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
-    -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
-    m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
-  ]);
+        -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
+        m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
+        -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]    + m[12] * m[2] * m[5],
+        m[0] * m[5] * m[10] - m[0] * m[6] * m[9]    - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]    + m[8] * m[1] * m[6]    - m[8] * m[2] * m[5]
+    ]);
 
-  let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
-  if (det === 0) {
-    console.error("Matrix is singular, no inverse exists");
-    return null;
-  }
+    let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+    if (det === 0) {
+        console.error("Matrix is singular, no inverse exists");
+        return null;
+    }
 
-  det = 1 / det;
-  for (let i = 0; i < 16; i++) {
-    inv[i] *= det;
-  }
-  this.set(inv);
-  return this;
+    det = 1 / det;
+    for (let i = 0; i < 16; i++) {
+        inv[i] *= det;
+    }
+    this.set(inv);
+    return this;
 }
 ```
 
@@ -1080,10 +1080,10 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
 const C = new Mat4().set([
-  1, 3, 2, 1,
-  1, 1, 2, 2,
-  1, 3, 3, 2,
-  3, 1, 3, 2
+    1, 3, 2, 1,
+    1, 1, 2, 2,
+    1, 3, 3, 2,
+    3, 1, 3, 2
 ]);
 const invC = new Mat4().copy(C).inverse();
 
@@ -1124,22 +1124,22 @@ inv(C)C =
 
 1. Three points have the co-ordinates $A = (5, 1, 3)$, $B = (10, 7, 4)$ and $C = (0, 5, -3)$. Use pen and paper to calculate the following:
 
-    (a) The vector $\vec{p}$ that points from $A$ to $B$;<br>
-    (b) The vector $\vec{q}$ that points from $B$ to $C$;<br>
-    (c) The vector $\vec{r}$ that points from $C$ to $A$;<br>
-    (d) The length of the vector $\vec{p}$;<br>
-    (e) A unit vector that points in the direction of the vector $\vec{q}$;<br>
-    (f) The dot product $\vec{p} \cdot \vec{q}$;<br>
-    (g) The cross product $\vec{q} \times \vec{r}$.
+   (a) The vector $\vec{p}$ that points from $A$ to $B$;<br>
+   (b) The vector $\vec{q}$ that points from $B$ to $C$;<br>
+   (c) The vector $\vec{r}$ that points from $C$ to $A$;<br>
+   (d) The length of the vector $\vec{p}$;<br>
+   (e) A unit vector that points in the direction of the vector $\vec{q}$;<br>
+   (f) The dot product $\vec{p} \cdot \vec{q}$;<br>
+   (g) The cross product $\vec{q} \times \vec{r}$.
 
 2. Repeat exercise 1 using your methods from the ***maths.js*** file.
 
 3. The three matrices $A$, $B$ and $C$ are defined by
 
 $$ \begin{align*}
-    A &= \begin{pmatrix} -1 & 3 \\ 2 & -5 \end{pmatrix}, &
-    B &= \begin{pmatrix} 0 & 2 \\ 7 & 1 \end{pmatrix}, &
-    C &= \begin{pmatrix} 3 & 2 \\ -3 & -4 \end{pmatrix}.
+   A &= \begin{pmatrix} -1 & 3 \\ 2 & -5 \end{pmatrix}, &
+   B &= \begin{pmatrix} 0 & 2 \\ 7 & 1 \end{pmatrix}, &
+   C &= \begin{pmatrix} 3 & 2 \\ -3 & -4 \end{pmatrix}.
 \end{align*} $$
 
 &emsp;&emsp; Use pen and paper to calculate the following:
@@ -1148,24 +1148,24 @@ $$ \begin{align*}
 &emsp;&emsp; (b) $ABC$;<br>
 &emsp;&emsp; (c) $B^\mathsf{T}A^\mathsf{T}$.<br>
 
-4. A transformation can be applied to a vector by matrix multiplication. If $T$ is a transformation matrix and $\vec{v}$ is a vector then the transformed vector is $T \vec{v}$. Given the following transformation matrices and vector
+1. A transformation can be applied to a vector by matrix multiplication. If $T$ is a transformation matrix and $\vec{v}$ is a vector then the transformed vector is $T \vec{v}$. Given the following transformation matrices and vector
 
 $$
 
 \begin{align*}
-  S &= \begin{pmatrix}
-    2 & 0 & 0 & 0 \\
-    0 & 2 & 0 & 0 \\
-    0 & 0 & 2 & 0 \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}, &
-  T &= \begin{pmatrix}
-    1 & 0 & 0 & 3 \\
-    0 & 1 & 0 & 2 \\
-    0 & 0 & 1 & -1 \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}, &
-  \vec{v} = \begin{pmatrix} 5 \\ 8 \\ 10 \\ 1 \end{pmatrix},
+    S &= \begin{pmatrix}
+        2 & 0 & 0 & 0 \\
+        0 & 2 & 0 & 0 \\
+        0 & 0 & 2 & 0 \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}, &
+    T &= \begin{pmatrix}
+        1 & 0 & 0 & 3 \\
+        0 & 1 & 0 & 2 \\
+        0 & 0 & 1 & -1 \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}, &
+    \vec{v} = \begin{pmatrix} 5 \\ 8 \\ 10 \\ 1 \end{pmatrix},
 \end{align*}
 ```
 
@@ -1182,11 +1182,11 @@ $$
 ## Video Walkthrough
 
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X" title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/9Ju2yfozZ6o?si=mZ5lOq2D3NzL9-2X" title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
 ></iframe>

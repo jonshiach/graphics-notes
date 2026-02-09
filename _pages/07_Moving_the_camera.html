@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -462,7 +462,7 @@ document.write(`
 </div>
 <p>Then add the following to the Camera class constructor.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Movement and settings</span>
-<span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
 
 <span class="c1">// Keyboard and mouse Input</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">;</span>
@@ -484,7 +484,7 @@ document.write(`
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">])</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">length</span><span class="p">(</span><span class="nx">vel</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">));</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -534,7 +534,7 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>First add the following to the Camera class constructor.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Then change the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method declaration so that it takes in the <code class="docutils literal notranslate"><span class="pre">dt</span></code> input.</p>
@@ -545,7 +545,7 @@ document.write(`
 <p>Finally, change the calculation of the new <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector to the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">move</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dt</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">length</span><span class="p">(</span><span class="nx">vel</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">),</span><span class="w"> </span><span class="nx">move</span><span class="p">));</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">),</span><span class="w"> </span><span class="nx">move</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -646,9 +646,9 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Camera class.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">mouseMove</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">pointerLockElement</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">pointerLockElement</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -744,12 +744,9 @@ document.write(`
 <li><p>Add the ability for the user to perform a jump by pressing the space bar.</p></li>
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
 <ul class="simple">
-<li><p>Loop through all the cubes</p>
-<ul>
+<li><p>Loop through all the cubes</p></li>
 <li><p>Calculate the distance between the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector and the centre of the current cube</p></li>
 <li><p>If this distance is less than 1, move the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> away from the centre of the current cube so that the distance is now 1</p></li>
-</ul>
-</li>
 </ul>
 </li>
 </ol>

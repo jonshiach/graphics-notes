@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,29 +460,29 @@ document.write(`
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Lab 1 - Intro to JavaScript<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;console-output&quot;</span> 
-         <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-family:monospace; white-space: pre; padding:10px;&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;intro_to_javascript.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Lab 1 - Intro to JavaScript<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;console-output&quot;</span> 
+                 <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-family:monospace; white-space: pre; padding:10px;&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;intro_to_javascript.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Save the file using <strong>File &gt; Save</strong> (<kbd>ctrl</kbd> + <kbd>S</kbd> on Windows or Linux or <kbd>⌘</kbd> + <kbd>S</kbd> on MacOS), give it the filename <em><strong>index.html</strong></em> and save it to your <em><strong>Lab 1 Intro to JavaScript</strong></em> folder.</p>
 <p>Create another file called <em><strong>intro_to_javascript.js</strong></em> and enter the following code into it.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="nx">elementId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">line</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">args</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">output</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">line</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">args</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">output</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="s2">&quot;console-output&quot;</span><span class="p">);</span>
@@ -555,8 +555,8 @@ score: 30
 <p>Any code following a double forward slash <code class="docutils literal notranslate"><span class="pre">//</span></code> is a <strong>comment</strong> and is ignored by the web browser or JavaScript engine. Comments are useful to let someone (or yourself) know what or why a particular bit of code is being used.</p>
 <p>Longer multi-line comments can be entered using <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code></p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
-<span class="cm">  This is a</span>
-<span class="cm">  multi-line comment</span>
+<span class="cm">    This is a</span>
+<span class="cm">    multi-line comment</span>
 <span class="cm">*/</span>
 </pre></div>
 </div>
@@ -1006,9 +1006,9 @@ colours = red,green,blue
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nObjects\n-------&quot;</span><span class="p">);</span>
 
 <span class="kd">const</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Mario&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">lives</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">score</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Mario&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">lives</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">score</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -1017,16 +1017,16 @@ colours = red,green,blue
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name:     &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Lives:    &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">[</span><span class="s2">&quot;lives&quot;</span><span class="p">]);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name:         &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Lives:        &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">[</span><span class="s2">&quot;lives&quot;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
 <p>Here we print the value of two of the <code class="docutils literal notranslate"><span class="pre">player</span></code> object properties. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Objects
 -------
-Name:     Mario
-Lives:    3
+Name:         Mario
+Lives:        3
 </pre></div>
 </div>
 <section id="adding-or-updating-properties">
@@ -1038,13 +1038,13 @@ Lives:    3
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;super&quot;</span><span class="p">;</span>
 <span class="nx">player</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Power up: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Score:    &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">score</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Score:        &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">score</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <p>Here we have added the property <code class="docutils literal notranslate"><span class="pre">powerUp</span></code> and incremented the <code class="docutils literal notranslate"><span class="pre">score</span></code> property by 10. Refresh your browser, and you should see the following is added to your web page.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Power up: super
-Score:    10
+Score:        10
 </pre></div>
 </div>
 </section>
@@ -1055,8 +1055,8 @@ Score:    10
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">enemies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Goomba&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Koopa Troopa&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Goomba&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Koopa Troopa&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hitPoints</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -1069,25 +1069,25 @@ Score:    10
 <h2>Conditional statements<a class="headerlink" href="#conditional-statements" title="Link to this heading">#</a></h2>
 <p><strong>Conditional statements</strong> allow your program to make decisions and run different code depending on whether a logical condition is true or false. The basic conditional statement is a <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs if condition is true</span>
+<span class="w">    </span><span class="c1">// runs if condition is true</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This performs code only if the <code class="docutils literal notranslate"><span class="pre">condition</span></code> statement is true. If you want to run code where the condition is true, and other code where the condition is false we can use a <code class="docutils literal notranslate"><span class="pre">if...else</span></code> statement</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs if condition is true</span>
+<span class="w">    </span><span class="c1">// runs if condition is true</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs if condition is false</span>
+<span class="w">    </span><span class="c1">// runs if condition is false</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>For more complicated cases where you want to use multiple conditions we can use a <code class="docutils literal notranslate"><span class="pre">if...else</span> <span class="pre">if...else</span></code> statement</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs if condition1 is true</span>
+<span class="w">    </span><span class="c1">// runs if condition1 is true</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">condition2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs fi condition2 is true</span>
+<span class="w">    </span><span class="c1">// runs fi condition2 is true</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// runs if neither condition1 or condition2 is true</span>
+<span class="w">    </span><span class="c1">// runs if neither condition1 or condition2 is true</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1152,11 +1152,11 @@ Score:    10
 
 <span class="c1">// Power up state</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;fire&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario can throw fireballs&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario can throw fireballs&quot;</span><span class="p">);</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;super&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario is bigger and can break blocks.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario is bigger and can break blocks.&quot;</span><span class="p">);</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario is small.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario is small.&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1176,17 +1176,17 @@ Mario is bigger and can break blocks.
 <span class="kd">const</span><span class="w"> </span><span class="nx">enemyIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">jumpedOnEnemy</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">enemies</span><span class="p">[</span><span class="nx">enemyIndex</span><span class="p">].</span><span class="nx">hitPoints</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">enemies</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">hitPoints</span><span class="o">--</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario jumps on enemy and defeats it.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">enemies</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">hitPoints</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario jumps on enemy and defeats it.&quot;</span><span class="p">);</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">jumpedOnEnemy</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">enemies</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">hitPoints</span><span class="o">--</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Enemy takes damage.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">enemies</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">hitPoints</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Enemy takes damage.&quot;</span><span class="p">);</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;fire&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;super&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario has lost his power ups.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">player</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario has lost his power ups.&quot;</span><span class="p">);</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">player</span><span class="p">.</span><span class="nx">lives</span><span class="o">--</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario has lost a life.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">player</span><span class="p">.</span><span class="nx">lives</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario has lost a life.&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1205,7 +1205,7 @@ Mario is bigger and can break blocks.
 <h3>For loops<a class="headerlink" href="#for-loops" title="Link to this heading">#</a></h3>
 <p>The most common loop is a <strong>for</strong> loop which has the basic syntax.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="nx">initialisation</span><span class="p">;</span><span class="w"> </span><span class="nx">condition</span><span class="p">;</span><span class="w"> </span><span class="nx">update</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// code to repeat</span>
+<span class="w">    </span><span class="c1">// code to repeat</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1222,7 +1222,7 @@ Mario is bigger and can break blocks.
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nLoops\n-----&quot;</span><span class="p">)</span>
 
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">enemies</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">enemies</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">enemies</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1239,7 +1239,7 @@ Koopa Troopa
 <h3>While loops<a class="headerlink" href="#while-loops" title="Link to this heading">#</a></h3>
 <p>A <strong>while</strong> loop is used to repeat code when the number of iterations is unknown. The basic syntax of a while loop is</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// code to repeat whilst condition is true</span>
+<span class="w">    </span><span class="c1">// code to repeat whilst condition is true</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1250,8 +1250,8 @@ Koopa Troopa
 <span class="kd">const</span><span class="w"> </span><span class="nx">maxTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span>
 
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">maxTime</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">time</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;time = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">time</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">time</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;time = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">time</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1277,7 +1277,7 @@ time = 100
 <p>A <strong>function</strong> is a reusable block of code that performs a specific task. Functions help organise programs, reduce repetition, and make code easier to understand and maintain. In computer graphics, functions are used for creating and updating objects, handing input and drawing scenes.</p>
 <p>A function in JavaScript is defined using the following basic syntax</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">functionName</span><span class="p">(</span><span class="nx">parameters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// code to be run when the function is called.</span>
+<span class="w">    </span><span class="c1">// code to be run when the function is called.</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1289,7 +1289,7 @@ time = 100
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nFunctions\n---------&quot;</span><span class="p">)</span>
 
 <span class="kd">function</span><span class="w"> </span><span class="nx">jump</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario jumps!&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Mario jumps!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1316,7 +1316,7 @@ time = 100
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">moveRight</span><span class="p">(</span><span class="nx">steps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Mario moves </span><span class="si">${</span><span class="nx">steps</span><span class="si">}</span><span class="sb"> steps to the right.`</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Mario moves </span><span class="si">${</span><span class="nx">steps</span><span class="si">}</span><span class="sb"> steps to the right.`</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nx">moveRight</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
@@ -1336,10 +1336,10 @@ Mario moves 10 steps to the right.
 <p class="admonition-title">Task</p>
 <p>Add the following to your JavaScript file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">checkGameOver</span><span class="p">(</span><span class="nx">lives</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">lives</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Game Over!&quot;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Continue playing.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">lives</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Game Over!&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Continue playing.&quot;</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">checkGameOver</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">lives</span><span class="p">));</span>
@@ -1380,9 +1380,9 @@ Mario moves 10 steps to the right.
 </ul>
 <p>Classes allow us to create many similar objects in a consistent and organised way. Classes are defined using</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">parmeters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// declaration of class/object properties</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">parmeters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// declaration of class/object properties</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1394,12 +1394,12 @@ Mario moves 10 steps to the right.
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nClasses\n-------&quot;</span><span class="p">)</span>
 
 <span class="kd">class</span><span class="w"> </span><span class="nx">Racer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">position</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">position</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">position</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">position</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1441,7 +1441,7 @@ Power up: undefined
 <p class="admonition-title">Task</p>
 <p>Add the following to your Racer class (underneath the <code class="docutils literal notranslate"><span class="pre">constructor()</span></code> method and before the close brace <code class="docutils literal notranslate"><span class="pre">}</span></code> of the class definition)</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">accelerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1459,24 +1459,24 @@ Power up: undefined
 <p class="admonition-title">Task</p>
 <p>Add the following to the Racer class.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">addPowerUp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">powerUps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;Mushroom&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Green Shell&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Red Shell&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Banana&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="s2">&quot;Star&quot;</span>
-<span class="w">  </span><span class="p">]</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">powerUps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Mushroom&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Green Shell&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Red Shell&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Banana&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;Star&quot;</span>
+<span class="w">    </span><span class="p">]</span>
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">powerUps</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
 <span class="p">}</span>
 
 <span class="nx">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nRacer details\n-------------&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Speed: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Position: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Power up: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nRacer details\n-------------&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Speed: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Position: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Power up: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">powerUp</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

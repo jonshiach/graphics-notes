@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -442,26 +442,26 @@ document.write(`
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;!doctype html&gt;
 
 &lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-    &lt;title&gt;Lab 2 - Basic Shapes in WebGL&lt;/title&gt;
-    &lt;style&gt;
-      html, head, body {
-        margin: 0;
-        padding: 10px;
-        background-color: #000;
-      }
-      #canvas {
-        width: 800px;
-        height: 600px;
-        background-color: #8AcE00;
-      }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
-  &lt;/body&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;Lab 2 - Basic Shapes in WebGL&lt;/title&gt;
+        &lt;style&gt;
+            html, head, body {
+                margin: 0;
+                padding: 10px;
+                background-color: #000;
+            }
+            #canvas {
+                width: 800px;
+                height: 600px;
+                background-color: #8AcE00;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
+    &lt;/body&gt;
 &lt;/html&gt;
 </pre></div>
 </div>
@@ -481,14 +481,14 @@ document.write(`
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Main function</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">  </span><span class="c1">// Setup WebGL</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Setup WebGL</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
 
 <span class="p">}</span>
 
@@ -507,8 +507,8 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag near the bottom of the <em><strong>index.html</strong></em> file so that it looks like the following</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;body&gt;
-  &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
-  &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
+    &lt;canvas id=&quot;canvas&quot; width=&quot;800px&quot; height=&quot;600px&quot;&gt;&lt;/canvas&gt;
+    &lt;script src=&quot;basic_shapes.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
 </pre></div>
 </div>
@@ -551,10 +551,10 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Enter the following after we have cleared the canvas.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w">  </span><span class="c1">// x    y    z</span>
-<span class="w">  </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0       2</span>
-<span class="w">   </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     /   \</span>
-<span class="w">   </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2    0 --- 1</span>
+<span class="w">    </span><span class="c1">// x    y    z</span>
+<span class="w">    </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0       2</span>
+<span class="w">     </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     /   \</span>
+<span class="w">     </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2    0 --- 1</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -587,13 +587,13 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span id="vertex-shader-section"></span><h3>Write and Compile the Vertex Shader<a class="headerlink" href="#write-and-compile-the-vertex-shader" title="Link to this heading">#</a></h3>
 <p>The next step is create a shader program that runs on the GPU and uses WebGL to determine which pixels on the display are to be rendered and in what colour. This shader program comprises two separate programs known as “shaders”: the <strong>vertex shader</strong> and the <strong>fragment shader</strong>. Shaders are written in <strong>GLSL (webGL Shader Language)</strong> which is similar to C.</p>
 <p>The vertex shader is called once for each vertex and transforms the vertex co-ordinates from model space (the local object co-ordinates) to the clip space that defines the region that is displayed on the canvas. We have defined our triangle using co-ordinates between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, so they are already in clip space and our vertex shader just needs to output each vertex. The shader code for a simple vertex shader is</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -616,7 +616,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="sb">in vec3 aPosition;</span>
 
 <span class="sb">void main() {</span>
-<span class="sb">  gl_Position = vec4(aPosition, 1.0);</span>
+<span class="sb">    gl_Position = vec4(aPosition, 1.0);</span>
 <span class="sb">}`</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -627,8 +627,8 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">);</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderParameter</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">COMPILE_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Error compiling vertex shader:\n`</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">));</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Error compiling vertex shader:\n`</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">));</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">vertexShader</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -638,13 +638,13 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <section id="write-and-compile-the-fragment-shader">
 <span id="lab01-fragment-shader"></span><h3>Write and Compile the Fragment Shader<a class="headerlink" href="#write-and-compile-the-fragment-shader" title="Link to this heading">#</a></h3>
 <p>The other shader we need to write is the fragment shader. This takes in information on a fragment that has been identified as being part of the primitive (i.e., triangle) and determines the colour that it will be rendered. We are going to render all fragments in the triangle as red, so the fragment shader code is as follows.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -660,7 +660,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="sb">out vec4 fragColour;</span>
 
 <span class="sb">void main() {</span>
-<span class="sb">  fragColour = vec4(1.0, 0.0, 0.0, 1.0);</span>
+<span class="sb">    fragColour = vec4(1.0, 0.0, 0.0, 1.0);</span>
 <span class="sb">}`</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -671,8 +671,8 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">);</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderParameter</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">COMPILE_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Error compiling fragment shader:\n`</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">));</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Error compiling fragment shader:\n`</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">));</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">fragmentShader</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -692,7 +692,7 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
 
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramParameter</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINK_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Failed to link WebGL program : </span><span class="si">${</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramInfoLog</span><span class="p">(</span><span class="nx">program</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Failed to link WebGL program : </span><span class="si">${</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramInfoLog</span><span class="p">(</span><span class="nx">program</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -716,17 +716,17 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Enter the following after you have set the shader program.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Tell WebGL how to read data from the vertex buffer  </span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Tell WebGL how to read data from the vertex buffer    </span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">positionLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aPosition&quot;</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">positionLocation</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">vbo</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span>
-<span class="w">  </span><span class="nx">positionLocation</span><span class="p">,</span><span class="w"> </span><span class="c1">// index</span>
-<span class="w">  </span><span class="mf">3</span><span class="p">,</span><span class="w">                </span><span class="c1">// size</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">         </span><span class="c1">// type</span>
-<span class="w">  </span><span class="kc">false</span><span class="p">,</span><span class="w">            </span><span class="c1">// normalized</span>
-<span class="w">  </span><span class="mf">0</span><span class="p">,</span><span class="w">                </span><span class="c1">// stride</span>
-<span class="w">  </span><span class="mf">0</span><span class="p">);</span><span class="w">               </span><span class="c1">// offset</span>
+<span class="w">    </span><span class="nx">positionLocation</span><span class="p">,</span><span class="w"> </span><span class="c1">// index</span>
+<span class="w">    </span><span class="mf">3</span><span class="p">,</span><span class="w">                </span><span class="c1">// size</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">         </span><span class="c1">// type</span>
+<span class="w">    </span><span class="kc">false</span><span class="p">,</span><span class="w">            </span><span class="c1">// normalized</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">                </span><span class="c1">// stride</span>
+<span class="w">    </span><span class="mf">0</span><span class="p">);</span><span class="w">               </span><span class="c1">// offset</span>
 </pre></div>
 </div>
 </div>
@@ -806,46 +806,46 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Create a new JavaScript files called <em><strong>webGLUtils.js</strong></em> within the <em><strong>Lab 2 Basic Shapes</strong></em> folder, and copy and paste the following code into it</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Initialize WebGL context</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">gl</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;webgl&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;WebGL not supported&quot;</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">gl</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Compile a shader</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">source</span><span class="p">,</span><span class="w"> </span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">shader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">type</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">shader</span><span class="p">,</span><span class="w"> </span><span class="nx">source</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">shader</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderParameter</span><span class="p">(</span><span class="nx">shader</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">COMPILE_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">shader</span><span class="p">));</span>
-<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">shader</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">shader</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">shader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">type</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">shader</span><span class="p">,</span><span class="w"> </span><span class="nx">source</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">shader</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderParameter</span><span class="p">(</span><span class="nx">shader</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">COMPILE_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getShaderInfoLog</span><span class="p">(</span><span class="nx">shader</span><span class="p">));</span>
+<span class="w">        </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteShader</span><span class="p">(</span><span class="nx">shader</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">shader</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Create shader program</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSource</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertexShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShader</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramParameter</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINK_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramInfoLog</span><span class="p">(</span><span class="nx">program</span><span class="p">));</span>
-<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">program</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertexShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentSource</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShader</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentShader</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramParameter</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">LINK_STATUS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getProgramInfoLog</span><span class="p">(</span><span class="nx">program</span><span class="p">));</span>
+<span class="w">        </span><span class="nx">gl</span><span class="p">.</span><span class="nx">deleteProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">program</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -882,32 +882,32 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <section id="vertex-and-fragment-shaders">
 <h3>Vertex and Fragment Shaders<a class="headerlink" href="#vertex-and-fragment-shaders" title="Link to this heading">#</a></h3>
 <p>Our current vertex shader simply takes in an input of a 3-element vector containing the <span class="math notranslate nohighlight">\((x, y, z)\)</span> vertex co-ordinates and outputs a 4-element vector of these co-ordinates to the fragment shader. The vertex co-ordinates are outputted using the <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> variable which is a required output and is not specifically declared. To add colour data to our co-ordinates we need to declare a second 3-element input vector for the attribute colour as well as an output vector for the vertex colour. So our vertex shader is</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span>
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aPosition</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPosition</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Output vertex colour</span>
-<span class="w">  </span><span class="n">vColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Output vertex colour</span>
+<span class="w">    </span><span class="n">vColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColour</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>As for the fragment shader, we will simply output the colour data of the vertex. Our current fragment shader does not have an input declared because it expects <code class="docutils literal notranslate"><span class="pre">gl_Position</span></code> by default, so we need to add an input declaration for the vertex colour outputted by the vertex shader and use this to create the 4-element RGBA output vector.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
-<span class="n">precision</span><span class="w"> </span><span class="n">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
+<span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 
-<span class="n">in</span><span class="w"> </span><span class="n">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vColour</span><span class="p">;</span>
 
-<span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">fragColour</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">vColour</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">vColour</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -924,10 +924,10 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Amend the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> array so that it looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w"> </span><span class="c1">// x     y    z      r    g    b</span>
-<span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0       2</span>
-<span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     /   \</span>
-<span class="w">  </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2    0 --- 1</span>
+<span class="w">    </span><span class="c1">// x    y    z       R    G    B</span>
+<span class="w">    </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     2</span>
+<span class="w">     </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1   /   \</span>
+<span class="w">     </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2  0 --- 1</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -952,13 +952,13 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p class="admonition-title">Task</p>
 <p>Change the <code class="docutils literal notranslate"><span class="pre">gl.vertexAttribPointer();</span></code> function so that it looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span>
-<span class="w">  </span><span class="nx">positionLocation</span><span class="p">,</span><span class="w">                    </span><span class="c1">// index</span>
-<span class="w">  </span><span class="mf">3</span><span class="p">,</span><span class="w">                                   </span><span class="c1">// size</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">                            </span><span class="c1">// type</span>
-<span class="w">  </span><span class="kc">false</span><span class="p">,</span><span class="w">                               </span><span class="c1">// normalized</span>
-<span class="w">  </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">,</span><span class="w">  </span><span class="c1">// stride</span>
-<span class="w">  </span><span class="mf">0</span><span class="w">                                    </span><span class="c1">// offset</span>
-<span class="p">);</span><span class="w">          </span>
+<span class="w">    </span><span class="nx">positionLocation</span><span class="p">,</span><span class="w"> </span><span class="c1">// index</span>
+<span class="w">    </span><span class="mf">3</span><span class="p">,</span><span class="w">                </span><span class="c1">// size</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">         </span><span class="c1">// type</span>
+<span class="w">    </span><span class="kc">false</span><span class="p">,</span><span class="w">            </span><span class="c1">// normalized</span>
+<span class="w">    </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">,</span><span class="w">  </span><span class="c1">// stride</span>
+<span class="w">    </span><span class="mf">0</span><span class="w">                 </span><span class="c1">// offset</span>
+<span class="p">);</span><span class="w">                    </span>
 </pre></div>
 </div>
 </div>
@@ -976,12 +976,12 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">colourLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aColour&quot;</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span>
-<span class="w">  </span><span class="nx">colourLocation</span><span class="p">,</span><span class="w">                      </span><span class="c1">// index</span>
-<span class="w">  </span><span class="mf">3</span><span class="p">,</span><span class="w">                                   </span><span class="c1">// size</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">                            </span><span class="c1">// type</span>
-<span class="w">  </span><span class="kc">false</span><span class="p">,</span><span class="w">                               </span><span class="c1">// normalized</span>
-<span class="w">  </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">,</span><span class="w">  </span><span class="c1">// stride</span>
-<span class="w">  </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="w">   </span><span class="c1">// offset</span>
+<span class="w">    </span><span class="nx">colourLocation</span><span class="p">,</span><span class="w"> </span><span class="c1">// index</span>
+<span class="w">    </span><span class="mf">3</span><span class="p">,</span><span class="w">              </span><span class="c1">// size</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w">       </span><span class="c1">// type</span>
+<span class="w">    </span><span class="kc">false</span><span class="p">,</span><span class="w">          </span><span class="c1">// normalized</span>
+<span class="w">    </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">,</span><span class="w"> </span><span class="c1">// stride</span>
+<span class="w">    </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="w">  </span><span class="c1">// offset</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -1007,13 +1007,13 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Enter the following code after we defined the triangle vertex buffer.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define square vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">squareVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w">  </span><span class="c1">// x  y    z       r    g    b             </span>
-<span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
-<span class="w">  </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
-<span class="w">  </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
-<span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     0 -- 1 </span>
-<span class="w">  </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2</span>
-<span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3</span>
+<span class="w">    </span><span class="c1">// x  y    z       R    G    B                         </span>
+<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0  3 -- 2</span>
+<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1  |  / |        </span>
+<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2  | /  | </span>
+<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0  0 -- 1 </span>
+<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2</span>
+<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3</span>
 <span class="p">]);</span>
 
 <span class="c1">// Create VBO for the square</span>
@@ -1059,32 +1059,32 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Copy and paste the following function definition to the <em><strong>webGLUtils.js</strong></em> file.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create VAO</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span>
-<span class="w">  </span><span class="c1">// Create VAO</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createVertexArray</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">vao</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Create VAO</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">vao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createVertexArray</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">vao</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Create VBO</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vbo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">vbo</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create VBO</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">vbo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">vbo</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Position attribute</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">positionLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aPosition&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">positionLocation</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">positionLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">stride</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Position attribute</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">positionLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aPosition&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">positionLocation</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">positionLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">stride</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Colour attribute</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">colourLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aColour&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">stride</span><span class="p">,</span><span class="w"> </span><span class="nx">offset</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Colour attribute</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">colourLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aColour&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">colourLocation</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">stride</span><span class="p">,</span><span class="w"> </span><span class="nx">offset</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Unbind VAO</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Unbind VAO</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">vao</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">vao</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1110,46 +1110,46 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Your <code class="docutils literal notranslate"><span class="pre">main()</span></code> function should now look something like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">  </span><span class="c1">// Setup WebGL</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Setup WebGL</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">initWebGL</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Create WebGL program </span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShaderSource</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentShaderSource</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create WebGL program </span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createProgram</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">vertexShaderSource</span><span class="p">,</span><span class="w"> </span><span class="nx">fragmentShaderSource</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Set the shader program</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Set the shader program</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">program</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Define triangle vertices</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w">    </span><span class="c1">// x     y    z      r    g    b</span>
-<span class="w">    </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0       2</span>
-<span class="w">     </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     /   \</span>
-<span class="w">     </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2    0 --- 1</span>
-<span class="w">  </span><span class="p">]);</span>
+<span class="w">    </span><span class="c1">// Define triangle vertices</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="w">        </span><span class="c1">// x    y    z       r    g     b</span>
+<span class="w">        </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     2</span>
+<span class="w">         </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1   /   \</span>
+<span class="w">         </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2  0 --- 1</span>
+<span class="w">    </span><span class="p">]);</span>
 
-<span class="w">  </span><span class="c1">// Define square vertices</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">squareVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w">    </span><span class="c1">// x  y    z       r    g    b             </span>
-<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
-<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
-<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
-<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     0 -- 1 </span>
-<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2</span>
-<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3</span>
-<span class="w">  </span><span class="p">]);</span>
+<span class="w">    </span><span class="c1">// Define square vertices</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">squareVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
+<span class="w">        </span><span class="c1">// x  y    z       R    G    B                         </span>
+<span class="w">        </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0  3 -- 2</span>
+<span class="w">        </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1  |  / |        </span>
+<span class="w">        </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2  | /  | </span>
+<span class="w">        </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0  0 -- 1 </span>
+<span class="w">        </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2</span>
+<span class="w">        </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3</span>
+<span class="w">    </span><span class="p">]);</span>
 
-<span class="w">  </span><span class="c1">// Create VAOs</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">triangleVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">squareVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">squareVertices</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create VAOs</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">triangleVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">vertices</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">squareVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">squareVertices</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Draw the triangle</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVao</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Draw the triangle</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">triangleVao</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// Draw the square</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">squareVao</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Draw the square</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindVertexArray</span><span class="p">(</span><span class="nx">squareVao</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1165,24 +1165,24 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p>Edit the code used to define the vertices for the square so that it looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define square vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">squareVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
-<span class="w"> </span><span class="c1">// x  y    z       r    g    b             </span>
-<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0     3 -- 2</span>
-<span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1     |  / |    </span>
-<span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2     | /  | </span>
-<span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3     0 -- 1 </span>
+<span class="w">    </span><span class="c1">// x  y    z       R    G    B                         </span>
+<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 0  3 -- 2</span>
+<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 1  |  / |        </span>
+<span class="w">    </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 2  | /  | </span>
+<span class="w">    </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">    </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="c1">// vertex 3  0 -- 1 </span>
 <span class="p">]);</span>
 </pre></div>
 </div>
 <p>And add the following arrays after the square vertices have been defined.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define triangle indices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint16Array</span><span class="p">([</span>
-<span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span>
+<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span>
 <span class="p">]);</span>
 
 <span class="c1">// Define square indices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">squareIndices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint16Array</span><span class="p">([</span>
-<span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w">  </span><span class="c1">// lower-right triangle</span>
-<span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w">  </span><span class="c1">// upper-left triangle</span>
+<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="c1">// lower-right triangle</span>
+<span class="w">   </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="c1">// upper-left triangle</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -1277,14 +1277,14 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <p class="sd-card-text">The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> vertices of the two outer vertices are</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-  x_i &amp;= r \cos(\theta_i), &amp; y_i &amp;= r \sin(\theta_i), \\
-  x_{i+1} &amp;= r \cos(\theta_{i+1}), &amp; y_{i+1} &amp;= r \sin(\theta_{i+1}),
+    x_i &amp;= r \cos(\theta_i), &amp; y_i &amp;= r \sin(\theta_i), \\
+    x_{i+1} &amp;= r \cos(\theta_{i+1}), &amp; y_{i+1} &amp;= r \sin(\theta_{i+1}),
 \end{align*}\end{split}\]</div>
 <p class="sd-card-text">where <span class="math notranslate nohighlight">\(r\)</span> is the radius and the angles <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(\theta_{i+1}\)</span> are calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
-  \theta_i &amp;= \frac{i2\pi}{6}, \\
-  \theta_{i+1} &amp;= \frac{(i+1)2\pi}{6}.
+    \theta_i &amp;= \frac{i2\pi}{6}, \\
+    \theta_{i+1} &amp;= \frac{(i+1)2\pi}{6}.
 \end{align*}\end{split}\]</div>
 </div>
 </details><ol class="arabic simple" start="4">
@@ -1299,14 +1299,14 @@ Colours, textures, normals, and depth all interpolate smoothly inside a triangle
 <section id="video-walkthrough">
 <h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
 ></iframe>
 </section>
 </section>

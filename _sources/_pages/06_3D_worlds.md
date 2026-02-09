@@ -26,59 +26,59 @@ Open the ***3D_worlds.js*** file, and you will see that the vertices and indices
 ```javascript
 // Define cube vertices
 const vertices = new Float32Array([
-  // x  y  z      r  g  b     u  v                    + ------ +
-  // front                                           /|       /|
-  -1, -1,  1,     0, 0, 0,    0, 0,  //    y        / |      / |
-   1, -1,  1,     0, 0, 0,    1, 0,  //    |       + ------ +  |
-   1,  1,  1,     0, 0, 0,    1, 1,  //    +-- x   |  + ----|- +
-  -1, -1,  1,     0, 0, 0,    0, 0,  //   /        | /      | /   
-   1,  1,  1,     0, 0, 0,    1, 1,  //  z         |/       |/
-  -1,  1,  1,     0, 0, 0,    0, 1,  //            + ------ +   
-  // right                        
-   1, -1,  1,     0, 0, 0,    0, 0,
-   1, -1, -1,     0, 0, 0,    1, 0, 
-   1,  1, -1,     0, 0, 0,    1, 1,
-   1, -1,  1,     0, 0, 0,    0, 0,
-   1,  1, -1,     0, 0, 0,    1, 1,
-   1,  1,  1,     0, 0, 0,    0, 1,
-  // back
-   1, -1, -1,     0, 0, 0,    0, 0,
-  -1, -1, -1,     0, 0, 0,    1, 0,
-  -1,  1, -1,     0, 0, 0,    1, 1,
-   1, -1, -1,     0, 0, 0,    0, 0,
-  -1,  1, -1,     0, 0, 0,    1, 1,
-   1,  1, -1,     0, 0, 0,    0, 1,
-  // left
-  -1, -1, -1,     0, 0, 0,    0, 0,
-  -1, -1,  1,     0, 0, 0,    1, 0,
-  -1,  1,  1,     0, 0, 0,    1, 1,
-  -1, -1, -1,     0, 0, 0,    0, 0,
-  -1,  1,  1,     0, 0, 0,    1, 1,
-  -1,  1, -1,     0, 0, 0,    0, 1,
-  // bottom
-  -1, -1, -1,     0, 0, 0,    0, 0,
-   1, -1, -1,     0, 0, 0,    1, 0,
-   1, -1,  1,     0, 0, 0,    1, 1,
-  -1, -1, -1,     0, 0, 0,    0, 0,
-   1, -1,  1,     0, 0, 0,    1, 1, 
-  -1, -1,  1,     0, 0, 0,    0, 1,
-  // top
-  -1,  1,  1,     0, 0, 0,    0, 0,
-   1,  1,  1,     0, 0, 0,    1, 0,
-   1,  1, -1,     0, 0, 0,    1, 1,
-  -1,  1,  1,     0, 0, 0,    0, 0,
-   1,  1, -1,     0, 0, 0,    1, 1,
-  -1,  1, -1,     0, 0, 0,    0, 1
+    // x  y  z      r  g  b     u  v                                 + ------ +
+    // front                                                        /|       /|
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0, //   y        / |      / |
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0, //   |       + ------ +  |
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0, //   +-- x   |  + ----|- +
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0, //  /        | /      | /   
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0, // z         |/       |/
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0, //           + ------ +   
+    // right                        
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0, 
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,
+    // back
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,
+    // left
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,
+    // bottom
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0, 
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,
+    // top
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1
 ]);
 
 // Define cube indices
 const indices = new Uint16Array([
-   0,  1,  2,  3,  4,  5,  // front
-   6,  7,  8,  9, 10, 11,  // right
-  12, 13, 14, 15, 16, 17,  // back
-  18, 19, 20, 21, 22, 23,  // left
-  24, 25, 26, 27, 28, 29,  // bottom
-  30, 31, 32, 33, 34, 35   // top
+     0,  1,  2,  3,  4,  5,  // front
+     6,  7,  8,  9, 10, 11,  // right
+    12, 13, 14, 15, 16, 17,  // back
+    18, 19, 20, 21, 22, 23,  // left
+    24, 25, 26, 27, 28, 29,  // bottom
+    30, 31, 32, 33, 34, 35   // top
 ]);
 ```
 
@@ -156,7 +156,7 @@ We saw in [Lab 5: Transformations](transformations-section) that we apply a tran
 
 ### The Model matrix
 
-In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$.
+In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0.0, -2)$.
 
 :::{admonition} Task
 :class: tip
@@ -168,9 +168,9 @@ Edit the `render()` function in the ***3D_worlds.js*** file so that the calculat
 const rotationsPerSecond = 1/3;
 const angle = rotationsPerSecond * time * 2 * Math.PI * 0.001;
 const model = new Mat4()
-  .translate([0, 0, -2])
-  .rotate([0, 1, 0], angle)
-  .scale([0.5, 0.5, 0.5]);
+    .translate([0, 0.0, -2])
+    .rotate([0, 1.0, 0], angle)
+    .scale([0.5, 0.5, 0.5]);
 ```
 
 :::
@@ -185,7 +185,7 @@ To view the world space we create a virtual camera and place it in the world spa
 
 - $\vec{eye}$: the coordinates of the camera position,
 - $\vec{target}$: the coordinates of the target point that the camera is pointing,
-- $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
+- $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1.0, 0)$
 
 ```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
@@ -194,7 +194,7 @@ To view the world space we create a virtual camera and place it in the world spa
 The vectors used in the transformation to the view space.
 ```
 
-The eye and target vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by negative of the eye vector so that it is at $(0, 0, 0)$ using the following translation matrix
+The eye and target vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by negative of the eye vector so that it is at $(0, 0.0, 0)$ using the following translation matrix
 
 $$ \begin{align*}
     Translate =
@@ -279,32 +279,32 @@ Create a file called ***camera.js*** inside which enter the following code
 ```javascript
 class Camera {
 
-  constructor() {
+    constructor() {
 
-    // Camera vectors
-    this.eye     = [0, 0, 0];
-    this.worldUp = [0, 1, 0];
-    this.front   = [0, 0, -1];
-    this.right   = [1, 0, 0];
-    this.up      = [0, 1, 0];
-  }
+        // Camera vectors
+        this.eye     = [0, 0.0, 0];
+        this.worldUp = [0, 1.0, 0];
+        this.front   = [0, 0.0, -1];
+        this.right   = [1.0, 0.0, 0];
+        this.up      = [0, 1.0, 0];
+    }
 
-  update() {
-    this.right = normalize(cross(this.front, this.worldUp));
-    this.up    = normalize(cross(this.right, this.front));
-  }
+    update() {
+        this.right = normalize(cross(this.front, this.worldUp));
+        this.up    = normalize(cross(this.right, this.front));
+    }
 
-  getViewMatrix() {
-    return new Mat4().set([
-      this.right[0], this.up[0], -this.front[0], 0,
-      this.right[1], this.up[1], -this.front[1], 0,
-      this.right[2], this.up[2], -this.front[2], 0,
-      -dot(this.eye, this.right),
-      -dot(this.eye, this.up),
-       dot(this.eye, this.front),
-      1
-    ]);
-  }
+    getViewMatrix() {
+        return new Mat4().set([
+            this.right[0], this.up[0], -this.front[0], 0.0,
+            this.right[1], this.up[1], -this.front[1], 0.0,
+            this.right[2], this.up[2], -this.front[2], 0.0,
+            -dot(this.eye, this.right),
+            -dot(this.eye, this.up),
+             dot(this.eye, this.front),
+            1
+        ]);
+    }
 }
 ```
 
@@ -315,7 +315,7 @@ And add the following to the ***index.html*** file before the ***3D_worlds.js***
 ```
 :::
 
-Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0.0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
 
 :::{admonition} Task
 :class: tip
@@ -331,8 +331,8 @@ And add the following to the `render()` function before we calculate the model m
 
 ```javascript
 // Update camera vectors
-const target = [0, 0, -2];
-camera.eye = [1, 1, 1];
+const target = [0, 0.0, -2];
+camera.eye = [1.0, 1.0, 1];
 camera.front = normalize(subtractVector(target, camera.eye));
 camera.update();
 
@@ -342,7 +342,7 @@ const view = camera.getViewMatrix();
 
 :::
 
-Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
+Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1.0,1.0,1)$ and looking towards the centre of the translated cube at $(0, 0.0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
 
 ---
 
@@ -422,19 +422,19 @@ Add the following method definition to the Camera class
 
 ```javascript
 getOrthographicMatrix(left, right, bottom, top, near, far) {
-  const rl = 1 / (right - left);
-  const tb = 1 / (top - bottom);
-  const fn = 1 / (far - near);
+    const rl = 1 / (right - left);
+    const tb = 1 / (top - bottom);
+    const fn = 1 / (far - near);
 
-  return new Mat4().set([
-    2 * rl, 0, 0, 0,
-    0, 2 * tb, 0, 0,
-    0, 0, -2 * fn, 0,
-    -(right + left) * rl,
-    -(top + bottom) * tb,
-    -(far + near) * fn,
-    1
-  ]);
+    return new Mat4().set([
+        2 * rl, 0.0, 0.0, 0.0,
+        0.0, 2 * tb, 0.0, 0.0,
+        0.0, 0.0, -2 * fn, 0.0,
+        -(right + left) * rl,
+        -(top + bottom) * tb,
+        -(far + near) * fn,
+        1
+    ]);
 }
 ```
 
@@ -442,7 +442,7 @@ And add the following to the `render()` function file after we have calculated t
 
 ```javascript
 // Calculate projection matrix
-const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
+const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0.0, 100);
 ```
 
 :::
@@ -568,8 +568,8 @@ Add the following code after the cube indices are defined
 ```javascript
 // Define cube positions
 const cubes = [
-  { position : [0, 0, -2] },
-  { position : [0, 0, -6] }
+    { position : [0, 0.0, -2] },
+    { position : [0, 0.0, -6] }
 ];
 const numCubes = cubes.length;
 ```
@@ -580,19 +580,19 @@ Now edit the code used to calculate the model matrix and draw the cubes so that 
 // Draw cubes
 for (let i = 0; i < numCubes; i++) {
 
-  // Calculate the model matrix
-  const angle = 0;
-  const model = new Mat4()
-    .translate(cubes[i].position)
-    .rotate([0, 1, 0], angle)
-    .scale([0.5, 0.5, 0.5]);
+    // Calculate the model matrix
+    const angle = 0;
+    const model = new Mat4()
+        .translate(cubes[i].position)
+        .rotate([0, 1.0, 0], angle)
+        .scale([0.5, 0.5, 0.5]);
 
-  // Send model matrix to the shader
-  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+    // Send model matrix to the shader
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
-  // Draw the triangles
-  gl.bindVertexArray(vao);
-  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+    // Draw the triangles
+    gl.bindVertexArray(vao);
+    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
 ```
 
@@ -607,7 +607,7 @@ Here we first define an array of JavaScript objects where the position attribute
 Orthographic projection.
 ```
 
-The cube in the front is centred at $(0, 0, -2)$ and the cube behind is centred at $(0, 0, -6)$. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at $(1, 1, 1)$.
+The cube in the front is centred at $(0, 0.0, -2)$ and the cube behind is centred at $(0, 0.0, -6)$. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at $(1.0, 1.0, 1)$.
 
 Perspective projection is used to render objects where the further an object is from the camera, the small it appears in the canvas. It use the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at $(0,0,0)$ ({numref}`perspective-projection-figure`). The clipping volume bounded by the size clipping planes is called the **viewing frustum**.
 
@@ -708,8 +708,8 @@ $$ \begin{align*}
 So the mapping for $x'$ and $y'$ is correct. We need $z'$ to be between $-1$ and $1$ so $A$ and $B$ must satisfy
 
 $$ \begin{align*}
-    \textsf{near plane:} &&\frac{Az + B}{-z} &= -1, & \implies  Az + B &= z, \\
-    \textsf{far plane:} && \frac{Az + B}{-z} &= 1, & \implies Az + B &= -z.
+    \textsf{near plane:} &&\frac{Az + B}{-z} &= -1.0, & \implies  Az + B &= z, \\
+    \textsf{far plane:} && \frac{Az + B}{-z} &= 1.0, & \implies Az + B &= -z.
 \end{align*} $$
 
 At the near clipping plane $z = -near$ and at the far clipping plane $z = -far$ so
@@ -780,16 +780,16 @@ And add the following method definition to the Camera class
 
 ```javascript
 getPerspectiveMatrix() {
-  const t  = this.near * Math.tan(this.fov / 2);
-  const r  = this.aspect * t;
-  const fn = 1 / (this.far - this.near);
+    const t  = this.near * Math.tan(this.fov / 2);
+    const r  = this.aspect * t;
+    const fn = 1 / (this.far - this.near);
 
-  return new Mat4().set([
-    this.near / r, 0, 0, 0,
-    0, this.near / t, 0, 0,
-    0, 0, -(this.far + this.near) * fn, -1,
-    0, 0, -2 * this.far * this.near * fn, 0
-  ]);
+    return new Mat4().set([
+        this.near / r, 0.0, 0.0, 0.0,
+        0.0, this.near / t, 0.0, 0.0,
+        0.0, 0.0, -(this.far + this.near) * fn, -1.0,
+        0.0, 0.0, -2 * this.far * this.near * fn, 0
+    ]);
 }
 ```
 
@@ -864,12 +864,12 @@ $fov = 120^\circ$
 ## Video walkthrough
 
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/5rUYed7RTss?si=lvJIqcUgqzTSSgBZ"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
+     width="560"
+     height="315"
+     src="https://www.youtube.com/embed/5rUYed7RTss?si=lvJIqcUgqzTSSgBZ"
+     title="YouTube video player"
+     frameborder="0"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+     referrerpolicy="strict-origin-when-cross-origin"
+     allowfullscreen
 ></iframe>

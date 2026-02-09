@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -404,12 +404,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternions">Quaternions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarternion-magnitude">Quarternion magnitude</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-quaternion">Unit quaternion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-conjugate">Quaternion conjugate</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplying-quaternions">Multiplying quaternions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-inverse">Quaternion inverse</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">Rotations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-rotation-matrix">Quaternion rotation matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>
@@ -443,7 +443,24 @@ document.write(`
 <p>Quaternions are a mathematical object that can be used to perform rotation operations that do not suffer from gimbal lock and require fewer floating point calculations. There is quite a lot of maths used here but in this page I’ve focussed only on the bits you need to know to apply quaternions.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 10 Quaternions</strong></em> inside which create a file called <em><strong>index.html</strong></em> and enter the following into it.</p>
+<p>Create a copy of either your folders from labs 7, 8 or 9 (doesn’t matter which one, as long is it has a working camera that can be controlled using a keyboard and mouse), rename it <em><strong>Lab 10 Quaternions</strong></em>, rename the main JavaScript file to <em><strong>quaternions.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 10 - Quaternions”.</p>
+<p>Then create a new file called <em><strong>quaternion_calculations.js</strong></em> and enter the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="nx">elementId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">line</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">args</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">output</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="s2">&quot;console-output&quot;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Lab 10 - Quaternions\n--------------------&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, create a new file called <em><strong>index2.html</strong></em> and enter the following</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
@@ -460,22 +477,11 @@ document.write(`
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>Create another file called <em><strong>quaternion_calculations.js</strong></em> and enter the following into it.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="nx">elementId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">elementId</span><span class="p">);</span>
-
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">line</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">args</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">output</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">write</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="nx">setupConsoleOutput</span><span class="p">(</span><span class="s2">&quot;console-output&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Lab 10 - Quaternions\n--------------------&#39;</span><span class="p">);</span>
-</pre></div>
 </div>
+<p>In this lab we will being by learning how to perform calculations using quaternions the <em><strong>quaternion_calculations.js</strong></em> file and adding a class to the <em><strong>maths.js</strong></em> file. Once we know our class performs the correct calculations, we will implement this into the <em><strong>quaternions.js</strong></em> and <em><strong>camera.js</strong></em> files. Load <em><strong>index2.html</strong></em> in a live server and you should see a webpage containing the following</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lab 10 - Quaternions
+--------------------
+</pre></div>
 </div>
 <hr class="docutils" />
 <section id="complex-numbers">
@@ -551,10 +557,10 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are real numbers and <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span> are imaginary numbers which are related to <span class="math notranslate nohighlight">\(-1\)</span> and each other by</p>
 <div class="math notranslate nohighlight">
 \[i^2 = j^2 = k^2 = ijk = -1. \]</div>
-<p>Quaternions are more commonly represented in scalar-vector form</p>
+<p>Quaternions are more commonly represented in scalar-vector form where we use a 3-element vector for the imaginary coefficients</p>
 <div class="math notranslate nohighlight">
-\[q = [w, \vec{q}_{\vec{v}}],\]</div>
-<p>where <span class="math notranslate nohighlight">\(\vec{q}_{\vec{v}} = (x, y, z)\)</span>. We are going to create a Quaternion class so that we can work with quaternions.</p>
+\[q = [w, (x, y, z)],\]</div>
+<p>where <span class="math notranslate nohighlight">\(w\)</span> is known as the <strong>scalar</strong> part of a quaternion and <span class="math notranslate nohighlight">\((x, y, z)\)</span> is the <strong>vector</strong> part. We are going to create a Quaternion class so that we can work with quaternions.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following class definition to the *<strong>maths.js</strong> file</p>
@@ -658,41 +664,6 @@ length(qHat) = 0.9999999999999999
 </pre></div>
 </div>
 </section>
-<section id="quaternion-conjugate">
-<h3>Quaternion conjugate<a class="headerlink" href="#quaternion-conjugate" title="Link to this heading">#</a></h3>
-<p>The <strong>conjugate</strong> of the quaternion <span class="math notranslate nohighlight">\(q = [w, \vec{q}_{\vec{v}}]\)</span> is denoted by <span class="math notranslate nohighlight">\(q^*\)</span> and is another quaternion with the vector parts negated</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-  q^* = [w, -\vec{q}_{\vec{v}}].
-\end{align*} \]</div>
-<p>For example, given the quaternion <span class="math notranslate nohighlight">\(q = [1, (2, 3, 4)]\)</span> then its conjugate is</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-  q^* = [1, (-2, -3, -4)].
-\end{align*} \]</div>
-<div class="tip admonition">
-<p class="admonition-title">Task</p>
-<p>Add the following method to the Quaternion class</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">conjugate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">z</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>And add the following code to the <em><strong>quaternion_calculations.js</strong></em> file</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">qConjugate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">).</span><span class="nx">conjugate</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nconjugate(q) = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">qConjugate</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-</pre></div>
-</div>
-</div>
-<p>Here we have added the method <code class="docutils literal notranslate"><span class="pre">conjugate()</span></code> to the Quaternion class that computes the conjugate of the current quaternion. Refresh your browser, and you should see the following added to the webpage</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>conjugate(q) = [ 1.000, ( -2.000, -3.000, -4.000 ) ]
-</pre></div>
-</div>
-</section>
 <section id="multiplying-quaternions">
 <h3>Multiplying quaternions<a class="headerlink" href="#multiplying-quaternions" title="Link to this heading">#</a></h3>
 <p>The multiplication of two quaternions <span class="math notranslate nohighlight">\(q_1 = [w_1, (x_1, y_1, z_1)]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, (x_2, y_2, z_2)]\)</span> results in the quaternion <span class="math notranslate nohighlight">\(q_1q_2 = [w, (x, y, z)]\)</span> where</p>
@@ -703,15 +674,15 @@ length(qHat) = 0.9999999999999999
   y &amp;= w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2, \\
   z &amp;= w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2.
 \end{align*}\end{split}\]</div>
-<p>If <span class="math notranslate nohighlight">\(q_1 = [w_1, \vec{q}_{\vec{v}1}]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, \vec{q}_{\vec{v}2}]\)</span> then we can write</p>
+<p>If <span class="math notranslate nohighlight">\(q_1 = [w_1, \vec{a}]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, \vec{b}]\)</span> then we can write quaternion multiplication as</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-product-equation-2">
 <span class="eqno">(28)<a class="headerlink" href="#equation-quaternion-product-equation-2" title="Link to this equation">#</a></span>\[ \begin{align*}
-  q_1q_2 = [w_1w_2 - \vec{q}_{\vec{v}1} \cdot \vec{q}_{\vec{v}2}, w_1 \vec{q}_{\vec{v}1} + w_2 \vec{q}_{\vec{v}2} + \vec{q}_{\vec{v}1} \times \vec{q}_{\vec{v}2}].
+  q_1q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
 \end{align*} \]</div>
-<p>You don’t need to know where these come from but if you are curious, click on the dropdown below.</p>
+<p>You don’t need to know where equations <a class="reference internal" href="#equation-quaternion-product-equation-1">(27)</a> and <a class="reference internal" href="#equation-quaternion-product-equation-2">(28)</a> come from but if you are curious, click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">Derivation of quaternion rotation equation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text">Derivation of quaternion multiplication equation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <p class="sd-card-text">Let <span class="math notranslate nohighlight">\(q_1 = x_1i + y_1j + z_1k + w_1\)</span> and <span class="math notranslate nohighlight">\(q_2 = x_2i + y_2j + z_2k + w_2\)</span> be two quaternions then multiplying them gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
@@ -730,8 +701,8 @@ length(qHat) = 0.9999999999999999
   &amp; \quad + z_1w_2k + z_1x_2j - z_1y_2i - z_1z_2.
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">Factorising the real and imaginary parts</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{align*}
+<div class="math notranslate nohighlight" id="equation-quaternion-multiplication-equation-3">
+<span class="eqno">(29)<a class="headerlink" href="#equation-quaternion-multiplication-equation-3" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
   q_1q_2 &amp;= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
   &amp; \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)i \\
   &amp; \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)j \\
@@ -745,6 +716,25 @@ length(qHat) = 0.9999999999999999
   y &amp;= w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2, \\
   z &amp;= w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2.
 \end{align*}\end{split}\]</div>
+<p class="sd-card-text">We can write equation <a class="reference internal" href="#equation-quaternion-multiplication-equation-3">(29)</a> by multiplying by the quaternions <span class="math notranslate nohighlight">\([0,(0,0,0)]\)</span> for the scalar part and <span class="math notranslate nohighlight">\(i = [0, (1, 0, 0)]\)</span>, <span class="math notranslate nohighlight">\(j = [0, (0, 1, 0)]\)</span> and <span class="math notranslate nohighlight">\(k = [0, (0, 0, 1)]\)</span> for the imaginary parts</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    q_1q_2 &amp;= (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2)[1, (0, 0, 0)] \\
+    &amp; \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)[0, (1, 0, 0)] \\
+    &amp; \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)[0, (0, 1, 0)] \\
+    &amp; \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)[0, (0, 0, 1)] \\
+    &amp;= [w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
+    &amp; \quad w_1(x_2, y_2, z_2) + w_2(x_1, y_1, z_2)\\
+    &amp; \quad + (y_1z_2 - z_1y_2, z_1x_2 - x_1z_2, x_1y_2 - y_1x_2)]
+\end{align*} \end{split}\]</div>
+<p class="sd-card-text">Since <span class="math notranslate nohighlight">\((x_1, y_1, z_1) \cdot (x_2, y_2, z_2) = x_1x_2 + y_1y_2 + z_1z_2\)</span> and <span class="math notranslate nohighlight">\((x_1, y_1, z_1) \times (x_2, y_2, z_2) = (y_1z_2 - z_1y_2, z_1x_2 - x_1z_2, x_1y_2 - y_1x_2)\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    q_1q_2 &amp;= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2),  w_1(x_2, y_2, z_2) + w_2(x_1, y_1, z_2) + (x_1, y_1, z_1) \times (x_2, y_2, z_2)]
+\end{align*} \]</div>
+<p class="sd-card-text">Let <span class="math notranslate nohighlight">\(\vec{a} = (x_1, y_1, z_1)\)</span> and <span class="math notranslate nohighlight">\(\vec{b} = (x_2, y_2, z_2)\)</span> such that <span class="math notranslate nohighlight">\(q_1 = [w_1, \vec{a}]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, \vec{b}]\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[ q_1q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].\]</div>
 </div>
 </details><p>For example, given the quaternions <span class="math notranslate nohighlight">\(q_1 = [1, (2, 3, 4)]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [5, (6, 7, 8)]\)</span> then</p>
 <div class="math notranslate nohighlight">
@@ -789,17 +779,21 @@ q1q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
 <section id="quaternion-inverse">
 <h3>Quaternion inverse<a class="headerlink" href="#quaternion-inverse" title="Link to this heading">#</a></h3>
 <p>The <strong>inverse</strong> of a quaternion <span class="math notranslate nohighlight">\(q\)</span> is denoted by <span class="math notranslate nohighlight">\(q^{-1}\)</span> and is defined by</p>
+<div class="math notranslate nohighlight" id="equation-quaternion-inverse-definition">
+<span class="eqno">(30)<a class="headerlink" href="#equation-quaternion-inverse-definition" title="Link to this equation">#</a></span>\[ qq^{-1} = 1. \]</div>
+<p>To calculate the inverse or the quaternion <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span>, we need to consider its <strong>conjugate</strong> of which is denoted by <span class="math notranslate nohighlight">\(q^*\)</span> and is defined by</p>
 <div class="math notranslate nohighlight">
-\[ qq^{-1} = 1. \]</div>
-<p>Multiplying both sides by the quaternion conjugate <span class="math notranslate nohighlight">\(q^*\)</span></p>
+\[ \begin{align*}
+    q^* = [w, (-x, -y, -z)],
+\end{align*} \]</div>
+<p>i.e., the sign of the vector part is negated. Note that multiplying <span class="math notranslate nohighlight">\(q\)</span> by its conjugate <span class="math notranslate nohighlight">\(qq^*=q^*q = |q|^2\)</span>. Multiplying both sides of equation <a class="reference internal" href="#equation-quaternion-inverse-definition">(30)</a> by <span class="math notranslate nohighlight">\(q^*\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
   q^*qq^{-1} &amp;= q^* \\
   |q|^2q^{-1} &amp;= q^* \\
   q^{-1} &amp;= \frac{q^*}{|q|^2}.
 \end{align*} \end{split}\]</div>
-<p>If <span class="math notranslate nohighlight">\(q\)</span> is a unit quaternion then <span class="math notranslate nohighlight">\(|q|=1\)</span> and <span class="math notranslate nohighlight">\(q^{-1} = q^*\)</span>.</p>
-<p>For example, given the quaternion <span class="math notranslate nohighlight">\(q = [1, (2, 3, 4)]\)</span>, then since <span class="math notranslate nohighlight">\(|q| = \sqrt{30}\)</span> then</p>
+<p>If <span class="math notranslate nohighlight">\(q\)</span> is a unit quaternion then <span class="math notranslate nohighlight">\(|q|=1\)</span> and <span class="math notranslate nohighlight">\(q^{-1} = q^*\)</span>. For example, given the quaternion <span class="math notranslate nohighlight">\(q = [1, (2, 3, 4)]\)</span>, then since <span class="math notranslate nohighlight">\(|q| = \sqrt{30}\)</span> then</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
   q^{-1} &amp;= \frac{[1, (-2, -3, -4)]}{30} = [0.033, (-0.067, -0.1, -0.133)].
@@ -846,66 +840,132 @@ qInv * q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 <p>We saw above that we can rotate a number in the complex plane by multiplying by the complex number</p>
 <div class="math notranslate nohighlight">
 \[ z = \cos(\theta) + i\sin(\theta). \]</div>
-<p>We can do similar in 3D space where the rotation of the vector <span class="math notranslate nohighlight">\(\vec{v}\)</span> around a unit vector <span class="math notranslate nohighlight">\(\vec{q}_{\vec{v}}\)</span> by the angle <span class="math notranslate nohighlight">\(\theta\)</span>. We represent <span class="math notranslate nohighlight">\(\vec{v}\)</span> as the pure quaternion <span class="math notranslate nohighlight">\(p = [0, \vec{v}]\)</span> and calculate</p>
-<div class="math notranslate nohighlight">
-\[ p' = qpq^{-1}, \]</div>
-<p>where <span class="math notranslate nohighlight">\(q\)</span> is the <strong>rotation quaternion</strong> defined by</p>
+<p>We can do similar in 3D space using the <strong>rotation quaternion</strong> which is</p>
 <div class="math notranslate nohighlight" id="equation-rotation-quaternion-equation">
-<span class="eqno">(29)<a class="headerlink" href="#equation-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \vec{q}_{\vec{v}}]. \]</div>
-<p>For example, consider the rotation of the vector <span class="math notranslate nohighlight">\(\vec{v} = (1, 0, 0)\)</span> that points along the <span class="math notranslate nohighlight">\(x\)</span>-axis by <span class="math notranslate nohighlight">\(90^\circ\)</span> about the <span class="math notranslate nohighlight">\(y\)</span>-axis. The resulting vector should be <span class="math notranslate nohighlight">\(\vec{v}' = (0, 0, -1)\)</span> (pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis). Here <span class="math notranslate nohighlight">\(p = [0, (1, 0, 0)]\)</span> and the rotation quaternion is</p>
+<span class="eqno">(31)<a class="headerlink" href="#equation-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}} ]. \]</div>
+<p>To apply the rotation quaternion to rotate the vector <span class="math notranslate nohighlight">\(\vec{p}\)</span> we define the quaternion <span class="math notranslate nohighlight">\(p = [0, \vec{p}]\)</span> and calculate</p>
+<div class="math notranslate nohighlight" id="equation-quaternion-rotation-multiplication-equation">
+<span class="eqno">(32)<a class="headerlink" href="#equation-quaternion-rotation-multiplication-equation" title="Link to this equation">#</a></span>\[p' = qpq^{-1},\]</div>
+<p>which returns a quaternion of the form <span class="math notranslate nohighlight">\(p' = [0, \vec{p}']\)</span> where <span class="math notranslate nohighlight">\(\vec{p}'\)</span> is the rotated vector. You don’t need to know why we use equation <a class="reference internal" href="#equation-quaternion-rotation-multiplication-equation">(32)</a>, but if you are curious, click on the dropdown below.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Derivation of the quaternion rotation multiplication order</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Consider the rotation of the vector <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\vec{v}} = (0, 0, 1)\)</span> the points along the <span class="math notranslate nohighlight">\(z\)</span>-axis. The rotation quaternion for this is</p>
 <div class="math notranslate nohighlight">
-\[ q = [\cos(45^\circ), \sin(45^\circ) (0, 1, 0)] = [0.707, (0, 0.707, 0)], \]</div>
-<p>and <span class="math notranslate nohighlight">\(q^{-1} = [0.707, (0, -0.707, 0)]\)</span>. Computing <span class="math notranslate nohighlight">\(qp\)</span> using equation  gives</p>
+\[ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)]. \]</div>
+<p class="sd-card-text">Expressing <span class="math notranslate nohighlight">\(\vec{p}\)</span> as a quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> and multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-product-equation">(40)</a> gives</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    p' = qp &amp;= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
+\end{align*} \]</div>
+<p class="sd-card-text">The scalar part of <span class="math notranslate nohighlight">\(p'\)</span> is zero so we can extract the rotated vector which is <span class="math notranslate nohighlight">\(\vec{p}' = (1.414, 1.414, 0)\)</span>. This rotation is shown below.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/10_quaternion_rotation_1.svg"><img alt="../_images/10_quaternion_rotation_1.svg" src="../_images/10_quaternion_rotation_1.svg" style="width: 450px;" />
+</a>
+</figure>
+<p class="sd-card-text">This example rotated about a vector point along one of the axes, what happens when we rotate by a quaternion that doesn’t? Consider the rotation of the same vector <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by angle <span class="math notranslate nohighlight">\(45^\circ\)</span> about the unit vector <span class="math notranslate nohighlight">\(\hat{\vec{v}} =  (0.707, 0, 0.707)\)</span>, the rotation quaternion is</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
+\end{align*} \]</div>
+<p class="sd-card-text">Calculating <span class="math notranslate nohighlight">\(qp\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align*}
+    p' = qp &amp;= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
+\end{align*} \]</div>
+<p class="sd-card-text">Now the real part is non-zero, so we can’t extract the rotated vector. However, if we multiply <span class="math notranslate nohighlight">\(qp\)</span> by the inverse of the rotation quaternion <span class="math notranslate nohighlight">\(q^{-1}\)</span> on the right we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    p' = qpq^{-1} &amp;= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
+    &amp;= [0, (1, 1.414, 1)]
+\end{align*} \end{split}\]</div>
+<p class="sd-card-text">The real part of <span class="math notranslate nohighlight">\(p'\)</span> is zero, so we can extract the rotated vector which is <span class="math notranslate nohighlight">\(\vec{p}' = (1, 1.414, 1)\)</span>.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/10_quaternion_rotation_2.svg"><img alt="../_images/10_quaternion_rotation_2.svg" src="../_images/10_quaternion_rotation_2.svg" style="width: 450px;" />
+</a>
+</figure>
+<p class="sd-card-text">The plot of this rotation above shows that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span>. This is because we have applied the rotation quaternion twice, so we need to halve the angle and the rotation quaternion is</p>
+<div class="math notranslate nohighlight">
+\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}}].\]</div>
+<p class="sd-card-text">So our rotation quaternion is</p>
+<div class="math notranslate nohighlight">
+\[q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]. \]</div>
+<p class="sd-card-text">Calculating <span class="math notranslate nohighlight">\(p' = qpq^{-1}\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    p' = qpq^{-1} &amp;= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
+    &amp;= [0, (1.707, 1, 0.293)].
+\end{align*}\end{split}\]</div>
+<p class="sd-card-text">The plot of this rotation below shows that this is the correct rotation.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/10_quaternion_rotation_3.svg"><img alt="../_images/10_quaternion_rotation_3.svg" src="../_images/10_quaternion_rotation_3.svg" style="width: 450px;" />
+</a>
+</figure>
+</div>
+</details><p>For example, consider the rotation of the vector <span class="math notranslate nohighlight">\(\vec{p} = (1, 0, 0)\)</span> that points along the <span class="math notranslate nohighlight">\(x\)</span>-axis by <span class="math notranslate nohighlight">\(90^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 1, 0)\)</span> which points along the <span class="math notranslate nohighlight">\(y\)</span>-axis. The resulting vector should be <span class="math notranslate nohighlight">\(\vec{v}' = (0, 0, -1)\)</span>, i.e., a vector pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. Here <span class="math notranslate nohighlight">\(p = [0, (1, 0, 0)]\)</span> and the rotation quaternion and its inverse is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+    q &amp;= [\cos(45^\circ), \sin(45^\circ) (0, 1, 0)] = [0.707, (0, 0.707, 0)], \\
+    q^{-1} &amp;= [0.707, (0, -0.707, 0)]
+\end{align*} \end{split}\]</div>
+<p>Computing <span class="math notranslate nohighlight">\(qpq^{-1}\)</span> gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
   qpq^{-1} &amp;= [0.707, (0, 0.707, 0)][0, (1, 0, 0)][0.707, (0, -0.707, 0)] \\
   &amp;= [0, (0.707, 0, -0.707)][0.707, (0, -0.707, 0)] \\
   &amp;= [0, (0, 0, -1)]
 \end{align*} \end{split}\]</div>
-<p>So <span class="math notranslate nohighlight">\(\vec{v}' = (0, 0, -1)\)</span> as expected.</p>
+<p>So <span class="math notranslate nohighlight">\(\vec{p}' = (0, 0, -1)\)</span> as expected.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Quaternion class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">axis</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">halfAngle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">angle</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">halfAngle</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">axis</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">halfAngle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">angle</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">halfAngle</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">halfAngle</span><span class="p">);</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span>
+<span class="w">        </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">halfAngle</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">axis</span><span class="p">[</span><span class="mf">2</span><span class="p">],</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">normalize</span><span class="p">();</span>
+<span class="nx">rotateVector</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">]);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">qInv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">inverse</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">qInv</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nx">result</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">z</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>And add the following code to the <em><strong>quaternion_calculations.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternion rotation</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">qRot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromAxisAngle</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="mf">90</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">qRotInv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">qRot</span><span class="p">.</span><span class="nx">inverse</span><span class="p">();</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nqRot = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">qRot</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;p = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;qRotInv = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">qRotInv</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">pRotated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">qRot</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">qRotInv</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\npRotated = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">pRotated</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">90</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">qRot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nQuaternion rotation\n-------------------&quot;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;p = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">p</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;qRot = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">qRot</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;pRotated = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">printVector</span><span class="p">(</span><span class="nx">qRot</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">(</span><span class="nx">p</span><span class="p">)));</span>
 </pre></div>
 </div>
 </div>
-<p>Here we have defined the Quaternion class method <code class="docutils literal notranslate"><span class="pre">fromAxisAngle()</span></code> which calculates the rotation quaternion using equation . We have then calculated the quaternions <span class="math notranslate nohighlight">\(q\)</span>, <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q^{-1}\)</span> from the example above and used these to apply quaternion rotaiton. Refresh your browser, and you should see the following added to the webpage</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>qRot = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
-p = [ 0.000, ( 1.000, 0.000, 0.000 ) ]
-qRotInv = [ 0.707, ( 0.000, -0.707, 0.000 ) ]
-
-pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
+<p>Here we have defined two Quaternion class methods <code class="docutils literal notranslate"><span class="pre">fromAxisAngle()</span></code> using equation <a class="reference internal" href="#equation-rotation-quaternion-equation">(31)</a> and <code class="docutils literal notranslate"><span class="pre">rotateVector()</span></code> which calculates the rotation quaternion and rotates a vector using the current quaternion object. We have then used these to rotate the vector <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> about the the vector <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> by <span class="math notranslate nohighlight">\(90^\circ\)</span>. Refresh your browser, and you should see the following added to the webpage</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Quaternion rotation
+-------------------
+p = [ 1.00, 0.00, 0.00 ]
+qRot = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
+pRotated = [ 0.00, 0.00, -1.00 ]
 </pre></div>
 </div>
-<p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to <span class="math notranslate nohighlight">\(qpq^*\)</span>. If the rotation quaternion is <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span>, and <span class="math notranslate nohighlight">\(q\)</span> is a unit quaternion, then the corresponding rotation matrix is</p>
+<section id="quaternion-rotation-matrix">
+<h3>Quaternion rotation matrix<a class="headerlink" href="#quaternion-rotation-matrix" title="Link to this heading">#</a></h3>
+<p>We have been using <span class="math notranslate nohighlight">\(4 \times 4\)</span> matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a <span class="math notranslate nohighlight">\(4 \times 4\)</span> rotation matrix that is equivalent to <span class="math notranslate nohighlight">\(qpq^{-1}\)</span>. If the rotation quaternion is <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span>, and <span class="math notranslate nohighlight">\(q\)</span> is a unit quaternion, then the corresponding rotation matrix is</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-matrix-equation">
-<span class="eqno">(30)<a class="headerlink" href="#equation-quaternion-rotation-matrix-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+<span class="eqno">(33)<a class="headerlink" href="#equation-quaternion-rotation-matrix-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
     Rotate &amp;=
     \begin{pmatrix}
         1 - 2(y^2 + z^2) &amp; 2(xy + wz) &amp; 2(xz - wy) &amp; 0 \\
@@ -917,76 +977,8 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 <p>You don’t need to know the derivation of the quaternion rotation matrix but if you are curious, click on the dropdown below.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">Derivation of quaternion rotation equation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider the rotation of the vector <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the <span class="math notranslate nohighlight">\(z\)</span>-axis. The rotation quaternion for this is</p>
-<div class="math notranslate nohighlight">
-\[ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)], \]</div>
-<p class="sd-card-text">and expressing <span class="math notranslate nohighlight">\(\vec{p}\)</span> as a pure quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span>. Multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-product-equation">(38)</a> gives</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-    qp &amp;=  [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
-\end{align*} \]</div>
-<p class="sd-card-text">Since the scalar part is zero then this is a pure quaternion and the absolute value of the rotated quaternion is</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-    |qp| &amp;= \sqrt{0 ^ 2 + 1.414^2 + 1.414^2 + 0^2} = 2,
-\end{align*} \]</div>
-<p class="sd-card-text">which is the same as the absolute value of <span class="math notranslate nohighlight">\([0, (2, 0, 0)]\)</span>. This rotation is shown in shown in <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#quaternion-rotation-1-figure"><span class="std std-numref">Fig. 120</span></a>.</p>
-<figure class="align-default" id="quaternion-rotation-1-figure">
-<a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_1.svg"><img alt="../_images/B_Quaternion_rotation_1.svg" src="../_images/B_Quaternion_rotation_1.svg" style="width: 450px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 111 </span><span class="caption-text">The quaternion <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> is rotated <span class="math notranslate nohighlight">\(45^\circ\)</span> by multiplying by the rotation quaternion <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ)(1, 0, 0)]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-1-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p class="sd-card-text">In the rotation example shown above used a quaternion that was perpendicular to the vector being rotated. What happens when we rotate by a quaternion that isn’t perpendicular to the vector? Consider the rotation of the same vector <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by angle 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the unit vector <span class="math notranslate nohighlight">\(\hat{\vec{v}} =  (0.707, 0, 0.707)\)</span> which is not perpendicular to <span class="math notranslate nohighlight">\(\vec{p}\)</span>. The rotation quaternion is</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-    q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
-\end{align*} \]</div>
-<p class="sd-card-text">and multiplying by <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span></p>
-<div class="math notranslate nohighlight">
-\[ \begin{align*}
-    qp &amp;= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
-\end{align*} \]</div>
-<p class="sd-card-text">Now we no longer have a pure quaternion since the scalar part is <span class="math notranslate nohighlight">\(-1.414\)</span> which is non-zero. However, if we multiply <span class="math notranslate nohighlight">\(qp\)</span> by the quaternion conjugate <span class="math notranslate nohighlight">\(q^*\)</span> on the right we have</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{align*}
-    qpq^* &amp;= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
-    &amp;= [0, (1, 1.414, 1)]
-\end{align*} \end{split}\]</div>
-<p class="sd-card-text">So <span class="math notranslate nohighlight">\(qpq^*\)</span> is a pure quaternion and its absolute value is</p>
-<div class="math notranslate nohighlight">
-\[ |qpq^*| = \sqrt{1^2 + (1.414)^2 + 1^2} = \sqrt{4} = 2,\]</div>
-<p class="sd-card-text">which is the same as <span class="math notranslate nohighlight">\(|p|\)</span>.</p>
-<figure class="align-default" id="quaternion-rotation-2-figure">
-<a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_2.svg"><img alt="../_images/B_Quaternion_rotation_2.svg" src="../_images/B_Quaternion_rotation_2.svg" style="width: 450px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 112 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(45^\circ), \sin(45^\circ) \hat{\vec{v}}]\)</span></span><a class="headerlink" href="#quaternion-rotation-2-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p class="sd-card-text">Plotting <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(qpq^*\)</span> we see that we have rotated by <span class="math notranslate nohighlight">\(90^\circ\)</span> instead of the desired <span class="math notranslate nohighlight">\(45^\circ\)</span> (<a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#quaternion-rotation-2-figure"><span class="std std-numref">Fig. 121</span></a>). This is because we have multiplied the quaternion <span class="math notranslate nohighlight">\(p\)</span> by two rotation quaternions each using the angle <span class="math notranslate nohighlight">\(45^\circ\)</span>. So to rotate a quaternion <span class="math notranslate nohighlight">\(p\)</span> about a vector <span class="math notranslate nohighlight">\(\hat{\vec{v}}\)</span> by angle <span class="math notranslate nohighlight">\(\theta\)</span> whilst ensuring that we get a pure quaternion we perform <span class="math notranslate nohighlight">\(qpq^*\)</span> where the rotation quaternion is</p>
-<div class="math notranslate nohighlight" id="equation-appendix-rotation-quaternion-equation">
-<span class="eqno">(31)<a class="headerlink" href="#equation-appendix-rotation-quaternion-equation" title="Link to this equation">#</a></span>\[ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}}].\]</div>
-<p class="sd-card-text">Returning to our example of rotating <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by <span class="math notranslate nohighlight">\(45^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\vec{v}} = (0.707, 0, 0.707)\)</span> using equation <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-appendix-rotation-quaternion-equation">(39)</a> we have a rotation quaternion of</p>
-<div class="math notranslate nohighlight">
-\[q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]\]</div>
-<p class="sd-card-text">so calculating <span class="math notranslate nohighlight">\(qpq^*\)</span> we have</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{align*}
-    qpq^* &amp;= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
-    &amp;= [0, (1.707, 1, 0.293)].
-\end{align*}\end{split}\]</div>
-<p class="sd-card-text">The effect of this rotation is shown in <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#quaternion-rotation-3-figure"><span class="std std-numref">Fig. 122</span></a>.</p>
-<figure class="align-default" id="quaternion-rotation-3-figure">
-<a class="reference internal image-reference" href="../_images/B_Quaternion_rotation_3.svg"><img alt="../_images/B_Quaternion_rotation_3.svg" src="../_images/B_Quaternion_rotation_3.svg" style="width: 450px;" />
-</a>
-<figcaption>
-<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Rotating the quaternion <span class="math notranslate nohighlight">\(p=[0, (2, 0, 0)]\)</span> using <span class="math notranslate nohighlight">\(qpq^*\)</span> where <span class="math notranslate nohighlight">\(q = [\cos(\frac{45^\circ}{2}), \sin(\frac{45^\circ}{2}) \hat{\vec{v}}]\)</span>.</span><a class="headerlink" href="#quaternion-rotation-3-figure" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p class="sd-card-text">To derive a <span class="math notranslate nohighlight">\(4 \times 4\)</span> transformation matrix that achieves quaternion rotation, consider the multiplication of the quaternion <span class="math notranslate nohighlight">\(p = [p_w, (p_x, p_y, p_z)]\)</span> on the left by the rotation unit quaternion <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span></p>
+<span class="sd-summary-text">Derivation of quaternion rotation matrix</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">To derive a <span class="math notranslate nohighlight">\(4 \times 4\)</span> transformation matrix that achieves quaternion rotation, consider the multiplication of the quaternion <span class="math notranslate nohighlight">\(p = [p_w, (p_x, p_y, p_z)]\)</span> on the left by the rotation quaternion <span class="math notranslate nohighlight">\(q = [w, (x, y, z)]\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     qp &amp;= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
@@ -994,7 +986,7 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
     &amp;= [wp_w - xp_x - yp_y - zp_z, \\
     &amp;\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">If we write the quaternion <span class="math notranslate nohighlight">\(p\)</span> as a 4-element vector of the form <span class="math notranslate nohighlight">\(\vec{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}\)</span> (note that <span class="math notranslate nohighlight">\(p_w\)</span>, is now at the end of the vector which is synonymous with <a class="reference internal" href="05_Transformations.html#homogeneous-coordinates-section"><span class="std std-ref">homogeneous coordinates</span></a>) then we have</p>
+<p class="sd-card-text">If we write the quaternion <span class="math notranslate nohighlight">\(p\)</span> as a 4-element vector of the form <span class="math notranslate nohighlight">\(\vec{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}\)</span> (note that <span class="math notranslate nohighlight">\(p_w\)</span>, is now at the end of the vector which is synonymous with <a class="reference internal" href="05_Transformations.html#homogeneous-coordinates-section"><span class="std std-ref">homogeneous co-ordinates</span></a>) then we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     qp &amp;=
@@ -1007,7 +999,7 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">and we can express the rotation <span class="math notranslate nohighlight">\(qp\)</span> as the matrix equation</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-q-equation">
-<span class="eqno">(32)<a class="headerlink" href="#equation-quaternion-rotation-q-equation" title="Link to this equation">#</a></span>\[\begin{split} qp = \begin{align*}
+<span class="eqno">(34)<a class="headerlink" href="#equation-quaternion-rotation-q-equation" title="Link to this equation">#</a></span>\[\begin{split} qp = \begin{align*}
     \begin{pmatrix}
          w &amp; -z &amp;  y &amp; x \\
          z &amp;  w &amp; -x &amp; y \\
@@ -1016,10 +1008,10 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Doing similar for multiplying <span class="math notranslate nohighlight">\(p\)</span> on the right by <span class="math notranslate nohighlight">\(q^* = [w, (-x, -y, -z)]\)</span></p>
+<p class="sd-card-text">Doing similar for multiplying <span class="math notranslate nohighlight">\(p\)</span> on the right by the inverse rotation quaternion <span class="math notranslate nohighlight">\(q^{-1} = [w, (-x, -y, -z)]\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    pq^* &amp;= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
+    pq^{-1} &amp;= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
     &amp;= [wp_w - (p_x, p_y, p_z) \cdot ( -x, -y, -z), \\
     &amp; \qquad p_w(-x, -y, -z) + w(p_x, p_y, p_z) + (p_x, p_y, p_z) \times (-x, -y, -z)] \\
     &amp;= [xp_x + yp_y + zp_z + wp_w, \\
@@ -1028,7 +1020,7 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 <p class="sd-card-text">Writing <span class="math notranslate nohighlight">\(p\)</span> the form <span class="math notranslate nohighlight">\(\vec{p} = (p_x, p_y, p_z, p_w)\)</span> as before gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    pq^* =
+    pq^{-1} =
     \begin{pmatrix}
         wp_x - zp_y + yp_z - xp_w \\
         zp_x + wp_y - xp_z - yp_w \\
@@ -1038,8 +1030,8 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 \end{align*} \end{split}\]</div>
 <p class="sd-card-text">which can be expressed by the matrix equation</p>
 <div class="math notranslate nohighlight" id="equation-quaternion-rotation-q2-equation">
-<span class="eqno">(33)<a class="headerlink" href="#equation-quaternion-rotation-q2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
-    pq^* &amp;=
+<span class="eqno">(35)<a class="headerlink" href="#equation-quaternion-rotation-q2-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+    pq^{-1} &amp;=
     \begin{pmatrix}
         w &amp; -z &amp; y &amp; -x \\
         z &amp; w &amp; -x &amp; -y \\
@@ -1048,10 +1040,10 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
     \end{pmatrix}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^*\)</span> from equations <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-rotation-q-equation">(40)</a> and <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-rotation-q2-equation">(41)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^*\)</span></p>
+<p class="sd-card-text">The two matrices for <span class="math notranslate nohighlight">\(qp\)</span> and <span class="math notranslate nohighlight">\(pq^{-1}\)</span> from equations <a class="reference internal" href="#equation-quaternion-rotation-q-equation">(34)</a> and <a class="reference internal" href="#equation-quaternion-rotation-q2-equation">(35)</a> can be combined to give a single matrix <span class="math notranslate nohighlight">\(R\)</span> that performs the quaternion rotation <span class="math notranslate nohighlight">\(qpq^{-1}\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    R &amp;= qp \cdot pq^*
+    R &amp;= qp \cdot pq^{-1}
     =
     \begin{pmatrix}
         w &amp; -z &amp; y &amp; -x \\
@@ -1105,17 +1097,17 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Quaternion class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">matrix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">z</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">xx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">zz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">wx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">wy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">wz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">xz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="nx">yz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">z</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">xx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">zz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">wx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">wy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">wz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">xz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">,</span><span class="w"> </span><span class="nx">yz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">([</span>
-<span class="w">    </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">zz</span><span class="p">),</span><span class="w">  </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wz</span><span class="p">),</span><span class="w">      </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wy</span><span class="p">),</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wz</span><span class="p">),</span><span class="w">      </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">zz</span><span class="p">),</span><span class="w">  </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yz</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wx</span><span class="p">),</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xz</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wy</span><span class="p">),</span><span class="w">      </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wx</span><span class="p">),</span><span class="w">      </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">yy</span><span class="p">),</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">1</span>
-<span class="w">  </span><span class="p">]);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">set</span><span class="p">([</span>
+<span class="w">        </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">zz</span><span class="p">),</span><span class="w">  </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wz</span><span class="p">),</span><span class="w">      </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wy</span><span class="p">),</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wz</span><span class="p">),</span><span class="w">      </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">zz</span><span class="p">),</span><span class="w">  </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yz</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wx</span><span class="p">),</span><span class="w">      </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xz</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">wy</span><span class="p">),</span><span class="w">      </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">yz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">wx</span><span class="p">),</span><span class="w">      </span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">xx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">yy</span><span class="p">),</span><span class="w">  </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">0</span><span class="p">,</span><span class="w">                  </span><span class="mf">1</span>
+<span class="w">    </span><span class="p">]);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1128,38 +1120,43 @@ pRotated = [ 0.000, ( 0.000, 0.000, -1.000 ) ]
 </pre></div>
 </div>
 </div>
-<p>Here we have defined the Quaternion class method <code class="docutils literal notranslate"><span class="pre">matrix()</span></code> that returns the <span class="math notranslate nohighlight">\(4 \times 4\)</span> quaternion rotation matrix for a rotation quaternion. We then print this, as well as the standard <a class="reference internal" href="05_Transformations.html#axis-angle-rotation-section"><span class="std std-ref">axis-angle rotation matrix</span></a> from . Refresh your browser, and you should see the following added to the webpage</p>
+<p>Here we have defined the Quaternion class method <code class="docutils literal notranslate"><span class="pre">matrix()</span></code> that returns the <span class="math notranslate nohighlight">\(4 \times 4\)</span> quaternion rotation matrix for a rotation quaternion. We then print this, as well as the standard axis-angle rotation matrix from equation <a class="reference internal" href="05_Transformations.html#equation-eq-axis-angle-rotation-matrix">(14)</a> that we derived in <a class="reference internal" href="05_Transformations.html#axis-angle-rotation-section"><span class="std std-ref">Lab 5: Transformations</span></a>. Refresh your browser, and you should see the following added to the webpage</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>quaternion rotation matrix =
-  [    0.80     0.51    -0.31     0.00 ]
-  [   -0.31     0.80     0.51     0.00 ]
-  [    0.51    -0.31     0.80     0.00 ]
+  [    0.00     0.00    -1.00     0.00 ]
+  [    0.00     1.00     0.00     0.00 ]
+  [    1.00     0.00     0.00     0.00 ]
   [    0.00     0.00     0.00     1.00 ]
 
 rotation matrix =
-  [    0.80     0.51    -0.31     0.00 ]
-  [   -0.31     0.80     0.51     0.00 ]
-  [    0.51    -0.31     0.80     0.00 ]
+  [    0.00     0.00    -1.00     0.00 ]
+  [    0.00     1.00     0.00     0.00 ]
+  [    1.00     0.00     0.00     0.00 ]
   [    0.00     0.00     0.00     1.00 ]
 </pre></div>
 </div>
-<p>Note that both matrices are equivalent, so why are we bothering with quaternion rotation? Comparing the code for the <code class="docutils literal notranslate"><span class="pre">matrix()</span></code> Quaternion class method with the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> method from the Mat4 class we can see the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix. Efficiency is always a bonus, but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock so it will work for any axis vector.</p>
-<p>So it makes sense to use the quaternion rotation matrix for our axis-angle rotations. Edit the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> Mat4 class method, so that is looks like the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">rotate</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span><span class="w"> </span><span class="n">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rotationQuaternion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">().</span><span class="n">fromAxisAngle</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span><span class="w"> </span><span class="n">angle</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">rotationQuaternion</span><span class="p">.</span><span class="n">matrix</span><span class="p">());</span>
+<p>Note that both matrices are equivalent, so why are we bothering with quaternion rotation? Comparing the code for the <code class="docutils literal notranslate"><span class="pre">matrix()</span></code> Quaternion class method with the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> method from the Mat4 class we can see the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix. Efficiency is always a bonus, but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock so it will work for any configuration.</p>
+<p>So it makes sense to use the quaternion rotation matrix for our axis-angle rotations.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> Mat4 class method, so that is looks like the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">rotationQuaternion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">rotationQuaternion</span><span class="p">.</span><span class="nx">matrix</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
+</section>
 <section id="calculating-a-quaternion-from-euler-angles">
 <h3>Calculating a quaternion from Euler angles<a class="headerlink" href="#calculating-a-quaternion-from-euler-angles" title="Link to this heading">#</a></h3>
-<p>Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in terms of the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles. Since multiplying rotation quaternions achieves rotation, then if <span class="math notranslate nohighlight">\(q_x\)</span>, <span class="math notranslate nohighlight">\(q_y\)</span> and <span class="math notranslate nohighlight">\(q_z\)</span> are rotation quaterions for rotatiing about the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes then</p>
+<p>Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in terms of the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles. Since multiplying rotation quaternions achieves rotation, then if <span class="math notranslate nohighlight">\(q_y\)</span>, <span class="math notranslate nohighlight">\(q_p\)</span> and <span class="math notranslate nohighlight">\(q_r\)</span> are rotation quaterions for rotating about the <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> then the quaternion that gives the camera orientation is calculated using <span class="math notranslate nohighlight">\(q_y q_p q_r\)</span>,where</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-  q_x &amp;= [c_x, (s_x, 0, 0)], \\
-  q_y &amp;= [c_y, (0, s_y, 0)], \\
-  q_z &amp;= [c_z, (0, 0, s_z)].
+  q_y &amp;= [c_y, (s_y, 0, 0)], \\
+  q_p &amp;= [c_p, (0, s_p, 0)], \\
+  q_r &amp;= [c_r, (0, 0, s_r)].
 \end{align*} \end{split}\]</div>
-<p>Since <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> are the angles for rotating about the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes respectively then</p>
+<p>and</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     c_x &amp;= \cos(\tfrac{pitch}{2}), &amp;
@@ -1169,70 +1166,97 @@ rotation matrix =
     s_y &amp;= \sin(\tfrac{yaw}{2}), &amp;
     s_z &amp;= \sin(\tfrac{roll}{2}).
 \end{align*} \end{split}\]</div>
-<p>Rotating about the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span> axes in that order we need to calcualte <span class="math notranslate nohighlight">\(q_zq_yq_x\)</span> (quaternion multiplication applies rotations from right-to-left)</p>
+<p>Therefore,</p>
 <div class="math notranslate nohighlight" id="equation-euler-to-quaternion-equation">
-<span class="eqno">(34)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
-  q_zq_yq_x &amp;= [c_r, (0, 0, s_r)][c_y, (0, s_y, 0)][c_p, (s_p, 0, 0)] \\
-  &amp;= [c_pc_yc_r + s_ps_ys_r, (s_pc_yc_r - c_ps_ys_r, c_ps_yc_r + s_pc_ys_r, c_pc_yc_r - s_ps_yc_r)].
+<span class="eqno">(36)<a class="headerlink" href="#equation-euler-to-quaternion-equation" title="Link to this equation">#</a></span>\[\begin{split} \begin{align*}
+  q_yq_pq_r &amp;= [c_y, (0, s_y, 0)] \, [c_p, (s_p, 0, 0)] \, [c_r, (0, 0, s_r)] \\
+  &amp;= [c_yc_pc_r + s_ys_ps_r, (c_ys_pc_r + s_yc_ps_r, s_yc_pc_r - c_ys_ps_r, c_yc_ps_r - s_ys_pc_r)]
 \end{align*} \end{split}\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following method to the Quaternion class</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">fromEuler</span><span class="p">(</span><span class="nx">yaw</span><span class="p">,</span><span class="w"> </span><span class="nx">pitch</span><span class="p">,</span><span class="w"> </span><span class="nx">roll</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">yaw</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">yaw</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">pitch</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">pitch</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">roll</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">roll</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sr</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sr</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sr</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">cy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">sy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">sp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">cr</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And add the following code to the <em><strong>quaternion_calculations.js</strong></em> file</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">yaw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">q3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromEuler</span><span class="p">(</span><span class="nx">yaw</span><span class="p">,</span><span class="w"> </span><span class="nx">pitch</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nq3 = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">q3</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<p>Refresh your browser, and you should see the following added to the webpage</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
+</pre></div>
+</div>
 </section>
 </section>
 <hr class="docutils" />
 <section id="a-quaternion-camera">
 <h2>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Link to this heading">#</a></h2>
-<p>We are currently using Euler angles rotation to calculate the camera vectors in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method. As such our camera may suffer from gimbal lock, and it also does not allow us to move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> (recall that we needed to limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle between <span class="math notranslate nohighlight">\(-89^\circ\)</span> and <span class="math notranslate nohighlight">\(+89^\circ\)</span>). So it would be advantageous to use quaternion rotations to calculate the view matrix.</p>
-<p>To implement a quaternion camera we calculate a quaternion from the camera Euler angles that represents the current orientation of the camera. We can then use the rotation matrix for this quaternion, along with a translation transformation to move the camera to <span class="math notranslate nohighlight">\((0, 0, 0)\)</span>, to calculate the view matrix, i.e.,</p>
-<div class="math notranslate nohighlight">
-\[ View = Quaternion(pitch, yaw) \cdot Translate(-\vec{eye}) \]</div>
-<p>In the <strong>camera.hpp</strong> header file declare the camera orientation quaternion attribute.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quaternion camera</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
+<p>Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through <span class="math notranslate nohighlight">\(\pm 90^\circ\)</span> to look straight up or down (recall that we needed to limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle between <span class="math notranslate nohighlight">\(\pm 89^\circ\)</span>).</p>
+<p>To implment a quarternion camera we do the following:</p>
+<ul class="simple">
+<li><p>Define a quarternion that describes the current orientation for our camera.</p></li>
+<li><p>Use the orientation quaternion to calculate the <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> camera vectors by rotating the vectors that point along the coordinate axes.</p></li>
+<li><p>Rotate the orientation quaternion based on changes to the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles due to mouse movement.</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>In the <em><strong>camera.js</strong></em> file delete the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> properties from the Camera class constructor (we will no longer need these since the camera vectors are calculated using a quaternion) and add the following quaternion to the constructor</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Orientation quaternion</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>We are going to write a Camera class method for a quaternion camera, add the method declaration to the Camera class</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">quaternionCamera</span><span class="p">();</span>
+<p>In the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method, replace the commands used to calculate the <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> camera vectors with the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Update direction vectors using the orientation quaternion</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">]));</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]));</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]));</span>
 </pre></div>
 </div>
-<p>and define the method in the <strong>camera.cpp</strong> file</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Camera::quaternionCamera</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
-<span class="w">    </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="p">(</span><span class="o">-</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate the view matrix</span>
-<span class="w">    </span><span class="n">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orientation</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">eye</span><span class="p">);</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate the projection matrix</span>
-<span class="w">    </span><span class="n">projection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">perspective</span><span class="p">(</span><span class="n">fov</span><span class="p">,</span><span class="w"> </span><span class="n">aspect</span><span class="p">,</span><span class="w"> </span><span class="n">near</span><span class="p">,</span><span class="w"> </span><span class="n">far</span><span class="p">);</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate camera vectors from view matrix</span>
-<span class="w">    </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-<span class="w">    </span><span class="n">up</span><span class="w">    </span><span class="o">=</span><span class="w">  </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
-<span class="w">    </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">view</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<p>Replace the <code class="docutils literal notranslate"><span class="pre">mouseMove()</span></code> method with the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">mouseMove</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">pointerLockElement</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">yaw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">e</span><span class="p">.</span><span class="nx">movementX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">e</span><span class="p">.</span><span class="nx">movementY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Yaw quaternion (rotate around worldUp)</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">yawQuat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">,</span><span class="w"> </span><span class="nx">yaw</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Pitch quaternion (rotate around camera&#39;s local right axis)</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">pitchQuat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">().</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="nx">pitch</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Apply rotations</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">yawQuat</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">pitchQuat</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">orientation</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">normalize</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here the camera orientation quaternion is calculated from the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> Euler angles. We then combine a translation by <span class="math notranslate nohighlight">\(-\vec{eye}\)</span> so that the camera is at the origin and then rotate using the rotation matrix for the orientation quaternion (remember this is how the view matrix was derived in <a class="reference internal" href="06_3D_worlds.html#view-matrix-section"><span class="std std-ref">6. 3D Worlds</span></a>). We also need to calculate the <span class="math notranslate nohighlight">\(\vec{right}\)</span>, <span class="math notranslate nohighlight">\(\vec{up}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> camera vectors using the orientation quaternion. Recall that the view matrix given in equation <code class="xref eq docutils literal notranslate"><span class="pre">lookat-matrix-equation</span></code> is</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} View = \begin{pmatrix}
-        \vec{right}_x &amp; \vec{up}_x &amp; -\vec{front}_x &amp; 0 \\
-        \vec{right}_y &amp; \vec{up}_y &amp; -\vec{front}_y &amp; 0 \\
-        \vec{right}_z &amp; \vec{up}_z &amp; -\vec{front}_z &amp; 0 \\
-        -\vec{eye} \cdot \vec{right} &amp; -\vec{eye} \cdot \vec{up} &amp; \vec{eye} \cdot \vec{front} &amp; 1 \\
-    \end{pmatrix} \end{split}\]</div>
-<p>So we just extract <span class="math notranslate nohighlight">\(\vec{right}\)</span>, <span class="math notranslate nohighlight">\(\vec{up}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> from the first three columns of the view matrix.</p>
-<p>We also need to change the initial <span class="math notranslate nohighlight">\(yaw\)</span> angle from <span class="math notranslate nohighlight">\(-90^\circ\)</span> to <span class="math notranslate nohighlight">\(0^\circ\)</span>. In the <strong>camera.hpp</strong> change the <span class="math notranslate nohighlight">\(yaw\)</span> angle declaration to the following</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
-</pre></div>
 </div>
-<p>Finally, replace the call to the <code class="docutils literal notranslate"><span class="pre">calculateMatrices()</span></code> method in the <strong>Lab10_Quaternions.cpp</strong> file with the following so that we are now using our quaternion camera.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">camera</span><span class="p">.</span><span class="n">quaternionCamera</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Compile and run the code and you will see that you can move the camera in any orientation and we can move the camera through 90<span class="math notranslate nohighlight">\(^\circ\)</span> or 270<span class="math notranslate nohighlight">\(^\circ\)</span> without the orientation flipping around.</p>
+<p>Here we have made the changes to implement a quaternion camera. In <code class="docutils literal notranslate"><span class="pre">update()</span></code> we use the orientation quaterion to rotate the vectors <span class="math notranslate nohighlight">\((0, 0, -1)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> to give the <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> camera vectors (note that we rotate <span class="math notranslate nohighlight">\((0, 0, -1)\)</span> and not <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> since in WebGL the camera is pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis). The <code class="docutils literal notranslate"><span class="pre">mouseMove()</span></code> method has been updated so that two quaternions, <code class="docutils literal notranslate"><span class="pre">yawQuat</span></code> and <code class="docutils literal notranslate"><span class="pre">pitchQuat</span></code> have been created to perform left-to-right and up-and-down camera rotations. These are multiplied by the orientation quaterion to apply the rotations.</p>
+<p>Load <em><strong>index.html</strong></em> in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through <span class="math notranslate nohighlight">\(\pm 90^\circ\)</span>.</p>
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/10_Camera_with_quaternion.mp4" type="video/mp4">
+    <source src="../_static/videos/10_quaternion_camera.mp4" type="video/mp4">
 </video>
 </center>
 </section>
@@ -1244,7 +1268,7 @@ rotation matrix =
 <a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 114 </span><span class="caption-text">Linear interpolation between two points.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Linear interpolation between two points.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>If <span class="math notranslate nohighlight">\(\vec{v}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{v}_2\)</span> are two points then another point, <span class="math notranslate nohighlight">\(\vec{v}_t\)</span>, that lies on the line between <span class="math notranslate nohighlight">\(\vec{v}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{v}_2\)</span> is calculated using</p>
@@ -1256,19 +1280,19 @@ rotation matrix =
 <a class="reference internal image-reference" href="../_images/10_SLERP.svg"><img alt="../_images/10_SLERP.svg" src="../_images/10_SLERP.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 115 </span><span class="caption-text">SLERP interpolation between two points on a sphere.</span><a class="headerlink" href="#a-slerp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 112 </span><span class="caption-text">SLERP interpolation between two points on a sphere.</span><a class="headerlink" href="#a-slerp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 115</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
+<p>Consider <a class="reference internal" href="#a-slerp-figure"><span class="std std-numref">Fig. 112</span></a> where <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it’s very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion <span class="math notranslate nohighlight">\(q_t\)</span> represents another quaternion that is partway between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> calculated using</p>
 <div class="math notranslate nohighlight" id="equation-slerp-equation">
-<span class="eqno">(35)<a class="headerlink" href="#equation-slerp-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
+<span class="eqno">(37)<a class="headerlink" href="#equation-slerp-equation" title="Link to this equation">#</a></span>\[ \begin{align*}
     \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
 \end{align*}, \]</div>
 <p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1 and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two quaternions and is calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right),\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> is the dot product between the two quaternions and calculated in the same way as the <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product between two 4-element vectors</span></a>. Sometimes <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(35)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
+<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(37)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
 <p>Add a method declaration to the Maths class in the <code class="docutils literal notranslate"><span class="pre">maths.hpp</span></code> file</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="nf">SLERP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
 </pre></div>
@@ -1323,10 +1347,10 @@ rotation matrix =
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 116 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 113 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\vec{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 116</span></a>.</p>
+<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\vec{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 113</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[ View = Translate(\vec{offset}) \cdot View \]</div>
 <p>The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
@@ -1343,12 +1367,12 @@ rotation matrix =
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 117</span></a>).</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 114</span></a>).</p>
 <figure class="align-default" id="third-person-camera-figure-2">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 117 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 114 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1446,12 +1470,12 @@ rotation matrix =
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternions">Quaternions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarternion-magnitude">Quarternion magnitude</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-quaternion">Unit quaternion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-conjugate">Quaternion conjugate</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplying-quaternions">Multiplying quaternions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-inverse">Quaternion inverse</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotations-using-quaternions">Rotations using quaternions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quaternion-rotation-matrix">Quaternion rotation matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-a-quaternion-from-euler-angles">Calculating a quaternion from Euler angles</a></li>
 </ul>
 </li>

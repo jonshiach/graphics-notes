@@ -17,26 +17,26 @@ Create a folder called ***Lab 2 Basic Shapes*** inside which create an HTML file
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lab 2 - Basic Shapes in WebGL</title>
-    <style>
-      html, head, body {
-        margin: 0;
-        padding: 10px;
-        background-color: #000;
-      }
-      #canvas {
-        width: 800px;
-        height: 600px;
-        background-color: #8AcE00;
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="canvas" width="800px" height="600px"></canvas>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lab 2 - Basic Shapes in WebGL</title>
+        <style>
+            html, head, body {
+                margin: 0;
+                padding: 10px;
+                background-color: #000;
+            }
+            #canvas {
+                width: 800px;
+                height: 600px;
+                background-color: #8AcE00;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="800px" height="600px"></canvas>
+    </body>
 </html>
 ```
 
@@ -62,14 +62,14 @@ Inside your ***Lab 2 Basic Shapes*** folder, create a JavaScript file ***basic_s
 // Main function
 function main() {
 
-  // Setup WebGL
-  const canvas = document.getElementById("canvas");
-  const gl = canvas.getContext("webgl2");
-  if (!gl) throw new Error("WebGL not supported");
-  
-  gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.2, 0.2, 0.2, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+    // Setup WebGL
+    const canvas = document.getElementById("canvas");
+    const gl = canvas.getContext("webgl2");
+    if (!gl) throw new Error("WebGL not supported");
+    
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.2, 0.2, 0.2, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
 }
 
@@ -95,8 +95,8 @@ Edit the `<body>` tag near the bottom of the ***index.html*** file so that it lo
 
 ```text
 <body>
-  <canvas id="canvas" width="800px" height="600px"></canvas>
-  <script src="basic_shapes.js"></script>
+    <canvas id="canvas" width="800px" height="600px"></canvas>
+    <script src="basic_shapes.js"></script>
 </body>
 ```
 
@@ -152,10 +152,10 @@ Enter the following after we have cleared the canvas.
 ```javascript
 // Define triangle vertices
 const vertices = new Float32Array([
-  // x    y    z
-  -0.5, -0.5, 0.0, // vertex 0       2
-   0.5, -0.5, 0.0, // vertex 1     /   \
-   0.0,  0.5, 0.0, // vertex 2    0 --- 1
+    // x    y    z
+    -0.5, -0.5, 0.0, // vertex 0       2
+     0.5, -0.5, 0.0, // vertex 1     /   \
+     0.0,  0.5, 0.0, // vertex 2    0 --- 1
 ]);
 ```
 
@@ -202,14 +202,14 @@ The next step is create a shader program that runs on the GPU and uses WebGL to 
 
 The vertex shader is called once for each vertex and transforms the vertex co-ordinates from model space (the local object co-ordinates) to the clip space that defines the region that is displayed on the canvas. We have defined our triangle using co-ordinates between $-1$ and $1$, so they are already in clip space and our vertex shader just needs to output each vertex. The shader code for a simple vertex shader is
 
-```c
+```glsl
 #version 300 es
 precision mediump float;
 
 in vec3 aPosition;
 
 void main() {
-  gl_Position = vec4(aPosition, 1.0);
+    gl_Position = vec4(aPosition, 1.0);
 }
 ```
 
@@ -239,7 +239,7 @@ precision mediump float;
 in vec3 aPosition;
 
 void main() {
-  gl_Position = vec4(aPosition, 1.0);
+    gl_Position = vec4(aPosition, 1.0);
 }`;
 ```
 
@@ -252,8 +252,8 @@ gl.shaderSource(vertexShader, vertexShaderSource);
 gl.compileShader(vertexShader);
 
 if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-  console.log(`Error compiling vertex shader:\n`, gl.getShaderInfoLog(vertexShader));
-  gl.deleteShader(vertexShader);
+    console.log(`Error compiling vertex shader:\n`, gl.getShaderInfoLog(vertexShader));
+    gl.deleteShader(vertexShader);
 }
 ```
 
@@ -267,14 +267,14 @@ As well as defining a string for the vertex shader code, we then create a vertex
 
 The other shader we need to write is the fragment shader. This takes in information on a fragment that has been identified as being part of the primitive (i.e., triangle) and determines the colour that it will be rendered. We are going to render all fragments in the triangle as red, so the fragment shader code is as follows.
 
-```c
+```glsl
 #version 300 es
 precision mediump float;
 
 out vec4 fragColour;
 
 void main() {
-  fragColour = vec4(1.0, 0.0, 0.0, 1.0);
+    fragColour = vec4(1.0, 0.0, 0.0, 1.0);
 }
 ```
 
@@ -294,7 +294,7 @@ precision mediump float;
 out vec4 fragColour;
 
 void main() {
-  fragColour = vec4(1.0, 0.0, 0.0, 1.0);
+    fragColour = vec4(1.0, 0.0, 0.0, 1.0);
 }`;
 ```
 
@@ -307,8 +307,8 @@ gl.shaderSource(fragmentShader, fragmentShaderSource);
 gl.compileShader(fragmentShader);
 
 if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-  console.log(`Error compiling fragment shader:\n`, gl.getShaderInfoLog(fragmentShader));
-  gl.deleteShader(fragmentShader);
+    console.log(`Error compiling fragment shader:\n`, gl.getShaderInfoLog(fragmentShader));
+    gl.deleteShader(fragmentShader);
 }
 ```
 
@@ -335,7 +335,7 @@ gl.attachShader(program, fragmentShader);
 gl.linkProgram(program);
 
 if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-  console.log(`Failed to link WebGL program : ${gl.getProgramInfoLog(program)}`);
+    console.log(`Failed to link WebGL program : ${gl.getProgramInfoLog(program)}`);
 return;
 }
 ```
@@ -372,17 +372,17 @@ Earlier we created the VBO in the GPU and copied across our vertex data. We now 
 Enter the following after you have set the shader program.
 
 ```javascript
-// Tell WebGL how to read data from the vertex buffer  
+// Tell WebGL how to read data from the vertex buffer    
 const positionLocation = gl.getAttribLocation(program, "aPosition");
 gl.enableVertexAttribArray(positionLocation);
 gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
 gl.vertexAttribPointer(
-  positionLocation, // index
-  3,                // size
-  gl.FLOAT,         // type
-  false,            // normalized
-  0,                // stride
-  0);               // offset
+    positionLocation, // index
+    3,                // size
+    gl.FLOAT,         // type
+    false,            // normalized
+    0,                // stride
+    0);               // offset
 ```
 
 ::::
@@ -456,46 +456,46 @@ Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Bas
 ```javascript
 // Initialize WebGL context
 function initWebGL(canvas) {
-  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
-  if (!gl) throw new Error("WebGL not supported");
-  
-  gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.2, 0.2, 0.2, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  
-  return gl;
+    const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+    if (!gl) throw new Error("WebGL not supported");
+    
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.2, 0.2, 0.2, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    
+    return gl;
 }
 
 // Compile a shader
 function compileShader(gl, source, type) {
-  const shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(shader));
-    gl.deleteShader(shader);
-    return null;
-  }
-  return shader;
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+    return shader;
 }
 
 // Create shader program
 function createProgram(gl, vertexSource, fragmentSource) {
-  const vertexShader = compileShader(gl, vertexSource, gl.VERTEX_SHADER);
-  const fragmentShader = compileShader(gl, fragmentSource, gl.FRAGMENT_SHADER);
-  
-  const program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error(gl.getProgramInfoLog(program));
-    gl.deleteProgram(program);
-    return null;
-  }
-  return program;
+    const vertexShader = compileShader(gl, vertexSource, gl.VERTEX_SHADER);
+    const fragmentShader = compileShader(gl, fragmentSource, gl.FRAGMENT_SHADER);
+    
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+    }
+    return program;
 }
 ```
 
@@ -548,7 +548,7 @@ So we are able to draw a triangle using WebGL of a single colour. Whilst this is
 
 Our current vertex shader simply takes in an input of a 3-element vector containing the $(x, y, z)$ vertex co-ordinates and outputs a 4-element vector of these co-ordinates to the fragment shader. The vertex co-ordinates are outputted using the `gl_Position` variable which is a required output and is not specifically declared. To add colour data to our co-ordinates we need to declare a second 3-element input vector for the attribute colour as well as an output vector for the vertex colour. So our vertex shader is
 
-```c
+```glsl
 #version 300 es
 precision mediump float;
 
@@ -558,16 +558,16 @@ in vec3 aColour;
 out vec3 vColour;
 
 void main() {
-  gl_Position = vec4(aPosition, 1.0);
+    gl_Position = vec4(aPosition, 1.0);
 
-  // Output vertex colour
-  vColour = aColour;
+    // Output vertex colour
+    vColour = aColour;
 }
 ```
 
 As for the fragment shader, we will simply output the colour data of the vertex. Our current fragment shader does not have an input declared because it expects `gl_Position` by default, so we need to add an input declaration for the vertex colour outputted by the vertex shader and use this to create the 4-element RGBA output vector.
 
-```c
+```glsl
 #version 300 es
 precision mediump float;
 
@@ -576,7 +576,7 @@ in vec3 vColour;
 out vec4 fragColour;
 
 void main() {
-  fragColour = vec4(vColour, 1.0);
+    fragColour = vec4(vColour, 1.0);
 }
 ```
 
@@ -598,10 +598,10 @@ Amend the `vertices` array so that it looks like the following
 ```javascript
 // Define triangle vertices
 const vertices = new Float32Array([
- // x     y    z      r    g    b
- -0.5, -0.5, 0.0,    1.0, 0.0, 0.0, // vertex 0       2
-  0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1     /   \
-  0.0,  0.5, 0.0,    0.0, 0.0, 1.0, // vertex 2    0 --- 1
+    // x    y    z       R    G    B
+    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0, // vertex 0     2
+     0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1   /   \
+     0.0,  0.5, 0.0,    0.0, 0.0, 1.0, // vertex 2  0 --- 1
 ]);
 ```
 
@@ -632,13 +632,13 @@ Change the `gl.vertexAttribPointer();` function so that it looks like the follow
 
 ```javascript
 gl.vertexAttribPointer(
-  positionLocation,                    // index
-  3,                                   // size
-  gl.FLOAT,                            // type
-  false,                               // normalized
-  6 * Float32Array.BYTES_PER_ELEMENT,  // stride
-  0                                    // offset
-);          
+    positionLocation, // index
+    3,                // size
+    gl.FLOAT,         // type
+    false,            // normalized
+    6 * Float32Array.BYTES_PER_ELEMENT,  // stride
+    0                 // offset
+);                    
 ```
 
 ::::
@@ -661,12 +661,12 @@ Enter the following code after we told WebGL how to read the co-ordinate data.
 const colourLocation = gl.getAttribLocation(program, "aColour");
 gl.enableVertexAttribArray(colourLocation);
 gl.vertexAttribPointer(
-  colourLocation,                      // index
-  3,                                   // size
-  gl.FLOAT,                            // type
-  false,                               // normalized
-  6 * Float32Array.BYTES_PER_ELEMENT,  // stride
-  3 * Float32Array.BYTES_PER_ELEMENT   // offset
+    colourLocation, // index
+    3,              // size
+    gl.FLOAT,       // type
+    false,          // normalized
+    6 * Float32Array.BYTES_PER_ELEMENT, // stride
+    3 * Float32Array.BYTES_PER_ELEMENT  // offset
 );
 ```
 
@@ -699,13 +699,13 @@ Enter the following code after we defined the triangle vertex buffer.
 ```javascript
 // Define square vertices
 const squareVertices = new Float32Array([
-  // x  y    z       r    g    b             
-  0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     3 -- 2
-  0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
-  0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2     | /  | 
-  0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     0 -- 1 
-  0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2
-  0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3
+    // x  y    z       R    G    B                         
+    0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0  3 -- 2
+    0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1  |  / |        
+    0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2  | /  | 
+    0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0  0 -- 1 
+    0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2
+    0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3
 ]);
 
 // Create VBO for the square
@@ -763,32 +763,32 @@ Copy and paste the following function definition to the ***webGLUtils.js*** file
 ```javascript
 // Create VAO
 function createVao(gl, program, vertices) {
-  
-  // Create VAO
-  const vao = gl.createVertexArray();
-  gl.bindVertexArray(vao);
+    
+    // Create VAO
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
 
-  // Create VBO
-  const vbo = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    // Create VBO
+    const vbo = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
-  // Position attribute
-  const stride = 6 * Float32Array.BYTES_PER_ELEMENT;
-  const positionLocation = gl.getAttribLocation(program, "aPosition");
-  gl.enableVertexAttribArray(positionLocation);
-  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, stride, 0);
+    // Position attribute
+    const stride = 6 * Float32Array.BYTES_PER_ELEMENT;
+    const positionLocation = gl.getAttribLocation(program, "aPosition");
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, stride, 0);
 
-  // Colour attribute
-  let offset = 3 * Float32Array.BYTES_PER_ELEMENT;
-  const colourLocation = gl.getAttribLocation(program, "aColour");
-  gl.enableVertexAttribArray(colourLocation);
-  gl.vertexAttribPointer(colourLocation, 3, gl.FLOAT, false, stride, offset);
+    // Colour attribute
+    let offset = 3 * Float32Array.BYTES_PER_ELEMENT;
+    const colourLocation = gl.getAttribLocation(program, "aColour");
+    gl.enableVertexAttribArray(colourLocation);
+    gl.vertexAttribPointer(colourLocation, 3, gl.FLOAT, false, stride, offset);
 
-  // Unbind VAO
-  gl.bindVertexArray(null);
+    // Unbind VAO
+    gl.bindVertexArray(null);
 
-  return vao;
+    return vao;
 }
 ```
 
@@ -822,46 +822,46 @@ Your `main()` function should now look something like the following
 ```javascript
 function main() {
 
-  // Setup WebGL
-  const canvas = document.getElementById("canvas");
-  const gl = initWebGL(canvas);
+    // Setup WebGL
+    const canvas = document.getElementById("canvas");
+    const gl = initWebGL(canvas);
 
-  // Create WebGL program 
-  const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
+    // Create WebGL program 
+    const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
 
-  // Set the shader program
-  gl.useProgram(program);
+    // Set the shader program
+    gl.useProgram(program);
 
-  // Define triangle vertices
-  const vertices = new Float32Array([
-    // x     y    z      r    g    b
-    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0, // vertex 0       2
-     0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1     /   \
-     0.0,  0.5, 0.0,    0.0, 0.0, 1.0, // vertex 2    0 --- 1
-  ]);
+    // Define triangle vertices
+    const vertices = new Float32Array([
+        // x    y    z       r    g     b
+        -0.5, -0.5, 0.0,    1.0, 0.0, 0.0, // vertex 0     2
+         0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1   /   \
+         0.0,  0.5, 0.0,    0.0, 0.0, 1.0, // vertex 2  0 --- 1
+    ]);
 
-  // Define square vertices
-  const squareVertices = new Float32Array([
-    // x  y    z       r    g    b             
-    0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     3 -- 2
-    0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
-    0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2     | /  | 
-    0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     0 -- 1 
-    0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2
-    0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3
-  ]);
+    // Define square vertices
+    const squareVertices = new Float32Array([
+        // x  y    z       R    G    B                         
+        0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0  3 -- 2
+        0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1  |  / |        
+        0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2  | /  | 
+        0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0  0 -- 1 
+        0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2
+        0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3
+    ]);
 
-  // Create VAOs
-  const triangleVao = createVao(gl, program, vertices);
-  const squareVao = createVao(gl, program, squareVertices);
+    // Create VAOs
+    const triangleVao = createVao(gl, program, vertices);
+    const squareVao = createVao(gl, program, squareVertices);
 
-  // Draw the triangle
-  gl.bindVertexArray(triangleVao);
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // Draw the triangle
+    gl.bindVertexArray(triangleVao);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-  // Draw the square
-  gl.bindVertexArray(squareVao);
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    // Draw the square
+    gl.bindVertexArray(squareVao);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 ```
 
@@ -883,11 +883,11 @@ Edit the code used to define the vertices for the square so that it looks like t
 ```javascript
 // Define square vertices
 const squareVertices = new Float32Array([
- // x  y    z       r    g    b             
- 0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     3 -- 2
- 0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
- 0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2     | /  | 
- 0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3     0 -- 1 
+    // x  y    z       R    G    B                         
+    0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0  3 -- 2
+    0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1  |  / |        
+    0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2  | /  | 
+    0.5, 0.6, 0.0,    1.0, 1.0, 1.0, // vertex 3  0 -- 1 
 ]);
 ```
 
@@ -896,13 +896,13 @@ And add the following arrays after the square vertices have been defined.
 ```javascript
 // Define triangle indices
 const indices = new Uint16Array([
- 0, 1, 2
+   0, 1, 2
 ]);
 
 // Define square indices
 const squareIndices = new Uint16Array([
- 0, 1, 2,  // lower-right triangle
- 0, 2, 3,  // upper-left triangle
+   0, 1, 2, // lower-right triangle
+   0, 2, 3, // upper-left triangle
 ]);
 ```
 
@@ -991,7 +991,7 @@ We can access individual elements of the `aPosition` vectors using `aPosition.x`
 :::
 
 2. Use two triangles to draw a green rectangle with lower-left vertex at $(-0.5, -0.5, 0)$ and the upper-right vertex at $(0.5, 0.5, 0)$.
-  
+    
 :::{figure} ../_images/02_ex2.png
 :width: 60%
 :::
@@ -1014,8 +1014,8 @@ The $x$ and $y$ vertices of the two outer vertices are
 
 :::{math}
 \begin{align*}
-  x_i &= r \cos(\theta_i), & y_i &= r \sin(\theta_i), \\
-  x_{i+1} &= r \cos(\theta_{i+1}), & y_{i+1} &= r \sin(\theta_{i+1}),
+    x_i &= r \cos(\theta_i), & y_i &= r \sin(\theta_i), \\
+    x_{i+1} &= r \cos(\theta_{i+1}), & y_{i+1} &= r \sin(\theta_{i+1}),
 \end{align*}
 :::
 
@@ -1023,8 +1023,8 @@ where $r$ is the radius and the angles $\theta_i$ and $\theta_{i+1}$ are calcula
 
 :::{math}
 \begin{align*}
-  \theta_i &= \frac{i2\pi}{6}, \\
-  \theta_{i+1} &= \frac{(i+1)2\pi}{6}.
+    \theta_i &= \frac{i2\pi}{6}, \\
+    \theta_{i+1} &= \frac{(i+1)2\pi}{6}.
 \end{align*}
 :::
 
@@ -1041,12 +1041,12 @@ where $r$ is the radius and the angles $\theta_i$ and $\theta_{i+1}$ are calcula
 ## Video walkthrough
 
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/E1w1_Cy8_uI?si=9Af9TH0qz3F-p05a"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
 ></iframe>
