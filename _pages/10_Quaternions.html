@@ -62,7 +62,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_pages/10_Quaternions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Appendix A: Complex Numbers and Quaternions" href="A1_Complex_numbers_and_quaternions.html" />
     <link rel="prev" title="Lab 9: Normal Mapping" href="09_Normal_mapping.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -198,10 +197,6 @@
 <li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">Lab 8: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 10: Quaternions</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -853,7 +848,7 @@ qInv * q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 <p class="sd-card-text">Consider the rotation of the vector <span class="math notranslate nohighlight">\(\vec{p} = (2, 0, 0)\)</span> by 45<span class="math notranslate nohighlight">\(^\circ\)</span> about the vector <span class="math notranslate nohighlight">\(\hat{\vec{v}} = (0, 0, 1)\)</span> the points along the <span class="math notranslate nohighlight">\(z\)</span>-axis. The rotation quaternion for this is</p>
 <div class="math notranslate nohighlight">
 \[ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)]. \]</div>
-<p class="sd-card-text">Expressing <span class="math notranslate nohighlight">\(\vec{p}\)</span> as a quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> and multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-product-equation">(40)</a> gives</p>
+<p class="sd-card-text">Expressing <span class="math notranslate nohighlight">\(\vec{p}\)</span> as a quaternion we have <span class="math notranslate nohighlight">\(p = [0, (2, 0, 0)]\)</span> and multiplying <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> using equation <a class="reference internal" href="A1_Complex_numbers_and_quaternions.html#equation-quaternion-product-equation">()</a> gives</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     p' = qp &amp;= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
@@ -1263,7 +1258,7 @@ rotation matrix =
 <hr class="docutils" />
 <section id="slerp">
 <h2>SLERP<a class="headerlink" href="#slerp" title="Link to this heading">#</a></h2>
-<p>The another advantage that quaternions have over Euler angles is that we can interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
+<p>Another advantage that quaternions have over Euler angles is that we can easily interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.</p>
 <figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/10_LERP.svg"><img alt="../_images/10_LERP.svg" src="../_images/10_LERP.svg" style="width: 300px;" />
 </a>
@@ -1291,53 +1286,35 @@ rotation matrix =
 <p>where <span class="math notranslate nohighlight">\(t\)</span> is a value between 0 and 1 and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two quaternions and is calculated using</p>
 <div class="math notranslate nohighlight">
 \[ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right),\]</div>
-<p>where <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> is the dot product between the two quaternions and calculated in the same way as the <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product between two 4-element vectors</span></a>. Sometimes <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(37)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
-<p>Add a method declaration to the Maths class in the <code class="docutils literal notranslate"><span class="pre">maths.hpp</span></code> file</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="nf">SLERP</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>and define the method in the <code class="docutils literal notranslate"><span class="pre">maths.cpp</span></code> file</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// SLERP</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="nf">Maths::SLERP</span><span class="p">(</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q1</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q2</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Calculate cos(theta)</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">cosTheta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// If q1 and q2 are close together return q2 to avoid divide by zero errors</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cosTheta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.9999f</span><span class="p">)</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">q2</span><span class="p">;</span>
-
-<span class="w">    </span><span class="c1">// Avoid taking the long path around the sphere by reversing sign of q2</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cosTheta</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">q2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">(</span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
-<span class="w">        </span><span class="n">cosTheta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">cosTheta</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1">// Calculate SLERP</span>
-<span class="w">    </span><span class="n">Quaternion</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="n">cosTheta</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">((</span><span class="mf">1.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
-<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
-<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q2</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Then to apply SLERP replace the code used to calculate the <code class="docutils literal notranslate"><span class="pre">orientation</span></code> quaternion in the <code class="docutils literal notranslate"><span class="pre">quaternionCamera()</span></code> method with the following.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate camera orientation quaternion from the Euler angles</span>
-<span class="n">Quaternion</span><span class="w"> </span><span class="nf">newOrientation</span><span class="p">(</span><span class="o">-</span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
-
-<span class="c1">// Apply SLERP</span>
-<span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Maths</span><span class="o">::</span><span class="n">SLERP</span><span class="p">(</span><span class="n">orientation</span><span class="p">,</span><span class="w"> </span><span class="n">newOrientation</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Here we use a temporary quaternion <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code> which is calculated using the <span class="math notranslate nohighlight">\(pitch\)</span>, <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> Euler angles of the camera and then used SLERP to interpolate between <code class="docutils literal notranslate"><span class="pre">orientation</span></code> and <code class="docutils literal notranslate"><span class="pre">newOrientation</span></code>. Note that here we are using <span class="math notranslate nohighlight">\(t = 0.2\)</span>. This parameter determines how far towards the new orientation we are interpolating. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.</p>
+<p>where <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> is the dot product between the two quaternions and calculated in the same way as the <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product between two 4-element vectors</span></a>. Sometimes <span class="math notranslate nohighlight">\(q_1 \cdot q_2\)</span> returns a negative result meaning that <span class="math notranslate nohighlight">\(\theta\)</span> we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion <span class="math notranslate nohighlight">\(-q\)</span> is the same orientation as <span class="math notranslate nohighlight">\(q\)</span>. Another consideration is when <span class="math notranslate nohighlight">\(\theta\)</span> is very small then <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> in equation <a class="reference internal" href="#equation-slerp-equation">(37)</a> can be rounded to zero causing a divide by zero error. To get around this we can use LERP between <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span>.</p>
+<p>To calculate SLERP between two quaternions <span class="math notranslate nohighlight">\(q_1 = [w_1, (x_1, y_1, z_1)]\)</span> and <span class="math notranslate nohighlight">\(q_2 = [w_2, (x_2, y_2, z_2)]\)</span> we do the following:</p>
+<ul class="simple">
+<li><p>Calculate <span class="math notranslate nohighlight">\(\cos(\theta) = w_1w_2 + x_1x_2 + y_1y_2 + z_1z_2\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\cos(\theta) &lt; 0\)</span> then <span class="math notranslate nohighlight">\(q_2 = -q_2\)</span> and <span class="math notranslate nohighlight">\(\cos(\theta) = -\cos(\theta)\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\cos(\theta) &gt; 0.9995\)</span> (i.e., <span class="math notranslate nohighlight">\(q_1\)</span> and <span class="math notranslate nohighlight">\(q_2\)</span> are very close) use LERP</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[q_t = q_1 + t  (q_2 - q_1).\]</div>
+<ul class="simple">
+<li><p>Else use SLERP</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2, \]</div>
+<p>where <span class="math notranslate nohighlight">\(t =  1 - \exp(-rotation \, speed \times \Delta t)\)</span> for exponential damping.</p>
+<p>To implement smoothing in a first-person camera we calculate a target quaternion using the mouse input and then use SLERP to calculate the interpolated quaternion between the current camera quaternion and the target quaternion (<a class="reference internal" href="#slerped-camera-figure"><span class="std std-numref">Fig. 113</span></a>). This interpolated quaternion becomes the camera quaternion and is used to perform the rotations on the camera vectors.</p>
+<figure class="align-default" id="slerped-camera-figure">
+<a class="reference internal image-reference" href="../_images/10_slerped_camera.svg"><img alt="../_images/10_slerped_camera.svg" src="../_images/10_slerped_camera.svg" style="width: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Camera smoothing using SLERP.</span><a class="headerlink" href="#slerped-camera-figure" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The effects of applying SLERP to smooth the camera rotation can be seen in the video below.</p>
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/10_slerped_camera.mp4" type="video/mp4">
+</video>
+</center>
 </section>
 <hr class="docutils" />
 <section id="third-person-camera">
@@ -1347,10 +1324,10 @@ rotation matrix =
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera.svg"><img alt="../_images/10_Third_person_camera.svg" src="../_images/10_Third_person_camera.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 113 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 114 </span><span class="caption-text">A third person camera that follows a character.</span><a class="headerlink" href="#third-person-camera-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\vec{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 113</span></a>.</p>
+<p>To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an <span class="math notranslate nohighlight">\(\vec{offset}\)</span> vector <a class="reference internal" href="#third-person-camera-figure"><span class="std std-numref">Fig. 114</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[ View = Translate(\vec{offset}) \cdot View \]</div>
 <p>The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.</p>
@@ -1367,12 +1344,12 @@ rotation matrix =
     <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
 </video>
 </center>
-<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 114</span></a>).</p>
+<p>Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different <span class="math notranslate nohighlight">\(yaw\)</span> angle that can be altered using keyboard inputs (<a class="reference internal" href="#third-person-camera-figure-2"><span class="std std-numref">Fig. 115</span></a>).</p>
 <figure class="align-default" id="third-person-camera-figure-2">
 <a class="reference internal image-reference" href="../_images/10_Third_person_camera_2.svg"><img alt="../_images/10_Third_person_camera_2.svg" src="../_images/10_Third_person_camera_2.svg" style="width: 450px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 114 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 115 </span><span class="caption-text">A third person camera that is independent of the character orientation.</span><a class="headerlink" href="#third-person-camera-figure-2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1437,15 +1414,6 @@ rotation matrix =
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Lab 9: Normal Mapping</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="A1_Complex_numbers_and_quaternions.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Appendix A: Complex Numbers and Quaternions</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

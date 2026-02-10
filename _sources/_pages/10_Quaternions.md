@@ -985,7 +985,7 @@ Load ***index.html*** in a live server and you should see that nothing much has 
 ---
 ## SLERP
 
-The another advantage that quaternions have over Euler angles is that we can interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
+Another advantage that quaternions have over Euler angles is that we can easily interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
 
 ```{figure} ../_images/10_LERP.svg
 :width: 300
@@ -1018,61 +1018,38 @@ where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two q
 
 $$ \theta = \cos^{-1} \left( \frac{q_1 \cdot q_2}{|q_1||q_2|} \right),$$
 
-where $q_1 \cdot q_2$ is the dot product between the two quaternions and calculated in the same way as the [dot product between two 4-element vectors](dot-product-section). Sometimes $q_1 \cdot q_2$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$.
+where $q_1 \cdot q_2$ is the dot product between the two quaternions and calculated in the same way as the [dot product between two 4-element vectors](dot-product-section). Sometimes $q_1 \cdot q_2$ returns a negative result meaning that $\theta$ we will be interpolating the long way round the sphere. To overcome this we negate the values of one of the quaternions, this is fine since the quaternion $-q$ is the same orientation as $q$. Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_1$ and $q_2$.
 
-Another consideration is when $\theta$ is very small then $\sin(\theta)$ in equation {eq}`slerp-equation` can be rounded to zero causing a divide by zero error. To get around this we can use LERP between $q_1$ and $q_2$.
+To calculate SLERP between two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ we do the following:
 
-Add a method declaration to the Maths class in the `maths.hpp` file
+- Calculate $\cos(\theta) = w_1w_2 + x_1x_2 + y_1y_2 + z_1z_2$
+- If $\cos(\theta) < 0$ then $q_2 = -q_2$ and $\cos(\theta) = -\cos(\theta)$
+- If $\cos(\theta) > 0.9995$ (i.e., $q_1$ and $q_2$ are very close) use LERP
 
-```cpp
-static Quaternion SLERP(const Quaternion q1, const Quaternion q2, const float t);
+$$q_t = q_1 + t  (q_2 - q_1).$$
+
+- Else use SLERP
+  
+$$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2, $$
+
+where $t =  1 - \exp(-rotation \, speed \times \Delta t)$ for exponential damping.
+
+To implement smoothing in a first-person camera we calculate a target quaternion using the mouse input and then use SLERP to calculate the interpolated quaternion between the current camera quaternion and the target quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the camera quaternion and is used to perform the rotations on the camera vectors.
+
+```{figure} ../_images/10_slerped_camera.svg
+:width: 350
+:name: slerped-camera-figure
+
+Camera smoothing using SLERP.
 ```
 
-and define the method in the `maths.cpp` file
+The effects of applying SLERP to smooth the camera rotation can be seen in the video below.
 
-```cpp
-// SLERP
-Quaternion Maths::SLERP(Quaternion q1, Quaternion q2, const float t)
-{
-    // Calculate cos(theta)
-    float cosTheta = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
-    
-    // If q1 and q2 are close together return q2 to avoid divide by zero errors
-    if (cosTheta > 0.9999f)
-        return q2;
-
-    // Avoid taking the long path around the sphere by reversing sign of q2
-    if (cosTheta < 0)
-    {
-        q2 = Quaternion(-q2.w, -q2.x, -q2.y, -q2.z);
-        cosTheta = -cosTheta;
-    }
-    
-    // Calculate SLERP
-    Quaternion q;
-    float theta = acos(cosTheta);
-    float a = sin((1.0f - t) * theta) / sin(theta);
-    float b = sin(t * theta) / sin(theta);
-    q.w = a * q1.w + b * q2.w;
-    q.x = a * q1.x + b * q2.x;
-    q.y = a * q1.y + b * q2.y;
-    q.z = a * q1.z + b * q2.z;
-    
-    return q;
-}
-```
-
-Then to apply SLERP replace the code used to calculate the `orientation` quaternion in the `quaternionCamera()` method with the following.
-
-```cpp
-// Calculate camera orientation quaternion from the Euler angles
-Quaternion newOrientation(-pitch, yaw);
-
-// Apply SLERP
-orientation = Maths::SLERP(orientation, newOrientation, 0.2f);
-```
-
-Here we use a temporary quaternion `newOrientation` which is calculated using the $pitch$, $yaw$ and $roll$ Euler angles of the camera and then used SLERP to interpolate between `orientation` and `newOrientation`. Note that here we are using $t = 0.2$. This parameter determines how far towards the new orientation we are interpolating. Compile and run your program and you should see that the camera rotation is much smoother and more satisfying to use.
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/10_slerped_camera.mp4" type="video/mp4">
+</video>
+</center>
 
 ---
 

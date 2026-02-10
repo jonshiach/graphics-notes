@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -198,10 +198,6 @@
 <li class="toctree-l1"><a class="reference internal" href="08_Lighting.html">Lab 8: Lighting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09_Normal_mapping.html">Lab 9: Normal Mapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10_Quaternions.html">Lab 10: Quaternions</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A1_Complex_numbers_and_quaternions.html">Appendix A: Complex Numbers and Quaternions</a></li>
 </ul>
 
     </div>
@@ -502,7 +498,7 @@ document.write(`
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And add the following before the VAO us unbound.</p>
+<p>And add the following before the VAO is unbound.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Texture coordinates</span>
 <span class="nx">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">.</span><span class="nx">BYTES_PER_ELEMENT</span><span class="p">;</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">texCoordsLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aTexCoord&quot;</span><span class="p">);</span>
@@ -552,7 +548,7 @@ document.write(`
 <p>The last thing we need to do is to bind the texture to the uniform in the JavaScript code.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following code the texture has been loaded.</p>
+<p>Add the following code after the texture has been loaded.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bind texture</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE0</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">texture</span><span class="p">);</span>

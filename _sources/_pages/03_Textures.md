@@ -109,7 +109,7 @@ In the `createVao()` function in the ***webGLUtils.js*** file, update the stride
 const stride = 8 * Float32Array.BYTES_PER_ELEMENT;
 ```
 
-And add the following before the VAO us unbound.
+And add the following before the VAO is unbound.
 
 ```javascript
 // Texture coordinates
@@ -182,7 +182,7 @@ The last thing we need to do is to bind the texture to the uniform in the JavaSc
 :::{admonition} Task
 :class: tip
 
-Add the following code the texture has been loaded.
+Add the following code after the texture has been loaded.
 
 ```javascript
 // Bind texture
