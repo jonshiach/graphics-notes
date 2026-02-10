@@ -56,7 +56,7 @@ Then add the following to the Camera class constructor.
 
 ```javascript
  // Movement and settings
-this.keys      = {};
+this.keys = {};
 
 // Keyboard and mouse Input
 this.canvas = canvas;
@@ -84,7 +84,7 @@ if (this.keys["a"]) vel = subtractVector(vel, this.right);
 if (this.keys["d"]) vel = addVector(vel, this.right);
 
 if (length(vel) > 0) {
-  this.eye = addVector(this.eye, normalize(vel));
+    this.eye = addVector(this.eye, normalize(vel));
 }
 ```
 
@@ -156,7 +156,7 @@ Here we have created the variable `lastFrame` which is used to store the time (i
 First add the following to the Camera class constructor.
 
 ```javascript
-this.speed     = 5;
+this.speed = 5;
 ```
 
 Then change the `update()` method declaration so that it takes in the `dt` input.
@@ -171,7 +171,7 @@ Finally, change the calculation of the new $\vec{eye}$ vector to the following.
 ```javascript
 const move = this.speed * dt;
 if (length(vel) > 0) {
-  this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
+    this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
 }
 ```
 
@@ -298,9 +298,9 @@ Add the following method to the Camera class.
 
 ```javascript
 mouseMove(e) {
-  if (document.pointerLockElement !== this.canvas) return;
-  this.yaw   += e.movementX * this.turnSpeed;
-  this.pitch -= e.movementY * this.turnSpeed;
+    if (document.pointerLockElement !== this.canvas) return;
+    this.yaw   += e.movementX * this.turnSpeed;
+    this.pitch -= e.movementY * this.turnSpeed;
 }
 ```
 :::
@@ -421,8 +421,8 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
 
     - Loop through all the cubes
-      - Calculate the distance between the $\vec{eye}$ vector and the centre of the current cube
-      - If this distance is less than 1, move the $\vec{eye}$ away from the centre of the current cube so that the distance is now 1
+    - Calculate the distance between the $\vec{eye}$ vector and the centre of the current cube
+    - If this distance is less than 1, move the $\vec{eye}$ away from the centre of the current cube so that the distance is now 1
 
 ---
 

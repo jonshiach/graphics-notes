@@ -52,7 +52,7 @@ function main() {
 
   // Define triangle vertices
   const vertices = new Float32Array([
-    // x     y    z      r    g    b
+    // x     y    z      R    G    B
     -0.5, -0.5, 0.0,    1.0, 0.0, 0.0, // vertex 0       2
      0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1     /   \
      0.0,  0.5, 0.0,    0.0, 0.0, 1.0, // vertex 2    0 --- 1
@@ -60,7 +60,7 @@ function main() {
 
   // Define square vertices
   const squareVertices = new Float32Array([
-  // x    y    z       r    g    b             
+  // x    y    z       R    G    B             
     0.5, 0.2, 0.0,    1.0, 0.0, 0.0, // vertex 0     3 -- 2
     0.8, 0.2, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
     0.8, 0.6, 0.0,    0.0, 0.0, 1.0, // vertex 2     | /  | 
@@ -88,7 +88,7 @@ function main() {
 
   // Exercise 2
   // const rectangleVertices = new Float32Array([
-  // // x    y    z         r    g    b             
+  // // x    y    z         R    G    B             
   //   -0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 0     3 -- 2
   //    0.5, -0.5, 0.0,    0.0, 1.0, 0.0, // vertex 1     |  / |    
   //    0.5,  0.5, 0.0,    0.0, 1.0, 0.0, // vertex 2     | /  | 

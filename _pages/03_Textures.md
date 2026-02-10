@@ -43,23 +43,23 @@ Add the following function definition to the ***webGLUtils.js*** file.
 
 ```javascript
 function loadTexture(gl, url) {
-  const texture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-
-  // Temporary 1×1 magenta pixel while image loads
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
-
-  const image = new Image();
-  image.src = url;
-  image.onload = () => {
+    const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  };
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-  return texture;
+    // Temporary 1×1 magenta pixel while image loads
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
+
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    };
+
+    return texture;
 }
 ```
 
@@ -88,11 +88,11 @@ Edit the `vertices` array so that the $(u,v)$ coordinates are defined for each v
 ```javascript
 // Define vertices
 const vertices = new Float32Array([
-// x    y     z       r    g    b      u  v            
--0.5, -0.5,  0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
- 0.5, -0.5,  0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
- 0.5,  0.5,  0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
--0.5,  0.5,  0.0,    1.0, 1.0, 1.0,    0, 1, // vertex 3     0 -- 1 
+    // x    y    z       R    G    B       u    v                        
+    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.0, 0.0, // vertex 0  3 -- 2
+     0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1.0, 0.0, // vertex 1  |  / |        
+     0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1.0, 1.0, // vertex 2  | /  | 
+    -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.0, 1.0, // vertex 3  0 -- 1 
 ]);
 ```
 
@@ -109,7 +109,7 @@ In the `createVao()` function in the ***webGLUtils.js*** file, update the stride
 const stride = 8 * Float32Array.BYTES_PER_ELEMENT;
 ```
 
-And add the following before the VAO us unbound.
+And add the following before the VAO is unbound.
 
 ```javascript
 // Texture coordinates
@@ -182,7 +182,7 @@ The last thing we need to do is to bind the texture to the uniform in the JavaSc
 :::{admonition} Task
 :class: tip
 
-Add the following code the texture has been loaded.
+Add the following code after the texture has been loaded.
 
 ```javascript
 // Bind texture
@@ -211,7 +211,16 @@ When we apply a texture to a polygon, WebGL needs to determine the colour of eac
 There are two types of scaling:
 
 - **Minification** - where the texture is larger than the polygon it is being mapped to so a fragment covers multiple textels, so the texture must be minified to fit the polygon;
+
+```{figure} ../_images/03_minification.svg
+:width: 500
+```
+
 - **Magnification** - where the texture is smaller than the polygon so that a single textel takes up multiple fragments, so the texture must be magnified to fit the polygon.
+
+```{figure} ../_images/03_magnification.svg
+:width: 500
+```
 
 In addition to scaling the texture WebGL also needs to determine how to get the colour of the fragment from the texture. There are different methods for doing this known as **texture filtering**.
 
@@ -325,7 +334,7 @@ Add the following function definition to the ***webGLUtils.js*** file.
 
 ```javascript
 function isPowerOf2(x) {
-  return (x & (x - 1)) === 0;
+    return (x & (x - 1)) === 0;
 }
 ```
 
@@ -333,21 +342,21 @@ Then change the onlload function in the `loadTexture()` function to the followin
 
 ```javascript
 image.onload = () => {
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
 
-  // Auto-generate mipmaps (requires power-of-2 image)
-  if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-    gl.generateMipmap(gl.TEXTURE_2D);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  } else {
-    // Non power-of-2 textures must be clamped & non-mipmapped
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  }
+    // Auto-generate mipmaps (requires power-of-2 image)
+    if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    } else {
+        // Non power-of-2 textures must be clamped & non-mipmapped
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
 };
 ```
 
@@ -370,16 +379,16 @@ In our examples above, all the texture coordinates have been in the range from 0
 :::{admonition} Task
 :class: tip
 
-Change the texture coordinates in the vertices array so that the 1 values are changed to 4.
+Change the texture coordinates in the vertices array so that in the $(u,v)$ coordinates, the 1.0 are changed to 4.0
 
 ```javascript
 // Define vertices
 const vertices = new Float32Array([
-//  x     y    z       r    g    b      u  v            
-  -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
-   0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    4, 0, // vertex 1     |  / |    
-   0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    4, 4, // vertex 2     | /  | 
-  -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0, 4, // vertex 3     0 -- 1 
+    // x    y    z       R    G    B       u    v                        
+    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.0, 0.0, // vertex 0  3 -- 2
+     0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    4.0, 0.0, // vertex 1  |  / |        
+     0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    4.0, 4.0, // vertex 2  | /  | 
+    -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.0, 4.0, // vertex 3  0 -- 1 
 ]);
 ```
 
@@ -507,8 +516,8 @@ A rectangle with a mix of two textures applied.
 :width: 60%
 ```
 
-3. Modify the fragment shader so that the red and green colour components of the pixel are switched.
-   
+3. Modify the fragment shader so that the red and green colour components of the pixel are switched. Hint: you can use <a href="https://en.wikipedia.org/wiki/Swizzling_(computer_graphics)" target="_blank">swizzling</a> for RGBA components, e.g., `vector.r` returns the red colour component of the 4-element vector `vector`.
+     
 ```{figure} ../_images/03_Ex3.png
 :width: 60%
 ```
@@ -537,10 +546,10 @@ A rectangle with a mix of two textures applied.
 ## Video walkthrough
 
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/19L9ir8Aly0?si=QiQmUOTycjDPYKpE" title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/19L9ir8Aly0?si=QiQmUOTycjDPYKpE" title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
 ></iframe>

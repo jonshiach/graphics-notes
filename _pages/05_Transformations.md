@@ -148,14 +148,14 @@ Add the following method to the Mat4 class in the ***maths.js*** file
 
 ```javascript
 translate(t) {
-  const [x, y, z] = t;
-  const transMatrix = new Mat4().set([
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    x, y, z, 1
-  ]);
-  return this.multiply(transMatrix);
+    const [x, y, z] = t;
+    const transMatrix = new Mat4().set([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        x, y, z, 1
+    ]);
+    return this.multiply(transMatrix);
 }
 ```
 
@@ -163,7 +163,7 @@ translate(t) {
 
 Here we have defined the method `translate()` that calculates the translation matrix for a given translation vector multiplies the current matrix object by the translation matrix.
 
-The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a  **uniform**, like we did in [Lab 3: Textures](uniforms-section).
+The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a **uniform**, like we did in [Lab 3: Textures](uniforms-section).
 
 :::{admonition} Task
 :class: tip
@@ -249,7 +249,7 @@ $$ Scale =
     0 & s_y & 0 & 0 \\
     0 & 0 & s_z & 0 \\
     0 & 0 & 0 & 1
-\end{pmatrix}. $$(eq:scaling-matrix)
+\end{pmatrix}. $$(eq-scaling-matrix)
 
 Let's now apply scaling to our rectangle in WebGL to increase its size by a factor of 0.5 in the horizontal direction and 0.4 in the vertical direction. The scaling matrix that achieves this is
 
@@ -272,14 +272,14 @@ Enter the following method to the Mat4 class
 
 ```javascript
 scale(s) {
-  const [x, y, z] = s;
-  const scaleMatrix = new Mat4().set([
-    x, 0, 0, 0,
-    0, y, 0, 0,
-    0, 0, z, 0,
-    0, 0, 0, 1
-  ]);
-  return this.multiply(scaleMatrix);
+    const [x, y, z] = s;
+    const scaleMatrix = new Mat4().set([
+        x, 0, 0, 0,
+        0, y, 0, 0,
+        0, 0, z, 0,
+        0, 0, 0, 1
+    ]);
+    return this.multiply(scaleMatrix);
 }
 ```
 
@@ -498,15 +498,15 @@ Add the following method to the Mat4 class
 
 ```javascript
 rotate(angle) {
-  const c = Math.cos(angle);
-  const s = Math.sin(angle);
-  const rotateMatrix = new Mat4().set([
-     c, s, 0, 0,
-    -s, c, 0, 0,
-    0,  0, 1, 0,
-    0,  0, 0, 1
-  ]);
-  return this.multiply(rotateMatrix);
+    const c = Math.cos(angle);
+    const s = Math.sin(angle);
+    const rotateMatrix = new Mat4().set([
+         c, s, 0, 0,
+        -s, c, 0, 0,
+        0,  0, 1, 0,
+        0,  0, 0, 1
+    ]);
+    return this.multiply(rotateMatrix);
 }
 ```
 
@@ -559,7 +559,7 @@ $$ \begin{align*}
         0 \\
         0 & 0 & 0 & 1
     \end{pmatrix}.
-\end{align*} $$(eq:axis-angle-rotation-matrix)
+\end{align*} $$(eq-axis-angle-rotation-matrix)
 
 Where $c = \cos(\theta)$ and $s = \sin(\theta)$. Again, you don't really need to know how this is derived but if you are curious click on the dropdown link below.
 
@@ -737,7 +737,7 @@ $$ \begin{align*}
 
 :::
 
-The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{\vec{v}}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so we can edit our `rotate()` function so that it uses equation {eq}`eq:axis-angle-rotation-matrix`.
+The rotations around the three coordinates axis can be calculated using the axis-angle rotation matrix (by letting $\hat{\vec{v}}$ be $(1,0,0)$, $(0,1,0)$ or $(0,0,1)$ for rotating around the $x$, $y$ and $z$ axes respectively) so we can edit our `rotate()` function so that it uses equation {eq}`eq-axis-angle-rotation-matrix`.
 
 :::{admonition} Task
 :class: tip

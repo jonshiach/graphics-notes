@@ -61,7 +61,7 @@ function main() {
 
   // // Define vertices
   // const vertices = new Float32Array([
-  // //  x     y    z       r    g    b      u  v            
+  // //  x     y    z       R    G    B      u  v            
   //   -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
   //    0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1, 0, // vertex 1     |  / |    
   //    0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1, 1, // vertex 2     | /  | 
@@ -71,7 +71,7 @@ function main() {
   // // Exercise 1 - 4 x 6 array of marios
   // // Define vertices
   // const vertices = new Float32Array([
-  // //  x     y    z       r    g    b      u  v            
+  // //  x     y    z       R    G    B      u  v            
   //   -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0, 0, // vertex 0     3 -- 2
   //    0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    6, 0, // vertex 1     |  / |    
   //    0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    6, 4, // vertex 2     | /  | 
@@ -81,7 +81,7 @@ function main() {
   // Exercise 6 - zoom in on Mario's eye
   // Define vertices
   const vertices = new Float32Array([
-  //  x     y    z       r    g    b      u  v            
+  //  x     y    z       R    G    B      u  v            
     -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.4, 0.35, // vertex 0     3 -- 2
      0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    0.55, 0.35, // vertex 1     |  / |    
      0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    0.55, 0.6, // vertex 2     | /  | 

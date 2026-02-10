@@ -20,19 +20,19 @@ In the ***lighting.js*** file, change the definition of the cubes to the followi
 ```javascript
 // Define cube positions (5x5 grid of cubes)
 const cubePositions = [];
-for (let i = 0; i < 5; i++)  {
-  for (let j = 0; j < 5; j++) {
-    cubePositions.push([3 * i, 0, -3 * j]);
-  }
+for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+        cubePositions.push([3 * i, 0.0, -3 * j]);
+    }
 }
 
 // Define cubes
 const numCubes = cubePositions.length;
 const cubes = [];
 for (let i = 0; i < numCubes; i++) {
-  cubes.push({
-    position  : cubePositions[i],
-  });
+    cubes.push({
+        position  : cubePositions[i],
+    });
 }
 ```
 
@@ -99,14 +99,14 @@ uniform float uKa;
 
 void main() {
 
-  // Object colour
-  vec4 objectColour = texture(uTexture, vTexCoords);
+    // Object colour
+    vec4 objectColour = texture(uTexture, vTexCoords);
 
-  // Ambient
-  vec3 ambient = uKa * objectColour.rgb;
+    // Ambient
+    vec3 ambient = uKa * objectColour.rgb;
 
-  // Fragment colour
-  fragColour = vec4(ambient, objectColour.a);
+    // Fragment colour
+    fragColour = vec4(ambient, objectColour.a);
 }
 ```
 
@@ -127,8 +127,8 @@ Edit the code used to define the cubes so that it looks like the following.
 
 ```javascript
 cubes.push({
-  position  : cubePositions[i],
-  ka        : 0.2,
+    position  : cubePositions[i],
+    ka        : 0.2,
 });
 ```
 
@@ -191,7 +191,7 @@ The amount of light that is reflected to the viewer is modelled using the angle 
 
 $$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-reflection-equation)
 
-where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
+where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1.0, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
 $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
@@ -260,7 +260,7 @@ $$ \begin{align*}
 The matrix $(M^{-1})^\mathsf{T}$ is the transformation matrix to transform the model space normal vectors to the world space that ensures the world space normal vectors are perpendicular to the surface.
 ````
 
-Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0, 0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1, 0, 0)$, and similar for the other faces of the cube.
+Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0.0, 0.0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1.0, 0.0, 0)$, and similar for the other faces of the cube.
 
 ```{figure} ../_images/08_cube_normals.svg
 :width: 250
@@ -276,72 +276,72 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
 
 ```javascript
 // Define cube vertices
-  const vertices = new Float32Array([
-    // x  y  z      r  g  b     u  v     nx  ny  nz                   + ------ +
-    // front                                                         /|       /|
-    -1, -1,  1,     0, 0, 0,    0, 0,    0,  0,  1,  //    y        / |      / |
-     1, -1,  1,     0, 0, 0,    1, 0,    0,  0,  1,  //    |       + ------ +  |
-     1,  1,  1,     0, 0, 0,    1, 1,    0,  0,  1,  //    +-- x   |  + ----|- +
-    -1, -1,  1,     0, 0, 0,    0, 0,    0,  0,  1,  //   /        | /      | /
-     1,  1,  1,     0, 0, 0,    1, 1,    0,  0,  1,  //  z         |/       |/
-    -1,  1,  1,     0, 0, 0,    0, 1,    0,  0,  1,  //            + ------ +
-    // right
-     1, -1,  1,     0, 0, 0,    0, 0,    1,  0,  0,
-     1, -1, -1,     0, 0, 0,    1, 0,    1,  0,  0,
-     1,  1, -1,     0, 0, 0,    1, 1,    1,  0,  0,
-     1, -1,  1,     0, 0, 0,    0, 0,    1,  0,  0,
-     1,  1, -1,     0, 0, 0,    1, 1,    1,  0,  0,
-     1,  1,  1,     0, 0, 0,    0, 1,    1,  0,  0,
-    // etc.
+    const vertices = new Float32Array([
+        // x    y     z       R    G    B       u    v      nx    ny    nz                    + ------ +
+        // front                                                                             /|       /|
+        -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //   y        / |      / |
+         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0,  1.0,  //   |       + ------ +  |
+         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  //   +-- x   |  + ----|- +
+        -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //  /        | /      | /
+         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  // z         |/       |/
+        -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0,  1.0,  //           + ------ +
+        // right
+         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
+         1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    1.0,  0.0,  0.0,
+         1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
+         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
+         1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
+         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    1.0,  0.0,  0.0,
+        // etc.
 ```
 
 ````{dropdown} Click to reveal the vertex coordinates for the cube
 ```javascript
 // Define cube vertices
 const vertices = new Float32Array([
-  // x  y  z      r  g  b     u  v     nx  ny  nz                   + ------ +
-  // front                                                         /|       /|
-  -1, -1,  1,     0, 0, 0,    0, 0,    0,  0,  1,  //    y        / |      / |
-   1, -1,  1,     0, 0, 0,    1, 0,    0,  0,  1,  //    |       + ------ +  |
-   1,  1,  1,     0, 0, 0,    1, 1,    0,  0,  1,  //    +-- x   |  + ----|- +
-  -1, -1,  1,     0, 0, 0,    0, 0,    0,  0,  1,  //   /        | /      | /
-   1,  1,  1,     0, 0, 0,    1, 1,    0,  0,  1,  //  z         |/       |/
-  -1,  1,  1,     0, 0, 0,    0, 1,    0,  0,  1,  //            + ------ +
-  // right
-   1, -1,  1,     0, 0, 0,    0, 0,    1,  0,  0,
-   1, -1, -1,     0, 0, 0,    1, 0,    1,  0,  0,
-   1,  1, -1,     0, 0, 0,    1, 1,    1,  0,  0,
-   1, -1,  1,     0, 0, 0,    0, 0,    1,  0,  0,
-   1,  1, -1,     0, 0, 0,    1, 1,    1,  0,  0,
-   1,  1,  1,     0, 0, 0,    0, 1,    1,  0,  0,
-  // back
-   1, -1, -1,     0, 0, 0,    0, 0,    0,  0, -1,
-  -1, -1, -1,     0, 0, 0,    1, 0,    0,  0, -1,
-  -1,  1, -1,     0, 0, 0,    1, 1,    0,  0, -1,
-   1, -1, -1,     0, 0, 0,    0, 0,    0,  0, -1,
-  -1,  1, -1,     0, 0, 0,    1, 1,    0,  0, -1,
-   1,  1, -1,     0, 0, 0,    0, 1,    0,  0, -1,
-  // left
-  -1, -1, -1,     0, 0, 0,    0, 0,   -1,  0,  0,
-  -1, -1,  1,     0, 0, 0,    1, 0,   -1,  0,  0,
-  -1,  1,  1,     0, 0, 0,    1, 1,   -1,  0,  0,
-  -1, -1, -1,     0, 0, 0,    0, 0,   -1,  0,  0,
-  -1,  1,  1,     0, 0, 0,    1, 1,   -1,  0,  0,
-  -1,  1, -1,     0, 0, 0,    0, 1,   -1,  0,  0,
-  // bottom
-  -1, -1, -1,     0, 0, 0,    0, 0,    0, -1,  0,
-   1, -1, -1,     0, 0, 0,    1, 0,    0, -1,  0,
-   1, -1,  1,     0, 0, 0,    1, 1,    0, -1,  0,
-  -1, -1, -1,     0, 0, 0,    0, 0,    0, -1,  0,
-   1, -1,  1,     0, 0, 0,    1, 1,    0, -1,  0,
-  -1, -1,  1,     0, 0, 0,    0, 1,    0, -1,  0,
-  // top
-  -1,  1,  1,     0, 0, 0,    0, 0,    0,  1,  0,
-   1,  1,  1,     0, 0, 0,    1, 0,    0,  1,  0,
-   1,  1, -1,     0, 0, 0,    1, 1,    0,  1,  0,
-  -1,  1,  1,     0, 0, 0,    0, 0,    0,  1,  0,
-   1,  1, -1,     0, 0, 0,    1, 1,    0,  1,  0,
-  -1,  1, -1,     0, 0, 0,    0, 1,    0,  1,  0,
+    // x    y     z       R    G    B       u    v      nx    ny    nz                    + ------ +
+    // front                                                                             /|       /|
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //   y        / |      / |
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0,  1.0,  //   |       + ------ +  |
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  //   +-- x   |  + ----|- +
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //  /        | /      | /
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  // z         |/       |/
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0,  1.0,  //           + ------ +
+    // right
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    1.0,  0.0,  0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    1.0,  0.0,  0.0,
+    // back
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0, -1.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0, -1.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0, -1.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0, -1.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0, -1.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0, -1.0,
+    // left
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,   -1.0,  0.0,  0.0,
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,   -1.0,  0.0,  0.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,   -1.0,  0.0,  0.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,   -1.0,  0.0,  0.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,   -1.0,  0.0,  0.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,   -1.0,  0.0,  0.0,
+    // bottom
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0, -1.0,  0.0,
+     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0, -1.0,  0.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0, -1.0,  0.0,
+    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0, -1.0,  0.0,
+     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0, -1.0,  0.0,
+    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0, -1.0,  0.0,
+    // top
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  1.0,  0.0,
+     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  1.0,  0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  1.0,  0.0,
+    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  1.0,  0.0,
+     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  1.0,  0.0,
+    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  1.0,  0.0,
 ]);
 ```
 ````
@@ -362,10 +362,11 @@ gl.enableVertexAttribArray(normalLocation);
 gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, stride, offset);
 ```
 
-Now change the vertex shader to accept the normals as an input attribute and an output.
+Now change the vertex shader to accept the normal vectors as an input attribute and an output.
 
 ```glsl
 in vec3 aNormal;
+
 
 out vec3 vNormal;
 ```
@@ -392,7 +393,7 @@ fragColour = vec4(vNormal, objectColour.a);
 
 :::
 
-Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
+Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1.0, 0.0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0.0, 1.0, 0)$ and the side facing towards us is blue because its normal vector is $(0.0, 0.0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
 
 ```{figure} ../_images/08_cubes_normals.png
 :width: 80%
@@ -417,8 +418,8 @@ Now define a JavaScript object for the light source properties just after where 
 ```javascript
 // Define light source properties
 const light = {
-  position  : [6, 2, 0],
-  colour    : [1, 1, 1],
+    position  : [6, 2, 0],
+    colour    : [1.0, 1.0, 1],
 }
 ```
 
@@ -534,8 +535,8 @@ gl.useProgram(lightProgram);
 
 // Calculate model matrix for the light source
 const model = new Mat4()
-  .translate(light.position)
-  .scale([0.1, 0.1, 0.1]);
+    .translate(light.position)
+    .scale([0.1, 0.1, 0.1]);
 
 // Send model, view and projection matrices to the shaders
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
@@ -835,12 +836,12 @@ A data structure in GLSL is defined as follows:
 
 ```glsl
 struct Light {
-  int type;
-  vec3 position;
-  vec3 colour;
-  float constant;
-  float linear;
-  float quadratic;
+    int type;
+    vec3 position;
+    vec3 colour;
+    float constant;
+    float linear;
+    float quadratic;
 };
 ```
 
@@ -868,12 +869,12 @@ uniform float uShininess;
 
 // Light struct
 struct Light {
-  int type;
-  vec3 position;
-  vec3 colour;
-  float constant;
-  float linear;
-  float quadratic;
+    int type;
+    vec3 position;
+    vec3 colour;
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 // Number of lights
@@ -885,48 +886,48 @@ uniform Light uLights[16];
 // Function to calculate diffuse and specular reflection
 vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
  
-  // Light vector
-  vec3 L = normalize(light.position - vPosition);
+    // Light vector
+    vec3 L = normalize(light.position - vPosition);
 
-  // Reflection vector
-  vec3 R = normalize(2.0 * dot(L, N) * N - L);
+    // Reflection vector
+    vec3 R = normalize(2.0 * dot(L, N) * N - L);
 
-  // Attenuation
-  float dist = length(light.position - vPosition);
-  float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+    // Attenuation
+    float dist = length(light.position - vPosition);
+    float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
 
-  // Ambient reflection
-  vec3 ambient = uKa * objectColour;
+    // Ambient reflection
+    vec3 ambient = uKa * objectColour;
 
-  // Diffuse
-  vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
+    // Diffuse
+    vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
-  // Specular
-  vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
+    // Specular
+    vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
 
-  // Output fragment colour
-  return attenuation * (ambient + diffuse + specular);
+    // Output fragment colour
+    return attenuation * (ambient + diffuse + specular);
 }
 
 // Main function
 void main() {
 
-  // Object colour
-  vec4 objectColour = texture(uTexture, vTexCoords);
+    // Object colour
+    vec4 objectColour = texture(uTexture, vTexCoords);
 
-  // Lighting vectors
-  vec3 N = normalize(vNormal);
-  vec3 V = normalize(uCameraPosition - vPosition);
+    // Lighting vectors
+    vec3 N = normalize(vNormal);
+    vec3 V = normalize(uCameraPosition - vPosition);
 
-  // Calculate lighting for each light source
-  vec3 result;
-  for (int i = 0; i < 16; i++) {
-    if (i >= uNumLights) break;
-    result += computeLight(uLights[i], N, V, objectColour.rgb);
-  }
+    // Calculate lighting for each light source
+    vec3 result;
+    for (int i = 0; i < 16; i++) {
+      if (i >= uNumLights) break;
+      result += computeLight(uLights[i], N, V, objectColour.rgb);
+    }
 
-  // Fragment colour
-  fragColour = vec4(result, objectColour.a);
+    // Fragment colour
+    fragColour = vec4(result, objectColour.a);
 }
 ```
 
@@ -949,25 +950,25 @@ Define an array containing the properties of two light sources.
 
 ```javascript
 // Create vector of light sources
-const lightSources = [ 
-  {
-    type        : 1,
-    position    : [6, 2, 0],
-    colour      : [1, 1, 1],
-    direction   : [0, -1, -2],
-    constant    : 1.0,
-    linear      : 0.1,
-    quadratic   : 0.02,
-  },
-  {
-    type        : 1,
-    position    : [9, 2, -9],
-    direction   : [0, 0, 0],
-    colour      : [1, 1, 0],
-    constant    : 1.0,
-    linear      : 0.1,
-    quadratic   : 0.02,
-  },
+const lightSources = [
+    {
+        type        : 1.0,
+        position    : [6, 2, 0],
+        colour      : [1.0, 1.0, 1],
+        direction   : [0.0, -1.0, -2],
+        constant    : 1.0,
+        linear      : 0.1,
+        quadratic   : 0.02,
+    },
+    {
+        type        : 1.0,
+        position    : [9, 2, -9],
+        direction   : [0.0, 0.0, 0],
+        colour      : [1.0, 1.0, 0],
+        constant    : 1.0,
+        linear      : 0.1,
+        quadratic   : 0.02,
+    },
 ];
 const numLights = lightSources.length;
 ```
@@ -978,12 +979,12 @@ Edit the code where the light source properties are sent to the shader to loop o
 // Send light source properties to the shader
 gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), numLights);
 for (let i = 0; i < numLights; i++) {
-  gl.uniform1i(gl.getUniformLocation(program, `uLights[${i}].type`), lightSources[i].type);
-  gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].position`), lightSources[i].position);
-  gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].colour`), lightSources[i].colour);  
-  gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].constant`), lightSources[i].constant);
-  gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].linear`), lightSources[i].linear);
-  gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].quadratic`), lightSources[i].quadratic);
+    gl.uniform1i(gl.getUniformLocation(program, `uLights[${i}].type`), lightSources[i].type);
+    gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].position`), lightSources[i].position);
+    gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].colour`), lightSources[i].colour);  
+    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].constant`), lightSources[i].constant);
+    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].linear`), lightSources[i].linear);
+    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].quadratic`), lightSources[i].quadratic);
 }
 ```
 
@@ -994,22 +995,22 @@ And edit the code where the light sources are drawn to loop over the number of l
 gl.useProgram(lightProgram);
 
 for (let i = 0; i < numLights; i++) {
-  // Calculate model matrix for light source
-  const model = new Mat4()
-    .translate(lightSources[i].position)
-    .scale([0.1, 0.1, 0.1]);
+    // Calculate model matrix for light source
+    const model = new Mat4()
+        .translate(lightSources[i].position)
+        .scale([0.1, 0.1, 0.1]);
 
-  // Send model, view and projection matrices to the shaders
-  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
-  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
-  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
+    // Send model, view and projection matrices to the shaders
+    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
-  // Send light colour to the shader
-  gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
+    // Send light colour to the shader
+    gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
 
-  // Draw light source cube
-  gl.bindVertexArray(vao);
-  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+    // Draw light source cube
+    gl.bindVertexArray(vao);
+    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
 ```
 
@@ -1061,12 +1062,12 @@ In the `computeLight()` function, add the following code to turn off the light c
 // Spotlight
 float spotLight = 1.0;
 if (light.type == 2) {
-  vec3 D = normalize(light.direction);
-  float theta = dot(-L, D);
-  spotLight = 0.0;
-  if (theta > light.cutoff) {
-    spotLight = 1.0;
-  }
+    vec3 D = normalize(light.direction);
+    float theta = dot(-L, D);
+    spotLight = 0.0;
+    if (theta > light.cutoff) {
+        spotLight = 1.0;
+    }
 }
 ```
 
@@ -1081,7 +1082,7 @@ In the `main()` function further down, add the light direction and cutoff attrib
 
 ```javascript
 type      : 2,
-direction : [0, -1, -1],
+direction : [0.0, -1.0, -1],
 cutoff    : Math.cos(40 * Math.PI / 180),
 ```
 
@@ -1129,10 +1130,10 @@ And in the `computeLight()` function, replace the spotlight code with the follow
 // Spotlight
 float spotLight = 1.0;
 if (light.type == 2) {
-  vec3 D = normalize(light.direction);
-  float theta = dot(-L, D);
-  float epsilon = light.cutoff - light.innerCutoff;
-  spotLight = clamp((light.cutoff - theta) / epsilon, 0.0, 1.0);
+    vec3 D = normalize(light.direction);
+    float theta = dot(-L, D);
+    float epsilon = light.cutoff - light.innerCutoff;
+    spotLight = clamp((light.cutoff - theta) / epsilon, 0.0, 1.0);
 }
 ```
 
@@ -1181,7 +1182,7 @@ Add the following after we have calculated the light vector in the `computeLight
 
 ```glsl
 if (light.type == 3) {
-  L = normalize(-light.direction);
+    L = normalize(-light.direction);
 }
 ```
 
@@ -1191,8 +1192,8 @@ And replace the code used to calculate the attenuation with the following.
 // Attenuation
 float attenuation = 1.0;
 if (light.type != 3) {
-  float dist = length(light.position - vPosition);
-  attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+    float dist = length(light.position - vPosition);
+    attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
 }
 ```
 
@@ -1200,22 +1201,22 @@ Add an additional light source to the light sources array.
 
 ```javascript
 {
-  type        : 3,
-  position    : [0, 0, 0],
-  direction   : [2, -1, -1],
-  colour      : [1, 0, 1],
-  constant    : 1.0,
-  linear      : 0.1,
-  quadratic   : 0.02,
-  cutoff      : 0,
-  innerCutoff : 0,
+    type        : 3,
+    position    : [0.0, 0.0, 0],
+    direction   : [2, -1.0, -1],
+    colour      : [1.0, 0.0, 1],
+    constant    : 1.0,
+    linear      : 0.1,
+    quadratic   : 0.02,
+    cutoff      : 0.0,
+    innerCutoff : 0.0,
 },
 ```
 
 Finally, uncomment the code for the second light source.
 :::
 
-Here we have defined a directional light source with the direction vector $(2, -1, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. The light source colour has been set to magenta using the RGB values $(1, 0, 1)$. Refresh your web browser and you should see the following.
+Here we have defined a directional light source with the direction vector $(2, -1.0, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. The light source colour has been set to magenta using the RGB values $(1.0, 0.0, 1)$. Refresh your web browser and you should see the following.
 
 ```{figure} ../_images/08_cubes_directional_light.png
 :width: 80%
@@ -1231,8 +1232,8 @@ Cubes lit using a point light, spotlight and directional light.
 1. Experiment with the positions, colours and material properties of the various light sources to see what effects they have.
 
 2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at $\vec{eye}$, is pointing in the same direction as $\vec{front}$ and has a spread angle of $\phi = 15^\circ$. Turn off all other light sources for extra spookiness.
-   
-3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0,0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
+
+3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0.0,0.0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0.0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
 
 4. Add the ability to turn the lights off and on using keyboard input.
 

@@ -122,25 +122,25 @@
 % \end{tikzpicture}
 
 % Hexagon
-\begin{tikzpicture}
-  \tikzmath{\r=3;\al=\r+0.5;\ns=6;\angle = 360 / \ns;};
-  \draw [axis] (0:-\al) -- (0:\al) node [below] {$x$};
-  \draw [axis] (90:-\al) -- (90:\al) node [left] {$y$};
-  \draw [line width=1pt] circle (\r);
-  \foreach \i in {1,...,{\ns}} {
-    \draw [line width=1pt, blue, fill=blue, opacity=0.2] (0,0) -- 
-        ({\r*cos(\i * \angle)}, {\r*sin(\i * \angle)}) coordinate (1) -- 
-        ({\r*cos((\i + 1) * \angle)}, {\r * sin((\i + 1) * \angle)}) coordinate (2) --
-        cycle;
+% \begin{tikzpicture}
+%   \tikzmath{\r=3;\al=\r+0.5;\ns=6;\angle = 360 / \ns;};
+%   \draw [axis] (0:-\al) -- (0:\al) node [below] {$x$};
+%   \draw [axis] (90:-\al) -- (90:\al) node [left] {$y$};
+%   \draw [line width=1pt] circle (\r);
+%   \foreach \i in {1,...,{\ns}} {
+%     \draw [line width=1pt, blue, fill=blue, opacity=0.2] (0,0) -- 
+%         ({\r*cos(\i * \angle)}, {\r*sin(\i * \angle)}) coordinate (1) -- 
+%         ({\r*cos((\i + 1) * \angle)}, {\r * sin((\i + 1) * \angle)}) coordinate (2) --
+%         cycle;
     
-    \node [point,blue] at ({\r*cos(\i*\angle)}, {\r*sin(\i*\angle)}) {};
-  };
-  \node [point,blue] at (0,0) {};
-  \node [above right] at (\angle:\r) {$(r\cos(\theta), r\sin(\theta))$};
-  \draw [<->,thick,shorten >= 2pt,shorten <= 2pt] (0,0) -- (150:\r) node [pos=0.5,below left] {$r$};
-  \node at (0.5*\angle:0.5) {$\theta$};
-  \draw [thick] (0:0.75) arc (0:\angle:0.75);
-\end{tikzpicture}
+%     \node [point,blue] at ({\r*cos(\i*\angle)}, {\r*sin(\i*\angle)}) {};
+%   };
+%   \node [point,blue] at (0,0) {};
+%   \node [above right] at (\angle:\r) {$(r\cos(\theta), r\sin(\theta))$};
+%   \draw [<->,thick,shorten >= 2pt,shorten <= 2pt] (0,0) -- (150:\r) node [pos=0.5,below left] {$r$};
+%   \node at (0.5*\angle:0.5) {$\theta$};
+%   \draw [thick] (0:0.75) arc (0:\angle:0.75);
+% \end{tikzpicture}
 
 % Circle
 % \begin{tikzpicture}
@@ -639,6 +639,34 @@
 %     \draw [->,blue,shorten >= 2pt, shorten <= 2pt,line width=1pt] (0) to [bend right=20] (4);
 %     \draw [->,blue,shorten >= 2pt, shorten <= 2pt,line width=1pt] (1) to [bend left=10] (5);
 %     \draw [->,blue,shorten >= 2pt, shorten <= 2pt,line width=1pt] (2) to [bend left=10] (6);
+% \end{tikzpicture}
+
+% Minification
+% \begin{tikzpicture}
+%     \useasboundingbox (-1,-1) rectangle (9,5);
+%     \fill [blue!20] (6,0) rectangle ++(1,1);
+%     \fill [blue!20] (0,0) rectangle ++(2,2);
+%     \draw (0,0) grid ++(4,4);
+%     \draw (6,0) grid ++(2,2);
+%     \node [below] at (2,0) {texture};
+%     \node [below] at (7,0) {polygon};
+%     \node [text width=4cm] (text) at (6.5,3) {a single pixel in the polygon is mapped to multiple textels};
+%     \draw [->] (text) -- (1.5, 1.5);
+%     \draw [->] (text) -- (6.5, 0.5);
+% \end{tikzpicture}
+
+% Magnification
+% \begin{tikzpicture}
+%     \useasboundingbox (-1,-1) rectangle (9,5);
+%     \fill [blue!20] (0,0) rectangle ++(1,1);
+%     \fill [blue!20] (4,0) rectangle ++(2,2);
+%     \draw (0,0) grid (2,2);
+%     \draw (4,0) grid ++(4,4);
+%     \node [below] at (1,0) {texture};
+%     \node [below] at (6,0) {polygon};
+%     \node [text width=4cm] (text) at (1.5,3) {multiple pixels in the polygon are mapped to a single textel};
+%     \draw [->] (text) -- (0.5, 0.5);
+%     \draw [->] (text) -- (4.5, 1.5);
 % \end{tikzpicture}
 
 % Rectangle
@@ -1712,10 +1740,9 @@
 %     \draw [arrow] (0,0,0.5) arc [start angle=180,end angle=122,x radius=1.1,y radius=1.1] node [pos=0.5,above left] {$\vec{k} \times \vec{i}$};
 % \end{tikzpicture}
 
-
 % Quaternion rotation
-% \tdplotsetmaincoords{60}{120}
-% \tdplotsetrotatedcoords{0}{90}{90}
+\tdplotsetmaincoords{60}{120}
+\tdplotsetrotatedcoords{0}{90}{90}
 % \begin{tikzpicture}[scale=2,tdplot_rotated_coords]
 %     \tikzmath{\xl=2.5;\yl=1.5;\zl=2;};
 %     \fill [gray!20] (-0.67,-0.5,0) -- ++(1.33,0,0) -- ++(0,1,0) -- ++(-1.33,0,0);
@@ -1725,7 +1752,7 @@
 %     \fill [gray!50] (0,0,0) -- (0.6,0,0) arc (0:45:0.6);
 %     \draw [->,line width=1pt] (0.6,0,0) arc (0:45:0.6) node [pos=0.5,xshift=-0.3cm] {$45^\circ$};
 %     \draw [gray] (-0.67,0,0) -- (0,0,0);
-%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$p = [0, (2, 0 ,0)]$};
+%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$\vec{p} = (2, 0 ,0)$};
 %     \draw [vector,mygreen] (0,0,0) -- (0,0,1) node [below right] {$\vec{v} = (0, 0, 1)$};
 %     \draw [vector,red] (0,0,0) -- (1.414, 1.414, 0) node [above] {$qp = [0,(1.414, 1.414, 0)]$};
 % \end{tikzpicture}
@@ -1740,9 +1767,9 @@
 %     \draw [->,line width=1pt] (0.25,0,-0.25) arc [start angle=0, end angle=110, radius=0.3, y radius=0.25] node [pos=0.5,xshift=-0.15cm,yshift=-0.2cm] {$90^\circ$};
 %     \draw [vector, gray] (0,0,0) -- (0, 1, 0);
 %     \draw [gray] (-0.5,0,0.5) -- (0.5,0,-0.5);
-%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$p = [0, (2, 0 ,0)]$};
+%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$\vec{p} = (2, 0 ,0)$};
 %     \draw [vector,mygreen] (0,0,0) -- (0.707,0,0.707) node [below] {$\vec{v} = (0.707,0,0.707)$};
-%     \draw [vector,red] (0,0,0) -- (1,1.414,1) node [above,xshift=1.25cm] {$qpq^* = [0,(1,1.414,1)]$};
+%     \draw [vector,red] (0,0,0) -- (1,1.414,1) node [above,xshift=1.25cm] {$qpq^{-1} = [0,(1,1.414,1)]$};
 % \end{tikzpicture}
 
 % \begin{tikzpicture}[scale=2,tdplot_rotated_coords]
@@ -1758,9 +1785,9 @@
 %     \draw [axis] (0,0,0) -- (\xl,0,0) node at (\xl+0.15,0,0) {$x$};
 %     \draw [axis] (0,0,0) -- (0,\yl,0) node at (0,\yl+0.15,0) {$y$};
 %     \draw [axis] (0,0,0) -- (0,0,\zl) node at (0,0,\zl+0.15) {$z$};
-%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$p = [0, (2, 0 ,0)]$};
+%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$\vec{p} = (2, 0 ,0)$};
 %     \draw [vector,mygreen] (0,0,0) -- (0.707,0,0.707) node [below] {$\vec{v} = (0.707,0,0.707)$};
-%     \draw [vector,red] (0,0,0) -- (1.707,1,0.293) node [above,xshift=0.75cm] {$qpq^* = [0,(1.707, 1, 0.293)]$};
+%     \draw [vector,red] (0,0,0) -- (1.707,1,0.293) node [above,xshift=0.75cm] {$qpq^{-1} = [0,(1.707, 1, 0.293)]$};
 % \end{tikzpicture}
 
 % LERP
@@ -1769,9 +1796,9 @@
 % 	\coordinate (p0) at (-1,0.5);
 % 	\coordinate (p1) at (3, 2);
 % 	\coordinate (pt) at ($(p0)!0.5!(p1)$);
-% 	\draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
-% 	\draw [axis] (0,0) -- ++(\y:\al) node [above] {$y$};
-% 	\draw [axis] (0,0) -- ++(\z:\al) node [below right] {$z$};
+% 	% \draw [axis] (0,0) -- ++(\x:\al) node [right] {$x$};
+% 	% \draw [axis] (0,0) -- ++(\y:\al) node [above] {$y$};
+% 	% \draw [axis] (0,0) -- ++(\z:\al) node [below right] {$z$};
 % 	\node [point,label=below:$\vec{v}_1$] at (p0) {};
 % 	\node [point,label=below:$\vec{v}_2$] at (p1) {};
 % 	\draw [line width=1pt] (p0) -- (p1);
@@ -1800,6 +1827,16 @@
 % 	\draw (-\r,0) arc (180:360:2.5 and 1);
 % 	\draw[dashed] (\r,0) arc (0:180:2.5 and 1);
 % \end{tikzpicture}
+
+% Applying SLERP
+\begin{tikzpicture}
+    \node (camera) [rotate=50] {\includegraphics[width=1cm]{camera.pdf}};
+    \node (camera) [rotate=90,opacity=0.5] {\includegraphics[width=1cm]{camera.pdf}};
+    \draw [vector] (camera) -- ++(90:3) node [above,text width=2.5cm,align=center] {current quaternion};
+    \draw [vector,blue] (camera) -- ++(30:3) node [right,text width=2.5cm,align=center] {target quaternion};
+    \draw [vector,red] (camera) -- ++(50:3) node [above,text width=2.5cm,align=center,xshift=0.5cm] {SLERPed quaternion};
+    \draw [->,thick,shorten >= 2pt, shorten <= 2pt] ($(camera)+(90:2)$) arc (90:50:2);
+\end{tikzpicture}
 
 % % Third person camera
 % \begin{tikzpicture}
