@@ -516,7 +516,7 @@ A rectangle with a mix of two textures applied.
 :width: 60%
 ```
 
-3. Modify the fragment shader so that the red and green colour components of the pixel are switched.
+3. Modify the fragment shader so that the red and green colour components of the pixel are switched. Hint: you can use <a href="https://en.wikipedia.org/wiki/Swizzling_(computer_graphics)" target="_blank">swizzling</a> for RGBA components, e.g., `vector.r` returns the rod colour component of the 4-element vector `vector`.
      
 ```{figure} ../_images/03_Ex3.png
 :width: 60%
