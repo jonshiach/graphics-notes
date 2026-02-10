@@ -1148,10 +1148,9 @@ $$ \begin{align*}
 &emsp;&emsp; (b) $ABC$;<br>
 &emsp;&emsp; (c) $B^\mathsf{T}A^\mathsf{T}$.<br>
 
-1. A transformation can be applied to a vector by matrix multiplication. If $T$ is a transformation matrix and $\vec{v}$ is a vector then the transformed vector is $T \vec{v}$. Given the following transformation matrices and vector
+4. A transformation can be applied to a vector by matrix multiplication. If $T$ is a transformation matrix and $\vec{v}$ is a vector then the transformed vector is $T \vec{v}$. Given the following transformation matrices and vector
 
 $$
-
 \begin{align*}
     S &= \begin{pmatrix}
         2 & 0 & 0 & 0 \\
@@ -1166,8 +1165,7 @@ $$
         0 & 0 & 0 & 1
     \end{pmatrix}, &
     \vec{v} = \begin{pmatrix} 5 \\ 8 \\ 10 \\ 1 \end{pmatrix},
-\end{align*}
-```
+\end{align*}$$
 
 &emsp;&emsp; use pen and paper to calculate the following transformations:
 
