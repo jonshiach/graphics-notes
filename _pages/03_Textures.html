@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -619,7 +619,7 @@ document.write(`
 <span class="kd">const</span><span class="w"> </span><span class="nx">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/mario_small.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">loadTexture()</span></code> function in the <em><strong>webGLUtils.js</strong></em> file, change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">NEAREST</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">texParameteri</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="nx">gl</span><span class="p">.</span><span class="nx">NEAREST</span><span class="p">);</span>
 </pre></div>

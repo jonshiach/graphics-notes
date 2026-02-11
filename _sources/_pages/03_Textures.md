@@ -263,7 +263,7 @@ Chnage the command to load the texture in the ***textures.js*** file to the foll
 const texture = loadTexture(gl, "assets/mario_small.png");
 ```
 
-Change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.
+In the `loadTexture()` function in the ***webGLUtils.js*** file, change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.
 
 ```javascript
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
