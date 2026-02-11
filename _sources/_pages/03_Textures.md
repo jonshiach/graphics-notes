@@ -416,7 +416,7 @@ The WebGL default wrapping is `GL_REPEAT` but we can specify the texture wrappin
 :::{admonition} Task
 :class: tip
 
-Add the following to the `loadTexture()` function in the ***webGLUtils.js*** file after the mipmap code.
+Add the following to the `loadTexture()` function in the ***webGLUtils.js*** file after the mipmap if statement.
 
 ```javascript
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
