@@ -462,7 +462,7 @@ Load a second texture by adding the following code after the first texture is lo
 const texture2 = loadTexture(gl, "assets/crate.png");
 ```
 
-And add the following code after we bind the first texture.
+And add the following code in the `render()` function after we have cleared the frame buffer
 
 ```javascript
 gl.activeTexture(gl.TEXTURE1);
