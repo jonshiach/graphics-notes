@@ -43,7 +43,7 @@ function setupConsoleOutput(elementId) {
 }
 
 setupConsoleOutput("console-output");
-console.log("Lab 5 - Vectors and Matrices\n----------------------------");
+console.log("Lab 4 - Vectors and Matrices\n----------------------------");
 ```
 
 :::
