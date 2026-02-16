@@ -187,7 +187,7 @@ Here we have defined two similar functions `addVector()` and `subtractVector()` 
 :::{admonition} Task
 :class: tip
 
-Add the following to the ***Vectors_and_matrices.js*** file
+Add the following to the ***vectors_and_matrices.js*** file
 
 ```javascript
 // Arithmetic operations on vectors
