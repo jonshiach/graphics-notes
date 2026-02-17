@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -884,7 +884,7 @@ b . (a x b) = 0
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nx">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">m</span><span class="p">;</span>
 <span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -915,7 +915,7 @@ b . (a x b) = 0
 <span class="w">     </span><span class="mf">9</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">11</span><span class="p">,</span><span class="w"> </span><span class="mf">12</span><span class="p">,</span>
 <span class="w">    </span><span class="mf">13</span><span class="p">,</span><span class="w"> </span><span class="mf">14</span><span class="p">,</span><span class="w"> </span><span class="mf">15</span><span class="p">,</span><span class="w"> </span><span class="mf">16</span>
 <span class="p">]);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;A =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;A =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@ b . (a x b) = 0
 <li><p><code class="docutils literal notranslate"><span class="pre">constructor()</span></code> – the constructor method that defines a <span class="math notranslate nohighlight">\(4\times 4\)</span> identity matrix (we discuss identity matrices <a class="reference internal" href="#identity-matrix-section"><span class="std std-ref">below</span></a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">identity()</span></code> – returns an identity matrix</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">set()</span></code> – sets the values of the matrix equal to 16 inputted values</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code> – prints the matrix (when used with <code class="docutils literal notranslate"><span class="pre">console.log()</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">toString()</span></code> – outputs a string that can be used with <code class="docutils literal notranslate"><span class="pre">console.log()</span></code> to print the matrix</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">copy()</span></code> – makes a copy of the matrix (useful to avoid overwriting the matrix)</p></li>
 </ul>
 <p>We have then created a matrix object and set the values equal to the matrix below and printed the matrix.</p>
@@ -992,7 +992,7 @@ A^\mathsf{T} =
 </pre></div>
 </div>
 <p>Now add enter the following code to the <em><strong>vectors_and_matrices.js</strong></em> file.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA^T =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">print</span><span class="p">());</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA^T =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">.</span><span class="nx">transpose</span><span class="p">());</span>
 </pre></div>
 </div>
 </div>
@@ -1009,8 +1009,8 @@ A^\mathsf{T} =
 <p class="admonition-title">Task</p>
 <p>Edit the code used to print the transpose of the matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> to the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">AT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">copy</span><span class="p">(</span><span class="nx">A</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA^T =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">AT</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA^T =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">AT</span><span class="p">.</span><span class="nx">transpose</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nA =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">A</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1120,8 +1120,8 @@ A =
 <span class="p">]);</span>
 
 <span class="kd">const</span><span class="w"> </span><span class="nx">AB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">copy</span><span class="p">(</span><span class="nx">A</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">B</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nB =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">B</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nAB =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">AB</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nB =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">B</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nAB =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">AB</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1328,9 +1328,9 @@ IA =
 <span class="p">]);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">invC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">copy</span><span class="p">(</span><span class="nx">C</span><span class="p">).</span><span class="nx">inverse</span><span class="p">();</span>
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nC =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">C</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\ninv(C) =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">invC</span><span class="p">.</span><span class="nx">print</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\ninv(C)C =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">invC</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">C</span><span class="p">).</span><span class="nx">print</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\nC =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">C</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\ninv(C) =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">invC</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;\ninv(C)C =\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">invC</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">C</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
@@ -1407,7 +1407,24 @@ inv(C)C =
    (b)   <span class="math notranslate nohighlight">\(T \, \vec{v}\)</span>;<br>
    (c)   <span class="math notranslate nohighlight">\(T\,S\,\vec{v}\)</span>.<br></p>
 <p>   For each one, describe what effect the transformation has on <span class="math notranslate nohighlight">\(\vec{v}\)</span>.</p>
-</section>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Solutions</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">1 (a) <span class="math notranslate nohighlight">\(\vec{p} = (5, 6, 1)\)</span></p>
+<p class="sd-card-text">1 (b) <span class="math notranslate nohighlight">\(\vec{q} = (-10, -2, -7)\)</span></p>
+<p class="sd-card-text">1 (c) <span class="math notranslate nohighlight">\(\vec{r} = (5, -4, 6)\)</span></p>
+<p class="sd-card-text">1 (d) <span class="math notranslate nohighlight">\(\| \vec{p} \| = 7.874\)</span></p>
+<p class="sd-card-text">1 (e) <span class="math notranslate nohighlight">\(\hat{\vec{q}} = (-0.81, -0.16, -0.57)\)</span></p>
+<p class="sd-card-text">1 (f) <span class="math notranslate nohighlight">\(\vec{p} \cdot \vec{q} = -69\)</span></p>
+<p class="sd-card-text">1 (g) <span class="math notranslate nohighlight">\(\vec{q} \times \vec{r} = (-30, 25, 50)\)</span></p>
+<p class="sd-card-text">3 (a) <span class="math notranslate nohighlight">\(AB = \begin{pmatrix} 21 &amp; 1 \\ -35 &amp; -1 \end{pmatrix}\)</span></p>
+<p class="sd-card-text">3 (b) <span class="math notranslate nohighlight">\(ABC = \)</span></p>
+<p class="sd-card-text">3 (c) <span class="math notranslate nohighlight">\(B^\mathsf{T}A^\mathsf{T} = \)</span></p>
+<p class="sd-card-text">4 (a) <span class="math notranslate nohighlight">\(S\vec{v} = \begin{pmatrix} 10 \\ 16 \\ 20 \\ 1 \end{pmatrix}\)</span>. The first three elements of <span class="math notranslate nohighlight">\(\vec{v}\)</span> have been doubled.</p>
+<p class="sd-card-text">4 (b) <span class="math notranslate nohighlight">\(T\vec{v} = \begin{pmatrix} 8 \\ 10 \\ 9 \\ 1 \end{pmatrix}\)</span>. The first three elements of <span class="math notranslate nohighlight">\(\vec{v}\)</span> have been increased by the elements in the fourth column of <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p class="sd-card-text">4 (c) <span class="math notranslate nohighlight">\(TS\vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}\)</span> This first three elements of <span class="math notranslate nohighlight">\(\vec{v}\)</span> have been double and then increased by the elements in the fourth column of <span class="math notranslate nohighlight">\(T\)</span>.</p>
+</div>
+</details></section>
 <hr class="docutils" />
 <section id="video-walkthrough">
 <h2>Video Walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
