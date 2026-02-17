@@ -30,145 +30,153 @@ function dot(a, b) {
 }
 
 function cross(a, b) {
-return [ 
-    a[1] * b[2] - a[2] * b[1], 
-    a[2] * b[0] - a[0] * b[2], 
-    a[0] * b[1] - a[1] * b[0] 
-];
+    return [ 
+        a[1] * b[2] - a[2] * b[1], 
+        a[2] * b[0] - a[0] * b[2], 
+        a[0] * b[1] - a[1] * b[0] 
+    ];
+}
+
+function lerpVector(a, b, t) {
+    return [
+        a[0] + t * (b[0] - a[0]),
+        a[1] + t * (b[1] - a[1]),
+        a[2] + t * (b[2] - a[2])
+    ];
 }
 
 // 4x4 Matrix class
 class Mat4 {
-constructor() {
-    this.m = new Float32Array(16);
-    this.identity();
-}
-
-identity() {
-    const m = this.m;
-    m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
-    m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
-    m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
-    m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
-    return this;
-}
-
-set(values) {
-    this.m.set(values);
-    return this;
-}
-
-print() {
-    const m = this.m;
-    let string = "";
-    for (let i = 0; i < 4; i++) {
-    const row = [
-        m[i * 4 + 0].toFixed(2).padStart(8),
-        m[i * 4 + 1].toFixed(2).padStart(8),
-        m[i * 4 + 2].toFixed(2).padStart(8),
-        m[i * 4 + 3].toFixed(2).padStart(8),
-    ];
-    string += "  [" + row.join(" ") + " ]\n";
+    constructor() {
+        this.m = new Float32Array(16);
+        this.identity();
     }
-    return string;
-}
 
-copy(mat) {
-    this.m.set(mat.m);
-    return this;
-}
+    identity() {
+        const m = this.m;
+        m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
+        m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
+        m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
+        m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
+        return this;
+    }
 
-transpose() {
-    const m = this.m;
-    let tmp;
-    tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
-    tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
-    tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
-    tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
-    tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
-    tmp = m[11]; m[11] = m[14]; m[14] = tmp;
-    return this
-}
+    set(values) {
+        this.m.set(values);
+        return this;
+    }
 
-multiply(mat) {
-    const result = new Float32Array(16);
-    for (let col = 0; col < 4; col++) {
-    for (let row = 0; row < 4; row++) {
-        let sum = 0;
-        for (let k  = 0; k < 4; k++) {
-        sum += this.m[row + k * 4] * mat.m[k + col * 4];
+    print() {
+        const m = this.m;
+        let string = "";
+        for (let i = 0; i < 4; i++) {
+        const row = [
+            m[i * 4 + 0].toFixed(2).padStart(8),
+            m[i * 4 + 1].toFixed(2).padStart(8),
+            m[i * 4 + 2].toFixed(2).padStart(8),
+            m[i * 4 + 3].toFixed(2).padStart(8),
+        ];
+        string += "  [" + row.join(" ") + " ]\n";
         }
-        result[row + col * 4] = sum;
-    }
-    }
-    this.set(result);
-    return this;
-}
-
-inverse() {
-    let m = this.m;
-    const inv = new Float32Array([
-    m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
-    -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],      
-    m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],      
-    -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
-
-    -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
-    m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
-    -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
-    m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
-
-    m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
-    -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
-    m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
-    -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
-
-    -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
-    m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
-    -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
-    m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
-    ]);
-
-    let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
-    if (det === 0) {
-    console.error("Matrix is singular, no inverse exists");
-    return null;
+        return string;
     }
 
-    det = 1 / det;
-    for (let i = 0; i < 16; i++) {
-    inv[i] *= det;
+    copy(mat) {
+        this.m.set(mat.m);
+        return this;
     }
-    this.set(inv);
-    return this;
-}
 
-translate(t) {
-    const [x, y, z] = t;
-    const transMatrix = new Mat4().set([
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    x, y, z, 1
-    ]);
-    return this.multiply(transMatrix);
-}
+    transpose() {
+        const m = this.m;
+        let tmp;
+        tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
+        tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
+        tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
+        tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
+        tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
+        tmp = m[11]; m[11] = m[14]; m[14] = tmp;
+        return this
+    }
 
-scale(s) {
-    const [x, y, z] = s;
-    const scaleMatrix = new Mat4().set([
-    x, 0, 0, 0,
-    0, y, 0, 0,
-    0, 0, z, 0,
-    0, 0, 0, 1
-    ]);
-    return this.multiply(scaleMatrix);
-}
+    multiply(mat) {
+        const result = new Float32Array(16);
+        for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < 4; row++) {
+            let sum = 0;
+            for (let k  = 0; k < 4; k++) {
+            sum += this.m[row + k * 4] * mat.m[k + col * 4];
+            }
+            result[row + col * 4] = sum;
+        }
+        }
+        this.set(result);
+        return this;
+    }
 
-rotate(axis, angle) {
-    const rotationQuaternion = new Quaternion().fromAxisAngle(axis, angle);
-    return this.multiply(rotationQuaternion.matrix());
-}
+    inverse() {
+        let m = this.m;
+        const inv = new Float32Array([
+        m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10],
+        -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10],      
+        m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] + m[13] * m[2] * m[7]  - m[13] * m[3] * m[6],      
+        -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] - m[9] * m[2] * m[7]  + m[9] * m[3] * m[6],
+
+        -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10],
+        m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10],
+        -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] - m[12] * m[2] * m[7]  + m[12] * m[3] * m[6],
+        m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] + m[8] * m[2] * m[7]  - m[8] * m[3] * m[6],
+
+        m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9],
+        -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9],
+        m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] + m[12] * m[1] * m[7]  - m[12] * m[3] * m[5],
+        -m[0] * m[5] * m[11] + m[0] * m[7] * m[9]  + m[4] * m[1] * m[11] - m[4] * m[3] * m[9]  - m[8] * m[1] * m[7]  + m[8] * m[3] * m[5],
+
+        -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9],
+        m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9],
+        -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] - m[12] * m[1] * m[6]  + m[12] * m[2] * m[5],
+        m[0] * m[5] * m[10] - m[0] * m[6] * m[9]  - m[4] * m[1] * m[10] + m[4] * m[2] * m[9]  + m[8] * m[1] * m[6]  - m[8] * m[2] * m[5]
+        ]);
+
+        let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+        if (det === 0) {
+        console.error("Matrix is singular, no inverse exists");
+        return null;
+        }
+
+        det = 1 / det;
+        for (let i = 0; i < 16; i++) {
+        inv[i] *= det;
+        }
+        this.set(inv);
+        return this;
+    }
+
+    translate(t) {
+        const [x, y, z] = t;
+        const transMatrix = new Mat4().set([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        x, y, z, 1
+        ]);
+        return this.multiply(transMatrix);
+    }
+
+    scale(s) {
+        const [x, y, z] = s;
+        const scaleMatrix = new Mat4().set([
+        x, 0, 0, 0,
+        0, y, 0, 0,
+        0, 0, z, 0,
+        0, 0, 0, 1
+        ]);
+        return this.multiply(scaleMatrix);
+    }
+
+    rotate(axis, angle) {
+        const rotationQuaternion = Quaternion.fromAxisAngle(axis, angle);
+        return this.multiply(rotationQuaternion.matrix());
+    }
 }
 
 class Quaternion {
@@ -179,24 +187,12 @@ class Quaternion {
         this.z = z;
     }
 
-    clone() {
-        return new Quaternion(this.w, this.x, this.y, this.z);
-    }
-
-    print() {
+    toString() {
         const w = this.w.toFixed(3);
         const x = this.x.toFixed(3);
         const y = this.y.toFixed(3);
         const z = this.z.toFixed(3);
         return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
-    }
-
-    copy(q) {
-        this.w = q.w;
-        this.x = q.x;
-        this.y = q.y;
-        this.z = q.z;
-        return this;
     }
 
     length() {
@@ -210,7 +206,6 @@ class Quaternion {
 
     normalize() {
         const len = this.length();
-        if (len === 0) return new Quaternion(0, 0, 0, 0);
         const inv = 1 / len;
         this.w *= inv;
         this.x *= inv;
@@ -222,14 +217,13 @@ class Quaternion {
 
     inverse() {
         const len2 = this.length() * this.length();
-        if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
         return new Quaternion(
-        this.w / len2, 
-        -this.x / len2, 
-        -this.y / len2, 
-        -this.z / len2
+            this.w / len2, 
+            -this.x / len2, 
+            -this.y / len2, 
+            -this.z / len2
         );
-    }
+    };
 
     multiply(q) {
         return new Quaternion(
@@ -240,24 +234,22 @@ class Quaternion {
         );
     }
 
-    fromAxisAngle(axis, angle) {
-        axis = normalize(axis);
+    static fromAxisAngle(axis, angle) {
         const halfAngle = 0.5 * angle;
         const s = Math.sin(halfAngle);
+        const n = normalize(axis);
 
         return new Quaternion(
             Math.cos(halfAngle),
-            s * axis[0],
-            s * axis[1],
-            s * axis[2],
+            s * n[0],
+            s * n[1],
+            s * n[2],
         );
     }
 
     rotateVector(v) {
-        const q = new Quaternion(this.w, this.x, this.y, this.z);
         const p = new Quaternion(0, v[0], v[1], v[2]);
-        const qInv = new Quaternion(q.w, -q.x, -q.y, -q.z);
-        const result = q.multiply(p).multiply(qInv);
+        const result = this.multiply(p).multiply(this.inverse());
         return [result.x, result.y, result.z];
     }
 
@@ -275,7 +267,7 @@ class Quaternion {
         ]);
     }
 
-    fromEuler(yaw, pitch, roll) {
+    static fromEuler(yaw, pitch, roll) {
         const cy = Math.cos(0.5 * yaw);
         const sy = Math.sin(0.5 * yaw);
         const cp = Math.cos(0.5 * pitch);

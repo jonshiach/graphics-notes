@@ -43,7 +43,7 @@ function setupConsoleOutput(elementId) {
 }
 
 setupConsoleOutput("console-output");
-console.log("Lab 5 - Vectors and Matrices\n----------------------------");
+console.log("Lab 4 - Vectors and Matrices\n----------------------------");
 ```
 
 :::
@@ -187,7 +187,7 @@ Here we have defined two similar functions `addVector()` and `subtractVector()` 
 :::{admonition} Task
 :class: tip
 
-Add the following to the ***Vectors_and_matrices.js*** file
+Add the following to the ***vectors_and_matrices.js*** file
 
 ```javascript
 // Arithmetic operations on vectors
@@ -574,7 +574,7 @@ class Mat4 {
         return this;
     }
 
-    print() {
+    toString() {
         const m = this.m;
         let string = "";
         for (let i = 0; i < 4; i++) {
@@ -607,7 +607,7 @@ const A = new Mat4().set([
      9, 10, 11, 12,
     13, 14, 15, 16
 ]);
-console.log("A =\n" + A.print());
+console.log("A =\n" + A);
 ```
 
 :::
@@ -617,7 +617,7 @@ Here we have declared a class called `Mat4` inside which we have defined the fol
 - `constructor()` -- the constructor method that defines a $4\times 4$ identity matrix (we discuss identity matrices [below](identity-matrix-section))
 - `identity()` -- returns an identity matrix
 - `set()` -- sets the values of the matrix equal to 16 inputted values
-- `print()` -- prints the matrix (when used with `console.log()`)
+- `toString()` -- outputs a string that can be used with `console.log()` to print the matrix
 - `copy()` -- makes a copy of the matrix (useful to avoid overwriting the matrix)
 
 We have then created a matrix object and set the values equal to the matrix below and printed the matrix.
@@ -698,7 +698,7 @@ transpose() {
 Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
-console.log("\nA^T =\n" + A.transpose().print());
+console.log("\nA^T =\n" + A.transpose());
 ```
 
 :::
@@ -722,8 +722,8 @@ Edit the code used to print the transpose of the matrix `A` to the following
 
 ```javascript
 const AT = new Mat4().copy(A);
-console.log("\nA^T =\n" + AT.transpose().print());
-console.log("\nA =\n" + A.print());
+console.log("\nA^T =\n" + AT.transpose());
+console.log("\nA =\n" + A);
 ```
 
 :::
@@ -847,8 +847,8 @@ const B = new Mat4().set([
 ]);
 
 const AB = new Mat4().copy(A).multiply(B);
-console.log("\nB =\n" + B.print());
-console.log("\nAB =\n" + AB.print());
+console.log("\nB =\n" + B);
+console.log("\nAB =\n" + AB);
 ```
 
 :::
@@ -1087,9 +1087,9 @@ const C = new Mat4().set([
 ]);
 const invC = new Mat4().copy(C).inverse();
 
-console.log("\nC =\n" + C.print());
-console.log("\ninv(C) =\n" + invC.print());
-console.log("\ninv(C)C =\n" + invC.multiply(C).print());
+console.log("\nC =\n" + C);
+console.log("\ninv(C) =\n" + invC);
+console.log("\ninv(C)C =\n" + invC.multiply(C));
 ```
 
 :::
@@ -1174,6 +1174,36 @@ $$
 &emsp;&emsp; (c) &emsp; $T\,S\,\vec{v}$.<br>
 
 &emsp;&emsp; For each one, describe what effect the transformation has on $\vec{v}$.
+
+
+```{dropdown} Solutions
+
+1 (a) $\vec{p} = (5, 6, 1)$
+
+1 (b) $\vec{q} = (-10, -2, -7)$
+
+1 (c) $\vec{r} = (5, -4, 6)$
+
+1 (d) $\| \vec{p} \| = 7.874$
+
+1 (e) $\hat{\vec{q}} = (-0.81, -0.16, -0.57)$
+
+1 (f) $\vec{p} \cdot \vec{q} = -69$
+
+1 (g) $\vec{q} \times \vec{r} = (-30, 25, 50)$
+
+3 (a) $AB = \begin{pmatrix} 21 & 1 \\ -35 & -1 \end{pmatrix}$
+
+3 (b) $ABC = $
+
+3 (c) $B^\mathsf{T}A^\mathsf{T} = $
+
+4 (a) $S\vec{v} = \begin{pmatrix} 10 \\ 16 \\ 20 \\ 1 \end{pmatrix}$. The first three elements of $\vec{v}$ have been doubled.
+
+4 (b) $T\vec{v} = \begin{pmatrix} 8 \\ 10 \\ 9 \\ 1 \end{pmatrix}$. The first three elements of $\vec{v}$ have been increased by the elements in the fourth column of $T$.
+
+4 (c) $TS\vec{v} = \begin{pmatrix} 13 \\ 18 \\ 19 \\ 1 \end{pmatrix}$ This first three elements of $\vec{v}$ have been double and then increased by the elements in the fourth column of $T$.
+```
 
 ---
 

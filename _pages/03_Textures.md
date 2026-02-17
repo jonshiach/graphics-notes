@@ -263,7 +263,7 @@ Chnage the command to load the texture in the ***textures.js*** file to the foll
 const texture = loadTexture(gl, "assets/mario_small.png");
 ```
 
-Change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.
+In the `loadTexture()` function in the ***webGLUtils.js*** file, change the texture filtering to nearest-neighbour interpolation for both minification and magnification using the following code.
 
 ```javascript
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
@@ -416,7 +416,7 @@ The WebGL default wrapping is `GL_REPEAT` but we can specify the texture wrappin
 :::{admonition} Task
 :class: tip
 
-Add the following to the `loadTexture()` function in the ***webGLUtils.js*** file after the mipmap code.
+Add the following to the `loadTexture()` function in the ***webGLUtils.js*** file after the mipmap if statement.
 
 ```javascript
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
@@ -462,7 +462,7 @@ Load a second texture by adding the following code after the first texture is lo
 const texture2 = loadTexture(gl, "assets/crate.png");
 ```
 
-And add the following code after we bind the first texture.
+And add the following code in the `render()` function after we have cleared the frame buffer
 
 ```javascript
 gl.activeTexture(gl.TEXTURE1);

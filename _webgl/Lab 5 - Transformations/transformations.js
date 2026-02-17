@@ -92,9 +92,9 @@ function main() {
     const rotationsPerSecond = 1/2;
     const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
     const model = new Mat4()
-      .translate([0.4, 0.3, 0])
-      .rotate([0, 0, 1], angle)
-      .scale([0.5, 0.4, 1]);
+        .translate([0.4, 0.3, 0])
+        .rotate([0, 0, 1], angle)
+        .scale([0.5, 0.4, 1]);
 
     // Send model matrix to the shader
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);

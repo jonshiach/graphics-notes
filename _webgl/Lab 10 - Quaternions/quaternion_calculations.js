@@ -13,47 +13,59 @@ setupConsoleOutput("console-output");
 console.log('Lab 10 - Quaternions\n--------------------');
 
 // Define quaternions
-const q = new Quaternion(1, 2, 3, 4);
-console.log("q = " + q.print());
+let q = new Quaternion(1, 2, 3, 4);
+console.log("q = " + q);
 
 // Quaternion length
 console.log("\nQuaternion length\n-----------------")
 console.log("length(q) = " + q.length());
 const qHat = new Quaternion(1, 2, 3, 4).normalize();
-console.log("qHat = " + qHat.print());
+console.log("qHat = " + qHat);
 console.log("length(qHat) = " + qHat.length());
 
 // Multiplying quaternions
-const q1 = new Quaternion(1, 2, 3, 4);
 const q2 = new Quaternion(5, 6, 7, 8);
 console.log("\nMultiplying quaternions\n-----------------------");
-console.log("q1 = " + q1.print());
-console.log("q2 = " + q2.print());
-console.log("q1q2 = " + q1.multiply(q2).print());
+console.log("q2 = " + q2);
+console.log("qq2 = " + q.multiply(q2));
 
 // Quaternion inverse
-const qInv = q.inverse();
 console.log("\nQuaternion inverse\n------------------")
-console.log("qInv = " + qInv.print());
-console.log("qInv * q = " + qInv.multiply(q).print());
+console.log("qInv = " + q.inverse());
+console.log("qInv * q = " + q.inverse().multiply(q));
 
 // Quaternion rotation
 const p = [1, 0, 0];
 const axis = [0, 1, 0];
 const angle = 90 * Math.PI / 180;
-const qRot = new Quaternion().fromAxisAngle(axis, angle);
+q = Quaternion.fromAxisAngle(axis, angle);
 console.log("\nQuaternion rotation\n-------------------");
 console.log("p = " + printVector(p));
-console.log("qRot = " + qRot.print());
-console.log("pRotated = " + printVector(qRot.rotateVector(p)));
+console.log("q = " + q);
+console.log("pRotated = " + printVector(q.rotateVector(p)));
 
-const quaterionRotation = qRot.matrix();
-console.log("\nquaternion rotation matrix =\n" + quaterionRotation.print());
+const quaterionMatrix = q.matrix();
+console.log("\nquaternion rotation matrix =\n" + quaterionMatrix.print());
 
 const rotationMatrix = new Mat4().rotate(axis, angle);
 console.log("\nrotation matrix =\n" + rotationMatrix.print());
 
 const yaw = 45 * Math.PI / 180;
-const pitch = 45 * Math.PI / 180;
-const q3 = new Quaternion().fromEuler(yaw, pitch, 0.0);
-console.log("\nq3 = " + q3.print());
+const pitch = 30 * Math.PI / 180;
+q = Quaternion.fromEuler(yaw, pitch, 0.0);
+console.log("\nq = " + q);
+
+
+// Quaternion camera
+let qCamera = new Quaternion();
+const qYaw = Quaternion.fromAxisAngle([0, 1, 0], yaw);
+const qPitch = Quaternion.fromAxisAngle([1, 0, 0], pitch);
+qCamera = qYaw.multiply(qCamera);
+
+console.log("\nqYaw = " + qYaw);
+console.log("\nqPitch = " + qPitch);
+console.log("\nqCamera = " + qCamera);
+
+qCamera = qPitch.multiply(qCamera);
+console.log("\nqCamera = " + qCamera);
+

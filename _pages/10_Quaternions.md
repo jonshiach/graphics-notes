@@ -167,20 +167,20 @@ Add the following class definition to the ***maths.js** file
 
 ```javascript
 class Quaternion {
-  constructor(w = 1, x = 0, y = 0, z = 0) {
-    this.w = w;
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+    constructor(w = 1, x = 0, y = 0, z = 0) {
+        this.w = w;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
-  print() {
-    const w = this.w.toFixed(3);
-    const x = this.x.toFixed(3);
-    const y = this.y.toFixed(3);
-    const z = this.z.toFixed(3);
-    return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
-  }
+    toString() {
+        const w = this.w.toFixed(3);
+        const x = this.x.toFixed(3);
+        const y = this.y.toFixed(3);
+        const z = this.z.toFixed(3);
+        return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
+    }
 }
 ```
 
@@ -188,18 +188,18 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 const q = new Quaternion(1, 2, 3, 4);
-console.log("q = " + q.print());
+console.log("q = " + q);
 ```
 
 :::
 
-Here we have defined a Quaternion class that contains a constructor to initialize the quarternion using input paramters for $w$, $x$, $y$ and $z$ components and a method to print the quaternion. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined a Quaternion class that contains a constructor to initialize the quaternion using input parameters for $w$, $x$, $y$ and $z$ components and a method to output a string for printing. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
 q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
 ```
 
-### Quarternion magnitude
+### Quaternion magnitude
 
 The **magnitude**, or length, of a quaternion $q$ is denoted by $| q |$ and calculated in a similar way to how we calculate [vector magnitude](vector-magnitude-section)
 
@@ -216,12 +216,12 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
-  return Math.sqrt(
-    this.w * this.w +
-    this.x * this.x +
-    this.y * this.y +
-    this.z * this.z
-  );
+    return Math.sqrt(
+        this.w * this.w +
+        this.x * this.x +
+        this.y * this.y +
+        this.z * this.z
+    );
 }
 ```
 
@@ -260,15 +260,15 @@ Add the following method to the Quaternion class
 
 ```javascript
 normalize() {
-  const len = this.length();
-  if (len === 0) return new Quaternion(0, 0, 0, 0);
-  const inv = 1 / len;
-  this.w *= inv;
-  this.x *= inv;
-  this.y *= inv;
-  this.z *= inv;
+    const len = this.length();
+    if (len === 0) return new Quaternion(0, 0, 0, 0);
+    const inv = 1 / len;
+    this.w *= inv;
+    this.x *= inv;
+    this.y *= inv;
+    this.z *= inv;
   
-  return this;
+    return this;
 }
 ```
 
@@ -276,7 +276,7 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 const qHat = new Quaternion(1, 2, 3, 4).normalize();
-console.log("\nqHat = " + qHat.print());
+console.log("\nqHat = " + qHat);
 console.log("length(qHat) = " + qHat.length());
 ```
 
@@ -291,7 +291,7 @@ length(qHat) = 0.9999999999999999
 
 ### Multiplying quaternions
 
-The multiplication of two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ results in the quaternion $q_1q_2 = [w, (x, y, z)]$ where
+The multiplication of two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ results in the quaternion $q_1 \times q_2 = [w, (x, y, z)]$ where
 
 $$ \begin{align*}
   w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
@@ -303,7 +303,7 @@ $$ \begin{align*}
 If $q_1 = [w_1, \vec{a}]$ and $q_2 = [w_2, \vec{b}]$ then we can write quaternion multiplication as
 
 $$ \begin{align*}
-  q_1q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
+  q_1 \times q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
 \end{align*} $$(quaternion-product-equation-2)
 
 You don't need to know where equations {eq}`quaternion-product-equation-1` and {eq}`quaternion-product-equation-2` come from but if you are curious, click on the dropdown below.
@@ -312,7 +312,7 @@ You don't need to know where equations {eq}`quaternion-product-equation-1` and {
 Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then multiplying them gives
 
 $$ \begin{align*}
-    q_1q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
+    q_1 \times q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
     &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
     & \quad + x_1w_2i + x_1x_2i^2 + x_1y_2ij + x_1z_2ik \\
     & \quad + y_1w_2j + y_1x_2ji + y_1y_2j^2 + y_1z_2jk \\
@@ -322,7 +322,7 @@ $$ \begin{align*}
 Since $i^2 = j^2 = k^2 = -1$, $ij = k$, $ik = -j$, $ji = -k$, $jk = i$, $ki = j$, $kj = -i$ then
 
 $$ \begin{align*}
-  q_1q_2 &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
+  q_1 \times q_2 &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
   & \quad + x_1w_2i - x_1x_2 + x_1y_2k - x_1z_2j \\
   & \quad + y_1w_2j - y_1x_2k - y_1y_2 + y_1z_2i \\
   & \quad + z_1w_2k + z_1x_2j - z_1y_2i - z_1z_2.
@@ -331,13 +331,13 @@ $$ \begin{align*}
 Factorising the real and imaginary parts
 
 $$ \begin{align*}
-  q_1q_2 &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
+  q_1 \times q_2 &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
   & \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)i \\
   & \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)j \\
   & \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)k.
 \end{align*} $$(quaternion-multiplication-equation-3)
 
-We can write this in scalar-vector form $q_1q_2 = [w, (x, y, z)]$ where
+We can write this in scalar-vector form $q_1 \times q_2 = [w, (x, y, z)]$ where
 
 $$ \begin{align*}
   w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
@@ -346,10 +346,10 @@ $$ \begin{align*}
   z &= w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2.
 \end{align*}$$
 
-We can write equation {eq}`quaternion-multiplication-equation-3` by multiplying by the quaternions $[0,(0,0,0)]$ for the scalar part and $i = [0, (1, 0, 0)]$, $j = [0, (0, 1, 0)]$ and $k = [0, (0, 0, 1)]$ for the imaginary parts
+We can write equation {eq}`quaternion-multiplication-equation-3` by multiplying by the quaternions $[1, (0, 0, 0)]$ for the scalar part and $i = [0, (1, 0, 0)]$, $j = [0, (0, 1, 0)]$ and $k = [0, (0, 0, 1)]$ for the imaginary parts
 
 $$ \begin{align*}
-    q_1q_2 &= (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2)[1, (0, 0, 0)] \\
+    q_1 \times q_2 &= (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2)[1, (0, 0, 0)] \\
     & \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)[0, (1, 0, 0)] \\
     & \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)[0, (0, 1, 0)] \\
     & \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)[0, (0, 0, 1)] \\
@@ -358,15 +358,23 @@ $$ \begin{align*}
     & \quad + (y_1z_2 - z_1y_2, z_1x_2 - x_1z_2, x_1y_2 - y_1x_2)]
 \end{align*} $$
 
-Since $(x_1, y_1, z_1) \cdot (x_2, y_2, z_2) = x_1x_2 + y_1y_2 + z_1z_2$ and $(x_1, y_1, z_1) \times (x_2, y_2, z_2) = (y_1z_2 - z_1y_2, z_1x_2 - x_1z_2, x_1y_2 - y_1x_2)$ then
+Since
 
 $$ \begin{align*}
-    q_1q_2 &= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2),  w_1(x_2, y_2, z_2) + w_2(x_1, y_1, z_2) + (x_1, y_1, z_1) \times (x_2, y_2, z_2)]
+    (x_1, y_1, z_1) \cdot (x_2, y_2, z_2) &= x_1x_2 + y_1y_2 + z_1z_2, \\
+    (x_1, y_1, z_1) \times (x_2, y_2, z_2) &= (y_1z_2 - z_1y_2, z_1x_2 - x_1z_2, x_1y_2 - y_1x_2)
+\end{align*} $$
+
+then
+
+$$ \begin{align*}
+    q_1 \times q_2 &= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2), \\
+    & \qquad w_1(x_2, y_2, z_2) + w_2(x_1, y_1, z_2) + (x_1, y_1, z_1) \times (x_2, y_2, z_2)]
 \end{align*} $$
 
 Let $\vec{a} = (x_1, y_1, z_1)$ and $\vec{b} = (x_2, y_2, z_2)$ such that $q_1 = [w_1, \vec{a}]$ and $q_2 = [w_2, \vec{b}]$ then
 
-$$ q_1q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].$$
+$$ q_1 \times q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].$$
 ```
 
 For example, given the quaternions $q_1 = [1, (2, 3, 4)]$ and $q_2 = [5, (6, 7, 8)]$ then
@@ -403,9 +411,9 @@ And add the following code to the ***quaternion_calculations.js*** file
 ```javascript
 const q1 = new Quaternion(1, 2, 3, 4);
 const q2 = new Quaternion(5, 6, 7, 8);
-console.log("\nq1 = " + q1.print());
-console.log("q2 = " + q2.print());
-console.log("q1q2 = " + q1.multiply(q2).print());
+console.log("\nq1 = " + q1);
+console.log("q2 = " + q2);
+console.log("q1 x q2 = " + q1.multiply(q2));
 ```
 
 :::
@@ -415,14 +423,14 @@ Here we have added the method `multiply()` to the Quaternion class that multipli
 ```text
 q1 = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
 q2 = [ 5.000, ( 6.000, 7.000, 8.000 ) ]
-q1q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
+q1 x q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
 ```
 
 ### Quaternion inverse
 
 The **inverse** of a quaternion $q$ is denoted by $q^{-1}$ and is defined by
 
-$$ qq^{-1} = 1. $$(quaternion-inverse-definition)
+$$ q \times q^{-1} = q^{-1} \times q = 1. $$(quaternion-inverse-definition)
 
 To calculate the inverse or the quaternion $q = [w, (x, y, z)]$, we need to consider its **conjugate** of which is denoted by $q^*$ and is defined by
 
@@ -430,11 +438,11 @@ $$ \begin{align*}
     q^* = [w, (-x, -y, -z)],
 \end{align*} $$
 
-i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate $qq^*=q^*q = |q|^2$. Multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
+i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate results in $q \times q^*=q^*q = |q|^2$ so multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
 
 $$ \begin{align*}
-  q^*qq^{-1} &= q^* \\
-  |q|^2q^{-1} &= q^* \\
+  q^* \times q \times q^{-1} &= q^* \\
+  |q|^2 \times q^{-1} &= q^* \\
   q^{-1} &= \frac{q^*}{|q|^2}.
 \end{align*} $$
 
@@ -447,7 +455,7 @@ $$ \begin{align*}
 Checking that this is the inverse of $q$
 
 $$ \begin{align*}
-  qq^{-1} &= [1, (-2, -3, -4)][0.183, (-0.365, -0.548, -0.730)] \\
+  q \times q^{-1} &= [1, (-2, -3, -4)][0.183, (-0.365, -0.548, -0.730)] \\
   &= [1, (0, 0, 0)].
 \end{align*} $$
 
@@ -458,14 +466,14 @@ Add the following method to the Quaternion class
 
 ```javascript
 inverse() {
-  const len2 = this.length() * this.length();
-  if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
-  return new Quaternion(
-    this.w / len2,
-    -this.x / len2,
-    -this.y / len2,
-    -this.z / len2
-  );
+    const len2 = this.length() * this.length();
+    if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
+    return new Quaternion(
+        this.w / len2,
+        -this.x / len2,
+        -this.y / len2,
+        -this.z / len2
+    );
 }
 ```
 
@@ -474,17 +482,17 @@ And add the following code to the ***quaternion_calculations.js*** file
 ```javascript
 // Quaternion inverse
 const qInv = q.inverse();
-console.log("\nqInv = " + qInv.print())
-console.log("qInv * q = " + qInv.multiply(q).print())
+console.log("\nqInv = " + qInv)
+console.log("qInv x q = " + qInv.multiply(q))
 ```
 
 :::
 
-Here we have defined the Quaternion class method `inverse()` which calculates the inverse of the current quaternion and we have used it to calculate the inverse of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined the Quaternion class method `inverse()` which calculates the inverse of the current quaternion, and we have used it to calculate the inverse of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
 qInv = [ 0.033, ( -0.067, -0.100, -0.133 ) ]
-qInv * q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
+qInv x q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 ```
 
 ---
@@ -495,25 +503,29 @@ We saw above that we can rotate a number in the complex plane by multiplying by 
 
 $$ z = \cos(\theta) + i\sin(\theta). $$
 
-We can do similar in 3D space using the **rotation quaternion** which is
+To rotate a quaternion $p$ we simply multiply it by another quaternion $q$ that represents the rotation we wish to apply
+
+$$ p' = q \times p, $$
+
+where $q$ is defined by
 
 $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}} ]. $$(rotation-quaternion-equation)
 
-To apply the rotation quaternion to rotate the vector $\vec{p}$ we define the quaternion $p = [0, \vec{p}]$ and calculate
+To apply the rotation quaternion to rotate the vector $\vec{p}$ we need to define the quaternion $p = [0, \vec{p}]$ and then calculate
 
-$$p' = qpq^{-1},$$(quaternion-rotation-multiplication-equation)
+$$p' = q \times p \times q^{-1},$$(quaternion-rotation-multiplication-equation)
 
-which returns a quaternion of the form $p' = [0, \vec{p}']$ where $\vec{p}'$ is the rotated vector. You don't need to know why we use equation {eq}`quaternion-rotation-multiplication-equation`, but if you are curious, click on the dropdown below.
+which returns a quaternion of the form $p' = [0, \vec{p}']$ where $\vec{p}'$ is the rotated vector. You don't need to know why we need to use 2 multiplications in equation {eq}`quaternion-rotation-multiplication-equation` but if you are curious, click on the dropdown below.
 
-````{dropdown} Derivation of the quaternion rotation multiplication order
+````{dropdown} Derivation of the equation for rotating a vector using quaternions
 Consider the rotation of the vector $\vec{p} = (2, 0, 0)$ by 45$^\circ$ about the vector $\hat{\vec{v}} = (0, 0, 1)$ the points along the $z$-axis. The rotation quaternion for this is
 
 $$ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)]. $$
 
-Expressing $\vec{p}$ as a quaternion we have $p = [0, (2, 0, 0)]$ and multiplying $p$ and $q$ using equation {eq}`quaternion-product-equation` gives
+Expressing $\vec{p}$ as a quaternion we have $p = [0, (2, 0, 0)]$ and rotating this using $q$ we have
 
 $$ \begin{align*}
-    p' = qp &= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
+    p' = q \times p &= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
 \end{align*} $$
 
 The scalar part of $p'$ is zero so we can extract the rotated vector which is $\vec{p}' = (1.414, 1.414, 0)$. This rotation is shown below.
@@ -522,7 +534,7 @@ The scalar part of $p'$ is zero so we can extract the rotated vector which is $\
 :width: 450
 ```
 
-This example rotated about a vector point along one of the axes, what happens when we rotate by a quaternion that doesn't? Consider the rotation of the same vector $\vec{p} = (2, 0, 0)$ by angle $45^\circ$ about the unit vector $\hat{\vec{v}} =  (0.707, 0, 0.707)$, the rotation quaternion is
+This example rotated about a vector that points along one of the axes, what happens when we rotate by a vector that doesn't? Consider the rotation of the same vector $\vec{p} = (2, 0, 0)$ by angle $45^\circ$ about the unit vector $\hat{\vec{v}} =  (0.707, 0, 0.707)$, the rotation quaternion is
 
 $$ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
@@ -531,13 +543,13 @@ $$ \begin{align*}
 Calculating $qp$
 
 $$ \begin{align*}
-    p' = qp &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
+    p' = q \times p &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
 \end{align*} $$
 
-Now the real part is non-zero, so we can't extract the rotated vector. However, if we multiply $qp$ by the inverse of the rotation quaternion $q^{-1}$ on the right we have
+Now the real part is non-zero, so we can't extract the rotated vector. However, if we multiply $q \times p$ by the inverse of the rotation quaternion $q^{-1}$ on the right we have
 
 $$ \begin{align*}
-    p' = qpq^{-1} &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
+    p' = q \times p \times q^{-1} &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
     &= [0, (1, 1.414, 1)]
 \end{align*} $$
 
@@ -547,7 +559,7 @@ The real part of $p'$ is zero, so we can extract the rotated vector which is $\v
 :width: 450
 ```
 
-The plot of this rotation above shows that we have rotated by $90^\circ$ instead of the desired $45^\circ$. This is because we have applied the rotation quaternion twice, so we need to halve the angle and the rotation quaternion is
+The plot of this rotation above shows that we have rotated by $90^\circ$ instead of the desired $45^\circ$. This is because we have applied two rotations of $45^\circ$, so we need to halve the angle in the rotation quaternion is
 
 $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}}].$$
 
@@ -555,10 +567,10 @@ So our rotation quaternion is
 
 $$q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = [0.924, (0.271, 0, 0.271)]. $$
 
-Calculating $p' = qpq^{-1}$ we have
+Now calculating the rotation we have
 
 $$ \begin{align*}
-    p' = qpq^{-1} &= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
+    p' = q \times p \times q^{-1} &= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
     &= [0, (1.707, 1, 0.293)].
 \end{align*}$$
 
@@ -576,10 +588,10 @@ $$ \begin{align*}
     q^{-1} &= [0.707, (0, -0.707, 0)]
 \end{align*} $$
 
-Computing $qpq^{-1}$ gives
+Computing $q \times p \times q^{-1}$ gives
 
 $$ \begin{align*}
-  qpq^{-1} &= [0.707, (0, 0.707, 0)][0, (1, 0, 0)][0.707, (0, -0.707, 0)] \\
+  q \times p \times q^{-1} &= [0.707, (0, 0.707, 0)][0, (1, 0, 0)][0.707, (0, -0.707, 0)] \\
   &= [0, (0.707, 0, -0.707)][0.707, (0, -0.707, 0)] \\
   &= [0, (0, 0, -1)]
 \end{align*} $$
@@ -592,7 +604,7 @@ So $\vec{p}' = (0, 0, -1)$ as expected.
 Add the following method to the Quaternion class
 
 ```javascript
-fromAxisAngle(axis, angle) {
+static fromAxisAngle(axis, angle) {
     axis = normalize(axis);
     const halfAngle = 0.5 * angle;
     const s = Math.sin(halfAngle);
@@ -620,10 +632,10 @@ And add the following code to the ***quaternion_calculations.js*** file
 const p = [1, 0, 0];
 const axis = [0, 1, 0];
 const angle = 90 * Math.PI / 180;
-const qRot = new Quaternion().fromAxisAngle(axis, angle);
+const qRot = new Quaternion.fromAxisAngle(axis, angle);
 console.log("\nQuaternion rotation\n-------------------");
 console.log("p = " + printVector(p));
-console.log("qRot = " + qRot.print());
+console.log("qRot = " + qRot);
 console.log("pRotated = " + printVector(qRot.rotateVector(p)));
 ```
 
@@ -639,9 +651,9 @@ qRot = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
 pRotated = [ 0.00, 0.00, -1.00 ]
 ```
 
-### Quaternion rotation matrix
+### Matrix representation of a quaternion
 
-We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to $qpq^{-1}$. If the rotation quaternion is $q = [w, (x, y, z)]$, and $q$ is a unit quaternion, then the corresponding rotation matrix is
+We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to $q \times p \times q^{-1}$. If the rotation quaternion is $q = [w, (x, y, z)]$, and $q$ is a unit quaternion, then the corresponding rotation matrix is
 
 $$ \begin{align*}
     Rotate &=
@@ -660,7 +672,7 @@ You don't need to know the derivation of the quaternion rotation matrix but if y
 To derive a $4 \times 4$ transformation matrix that achieves quaternion rotation, consider the multiplication of the quaternion $p = [p_w, (p_x, p_y, p_z)]$ on the left by the rotation quaternion $q = [w, (x, y, z)]$
 
 $$ \begin{align*}
-    qp &= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
+    q \times p &= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
     &= [wp_w - (x, y, z) \cdot (p_x, p_y, p_z), w(p_x, p_y, p_z) + p_w(x, y, z) + (x, y, z) \times (p_x, p_y, p_z)] \\
     &= [wp_w - xp_x - yp_y - zp_z, \\
     &\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
@@ -669,7 +681,7 @@ $$ \begin{align*}
 If we write the quaternion $p$ as a 4-element vector of the form $\vec{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous co-ordinates](homogeneous-coordinates-section)) then we have
 
 $$ \begin{align*}
-    qp &=
+    q \times p &=
     \begin{pmatrix}
          wp_x - zp_y + yp_z + xp_w \\
          zp_x + wp_y - xp_z + yp_w \\
@@ -678,9 +690,9 @@ $$ \begin{align*}
     \end{pmatrix},
 \end{align*} $$
 
-and we can express the rotation $qp$ as the matrix equation
+and we can express the rotation $q \times p$ as the matrix equation
 
-$$ qp = \begin{align*}
+$$ q \times p = \begin{align*}
     \begin{pmatrix}
          w & -z &  y & x \\
          z &  w & -x & y \\
@@ -693,7 +705,7 @@ $$ qp = \begin{align*}
 Doing similar for multiplying $p$ on the right by the inverse rotation quaternion $q^{-1} = [w, (-x, -y, -z)]$
 
 $$ \begin{align*}
-    pq^{-1} &= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
+    p \times q^{-1} &= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
     &= [wp_w - (p_x, p_y, p_z) \cdot ( -x, -y, -z), \\
     & \qquad p_w(-x, -y, -z) + w(p_x, p_y, p_z) + (p_x, p_y, p_z) \times (-x, -y, -z)] \\
     &= [xp_x + yp_y + zp_z + wp_w, \\
@@ -703,7 +715,7 @@ $$ \begin{align*}
 Writing $p$ the form $\vec{p} = (p_x, p_y, p_z, p_w)$ as before gives
 
 $$ \begin{align*}
-    pq^{-1} =
+    p \times q^{-1} =
     \begin{pmatrix}
         wp_x - zp_y + yp_z - xp_w \\
         zp_x + wp_y - xp_z - yp_w \\
@@ -715,7 +727,7 @@ $$ \begin{align*}
 which can be expressed by the matrix equation
 
 $$ \begin{align*}
-    pq^{-1} &=
+    p \times q^{-1} &=
     \begin{pmatrix}
         w & -z & y & -x \\
         z & w & -x & -y \\
@@ -725,10 +737,10 @@ $$ \begin{align*}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} $$(quaternion-rotation-q2-equation)
 
-The two matrices for $qp$ and $pq^{-1}$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $qpq^{-1}$
+The two matrices for $q \times p$ and $p \times q^{-1}$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $q \times p \times q^{-1}$
 
 $$ \begin{align*}
-    R &= qp \cdot pq^{-1}
+    R &= (q \times p) \cdot (p \times q^{-1})
     =
     \begin{pmatrix}
         w & -z & y & -x \\
@@ -806,11 +818,11 @@ matrix() {
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const quaterionRotation = rotationQuaternion.matrix();
-console.log("\nquaternion rotation matrix =\n" + quaterionRotation.print());
+const quaternionRotation = rotationQuaternion.matrix();
+console.log("\nquaternion rotation matrix =\n" + quaternionRotation);
 
 const rotationMatrix = new Mat4().rotate(axis, angle);
-console.log("\nrotation matrix =\n" + rotationMatrix.print());
+console.log("\nrotation matrix =\n" + rotationMatrix);
 ```
 
 :::
@@ -831,7 +843,7 @@ rotation matrix =
   [    0.00     0.00     0.00     1.00 ]
 ```
 
-Note that both matrices are equivalent, so why are we bothering with quaternion rotation? Comparing the code for the `matrix()` Quaternion class method with the `rotate()` method from the Mat4 class we can see the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix. Efficiency is always a bonus, but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock so it will work for any configuration.
+Note that both matrices are equivalent (you can change the axis and angles to confirm this works for other quaternions), so why are we bothering with quaternion rotation? Comparing the code for the `matrix()` Quaternion class method with the `rotate()` method from the Mat4 class we can see the quaternion rotation matrix requires 16 multiplications compared to 24 multiplications to calculate the rotation matrix. Efficiency is always a bonus, but the main advantage is the quaternion rotation matrix does not suffer from gimbal lock so it will work for any configuration.
 
 So it makes sense to use the quaternion rotation matrix for our axis-angle rotations.
 
@@ -842,15 +854,15 @@ Edit the `rotate()` Mat4 class method, so that is looks like the following
 
 ```javascript
 rotate(axis, angle) {
-    const rotationQuaternion = new Quaternion().fromAxisAngle(axis, angle);
+    const rotationQuaternion = new Quaternion.fromAxisAngle(axis, angle);
     return this.multiply(rotationQuaternion.matrix());
 }
 ```
 :::
 
-### Calculating a quaternion from Euler angles
+<!-- ### Calculating a quaternion from Euler angles
 
-Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Since multiplying rotation quaternions achieves rotation, then if $q_y$, $q_p$ and $q_r$ are rotation quaterions for rotating about the $yaw$, $pitch$ and $roll$ then the quaternion that gives the camera orientation is calculated using $q_y q_p q_r$,where 
+Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Since multiplying rotation quaternions achieves rotation, then if $q_y$, $q_p$ and $q_r$ are rotation quaternions for rotating about the $yaw$, $pitch$ and $roll$ then the quaternion that gives the camera orientation is calculated using $q_y q_p q_r$ where
 
 $$ \begin{align*}
   q_y &= [c_y, (s_y, 0, 0)], \\
@@ -904,8 +916,8 @@ And add the following code to the ***quaternion_calculations.js*** file
 ```javascript
 const yaw = 45 * Math.PI / 180;
 const pitch = 45 * Math.PI / 180;
-const q3 = new Quaternion().fromEuler(yaw, pitch, 0.0);
-console.log("\nq3 = " + q3.print());
+const q3 = new Quaternion.fromEuler(yaw, pitch, 0.0);
+console.log("\nq3 = " + q3);
 ```
 
 :::
@@ -916,63 +928,133 @@ Refresh your browser, and you should see the following added to the webpage
 q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 ```
 
+--- -->
+
 ---
 
 ## A Quaternion camera
 
 Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the `update()` method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through $\pm 90^\circ$ to look straight up or down (recall that we needed to limit the $pitch$ angle between $\pm 89^\circ$).
 
-To implment a quarternion camera we do the following:
+To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space. We rotate the camera quaternion using two rotation quaternions based on changes to the $yaw$ and $pitch$ angles from the mouse input. Once we have the rotated camera quaternion we can use it to rotate vectors pointing along the $x$ and negative $z$ axes to give the $\vec{right}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.
 
-- Define a quarternion that describes the current orientation for our camera.
-- Use the orientation quaternion to calculate the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors by rotating the vectors that point along the coordinate axes.
-- Rotate the orientation quaternion based on changes to the $yaw$ and $pitch$ angles due to mouse movement.
+For example, consider the camera quaternion $q_{camera} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the left resulting in a $yaw$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate the camera quaternion about the $y$-axis by multiplying by
+
+$$ q_{yaw} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(0, 1, 0)] = [0.924, (0, 0.383, 0)].$$
+
+Performing the quaternion multiplication we have
+
+$$ \begin{align*}
+    q_{camera}' &= q_{yaw} \times q_{camera} \\
+    &= [0.924, (0, 0.383, 0)] \, [1, (0, 0, 0)] \\
+    &= [0.924, (0, 0.383, 0)].
+\end{align*} $$
+
+```{figure} ../_images/10_quaternion_camera_1.svg
+:width: 300
+
+Rotation of the camera quaternion $q_{camera}$ around the $y$-axis by the angle $yaw$.
+```
+
+Let's say the user also moves the mouse upwards resulting in $pitch$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the camera $\vec{right}$ vector (which is currently $(1, 0, 0)$) by multiplying $q_{camera}'$ by
+
+$$ q_{pitch} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(1, 0, 0)] = [0.966, (0.259, 0, 0)]. $$
+
+Performing the quaternion multiplication we have
+
+$$ \begin{align*}
+    q_{final} &= q_{pitch} \times q_{camera}' \\
+    &= [0.966, (0.259, 0, 0)] \, [0.924, (0, 0.383, 0)] \\
+    &= [0.892, (0.239, 0.370, 0.099)].
+\end{align*} $$
+
+```{figure} ../_images/10_quaternion_camera_2.svg
+:width: 300
+
+Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
+```
+
+Note that in practice we can apply the yaw and pitch quaternion rotations in a single multiplication, i.e.,
+
+$$ q_{final} = q_{yaw} \times q_{pitch} \times q_{camera}.$$
+
+The final camera quaternion can be used to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to calculate the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. Also, we can use the inverse of the quaternion matrix form of $final \, camera \, quaternion$ to calculate the view matrix using
+
+$$ View = q_{camera}^{-1} \cdot Translate(-\vec{eye}). $$
+
+The reason we use the inverse camera quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
 
 :::{admonition} Task
 :class: tip
 
-In the ***camera.js*** file delete the $yaw$ and $pitch$ properties from the Camera class constructor (we will no longer need these since the camera vectors are calculated using a quaternion) and add the following quaternion to the constructor
+In the ***camera.js*** file delete the camera vectors $\vec{worldUp}$, $\vec{front}$, $\vec{right}$ and $\vec{up}$ (but keep the $\vec{eye}$ vector) as well as the $yaw$ and $pitch$ properties from the Camera class constructor (we will no longer need these since the camera vectors are calculated using a quaternion) and add the following quaternion to the constructor
 
 ```javascript
-// Orientation quaternion
-this.orientation = new Quaternion();
+// Rotation quaternion
+this.rotation = new Quaternion();
 ```
 
-In the `update()` method, replace the commands used to calculate the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors with the following
+Change the `update()` method so that is looks like the following
 
 ```javascript
-// Update direction vectors using the orientation quaternion
-this.front = normalize(this.orientation.rotateVector([0, 0, -1]));
-this.right = normalize(this.orientation.rotateVector([1, 0, 0]));
-this.up    = normalize(this.orientation.rotateVector([0, 1, 0]));
-```
+update(dt) {  
 
-Replace the `mouseMove()` method with the following
+    // Yaw rotation (rotate around y-axis)
+    const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
 
-```javascript
-mouseMove(e) {
-    if (document.pointerLockElement !== this.canvas) return;
-    const yaw   = -e.movementX * this.turnSpeed;
-    const pitch = -e.movementY * this.turnSpeed;
+    // Pitch rotation (rotate around local right vector)
+    const localRight = this.rotation.rotateVector([1, 0, 0]);
+    const pitchQuat = Quaternion.fromAxisAngle(localRight, this.pitch);
 
-    // Yaw quaternion (rotate around worldUp)
-    const yawQuat = new Quaternion().fromAxisAngle(this.worldUp, yaw);
+    // Zero yaw and pitch angles
+    this.yaw = 0;
+    this.pitch = 0;
 
-    // Pitch quaternion (rotate around camera's local right axis)
-    const right = this.orientation.rotateVector([1, 0, 0]);
-    const pitchQuat = new Quaternion().fromAxisAngle(right, pitch);
-
-    // Apply rotations
-    this.orientation = yawQuat
+    // Rotate camera quaternion
+    this.rotation = yawQuat
         .multiply(pitchQuat)
-        .multiply(this.orientation)
+        .multiply(this.rotation)
         .normalize();
+
+    // Calculate front and right camera vectors
+    const front = this.rotation.rotateVector([0, 0, -1]);
+    const right = this.rotation.rotateVector([1, 0, 0]);
+
+    // Camera movement
+    let vel = [0, 0, 0];
+    if (this.keys["w"]) vel = addVector(vel, front);
+    if (this.keys["s"]) vel = subtractVector(vel, front);
+    if (this.keys["a"]) vel = subtractVector(vel, right);
+    if (this.keys["d"]) vel = addVector(vel, right);
+    console.log();
+
+    if (length(vel) > 0) {
+        vel = normalize(vel);
+        this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
+    }
+}
+```
+
+In the `mouseMove()` function change the `+=` to `-=` in the command to update the $yaw$ angle and delete the commands that limit the $pitch$ angle. 
+
+Then replace the `getViewMatrix()` function with the following
+
+```javascript
+getViewMatrix() {
+    const rotate = this.rotation.inverse().matrix();
+    const translate = new Mat4().translate([
+        -this.eye[0],
+        -this.eye[1],
+        -this.eye[2]
+    ]);
+
+    return rotate.multiply(translate);
 }
 ```
 
 :::
 
-Here we have made the changes to implement a quaternion camera. In `update()` we use the orientation quaterion to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to give the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors (note that we rotate $(0, 0, -1)$ and not $(0, 0, 1)$ since in WebGL the camera is pointing down the $z$-axis). The `mouseMove()` method has been updated so that two quaternions, `yawQuat` and `pitchQuat` have been created to perform left-to-right and up-and-down camera rotations. These are multiplied by the orientation quaterion to apply the rotations.
+Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the camera quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new camera quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the camera quaternion to compute the view matrix.
 
 Load ***index.html*** in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through $\pm 90^\circ$.
 
@@ -983,6 +1065,7 @@ Load ***index.html*** in a live server and you should see that nothing much has 
 </center>
 
 ---
+
 ## SLERP
 
 Another advantage that quaternions have over Euler angles is that we can easily interpolate between two quaternions smoothly and without encountering the problem of gimble lock. Standard Linear intERPolation (LERP) is used to calculate an intermediate position on the straight line between two points.
@@ -999,7 +1082,7 @@ $$ \operatorname{LERP}(\vec{v}_1, \vec{v}_2, t) = \vec{v}_1 + t(\vec{v}_2 - \vec
 
 where $t$ is a value between 0 and 1.
 
-**SLERP** stands for Spherical Linear intERPpolation and is a method used to interpolate between two quaternions across a surface of a sphere.
+**SLERP** stands for Spherical Linear intERPolation and is a method used to interpolate between two quaternions across a surface of a sphere.
 
 ```{figure} ../_images/10_SLERP.svg
 :width: 400
@@ -1043,7 +1126,7 @@ To implement smoothing in a first-person camera we calculate a target quaternion
 Camera smoothing using SLERP.
 ```
 
-The effects of applying SLERP to smooth the camera rotation can be seen in the video below.
+The effects of applying SLERP to smooth the camera rotation can be seen in the video below (the effects are best experienced by moving the camera yourself).
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">

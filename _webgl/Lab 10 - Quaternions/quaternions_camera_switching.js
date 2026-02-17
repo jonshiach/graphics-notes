@@ -83,7 +83,7 @@ uniform Light uLights[16];
 
 // Function to calculate diffuse and specular reflection
 vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
- 
+    
     // Light vector
     vec3 L = normalize(light.position - vPosition);
     if (light.type == 3) {
@@ -243,19 +243,19 @@ function main() {
 
     // Define cube indices
     const indices = new Uint16Array([
-        0,  1,  2,  3,  4,  5,  // front
-        6,  7,  8,  9, 10, 11,  // right
+         0,  1,  2,  3,  4,  5,  // front
+         6,  7,  8,  9, 10, 11,  // right
         12, 13, 14, 15, 16, 17,  // back
         18, 19, 20, 21, 22, 23,  // left
         24, 25, 26, 27, 28, 29,  // bottom
-        30, 31, 32, 33, 34, 35   // top
+        30, 31, 32, 33, 34, 35,  // top
     ]);
 
     // Define cube positions (5x5 grid of cubes)
     const cubePositions = [];
     for (let i = 0; i < 5; i++)  {
         for (let j = 0; j < 5; j++) {
-            cubePositions.push([3 * i, 0, -3 * j]);
+        cubePositions.push([3 * i, 0, -3 * j]);
         }
     }
 
@@ -264,11 +264,11 @@ function main() {
     const cubes = [];
     for (let i = 0; i < numCubes; i++) {
         cubes.push({
-            position  : cubePositions[i],
-            ka        : 0.2,
-            kd        : 0.7,
-            ks        : 0.2,
-            shininess : 32,
+        position  : cubePositions[i],
+        ka        : 0.2,
+        kd        : 0.7,
+        ks        : 0.2,
+        shininess : 32,
         });
     }
 
@@ -284,37 +284,37 @@ function main() {
     // Create vector of light sources
     const lightSources = [ 
         {
-            type        : 2,
-            position    : [6, 2, 0],
-            colour      : [1, 1, 1],
-            direction   : [0, -1, -1],
-            constant    : 1.0,
-            linear      : 0.1,
-            quadratic   : 0.02,
-            cutoff      : Math.cos(40 * Math.PI / 180),
-            innerCutoff : Math.cos(30 * Math.PI / 180),
+        type        : 2,
+        position    : [6, 2, 0],
+        colour      : [1, 1, 1],
+        direction   : [0, -1, -1],
+        constant    : 1.0,
+        linear      : 0.1,
+        quadratic   : 0.02,
+        cutoff      : Math.cos(40 * Math.PI / 180),
+        innerCutoff : Math.cos(30 * Math.PI / 180),
         },
         {
-            type        : 1,
-            position    : [9, 2, -9],
-            direction   : [0, 0, 0],
-            colour      : [1, 1, 0],
-            constant    : 1.0,
-            linear      : 0.1,
-            quadratic   : 0.02,
-            cutoff      : 0,
-            innerCutoff : 0,
+        type        : 1,
+        position    : [9, 2, -9],
+        direction   : [0, 0, 0],
+        colour      : [1, 1, 0],
+        constant    : 1.0,
+        linear      : 0.1,
+        quadratic   : 0.02,
+        cutoff      : 0,
+        innerCutoff : 0,
         },
         {
-            type        : 3,
-            position    : [0, 0, 0],
-            direction   : [2, -1, -1],
-            colour      : [1, 0, 1],
-            constant    : 1.0,
-            linear      : 0.1,
-            quadratic   : 0.02,
-            cutoff      : 0,
-            innerCutoff : 0,
+        type        : 3,
+        position    : [0, 0, 0],
+        direction   : [2, -1, -1],
+        colour      : [1, 0, 1],
+        constant    : 1.0,
+        linear      : 0.1,
+        quadratic   : 0.02,
+        cutoff      : 0,
+        innerCutoff : 0,
         },
     ];
     const numLights = lightSources.length;
@@ -349,9 +349,16 @@ function main() {
     const floorNormalMap = loadTexture(gl, "assets/stones_normal.png");
     const floorSpecularMap = loadTexture(gl, "assets/stones_specular.png");
 
-    // Camera object
-    const camera = new Camera(canvas);
-    camera.eye = [6, 2, 5];
+    // Create player object
+    const player = new Player();
+
+    // Create cameras
+    const input = new Input(canvas);
+    const cameras = [
+        new FirstPersonCamera(player),
+        new ThirdPersonCamera(player)
+    ];
+    const cameraController = new CameraController(cameras);
 
     // Timer 
     let lastTime = 0;
@@ -381,16 +388,22 @@ function main() {
         gl.bindTexture(gl.TEXTURE_2D, normalMap);
         gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
-        // Update camera vectors;
+        // Calculate dt
         const dt = (time - lastTime) * 0.001;
         lastTime = time;
-        camera.update(dt);
+
+        // Get active camera
+        cameraController.update(dt, input);
+        const camera = cameraController.active;
+
+        // Update player and camera
+        player.update(dt, input, camera);
+        camera.update(dt, input);
 
         // Calculate view matrix
         const view = camera.getViewMatrix();
 
         // Calculate projection matrix
-        // const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
         const projection = camera.getPerspectiveMatrix();
 
         // Send view and project matrices to the shaders
@@ -474,22 +487,22 @@ function main() {
         gl.useProgram(lightProgram);
 
         for (let i = 0; i < numLights; i++) {
-            // Calculate model matrix for light source
-            const model = new Mat4()
-                .translate(lightSources[i].position)
-                .scale([0.1, 0.1, 0.1]);
+        // Calculate model matrix for light source
+        const model = new Mat4()
+            .translate(lightSources[i].position)
+            .scale([0.1, 0.1, 0.1]);
 
-            // Send model, view and projection matrices to the shaders
-            gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
-            gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
-            gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
+        // Send model, view and projection matrices to the shaders
+        gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
+        gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
+        gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
-            // Send light colour to the shader
-            gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
+        // Send light colour to the shader
+        gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
 
-            // Draw light source cube
-            gl.bindVertexArray(vao);
-            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+        // Draw light source cube
+        gl.bindVertexArray(vao);
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
         }
 
         // Render next frame
