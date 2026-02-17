@@ -291,7 +291,7 @@ length(qHat) = 0.9999999999999999
 
 ### Multiplying quaternions
 
-The multiplication of two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ results in the quaternion $q_1 \times q_2 = [w, (x, y, z)]$ where
+The multiplication of two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ results in the quaternion $q_1 \, q_2 = [w, (x, y, z)]$ where
 
 $$ \begin{align*}
   w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
@@ -303,7 +303,7 @@ $$ \begin{align*}
 If $q_1 = [w_1, \vec{a}]$ and $q_2 = [w_2, \vec{b}]$ then we can write quaternion multiplication as
 
 $$ \begin{align*}
-  q_1 \times q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
+  q_1 \, q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
 \end{align*} $$(quaternion-product-equation-2)
 
 You don't need to know where equations {eq}`quaternion-product-equation-1` and {eq}`quaternion-product-equation-2` come from but if you are curious, click on the dropdown below.
@@ -312,7 +312,7 @@ You don't need to know where equations {eq}`quaternion-product-equation-1` and {
 Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then multiplying them gives
 
 $$ \begin{align*}
-    q_1 \times q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
+    q_1 \, q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
     &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
     & \quad + x_1w_2i + x_1x_2i^2 + x_1y_2ij + x_1z_2ik \\
     & \quad + y_1w_2j + y_1x_2ji + y_1y_2j^2 + y_1z_2jk \\
@@ -322,7 +322,7 @@ $$ \begin{align*}
 Since $i^2 = j^2 = k^2 = -1$, $ij = k$, $ik = -j$, $ji = -k$, $jk = i$, $ki = j$, $kj = -i$ then
 
 $$ \begin{align*}
-  q_1 \times q_2 &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
+  q_1 \, q_2 &= w_1w_2 + w_1x_2i + w_1y_2j + w_1z_2k \\
   & \quad + x_1w_2i - x_1x_2 + x_1y_2k - x_1z_2j \\
   & \quad + y_1w_2j - y_1x_2k - y_1y_2 + y_1z_2i \\
   & \quad + z_1w_2k + z_1x_2j - z_1y_2i - z_1z_2.
@@ -331,13 +331,13 @@ $$ \begin{align*}
 Factorising the real and imaginary parts
 
 $$ \begin{align*}
-  q_1 \times q_2 &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
+  q_1 \, q_2 &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2 \\
   & \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)i \\
   & \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)j \\
   & \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)k.
 \end{align*} $$(quaternion-multiplication-equation-3)
 
-We can write this in scalar-vector form $q_1 \times q_2 = [w, (x, y, z)]$ where
+We can write this in scalar-vector form $q_1 \, q_2 = [w, (x, y, z)]$ where
 
 $$ \begin{align*}
   w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
@@ -349,7 +349,7 @@ $$ \begin{align*}
 We can write equation {eq}`quaternion-multiplication-equation-3` by multiplying by the quaternions $[1, (0, 0, 0)]$ for the scalar part and $i = [0, (1, 0, 0)]$, $j = [0, (0, 1, 0)]$ and $k = [0, (0, 0, 1)]$ for the imaginary parts
 
 $$ \begin{align*}
-    q_1 \times q_2 &= (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2)[1, (0, 0, 0)] \\
+    q_1 \, q_2 &= (w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2)[1, (0, 0, 0)] \\
     & \quad + (w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2)[0, (1, 0, 0)] \\
     & \quad + (w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2)[0, (0, 1, 0)] \\
     & \quad + (w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2)[0, (0, 0, 1)] \\
@@ -368,13 +368,13 @@ $$ \begin{align*}
 then
 
 $$ \begin{align*}
-    q_1 \times q_2 &= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2), \\
+    q_1 \, q_2 &= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2), \\
     & \qquad w_1(x_2, y_2, z_2) + w_2(x_1, y_1, z_2) + (x_1, y_1, z_1) \times (x_2, y_2, z_2)]
 \end{align*} $$
 
 Let $\vec{a} = (x_1, y_1, z_1)$ and $\vec{b} = (x_2, y_2, z_2)$ such that $q_1 = [w_1, \vec{a}]$ and $q_2 = [w_2, \vec{b}]$ then
 
-$$ q_1 \times q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].$$
+$$ q_1 \, q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].$$
 ```
 
 For example, given the quaternions $q_1 = [1, (2, 3, 4)]$ and $q_2 = [5, (6, 7, 8)]$ then
@@ -386,7 +386,7 @@ $$ \begin{align*}
   z &= 1 \times 8 + 2 \times 7 - 3 \times 6 + 4 \times 5 = 24,
 \end{align*} $$
 
-so $q_1q_2 = [-60, (12, 30, 24)]$.
+so $q_1 \, q_2 = [-60, (12, 30, 24)]$.
 
 :::{admonition} Task
 :class: tip
@@ -430,7 +430,7 @@ q1 x q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
 
 The **inverse** of a quaternion $q$ is denoted by $q^{-1}$ and is defined by
 
-$$ q \times q^{-1} = q^{-1} \times q = 1. $$(quaternion-inverse-definition)
+$$ q  q^{-1} = q^{-1} \, q = 1. $$(quaternion-inverse-definition)
 
 To calculate the inverse or the quaternion $q = [w, (x, y, z)]$, we need to consider its **conjugate** of which is denoted by $q^*$ and is defined by
 
@@ -438,11 +438,11 @@ $$ \begin{align*}
     q^* = [w, (-x, -y, -z)],
 \end{align*} $$
 
-i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate results in $q \times q^*=q^*q = |q|^2$ so multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
+i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate results in $q q^*=q^* \, q = |q|^2$ so multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
 
 $$ \begin{align*}
-  q^* \times q \times q^{-1} &= q^* \\
-  |q|^2 \times q^{-1} &= q^* \\
+  q^* \, q q^{-1} &= q^* \\
+  |q|^2 q^{-1} &= q^* \\
   q^{-1} &= \frac{q^*}{|q|^2}.
 \end{align*} $$
 
@@ -455,7 +455,7 @@ $$ \begin{align*}
 Checking that this is the inverse of $q$
 
 $$ \begin{align*}
-  q \times q^{-1} &= [1, (-2, -3, -4)][0.183, (-0.365, -0.548, -0.730)] \\
+  q q^{-1} &= [1, (-2, -3, -4)][0.183, (-0.365, -0.548, -0.730)] \\
   &= [1, (0, 0, 0)].
 \end{align*} $$
 
@@ -505,7 +505,7 @@ $$ z = \cos(\theta) + i\sin(\theta). $$
 
 To rotate a quaternion $p$ we simply multiply it by another quaternion $q$ that represents the rotation we wish to apply
 
-$$ p' = q \times p, $$
+$$ p' = q p, $$
 
 where $q$ is defined by
 
@@ -513,7 +513,7 @@ $$ q = [\cos(\tfrac{1}{2}\theta), \sin(\tfrac{1}{2}\theta) \hat{\vec{v}} ]. $$(r
 
 To apply the rotation quaternion to rotate the vector $\vec{p}$ we need to define the quaternion $p = [0, \vec{p}]$ and then calculate
 
-$$p' = q \times p \times q^{-1},$$(quaternion-rotation-multiplication-equation)
+$$p' = q p q^{-1},$$(quaternion-rotation-multiplication-equation)
 
 which returns a quaternion of the form $p' = [0, \vec{p}']$ where $\vec{p}'$ is the rotated vector. You don't need to know why we need to use 2 multiplications in equation {eq}`quaternion-rotation-multiplication-equation` but if you are curious, click on the dropdown below.
 
@@ -525,7 +525,7 @@ $$ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)]. $$
 Expressing $\vec{p}$ as a quaternion we have $p = [0, (2, 0, 0)]$ and rotating this using $q$ we have
 
 $$ \begin{align*}
-    p' = q \times p &= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
+    p' = q p &= [0.707, (0, 0, 0.707)] [0, (2, 0, 0)] = [0, (1.414, 1.414, 0)]
 \end{align*} $$
 
 The scalar part of $p'$ is zero so we can extract the rotated vector which is $\vec{p}' = (1.414, 1.414, 0)$. This rotation is shown below.
@@ -540,16 +540,16 @@ $$ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
 \end{align*} $$
 
-Calculating $qp$
+Calculating $q \, p$
 
 $$ \begin{align*}
-    p' = q \times p &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
+    p' = q p &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
 \end{align*} $$
 
-Now the real part is non-zero, so we can't extract the rotated vector. However, if we multiply $q \times p$ by the inverse of the rotation quaternion $q^{-1}$ on the right we have
+Now the real part is non-zero, so we can't extract the rotated vector. However, if we multiply $q p$ by the inverse of the rotation quaternion $q^{-1}$ on the right we have
 
 $$ \begin{align*}
-    p' = q \times p \times q^{-1} &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
+    p' = q p q^{-1} &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] [0.707, (-0.5, 0, -0.5)] \\
     &= [0, (1, 1.414, 1)]
 \end{align*} $$
 
@@ -570,7 +570,7 @@ $$q = [\cos(\tfrac{45^\circ}{2}), \sin(\tfrac{45^\circ}{2})(0.707, 0, 0.707)] = 
 Now calculating the rotation we have
 
 $$ \begin{align*}
-    p' = q \times p \times q^{-1} &= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
+    p' = q p q^{-1} &= [0.924, (0.271, 0, 0.271)] [0,(2,0,0)] [0.924, (-0.271, 0, -0.271)] \\
     &= [0, (1.707, 1, 0.293)].
 \end{align*}$$
 
@@ -588,10 +588,10 @@ $$ \begin{align*}
     q^{-1} &= [0.707, (0, -0.707, 0)]
 \end{align*} $$
 
-Computing $q \times p \times q^{-1}$ gives
+Computing $q p q^{-1}$ gives
 
 $$ \begin{align*}
-  q \times p \times q^{-1} &= [0.707, (0, 0.707, 0)][0, (1, 0, 0)][0.707, (0, -0.707, 0)] \\
+  q p q^{-1} &= [0.707, (0, 0.707, 0)][0, (1, 0, 0)][0.707, (0, -0.707, 0)] \\
   &= [0, (0.707, 0, -0.707)][0.707, (0, -0.707, 0)] \\
   &= [0, (0, 0, -1)]
 \end{align*} $$
@@ -653,7 +653,7 @@ pRotated = [ 0.00, 0.00, -1.00 ]
 
 ### Matrix representation of a quaternion
 
-We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to $q \times p \times q^{-1}$. If the rotation quaternion is $q = [w, (x, y, z)]$, and $q$ is a unit quaternion, then the corresponding rotation matrix is
+We have been using $4 \times 4$ matrices to compute the transformations to convert between model, view and screen spaces, so in order to use quaternions for rotations we need to calculate a $4 \times 4$ rotation matrix that is equivalent to $q p q^{-1}$. If the rotation quaternion is $q = [w, (x, y, z)]$, and $q$ is a unit quaternion, then the corresponding rotation matrix is
 
 $$ \begin{align*}
     Rotate &=
@@ -672,7 +672,7 @@ You don't need to know the derivation of the quaternion rotation matrix but if y
 To derive a $4 \times 4$ transformation matrix that achieves quaternion rotation, consider the multiplication of the quaternion $p = [p_w, (p_x, p_y, p_z)]$ on the left by the rotation quaternion $q = [w, (x, y, z)]$
 
 $$ \begin{align*}
-    q \times p &= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
+    q p &= [w, (x, y, z)] [p_w, (p_x, p_y, p_z)] \\
     &= [wp_w - (x, y, z) \cdot (p_x, p_y, p_z), w(p_x, p_y, p_z) + p_w(x, y, z) + (x, y, z) \times (p_x, p_y, p_z)] \\
     &= [wp_w - xp_x - yp_y - zp_z, \\
     &\qquad (wp_x - zp_y - yp_z + xp_w, zp_x + wp_y - xp_z + yp_w, -yp_x + xp_y + wp_z + zp_w)].
@@ -681,7 +681,7 @@ $$ \begin{align*}
 If we write the quaternion $p$ as a 4-element vector of the form $\vec{p} = (p_x, p_y, p_z, p_w)^\mathsf{T}$ (note that $p_w$, is now at the end of the vector which is synonymous with [homogeneous co-ordinates](homogeneous-coordinates-section)) then we have
 
 $$ \begin{align*}
-    q \times p &=
+    q p &=
     \begin{pmatrix}
          wp_x - zp_y + yp_z + xp_w \\
          zp_x + wp_y - xp_z + yp_w \\
@@ -690,9 +690,9 @@ $$ \begin{align*}
     \end{pmatrix},
 \end{align*} $$
 
-and we can express the rotation $q \times p$ as the matrix equation
+and we can express the rotation $q p$ as the matrix equation
 
-$$ q \times p = \begin{align*}
+$$ q p = \begin{align*}
     \begin{pmatrix}
          w & -z &  y & x \\
          z &  w & -x & y \\
@@ -705,7 +705,7 @@ $$ q \times p = \begin{align*}
 Doing similar for multiplying $p$ on the right by the inverse rotation quaternion $q^{-1} = [w, (-x, -y, -z)]$
 
 $$ \begin{align*}
-    p \times q^{-1} &= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
+    p q^{-1} &= [p_w, (p_x, p_y, p_z)][w, (-x, -y, -z)] \\
     &= [wp_w - (p_x, p_y, p_z) \cdot ( -x, -y, -z), \\
     & \qquad p_w(-x, -y, -z) + w(p_x, p_y, p_z) + (p_x, p_y, p_z) \times (-x, -y, -z)] \\
     &= [xp_x + yp_y + zp_z + wp_w, \\
@@ -715,7 +715,7 @@ $$ \begin{align*}
 Writing $p$ the form $\vec{p} = (p_x, p_y, p_z, p_w)$ as before gives
 
 $$ \begin{align*}
-    p \times q^{-1} =
+    p q^{-1} =
     \begin{pmatrix}
         wp_x - zp_y + yp_z - xp_w \\
         zp_x + wp_y - xp_z - yp_w \\
@@ -727,7 +727,7 @@ $$ \begin{align*}
 which can be expressed by the matrix equation
 
 $$ \begin{align*}
-    p \times q^{-1} &=
+    p q^{-1} &=
     \begin{pmatrix}
         w & -z & y & -x \\
         z & w & -x & -y \\
@@ -737,10 +737,10 @@ $$ \begin{align*}
     \begin{pmatrix} p_x \\ p_y \\ p_z \\ p_w \end{pmatrix}
 \end{align*} $$(quaternion-rotation-q2-equation)
 
-The two matrices for $q \times p$ and $p \times q^{-1}$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $q \times p \times q^{-1}$
+The two matrices for $q p$ and $p q^{-1}$ from equations {eq}`quaternion-rotation-q-equation` and {eq}`quaternion-rotation-q2-equation` can be combined to give a single matrix $R$ that performs the quaternion rotation $q p q^{-1}$
 
 $$ \begin{align*}
-    R &= (q \times p) \cdot (p \times q^{-1})
+    R &= (q p) \cdot (p q^{-1})
     =
     \begin{pmatrix}
         w & -z & y & -x \\
@@ -945,7 +945,7 @@ $$ q_{yaw} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(0, 1, 0)] = [0.924, (0,
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{camera}' &= q_{yaw} \times q_{camera} \\
+    q_{camera}' &= q_{yaw} \, q_{camera} \\
     &= [0.924, (0, 0.383, 0)] \, [1, (0, 0, 0)] \\
     &= [0.924, (0, 0.383, 0)].
 \end{align*} $$
@@ -963,7 +963,7 @@ $$ q_{pitch} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(1, 0, 0)] = [0.966,
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{final} &= q_{pitch} \times q_{camera}' \\
+    q_{final} &= q_{pitch} \, q_{camera}' \\
     &= [0.966, (0.259, 0, 0)] \, [0.924, (0, 0.383, 0)] \\
     &= [0.892, (0.239, 0.370, 0.099)].
 \end{align*} $$
@@ -971,12 +971,12 @@ $$ \begin{align*}
 ```{figure} ../_images/10_quaternion_camera_2.svg
 :width: 300
 
-Rotation of the camera quaternion $q_{camera'}'$ around the $x$-axis by the angle $pitch$.
+Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
 ```
 
 Note that in practice we can apply the yaw and pitch quaternion rotations in a single multiplication, i.e.,
 
-$$ q_{final} = q_{yaw} \times q_{pitch} \times q_{camera}.$$
+$$ q_{final} = q_{yaw} \, q_{pitch} \, q_{camera}.$$
 
 The final camera quaternion can be used to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to calculate the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. Also, we can use the inverse of the quaternion matrix form of $final \, camera \, quaternion$ to calculate the view matrix using
 
@@ -1094,7 +1094,7 @@ SLERP interpolation between two points on a sphere.
 Consider {numref}`A-SLERP-figure` where $q_1$ and $q_2$ are two quaternions emanating from the centre of a sphere (note that this diagram is a bit misleading as quaternions exist in 4 dimensions but since it's very difficult to visualize 4D on a 2D screen this will have to do). The interpolated quaternion $q_t$ represents another quaternion that is partway between $q_1$ and $q_2$ calculated using
 
 $$ \begin{align*}
-    \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)}q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2
+    \operatorname{SLERP}(q_1, q_2, t) = \frac{\sin((1-t) \theta)}{\sin(\theta)} \, q_1 + \frac{\sin(t\theta)}{\sin(\theta)} \, q_2
 \end{align*}, $$(slerp-equation)
 
 where $t$ is a value between 0 and 1 and $\theta$ is the angle between the two quaternions and is calculated using
@@ -1113,7 +1113,7 @@ $$q_t = q_1 + t  (q_2 - q_1).$$
 
 - Else use SLERP
   
-$$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} q_1 + \frac{\sin(t\theta)}{\sin(\theta)}q_2, $$
+$$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} \, q_1 + \frac{\sin(t\theta)}{\sin(\theta)} \, q_2, $$
 
 where $t =  1 - \exp(-rotation \, speed \times \Delta t)$ for exponential damping.
 
