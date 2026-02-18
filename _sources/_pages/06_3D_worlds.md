@@ -156,7 +156,7 @@ We saw in [Lab 5: Transformations](transformations-section) that we apply a tran
 
 ### The Model matrix
 
-In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0.0, -2)$.
+In [Lab 5: Transformations](transformations-section) we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let's compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the $y$-axis and translated backwards down the $z$-axis so that its centre is at $(0, 0, -2)$.
 
 :::{admonition} Task
 :class: tip
@@ -168,8 +168,8 @@ Edit the `render()` function in the ***3D_worlds.js*** file so that the calculat
 const rotationsPerSecond = 1/3;
 const angle = rotationsPerSecond * time * 2 * Math.PI * 0.001;
 const model = new Mat4()
-    .translate([0, 0.0, -2])
-    .rotate([0, 1.0, 0], angle)
+    .translate([0, 0, -2])
+    .rotate([0, 1, 0], angle)
     .scale([0.5, 0.5, 0.5]);
 ```
 
@@ -185,7 +185,7 @@ To view the world space we create a virtual camera and place it in the world spa
 
 - $\vec{eye}$: the coordinates of the camera position,
 - $\vec{target}$: the coordinates of the target point that the camera is pointing,
-- $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1.0, 0)$
+- $\vec{worldUp}$: a vector pointing straight up in the world space which allows us to orientate the camera, this is usually $(0, 1, 0)$
 
 ```{figure} ../_images/06_view_space_alignment.svg
 :width: 400
@@ -194,7 +194,7 @@ To view the world space we create a virtual camera and place it in the world spa
 The vectors used in the transformation to the view space.
 ```
 
-The eye and target vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by negative of the eye vector so that it is at $(0, 0.0, 0)$ using the following translation matrix
+The eye and target vectors are either determined by the user through keyboard, mouse or controller inputs or through some predetermined routine. To determine the view space transformation we first translate the camera position by negative of the eye vector so that it is at $(0, 0, 0)$ using the following translation matrix
 
 $$ \begin{align*}
     Translate =
@@ -282,11 +282,11 @@ class Camera {
     constructor() {
 
         // Camera vectors
-        this.eye     = [0, 0.0, 0];
-        this.worldUp = [0, 1.0, 0];
-        this.front   = [0, 0.0, -1];
-        this.right   = [1.0, 0.0, 0];
-        this.up      = [0, 1.0, 0];
+        this.eye     = [0, 0, 0];
+        this.worldUp = [0, 1, 0];
+        this.front   = [0, 0, -1];
+        this.right   = [1, 0, 0];
+        this.up      = [0, 1, 0];
     }
 
     update() {
@@ -296,9 +296,9 @@ class Camera {
 
     getViewMatrix() {
         return new Mat4().set([
-            this.right[0], this.up[0], -this.front[0], 0.0,
-            this.right[1], this.up[1], -this.front[1], 0.0,
-            this.right[2], this.up[2], -this.front[2], 0.0,
+            this.right[0], this.up[0], -this.front[0], 0,
+            this.right[1], this.up[1], -this.front[1], 0,
+            this.right[2], this.up[2], -this.front[2], 0,
             -dot(this.eye, this.right),
             -dot(this.eye, this.up),
              dot(this.eye, this.front),
@@ -315,7 +315,7 @@ And add the following to the ***index.html*** file before the ***3D_worlds.js***
 ```
 :::
 
-Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0.0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
 
 :::{admonition} Task
 :class: tip
@@ -331,8 +331,8 @@ And add the following to the `render()` function before we calculate the model m
 
 ```javascript
 // Update camera vectors
-const target = [0, 0.0, -2];
-camera.eye = [1.0, 1.0, 1];
+const target = [0, 0, -2];
+camera.eye = [1, 1, 1];
 camera.front = normalize(subtractVector(target, camera.eye));
 camera.update();
 
@@ -342,7 +342,7 @@ const view = camera.getViewMatrix();
 
 :::
 
-Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1.0,1.0,1)$ and looking towards the centre of the translated cube at $(0, 0.0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
+Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
 
 ---
 
@@ -427,9 +427,9 @@ getOrthographicMatrix(left, right, bottom, top, near, far) {
     const fn = 1 / (far - near);
 
     return new Mat4().set([
-        2 * rl, 0.0, 0.0, 0.0,
-        0.0, 2 * tb, 0.0, 0.0,
-        0.0, 0.0, -2 * fn, 0.0,
+        2 * rl, 0, 0, 0,
+        0, 2 * tb, 0, 0,
+        0, 0, -2 * fn, 0,
         -(right + left) * rl,
         -(top + bottom) * tb,
         -(far + near) * fn,
@@ -442,7 +442,7 @@ And add the following to the `render()` function file after we have calculated t
 
 ```javascript
 // Calculate projection matrix
-const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0.0, 100);
+const projection = camera.getOrthographicMatrix(-2, 2, -2, 2, 0, 100);
 ```
 
 :::
@@ -568,8 +568,8 @@ Add the following code after the cube indices are defined
 ```javascript
 // Define cube positions
 const cubes = [
-    { position : [0, 0.0, -2] },
-    { position : [0, 0.0, -6] }
+    { position : [0, 0, -2] },
+    { position : [0, 0, -6] }
 ];
 const numCubes = cubes.length;
 ```
@@ -584,7 +584,7 @@ for (let i = 0; i < numCubes; i++) {
     const angle = 0;
     const model = new Mat4()
         .translate(cubes[i].position)
-        .rotate([0, 1.0, 0], angle)
+        .rotate([0, 1, 0], angle)
         .scale([0.5, 0.5, 0.5]);
 
     // Send model matrix to the shader
@@ -607,7 +607,7 @@ Here we first define an array of JavaScript objects where the position attribute
 Orthographic projection.
 ```
 
-The cube in the front is centred at $(0, 0.0, -2)$ and the cube behind is centred at $(0, 0.0, -6)$. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at $(1.0, 1.0, 1)$.
+The cube in the front is centred at $(0, 0, -2)$ and the cube behind is centred at $(0, 0, -6)$. Using orthographic projection both cubes appear the same size despite one being further away from the camera which is located at $(1, 1, 1)$.
 
 Perspective projection is used to render objects where the further an object is from the camera, the small it appears in the canvas. It use the same near and far clipping planes as orthographic projection but the clipping planes on the sides are not parallel, rather they angle in such that the four planes meet at $(0,0,0)$ ({numref}`perspective-projection-figure`). The clipping volume bounded by the size clipping planes is called the **viewing frustum**.
 
@@ -708,8 +708,8 @@ $$ \begin{align*}
 So the mapping for $x'$ and $y'$ is correct. We need $z'$ to be between $-1$ and $1$ so $A$ and $B$ must satisfy
 
 $$ \begin{align*}
-    \textsf{near plane:} &&\frac{Az + B}{-z} &= -1.0, & \implies  Az + B &= z, \\
-    \textsf{far plane:} && \frac{Az + B}{-z} &= 1.0, & \implies Az + B &= -z.
+    \textsf{near plane:} &&\frac{Az + B}{-z} &= -1, & \implies  Az + B &= z, \\
+    \textsf{far plane:} && \frac{Az + B}{-z} &= 1, & \implies Az + B &= -z.
 \end{align*} $$
 
 At the near clipping plane $z = -near$ and at the far clipping plane $z = -far$ so
@@ -785,10 +785,10 @@ getPerspectiveMatrix() {
     const fn = 1 / (this.far - this.near);
 
     return new Mat4().set([
-        this.near / r, 0.0, 0.0, 0.0,
-        0.0, this.near / t, 0.0, 0.0,
-        0.0, 0.0, -(this.far + this.near) * fn, -1.0,
-        0.0, 0.0, -2 * this.far * this.near * fn, 0
+        this.near / r, 0, 0, 0,
+        0, this.near / t, 0, 0,
+        0, 0, -(this.far + this.near) * fn, -1,
+        0, 0, -2 * this.far * this.near * fn, 0
     ]);
 }
 ```
@@ -843,7 +843,7 @@ $fov = 120^\circ$
 :width: 60%
 ```
 
-2. Move the camera to that its position moves in a circular orbit around the centre cube at a height of 3 units off the ground. The camera should complete one full rotation every 10 seconds whilst also looking at the centre cube.
+2. Move the camera to that its position moves in a circular orbit around the centre cube at a height of 4 units off the ground. The camera should complete one full rotation every 10 seconds whilst also looking at the centre cube.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">
@@ -851,11 +851,19 @@ $fov = 120^\circ$
 </video>
 </center>
 
-3. Rotate every other cube about a random vector so that they complete one full rotation every 2 seconds.
+3. Replace every other cube with a pyramid object. You will need to define arrays for the vertices and indices object and create a VAO.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">
     <source src="../_static/videos/06_Ex3.mp4" type="video/mp4">
+</video>
+</center>
+
+4. Rotate the cube objects about a random vector so that they complete one full rotation every 2 seconds.
+
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/06_Ex4.mp4" type="video/mp4">
 </video>
 </center>
 

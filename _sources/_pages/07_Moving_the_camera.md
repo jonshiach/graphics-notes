@@ -84,7 +84,8 @@ if (this.keys["a"]) vel = subtractVector(vel, this.right);
 if (this.keys["d"]) vel = addVector(vel, this.right);
 
 if (length(vel) > 0) {
-    this.eye = addVector(this.eye, normalize(vel));
+    vel = normalize(vel);
+    this.eye = addVector(this.eye, vel);
 }
 ```
 
@@ -169,15 +170,12 @@ update(dt) {
 Finally, change the calculation of the new $\vec{eye}$ vector to the following.
 
 ```javascript
-const move = this.speed * dt;
-if (length(vel) > 0) {
-    this.eye = addVector(this.eye, scaleVector(normalize(vel), move));
-}
+this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
 ```
 
 :::
 
-So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed before it is added to the $\vec{eye}$ vector. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.
+So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
