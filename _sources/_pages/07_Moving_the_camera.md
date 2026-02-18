@@ -41,76 +41,79 @@ Since these three vectors point to the right, up and to the front of the camera 
 Moving the camera forwards and backwards.
 ```
 
-We need to get keyboard input from the user and use it to move the camera. To do this we are going to use the built-in JavaScript method `window.addEventListener()` that lets you listen to events happening in the browser window, e.g., key presses and mouse movement.
+We need to get keyboard input from the user and use it to move the camera. To do this we are going create a class to handle all inputs from the keyboard and mouse.
 
 :::{admonition} Task
 :class: tip
 
-Change the constructor declaration in the ***camera.js*** file so that a canvas object is inputted.
+Add the following class to the ***webGLUtils.js*** file
 
 ```javascript
-constructor(canvas) {
-```
+class Input {
 
-Then add the following to the Camera class constructor.
+    constructor() {
+        this.keys = {};
 
-```javascript
- // Movement and settings
-this.keys = {};
+        window.addEventListener("keydown", e => {
+            this.keys[e.key.toLowerCase()] = true;
+        });
 
-// Keyboard and mouse Input
-this.canvas = canvas;
-window.addEventListener("keydown", e => this.keys[e.key] = true);
-window.addEventListener("keyup"  , e => this.keys[e.key] = false);
-```
+        window.addEventListener("keyup", e => {
+            this.keys[e.key.toLowerCase()] = false;
+        });
+    }
 
-:::
-
-Here we have created an empty JavaScript object called `keys` and two event listeners which will listen for when a key is pressed and when it is released. For example, if we press the <kbd>W</kbd> key down when the browser window is active then `"w"` will be added to the `keys` object and assigned true value. When we release the <kbd>W</kbd> key the value will be changed to false.
-
-We now need to change the position of the camera, i.e., the $\vec{eye}$ vector, based on the state of the `keys` object.
-
-:::{admonition} Task
-:class: tip
-
-Add the following code to the `update()` Camera class method after the camera vectors have been calculated
-
-```javascript
-// Camera movement
-let vel = [0, 0, 0];
-if (this.keys["w"]) vel = addVector(vel, this.front);
-if (this.keys["s"]) vel = subtractVector(vel, this.front);
-if (this.keys["a"]) vel = subtractVector(vel, this.right);
-if (this.keys["d"]) vel = addVector(vel, this.right);
-
-if (length(vel) > 0) {
-    vel = normalize(vel);
-    this.eye = addVector(this.eye, vel);
+    isDown(key) {
+        return this.keys[key.toLowerCase()];
+    }
 }
 ```
 
 :::
 
-Here we create a velocity vector and initialise it to zeros. We then check the state of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys and if any of these are true we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. This is normalized and then added to the $\vec{eye}$ vector.
+Here we create an Input class that contains the property `keys` which is a JavaScript object that saves the state of whether a key is being depressed. The `window.addEventListener()` method listens to events happening in the browser window. For example, if we press the <kbd>W</kbd> key down when the browser window is active then `"w"` will be added to the `keys` object and assigned true value. When we release the <kbd>W</kbd> key the value will be changed to false. The `isDown()` method provides a simple way to check whether a particular key is depressed.
 
 :::{admonition} Task
 :class: tip
 
-Change the creation of the Camera object so that it now takes in the canvas input.
+In the ***camera.js*** file, change the Camera class method `update()` so that is looks like the following
 
 ```javascript
-// Camera object
-const camera = new Camera(canvas);
+update(input) {  
+
+    this.right = normalize(cross(this.front, this.worldUp));
+    this.up    = normalize(cross(this.right, this.front));
+
+    // Camera movement
+    let vel = [0, 0, 0];
+    if (input.isDown("w")) vel = addVector(vel, this.front);
+    if (input.isDown("s")) vel = subtractVector(vel, this.front);
+    if (input.isDown("a")) vel = subtractVector(vel, this.right);
+    if (input.isDown("d")) vel = addVector(vel, this.right);
+
+    if (length(vel) > 0) {
+        vel = normalize(vel);
+        this.eye = addVector(this.eye, vel);
+    }
+}
 ```
 
-And delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors so that the code now looks like
+Now in the ***moving_the_camera.js*** file, add the following after we have created the camera object
 
 ```javascript
-// Update camera vectors
-camera.update();
+// Keyboard and mouse inputs
+const input = new Input(canvas);
+```
+
+Finally, where we update the camera, delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors and change the method call to `camera.upate()`
+
+```javascript
+camera.update(input);
 ```
 
 :::
+
+Here we have made changes the `update()` camera class method to create a velocity vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. If the velocity vector is non-zero, i.e., some key presses have been registers, then it is normalized and added to the $\vec{eye}$ vector.
 
 Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.
 
@@ -141,15 +144,15 @@ let lastTime = 0;
 Then edit the commands to update the camera vectors, so it looks like the following.
 
 ```javascript
-// Update camera vectors
+// Update camera
 const dt = (time - lastTime) * 0.001;
 lastTime = time;
-camera.update(dt);
+camera.update(input, dt);
 ```
 
 :::
 
-Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames `dt` in second which we have entered this as an input in the `update()` Camera class method, so we now need to update that.
+Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames `dt` in second which we have added as an input parameter to the `update()` Camera class method, so we now need to update that.
 
 :::{admonition} Task
 :class: tip
@@ -157,14 +160,14 @@ Here we have created the variable `lastFrame` which is used to store the time (i
 First add the following to the Camera class constructor.
 
 ```javascript
+// Movement settings
 this.speed = 5;
 ```
 
 Then change the `update()` method declaration so that it takes in the `dt` input.
 
 ```javascript
-// Update movement
-update(dt) {
+update(input, dt) {
 ```
 
 Finally, change the calculation of the new $\vec{eye}$ vector to the following.
@@ -189,9 +192,51 @@ So here we have set the speed of our camera to 5 units per second and have scale
 
 We can now move the camera position using keyboard inputs, but we cannot yet point the camera in a different direction. This is usually done using mouse inputs but can also be done using keyboard or game controllers.
 
+We need to make changes to out Input class so that we can get mouse input from the user.
+
+:::{admonition} Task
+:class: tip
+
+In the ***webGLUtils.js*** file, add the following to the Input class constructor
+
+```javascript
+this.mouseDelta = { x: 0, y: 0 };
+
+canvas.addEventListener("click", () => 
+    canvas.requestPointerLock()
+);
+
+document.addEventListener("mousemove", e => {
+    if (document.pointerLockElement === canvas) {
+        this.mouseDelta.x += e.movementX;
+        this.mouseDelta.y += e.movementY;
+    }
+});
+```
+
+Also, add the following method to the Input class
+
+
+```javascript
+consumeMouseDelta() {
+
+    const dx = this.mouseDelta.x;
+    const dy = this.mouseDelta.y;
+
+    this.mouseDelta.x = 0;
+    this.mouseDelta.y = 0;
+
+    return { dx, dy };
+}
+```
+
+:::
+
+Here we have added event listeners to the Input class constructor to lock the pointer when a mouse click has been detected on the canvas and to record the mouse movement in `mouseDelta`. We also added the method `consumeMouseDelta()` which when called will return how far in pixels the mouse has moved since the last frame and resets the `mouseDelta` values back to zero.
+
 ### Yaw, pitch and roll
 
-The direction which the camera is pointing is governed by three angles called $yaw$, $pitch$ and $roll$ which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">**Euler angles**</a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its $yaw$ angle. Then on take off it can point its nose upwards in the vertical direction by changing its $pitch$ angle. Once airborne the plane can move its wingtips up and down thus changing its $roll$ angle. Our camera is analogous to the plane ({numref}`yaw-pitch-roll-figure`).
+The direction which the camera is pointing is governed by three angles called $yaw$, $pitch$ and $roll$ which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">Euler angles</a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its $yaw$ angle. Then on take off it can point its nose upwards in the vertical direction by changing its $pitch$ angle. Once airborne the plane can move its wingtips up and down thus changing its $roll$ angle. Our camera is analogous to the plane ({numref}`yaw-pitch-roll-figure`).
 
 ```{figure} /_images/07_yaw_pitch_roll.svg
 :width: 300
@@ -248,62 +293,32 @@ So now we can calculate the front vector from the $yaw$ and $pitch$ Euler angles
 :::{admonition} Task
 :class: tip
 
-Add the following to the Camera class constructor.
+Add the following to the movement settings in the Camera class constructor
 
 ```javascript
-// Rotation
-this.yaw       = 0;
-this.pitch     = 0;
 this.turnSpeed = 0.005;  
+this.yaw = 0;
+this.pitch = 0;
 ```
 
 And add the following before the $\vec{right}$ and $\vec{front}$ camera vectors are calculated in the `update()` method
 
 ```javascript
+const { dx, dy } = input.consumeMouseDelta();
+this.yaw += dx * this.turnSpeed;
+this.pitch -= dy * this.turnSpeed;
+
 const cy = Math.cos(this.yaw);
 const cp = Math.cos(this.pitch);
 const sy = Math.sin(this.yaw);
 const sp = Math.sin(this.pitch);
+
 this.front = normalize([cp * sy, sp, -cp * cy]);
 ```
 
 :::
 
-Here, along with declaring variables for the $yaw$ and $pitch$ angles, we have declared a variable that governs the speed at which the camera turns when we move the mouse. We have also calculated the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`.
-
-### Getting the mouse input
-
-We need a way of recording the input from the mouse and adjusting the $yaw$ and $pitch$ angles.
-
-:::{admonition} Task
-:class: tip
-
-Add the following to the Camera class constructor.
-
-```javascript
-canvas.addEventListener("click", () => canvas.requestPointerLock());
-document.addEventListener("mousemove", e => this.mouseMove(e));
-```
-
-:::
-
-Here we have added two event listeners. The first detects whether the mouse has been clicked in the browser window and if so, hides the mouse pointed and locks it to the canvas using `requestPointerLock()`. The second uses the `mouseMove()` method which we will now write to return the $x$ and $y$ coordinates (in pixels) of the mouse pointer.
-
-:::{admonition} Task
-:class: tip
-
-Add the following method to the Camera class.
-
-```javascript
-mouseMove(e) {
-    if (document.pointerLockElement !== this.canvas) return;
-    this.yaw   += e.movementX * this.turnSpeed;
-    this.pitch -= e.movementY * this.turnSpeed;
-}
-```
-:::
-
-Here we have defined a simple method to update the $pitch$ and $yaw$ angles based on the mouse cursor movement. `movementX` and `movementY` are move properties that are the number of horizontal and vertical pixels that the mouse pointer has moved since the last frame. Note that we subtract the $y$ coordinate from the $pitch$ angle because `movementY` is measured from the top of the canvas.
+Here we have added Camera class properties for controlling the turn speed of the camera and storing the $yaw$ and $pitch$ angles. Then we have modified the `update()` Camera class method to get the mouse movement values from the input, use these to update the $yaw$ and $pitch$ angles and calculated the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`. Note that we have subtract `dy * turnSpeed` from the $pitch$ angle because the mouse movement is measured from the top of the canvas.
 
 Running the program and we can now move around our world space and point the camera using the mouse.
 
@@ -328,7 +343,7 @@ This is due to the calculation of $\cos(pitch)$ and $\sin(pitch)$ in equation {e
 :::{admonition} Task
 :class: tip
 
-Add the following code to the `mouseMove()` Camera class method
+Add the following code to the `update()` Camera class method after the $pitch$ angle has been updated.
 
 ```javascript
 // Limit the pitch angle to -89 degrees < pitch < 89 degrees

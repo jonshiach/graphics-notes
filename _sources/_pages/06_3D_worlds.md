@@ -330,7 +330,7 @@ const camera = new Camera();
 And add the following to the `render()` function before we calculate the model matrix.
 
 ```javascript
-// Update camera vectors
+// Update camera
 const target = [0, 0, -2];
 camera.eye = [1, 1, 1];
 camera.front = normalize(subtractVector(target, camera.eye));
