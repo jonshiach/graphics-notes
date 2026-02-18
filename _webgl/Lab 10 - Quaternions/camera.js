@@ -33,12 +33,12 @@ class Camera {
 
   update(dt) {  
 
-        // Yaw rotation
-        const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-
         // Pitch rotation
         const localRight = this.rotation.rotateVector([1, 0, 0]);
         const pitchQuat = Quaternion.fromAxisAngle(localRight, this.pitch);
+
+        // Yaw rotation
+        const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
 
         // Zero yaw and pitch angles
         this.yaw = 0;

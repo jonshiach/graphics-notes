@@ -87,7 +87,7 @@ class FirstPersonCamera extends BaseCamera {
         }
 
         // Camera sit at player position
-        this.eye = [...this.player.position];
+        this.eye = this.player.position;
     }
 }
 
