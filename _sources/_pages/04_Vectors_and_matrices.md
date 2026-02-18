@@ -1210,7 +1210,7 @@ $$
 
 3 (a) $AB = \begin{pmatrix} 21 & 1 \\ -35 & -1 \end{pmatrix}$
 
-3 (b) $ABC = $
+3 (b) $ABC = \begin{pmatrix} 60 & 38 \\ -102 & -66 \end{pmatrix}$
 
 3 (c) $B^\mathsf{T}A^\mathsf{T} = $
 

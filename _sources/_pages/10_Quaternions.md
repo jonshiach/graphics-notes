@@ -938,35 +938,35 @@ Now that we have built a Quaternion class we can now use quaternions to perform 
 
 To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space. We rotate the camera quaternion using two rotation quaternions based on changes to the $yaw$ and $pitch$ angles from the mouse input. Once we have the rotated camera quaternion we can use it to rotate vectors pointing along the $x$ and negative $z$ axes to give the $\vec{right}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.
 
-For example, consider the camera quaternion $q_{camera} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the left resulting in a $yaw$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate the camera quaternion about the $y$-axis by multiplying by
+For example, consider the camera quaternion $q_{camera} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate $q_{camera}$ about the $x$-axis by multiplying by
 
-$$ q_{yaw} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(0, 1, 0)] = [0.924, (0, 0.383, 0)].$$
+$$ q_{pitch} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(1, 0, 0)] = [0.924, (0.383, 0, 0)].$$
 
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{camera}' &= q_{yaw} \, q_{camera} \\
-    &= [0.924, (0, 0.383, 0)] \, [1, (0, 0, 0)] \\
-    &= [0.924, (0, 0.383, 0)].
+    q_{pitch} \, q_{camera} &= [0.924, (0.383, 0, 0)] \, [1, (0, 0, 0)] \\
+    &= [0.924, (0.383, 0, 0)].
 \end{align*} $$
 
 ```{figure} ../_images/10_quaternion_camera_1.svg
-:width: 300
+:width: 350
 
-Rotation of the camera quaternion $q_{camera}$ around the $y$-axis by the angle $yaw$.
+Rotation of the camera quaternion $q_{camera}$ around the $x$-axis by the angle $pitch$.
 ```
 
-Let's say the user also moves the mouse upwards resulting in $pitch$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the camera $\vec{right}$ vector (which is currently $(1, 0, 0)$) by multiplying $q_{camera}'$ by
+Let's say the user also moves the mouse to the left resulting in a $yaw$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the $y$-axis by multiplying $q_{pitch} \, q_{camera}$ by
 
-$$ q_{pitch} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(1, 0, 0)] = [0.966, (0.259, 0, 0)]. $$
+$$ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (0, 0.259, 0)]. $$
 
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{final} &= q_{pitch} \, q_{camera}' \\
-    &= [0.966, (0.259, 0, 0)] \, [0.924, (0, 0.383, 0)] \\
-    &= [0.892, (0.239, 0.370, 0.099)].
+    q_{yaw} \, q_{pitch} \, q_{camera} &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
+    &= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} $$
+
+Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch} \, q_{camera}$ means that the $q_{camera}$ is multiplied by $q_{pitch}$ first and then multiplied by $q_{yaw}$.
 
 ```{figure} ../_images/10_quaternion_camera_2.svg
 :width: 300
@@ -974,11 +974,7 @@ $$ \begin{align*}
 Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
 ```
 
-Note that in practice we can apply the yaw and pitch quaternion rotations in a single multiplication, i.e.,
-
-$$ q_{final} = q_{yaw} \, q_{pitch} \, q_{camera}.$$
-
-The final camera quaternion can be used to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to calculate the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. Also, we can use the inverse of the quaternion matrix form of $final \, camera \, quaternion$ to calculate the view matrix using
+Once the camera quaternion has been rotated using the $pitch$ and $yaw$ angles, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. In addition, we can use the inverse of the quaternion matrix form of the camera quaternion to calculate the view matrix using
 
 $$ View = q_{camera}^{-1} \cdot Translate(-\vec{eye}). $$
 
@@ -999,12 +995,12 @@ Change the `update()` method so that is looks like the following
 ```javascript
 update(dt) {  
 
-    // Yaw rotation (rotate around y-axis)
-    const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-
     // Pitch rotation (rotate around local right vector)
     const localRight = this.rotation.rotateVector([1, 0, 0]);
     const pitchQuat = Quaternion.fromAxisAngle(localRight, this.pitch);
+
+    // Yaw rotation (rotate around y-axis)
+    const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
 
     // Zero yaw and pitch angles
     this.yaw = 0;

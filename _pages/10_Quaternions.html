@@ -1226,33 +1226,32 @@ q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 <h2>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Link to this heading">#</a></h2>
 <p>Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through <span class="math notranslate nohighlight">\(\pm 90^\circ\)</span> to look straight up or down (recall that we needed to limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle between <span class="math notranslate nohighlight">\(\pm 89^\circ\)</span>).</p>
 <p>To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space. We rotate the camera quaternion using two rotation quaternions based on changes to the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles from the mouse input. Once we have the rotated camera quaternion we can use it to rotate vectors pointing along the <span class="math notranslate nohighlight">\(x\)</span> and negative <span class="math notranslate nohighlight">\(z\)</span> axes to give the <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.</p>
-<p>For example, consider the camera quaternion <span class="math notranslate nohighlight">\(q_{camera} = [1, (0, 0, 0)]\)</span> which represents a camera pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. Let’s say the user moves the mouse to the left resulting in a <span class="math notranslate nohighlight">\(yaw\)</span> angle of <span class="math notranslate nohighlight">\(45^\circ\)</span> (which is <span class="math notranslate nohighlight">\(\frac{\pi}{4}\)</span> in radians) then we need to rotate the camera quaternion about the <span class="math notranslate nohighlight">\(y\)</span>-axis by multiplying by</p>
+<p>For example, consider the camera quaternion <span class="math notranslate nohighlight">\(q_{camera} = [1, (0, 0, 0)]\)</span> which represents a camera pointing down the <span class="math notranslate nohighlight">\(z\)</span>-axis. Let’s say the user moves the mouse to the upwards resulting in a <span class="math notranslate nohighlight">\(pitch\)</span> angle of <span class="math notranslate nohighlight">\(45^\circ\)</span> (which is <span class="math notranslate nohighlight">\(\frac{\pi}{4}\)</span> in radians) then we need to rotate <span class="math notranslate nohighlight">\(q_{camera}\)</span> about the <span class="math notranslate nohighlight">\(x\)</span>-axis by multiplying by</p>
 <div class="math notranslate nohighlight">
-\[ q_{yaw} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(0, 1, 0)] = [0.924, (0, 0.383, 0)].\]</div>
+\[ q_{pitch} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(1, 0, 0)] = [0.924, (0.383, 0, 0)].\]</div>
 <p>Performing the quaternion multiplication we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    q_{camera}' &amp;= q_{yaw} \, q_{camera} \\
-    &amp;= [0.924, (0, 0.383, 0)] \, [1, (0, 0, 0)] \\
-    &amp;= [0.924, (0, 0.383, 0)].
+    q_{pitch} \, q_{camera} &amp;= [0.924, (0.383, 0, 0)] \, [1, (0, 0, 0)] \\
+    &amp;= [0.924, (0.383, 0, 0)].
 \end{align*} \end{split}\]</div>
 <figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../_images/10_quaternion_camera_1.svg"><img alt="../_images/10_quaternion_camera_1.svg" src="../_images/10_quaternion_camera_1.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/10_quaternion_camera_1.svg"><img alt="../_images/10_quaternion_camera_1.svg" src="../_images/10_quaternion_camera_1.svg" style="width: 350px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Rotation of the camera quaternion <span class="math notranslate nohighlight">\(q_{camera}\)</span> around the <span class="math notranslate nohighlight">\(y\)</span>-axis by the angle <span class="math notranslate nohighlight">\(yaw\)</span>.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Rotation of the camera quaternion <span class="math notranslate nohighlight">\(q_{camera}\)</span> around the <span class="math notranslate nohighlight">\(x\)</span>-axis by the angle <span class="math notranslate nohighlight">\(pitch\)</span>.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Let’s say the user also moves the mouse upwards resulting in <span class="math notranslate nohighlight">\(pitch\)</span> angle of <span class="math notranslate nohighlight">\(30^\circ\)</span> (which is <span class="math notranslate nohighlight">\(\frac{\pi}{6}\)</span> in radians) then we need to rotate about the camera <span class="math notranslate nohighlight">\(\vec{right}\)</span> vector (which is currently <span class="math notranslate nohighlight">\((1, 0, 0)\)</span>) by multiplying <span class="math notranslate nohighlight">\(q_{camera}'\)</span> by</p>
+<p>Let’s say the user also moves the mouse to the left resulting in a <span class="math notranslate nohighlight">\(yaw\)</span> angle of <span class="math notranslate nohighlight">\(30^\circ\)</span> (which is <span class="math notranslate nohighlight">\(\frac{\pi}{6}\)</span> in radians) then we need to rotate about the <span class="math notranslate nohighlight">\(y\)</span>-axis by multiplying <span class="math notranslate nohighlight">\(q_{pitch} \, q_{camera}\)</span> by</p>
 <div class="math notranslate nohighlight">
-\[ q_{pitch} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(1, 0, 0)] = [0.966, (0.259, 0, 0)]. \]</div>
+\[ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (0, 0.259, 0)]. \]</div>
 <p>Performing the quaternion multiplication we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
-    q_{final} &amp;= q_{pitch} \, q_{camera}' \\
-    &amp;= [0.966, (0.259, 0, 0)] \, [0.924, (0, 0.383, 0)] \\
-    &amp;= [0.892, (0.239, 0.370, 0.099)].
+    q_{yaw} \, q_{pitch} \, q_{camera} &amp;= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
+    &amp;= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} \end{split}\]</div>
+<p>Note that quaternion multiplication is applied right-to-left so <span class="math notranslate nohighlight">\(q_{yaw} \, q_{pitch} \, q_{camera}\)</span> means that the <span class="math notranslate nohighlight">\(q_{camera}\)</span> is multiplied by <span class="math notranslate nohighlight">\(q_{pitch}\)</span> first and then multiplied by <span class="math notranslate nohighlight">\(q_{yaw}\)</span>.</p>
 <figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="../_images/10_quaternion_camera_2.svg"><img alt="../_images/10_quaternion_camera_2.svg" src="../_images/10_quaternion_camera_2.svg" style="width: 300px;" />
 </a>
@@ -1260,10 +1259,7 @@ q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 <p><span class="caption-number">Fig. 112 </span><span class="caption-text">Rotation of the camera quaternion <span class="math notranslate nohighlight">\(q_{camera}'\)</span> around the <span class="math notranslate nohighlight">\(x\)</span>-axis by the angle <span class="math notranslate nohighlight">\(pitch\)</span>.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Note that in practice we can apply the yaw and pitch quaternion rotations in a single multiplication, i.e.,</p>
-<div class="math notranslate nohighlight">
-\[ q_{final} = q_{yaw} \, q_{pitch} \, q_{camera}.\]</div>
-<p>The final camera quaternion can be used to rotate the vectors <span class="math notranslate nohighlight">\((0, 0, -1)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> to calculate the local camera vectors <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span>. Also, we can use the inverse of the quaternion matrix form of <span class="math notranslate nohighlight">\(final \, camera \, quaternion\)</span> to calculate the view matrix using</p>
+<p>Once the camera quaternion has been rotated using the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles, we can use equation <a class="reference internal" href="#equation-quaternion-rotation-multiplication-equation">(32)</a> to rotate the vectors <span class="math notranslate nohighlight">\((0, 0, -1)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> and <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> to determine the local camera vectors <span class="math notranslate nohighlight">\(\vec{front}\)</span>, <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span>. In addition, we can use the inverse of the quaternion matrix form of the camera quaternion to calculate the view matrix using</p>
 <div class="math notranslate nohighlight">
 \[ View = q_{camera}^{-1} \cdot Translate(-\vec{eye}). \]</div>
 <p>The reason we use the inverse camera quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.</p>
@@ -1277,12 +1273,12 @@ q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 <p>Change the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method so that is looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">update</span><span class="p">(</span><span class="nx">dt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
 
-<span class="w">    </span><span class="c1">// Yaw rotation (rotate around y-axis)</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">yawQuat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">.</span><span class="nx">fromAxisAngle</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
-
 <span class="w">    </span><span class="c1">// Pitch rotation (rotate around local right vector)</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">localRight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rotation</span><span class="p">.</span><span class="nx">rotateVector</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">]);</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">pitchQuat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">.</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">localRight</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Yaw rotation (rotate around y-axis)</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">yawQuat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">.</span><span class="nx">fromAxisAngle</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Zero yaw and pitch angles</span>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
