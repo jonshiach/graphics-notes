@@ -393,6 +393,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-keyboard-and-mouse-input">Getting keyboard and mouse input</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-keyboard-input-to-move-the-camera">Using keyboard input to move the camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-speed-of-the-camera">Controlling the speed of the camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-mouse-to-point-the-camera">Using the mouse to point the camera</a><ul class="nav section-nav flex-column">
@@ -416,10 +417,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lab-7-moving-the-camera">
 <span id="moving-the-camera-section"></span><h1>Lab 7: Moving the Camera<a class="headerlink" href="#lab-7-moving-the-camera" title="Link to this heading">#</a></h1>
-<p>In the <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a> we saw how we use transformations to build a 3D world, align the world to the camera position and project the view space onto the screen space. We also created a Camera class to contains methods to perform these calculations. The next step is to modify the Camera class to be able to move and direct the camera around the 3D world.</p>
+<p>In the <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a> we saw how we use transformations to build a 3D world, align the world to the camera position and project the view space onto the screen space. We also created a Camera class to contains methods to perform these calculations. The next step is to obtain keyboard and mouse input and modify the Camera class to be able to move and direct the camera around the 3D world.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a folder called <em><strong>Lab 7_Moving the Camera</strong></em> and copy across the contents of your <em><strong>Lab 6_3D_worlds</strong></em> folder (you will need to have completed <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a> before proceeding with this one). Change the filename of <em><strong>3D_worlds.js</strong></em> to <em><strong>moving_the_camera.js</strong></em> and edit <em><strong>index.html</strong></em> so that uses this file.</p>
+<p>Create a copy of your <em><strong>Lab 6 - 3D Worlds</strong></em> folder, rename it <em><strong>Lab 7 - Moving the Camera</strong></em>, rename the file <em><strong>3d_worlds.js</strong></em> to <em><strong>moving_the_camera.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 7 - Moving the Camera” and it embeds the <em><strong>moving_the_camera.js</strong></em> file.</p>
 </div>
 <p>Load <em><strong>index.html</strong></em> in a live server to check everything is working ok.</p>
 <figure class="align-default" id="moving-the-camera-figure">
@@ -430,9 +431,75 @@ document.write(`
 </figcaption>
 </figure>
 <hr class="docutils" />
+<section id="getting-keyboard-and-mouse-input">
+<h2>Getting keyboard and mouse input<a class="headerlink" href="#getting-keyboard-and-mouse-input" title="Link to this heading">#</a></h2>
+<p>We need a way to get keyboard and mouse input from the user and use it to move the camera. To do this we are going create a class to handle all inputs from the keyboard and mouse.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>Add the following class to the <em><strong>webGLUtils.js</strong></em> file</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Input</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keydown&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keyup&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">requestPointerLock</span><span class="p">()</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;mousemove&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">pointerLockElement</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementX</span><span class="p">;</span>
+<span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementY</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">isDown</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()];</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">consumeMouseDelta</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">dy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">dx</span><span class="p">,</span><span class="w"> </span><span class="nx">dy</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the <em><strong>moving_the_camera.js</strong></em> file, add the following after we have created the camera object</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Keyboard and mouse inputs</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Input</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we create an Input class that contains the following properties and methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">keys</span></code> – a JavaScript object that stores a boolean value for each key that is pressed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mouseDelta</span></code> – a JavaScript object that stores the distance that the mouse pointer has moved since the last frame</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">addEventListener()</span></code> – a method listens to events happening in the browser window</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isDown()</span></code> – a method that provides an easy way to check whether are particular key is being pressed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">consumeMouseDelta()</span></code> – a method that returns the values stored in <code class="docutils literal notranslate"><span class="pre">mouseDelta</span></code> and then resets it to zero</p></li>
+</ul>
+<p>The event listeners are used to update the <code class="docutils literal notranslate"><span class="pre">keys</span></code> and <code class="docutils literal notranslate"><span class="pre">mouseDelta</span></code> properties. For example, if we press the <kbd>W</kbd> key down when the browser window is active then <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code> will be added to the <code class="docutils literal notranslate"><span class="pre">keys</span></code> object and assigned true value. When we release the <kbd>W</kbd> key the value will be changed to false.</p>
+</section>
+<hr class="docutils" />
 <section id="using-keyboard-input-to-move-the-camera">
 <h2>Using keyboard input to move the camera<a class="headerlink" href="#using-keyboard-input-to-move-the-camera" title="Link to this heading">#</a></h2>
-<p>We are going to use keyboard input to change the coordinates of the eye vector (i.e., the camera position). Recall the view matrix from <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 4: 3D Worlds</span></a> where we introduced the camera vectors seen in <a class="reference internal" href="#camera-vectors-figure-2"><span class="std std-numref">Fig. 58</span></a>.</p>
+<p>Now that we have a way of capturing keyboard and mouse inputs, we are going to use keyboard input to change the coordinates of the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector, i.e., the camera position. Recall the view matrix from <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a> where we introduced the camera vectors seen in <a class="reference internal" href="#camera-vectors-figure-2"><span class="std std-numref">Fig. 58</span></a>.</p>
 <figure class="align-default" id="camera-vectors-figure-2">
 <a class="reference internal image-reference" href="../_images/06_view_space_alignment.svg"><img alt="../_images/06_view_space_alignment.svg" src="../_images/06_view_space_alignment.svg" style="width: 400px;" />
 </a>
@@ -448,32 +515,6 @@ document.write(`
 <p><span class="caption-number">Fig. 59 </span><span class="caption-text">Moving the camera forwards and backwards.</span><a class="headerlink" href="#camera-movement-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We need to get keyboard input from the user and use it to move the camera. To do this we are going create a class to handle all inputs from the keyboard and mouse.</p>
-<div class="tip admonition">
-<p class="admonition-title">Task</p>
-<p>Add the following class to the <em><strong>webGLUtils.js</strong></em> file</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Input</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-
-<span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keydown&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">        </span><span class="p">});</span>
-
-<span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keyup&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nx">isDown</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">key</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<p>Here we create an Input class that contains the property <code class="docutils literal notranslate"><span class="pre">keys</span></code> which is a JavaScript object that saves the state of whether a key is being depressed. The <code class="docutils literal notranslate"><span class="pre">window.addEventListener()</span></code> method listens to events happening in the browser window. For example, if we press the <kbd>W</kbd> key down when the browser window is active then <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code> will be added to the <code class="docutils literal notranslate"><span class="pre">keys</span></code> object and assigned true value. When we release the <kbd>W</kbd> key the value will be changed to false. The <code class="docutils literal notranslate"><span class="pre">isDown()</span></code> method provides a simple way to check whether a particular key is depressed.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>In the <em><strong>camera.js</strong></em> file, change the Camera class method <code class="docutils literal notranslate"><span class="pre">update()</span></code> so that is looks like the following</p>
@@ -496,17 +537,12 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now in the <em><strong>moving_the_camera.js</strong></em> file, add the following after we have created the camera object</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Keyboard and mouse inputs</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Input</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Finally, where we update the camera, delete the code that sets the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> camera vectors and change the method call to <code class="docutils literal notranslate"><span class="pre">camera.upate()</span></code></p>
+<p>In the *<strong>moving_the_camera.js</strong>, delete the code that sets the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> camera vectors and change the method call to <code class="docutils literal notranslate"><span class="pre">camera.upate()</span></code> so that it takes the <code class="docutils literal notranslate"><span class="pre">input</span></code> object.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">camera</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Here we have made changes the <code class="docutils literal notranslate"><span class="pre">update()</span></code> camera class method to create a velocity vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the velocity vector. If the velocity vector is non-zero, i.e., some key presses have been registers, then it is normalized and added to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
+<p>Here we have made changes the <code class="docutils literal notranslate"><span class="pre">update()</span></code> camera class method to create a velocity vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the velocity vector. If the velocity vector is non-zero, so that a key is being pressed, we normalize it and add it to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
 <p>Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.</p>
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
@@ -562,39 +598,6 @@ document.write(`
 <section id="using-the-mouse-to-point-the-camera">
 <h2>Using the mouse to point the camera<a class="headerlink" href="#using-the-mouse-to-point-the-camera" title="Link to this heading">#</a></h2>
 <p>We can now move the camera position using keyboard inputs, but we cannot yet point the camera in a different direction. This is usually done using mouse inputs but can also be done using keyboard or game controllers.</p>
-<p>We need to make changes to out Input class so that we can get mouse input from the user.</p>
-<div class="tip admonition">
-<p class="admonition-title">Task</p>
-<p>In the <em><strong>webGLUtils.js</strong></em> file, add the following to the Input class constructor</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">};</span>
-
-<span class="nx">canvas</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span>
-<span class="w">    </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">requestPointerLock</span><span class="p">()</span>
-<span class="p">);</span>
-
-<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;mousemove&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">pointerLockElement</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">canvas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementX</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">movementY</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
-</pre></div>
-</div>
-<p>Also, add the following method to the Input class</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">consumeMouseDelta</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">dy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
-
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">mouseDelta</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">dx</span><span class="p">,</span><span class="w"> </span><span class="nx">dy</span><span class="w"> </span><span class="p">};</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<p>Here we have added event listeners to the Input class constructor to lock the pointer when a mouse click has been detected on the canvas and to record the mouse movement in <code class="docutils literal notranslate"><span class="pre">mouseDelta</span></code>. We also added the method <code class="docutils literal notranslate"><span class="pre">consumeMouseDelta()</span></code> which when called will return how far in pixels the mouse has moved since the last frame and resets the <code class="docutils literal notranslate"><span class="pre">mouseDelta</span></code> values back to zero.</p>
 <section id="yaw-pitch-and-roll">
 <h3>Yaw, pitch and roll<a class="headerlink" href="#yaw-pitch-and-roll" title="Link to this heading">#</a></h3>
 <p>The direction which the camera is pointing is governed by three angles called <span class="math notranslate nohighlight">\(yaw\)</span>, <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(roll\)</span> which are collectively known as <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">Euler angles</a>. The name of these come from the aviation industry where they are related to the direction that an aircraft is facing. A plane on the ground first needs to taxi to the end of a runway which is does by steering left and right in the horizontal direction by changing its <span class="math notranslate nohighlight">\(yaw\)</span> angle. Then on take off it can point its nose upwards in the vertical direction by changing its <span class="math notranslate nohighlight">\(pitch\)</span> angle. Once airborne the plane can move its wingtips up and down thus changing its <span class="math notranslate nohighlight">\(roll\)</span> angle. Our camera is analogous to the plane (<a class="reference internal" href="#yaw-pitch-roll-figure"><span class="std std-numref">Fig. 60</span></a>).</p>
@@ -626,7 +629,7 @@ document.write(`
 <p><span class="caption-number">Fig. 62 </span><span class="caption-text">Looking down the <span class="math notranslate nohighlight">\(x\)</span>-axis.</span><a class="headerlink" href="#pitch-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We now do the same for the <span class="math notranslate nohighlight">\(pitch\)</span> angle. The <span class="math notranslate nohighlight">\(z\)</span> (and <span class="math notranslate nohighlight">\(x\)</span>) component of the vector is the adjacent side and the <span class="math notranslate nohighlight">\(y\)</span> component is the opposite side, i.e.,</p>
+<p>We now do the same for the <span class="math notranslate nohighlight">\(pitch\)</span> angle. The <span class="math notranslate nohighlight">\(z\)</span> (and <span class="math notranslate nohighlight">\(x\)</span>) component of the vector is the adjacent side and the <span class="math notranslate nohighlight">\(y\)</span> component is the opposite side (<a class="reference internal" href="#pitch-figure"><span class="std std-numref">Fig. 62</span></a>), i.e.,</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \begin{align*}
     \vec{front}_x &amp;= \cos(pitch), \\
@@ -666,7 +669,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have added Camera class properties for controlling the turn speed of the camera and storing the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. Then we have modified the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method to get the mouse movement values from the input, use these to update the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles and calculated the <span class="math notranslate nohighlight">\(\vec{front}\)</span> vector using equation <a class="reference internal" href="#equation-eq-euler-to-vector">(21)</a>. Note that we have subtract <code class="docutils literal notranslate"><span class="pre">dy</span> <span class="pre">*</span> <span class="pre">turnSpeed</span></code> from the <span class="math notranslate nohighlight">\(pitch\)</span> angle because the mouse movement is measured from the top of the canvas.</p>
+<p>Here we have added Camera class properties for controlling the turn speed of the camera and storing the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles. Then we have modified the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method to get the mouse movement values from the input, use these to update the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles and calculate the <span class="math notranslate nohighlight">\(\vec{front}\)</span> vector using equation <a class="reference internal" href="#equation-eq-euler-to-vector">(21)</a>. Note that we have subtract <code class="docutils literal notranslate"><span class="pre">dy</span> <span class="pre">*</span> <span class="pre">turnSpeed</span></code> from the <span class="math notranslate nohighlight">\(pitch\)</span> angle because the mouse movement is measured from the top of the canvas.</p>
 <p>Running the program and we can now move around our world space and point the camera using the mouse.</p>
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
@@ -752,9 +755,25 @@ document.write(`
 <hr class="docutils" />
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>Make it so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.</p></li>
-<li><p>Add the ability for the user to perform a jump by pressing the space bar.</p></li>
+<li><p>Add the ability for the user to perform a jump by pressing the space bar. Hints:</p>
+<ul class="simple">
+<li><p>To record when the space bar is pressed you can use <code class="docutils literal notranslate"><span class="pre">input.isDown(&quot;</span> <span class="pre">&quot;)</span></code>.</p></li>
+<li><p>You will need a way of recording when the space bar was first pressed and when the jump has been completed.</p></li>
+<li><p>For a jump based on physics the height of the camera can be calculated for each frame using</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\vec{eye}_y = \vec{eye}_y + jump\, velocity \times \Delta t\]</div>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(jump \, velocity\)</span> is initialised to some value (the larger the value the higher the jump), and is updated at each frame using</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[jump \, velocity = jump \, velocity - 9.81 \times \Delta t\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(9.81ms^{-2}\)</span> is the acceleration due to gravity on Earth (you could change this for other planets).</p></li>
+</ul>
+</li>
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
 <ul class="simple">
 <li><p>Loop through all the cubes</p></li>
@@ -768,6 +787,15 @@ document.write(`
 <section id="video-walkthrough">
 <h2>Video walkthrough<a class="headerlink" href="#video-walkthrough" title="Link to this heading">#</a></h2>
 <p>The video below walks you through these lab materials.</p>
+<iframe 
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/uIRpZXMt7eA?si=m7JHMkgnuKHf5lXY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+></iframe>
 </section>
 </section>
 
@@ -835,6 +863,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-keyboard-and-mouse-input">Getting keyboard and mouse input</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-keyboard-input-to-move-the-camera">Using keyboard input to move the camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-speed-of-the-camera">Controlling the speed of the camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-mouse-to-point-the-camera">Using the mouse to point the camera</a><ul class="nav section-nav flex-column">

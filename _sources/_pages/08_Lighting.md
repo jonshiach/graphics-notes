@@ -7,7 +7,7 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***Lab 7 Moving the Camera*** folder, rename it ***Lab 8 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 8 - Lighting" it uses ***lighting.js***.
+Create a copy of your ***Lab 7 Moving the Camera*** folder, rename it ***Lab 8 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 8 - Lighting" it embeds the ***lighting.js*** file.
 :::
 
 To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.
@@ -19,33 +19,27 @@ In the ***lighting.js*** file, change the definition of the cubes to the followi
 
 ```javascript
 // Define cube positions (5x5 grid of cubes)
-const cubePositions = [];
+const cubes = [];
 for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
-        cubePositions.push([3 * i, 0.0, -3 * j]);
+        cubes.push({
+            position  : [3 * i, 0, -3 * j],
+        });
     }
 }
-
-// Define cubes
-const numCubes = cubePositions.length;
-const cubes = [];
-for (let i = 0; i < numCubes; i++) {
-    cubes.push({
-        position  : cubePositions[i],
-    });
-}
-```
-
-Change the `gl.clearColor()` command in the `initWebGL()` function (in the ***webGLUtils.js*** file).
-
-```javascript
-gl.clearColor(0.0, 0.0, 0.0, 1.0);
+const numCubes = cubes.length;
 ```
 
 Move the camera position by adding the following line of code after the camera object has been created.
 
 ```javascript
 camera.eye = [6, 2, 5];
+```
+
+Change the `gl.clearColor()` command in the `initWebGL()` function (in the ***webGLUtils.js*** file).
+
+```javascript
+gl.clearColor(0.0, 0.0, 0.0, 1.0);
 ```
 
 :::
@@ -63,7 +57,7 @@ Grid of 25 cubes.
 
 ## Phong's lighting model
 
-Phong's lighting model first described by Bui Tuong Phong is a local illumination model that simulates the interaction of light falling on surfaces. The brightness of a point on a surface is based on three components
+Phong's lighting model first described by Bui Tuong Phong (1975) is a local illumination model that simulates the interaction of light falling on surfaces. The brightness of a point on a surface is based on three components
 
 - **ambient lighting** -- a simplified model of light that reflects off all objects in a scene
 - **diffuse lighting** -- describes the direct illumination of a surface by a light source based on the angle between the light source direction and the normal vector to the surface
@@ -191,7 +185,7 @@ The amount of light that is reflected to the viewer is modelled using the angle 
 
 $$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-reflection-equation)
 
-where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1.0, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
+where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
 $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
@@ -260,7 +254,7 @@ $$ \begin{align*}
 The matrix $(M^{-1})^\mathsf{T}$ is the transformation matrix to transform the model space normal vectors to the world space that ensures the world space normal vectors are perpendicular to the surface.
 ````
 
-Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0.0, 0.0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1.0, 0.0, 0)$, and similar for the other faces of the cube.
+Each vertex of our cube object needs to have an associated normal vector ({numref}`cube-normals-figure`). The normals for the front face will point in the positive $z$ direction so $\vec{n} = (0, 0, 1)$, the normals for the right face will point in the positive $x$ direction so $\vec{n} = (1, 0, 0)$, and similar for the other faces of the cube.
 
 ```{figure} ../_images/08_cube_normals.svg
 :width: 250
@@ -277,21 +271,21 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
 ```javascript
 // Define cube vertices
     const vertices = new Float32Array([
-        // x    y     z       R    G    B       u    v      nx    ny    nz                    + ------ +
-        // front                                                                             /|       /|
-        -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //   y        / |      / |
-         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0,  1.0,  //   |       + ------ +  |
-         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  //   +-- x   |  + ----|- +
-        -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //  /        | /      | /
-         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  // z         |/       |/
-        -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0,  1.0,  //           + ------ +
+        // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
+        // front                                                       /|       /|
+        -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
+         1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
+         1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
+        -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
+         1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
+        -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
         // right
-         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
-         1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    1.0,  0.0,  0.0,
-         1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
-         1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
-         1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
-         1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    1.0,  0.0,  0.0,
+         1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+         1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
+         1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+         1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+         1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+         1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
         // etc.
 ```
 
@@ -299,52 +293,58 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
 ```javascript
 // Define cube vertices
 const vertices = new Float32Array([
-    // x    y     z       R    G    B       u    v      nx    ny    nz                    + ------ +
-    // front                                                                             /|       /|
-    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //   y        / |      / |
-     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0,  1.0,  //   |       + ------ +  |
-     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  //   +-- x   |  + ----|- +
-    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0,  1.0,  //  /        | /      | /
-     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0,  1.0,  // z         |/       |/
-    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0,  1.0,  //           + ------ +
+    // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
+    // front                                                       /|       /|
+    -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
+     1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
+     1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
+    -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
+     1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
+    -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
     // right
-     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
-     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    1.0,  0.0,  0.0,
-     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
-     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    1.0,  0.0,  0.0,
-     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    1.0,  0.0,  0.0,
-     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    1.0,  0.0,  0.0,
+     1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+     1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
+     1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+     1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+     1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+     1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
     // back
-     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0, -1.0,
-    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  0.0, -1.0,
-    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0, -1.0,
-     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  0.0, -1.0,
-    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  0.0, -1.0,
-     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  0.0, -1.0,
+     1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
+    -1, -1, -1,    0, 0, 0,    1, 0,    0,  0, -1,
+    -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
+     1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
+    -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
+     1,  1, -1,    0, 0, 0,    0, 1,    0,  0, -1,
     // left
-    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,   -1.0,  0.0,  0.0,
-    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,   -1.0,  0.0,  0.0,
-    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,   -1.0,  0.0,  0.0,
-    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,   -1.0,  0.0,  0.0,
-    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,   -1.0,  0.0,  0.0,
-    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,   -1.0,  0.0,  0.0,
+    -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
+    -1, -1,  1,    0, 0, 0,    1, 0,   -1,  0,  0,
+    -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
+    -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
+    -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
+    -1,  1, -1,    0, 0, 0,    0, 1,   -1,  0,  0,
     // bottom
-    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0, -1.0,  0.0,
-     1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0, -1.0,  0.0,
-     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0, -1.0,  0.0,
-    -1.0, -1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0, -1.0,  0.0,
-     1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0, -1.0,  0.0,
-    -1.0, -1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0, -1.0,  0.0,
+    -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
+     1, -1, -1,    0, 0, 0,    1, 0,    0, -1,  0,
+     1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
+    -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
+     1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
+    -1, -1,  1,    0, 0, 0,    0, 1,    0, -1,  0,
     // top
-    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  1.0,  0.0,
-     1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    1.0, 0.0,    0.0,  1.0,  0.0,
-     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  1.0,  0.0,
-    -1.0,  1.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  1.0,  0.0,
-     1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    1.0, 1.0,    0.0,  1.0,  0.0,
-    -1.0,  1.0, -1.0,    0.0, 0.0, 0.0,    0.0, 1.0,    0.0,  1.0,  0.0,
+    -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+     1,  1,  1,    0, 0, 0,    1, 0,    0,  1,  0,
+     1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
+    -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+     1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
+    -1,  1, -1,    0, 0, 0,    0, 1,    0,  1,  0,
 ]);
 ```
 ````
+
+Edit the commands used to define the cubes to include the diffuse coefficient $k_d = 0.7$ where we did similar for the ambient coefficient
+
+```javascript
+kd        : 0.7,
+```
 
 In the `createVao()` function in the ***webGLUtils.js*** file, change the stride to 11 since we now have an additional 3 elements per vertex.
 
@@ -362,7 +362,7 @@ gl.enableVertexAttribArray(normalLocation);
 gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, stride, offset);
 ```
 
-Now change the vertex shader to accept the normal vectors as an input attribute and an output.
+Now in the ***lighting.js*** file, change the vertex shader to accept the normal vectors as an input attribute and an output.
 
 ```glsl
 in vec3 aNormal;
@@ -381,7 +381,7 @@ vNormal = normalize(mat3(transpose(inverse(uModel))) * aNormal);
 Now change the fragment shader to accept the normal as an input
 
 ```glsl
-in vec3 aNormal;
+in vec3 vNormal;
 ```
 
 Lastly, set the fragment colour to the normal vector.
@@ -393,7 +393,7 @@ fragColour = vec4(vNormal, objectColour.a);
 
 :::
 
-Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1.0, 0.0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0.0, 1.0, 0)$ and the side facing towards us is blue because its normal vector is $(0.0, 0.0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
+Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
 
 ```{figure} ../_images/08_cubes_normals.png
 :width: 80%
@@ -402,40 +402,55 @@ Phew! If everything has gone ok when you refresh your web browser you should see
 The colours of the cube faces based on the normal vectors.
 ```
 
-Now we just need to define diffuse coefficient for the cubes, the position and colour of our light source and send them to the shaders using uniforms.
+Now we need to define diffuse coefficient for the cubes, the position and colour of our light source and send them to the shaders using uniforms. Eventually, we will be adding multiple light sources with different properties and behaviours so to keep our code organised we are going to create a Light class.
 
 :::{admonition} Task
 :class: tip
 
-Edit the commands used to define the cubes to include the diffuse coefficient $k_d = 0.7$.
+Edit the definition of the cubes objects to include the diffuse coefficient $k_d = 0.7$
 
 ```javascript
 kd        : 0.7,
 ```
 
-Now define a JavaScript object for the light source properties just after where we have defined the cube positions and lighting coefficients.
+Create a new file called ***light.js*** and embed this in the ***index.html***. Enter the following class declaration into the ***light.js*** file
 
 ```javascript
-// Define light source properties
-const light = {
-    position  : [6, 2, 0],
-    colour    : [1.0, 1.0, 1],
+class Light {
+    constructor() {
+        this.position = [0, 0, 0];
+        this.colour = [1, 1, 1];
+    }
+
+    toShader(gl, program) {
+        // Light vectors
+        gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), this.position);
+        gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), this.colour);
+    }
 }
 ```
 
-Send the light position and colour vectors to the shaders after we have done this for the view and projection matrices.
+In the ***lighting.js*** file, create a light object before the render function
+
+```javascript
+// Light object
+const light = new Light();
+light.position = [6, 2, 0];
+```
+
+In the render function, send the light source properties to the shader after we have done this for the view and projection matrices
 
 ```javascript
 // Send light source properties to the shader
-gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), light.position);
-gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), light.colour);
+light.toShader(gl, program);
 ```
 
-And send the diffuse coefficient to the shader where we did this for the ambient coefficient.
+And send the diffuse coefficient to the shader where we did this for the ambient coefficient
 
 ```javascript
 gl.uniform1f(gl.getUniformLocation(program, "uKd"), cubes[i].kd);
 ```
+
 :::
 
 Now we have sent all the information required for diffuse lighting to the shader we now just need to edit the shaders.
@@ -477,7 +492,8 @@ Finally, add code to calculate diffuse lighting.
 // Diffuse
 vec3 N = normalize(vNormal);
 vec3 L = normalize(uLightPosition - vPosition);
-vec3 diffuse = uKd * max(dot(N, L), 0.0) * uLightColour * objectColour.rgb;
+float diff = max(dot(N, L), 0.0);
+vec3 diffuse = uKd * diff * uLightColour * objectColour.rgb;
 
 // Fragment colour
 fragColour = vec4(diffuse, objectColour.a);
@@ -505,7 +521,7 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 
 void main() {
-  gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
+    gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
 }`;
 
 const lightFragmentShader =
@@ -517,7 +533,7 @@ out vec4 fragColour;
 uniform vec3 uLightColour;
 
 void main() {
-  fragColour = vec4(uLightColour, 1.0);
+    fragColour = vec4(uLightColour, 1.0);
 }`;
 ```
 
@@ -527,10 +543,10 @@ Compile and link the light source shaders after the main shader program has been
 const lightProgram = createProgram(gl, lightVertexShader, lightFragmentShader);
 ```
 
-In the `render()` loop, after rendering the cubes, add the following code to render the light source cube.
+In the `render()` loop, after the for loop used to draw the cubes, add the following code to render the light source cube.
 
 ```javascript
-// Render light sources
+// Draw light source
 gl.useProgram(lightProgram);
 
 // Calculate model matrix for the light source
@@ -609,107 +625,36 @@ Consider {numref}`specular-reflection-figure` that shows parallel light rays hit
 Light rays hitting a smooth surface are reflected in the same direction.
 ```
 
-Specular lighting depends upon the position of the light source and the fragment in the world space. Consider {numref}`reflection-figure` that shows a surface with a normal vector $\vec{n}$, a vector $\vec{L}$ pointing from the surface to a light source and a vector $\vec{R}$ pointing in the direction of reflected light off the surface. The angle between $\vec{L}$ and $\vec{n}$, $\theta$ which is known as the incidence angle, and the angle between $\vec{R}$ and $\vec{n}$ are the same.
+For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer ({numref}`specular-figure`). The closer the $\vec{V}$ vector is to the $\vec{R}$ vector, the more specular light will be seen by the viewer.
 
-```{figure} ../_images/08_reflection.svg
-:width: 350
-:name: reflection-figure
-
-The light vector is reflected about the normal vector.
-```
-
-If $\vec{n}$ and $\vec{L}$ are unit vectors then the $\vec{R}$ vector is calculated using
-
-$$ \begin{align*}
-    \vec{R} = \operatorname{normalize}(2 (\vec{L} \cdot \vec{n}) \vec{n} - \vec{L}).
-\end{align*} $$
-
-If you are interested in the derivation of this formula, click on the dropdown below.
-
-````{dropdown} Derivation of the reflection vector
-The <a href="https://en.wikipedia.org/wiki/Vector_projection" target="_blank">vector projection</a> of a vector $\vec{a}$ onto another vector $\vec{b}$ is the vector $\operatorname{proj}_\vec{b} \vec{a}$ that points in the same direction as $\vec{b}$ with a length that is equal to the adjacent side of a right-angled triangle where $\vec{a}$ is the hypotenuse and the vector $\operatorname{proj}_\vec{b} \vec{a}$ is the adjacent side {numref}`vector-projection-figure`.
-
-```{figure} ../_images/08_vector_projection.svg
-:width: 250
-:name: vector-projection-figure
-
-The vector $\operatorname{proj}_\vec{b} \vec{a}$ is the projection of the vector $\vec{a}$ onto $\vec{b}$.
-```
-
-$\operatorname{proj}_\vec{b} \vec{a}$ is represented by the green vector in {numref}`vector-projection-figure` and is calculated by multiplying the unit vector $\hat{\vec{b}}$ by the length of the adjacent side of the right-angled triangle. Using trigonometry this gives
-
-$$ \operatorname{proj}_\vec{b} \vec{a} = \| \vec{a} \| \cos(\theta) \hat{\vec{b}}. $$
-
-Recall that the geometric definition of the dot product is
-
-$$\vec{a} \cdot \vec{b} = \| \vec{a} \| \| \vec{b} \| \cos(\theta)$$ 
-
-which can be rearranged to
-
-$$ \cos(\theta) = \frac{\vec{a} \cdot \vec{b}}{\| \vec{a} \| \| \vec{b} \|} $$
-
-so
-
-$$ \begin{align*}
-    \operatorname{proj}_\vec{b} \vec{a} = \| \vec{a} \| \frac{\vec{a} \cdot \vec{b}}{\| \vec{a} \| \| \vec{b} \|} \hat{\vec{b}} = (\vec{a} \cdot \hat{\vec{b}}) \hat{\vec{b}}
-\end{align*} $$
-
-Consider {numref}`reflection-vector-figure` that shows a surface with a normal vector $\vec{n}$, a light source vector $\vec{L}$ and a reflection vector $\vec{R}$. 
-
-```{figure} ../_images/08_reflection_vector.svg
-:width: 325
-:name: reflection-vector-figure
-
-Calculating the reflection vector $\vec{R}$.
-```
-
-If $\vec{n}$ and $\vec{L}$ are unit vectors, then the reflection vector $\vec{R}$ can be calculated by reversing $\vec{L}$ and adding the two projections, $\operatorname{proj}_{\vec{n}} \vec{L} = (\vec{L} \cdot \vec{n}) \vec{n}$
-
-$$ \vec{R} = 2 (\vec{L} \cdot \vec{n}) \vec{n} - \vec{L}$$
-````
-
-For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. This is determined by the angle $\phi$ between the $\vec{R}$ vector and the $\vec{V}$ vector. The closer the viewing vector is to the reflection vector, the smaller the value of $\phi$ will be and the more of the light will be reflected towards the camera.
-
-```{figure} ../_images/08_specular.svg
+```{figure} ../_images/08_phong_reflection.svg
 :width: 400
 :name: specular-figure
 
 Specular lighting scatters light mainly towards the reflection vector.
 ```
 
-Phong modelled the scattering of the reflected light rays using $\cos(\phi)$ raised to a power
+Phong's module of specular reflection can have problems when the $\vec{V}$ and $\vec{R}$ vectors are more than $90^\circ$ apart, so it is common to use a modification of the model called the **Blinn-Phong reflection model** developed by Jim Blinn (1977). A vector $\vec{H}$ is calculated that is halfway between the $\vec{L}$ and $\vec{V}$ vectors
 
-$$\vec{specular} = k_s \vec{I}_p \cos(\phi)^{\alpha},$$
+$$ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. $$
 
-where $k_s$ is the **specular lighting coefficient** similar to its ambient and diffuse counterparts and $\alpha$ is the **specular exponent** that determines the shininess of the object. If $\vec{R}$ and $\vec{V}$ are unit vectors, then $\cos(\phi)$ can be calculated using $ \cos(\phi) = \max(\vec{V} \cdot \vec{R}, 0)^{\alpha}$, so the specular reflection equation is
+The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer.
 
-$$ \vec{specular} = k_s \max(\vec{V} \cdot \vec{R}, 0)^\alpha \vec{I}_p.$$(specular-reflection-equation)
+```{figure} ../_images/08_blinn_phong.svg
+:width: 400
+:name: specular-figure
+
+The Blinn-Phong reflection model.
+```
+
+The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular reflection is
+
+$$ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-reflection-equation)
 
 :::{admonition} Task
 :class: tip
 
-Add the specular coefficient and exponent to the cube objects where we did the same for the ambient and diffuse coefficients.
-
-```javascript
-ks        : 1.0,
-shininess : 32,
-```
-
-Send the camera position to the shader after we sent the light position and colour.
-
-```javascript
-// Send camera position to the shader
-gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye);
-```
-
-And send the specular coefficient and exponent to the shader where we did this for the ambient and diffuse coefficients.
-
-```javascript
-gl.uniform1f(gl.getUniformLocation(program, "uKs"), cubes[i].ks);
-gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
-```
-
-Now in the fragment shader, add uniforms for the camera position, specular coefficient and exponent.
+In the fragment shader, add uniforms for the camera position, specular coefficient and exponent.
 
 ```glsl
 uniform vec3 uCameraPosition;
@@ -723,11 +668,33 @@ And add code to calculate the specular lighting in the `main()` function.
 ```glsl
 // Specular
 vec3 V = normalize(uCameraPosition - vPosition);
-vec3 R = normalize(2.0 * dot(L, N) * N - L);
-vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * uLightColour;
+vec3 H = normalize(L + V);
+float spec = pow(max(dot(H, N), 0.0), uShininess);
+vec3 specular = uKs * spec * uLightColour;
 
 // Fragment colour
 fragColour = vec4(specular, objectColour.a);
+```
+
+Add the specular coefficient and exponent to the cube objects where we did the same for the ambient and diffuse coefficients.
+
+```javascript
+ks        : 1.0,
+shininess : 32,
+```
+
+Send the camera position to the shader after where we send the view and projection matrices
+
+```javascript
+// Send camera position to the shader
+gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye);
+```
+
+And send the specular coefficient and exponent to the shader where we did this for the ambient and diffuse coefficients.
+
+```javascript
+gl.uniform1f(gl.getUniformLocation(program, "uKs"), cubes[i].ks);
+gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
 ```
 
 :::
@@ -779,26 +746,10 @@ Attenuation can be modelled by an inverse quadratic function.
 :::{admonition} Task
 :class: tip
 
-Add the following attenuation coefficients to the light source.
-
-```javascript
-constant  : 1.0,
-linear    : 0.1,
-quadratic : 0.02,
-```
-
-And send them to the shader where we did this for the light source position and colour.
-
-```javascript
-gl.uniform1f(gl.getUniformLocation(program, "uConstant"), light.constant);
-gl.uniform1f(gl.getUniformLocation(program, "uLinear"), light.linear);
-gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
-```
-
-Add the uniforms to the fragment shader.
+Add the uniforms for the attenuation coefficients to the fragment shader.
 
 ```glsl
-// Attenuation parameters
+// Attenuation coefficients
 uniform float uConstant;
 uniform float uLinear;
 uniform float uQuadratic;
@@ -808,16 +759,37 @@ Then calculate and apply attenuation to the fragment colour.
 
 ```glsl
 // Attenuation
-float dist = length(uLightPosition - vPosition);
-float attenuation = 1.0 / (uConstant + uLinear * dist + uQuadratic * dist * dist);
+float distance = length(uLightPosition - vPosition);
+float attenuation = 1.0 / (
+    uConstant +
+    uLinear * distance +
+    uQuadratic * distance * distance
+);
 
 // Fragment colour
 fragColour = vec4(attenuation * (ambient + diffuse + specular), objectColour.a);
 ```
 
+Add the following attenuation coefficients to the Light class constructor.
+
+```javascript
+// Attenuation coefficients
+this.constant = 1.0;
+this.linear = 0.1;
+this.quadratic = 0.05;
+```
+
+In the `toShader()` method, send the attenuation coefficients to the shaders
+
+```javascript
+gl.uniform1f(gl.getUniformLocation(program, "uConstant"), light.constant);
+gl.uniform1f(gl.getUniformLocation(program, "uLinear"), light.linear);
+gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
+```
+
 :::
 
-These values used the attenuation ceofficients here depend on the type of light source being modelled. In this case we have a weak light source to demonstrate the loss of light intensity over space but for stronger light sources you may wish to experiment with these values. Refresh your web browser and you should see that the cubes further away from the light source are darker as shown in {numref}`cubes-attenuation-figure`.
+These values used the attenuation coefficients here depend on the type of light source being modelled. Refresh your web browser, and you should see that the cubes further away from the light source are darker, as shown in {numref}`cubes-attenuation-figure`.
 
 ```{figure} ../_images/08_cubes_attenuation.png
 :width: 80%
@@ -836,7 +808,6 @@ A data structure in GLSL is defined as follows:
 
 ```glsl
 struct Light {
-    int type;
     vec3 position;
     vec3 colour;
     float constant;
@@ -845,7 +816,7 @@ struct Light {
 };
 ```
 
-This defines a `Light` structure with attributes for the light source type, position, colour and attenuation constants. The `type` attribute will be used later to specify different types of light sources. Before we add additional light sources we are going to rewrite our fragment shader to use a data structure.
+This defines a `Light` structure with attributes for the light source position, colour and attenuation constants. Before we add additional light sources we are going to rewrite our fragment shader to use a data structure.
 
 ```glsl
 #version 300 es
@@ -869,7 +840,6 @@ uniform float uShininess;
 
 // Light struct
 struct Light {
-    int type;
     vec3 position;
     vec3 colour;
     float constant;
@@ -883,33 +853,39 @@ uniform int uNumLights;
 // Array of lights
 uniform Light uLights[16];
 
-// Function to calculate diffuse and specular reflection
-vec3 computeLight(Light light, vec3 N, vec3 V, vec3 objectColour){
- 
+// Function to compute the lighting
+vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
+
     // Light vector
     vec3 L = normalize(light.position - vPosition);
 
-    // Reflection vector
-    vec3 R = normalize(2.0 * dot(L, N) * N - L);
-
     // Attenuation
-    float dist = length(light.position - vPosition);
-    float attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+    float attenuation = 1.0;
+    if (light.type != 2) {
+        float distance = length(light.position - vPosition);
+        attenuation = 1.0 /
+            (light.constant +
+             light.linear * distance +
+             light.quadratic * distance * distance);
+    }
 
-    // Ambient reflection
+    // Ambient light
     vec3 ambient = uKa * objectColour;
 
-    // Diffuse
+    // Diffuse light
+    float diff = max(dot(N, L), 0.0);
     vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
-    // Specular
-    vec3 specular = uKs * pow(max(dot(R, V), 0.0), uShininess) * light.colour;
+    // Specular light
+    vec3 H = normalize(L + V);
+    float spec = pow(max(dot(N, H), 0.0), uShininess);
+    vec3 specular = uKs * spec * light.colour;
 
     // Output fragment colour
     return attenuation * (ambient + diffuse + specular);
 }
 
-// Main function
+// Main fragment shader function
 void main() {
 
     // Object colour
@@ -920,14 +896,13 @@ void main() {
     vec3 V = normalize(uCameraPosition - vPosition);
 
     // Calculate lighting for each light source
-    vec3 result;
-    for (int i = 0; i < 16; i++) {
-      if (i >= uNumLights) break;
-      result += computeLight(uLights[i], N, V, objectColour.rgb);
+    vec3 lighting;
+    for (int i = 0; i < uNumLights; i++) {
+        lighting += computeLighting(uLights[i], N, V, objectColour.rgb);
     }
 
     // Fragment colour
-    fragColour = vec4(result, objectColour.a);
+    fragColour = vec4(lighting, objectColour.a);
 }
 ```
 
@@ -936,8 +911,8 @@ This fragment shader is a little more complex than before but the main changes a
 - A `Light` data structure is defined with attributes for the light source type, position, colour and attenuation constants.
 - An array of `Light` structures called `uLights` is defined to hold up to 16 light sources.
 - A uniform integer `uNumLights` is defined to specify the number of active light sources.
-- A function `computeLight()` is defined to calculate the diffuse and specular reflection for a given light source.
-- In the `main()` function a for loop iterates over the active light sources and calls the `computeLight()` function for each light source to add its contribution to the fragment colour.
+- A function `computeLighting()` is defined to perform the lighting calculations for a single light source
+- In the `main()` function a for loop iterates over the active light sources and calls the `computeLighting()` function for each light source to add its contribution to the fragment colour.
 
 Since this fragment shader not uses an array of light source we need to update the ***more_lights.js*** file to define multiple light sources using the `Light` data structure and send them to the shader.
 
@@ -945,59 +920,96 @@ Since this fragment shader not uses an array of light source we need to update t
 :class: tip
 
 Edit the fragment shader in the **more_lights.js** file to use the new fragment shader above.
+:::
 
-Define an array containing the properties of two light sources.
+Now that we have made changes to the fragment shader, we also need to update the Light class and create a new class to manage multiple light sources
+
+:::{admonition} Task
+:class: tip
+
+Change the `toShader()` Light class method so that it looks like the following
 
 ```javascript
-// Create vector of light sources
-const lightSources = [
-    {
-        type        : 1.0,
-        position    : [6, 2, 0],
-        colour      : [1.0, 1.0, 1],
-        direction   : [0.0, -1.0, -2],
-        constant    : 1.0,
-        linear      : 0.1,
-        quadratic   : 0.02,
-    },
-    {
-        type        : 1.0,
-        position    : [9, 2, -9],
-        direction   : [0.0, 0.0, 0],
-        colour      : [1.0, 1.0, 0],
-        constant    : 1.0,
-        linear      : 0.1,
-        quadratic   : 0.02,
-    },
-];
-const numLights = lightSources.length;
+toShader(gl, program, index) {
+    const prefix = `uLights[${index}]`;
+
+    // Light vectors
+    gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.position`), this.position);
+    gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.colour`), this.colour);  
+
+    // Attenuation coefficients
+    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uConstant`), this.constant);
+    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uLinear`), this.linear);
+    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uQuadratic`), this.quadratic);
+}
 ```
 
-Edit the code where the light source properties are sent to the shader to loop over the `lightSources` array and send each light source's properties to the shader.
+And add a LightSources class
+
+```javascript
+class LightSources {
+    constructor(maxLights = 16) {
+        this.lights = [];
+        this.maxLights = maxLights;
+    }
+
+    addLight(light) {
+        if (this.lights.length < this.maxLights) {
+            this.lights.push(light);
+        } else {
+            console.warn("Maximum number of lights reached.");
+        }
+    }
+
+    toShader(gl, program) {
+        gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), this.lights.length);
+
+        for (let i = 0; i < this.lights.length; i++) {
+            this.lights[i].toShader(gl, program, i);
+        }
+    }
+}
+```
+
+:::
+
+Here we have added the LightSources class which allows us to add up to 16 light sources to our scene. The `addLight()` method is used to append a Light class object to a `lights` array and the `toShader()` method is used to loop through each light source and send the information to the GLSL Light struct. Now let's add our light sources.
+
+:::{admonition} Task
+:class: tip
+
+Add the following after our light object was created
+
+```javascript
+// Add light sources
+const lightSources = new LightSources();
+lightSources.addLight(light);
+
+// Yellow light
+const yellowLight = new Light();
+yellowLight.position = [9, 3, -9];
+yellowLight.colour = [1, 1, 0];
+lightSources.addLight(yellowLight);
+```
+
+Edit the code where the light source properties are sent to the shader to the following
 
 ```javascript
 // Send light source properties to the shader
-gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), numLights);
-for (let i = 0; i < numLights; i++) {
-    gl.uniform1i(gl.getUniformLocation(program, `uLights[${i}].type`), lightSources[i].type);
-    gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].position`), lightSources[i].position);
-    gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].colour`), lightSources[i].colour);  
-    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].constant`), lightSources[i].constant);
-    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].linear`), lightSources[i].linear);
-    gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].quadratic`), lightSources[i].quadratic);
-}
+lightSources.toShader(gl, program);
 ```
 
 And edit the code where the light sources are drawn to loop over the number of light sources.
 
 ```javascript
-// Render light sources
+// Draw light sources
 gl.useProgram(lightProgram);
 
-for (let i = 0; i < numLights; i++) {
+for (let i = 0; i < lightSources.lights.length; i++) {
+
     // Calculate model matrix for light source
     const model = new Mat4()
-        .translate(lightSources[i].position)
+        .translate(lightSources.lights[i].position)
         .scale([0.1, 0.1, 0.1]);
 
     // Send model, view and projection matrices to the shaders
@@ -1006,7 +1018,7 @@ for (let i = 0; i < numLights; i++) {
     gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
     // Send light colour to the shader
-    gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources[i].colour);
+    gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources.lights[i].colour);
 
     // Draw light source cube
     gl.bindVertexArray(vao);
@@ -1016,7 +1028,7 @@ for (let i = 0; i < numLights; i++) {
 
 :::
 
-Here we have defined two light sources, with an additional yellow light source positioned further back in the scene. The code to send the light source properties to the shader and to draw the light sources has been updated to loop over the number of light sources defined in the `lightSources` array. Refresh your web browser, and you should see the following. Move the camera around the scene to see the effects of the light sources on the cubes.
+Here we have defined two light sources, with an additional yellow light source positioned further back in the scene. The code to send the light source properties to the shader and to draw the light sources has been updated to loop over the number of light sources. Refresh your web browser, and you should see the following. Move the camera around the scene to see the effects of the light sources on the cubes.
 
 ```{figure} ../_images/08_cubes_multiple_lights.png
 :width: 80%
@@ -1052,45 +1064,58 @@ So to determine if a fragment is illuminated by the spotlight we can calculate $
 Add attributes for the light direction vector and the value of $\cos(\textsf{cutoff})$ to the Light data structure in the fragment shader.
 
 ```glsl
+int type;
 vec3 direction;
 float cutoff;
 ```
 
-In the `computeLight()` function, add the following code to turn off the light contribution if the fragment is outside the spotlight cone.
+In the `computLighting()` function, add the following code after the attenuation calculation to turn off the light contribution if the fragment is outside the spotlight cone.
 
 ```glsl
-// Spotlight
-float spotLight = 1.0;
-if (light.type == 2) {
-    vec3 D = normalize(light.direction);
-    float theta = dot(-L, D);
-    spotLight = 0.0;
-    if (theta > light.cutoff) {
-        spotLight = 1.0;
+// Spotlight intensity
+float intensity = 1.0;
+if (light.type == 1) {
+    float theta = dot(-L, normalize(light.direction));
+    if (theta < light.cutoff) {
+        intensity = 0.0;
     }
 }
 ```
 
-And apply the spotlight to the fragment colour calculation.
+And edit the return command to apply the intensity to the diffuse and specular light
 
 ```glsl
 // Output fragment colour
-return spotlight * attenuation * (ambient + diffuse + specular);
+return attenuation * (ambient + intensity * (diffuse + specular));
 ```
 
-In the `main()` function further down, add the light direction and cutoff attributes to both light sources. Comment out the second light source object and change the first light source, add the following and comment out the code defining the second light source and comment out
+In the Light class constructor, add an input parameter to define the type of light source
 
 ```javascript
-type      : 2,
-direction : [0.0, -1.0, -1],
-cutoff    : Math.cos(40 * Math.PI / 180),
+class Light {
+    constructor(type = 0) {
+        this.type = type; // 0 = point, 1 = spot, 2 = directional
 ```
 
-Finally, send the additional light source properties to the shader by adding the following code where the other light source properties are sent.
+And add the light source vector and cutoff angle to the constructor
 
 ```javascript
-gl.uniform3fv(gl.getUniformLocation(program, `uLights[${i}].direction`), lightSources[i].direction);      
-gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].cutoff`), lightSources[i].cutoff);
+this.direction = [0, -1, 0];
+this.cutoff = Math.cos(50 * Math.PI / 180);
+```
+
+Send the additional light source properties to the shader by adding the following code where the other light source properties are sent.
+
+```javascript
+gl.uniform1i(gl.getUniformLocation(program, `${prefix}.type`), this.type);
+gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.direction`), this.direction);
+gl.uniform1f(gl.getUniformLocation(program, `${prefix}.cutoff`), this.cutoff);
+```
+
+Finally in the ***lighting.js*** file, change the type of the yellow light source to 1 so that the shader interprets it as a spotlight
+
+```javascript
+const yellowLight = new Light(1);
 ```
 
 :::
@@ -1106,7 +1131,7 @@ Cubes lit using a spotlight.
 
 Use the keyboard and mouse to move the camera around the cubes and see the effect of the spotlight. You may notice that there is an abrupt cutoff between the region illuminated by the spotlight and the region in darkness. In the real world this doesn't usually happen as light on this edge gets softened by various effects.
 
-We can model this softening by gradually reducing the intensity of the light as we approach the cutoff angle. Introducing a new inner cutoff angle that is slightly less than the cutoff angle then we can have full intensity for angles less than the inner cutoff angle and zero intensity for angles greater than the cutoff angle. Between these two angles we can gradually reduce the intensity from 1 to 0.
+Introducing a new outer cutoff angle that is slightly more than the cutoff angle then we can go from full intensity for angles less than the cutoff angle and gradually decrease to zero intensity for angles greater than the outer cutoff angle.
 
 ```{figure} ../_images/08_soft_edge.svg
 :width: 500
@@ -1118,40 +1143,39 @@ Intensity value over a range of $\theta$.
 :::{admonition} Task
 :class: tip
 
-Add an attribute for the inner cutoff angle to the Light data structure in the fragment shader.
+Add an attribute for the outer cutoff angle to the Light data structure in the fragment shader
 
 ```glsl
-float innerCutoff;
+float outerCutoff;
 ```
 
-And in the `computeLight()` function, replace the spotlight code with the following code to soften the edges of the spotlight.
+And in the `computLighting()` function, replace the spotlight code with the following code to soften the edges of the spotlight.
 
 ```glsl
-// Spotlight
-float spotLight = 1.0;
-if (light.type == 2) {
-    vec3 D = normalize(light.direction);
-    float theta = dot(-L, D);
-    float epsilon = light.cutoff - light.innerCutoff;
-    spotLight = clamp((light.cutoff - theta) / epsilon, 0.0, 1.0);
+// Spotlight intensity
+float intensity = 1.0;
+if (light.type == 1) {
+    float theta = dot(-L, normalize(light.direction));
+    float epsilon = light.cutoff - light.outerCutoff;
+    intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
 }
 ```
 
-Now add the attribute to the light source definitions
+Now add an outer cutoff property to the Light class constructor
 
 ```javascript
-innerCutoff : Math.cos(30 * Math.PI / 180),
+this.outerCutoff = Math.cos(52 * Math.PI / 180);
 ```
 
-And send the additional light source property to the shader by adding the following code where the other light source properties are sent.
+And send the additional light source property to the shader by adding the following code to the `toShader()` method
 
 ```javascript
-gl.uniform1f(gl.getUniformLocation(program, `uLights[${i}].innerCutoff`), lightSources[i].innerCutoff);
+gl.uniform1f(gl.getUniformLocation(program, `${prefix}.outerCutoff`), this.outerCutoff);
 ```
 
 :::
 
-Here we have defined an inner cutoff angle of $25^\circ$ which is slightly less than the cutoff angle of $30^\circ$. Refresh your web browser and you should see the following.
+Here we have defined an outer cutoff angle of $52^\circ$ which is slightly more than the cutoff angle of $50^\circ$. Refresh your web browser and you should see that there is now a soft edge to the spotlight.
 
 ```{figure} ../_images/08_cubes_spotlight_soft.png
 :width: 500
@@ -1178,45 +1202,36 @@ The lighting calculations are the same as for the other light sources seen above
 :::{admonition} Task
 :class: tip
 
-Add the following after we have calculated the light vector in the `computeLight()` function in the fragment shader.
+Add the following code to the `computerLighting()` fragment shader function before we calculate the ambient light
 
 ```glsl
-if (light.type == 3) {
+// Directional light
+if (light.type == 2) {
     L = normalize(-light.direction);
+    attenuation = 1.0;
 }
 ```
 
-And replace the code used to calculate the attenuation with the following.
-
-```glsl
-// Attenuation
-float attenuation = 1.0;
-if (light.type != 3) {
-    float dist = length(light.position - vPosition);
-    attenuation = 1.0 / (light.constant + light.linear * dist + light.quadratic * dist * dist);
-}
-```
-
-Add an additional light source to the light sources array.
+In the ***lighting.js*** file, add the following to add a direction light source after we have added the yellow light source
 
 ```javascript
-{
-    type        : 3,
-    position    : [0.0, 0.0, 0],
-    direction   : [2, -1.0, -1],
-    colour      : [1.0, 0.0, 1],
-    constant    : 1.0,
-    linear      : 0.1,
-    quadratic   : 0.02,
-    cutoff      : 0.0,
-    innerCutoff : 0.0,
-},
+// Directional light
+const directionalLight = new Light(2);
+directionalLight.colour = [1, 0, 1];
+directionalLight.direction = [2, -1, -1];
+lightSources.addLight(directionalLight);
 ```
 
-Finally, uncomment the code for the second light source.
+Finally, add the following code at the start of the for loop used to draw the light sources.
+
+```javascript
+// Don't draw directional light source
+if (lightSources.lights[i].type == 2) continue;
+```
+
 :::
 
-Here we have defined a directional light source with the direction vector $(2, -1.0, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. The light source colour has been set to magenta using the RGB values $(1.0, 0.0, 1)$. Refresh your web browser and you should see the following.
+Here we have defined a directional light source with the colour magenta and direction vector $(2, -1, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. Refresh your web browser and you should see the following.
 
 ```{figure} ../_images/08_cubes_directional_light.png
 :width: 80%
@@ -1231,14 +1246,30 @@ Cubes lit using a point light, spotlight and directional light.
 
 1. Experiment with the positions, colours and material properties of the various light sources to see what effects they have.
 
-2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at $\vec{eye}$, is pointing in the same direction as $\vec{front}$ and has a spread angle of $\phi = 15^\circ$. Turn off all other light sources for extra spookiness.
+2. Use a spotlight to model a flashlight controlled by the user such that the light is positioned at the camera $\vec{eye}$ vector and is pointing in the same direction as the camera $\vec{front}$ vector. Set the cutoff angles so that the spread of the light is $20^\circ$ and turn off all other light sources for extra spookiness.
 
-3. Change the colour of the second point light source to magenta and rotate its position in a circle centred at (0.0,0.0,-5) with radius 5. Turn off the spotlight and directional light. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0.0, \sin(t))$ where $r$ is the radius $t$ is some parameter (e.g., time).
+```{figure} ../_images/08_Ex2.png
+:width: 60%
+```
 
-4. Add the ability to turn the lights off and on using keyboard input.
+1. Add a green point light source that moves in a horizontal circle centred at $(6,2,-6)$ with radius 5. Hint: the coordinates of points on a circle can be calculated using $(x, y, z) = (c_x, c_y, c_z) + r (\cos(t), 0, \sin(t))$ where $r$ is the radius $t$ is some parameter.
+
+<center>
+<video autoplay controls muted="true" loop="true" width="500">
+    <source src="../_static/videos/08_Ex3.mp4" type="video/mp4">
+</video>
+</center>
 
 ---
 
 ## Video walkthrough
 
 The video below walks you through these lab materials.
+
+---
+
+## References
+
+J. F. Blinn (1977) "Models of light reflection for computer synthesized pictures". Proceedings of the 4th annual conference on Computer graphics and interactive techniques. pp. 192-198.
+
+B. T. Phong (1975) "Illumination for Computer Generated Pictures" Comm. ACM. Vol 18(6): 311-317.
