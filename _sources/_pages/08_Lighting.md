@@ -87,8 +87,6 @@ in vec2 vTexCoords;
 out vec4 fragColour;
 
 uniform sampler2D uTexture;
-
-// Material coefficients
 uniform float uKa;
 
 void main() {
