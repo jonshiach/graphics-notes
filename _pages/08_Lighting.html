@@ -533,18 +533,18 @@ document.write(`
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id1">
 <img alt="../_images/08_cubes_ambient_0.5.png" src="../_images/08_cubes_ambient_0.5.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 68 </span><span class="caption-text"><span class="math notranslate nohighlight">\(k_a=0.5\)</span></span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text"><span class="math notranslate nohighlight">\(k_a=0.5\)</span></span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
 <div class="sd-col sd-d-flex-column docutils">
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id2">
 <img alt="../_images/08_cubes_ambient_0.8.png" src="../_images/08_cubes_ambient_0.8.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 69 </span><span class="caption-text"><span class="math notranslate nohighlight">\(k_a=0.8\)</span></span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text"><span class="math notranslate nohighlight">\(k_a=0.8\)</span></span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -762,10 +762,6 @@ document.write(`
 <p>Now we need to define diffuse coefficient for the cubes, the position and colour of our light source and send them to the shaders using uniforms. Eventually, we will be adding multiple light sources with different properties and behaviours so to keep our code organised we are going to create a Light class.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the definition of the cubes objects to include the diffuse coefficient <span class="math notranslate nohighlight">\(k_d = 0.7\)</span></p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">kd</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
-</pre></div>
-</div>
 <p>Create a new file called <em><strong>light.js</strong></em> and embed this in the <em><strong>index.html</strong></em>. Enter the following class declaration into the <em><strong>light.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Light</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -781,7 +777,11 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the <em><strong>lighting.js</strong></em> file, create a light object before the render function</p>
+<p>In the <em><strong>lighting.js</strong></em> file, edit the definition of the cubes objects to include the diffuse coefficient <span class="math notranslate nohighlight">\(k_d = 0.7\)</span></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">kd</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Create a light object before the render function</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Light object</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Light</span><span class="p">();</span>
 <span class="nx">light</span><span class="p">.</span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
@@ -935,26 +935,26 @@ document.write(`
 <p><span class="caption-number">Fig. 78 </span><span class="caption-text">Light rays hitting a smooth surface are reflected in the same direction.</span><a class="headerlink" href="#specular-reflection-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>For a perfectly smooth surface the reflected ray will point in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector so in order to see the light the viewer would need to be positioned in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector. The viewing vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer (<code class="xref std std-numref docutils literal notranslate"><span class="pre">specular-figure</span></code>). The closer the <span class="math notranslate nohighlight">\(\vec{V}\)</span> vector is to the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector, the more specular light will be seen by the viewer.</p>
-<figure class="align-default" id="specular-figure">
+<p><a class="reference internal" href="#phongs-specular-model-figure"><span class="std std-numref">Fig. 79</span></a> defines the vectors needed to calculate Phongs specular lighting model. The vector <span class="math notranslate nohighlight">\(\vec{R}\)</span> is the reflection such that the angle between the light source vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> and the surface normal <span class="math notranslate nohighlight">\(\vec{n}\)</span> is the same as that between <span class="math notranslate nohighlight">\(\vec{n}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span>. The vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the viewing vector that points from the surface to the viewer (camera).</p>
+<figure class="align-default" id="phongs-specular-model-figure">
 <a class="reference internal image-reference" href="../_images/08_phong_reflection.svg"><img alt="../_images/08_phong_reflection.svg" src="../_images/08_phong_reflection.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Specular lighting scatters light mainly towards the reflection vector.</span><a class="headerlink" href="#specular-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Specular lighting scatters light mainly towards the reflection vector.</span><a class="headerlink" href="#phongs-specular-model-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Phong’s module of specular reflection can have problems when the <span class="math notranslate nohighlight">\(\vec{V}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span> vectors are more than <span class="math notranslate nohighlight">\(90^\circ\)</span> apart, so it is common to use a modification of the model called the <strong>Blinn-Phong reflection model</strong> developed by Jim Blinn (1977). A vector <span class="math notranslate nohighlight">\(\vec{H}\)</span> is calculated that is halfway between the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{V}\)</span> vectors</p>
-<div class="math notranslate nohighlight">
-\[ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. \]</div>
-<p>The scattering of the reflected light is determined by how far the <span class="math notranslate nohighlight">\(\vec{H}\)</span> vector is from the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{H}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, then the smaller its value the more specular light is seen by the viewer.</p>
-<figure class="align-default" id="id1">
+<p>For a perfectly smooth surface the reflected ray will point in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector so in order to see the light the viewer would need to be positioned in the direction of the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector. Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. The closer the <span class="math notranslate nohighlight">\(\vec{V}\)</span> vector is to the <span class="math notranslate nohighlight">\(\vec{R}\)</span> vector, the more specular light will be seen by the viewer.</p>
+<figure class="align-default" id="blinn-phong-model-figure">
 <a class="reference internal image-reference" href="../_images/08_blinn_phong.svg"><img alt="../_images/08_blinn_phong.svg" src="../_images/08_blinn_phong.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 80 </span><span class="caption-text">The Blinn-Phong reflection model.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">The Blinn-Phong reflection model.</span><a class="headerlink" href="#blinn-phong-model-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The scattering of the specular light is modelled by <span class="math notranslate nohighlight">\(\cos(\theta)^s\)</span> where <span class="math notranslate nohighlight">\(s\)</span> is known as the <strong>specular exponent</strong> and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product <span class="math notranslate nohighlight">\((\vec{H} \cdot \vec{n})^s\)</span>. The Blinn-Phong model of specular reflection is</p>
+<p>Phong’s model of specular reflection can have problems when the <span class="math notranslate nohighlight">\(\vec{V}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span> vectors are more than <span class="math notranslate nohighlight">\(90^\circ\)</span> apart, so it is common to use a modification of the model called the <strong>Blinn-Phong reflection model</strong> developed by Jim Blinn (1977). A vector <span class="math notranslate nohighlight">\(\vec{H}\)</span> is calculated that is halfway between the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{V}\)</span> vectors (<a class="reference internal" href="#blinn-phong-model-figure"><span class="std std-numref">Fig. 80</span></a>)</p>
+<div class="math notranslate nohighlight">
+\[ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. \]</div>
+<p>The scattering of the reflected light is determined by how far the <span class="math notranslate nohighlight">\(\vec{H}\)</span> vector is from the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{H}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by <span class="math notranslate nohighlight">\(\cos(\theta)^s\)</span> where <span class="math notranslate nohighlight">\(s\)</span> is known as the <strong>specular exponent</strong> and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product <span class="math notranslate nohighlight">\((\vec{H} \cdot \vec{n})^s\)</span>. The Blinn-Phong model of specular reflection is</p>
 <div class="math notranslate nohighlight" id="equation-specular-reflection-equation">
 <span class="eqno">(24)<a class="headerlink" href="#equation-specular-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.\]</div>
 <div class="tip admonition">

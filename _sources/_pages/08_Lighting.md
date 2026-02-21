@@ -405,12 +405,6 @@ Now we need to define diffuse coefficient for the cubes, the position and colour
 :::{admonition} Task
 :class: tip
 
-Edit the definition of the cubes objects to include the diffuse coefficient $k_d = 0.7$
-
-```javascript
-kd        : 0.7,
-```
-
 Create a new file called ***light.js*** and embed this in the ***index.html***. Enter the following class declaration into the ***light.js*** file
 
 ```javascript
@@ -428,7 +422,13 @@ class Light {
 }
 ```
 
-In the ***lighting.js*** file, create a light object before the render function
+In the ***lighting.js*** file, edit the definition of the cubes objects to include the diffuse coefficient $k_d = 0.7$
+
+```javascript
+kd        : 0.7,
+```
+
+Create a light object before the render function
 
 ```javascript
 // Light object
@@ -623,29 +623,29 @@ Consider {numref}`specular-reflection-figure` that shows parallel light rays hit
 Light rays hitting a smooth surface are reflected in the same direction.
 ```
 
-For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. The viewing vector $\vec{V}$ is the vector that points from the surface to the viewer (camera). Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer ({numref}`specular-figure`). The closer the $\vec{V}$ vector is to the $\vec{R}$ vector, the more specular light will be seen by the viewer.
+{numref}`phongs-specular-model-figure` defines the vectors needed to calculate Phongs specular lighting model. The vector $\vec{R}$ is the reflection such that the angle between the light source vector $\vec{L}$ and the surface normal $\vec{n}$ is the same as that between $\vec{n}$ and $\vec{R}$. The vector $\vec{V}$ is the viewing vector that points from the surface to the viewer (camera).
 
 ```{figure} ../_images/08_phong_reflection.svg
 :width: 400
-:name: specular-figure
+:name: phongs-specular-model-figure
 
 Specular lighting scatters light mainly towards the reflection vector.
 ```
 
-Phong's module of specular reflection can have problems when the $\vec{V}$ and $\vec{R}$ vectors are more than $90^\circ$ apart, so it is common to use a modification of the model called the **Blinn-Phong reflection model** developed by Jim Blinn (1977). A vector $\vec{H}$ is calculated that is halfway between the $\vec{L}$ and $\vec{V}$ vectors
-
-$$ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. $$
-
-The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer.
+For a perfectly smooth surface the reflected ray will point in the direction of the $\vec{R}$ vector so in order to see the light the viewer would need to be positioned in the direction of the $\vec{R}$ vector. Since most surfaces are not perfectly smooth we add a bit of scattering to the model the amount of specular lighting seen by the viewer. The closer the $\vec{V}$ vector is to the $\vec{R}$ vector, the more specular light will be seen by the viewer.
 
 ```{figure} ../_images/08_blinn_phong.svg
 :width: 400
-:name: specular-figure
+:name: blinn-phong-model-figure
 
 The Blinn-Phong reflection model.
 ```
 
-The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular reflection is
+Phong's model of specular reflection can have problems when the $\vec{V}$ and $\vec{R}$ vectors are more than $90^\circ$ apart, so it is common to use a modification of the model called the **Blinn-Phong reflection model** developed by Jim Blinn (1977). A vector $\vec{H}$ is calculated that is halfway between the $\vec{L}$ and $\vec{V}$ vectors ({numref}`blinn-phong-model-figure`)
+
+$$ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. $$
+
+The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular reflection is
 
 $$ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-reflection-equation)
 
