@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -419,7 +419,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lab-8-lighting">
 <span id="lighting-section"></span><h1>Lab 8: Lighting<a class="headerlink" href="#lab-8-lighting" title="Link to this heading">#</a></h1>
-<p>In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong reflection model</a>.</p>
+<p>In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong lighting model</a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Create a copy of your <em><strong>Lab 7 Moving the Camera</strong></em> folder, rename it <em><strong>Lab 8 Lighting</strong></em>, rename the file <em><strong>moving_the_camera.js</strong></em> to <em><strong>lighting.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 8 - Lighting” it embeds the <em><strong>lighting.js</strong></em> file.</p>
@@ -473,8 +473,8 @@ document.write(`
 <section id="ambient-lighting">
 <h3>Ambient lighting<a class="headerlink" href="#ambient-lighting" title="Link to this heading">#</a></h3>
 <p>Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient lighting is</p>
-<div class="math notranslate nohighlight" id="equation-ambient-reflection-equation">
-<span class="eqno">(22)<a class="headerlink" href="#equation-ambient-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{ambient} = k_a \vec{O}_d \]</div>
+<div class="math notranslate nohighlight" id="equation-ambient-lighting-equation">
+<span class="eqno">(22)<a class="headerlink" href="#equation-ambient-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{ambient} = k_a \vec{O}_d \]</div>
 <p>where <span class="math notranslate nohighlight">\(k_a\)</span> is known as the <strong>ambient lighting constant</strong> which takes on a value between 0 and 1 and <span class="math notranslate nohighlight">\(\vec{O}_d\)</span> is the object colour. <span class="math notranslate nohighlight">\(k_a\)</span> is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
 <span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
@@ -553,12 +553,12 @@ document.write(`
 </section>
 <section id="diffuse-lighting">
 <h3>Diffuse lighting<a class="headerlink" href="#diffuse-lighting" title="Link to this heading">#</a></h3>
-<p>Diffuse lighting is where light is reflected off a rough surface. Consider <a class="reference internal" href="#diffuse-reflection-figure"><span class="std std-numref">Fig. 70</span></a> that shows parallel light rays hitting a surface where light is scattered in multiple directions.</p>
-<figure class="align-default" id="diffuse-reflection-figure">
+<p>Diffuse lighting is where light is reflected off a rough surface. Consider <a class="reference internal" href="#diffuse-lighting-figure"><span class="std std-numref">Fig. 70</span></a> that shows parallel light rays hitting a surface where light is scattered in multiple directions.</p>
+<figure class="align-default" id="diffuse-lighting-figure">
 <a class="reference internal image-reference" href="../_images/08_diffuse_reflection.svg"><img alt="../_images/08_diffuse_reflection.svg" src="../_images/08_diffuse_reflection.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Light rays hitting a rough surface are scattered in all directions.</span><a class="headerlink" href="#diffuse-reflection-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Light rays hitting a rough surface are scattered in all directions.</span><a class="headerlink" href="#diffuse-lighting-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>To model diffuse lighting Phong’s model assumes that light is reflected equally in all directions (<a class="reference internal" href="#diffuse-figure"><span class="std std-numref">Fig. 71</span></a>).</p>
@@ -570,12 +570,12 @@ document.write(`
 </figcaption>
 </figure>
 <p>The amount of light that is reflected to the viewer is modelled using the angle <span class="math notranslate nohighlight">\(\theta\)</span> between the light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> which points from the fragment to the light source and the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span> which points perpendicular to the surface. If <span class="math notranslate nohighlight">\(\theta\)</span> is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if <span class="math notranslate nohighlight">\(\theta\)</span> is close to 90<span class="math notranslate nohighlight">\(^\circ\)</span> then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> the light source is behind the surface so no light is reflected to the viewer. We model this using <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> since <span class="math notranslate nohighlight">\(\cos(0^\circ) = 1\)</span> and <span class="math notranslate nohighlight">\(\cos(90^\circ)=0\)</span>. Diffuse lighting is calculated using</p>
-<div class="math notranslate nohighlight" id="equation-diffuse-reflection-equation">
-<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,\]</div>
+<div class="math notranslate nohighlight" id="equation-diffuse-lighting-equation">
+<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(k_d\)</span> is known as the <strong>diffuse lighting constant</strong> which takes a value between 0 and 1, and <span class="math notranslate nohighlight">\(\vec{I}_p\)</span> is the colour intensity of the point light source. Recall that the angle between two vectors is related by <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> so if the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> vectors are unit vectors then <span class="math notranslate nohighlight">\(\cos(\theta) = \vec{L} \cdot \vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> then light source is behind the surface and no light should be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta\)</span> is between 90<span class="math notranslate nohighlight">\(^\circ\)</span> and 180<span class="math notranslate nohighlight">\(^\circ\)</span>, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is negative so we limit the value of <span class="math notranslate nohighlight">\(\cos(\theta )\)</span> to positive values</p>
 <div class="math notranslate nohighlight">
 \[ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). \]</div>
-<p>So the equation to calculate diffuse reflection is</p>
+<p>So the equation to calculate diffuse lighting is</p>
 <div class="math notranslate nohighlight">
 \[ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
 <p>The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation</p>
@@ -927,15 +927,15 @@ document.write(`
 </section>
 <section id="specular-lighting">
 <h3>Specular lighting<a class="headerlink" href="#specular-lighting" title="Link to this heading">#</a></h3>
-<p>Consider <a class="reference internal" href="#specular-reflection-figure"><span class="std std-numref">Fig. 78</span></a> that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).</p>
-<figure class="align-default" id="specular-reflection-figure">
+<p>Consider <a class="reference internal" href="#specular-lighting-figure"><span class="std std-numref">Fig. 78</span></a> that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).</p>
+<figure class="align-default" id="specular-lighting-figure">
 <a class="reference internal image-reference" href="../_images/08_specular_reflection.svg"><img alt="../_images/08_specular_reflection.svg" src="../_images/08_specular_reflection.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Light rays hitting a smooth surface are reflected in the same direction.</span><a class="headerlink" href="#specular-reflection-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Light rays hitting a smooth surface are reflected in the same direction.</span><a class="headerlink" href="#specular-lighting-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#phongs-specular-model-figure"><span class="std std-numref">Fig. 79</span></a> defines the vectors needed to calculate Phongs specular lighting model. The vector <span class="math notranslate nohighlight">\(\vec{R}\)</span> is the reflection such that the angle between the light source vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> and the surface normal <span class="math notranslate nohighlight">\(\vec{n}\)</span> is the same as that between <span class="math notranslate nohighlight">\(\vec{n}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span>. The vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the viewing vector that points from the surface to the viewer (camera).</p>
+<p><a class="reference internal" href="#phongs-specular-model-figure"><span class="std std-numref">Fig. 79</span></a> defines the vectors needed to calculate Phong’s specular lighting model. The vector <span class="math notranslate nohighlight">\(\vec{R}\)</span> is the reflection such that the angle between the light source vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> and the surface normal <span class="math notranslate nohighlight">\(\vec{n}\)</span> is the same as that between <span class="math notranslate nohighlight">\(\vec{n}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span>. The vector <span class="math notranslate nohighlight">\(\vec{V}\)</span> is the viewing vector that points from the surface to the viewer (camera).</p>
 <figure class="align-default" id="phongs-specular-model-figure">
 <a class="reference internal image-reference" href="../_images/08_phong_reflection.svg"><img alt="../_images/08_phong_reflection.svg" src="../_images/08_phong_reflection.svg" style="width: 400px;" />
 </a>
@@ -948,15 +948,15 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/08_blinn_phong.svg"><img alt="../_images/08_blinn_phong.svg" src="../_images/08_blinn_phong.svg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 80 </span><span class="caption-text">The Blinn-Phong reflection model.</span><a class="headerlink" href="#blinn-phong-model-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">The Blinn-Phong lighting model.</span><a class="headerlink" href="#blinn-phong-model-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Phong’s model of specular reflection can have problems when the <span class="math notranslate nohighlight">\(\vec{V}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span> vectors are more than <span class="math notranslate nohighlight">\(90^\circ\)</span> apart, so it is common to use a modification of the model called the <strong>Blinn-Phong reflection model</strong> developed by Jim Blinn (1977). A vector <span class="math notranslate nohighlight">\(\vec{H}\)</span> is calculated that is halfway between the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{V}\)</span> vectors (<a class="reference internal" href="#blinn-phong-model-figure"><span class="std std-numref">Fig. 80</span></a>)</p>
+<p>Phong’s model of specular lighting can have problems when the <span class="math notranslate nohighlight">\(\vec{V}\)</span> and <span class="math notranslate nohighlight">\(\vec{R}\)</span> vectors are more than <span class="math notranslate nohighlight">\(90^\circ\)</span> apart, so it is common to use a modification of the model called the <strong>Blinn-Phong lighting model</strong> developed by Jim Blinn (1977). A vector <span class="math notranslate nohighlight">\(\vec{H}\)</span> is calculated that is halfway between the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{V}\)</span> vectors (<a class="reference internal" href="#blinn-phong-model-figure"><span class="std std-numref">Fig. 80</span></a>)</p>
 <div class="math notranslate nohighlight">
 \[ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. \]</div>
-<p>The scattering of the reflected light is determined by how far the <span class="math notranslate nohighlight">\(\vec{H}\)</span> vector is from the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{H}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by <span class="math notranslate nohighlight">\(\cos(\theta)^s\)</span> where <span class="math notranslate nohighlight">\(s\)</span> is known as the <strong>specular exponent</strong> and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product <span class="math notranslate nohighlight">\((\vec{H} \cdot \vec{n})^s\)</span>. The Blinn-Phong model of specular reflection is</p>
-<div class="math notranslate nohighlight" id="equation-specular-reflection-equation">
-<span class="eqno">(24)<a class="headerlink" href="#equation-specular-reflection-equation" title="Link to this equation">#</a></span>\[ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.\]</div>
+<p>The scattering of the reflected light is determined by how far the <span class="math notranslate nohighlight">\(\vec{H}\)</span> vector is from the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{H}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by <span class="math notranslate nohighlight">\(\cos(\theta)^s\)</span> where <span class="math notranslate nohighlight">\(s\)</span> is known as the <strong>specular exponent</strong> and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product <span class="math notranslate nohighlight">\((\vec{H} \cdot \vec{n})^s\)</span>. The Blinn-Phong model of specular lighting is</p>
+<div class="math notranslate nohighlight" id="equation-specular-lighting-equation">
+<span class="eqno">(24)<a class="headerlink" href="#equation-specular-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>In the fragment shader, add uniforms for the camera position, specular coefficient and exponent.</p>
@@ -1001,7 +1001,7 @@ document.write(`
 <p><span class="caption-number">Fig. 81 </span><span class="caption-text">Specular lighting: <span class="math notranslate nohighlight">\(k_s = 1.0\)</span>, <span class="math notranslate nohighlight">\(\alpha = 20\)</span>.</span><a class="headerlink" href="#cubes-specular-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Let’s add ambient and diffuse lighting to the specular lighting to complete the Phong reflection model.</p>
+<p>Let’s add ambient and diffuse lighting to the specular lighting to complete the Phong lighting model.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Change the fragment shader so that the fragment colour is the sum of the ambient, diffuse and specular lighting.</p>
@@ -1079,7 +1079,7 @@ document.write(`
 <hr class="docutils" />
 <section id="multiple-light-sources">
 <h2>Multiple light sources<a class="headerlink" href="#multiple-light-sources" title="Link to this heading">#</a></h2>
-<p>To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.</p>
+<p>To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular lighting for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.</p>
 <p>A data structure in GLSL is defined as follows:</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
@@ -1181,7 +1181,7 @@ document.write(`
 <p>This fragment shader is a little more complex than before but the main changes are:</p>
 <ul class="simple">
 <li><p>A <code class="docutils literal notranslate"><span class="pre">Light</span></code> data structure is defined with attributes for the light source type, position, colour and attenuation constants.</p></li>
-<li><p>An array of <code class="docutils literal notranslate"><span class="pre">Light</span></code> structures called <code class="docutils literal notranslate"><span class="pre">uLights</span></code> is defined to hold up to 16 light sources.</p></li>
+<li><p>A uniform array of <code class="docutils literal notranslate"><span class="pre">Light</span></code> structures called <code class="docutils literal notranslate"><span class="pre">uLights</span></code> is defined to hold up to 16 light sources.</p></li>
 <li><p>A uniform integer <code class="docutils literal notranslate"><span class="pre">uNumLights</span></code> is defined to specify the number of active light sources.</p></li>
 <li><p>A function <code class="docutils literal notranslate"><span class="pre">computeLighting()</span></code> is defined to perform the lighting calculations for a single light source</p></li>
 <li><p>In the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function a for loop iterates over the active light sources and calls the <code class="docutils literal notranslate"><span class="pre">computeLighting()</span></code> function for each light source to add its contribution to the fragment colour.</p></li>
@@ -1255,7 +1255,7 @@ document.write(`
 <span class="nx">lightSources</span><span class="p">.</span><span class="nx">toShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>And edit the code where the light sources are drawn to loop over the number of light sources.</p>
+<p>And edit the code where the light sources are drawn to loop over the number of light sources</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Draw light sources</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">lightProgram</span><span class="p">);</span>
 

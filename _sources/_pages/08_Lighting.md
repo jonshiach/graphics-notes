@@ -2,7 +2,7 @@
 
 # Lab 8: Lighting
 
-In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong reflection model</a>.
+In this lab we will be looking at adding a basic lighting model to our application. Lighting modelling is in itself a huge topic within the field of computer graphics and modern games and movies can look very lifelike thanks to some very clever techniques. Here we will be applying one of the simplest lighting models, the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model" target="_blank">Phong lighting model</a>.
 
 :::{admonition} Task
 :class: tip
@@ -73,7 +73,7 @@ where theses are 3-element vectors of RGB colour values.
 
 Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong's model for ambient lighting is
 
-$$ \vec{ambient} = k_a \vec{O}_d $$(ambient-reflection-equation)
+$$ \vec{ambient} = k_a \vec{O}_d $$(ambient-lighting-equation)
 
 where $k_a$ is known as the **ambient lighting constant** which takes on a value between 0 and 1 and $\vec{O}_d$ is the object colour. $k_a$ is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.
 
@@ -161,11 +161,11 @@ $k_a=0.8$
 
 ### Diffuse lighting
 
-Diffuse lighting is where light is reflected off a rough surface. Consider {numref}`diffuse-reflection-figure` that shows parallel light rays hitting a surface where light is scattered in multiple directions.
+Diffuse lighting is where light is reflected off a rough surface. Consider {numref}`diffuse-lighting-figure` that shows parallel light rays hitting a surface where light is scattered in multiple directions.
 
 ```{figure} ../_images/08_diffuse_reflection.svg
 :width: 400
-:name: diffuse-reflection-figure
+:name: diffuse-lighting-figure
 
 Light rays hitting a rough surface are scattered in all directions.
 ```
@@ -181,13 +181,13 @@ Diffuse lighting scatters light equally in all directions.
 
 The amount of light that is reflected to the viewer is modelled using the angle $\theta$ between the light vector $\vec{L}$ which points from the fragment to the light source and the normal vector $\vec{n}$ which points perpendicular to the surface. If $\theta$ is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if $\theta$ is close to 90$^\circ$ then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When $\theta > 90^\circ$ the light source is behind the surface so no light is reflected to the viewer. We model this using $\cos(\theta)$ since $\cos(0^\circ) = 1$ and $\cos(90^\circ)=0$. Diffuse lighting is calculated using
 
-$$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-reflection-equation)
+$$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-lighting-equation)
 
 where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
 $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
-So the equation to calculate diffuse reflection is
+So the equation to calculate diffuse lighting is
 
 $$ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
 
@@ -614,16 +614,16 @@ Ambient and diffuse lighting: $k_a = 0.2$, $k_d = 0.7$.
 
 ### Specular lighting
 
-Consider {numref}`specular-reflection-figure` that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).
+Consider {numref}`specular-lighting-figure` that shows parallel light rays hitting a smooth surface where the reflected rays will point mostly in the same direction (think of a mirrored surface).
 
 ```{figure} ../_images/08_specular_reflection.svg
 :width: 400
-:name: specular-reflection-figure
+:name: specular-lighting-figure
 
 Light rays hitting a smooth surface are reflected in the same direction.
 ```
 
-{numref}`phongs-specular-model-figure` defines the vectors needed to calculate Phongs specular lighting model. The vector $\vec{R}$ is the reflection such that the angle between the light source vector $\vec{L}$ and the surface normal $\vec{n}$ is the same as that between $\vec{n}$ and $\vec{R}$. The vector $\vec{V}$ is the viewing vector that points from the surface to the viewer (camera).
+{numref}`phongs-specular-model-figure` defines the vectors needed to calculate Phong's specular lighting model. The vector $\vec{R}$ is the reflection such that the angle between the light source vector $\vec{L}$ and the surface normal $\vec{n}$ is the same as that between $\vec{n}$ and $\vec{R}$. The vector $\vec{V}$ is the viewing vector that points from the surface to the viewer (camera).
 
 ```{figure} ../_images/08_phong_reflection.svg
 :width: 400
@@ -638,16 +638,16 @@ For a perfectly smooth surface the reflected ray will point in the direction of 
 :width: 400
 :name: blinn-phong-model-figure
 
-The Blinn-Phong reflection model.
+The Blinn-Phong lighting model.
 ```
 
-Phong's model of specular reflection can have problems when the $\vec{V}$ and $\vec{R}$ vectors are more than $90^\circ$ apart, so it is common to use a modification of the model called the **Blinn-Phong reflection model** developed by Jim Blinn (1977). A vector $\vec{H}$ is calculated that is halfway between the $\vec{L}$ and $\vec{V}$ vectors ({numref}`blinn-phong-model-figure`)
+Phong's model of specular lighting can have problems when the $\vec{V}$ and $\vec{R}$ vectors are more than $90^\circ$ apart, so it is common to use a modification of the model called the **Blinn-Phong lighting model** developed by Jim Blinn (1977). A vector $\vec{H}$ is calculated that is halfway between the $\vec{L}$ and $\vec{V}$ vectors ({numref}`blinn-phong-model-figure`)
 
 $$ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. $$
 
-The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular reflection is
+The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular lighting is
 
-$$ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-reflection-equation)
+$$ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-lighting-equation)
 
 :::{admonition} Task
 :class: tip
@@ -706,7 +706,7 @@ Refresh your web browser and your scene should be very dark. Move the camera so 
 Specular lighting: $k_s = 1.0$, $\alpha = 20$.
 ```
 
-Let's add ambient and diffuse lighting to the specular lighting to complete the Phong reflection model.
+Let's add ambient and diffuse lighting to the specular lighting to complete the Phong lighting model.
 
 :::{admonition} Task
 :class: tip
@@ -800,7 +800,7 @@ Applying attenuation means that the objects further away from light source appea
 
 ## Multiple light sources
 
-To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular reflection for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.
+To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular lighting for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.
 
 A data structure in GLSL is defined as follows:
 
@@ -907,7 +907,7 @@ void main() {
 This fragment shader is a little more complex than before but the main changes are:
 
 - A `Light` data structure is defined with attributes for the light source type, position, colour and attenuation constants.
-- An array of `Light` structures called `uLights` is defined to hold up to 16 light sources.
+- A uniform array of `Light` structures called `uLights` is defined to hold up to 16 light sources.
 - A uniform integer `uNumLights` is defined to specify the number of active light sources.
 - A function `computeLighting()` is defined to perform the lighting calculations for a single light source
 - In the `main()` function a for loop iterates over the active light sources and calls the `computeLighting()` function for each light source to add its contribution to the fragment colour.
@@ -997,7 +997,7 @@ Edit the code where the light source properties are sent to the shader to the fo
 lightSources.toShader(gl, program);
 ```
 
-And edit the code where the light sources are drawn to loop over the number of light sources.
+And edit the code where the light sources are drawn to loop over the number of light sources
 
 ```javascript
 // Draw light sources
