@@ -330,7 +330,7 @@ const camera = new Camera();
 And add the following to the `render()` function before we calculate the model matrix.
 
 ```javascript
-// Update camera vectors
+// Update camera
 const target = [0, 0, -2];
 camera.eye = [1, 1, 1];
 camera.front = normalize(subtractVector(target, camera.eye));
@@ -851,7 +851,11 @@ $fov = 120^\circ$
 </video>
 </center>
 
-3. Replace every other cube with a pyramid object. You will need to define arrays for the vertices and indices object and create a VAO.
+3. Replace every other cube with a pyramid object. To do this you will need to define the vertices and indices and create a VAO.
+
+```{figure} ../_images/06_pyramid.svg
+:width: 350
+```
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">
@@ -859,7 +863,7 @@ $fov = 120^\circ$
 </video>
 </center>
 
-4. Rotate the cube objects about a random vector so that they complete one full rotation every 2 seconds.
+1. Rotate the cube objects about a random vector so that they complete one full rotation every 2 seconds.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">

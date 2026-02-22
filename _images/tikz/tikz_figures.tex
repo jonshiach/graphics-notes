@@ -947,6 +947,27 @@
 %     \node [below left] at (\l,\l,\l) {$(1, 1, 1)$};
 % \end{tikzpicture}
 
+% Pyramid
+% \tdplotsetmaincoords{60}{140}
+% \tdplotsetrotatedcoords{0}{90}{90}
+% \begin{tikzpicture}[scale=2,tdplot_rotated_coords]
+%     \tikzmath{\xl=1.5;\yl=1;\zl=1.5;\l=0.5;};
+%     \draw [line width=1pt] (-\l,-\l,\l) -- (\l,-\l,\l) -- (\l,-\l,-\l) -- (-\l,-\l,-\l) -- cycle;
+%     \draw [line width=1pt] (-\l,-\l,-\l) -- (0,\l,0) -- (\l,-\l,-\l);
+%     \draw [line width=1pt] (-\l,-\l,\l) -- (0,\l,0) -- (\l,-\l,\l);
+%     % \draw [line width=1pt] (-\l,-\l,-\l) -- (\l,-\l,-\l) -- (\l,\l,-\l) -- (-\l,\l,-\l) -- cycle;
+%     % \draw [line width=1pt] (\l,-\l,\l) -- (\l,-\l,-\l) -- (\l,\l,-\l) -- (\l,\l,\l) -- cycle;
+%     % \draw [line width=1pt] (-\l,-\l,\l) -- (-\l,-\l,-\l) -- (-\l,\l,-\l) -- (-\l,\l,\l) -- cycle;
+%     \draw [axis,red] (0,0,0) -- (\xl,0,0) node at (\xl+0.15,0,0) {$x$};
+%     \draw [axis,mygreen] (0,0,0) -- (0,\yl,0) node at (0,\yl+0.15,0) {$y$};
+%     \draw [axis,blue] (0,0,0) -- (0,0,\zl) node [above] at (0,0,\zl+0.1) {$z$};
+%     \node [below left] at (-\l,-\l,\l) {$(-1, -1, 1)$};
+%     \node [below] at (\l,-\l,\l) {$(1, -1, 1)$};
+%     \node [above right] at (\l,-\l,-\l) {$(1, -1, -1)$};
+%     \node [above right] at (0, \l, 0) {$(1, 1, -1)$};
+%     \node [above right] at (-\l,-\l,-\l) {$(-1, -1, 1)$};
+% \end{tikzpicture}
+
 % Cube normals
 % \tdplotsetmaincoords{60}{140}
 % \tdplotsetrotatedcoords{0}{90}{90}
@@ -1375,6 +1396,7 @@
 % \end{tikzpicture}
 
 % \begin{tikzpicture}
+%     \tikzmath{\v=20;\l=135;\r=180-\l;\v=30;\h=0.5*(\v+\l);}
 %     \coordinate (1) at (3,0);
 %     \fill [blue] (0,0) rectangle ++(6,-0.25);
 %     \draw [white,line width=1pt] ($(1)+(30:1.2)$) arc (30:45:1.2);
@@ -1382,16 +1404,31 @@
 %     \foreach \i in {10, 20, ..., 70} {
 %         \draw [vector,yellow,line width=1.5] (1) -- ++(\i:{2.25*cos(\i - 45)^5});
 %     }
-%     \draw [vector] (1) -- ++(135:3) node [below left,pos=0.8] {$\vec{L}$};
+%     \draw [vector] (1) -- ++(\l:3) node [below left,pos=0.8] {$\vec{L}$};
 %     \draw [vector] (1) -- ++(90:3) node [above] {$\vec{n}$};
-%     \draw [vector] (1) -- ++(45:3) node [above right] {$\vec{R}$};
-%     \draw [vector] (1) -- ++(30:3) node [pos=0.9,below right] {$\vec{V}$};
-%     \node at ($(1)+(112.5:0.5)$) {$\theta$};
-%     \node at ($(1)+(67.5:0.5)$) {$\theta$};
-%     \draw [line width=1pt] ($(1)+(45:0.75)$) arc (45:135:0.75);
-%     \draw [line width=1pt] ($(1)+(30:1)$) arc (30:45:1);
-%     \node at ($(1)+(37.5:1.25)$) {$\phi$};
+%     \draw [vector] (1) -- ++(\r:3) node [above right] {$\vec{R}$};
+%     \draw [vector] (1) -- ++(\v:3) node [pos=0.9,below right] {$\vec{V}$};
+%     % \node at ($(1)+(0.5*\v+0.5*\r:1)$) {$\theta$};
+%     % \draw ($(1)+(\v:1.25)$) arc (\v:\r:1.25);
 %     \node [rotate=-150] at ($(1)+(30:3.5)$) {\includegraphics[width=0.75cm]{camera.pdf}};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\v=20;\l=135;\h=0.5*(\v+\l);}
+%     \coordinate (1) at (3,0);
+%     \fill [blue] (0,0) rectangle ++(6,-0.25);
+%     \draw [white,line width=1pt] ($(1)+(30:1.2)$) arc (30:45:1.2);
+%     \node at ($(1)+(135:3.5)$) {\includegraphics[width=1cm]{lightbulb.pdf}};
+%     \foreach \i in {40, 50, ..., 140} {
+%         \draw [vector,yellow,line width=1.5] (1) -- ++(\i:{2.25*cos(\i - 90)^5});
+%     }
+%     \draw [vector] (1) -- ++(\l:3) node [below left,pos=0.8] {$\vec{L}$};
+%     \draw [vector] (1) -- ++(90:3) node [above] {$\vec{n}$};
+%     \draw [vector] (1) -- ++(\v:3) node [pos=0.9,below right] {$\vec{V}$};
+%     \draw [vector] (1) -- ++(\h:3) node [above] {$\vec{H}$};
+%     \node at ($(1)+(0.5*(90+\h:1)$) {$\theta$};
+%     \draw ($(1)+(\h:1.25)$) arc (\h:90:1.25);
+%     \node [rotate=\v+180] at ($(1)+(\v:3.5)$) {\includegraphics[width=0.75cm]{camera.pdf}};
 % \end{tikzpicture}
 
 % Attenuation
@@ -1455,19 +1492,18 @@
 %     \draw [->,line width=1pt,shorten >= 2pt] (fragment) -- ($(1)+(-1,0)$);
 % \end{tikzpicture}
 
-% \begin{tikzpicture}[domain=0:8,samples=200]
-%     \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
-%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
-%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
-%     \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
-%     \node [left] at (-0.1,\yl) {1};
-%     \node [left] at (-0.1,0) {0};
-%     \node [below] at (-0.1,-0.1) {0};
-%     \node [below] at (\p,-0.1) {cutoff};
-%     \node [below] at (\p-\w,-0.1) {inner cutoff};
-%     \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
-%     \draw [<->] (\p-\w,3.2) -- ++(\w,0) node [pos=0.5,above] {$\epsilon$};
-% \end{tikzpicture}
+\begin{tikzpicture}[domain=0:8,samples=200]
+    \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
+    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
+    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
+    \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
+    \node [left] at (-0.1,\yl) {1};
+    \node [left] at (-0.1,0) {0};
+    \node [below] at (-0.1,-0.1) {0};
+    \node [below] at (\p,-0.1) {outer cutoff};
+    \node [below] at (\p-\w,-0.1) {cutoff};
+    \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
+\end{tikzpicture}
 
 % Directional light
 % \begin{tikzpicture}
@@ -1751,16 +1787,16 @@
 %     \draw[line width=1pt,->,rotate around={\x:(\x:1.5)},mygreen] (\x:1.5) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.6,left] {$pitch$};
 % \end{tikzpicture}
 
-\begin{tikzpicture}
-    \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
-    \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
-    \draw [axis] (0,0) -- (\y:\l+0.75) node at (\y:\l+1) {$y$};
-    \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
-    \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
-    \draw [vector,mygreen] (0,0) -- (50:2) node [right] at (50:2) {$q_{pitch} \, q_{camera}$};
-    \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{camera}$};
-    \draw[line width=1pt,->,rotate around={\y:(\y:2.75)},blue] (\y:2.75) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
-\end{tikzpicture}
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
+%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
+%     \draw [axis] (0,0) -- (\y:\l+0.75) node at (\y:\l+1) {$y$};
+%     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
+%     \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
+%     \draw [vector,mygreen] (0,0) -- (50:2) node [right] at (50:2) {$q_{pitch} \, q_{camera}$};
+%     \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{camera}$};
+%     \draw[line width=1pt,->,rotate around={\y:(\y:2.75)},blue] (\y:2.75) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
+% \end{tikzpicture}
 
 
 % Quaternion rotation of a vector

@@ -30,12 +30,12 @@ class Input {
 
     consumeMouseDelta() {
 
-        const dx = this.mouseDeltaX;
-        const dy = this.mouseDeltaY;
+        const dx = this.mouseDelta.x;
+        const dy = this.mouseDelta.y;
 
         this.mouseDelta.x = 0;
         this.mouseDelta.y = 0;
-        
+
         return { dx, dy };
     }
 }

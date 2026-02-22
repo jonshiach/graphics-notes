@@ -269,25 +269,36 @@ function main() {
     // Timer 
     let lastTime = 0;
 
-    // Light object
-    const light = new Light();
-    light.position = [6, 2, 0];
+    // // Light object
+    // const light = new Light();
+    // light.position = [6, 2, 0];
 
     // Add light sources
     const lightSources = new LightSources();
-    lightSources.addLight(light);
+    // lightSources.addLight(light);
 
-    // Yellow light
-    const yellowLight = new Light(1);
-    yellowLight.position = [9, 3, -9];
-    yellowLight.colour = [1, 1, 0];
-    lightSources.addLight(yellowLight);
+    // // Yellow light
+    // const yellowLight = new Light(1);
+    // yellowLight.position = [9, 3, -9];
+    // yellowLight.colour = [1, 1, 0];
+    // lightSources.addLight(yellowLight);
 
-    // Directional light
-    const directionalLight = new Light(2);
-    directionalLight.colour = [1, 0, 1];
-    directionalLight.direction = [2, -1, -1];
-    lightSources.addLight(directionalLight);
+    // // Directional light
+    // const directionalLight = new Light(2);
+    // directionalLight.colour = [1, 0, 1];
+    // directionalLight.direction = [2, -1, -1];
+    // lightSources.addLight(directionalLight);
+
+    // Flashlight
+    const flashLight = new Light(1);
+    flashLight.cutoff = Math.cos(20 * Math.PI / 180);
+    flashLight.outerCutoff = Math.cos(22 * Math.PI / 180);
+    lightSources.addLight(flashLight);
+
+    // Magenta light
+    const greenLight = new Light();
+    greenLight.colour = [0, 1, 0];
+    lightSources.addLight(greenLight);
 
     // Render function
     function render(time) {
@@ -330,6 +341,16 @@ function main() {
 
         // Send light source properties to the shader
         // light.toShader(gl, program);
+        lightSources.lights[0].position = camera.eye;
+        lightSources.lights[0].direction = camera.front;
+
+        const angle = 1/5 * time * 0.001 * 2 * Math.PI;
+        lightSources.lights[1].position = [
+            6 + 5 * Math.cos(angle),
+            2,
+            -6 + 5 * Math.sin(angle)
+        ];
+
         lightSources.toShader(gl, program);
 
         // Draw cubes

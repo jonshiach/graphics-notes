@@ -125,7 +125,10 @@ function main() {
   const texture = loadTexture(gl, "assets/crate.png");
 
   // Create camera object
-  const camera = new Camera(canvas);
+  const camera = new Camera();
+
+  // Inputs
+  const input = new Input(canvas);
 
   // Timer
   let lastTime = null;
@@ -138,33 +141,22 @@ function main() {
   let isGrounded = true;
   let jumpRequested = false;
 
-  window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-      jumpRequested = true;
-    }
-  });
-
   function jump(dt) {
 
-    if (jumpRequested && isGrounded) {
-      jumpVel = jumpSpeed;
-      isGrounded = false;
-    }
-    jumpRequested = false;
+        if (jumpRequested && isGrounded) {
+            jumpVel = jumpSpeed;
+            isGrounded = false;
+        }
+        jumpRequested = false;
+        jumpVel += gravity * dt;
+        jumpHeight += jumpVel * dt;
 
-    jumpVel += gravity * dt;
-    jumpHeight += jumpVel * dt;
-
-    if (jumpHeight <= 0) {
-      jumpHeight = 0;
-      jumpVel = 0;
-      isGrounded = true;
-    }
-    camera.eye[1] = jumpHeight;
-  }
-
-  function collision() {
-    
+        if (jumpHeight <= 0) {
+            jumpHeight = 0;
+            jumpVel = 0;
+            isGrounded = true;
+        }
+        camera.eye[1] = jumpHeight;
   }
 
   // Render function
@@ -188,12 +180,12 @@ function main() {
     gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 
     // Update camera vectors
-    console.log(time);
     const dt = (time - lastTime) * 0.001;
     lastTime = time;
-    camera.update(dt);
+    camera.update(input, dt);
 
     // Invoke jump
+    if (input.isDown(" ")) jumpRequested = true;
     jump(dt);
 
     // Calculate view matrix
@@ -203,8 +195,8 @@ function main() {
     const projection = camera.getPerspectiveMatrix();
 
     // Send view and projection matrix to the shaders
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.elements);
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.elements);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
+    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 
     // Draw cubes
     for (let i = 0; i < numCubes; i++){
@@ -215,7 +207,7 @@ function main() {
       const angle     = 0;
       const rotate    = new Mat4().rotate([0, 1, 0], angle);
       const model     = translate.multiply(rotate).multiply(scale);
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.elements);
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
       // Draw the rectangle
       gl.bindVertexArray(vao);

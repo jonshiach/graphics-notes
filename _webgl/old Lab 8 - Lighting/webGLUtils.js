@@ -1,13 +1,12 @@
 // Initialize WebGL context
 function initWebGL(canvasId) {
-  const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-  if (!gl) throw new Error('WebGL not supported');
+  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+  if (!gl) throw new Error("WebGL not supported");
   
   gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(0.2, 0.2, 0.2, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
-  gl.enable(gl.CULL_FACE);
   
   return gl;
 }
@@ -118,46 +117,4 @@ function loadTexture(gl, url) {
 
 function isPowerOf2(x) {
   return (x & (x - 1)) === 0;
-}
-
-class Input {
-
-    constructor() {
-        this.keys = {};
-        this.mouseDelta = { x: 0, y: 0 };
-
-        window.addEventListener("keydown", e => {
-            this.keys[e.key.toLowerCase()] = true;
-        });
-
-        window.addEventListener("keyup", e => {
-            this.keys[e.key.toLowerCase()] = false;
-        });
-
-        canvas.addEventListener("click", () => 
-            canvas.requestPointerLock()
-        );
-
-        document.addEventListener("mousemove", e => {
-            if (document.pointerLockElement === canvas) {
-                this.mouseDelta.x += e.movementX;
-                this.mouseDelta.y += e.movementY;
-            }
-        });
-    }
-
-    isDown(key) {
-        return this.keys[key.toLowerCase()];
-    }
-
-    consumeMouseDelta() {
-
-        const dx = this.mouseDelta.x;
-        const dy = this.mouseDelta.y;
-
-        this.mouseDelta.x = 0;
-        this.mouseDelta.y = 0;
-
-        return { dx, dy };
-    }
 }
