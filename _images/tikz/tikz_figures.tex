@@ -809,17 +809,17 @@
 % \end{tikzpicture}
 
 % Model space
-% \begin{tikzpicture}
-%     \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=2;\d=2;\h=2;}
-%     \coordinate (0) at ($(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
-%     % \draw [line width=1pt] (\x:-\al) -- (0,0);
-%     % \draw [line width=1pt] (\y:-0.75*\al) -- (0,0);
-%     % \draw [line width=1pt] (\z:-\al) -- (0,0);
-%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
-%     \draw [axis,red] (\x:1) -- (\x:\al) node at (\x:\al+0.2) {$x$};
-%     \draw [axis,mygreen] (\y:1) -- (\y:0.75*\al) node at (\y:0.75*\al+0.2) {$y$};
-%     \draw [axis,blue] (\z:1) -- (\z:\al) node at (\z:\al+0.2) {$z$};
-% \end{tikzpicture}
+\begin{tikzpicture}
+    \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=2;\d=2;\h=2;}
+    \coordinate (0) at ($(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
+    \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+    \draw [axis,red] (\x:1) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+    \draw [axis,mygreen] (\y:1) -- (\y:0.75*\al) node at (\y:0.75*\al+0.2) {$y$};
+    \draw [axis,blue] (\z:1) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+    \draw [red,line width=1pt,opacity=0.2] (0,0) -- (\x:1);
+    \draw [mygreen,line width=1pt,opacity=0.2] (0,0) -- (\y:1);
+    \draw [blue,line width=1pt,opacity=0.2] (0,0) -- (\z:1);
+\end{tikzpicture}
 
 % World space with camera
 % \begin{tikzpicture}
@@ -831,22 +831,37 @@
 %     \coordinate (1) at ($(0)+(\z:1)$);
 %     \coordinate (2) at ($(0)+(\x:1)$);
 %     \coordinate (3) at ($(1)+(\x:1)$);
-%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
-%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (1) ($(1)+(\x:\w)$) -- ++(\y:\h) ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
-%     \draw [fill=blue!10] (2) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (2) ($(2)+(\x:\w)$) -- ++(\y:\h) ($(2)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
-%     \draw [fill=red!20] (3) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (3) ($(3)+(\x:\w)$) -- ++(\y:\h) ($(3)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=red!20] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=mygreen!20] (1) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (1) ($(1)+(\x:\w)$) -- ++(\y:\h) ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=blue!20] (2) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (2) ($(2)+(\x:\w)$) -- ++(\y:\h) ($(2)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=white!20] (3) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (3) ($(3)+(\x:\w)$) -- ++(\y:\h) ($(3)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
 %     \node [rotate=\x] at ($(\x:-1)+(\z:1.25)$) {\includegraphics[width=0.5cm]{camera.pdf}};
 % \end{tikzpicture}
 
 % View space
 % \begin{tikzpicture}
-%     \tikzmath{\x=0;\y=90;\z=210;\al=4;\w=2;\d=2;\h=2;}
-%     \coordinate (0) at ($(\x:-3)+(\y:-1)$);
-%     \coordinate (1) at ($(\x:1)+(\y:-1)$);
-%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h);
-%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h);
-%     \draw [axis,red] (\x:-\al) -- (\x:\al) node at (\x:\al+0.2) {$x$};
-%     \draw [axis,mygreen] (\y:-0.5*\al) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
+%     \tikzmath{\x=-20;\y=90;\z=210;\al=2;\w=0.5;\d=0.5;\h=0.5;}
+%     \draw [axis,red] (\x:-2) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis,mygreen] (\y:-1) -- (\y:\al) node at (\y:\al+0.2) {$y$};
+%     \draw [axis,blue] (\z:-4) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+%     % \coordinate (0) at ($(0,0)+(\x:1)+(\z:1.25)$);
+%     % \coordinate (1) at ($(0)+(\z:1)$);
+%     % \coordinate (2) at ($(0)+(\x:1)$);
+%     % \coordinate (3) at ($(1)+(\x:1)$);
+%     % \draw [fill=blue!10,opacity=0.5] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     % \draw [fill=red!20,opacity=0.5] (1) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (1) ($(1)+(\x:\w)$) -- ++(\y:\h) ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     % \draw [fill=blue!10,opacity=0.5] (2) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (2) ($(2)+(\x:\w)$) -- ++(\y:\h) ($(2)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     % \draw [fill=red!20,opacity=0.5] (3) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (3) ($(3)+(\x:\w)$) -- ++(\y:\h) ($(3)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     % \node [rotate=\x,opacity=0.5] at ($(\x:-1)+(\z:1.25)$) {\includegraphics[width=0.5cm]{camera.pdf}};
+%     \coordinate (0) at ($(\z:-2)+(\x:-0.75)$);
+%     \coordinate (1) at ($(0)+(\z:1)$);
+%     \coordinate (2) at ($(0)+(\x:1)$);
+%     \coordinate (3) at ($(1)+(\x:1)$);
+%     \draw [fill=blue!20] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (1) ($(1)+(\x:\w)$) -- ++(\y:\h) ($(1)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=white] (2) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (2) ($(2)+(\x:\w)$) -- ++(\y:\h) ($(2)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [fill=mygreen!20] (3) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (3) ($(3)+(\x:\w)$) -- ++(\y:\h) ($(3)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \node [rotate=\z+180] at (0,0) {\includegraphics[width=0.5cm]{camera.pdf}};
 % \end{tikzpicture}
 
 % Screen space
@@ -854,10 +869,10 @@
 %     \tikzmath{\x=0;\y=90;\z=210;\al=4;\w=2;\d=2;\h=2;}
 %     \coordinate (0) at ($(\x:-3)+(\y:-1)$);
 %     \coordinate (1) at ($(\x:1)+(\y:-1)$);
-%     \draw [fill=blue!10] ($(0)+(\x:\w)+(45:0.8)+(\x:-1)$) -- ++(\x:1) -- ++(45:0.3) -- ($(0)+(\x:\w)+(\y:\h)+(-45:1.1)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) -- ++(\x:-1) ($(0)+(\x:\w)+(45:0.8)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) ;
-%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) ($(0)+(\x:\w)$) -- ++(45:0.4) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.4)$) -- ($(0)+(\x:\w)+(\y:\h)$);
-%     \draw [fill=red!20] ($(1)+(135:0.8)+(\x:1)$) -- ++(\x:-1) -- ++(135:0.3) -- ($(1)+(\y:\h)+(225:1.1)$) -- ++(45:0.3) -- ++(\x:1) ($(1)+(135:0.8)$) -- ($(1)+(\y:\h)+(225:0.8)$);
-%     \draw [fill=red!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) (1) -- ++(135:0.4) -- ($(1)+(\y:\h)+(225:0.4)$) -- ($(1)+(\y:\h)$);
+%     \draw [fill=blue!20] ($(0)+(\x:\w)+(45:0.8)+(\x:-1)$) -- ++(\x:1) -- ++(45:0.3) -- ($(0)+(\x:\w)+(\y:\h)+(-45:1.1)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) -- ++(\x:-1) ($(0)+(\x:\w)+(45:0.8)$) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.8)$) ;
+%     \draw [fill=red!20] (0) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) ($(0)+(\x:\w)$) -- ++(45:0.4) -- ($(0)+(\x:\w)+(\y:\h)+(-45:0.4)$) -- ($(0)+(\x:\w)+(\y:\h)$);
+%     \draw [fill=white] ($(1)+(135:0.8)+(\x:1)$) -- ++(\x:-1) -- ++(135:0.3) -- ($(1)+(\y:\h)+(225:1.1)$) -- ++(45:0.3) -- ++(\x:1) ($(1)+(135:0.8)$) -- ($(1)+(\y:\h)+(225:0.8)$);
+%     \draw [fill=mygreen!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) (1) -- ++(135:0.4) -- ($(1)+(\y:\h)+(225:0.4)$) -- ($(1)+(\y:\h)$);
 %     \draw [axis,red] (\x:-\al) -- (\x:\al) node at (\x:\al+0.2) {$x$};
 %     \draw [axis,mygreen] (\y:-0.5*\al) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
 % \end{tikzpicture}
@@ -1492,18 +1507,18 @@
 %     \draw [->,line width=1pt,shorten >= 2pt] (fragment) -- ($(1)+(-1,0)$);
 % \end{tikzpicture}
 
-\begin{tikzpicture}[domain=0:8,samples=200]
-    \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
-    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
-    \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
-    \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
-    \node [left] at (-0.1,\yl) {1};
-    \node [left] at (-0.1,0) {0};
-    \node [below] at (-0.1,-0.1) {0};
-    \node [below] at (\p,-0.1) {outer cutoff};
-    \node [below] at (\p-\w,-0.1) {cutoff};
-    \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
-\end{tikzpicture}
+% \begin{tikzpicture}[domain=0:8,samples=200]
+%     \tikzmath{\p=6;\w=0.3*\p;\yl=3;};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(0:8.5) node [right] {$\theta$};
+%     \draw [-stealth',line width=1pt] (-0.1,-0.1) -- ++(90:4) node [pos=0.4,above,rotate=90] {intensity};
+%     \draw [line width=1pt] plot (\x, {\yl * min(1,max(0,(\p - \x) / \w))});
+%     \node [left] at (-0.1,\yl) {1};
+%     \node [left] at (-0.1,0) {0};
+%     \node [below] at (-0.1,-0.1) {0};
+%     \node [below] at (\p,-0.1) {outer cutoff};
+%     \node [below] at (\p-\w,-0.1) {cutoff};
+%     \draw [dashed] (\p-\w,0) -- ++(90:\yl+0.5) (\p,0) -- ++(90:\yl+0.5);
+% \end{tikzpicture}
 
 % Directional light
 % \begin{tikzpicture}

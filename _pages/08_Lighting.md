@@ -10,7 +10,7 @@ In this lab we will be looking at adding a basic lighting model to our applicati
 Create a copy of your ***Lab 7 Moving the Camera*** folder, rename it ***Lab 8 Lighting***, rename the file ***moving_the_camera.js*** to ***lighting.js*** and change ***index.html*** so that the page title is "Lab 8 - Lighting" it embeds the ***lighting.js*** file.
 :::
 
-To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.
+To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw lots of cubes.
 
 :::{admonition} Task
 :class: tip
@@ -94,7 +94,7 @@ void main() {
     // Object colour
     vec4 objectColour = texture(uTexture, vTexCoords);
 
-    // Ambient
+    // Ambient light
     vec3 ambient = uKa * objectColour.rgb;
 
     // Fragment colour
@@ -181,7 +181,7 @@ Diffuse lighting scatters light equally in all directions.
 
 The amount of light that is reflected to the viewer is modelled using the angle $\theta$ between the light vector $\vec{L}$ which points from the fragment to the light source and the normal vector $\vec{n}$ which points perpendicular to the surface. If $\theta$ is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if $\theta$ is close to 90$^\circ$ then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When $\theta > 90^\circ$ the light source is behind the surface so no light is reflected to the viewer. We model this using $\cos(\theta)$ since $\cos(0^\circ) = 1$ and $\cos(90^\circ)=0$. Diffuse lighting is calculated using
 
-$$ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,$$(diffuse-lighting-equation)
+$$ \vec{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,$$(diffuse-lighting-equation)
 
 where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
@@ -391,7 +391,7 @@ fragColour = vec4(vNormal, objectColour.a);
 
 :::
 
-Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
+Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the sides of facing to the right is red because its normal vector is $(1, 0, 0)$ so in RGB this is pure red. The side facing up is green because its normal vector is $(0, 1, 0)$ and the side facing towards us is blue because its normal vector is $(0, 0, 1)$ as shown in {numref}`cube-normals-screenshot-figure`.
 
 ```{figure} ../_images/08_cubes_normals.png
 :width: 80%

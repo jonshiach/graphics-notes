@@ -2,24 +2,20 @@
 
 # Lab 5: Transformations
 
-Computer graphics requires that shapes are manipulated in space by moving the shapes, shrinking or stretching, rotating and reflection to name a few. We call these manipulations **transformations**. We need a convenient way of telling the computer how to apply our transformations and for this we make use of matrices which we covered in [Lab 4: Vectors and Matrices](vectors-and-matrices-section).
+In computer graphics, **transformations** allow us to control where objects appear, how they are oriented, and how large they are within a scene. Without transformations, every object would remain fixed at the origin, with no way to move, rotate, or scale it. Transformations are therefore fundamental to building interactive and visually rich graphics applications.
 
-Each transformation has an associated **transformation matrix** which we use to multiply the vertex coordinates of a shape to calculate the vertex coordinates of the transformed shape. For example if $A$ is a transformation matrix for a particular transformation and $(x,y,z)$ are the coordinates of a vertex then we apply the transformation using
-
-$$ \begin{pmatrix} x' \\ y' \\ x' \end{pmatrix} = A \cdot \begin{pmatrix} x \\ y \\ z \end{pmatrix}, $$
-
-where $(x',y',z')$ are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.
+In this lab, we will see how transformations such as translation, rotation, and scaling are represented mathematically using vectors and matrices. We will see how combining these operations enables us to position objects on the screen.
 
 :::{admonition} Task
 :class: tip
 
-Copy your ***Lab 3 Textures*** folder you created in [Lab 3: Textures](textures-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 5 Transformations***, change the name of ***textures.js*** to ***transformations.js*** and update ***index.html*** to reference the new JavaScript file.
+Copy your ***Lab 3 Textures*** folder you created in [Lab 3: Textures](textures-section) (you will have needed to have completed this lab before continuing here), rename it to ***Lab 5 Transformations***, change the name of ***textures.js*** to ***transformations.js*** and update ***index.html*** to embed this file.
 
-Also, copy the file ***maths.js*** from your ***Lab 4 Vectors and Matrices*** folder into the ***Lab 5 Transformation*** folder and embed this into the ***index.html*** file using a script tag.
+Also, copy the file ***maths.js*** from your ***Lab 4 Vectors and Matrices*** folder into the ***Lab 5 Transformation*** folder and embed this into the ***index.html*** file.
 
 :::
 
-Load ***index.html*** using a live server and you should see the textured rectangle from [Lab 3 - Textures](textures-section).
+Load ***index.html*** using a live server, and you should see the textured rectangle from [Lab 3 - Textures](textures-section).
 
 ```{figure} ../_images/05_transformations.png
 :width: 80%
@@ -27,7 +23,7 @@ Load ***index.html*** using a live server and you should see the textured rectan
 
 ---
 
-## WebGL coordinate system
+## The WebGL coordinate system
 
 In 3D graphics a coordinate system defines how points, directions and rotations are represented. The two main conventions are the **right-handed** and **left-handed** coordinates systems. Both use $x$, $y$ and $z$ axes but they differ in which direction the $z$-axis points relative to the $x$ and $y$ axis.
 
@@ -49,6 +45,16 @@ The WebGL co-ordinate system.
 ```
 
 Other graphics libraries that use the right-handed coordinate system include OpenGL, Three.js, Vulkan, Metal (Apple) and applications such as Unreal Engine and Blender. Graphics libraries that use the left-handed coordinate system include DirectX, Direct3D and Unity.
+
+---
+
+## Transformation matrices
+
+Each transformation has an associated **transformation matrix** which we use to multiply the vertex coordinates of a shape to calculate the vertex coordinates of the transformed shape. For example if $A$ is a transformation matrix for a particular transformation and $(x,y,z)$ are the coordinates of a vertex then we apply the transformation using
+
+$$ \begin{pmatrix} x' \\ y' \\ x' \end{pmatrix} = A \cdot \begin{pmatrix} x \\ y \\ z \end{pmatrix}, $$
+
+where $(x',y',z')$ are the coordinates of the transformed point. Note that all vectors and coordinates are written as a column vector when multiplying by a matrix.
 
 ---
 
@@ -155,6 +161,7 @@ translate(t) {
         0, 0, 1, 0,
         x, y, z, 1
     ]);
+
     return this.multiply(transMatrix);
 }
 ```
@@ -168,7 +175,7 @@ The multiplication of the vertex coordinates by the transformation matrices is d
 :::{admonition} Task
 :class: tip
 
-Add the following code after we have calculated the translation matrix
+In the `render()` function in the ***transformations.js*** file, add the following code after cleared the frame buffers
 
 ```javascript
 // Calculate the model matrix
@@ -279,6 +286,7 @@ scale(s) {
         0, 0, z, 0,
         0, 0, 0, 1
     ]);
+
     return this.multiply(scaleMatrix);
 }
 ```
@@ -506,6 +514,7 @@ rotate(angle) {
         0,  0, 1, 0,
         0,  0, 0, 1
     ]);
+
     return this.multiply(rotateMatrix);
 }
 ```
@@ -746,18 +755,19 @@ Edit the `rotate()` method so that it looks like the following
 
 ```javascript
 rotate(axis, angle) {
-  axis = normalize(axis);
-  const [x, y, z] = axis;
-  const c = Math.cos(angle);
-  const s = Math.sin(angle);
-  const t = 1 - c;
-  const rotateMatrix = new Mat4().set([
-    t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
-    t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
-    t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
-    0, 0, 0, 1
-  ]);
-  return this.multiply(rotateMatrix);
+    axis = normalize(axis);
+    const [x, y, z] = axis;
+    const c = Math.cos(angle);
+    const s = Math.sin(angle);
+    const t = 1 - c;
+    const rotateMatrix = new Mat4().set([
+        t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+        t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+        t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+        0, 0, 0, 1
+    ]);
+
+    return this.multiply(rotateMatrix);
 }
 ```
 

@@ -117,7 +117,8 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
     vec3 specular = uKs * spec * light.colour;
 
     // Output fragment colour
-    return attenuation * (ambient + intensity * (diffuse + specular));
+    // return attenuation * (ambient + intensity * (diffuse + specular));
+    return ambient;
 }
 
 // Main fragment shader function
@@ -281,13 +282,13 @@ function main() {
     const yellowLight = new Light(1);
     yellowLight.position = [9, 3, -9];
     yellowLight.colour = [1, 1, 0];
-    lightSources.addLight(yellowLight);
+    // lightSources.addLight(yellowLight);
 
     // Directional light
     const directionalLight = new Light(2);
     directionalLight.colour = [1, 0, 1];
     directionalLight.direction = [2, -1, -1];
-    lightSources.addLight(directionalLight);
+    // lightSources.addLight(directionalLight);
 
     // Render function
     function render(time) {
@@ -379,7 +380,7 @@ function main() {
 
             // Draw light source cube
             gl.bindVertexArray(vao);
-            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+            // gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
         }
 
         // Render next frame

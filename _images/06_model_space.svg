@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="175.816pt" height="128.296pt" viewBox="0 0 175.816 128.296">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="175.816" height="128.296" viewBox="0 0 175.816 128.296">
 <defs>
 <g>
 <g id="glyph-0-0">
@@ -50,4 +50,7 @@
 <g fill="rgb(0%, 0%, 100%)" fill-opacity="1">
 <use xlink:href="#glyph-0-2" x="3.32" y="123.381"/>
 </g>
+<path fill="none" stroke-width="0.99628" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 0%, 0%)" stroke-opacity="0.2" stroke-miterlimit="10" d="M -0.00084375 -0.0008125 L 26.635875 -9.696125 " transform="matrix(1, 0, 0, -1, 84.411, 75.882)"/>
+<path fill="none" stroke-width="0.99628" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 50%, 0%)" stroke-opacity="0.2" stroke-miterlimit="10" d="M -0.00084375 -0.0008125 L -0.00084375 28.346844 " transform="matrix(1, 0, 0, -1, 84.411, 75.882)"/>
+<path fill="none" stroke-width="0.99628" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 100%)" stroke-opacity="0.2" stroke-miterlimit="10" d="M -0.00084375 -0.0008125 L -24.547719 -14.172687 " transform="matrix(1, 0, 0, -1, 84.411, 75.882)"/>
 </svg>
