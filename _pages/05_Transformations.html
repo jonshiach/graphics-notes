@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -532,7 +532,7 @@ Translate = \begin{pmatrix}
 <p>The multiplication of the vertex coordinates by the transformation matrices is done in the GPU as opposed to the CPU. This is because GPUs are specifically designed to perform matrix multiplication on millions of vertices in parallel, so doing this in the GPU is much faster and frees up the CPU. So we send the transformation matrix to the vertex shader using a <strong>uniform</strong>, like we did in <a class="reference internal" href="#uniforms-section"><span class="xref myst">Lab 3: Textures</span></a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Add the following code after we have calculated the translation matrix</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function in the <em><strong>transformations.js</strong></em> file, add the following code after cleared the frame buffers</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the model matrix</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Mat4</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">])</span>
 

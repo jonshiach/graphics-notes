@@ -168,7 +168,7 @@ The multiplication of the vertex coordinates by the transformation matrices is d
 :::{admonition} Task
 :class: tip
 
-Add the following code after we have calculated the translation matrix
+In the `render()` function in the ***transformations.js*** file, add the following code after cleared the frame buffers
 
 ```javascript
 // Calculate the model matrix
