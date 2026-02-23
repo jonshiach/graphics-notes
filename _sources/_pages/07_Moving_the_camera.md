@@ -433,7 +433,7 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
     $$jump \, velocity = jump \, velocity - 9.81 \times \Delta t$$
 
-   - $9.81ms^{-2}$ is the acceleration due to gravity on Earth (you could change this for other planets).
+   - $9.81ms^{-2}$ is the acceleration due to gravity on Earth.
 
 3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
 

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -440,7 +440,7 @@ document.write(`
 </figure>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a copy of your <em><strong>Lab 8 Lighting</strong></em> folder, rename it <em><strong>Lab 9 Normal Mapping</strong></em>, rename the file <em><strong>lighting.js</strong></em> to <em><strong>normal_mapping.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 9 - Normal Maps” it uses <em><strong>normal_mapping.js</strong></em>.</p>
+<p>Create a copy of your <em><strong>Lab 8 Lighting</strong></em> folder, rename it <em><strong>Lab 9 Normal Mapping</strong></em>, rename the file <em><strong>lighting.js</strong></em> to <em><strong>normal_mapping.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 9 - Normal Maps” it embeds <em><strong>normal_mapping.js</strong></em>.</p>
 </div>
 <p>Load <em><strong>index.html</strong></em> in a live server, and you should see the cubes from <a class="reference internal" href="08_Lighting.html#lighting-section"><span class="std std-ref">Lab 8: Lighting</span></a> lit using a point light, a spotlight and a directional light source.</p>
 <figure class="align-default" id="id2">
@@ -453,7 +453,7 @@ document.write(`
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Download the file <a class="reference download internal" download="" href="../_downloads/9f5dc76b0f274192cd4ada632c6cf33d/crate_normal.png"><span class="xref download myst">crate_normal.png</span></a> and save it to the <em><strong>Lab 9 - Normal Mapping/assets/</strong></em> folder.</p>
-<p>Add the following just after we have loaded the crate texture.</p>
+<p>In the <em><strong>normal_mapping.js</strong></em> file, add the following just after we have loaded the crate texture.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">normalMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assets/crate_normal.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -758,6 +758,7 @@ document.write(`
 <p>To add our stone floor we are going to load in a simple 2D plane model, add diffuse and normal textures, define lighting and world space properties and draw it.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
+<p>Download the files <a class="reference download internal" download="" href="../_downloads/9d703bc954e649a05fa595ec6240bcd8/stones.png"><span class="xref download myst">stones.png</span></a> and <a class="reference download internal" download="" href="../_downloads/5c102782fbfb8059e3f461f1e688a9a2/stones_normal.png"><span class="xref download myst">stones_normal.png</span></a>  and save them in your <em><strong>Lab 9 - Normal Mapping/assets/</strong></em> folder.</p>
 <p>Add the following code after we load the crate textures.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define floor vertices</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">floorVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span>
@@ -793,11 +794,6 @@ document.write(`
 <span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE1</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">floorNormalMap</span><span class="p">);</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uNormalMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-
-<span class="c1">// Bind specular map</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">activeTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE2</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">bindTexture</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="nx">floorSpecularMap</span><span class="p">);</span>
-<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uSpecularMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
 
 <span class="c1">// Send object light properties to the shader</span>
 <span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1f</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uKa&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>

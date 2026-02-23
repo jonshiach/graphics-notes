@@ -31,7 +31,7 @@ The RBG values of a normal map give the values of the normal vectors.
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***Lab 8 Lighting*** folder, rename it ***Lab 9 Normal Mapping***, rename the file ***lighting.js*** to ***normal_mapping.js*** and change ***index.html*** so that the page title is "Lab 9 - Normal Maps" it uses ***normal_mapping.js***.
+Create a copy of your ***Lab 8 Lighting*** folder, rename it ***Lab 9 Normal Mapping***, rename the file ***lighting.js*** to ***normal_mapping.js*** and change ***index.html*** so that the page title is "Lab 9 - Normal Maps" it embeds ***normal_mapping.js***.
 :::
 
 Load ***index.html*** in a live server, and you should see the cubes from [Lab 8: Lighting](lighting-section) lit using a point light, a spotlight and a directional light source.
@@ -47,7 +47,7 @@ The cubes lit using three light sources from [Lab 8: Lighting](lighting-section)
 
 Download the file [crate_normal.png](../_downloads/Lab%209%20-%20Normal%20Mapping/crate_normal.png) and save it to the ***Lab 9 - Normal Mapping/assets/*** folder.
 
-Add the following just after we have loaded the crate texture.
+In the ***normal_mapping.js*** file, add the following just after we have loaded the crate texture.
 
 ```javascript
 const normalMap = loadTexture(gl, "assets/crate_normal.png");
@@ -401,6 +401,8 @@ To add our stone floor we are going to load in a simple 2D plane model, add diff
 :::{admonition} Task
 :class: tip
 
+Download the files [stones.png](../_downloads/Lab%209%20-%20Normal%20Mapping/stones.png) and [stones_normal.png](../_downloads/Lab%209%20-%20Normal%20Mapping/stones_normal.png)  and save them in your ***Lab 9 - Normal Mapping/assets/*** folder.
+
 Add the following code after we load the crate textures.
 
 ```javascript
@@ -440,11 +442,6 @@ gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
 gl.activeTexture(gl.TEXTURE1);
 gl.bindTexture(gl.TEXTURE_2D, floorNormalMap);
 gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
-
-// Bind specular map
-gl.activeTexture(gl.TEXTURE2);
-gl.bindTexture(gl.TEXTURE_2D, floorSpecularMap);
-gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
 
 // Send object light properties to the shader
 gl.uniform1f(gl.getUniformLocation(program, "uKa"), 0.2);

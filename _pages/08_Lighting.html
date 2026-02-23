@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -424,7 +424,7 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Create a copy of your <em><strong>Lab 7 Moving the Camera</strong></em> folder, rename it <em><strong>Lab 8 Lighting</strong></em>, rename the file <em><strong>moving_the_camera.js</strong></em> to <em><strong>lighting.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 8 - Lighting” it embeds the <em><strong>lighting.js</strong></em> file.</p>
 </div>
-<p>To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw more cubes.</p>
+<p>To help demonstrate the effects of lighting on a scene we are going to need more objects, so we are going to draw lots of cubes.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>In the <em><strong>lighting.js</strong></em> file, change the definition of the cubes to the following.</p>
@@ -492,7 +492,7 @@ document.write(`
 <span class="w">    </span><span class="c1">// Object colour</span>
 <span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// Ambient</span>
+<span class="w">    </span><span class="c1">// Ambient light</span>
 <span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKa</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Fragment colour</span>
@@ -571,7 +571,7 @@ document.write(`
 </figure>
 <p>The amount of light that is reflected to the viewer is modelled using the angle <span class="math notranslate nohighlight">\(\theta\)</span> between the light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> which points from the fragment to the light source and the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span> which points perpendicular to the surface. If <span class="math notranslate nohighlight">\(\theta\)</span> is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if <span class="math notranslate nohighlight">\(\theta\)</span> is close to 90<span class="math notranslate nohighlight">\(^\circ\)</span> then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> the light source is behind the surface so no light is reflected to the viewer. We model this using <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> since <span class="math notranslate nohighlight">\(\cos(0^\circ) = 1\)</span> and <span class="math notranslate nohighlight">\(\cos(90^\circ)=0\)</span>. Diffuse lighting is calculated using</p>
 <div class="math notranslate nohighlight" id="equation-diffuse-lighting-equation">
-<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \vec{I}_p \vec{O}_d \cos(\theta) ,\]</div>
+<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(k_d\)</span> is known as the <strong>diffuse lighting constant</strong> which takes a value between 0 and 1, and <span class="math notranslate nohighlight">\(\vec{I}_p\)</span> is the colour intensity of the point light source. Recall that the angle between two vectors is related by <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> so if the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> vectors are unit vectors then <span class="math notranslate nohighlight">\(\cos(\theta) = \vec{L} \cdot \vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> then light source is behind the surface and no light should be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta\)</span> is between 90<span class="math notranslate nohighlight">\(^\circ\)</span> and 180<span class="math notranslate nohighlight">\(^\circ\)</span>, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is negative so we limit the value of <span class="math notranslate nohighlight">\(\cos(\theta )\)</span> to positive values</p>
 <div class="math notranslate nohighlight">
 \[ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). \]</div>
@@ -751,7 +751,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in varying shades of red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the side of the closest cube facing to the right is red because its normal vector is <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> so in RGB this is pure red. The side facing up is green because its normal vector is <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> and the side facing towards us is blue because its normal vector is <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> as shown in <a class="reference internal" href="#cube-normals-screenshot-figure"><span class="std std-numref">Fig. 75</span></a>.</p>
+<p>Phew! If everything has gone ok when you refresh your web browser you should see the three sides of the cubes are rendered in red, green and blue. What we have done here is used the world space normal vector as the fragment colour as a check to see if everything is working as expected. Move the camera around, and you will notice that the sides of facing to the right is red because its normal vector is <span class="math notranslate nohighlight">\((1, 0, 0)\)</span> so in RGB this is pure red. The side facing up is green because its normal vector is <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> and the side facing towards us is blue because its normal vector is <span class="math notranslate nohighlight">\((0, 0, 1)\)</span> as shown in <a class="reference internal" href="#cube-normals-screenshot-figure"><span class="std std-numref">Fig. 75</span></a>.</p>
 <figure class="align-default" id="cube-normals-screenshot-figure">
 <a class="reference internal image-reference" href="../_images/08_cubes_normals.png"><img alt="../_images/08_cubes_normals.png" src="../_images/08_cubes_normals.png" style="width: 80%;" />
 </a>

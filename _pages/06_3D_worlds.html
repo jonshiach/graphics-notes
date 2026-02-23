@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -425,7 +425,7 @@ document.write(`
 <p>In <a class="reference internal" href="05_Transformations.html#transformations-section"><span class="std std-ref">Lab 5: Transformations</span></a> we looked at the transformations can be applied to the vertex coordinates <span class="math notranslate nohighlight">\((x, y, z, 1)\)</span> but all of our examples were using transformations in 2D. In this lab we will take the step into the third spatial dimension and look at 3D worlds.</p>
 <section id="d-models">
 <h2>3D models<a class="headerlink" href="#d-models" title="Link to this heading">#</a></h2>
-<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at (0,0,0) and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 41</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).</p>
+<p>To demonstrate building a simple 3D world we are going to need a 3D object. One of the simplest 3D objects is a <strong>unit cube</strong> which is a cube centred at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and has side lengths of 2 parallel to the coordinate axes (<a class="reference internal" href="#unit-cube-figure"><span class="std std-numref">Fig. 41</span></a>) so the coordinates of the 8 corners of the cube are combinations of <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Since we use triangles as our basic cube consists of 12 triangles (6 square sides each constructed using out of 2 triangles).</p>
 <figure class="align-default" id="unit-cube-figure">
 <a class="reference internal image-reference" href="../_images/06_unit_cube.svg"><img alt="../_images/06_unit_cube.svg" src="../_images/06_unit_cube.svg" style="width: 350px;" />
 </a>
@@ -538,7 +538,7 @@ document.write(`
 </figcaption>
 </figure>
 <ul class="simple">
-<li><p><strong>View space</strong> – the world space is transformed so that it is viewed from <span class="math notranslate nohighlight">\((0,0,0)\)</span> looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
+<li><p><strong>View space</strong> – the world space is translated so that the camera is at <span class="math notranslate nohighlight">\((0,0,0)\)</span> and then rotated so that the camera looks down the <span class="math notranslate nohighlight">\(z\)</span>-axis.</p></li>
 </ul>
 <figure class="align-default" id="view-space-figure">
 <a class="reference internal image-reference" href="../_images/06_view_space.svg"><img alt="../_images/06_view_space.svg" src="../_images/06_view_space.svg" style="width: 350px;" />
