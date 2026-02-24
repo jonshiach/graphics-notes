@@ -408,11 +408,11 @@ Add the following code after we load the crate textures.
 ```javascript
 // Define floor vertices
 const floorVertices = new Float32Array([
-    // x    y     z       R    G    B       u    v      nx    ny    nz
-    -1.0,  0.0,  1.0,    0.0, 0.0, 0.0,    0.0, 0.0,    0.0,  1.0,  0.0,
-     1.0,  0.0,  1.0,    0.0, 0.0, 0.0,    8.0, 0.0,    0.0,  1.0,  0.0,
-     1.0,  0.0, -1.0,    0.0, 0.0, 0.0,    8.0, 8.0,    0.0,  1.0,  0.0,
-    -1.0,  0.0, -1.0,    0.0, 0.0, 0.0,    0.0, 8.0,    0.0,  1.0,  0.0,
+    // x y   z     R  G  B     u  v     nx  ny  nz
+    -1,  0,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+     1,  0,  1,    0, 0, 0,    8, 0,    0,  1,  0,
+     1,  0, -1,    0, 0, 0,    8, 8,    0,  1,  0,
+    -1,  0, -1,    0, 0, 0,    0, 8,    0,  1,  0,
 ]);
 
 // Define floor indices
