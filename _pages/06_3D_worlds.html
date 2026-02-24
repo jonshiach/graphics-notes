@@ -567,6 +567,10 @@ document.write(`
 <li><p><strong>View matrix</strong> - transforms the world space coordinates to the view space coordinates</p></li>
 <li><p><strong>Projection matrix</strong> - transforms the view space coordinates to the screen space NDC coordinates</p></li>
 </ul>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/06_MVP.svg"><img alt="../_images/06_MVP.svg" src="../_images/06_MVP.svg" style="width: 450px;" />
+</a>
+</figure>
 <section id="the-model-matrix">
 <span id="model-matrix-section"></span><h3>The Model matrix<a class="headerlink" href="#the-model-matrix" title="Link to this heading">#</a></h3>
 <p>In <a class="reference internal" href="05_Transformations.html#transformations-section"><span class="std std-ref">Lab 5: Transformations</span></a> we saw that we can combine transformations such as translation, scaling and rotation by multiplying the individual transformation matrices together. Let’s compute a model matrix for our cube where it is scaled down by a factor of 0.5 in each coordinate direction, rotated about the <span class="math notranslate nohighlight">\(y\)</span>-axis and translated backwards down the <span class="math notranslate nohighlight">\(z\)</span>-axis so that its centre is at <span class="math notranslate nohighlight">\((0, 0, -2)\)</span>.</p>
@@ -709,7 +713,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at <span class="math notranslate nohighlight">\(\vec{eye} = (0,0,0)\)</span>, looking in the direction of  <span class="math notranslate nohighlight">\(\vec{front} = (0, 0, -1)\)</span> (i.e., down the <span class="math notranslate nohighlight">\(z\)</span>-axis). We also defined the method <code class="docutils literal notranslate"><span class="pre">lookAt()</span></code> which calculates returns the view matrix using equation <a class="reference internal" href="#equation-eq-view-matrix">(18)</a>.</p>
+<p>Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at <span class="math notranslate nohighlight">\(\vec{eye} = (0,0,0)\)</span>, looking in the direction of  <span class="math notranslate nohighlight">\(\vec{front} = (0, 0, -1)\)</span> (i.e., down the <span class="math notranslate nohighlight">\(z\)</span>-axis). We also defined the methods <code class="docutils literal notranslate"><span class="pre">update()</span></code> which calculates the <span class="math notranslate nohighlight">\(\vec{right}\)</span> and <span class="math notranslate nohighlight">\(\vec{up}\)</span> camera vectors and <code class="docutils literal notranslate"><span class="pre">getViewMatrix()</span></code> that returns the view matrix calculated using equation <a class="reference internal" href="#equation-eq-view-matrix">(18)</a>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Enter the following code before the <code class="docutils literal notranslate"><span class="pre">render()</span></code> function in the <em><strong>3D_worlds.js</strong></em> file.</p>

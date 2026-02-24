@@ -188,7 +188,7 @@ camera.update(input, dt);
 
 :::
 
-Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames `dt` in second which we have added as an input parameter to the `update()` Camera class method, so we now need to update that.
+Here we have created the variable `lastFrame` which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames in seconds `dt` which we have added as an input parameter to the `update()` Camera class method, so we now need to update that.
 
 :::{admonition} Task
 :class: tip
@@ -434,6 +434,12 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
     $$jump \, velocity = jump \, velocity - 9.81 \times \Delta t$$
 
    - $9.81ms^{-2}$ is the acceleration due to gravity on Earth.
+
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
+</video>
+</center>
 
 3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
 

@@ -570,7 +570,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have created the variable <code class="docutils literal notranslate"><span class="pre">lastFrame</span></code> which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames <code class="docutils literal notranslate"><span class="pre">dt</span></code> in second which we have added as an input parameter to the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method, so we now need to update that.</p>
+<p>Here we have created the variable <code class="docutils literal notranslate"><span class="pre">lastFrame</span></code> which is used to store the time (in milliseconds) that has elapsed when the previous frame was rendered. We use this and the current time to calculate the change in time between the two frames in seconds <code class="docutils literal notranslate"><span class="pre">dt</span></code> which we have added as an input parameter to the <code class="docutils literal notranslate"><span class="pre">update()</span></code> Camera class method, so we now need to update that.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>First add the following to the Camera class constructor.</p>
@@ -774,6 +774,13 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(9.81ms^{-2}\)</span> is the acceleration due to gravity on Earth.</p></li>
 </ul>
 </li>
+</ol>
+<center>
+<video autoplay controls muted="true" loop="true" width="60%">
+    <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
+</video>
+</center>
+<ol class="arabic simple" start="3">
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
 <ul class="simple">
 <li><p>Loop through all the cubes</p></li>

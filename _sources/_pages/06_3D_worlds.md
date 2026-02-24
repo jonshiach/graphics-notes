@@ -152,6 +152,11 @@ We saw in [Lab 5: Transformations](transformations-section) that we apply a tran
 - **View matrix** - transforms the world space coordinates to the view space coordinates
 - **Projection matrix** - transforms the view space coordinates to the screen space NDC coordinates
 
+```{figure} ../_images/06_MVP.svg
+:width: 450
+```
+
+
 (model-matrix-section)=
 
 ### The Model matrix
@@ -315,7 +320,7 @@ And add the following to the ***index.html*** file before the ***3D_worlds.js***
 ```
 :::
 
-Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the methods `update()` which calculates the $\vec{right}$ and $\vec{up}$ camera vectors and `getViewMatrix()` that returns the view matrix calculated using equation {eq}`eq-view-matrix`.
 
 :::{admonition} Task
 :class: tip
