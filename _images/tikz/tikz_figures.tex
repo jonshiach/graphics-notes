@@ -809,17 +809,17 @@
 % \end{tikzpicture}
 
 % Model space
-\begin{tikzpicture}
-    \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=2;\d=2;\h=2;}
-    \coordinate (0) at ($(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
-    \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
-    \draw [axis,red] (\x:1) -- (\x:\al) node at (\x:\al+0.2) {$x$};
-    \draw [axis,mygreen] (\y:1) -- (\y:0.75*\al) node at (\y:0.75*\al+0.2) {$y$};
-    \draw [axis,blue] (\z:1) -- (\z:\al) node at (\z:\al+0.2) {$z$};
-    \draw [red,line width=1pt,opacity=0.2] (0,0) -- (\x:1);
-    \draw [mygreen,line width=1pt,opacity=0.2] (0,0) -- (\y:1);
-    \draw [blue,line width=1pt,opacity=0.2] (0,0) -- (\z:1);
-\end{tikzpicture}
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=210;\al=3;\w=2;\d=2;\h=2;}
+%     \coordinate (0) at ($(\x:-0.5*\w)+(\y:-0.5*\h)+(\z:0.5*\d)$);
+%     \draw [fill=blue!10] (0) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\y:\h) -- ++(\z:\d) -- ++(\x:-\w) -- (0) ($(0)+(\x:\w)$) -- ++(\y:\h) ($(0)+(\y:\h)$) -- ++(\x:\w) -- ++(\z:-\d) -- ++(\x:-\w) -- ++(\z:\d);
+%     \draw [axis,red] (\x:1) -- (\x:\al) node at (\x:\al+0.2) {$x$};
+%     \draw [axis,mygreen] (\y:1) -- (\y:0.75*\al) node at (\y:0.75*\al+0.2) {$y$};
+%     \draw [axis,blue] (\z:1) -- (\z:\al) node at (\z:\al+0.2) {$z$};
+%     \draw [red,line width=1pt,opacity=0.2] (0,0) -- (\x:1);
+%     \draw [mygreen,line width=1pt,opacity=0.2] (0,0) -- (\y:1);
+%     \draw [blue,line width=1pt,opacity=0.2] (0,0) -- (\z:1);
+% \end{tikzpicture}
 
 % World space with camera
 % \begin{tikzpicture}
@@ -875,6 +875,21 @@
 %     \draw [fill=mygreen!20] (1) -- ++(\x:\w) -- ++(\y:\h) -- ++(\x:-\w) -- ++(\y:-\h) (1) -- ++(135:0.4) -- ($(1)+(\y:\h)+(225:0.4)$) -- ($(1)+(\y:\h)$);
 %     \draw [axis,red] (\x:-\al) -- (\x:\al) node at (\x:\al+0.2) {$x$};
 %     \draw [axis,mygreen] (\y:-0.5*\al) -- (\y:0.5*\al) node at (\y:0.5*\al+0.2) {$y$};
+% \end{tikzpicture}
+
+% Model - world - view - screen
+% \begin{tikzpicture}[node distance=2.5cm,every node/.style={rounded corners,fill=blue!10}]
+%     \node [draw,text width=1cm,align=center] (model) {Model Space};
+%     \node [draw,text width=1cm,align=center,right of=model] (world) {World Space};
+%     \node [draw,text width=1cm,align=center,right of=world] (view) {View Space};
+%     \node [draw,text width=1cm,align=center,right of=view] (screen) {Screen Space};
+%     \draw [->,line width=1pt] (model) edge (world) (world) edge (view) (view) edge(screen);
+%     \node [fill=none,text width=1cm,align=center] at ($(model)!0.5!(world)+(0,-1)$) (model matrix) {model matrix};
+%     \node [fill=none,text width=1cm,align=center] at ($(world)!0.5!(view)+(0,-1)$) (view matrix) {view matrix};
+%     \node [fill=none,text width=1.5cm,align=center] at ($(view)!0.5!(screen)+(0,-1)$) (projection matrix) {projection matrix};
+%     \draw [->] (model matrix) -- ++(0, 0.9);
+%     \draw [->] (view matrix) -- ++(0, 0.9);
+%     \draw [->] (projection matrix) -- ++(0, 0.9);
 % \end{tikzpicture}
 
 % Normalise Device Co-ordinates
@@ -1791,27 +1806,27 @@
 %     \draw [arrow] (0,0,0.5) arc [start angle=180,end angle=122,x radius=1.1,y radius=1.1] node [pos=0.5,above left] {$\vec{k} \times \vec{i}$};
 % \end{tikzpicture}
 
-% Quaternion rotation
+% Quaternion camera rotation
 % \begin{tikzpicture}
 %     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
 %     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.7) {$x$};
 %     \draw [axis] (0,0) -- (\y:\l) node at (\y:\l+0.2) {$y$};
 %     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
 %     \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
-%     \draw [vector,mygreen] (0,0) -- (50:2) node [right] at (50:2) {$q_{pitch} \, q_{camera}$};
+%     \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{camera}$};
 %     \draw[line width=1pt,->,rotate around={\x:(\x:1.5)},mygreen] (\x:1.5) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.6,left] {$pitch$};
 % \end{tikzpicture}
 
-% \begin{tikzpicture}
-%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
-%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
-%     \draw [axis] (0,0) -- (\y:\l+0.75) node at (\y:\l+1) {$y$};
-%     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
-%     \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
-%     \draw [vector,mygreen] (0,0) -- (50:2) node [right] at (50:2) {$q_{pitch} \, q_{camera}$};
-%     \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{camera}$};
-%     \draw[line width=1pt,->,rotate around={\y:(\y:2.75)},blue] (\y:2.75) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
-% \end{tikzpicture}
+\begin{tikzpicture}
+    \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
+    \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
+    \draw [axis] (0,0) -- (\y:\l+0.75) node at (\y:\l+1) {$y$};
+    \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
+    \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
+    \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{camera}$};
+    \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{camera}$};
+    \draw[line width=1pt,->,rotate around={\y:(\y:2.75)},blue] (\y:2.75) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
+\end{tikzpicture}
 
 
 % Quaternion rotation of a vector

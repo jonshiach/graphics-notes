@@ -45,7 +45,7 @@ Finally, create a new file called ***index2.html*** and enter the following
 
 <html lang="en">
   <head>
-    <title>Lab 10 - Quaternions</title>
+    <title>Lab 10 - Quaternion Calculations</title>
   </head>
   <body>
     <div id="console-output" 
@@ -167,33 +167,40 @@ Add the following class definition to the ***maths.js** file
 
 ```javascript
 class Quaternion {
-    constructor(w = 1, x = 0, y = 0, z = 0) {
-        this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
 
-    toString() {
-        const w = this.w.toFixed(3);
-        const x = this.x.toFixed(3);
-        const y = this.y.toFixed(3);
-        const z = this.z.toFixed(3);
-        return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
-    }
+  constructor(w = 1, x = 0, y = 0, z = 0) {
+    this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z
+  }
+
+  toString() {
+    const w = this.w.toFixed(3);
+    const x = this.x.toFixed(3);
+    const y = this.y.toFixed(3);
+    const z = this.z.toFixed(3);
+
+    return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
+  }
+  
+  copy() {
+    return new Quaternion(this.w, this.x, this.y, this.z);
+  }
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const q = new Quaternion(1, 2, 3, 4);
+// Defining quaternions
+let q = new Quaternion(1, 2, 3, 4);
 console.log("q = " + q);
 ```
 
 :::
 
-Here we have defined a Quaternion class that contains a constructor to initialize the quaternion using input parameters for $w$, $x$, $y$ and $z$ components and a method to output a string for printing. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined a Quaternion class that contains a constructor to initialize the quaternion using input parameters for $w$, $x$, $y$ and $z$ components, a method to return a string for console output and a method to make a copy. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
 q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
@@ -216,18 +223,20 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
-    return Math.sqrt(
-        this.w * this.w +
-        this.x * this.x +
-        this.y * this.y +
-        this.z * this.z
-    );
+  return Math.sqrt(
+    this.w * this.w +
+    this.x * this.x +
+    this.y * this.y +
+    this.z * this.z
+  );
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
+// Length and normalization
+console.log("\nLength and normalization\n------------------------")
 console.log("length(q) = " + q.length());
 ```
 
@@ -236,6 +245,8 @@ console.log("length(q) = " + q.length());
 Here we have added the method `length()` that computes the magnitude of the quaternion object and used it to calculate the magnitude of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
+Length and normalization
+------------------------
 length(q) = 5.477225575051661
 ```
 
@@ -260,23 +271,21 @@ Add the following method to the Quaternion class
 
 ```javascript
 normalize() {
-    const len = this.length();
-    if (len === 0) return new Quaternion(0, 0, 0, 0);
-    const inv = 1 / len;
-    this.w *= inv;
-    this.x *= inv;
-    this.y *= inv;
-    this.z *= inv;
-  
-    return this;
+  const len = 1 / this.length();
+  this.w *= len;
+  this.x *= len;
+  this.y *= len;
+  this.z *= len;
+
+  return this;
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const qHat = new Quaternion(1, 2, 3, 4).normalize();
-console.log("\nqHat = " + qHat);
+const qHat = q.copy().normalize();
+console.log("qHat = " + qHat);
 console.log("length(qHat) = " + qHat.length());
 ```
 
@@ -395,25 +404,26 @@ Add the following method to the Quaternion class
 
 ```javascript
 multiply(q) {
-  const w = this.w, x = this.x, y = this.y, z = this.z;
-
-  this.w = w * q.w - x * q.x - y * q.y - z * q.z;
-  this.x = w * q.x + x * q.w + y * q.z - z * q.y;
-  this.y = w * q.y - x * q.z + y * q.w + z * q.x;
-  this.z = w * q.z + x * q.y - y * q.x + z * q.w;
-
-  return this;
+  return new Quaternion(
+    this.w * q.w - this.x * q.x - this.y * q.y - this.z * q.z,
+    this.w * q.x + this.x * q.w + this.y * q.z - this.z * q.y,
+    this.w * q.y - this.x * q.z + this.y * q.w + this.z * q.x,
+    this.w * q.z + this.x * q.y - this.y * q.x + this.z * q.w
+  );
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const q1 = new Quaternion(1, 2, 3, 4);
-const q2 = new Quaternion(5, 6, 7, 8);
-console.log("\nq1 = " + q1);
-console.log("q2 = " + q2);
-console.log("q1 x q2 = " + q1.multiply(q2));
+// Multiplying quaternions
+console.log("\nMultiplying quaternions\n-----------------------")
+let p = new Quaternion(5, 6, 7, 8);
+
+console.log("q = " + q);
+console.log("p = " + p);
+console.log("qp = " + q.multiply(p));
+console.log("pq = " + p.multiply(q));
 ```
 
 :::
@@ -421,10 +431,15 @@ console.log("q1 x q2 = " + q1.multiply(q2));
 Here we have added the method `multiply()` to the Quaternion class that multiplies the current quaternion object by another quaternion and used it to calculate $[1, (2, 3, 4)][5, (6, 7, 8)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
-q1 = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
-q2 = [ 5.000, ( 6.000, 7.000, 8.000 ) ]
-q1 x q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
+Multiplying quaternions
+-----------------------
+q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
+p = [ 5.000, ( 6.000, 7.000, 8.000 ) ]
+qp = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
+pq = [ -60.000, ( 20.000, 14.000, 32.000 ) ]
 ```
+
+Note that $qp \neq pq$, so the order matters when multiplying quaternions.
 
 ### Quaternion inverse
 
@@ -466,14 +481,14 @@ Add the following method to the Quaternion class
 
 ```javascript
 inverse() {
-    const len2 = this.length() * this.length();
-    if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
-    return new Quaternion(
-        this.w / len2,
-        -this.x / len2,
-        -this.y / len2,
-        -this.z / len2
-    );
+  const len2 = this.length() * this.length();
+  if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
+  return new Quaternion(
+    this.w / len2,
+    -this.x / len2,
+    -this.y / len2,
+    -this.z / len2
+  );
 }
 ```
 
@@ -481,9 +496,10 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 // Quaternion inverse
-const qInv = q.inverse();
-console.log("\nqInv = " + qInv)
-console.log("qInv x q = " + qInv.multiply(q))
+console.log("\nInverse quaternion\n-------------------");
+console.log("qInv = " + q.inverse());
+console.log("qInv q = " + q.multiply(q.inverse()));
+console.log("q qInv = " + q.inverse().multiply(q));
 ```
 
 :::
@@ -491,8 +507,11 @@ console.log("qInv x q = " + qInv.multiply(q))
 Here we have defined the Quaternion class method `inverse()` which calculates the inverse of the current quaternion, and we have used it to calculate the inverse of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
+Inverse quaternion
+-------------------
 qInv = [ 0.033, ( -0.067, -0.100, -0.133 ) ]
-qInv x q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
+qInv q = [ 1.000, ( 0.000, 0.000, -0.000 ) ]
+q qInv = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 ```
 
 ---
@@ -605,49 +624,46 @@ Add the following method to the Quaternion class
 
 ```javascript
 static fromAxisAngle(axis, angle) {
-    axis = normalize(axis);
-    const halfAngle = 0.5 * angle;
-    const s = Math.sin(halfAngle);
+  axis = normalize(axis);
+  const halfAngle = 0.5 * angle;
+  const c = Math.cos(halfAngle);
+  const s = Math.sin(halfAngle);
 
-    return new Quaternion(
-        Math.cos(halfAngle),
-        s * axis[0],
-        s * axis[1],
-        s * axis[2],
-    );
+  return new Quaternion(c, s * axis[0], s * axis[1], s * axis[2]);
 }
 
 rotateVector(v) {
-    const p = new Quaternion(0, v[0], v[1], v[2]);
-    const qInv = this.inverse();
-    const result = this.multiply(p).multiply(qInv);
-    return [result.x, result.y, result.z];
+  const p = new Quaternion(0, v[0], v[1], v[2]);
+  const result = this.multiply(p).multiply(this.inverse());
+
+  return [ result.x, result.y, result.z ];
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-// Quaternion rotation
-const p = [1, 0, 0];
+// Rotations
+console.log("\nRotations\n---------")
 const axis = [0, 1, 0];
 const angle = 90 * Math.PI / 180;
-const qRot = new Quaternion.fromAxisAngle(axis, angle);
-console.log("\nQuaternion rotation\n-------------------");
+p = [1, 0, 0];
+q = Quaternion.fromAxisAngle(axis, angle);
+
+console.log("q = " + q);
 console.log("p = " + printVector(p));
-console.log("qRot = " + qRot);
-console.log("pRotated = " + printVector(qRot.rotateVector(p)));
+console.log("pRotated = " + printVector(q.rotateVector(p)));
 ```
 
 :::
 
-Here we have defined two Quaternion class methods `fromAxisAngle()` using equation {eq}`rotation-quaternion-equation` and `rotateVector()` which calculates the rotation quaternion and rotates a vector using the current quaternion object. We have then used these to rotate the vector $(1, 0, 0)$ about the the vector $(0, 1, 0)$ by $90^\circ$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined two Quaternion class methods `fromAxisAngle()` using equation {eq}`rotation-quaternion-equation` and `rotateVector()` which calculates the rotation quaternion and rotates a vector using the current quaternion object. We have then used these to rotate the vector $(1, 0, 0)$ about the axis $(0, 1, 0)$ by $90^\circ$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
-Quaternion rotation
--------------------
+Rotations
+---------
+q = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
 p = [ 1.00, 0.00, 0.00 ]
-qRot = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
 pRotated = [ 0.00, 0.00, -1.00 ]
 ```
 
@@ -801,28 +817,25 @@ Add the following method to the Quaternion class
 
 ```javascript
 matrix() {
-    const w = this.w, x = this.x, y = this.y, z = this.z;
-    const xx = x * x, yy = y * y, zz = z * z;
-    const wx = w * x, wy = w * y, wz = w * z;
-    const xy = x * y, xz = x * z, yz = y * z;
+  const w = this.w, x = this.x, y = this.y, z = this.z;
+  const xx = x * x, yy = y * y, zz = z * z;
+  const wx = w * x, wy = w * y, wz = w * z;
+  const xy = x * y, xz = x * z, yz = y * z;
 
-    return new Mat4().set([
-        1 - 2 * (yy + zz),  2 * (xy + wz),      2 * (xz - wy),      0,
-        2 * (xy - wz),      1 - 2 * (xx + zz),  2 * (yz + wx),      0,
-        2 * (xz + wy),      2 * (yz - wx),      1 - 2 * (xx + yy),  0,
-        0,                  0,                  0,                  1
-    ]);
+  return new Mat4().set([
+    1 - 2 * (yy + zz),  2 * (xy + wz),      2 * (xz - wy),      0,
+    2 * (xy - wz),      1 - 2 * (xx + zz),  2 * (yz + wx),      0,
+    2 * (xz + wy),      2 * (yz - wx),      1 - 2 * (xx + yy),  0,
+    0,                  0,                  0,                  1
+  ]);
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const quaternionRotation = rotationQuaternion.matrix();
-console.log("\nquaternion rotation matrix =\n" + quaternionRotation);
-
-const rotationMatrix = new Mat4().rotate(axis, angle);
-console.log("\nrotation matrix =\n" + rotationMatrix);
+console.log("\nquaternion rotation matrix =\n" + q.matrix());
+console.log("\nrotation matrix =\n" + new Mat4().rotate(axis, angle));
 ```
 
 :::
@@ -853,9 +866,9 @@ So it makes sense to use the quaternion rotation matrix for our axis-angle rotat
 Edit the `rotate()` Mat4 class method, so that is looks like the following
 
 ```javascript
-rotate(axis, angle) {
-    const rotationQuaternion = new Quaternion.fromAxisAngle(axis, angle);
-    return this.multiply(rotationQuaternion.matrix());
+rotate(axis, angle) {   
+  const q = Quaternion.fromAxisAngle(axis, angle);
+  return this.multiply(q.matrix());
 }
 ```
 :::
@@ -969,7 +982,7 @@ $$ \begin{align*}
 Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch} \, q_{camera}$ means that the $q_{camera}$ is multiplied by $q_{pitch}$ first and then multiplied by $q_{yaw}$.
 
 ```{figure} ../_images/10_quaternion_camera_2.svg
-:width: 300
+:width: 350
 
 Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
 ```
@@ -987,65 +1000,59 @@ In the ***camera.js*** file delete the camera vectors $\vec{worldUp}$, $\vec{fro
 
 ```javascript
 // Rotation quaternion
-this.rotation = new Quaternion();
+this.orientation = new Quaternion();
 ```
 
 Change the `update()` method so that is looks like the following
 
 ```javascript
-update(dt) {  
+update(input, dt) {
 
-    // Pitch rotation (rotate around local right vector)
-    const localRight = this.rotation.rotateVector([1, 0, 0]);
-    const pitchQuat = Quaternion.fromAxisAngle(localRight, this.pitch);
+  // Get yaw and pitch angles from mouse input
+  const mouse = input.consumeMouseDelta();
+  const yaw   = -mouse.x * this.turnSpeed;
+  const pitch = -mouse.y * this.turnSpeed;
 
-    // Yaw rotation (rotate around y-axis)
-    const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+  // Pitch rotation (rotate around local right vector)
+  const localRight = this.orientation.rotateVector([1, 0, 0]);
+  const pitchQ = Quaternion.fromAxisAngle(localRight, pitch);
 
-    // Zero yaw and pitch angles
-    this.yaw = 0;
-    this.pitch = 0;
+  // Yaw rotation (rotate around y-axis)
+  const yawQ = Quaternion.fromAxisAngle([0, 1, 0], yaw);
 
-    // Rotate camera quaternion
-    this.rotation = yawQuat
-        .multiply(pitchQuat)
-        .multiply(this.rotation)
-        .normalize();
+  // Rotate camera orientation
+  this.orientation = yawQ.multiply(pitchQ).multiply(this.orientation).normalize();
 
-    // Calculate front and right camera vectors
-    const front = this.rotation.rotateVector([0, 0, -1]);
-    const right = this.rotation.rotateVector([1, 0, 0]);
+  // Calculate front and right vectors
+  const front = this.orientation.rotateVector([0, 0, -1]);
+  const right = this.orientation.rotateVector([1, 0, 0]);
 
-    // Camera movement
-    let vel = [0, 0, 0];
-    if (this.keys["w"]) vel = addVector(vel, front);
-    if (this.keys["s"]) vel = subtractVector(vel, front);
-    if (this.keys["a"]) vel = subtractVector(vel, right);
-    if (this.keys["d"]) vel = addVector(vel, right);
-    console.log();
+  // Camera movement
+  let vel = [0, 0, 0];
+  if (input.isDown("w")) vel = addVector(vel, front);
+  if (input.isDown("s")) vel = subtractVector(vel, front);
+  if (input.isDown("a")) vel = subtractVector(vel, right);
+  if (input.isDown("d")) vel = addVector(vel, right);
 
-    if (length(vel) > 0) {
-        vel = normalize(vel);
-        this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
-    }
+  if (length(vel) > 0) {
+    vel = normalize(vel);
+    this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
+  }
 }
 ```
-
-In the `mouseMove()` function change the `+=` to `-=` in the command to update the $yaw$ angle and delete the commands that limit the $pitch$ angle. 
 
 Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
-    const rotate = this.rotation.inverse().matrix();
-    const translate = new Mat4().translate([
-        -this.eye[0],
-        -this.eye[1],
-        -this.eye[2]
-    ]);
-
-    return rotate.multiply(translate);
-}
+  const rotateMatrix = this.orientation.inverse().matrix();
+  const translateMatrix = new Mat4().translate([
+    -this.eye[0],
+    -this.eye[1],
+    -this.eye[2]
+  ]);
+  
+  return rotateMatrix.multiply(translateMatrix);
 ```
 
 :::

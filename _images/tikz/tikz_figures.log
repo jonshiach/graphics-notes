@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.30)  23 FEB 2026 12:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.30)  25 FEB 2026 15:38
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -443,18 +443,18 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 {/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./tikz_figures.aux) ) 
 Here is how much of TeX's memory you used:
- 17613 strings out of 476025
- 392543 string characters out of 5790017
- 1853388 words of memory out of 5000000
- 37741 multiletter control sequences out of 15000+600000
+ 17650 strings out of 476025
+ 393494 string characters out of 5790017
+ 1855388 words of memory out of 5000000
+ 37778 multiletter control sequences out of 15000+600000
  514265 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,7n,118p,491b,669s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-Output written on tikz_figures.pdf (1 page, 10278 bytes).
+ 117i,7n,118p,491b,690s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
+Output written on tikz_figures.pdf (1 page, 21848 bytes).
 PDF statistics:
- 16 PDF objects out of 1000 (max. 8388607)
- 10 compressed objects within 1 object stream
+ 21 PDF objects out of 1000 (max. 8388607)
+ 13 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

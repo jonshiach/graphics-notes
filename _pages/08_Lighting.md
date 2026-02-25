@@ -268,72 +268,72 @@ Add the $x$, $y$ and $z$ components of the normal vector to each cube vertex.
 
 ```javascript
 // Define cube vertices
-    const vertices = new Float32Array([
-        // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
-        // front                                                       /|       /|
-        -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
-         1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
-         1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
-        -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
-         1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
-        -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
-        // right
-         1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
-         1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
-         1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
-         1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
-         1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
-         1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
-        // etc.
+const vertices = new Float32Array([
+  // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
+  // front                                                       /|       /|
+  -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
+   1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
+   1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
+  -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
+   1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
+  -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
+  // right
+   1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+   1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+   1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+   1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
+  // etc
 ```
 
 ````{dropdown} Click to reveal the vertex coordinates for the cube
 ```javascript
 // Define cube vertices
 const vertices = new Float32Array([
-    // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
-    // front                                                       /|       /|
-    -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
-     1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
-     1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
-    -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
-     1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
-    -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
-    // right
-     1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
-     1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
-     1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
-     1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
-     1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
-     1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
-    // back
-     1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
-    -1, -1, -1,    0, 0, 0,    1, 0,    0,  0, -1,
-    -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
-     1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
-    -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
-     1,  1, -1,    0, 0, 0,    0, 1,    0,  0, -1,
-    // left
-    -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
-    -1, -1,  1,    0, 0, 0,    1, 0,   -1,  0,  0,
-    -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
-    -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
-    -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
-    -1,  1, -1,    0, 0, 0,    0, 1,   -1,  0,  0,
-    // bottom
-    -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
-     1, -1, -1,    0, 0, 0,    1, 0,    0, -1,  0,
-     1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
-    -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
-     1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
-    -1, -1,  1,    0, 0, 0,    0, 1,    0, -1,  0,
-    // top
-    -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
-     1,  1,  1,    0, 0, 0,    1, 0,    0,  1,  0,
-     1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
-    -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
-     1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
-    -1,  1, -1,    0, 0, 0,    0, 1,    0,  1,  0,
+  // x y   z     R  G  B     u  v     nx  ny  nz                  + ------ +
+  // front                                                       /|       /|
+  -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //   y        / |      / |
+   1, -1,  1,    0, 0, 0,    1, 0,    0,  0,  1,  //   |       + ------ +  |
+   1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  //   +-- x   |  + ----|- +
+  -1, -1,  1,    0, 0, 0,    0, 0,    0,  0,  1,  //  /        | /      | /
+   1,  1,  1,    0, 0, 0,    1, 1,    0,  0,  1,  // z         |/       |/
+  -1,  1,  1,    0, 0, 0,    0, 1,    0,  0,  1,  //           + ------ +
+  // right
+   1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+   1, -1, -1,    0, 0, 0,    1, 0,    1,  0,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+   1, -1,  1,    0, 0, 0,    0, 0,    1,  0,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    1,  0,  0,
+   1,  1,  1,    0, 0, 0,    0, 1,    1,  0,  0,
+  // back
+   1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
+  -1, -1, -1,    0, 0, 0,    1, 0,    0,  0, -1,
+  -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
+   1, -1, -1,    0, 0, 0,    0, 0,    0,  0, -1,
+  -1,  1, -1,    0, 0, 0,    1, 1,    0,  0, -1,
+   1,  1, -1,    0, 0, 0,    0, 1,    0,  0, -1,
+  // left
+  -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
+  -1, -1,  1,    0, 0, 0,    1, 0,   -1,  0,  0,
+  -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
+  -1, -1, -1,    0, 0, 0,    0, 0,   -1,  0,  0,
+  -1,  1,  1,    0, 0, 0,    1, 1,   -1,  0,  0,
+  -1,  1, -1,    0, 0, 0,    0, 1,   -1,  0,  0,
+  // bottom
+  -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
+   1, -1, -1,    0, 0, 0,    1, 0,    0, -1,  0,
+   1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
+  -1, -1, -1,    0, 0, 0,    0, 0,    0, -1,  0,
+   1, -1,  1,    0, 0, 0,    1, 1,    0, -1,  0,
+  -1, -1,  1,    0, 0, 0,    0, 1,    0, -1,  0,
+  // top
+  -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+   1,  1,  1,    0, 0, 0,    1, 0,    0,  1,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
+  -1,  1,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+   1,  1, -1,    0, 0, 0,    1, 1,    0,  1,  0,
+  -1,  1, -1,    0, 0, 0,    0, 1,    0,  1,  0,
 ]);
 ```
 ````
@@ -409,26 +409,21 @@ Create a new file called ***light.js*** and embed this in the ***index.html***. 
 
 ```javascript
 class Light {
-    constructor() {
-        this.position = [0, 0, 0];
-        this.colour = [1, 1, 1];
-    }
+
+  constructor() {
+    this.position = [0, 0, 0];
+    this.colour = [1, 1, 1];
+  }
 
     toShader(gl, program) {
-        // Light vectors
-        gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), this.position);
-        gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), this.colour);
-    }
+    // Light vectors
+    gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), this.position);
+    gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), this.colour);
+  }
 }
 ```
 
-In the ***lighting.js*** file, edit the definition of the cubes objects to include the diffuse coefficient $k_d = 0.7$
-
-```javascript
-kd        : 0.7,
-```
-
-Create a light object before the render function
+In the ***lighting.js*** file, create a light object before the render function
 
 ```javascript
 // Light object
@@ -487,7 +482,7 @@ uniform float uKd;
 Finally, add code to calculate diffuse lighting.
 
 ```glsl
-// Diffuse
+// Diffuse light
 vec3 N = normalize(vNormal);
 vec3 L = normalize(uLightPosition - vPosition);
 float diff = max(dot(N, L), 0.0);
@@ -519,7 +514,7 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 
 void main() {
-    gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
+  gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
 }`;
 
 const lightFragmentShader =
@@ -531,7 +526,7 @@ out vec4 fragColour;
 uniform vec3 uLightColour;
 
 void main() {
-    fragColour = vec4(uLightColour, 1.0);
+  fragColour = vec4(uLightColour, 1.0);
 }`;
 ```
 
@@ -549,8 +544,8 @@ gl.useProgram(lightProgram);
 
 // Calculate model matrix for the light source
 const model = new Mat4()
-    .translate(light.position)
-    .scale([0.1, 0.1, 0.1]);
+  .translate(light.position)
+  .scale([0.1, 0.1, 0.1]);
 
 // Send model, view and projection matrices to the shaders
 gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
@@ -567,21 +562,7 @@ gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 
 :::
 
-Refresh your web browser, and you will see a black canvas, so something has gone wrong. If you open up the developer console you should see errors stating that the uniform locations are not from the associated program. This is because we now have two shader programs, `program` which is used to render the cubes and `lightProgram` which is used to render the light source. In adding the code above we now have `lightProgram` as our current shader for the light sources, so we need to tell WebGL to use the other shader program for the cubes.
-
-:::{admonition} Task
-:class: tip
-
-Add the following code before we bind the textures for the cube objects
-
-```javascript
-// Set the shader program
-gl.useProgram(program);
-```
-
-:::
-
-Now when you refresh your browser you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
+Refresh your web browser, and you should see the effect of diffuse lighting on the cubes ({numref}`cubes-diffuse-figure`). Here we can see the light source cube in white and the faces of the cubes that are facing towards the light source are brighter than those facing away.
 
 ```{figure} ../_images/08_cubes_diffuse.png
 :width: 80%
@@ -664,7 +645,7 @@ uniform float uShininess;
 And add code to calculate the specular lighting in the `main()` function.
 
 ```glsl
-// Specular
+// Specular light
 vec3 V = normalize(uCameraPosition - vPosition);
 vec3 H = normalize(L + V);
 float spec = pow(max(dot(H, N), 0.0), uShininess);
@@ -747,7 +728,6 @@ Attenuation can be modelled by an inverse quadratic function.
 Add the uniforms for the attenuation coefficients to the fragment shader.
 
 ```glsl
-// Attenuation coefficients
 uniform float uConstant;
 uniform float uLinear;
 uniform float uQuadratic;
@@ -756,12 +736,12 @@ uniform float uQuadratic;
 Then calculate and apply attenuation to the fragment colour.
 
 ```glsl
-// Attenuation
+  // Attenuation
 float distance = length(uLightPosition - vPosition);
 float attenuation = 1.0 / (
-    uConstant +
-    uLinear * distance +
-    uQuadratic * distance * distance
+  uConstant +
+  uLinear * distance +
+  uQuadratic * distance * distance
 );
 
 // Fragment colour
@@ -780,9 +760,10 @@ this.quadratic = 0.05;
 In the `toShader()` method, send the attenuation coefficients to the shaders
 
 ```javascript
-gl.uniform1f(gl.getUniformLocation(program, "uConstant"), light.constant);
-gl.uniform1f(gl.getUniformLocation(program, "uLinear"), light.linear);
-gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), light.quadratic);
+// Attenuation coefficients
+gl.uniform1f(gl.getUniformLocation(program, "uConstant"), this.constant);
+gl.uniform1f(gl.getUniformLocation(program, "uLinear"), this.linear);
+gl.uniform1f(gl.getUniformLocation(program, "uQuadratic"), this.quadratic);
 ```
 
 :::
@@ -838,11 +819,11 @@ uniform float uShininess;
 
 // Light struct
 struct Light {
-    vec3 position;
-    vec3 colour;
-    float constant;
-    float linear;
-    float quadratic;
+  vec3 position;
+  vec3 colour;
+  float constant;
+  float linear;
+  float quadratic;
 };
 
 // Number of lights
@@ -854,53 +835,51 @@ uniform Light uLights[16];
 // Function to compute the lighting
 vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
 
-    // Light vector
-    vec3 L = normalize(light.position - vPosition);
+  // Light vector
+  vec3 L = normalize(light.position - vPosition);
 
-    // Attenuation
-    float attenuation = 1.0;
-    if (light.type != 2) {
-        float distance = length(light.position - vPosition);
-        attenuation = 1.0 /
-            (light.constant +
-             light.linear * distance +
-             light.quadratic * distance * distance);
-    }
+  // Attenuation
+  float distance = length(light.position - vPosition);
+  float attenuation = 1.0 / (
+    light.constant +
+    light.linear * distance +
+    light.quadratic * distance * distance
+  );
 
-    // Ambient light
-    vec3 ambient = uKa * objectColour;
+  // Ambient light
+  vec3 ambient = uKa * objectColour;
 
-    // Diffuse light
-    float diff = max(dot(N, L), 0.0);
-    vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
+  // Diffuse light
+  float diff = max(dot(N, L), 0.0);
+  vec3 diffuse = uKd * max(dot(N, L), 0.0) * light.colour * objectColour;
 
-    // Specular light
-    vec3 H = normalize(L + V);
-    float spec = pow(max(dot(N, H), 0.0), uShininess);
-    vec3 specular = uKs * spec * light.colour;
+  // Specular light
+  vec3 H = normalize(L + V);
+  float spec = pow(max(dot(N, H), 0.0), uShininess);
+  vec3 specular = uKs * spec * light.colour;
 
-    // Output fragment colour
-    return attenuation * (ambient + diffuse + specular);
+  // Output fragment colour
+  return attenuation * (ambient + diffuse + specular);
 }
 
 // Main fragment shader function
 void main() {
 
-    // Object colour
-    vec4 objectColour = texture(uTexture, vTexCoords);
+  // Object colour
+  vec4 objectColour = texture(uTexture, vTexCoords);
 
-    // Lighting vectors
-    vec3 N = normalize(vNormal);
-    vec3 V = normalize(uCameraPosition - vPosition);
+  // Lighting vectors
+  vec3 N = normalize(vNormal);
+  vec3 V = normalize(uCameraPosition - vPosition);
 
-    // Calculate lighting for each light source
-    vec3 lighting;
-    for (int i = 0; i < uNumLights; i++) {
-        lighting += computeLighting(uLights[i], N, V, objectColour.rgb);
-    }
+  // Calculate lighting for each light source
+  vec3 lighting;
+  for (int i = 0; i < uNumLights; i++) {
+    lighting += computeLighting(uLights[i], N, V, objectColour.rgb);
+  }
 
-    // Fragment colour
-    fragColour = vec4(lighting, objectColour.a);
+  // Fragment colour
+  fragColour = vec4(lighting, objectColour.a);
 }
 ```
 
@@ -929,43 +908,44 @@ Change the `toShader()` Light class method so that it looks like the following
 
 ```javascript
 toShader(gl, program, index) {
-    const prefix = `uLights[${index}]`;
+  const prefix = `uLights[${index}]`;
 
-    // Light vectors
-    gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.position`), this.position);
-    gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.colour`), this.colour);  
+  // Light vectors
+  gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.position`), this.position);
+  gl.uniform3fv(gl.getUniformLocation(program, `${prefix}.colour`), this.colour);  
 
-    // Attenuation coefficients
-    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uConstant`), this.constant);
-    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uLinear`), this.linear);
-    gl.uniform1f(gl.getUniformLocation(program, `${prefix}.uQuadratic`), this.quadratic);
+  // Attenuation coefficients
+  gl.uniform1f(gl.getUniformLocation(program, `${prefix}.constant`), this.constant);
+  gl.uniform1f(gl.getUniformLocation(program, `${prefix}.linear`), this.linear);
+  gl.uniform1f(gl.getUniformLocation(program, `${prefix}.quadratic`), this.quadratic);
 }
 ```
 
-And add a LightSources class
+And add a LightSources class to the ***lights.js*** file
 
 ```javascript
 class LightSources {
-    constructor(maxLights = 16) {
-        this.lights = [];
-        this.maxLights = maxLights;
-    }
 
-    addLight(light) {
-        if (this.lights.length < this.maxLights) {
-            this.lights.push(light);
-        } else {
-            console.warn("Maximum number of lights reached.");
-        }
-    }
+  constructor(maxLights = 16) {
+    this.lights = [];
+    this.maxLights = maxLights;
+  }
 
-    toShader(gl, program) {
-        gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), this.lights.length);
-
-        for (let i = 0; i < this.lights.length; i++) {
-            this.lights[i].toShader(gl, program, i);
-        }
+  addLight(light) {
+    if (this.lights.length < this.maxLights) {
+      this.lights.push(light);
+    } else {
+      console.warn("Maximum number of lights reached.");
     }
+  }
+
+  toShader(gl, program) {
+    gl.uniform1i(gl.getUniformLocation(program, "uNumLights"), this.lights.length);
+
+    for (let i = 0; i < this.lights.length; i++) {
+      this.lights[i].toShader(gl, program, i);
+    }
+  }
 }
 ```
 
@@ -1005,22 +985,22 @@ gl.useProgram(lightProgram);
 
 for (let i = 0; i < lightSources.lights.length; i++) {
 
-    // Calculate model matrix for light source
-    const model = new Mat4()
-        .translate(lightSources.lights[i].position)
-        .scale([0.1, 0.1, 0.1]);
+  // Calculate model matrix for light source
+  const model = new Mat4()
+    .translate(lightSources.lights[i].position)
+    .scale([0.1, 0.1, 0.1]);
 
-    // Send model, view and projection matrices to the shaders
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
-    gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
+  // Send model, view and projection matrices to the shaders
+  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uModel"), false, model.m);
+  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uView"), false, view.m);
+  gl.uniformMatrix4fv(gl.getUniformLocation(lightProgram, "uProjection"), false, projection.m);
 
-    // Send light colour to the shader
-    gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources.lights[i].colour);
+  // Send light colour to the shader
+  gl.uniform3fv(gl.getUniformLocation(lightProgram, "uLightColour"), lightSources.lights[i].colour);
 
-    // Draw light source cube
-    gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+  // Draw light source cube
+  gl.bindVertexArray(vao);
+  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
 ```
 
@@ -1210,7 +1190,7 @@ if (light.type == 2) {
 }
 ```
 
-In the ***lighting.js*** file, add the following to add a direction light source after we have added the yellow light source
+Add the following to add a direction light source after we have added the yellow light source
 
 ```javascript
 // Directional light
@@ -1229,7 +1209,7 @@ if (lightSources.lights[i].type == 2) continue;
 
 :::
 
-Here we have defined a directional light source with the colour magenta and direction vector $(2, -1, -1)$ which will produce light rays coming down from the top right as we look down the $z$-axis. Refresh your web browser and you should see the following.
+Here we have defined a directional light source with the colour magenta and direction vector $(2, -1, -1)$ which will produce light rays coming down from the top-left as we look down the $z$-axis. Refresh your web browser and you should see the following.
 
 ```{figure} ../_images/08_cubes_directional_light.png
 :width: 80%

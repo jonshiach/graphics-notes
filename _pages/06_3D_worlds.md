@@ -152,6 +152,11 @@ We saw in [Lab 5: Transformations](transformations-section) that we apply a tran
 - **View matrix** - transforms the world space coordinates to the view space coordinates
 - **Projection matrix** - transforms the view space coordinates to the screen space NDC coordinates
 
+```{figure} ../_images/06_MVP.svg
+:width: 450
+```
+
+
 (model-matrix-section)=
 
 ### The Model matrix
@@ -279,32 +284,32 @@ Create a file called ***camera.js*** inside which enter the following code
 ```javascript
 class Camera {
 
-    constructor() {
+  constructor() {
 
-        // Camera vectors
-        this.eye     = [0, 0, 0];
-        this.worldUp = [0, 1, 0];
-        this.front   = [0, 0, -1];
-        this.right   = [1, 0, 0];
-        this.up      = [0, 1, 0];
-    }
+    // Camera vectors
+    this.eye     = [0, 0, 0];
+    this.worldUp = [0, 1, 0];
+    this.front   = [0, 0, -1];
+    this.right   = [1, 0, 0];
+    this.up      = [0, 1, 0];
+  }
 
-    update() {
-        this.right = normalize(cross(this.front, this.worldUp));
-        this.up    = normalize(cross(this.right, this.front));
-    }
+  update() {
+    this.right = normalize(cross(this.front, this.worldUp));
+    this.up    = normalize(cross(this.right, this.front));
+  }
 
-    getViewMatrix() {
-        return new Mat4().set([
-            this.right[0], this.up[0], -this.front[0], 0,
-            this.right[1], this.up[1], -this.front[1], 0,
-            this.right[2], this.up[2], -this.front[2], 0,
-            -dot(this.eye, this.right),
-            -dot(this.eye, this.up),
-             dot(this.eye, this.front),
-            1
-        ]);
-    }
+  getViewMatrix() {
+    return new Mat4().set([
+      this.right[0], this.up[0], -this.front[0], 0,
+      this.right[1], this.up[1], -this.front[1], 0,
+      this.right[2], this.up[2], -this.front[2], 0,
+      -dot(this.eye, this.right),
+      -dot(this.eye, this.up),
+      dot(this.eye, this.front),
+      1
+    ]);
+  }
 }
 ```
 
@@ -315,7 +320,7 @@ And add the following to the ***index.html*** file before the ***3D_worlds.js***
 ```
 :::
 
-Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the method `lookAt()` which calculates returns the view matrix using equation {eq}`eq-view-matrix`.
+Here we have create a Camera class that will be used to compute anything that is related to the camera. The constructor function defines 5 camera class vectors such that the camera is positioned at $\vec{eye} = (0,0,0)$, looking in the direction of  $\vec{front} = (0, 0, -1)$ (i.e., down the $z$-axis). We also defined the methods `update()` which calculates the $\vec{right}$ and $\vec{up}$ camera vectors using equations {eq}`eq-right-camera-vector` and {eq}`eq-up-camera-vector`, and `getViewMatrix()` that returns the view matrix calculated using equation {eq}`eq-view-matrix`.
 
 :::{admonition} Task
 :class: tip
@@ -342,7 +347,7 @@ const view = camera.getViewMatrix();
 
 :::
 
-Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ (using equation {eq}`eq-front-camera-vector`) and then calculate the view matrix using the `lookAt()` method.
+Here we create a camera object, set the $\vec{eye}$ and $\vec{front}$ camera vectors so that the camera is positioned at $(1,1,1)$ and looking towards the centre of the translated cube at $(0, 0, -2)$ and then calculate the view matrix using the `lookAt()` method.
 
 ---
 
@@ -422,19 +427,19 @@ Add the following method definition to the Camera class
 
 ```javascript
 getOrthographicMatrix(left, right, bottom, top, near, far) {
-    const rl = 1 / (right - left);
-    const tb = 1 / (top - bottom);
-    const fn = 1 / (far - near);
+  const rl = 1 / (right - left);
+  const tb = 1 / (top - bottom);
+  const fn = 1 / (far - near);
 
-    return new Mat4().set([
-        2 * rl, 0, 0, 0,
-        0, 2 * tb, 0, 0,
-        0, 0, -2 * fn, 0,
-        -(right + left) * rl,
-        -(top + bottom) * tb,
-        -(far + near) * fn,
-        1
-    ]);
+  return new Mat4().set([
+    2 * rl, 0, 0, 0,
+    0, 2 * tb, 0, 0,
+    0, 0, -2 * fn, 0,
+    -(right + left) * rl,
+    -(top + bottom) * tb,
+    -(far + near) * fn,
+    1
+  ]);
 }
 ```
 
@@ -568,8 +573,8 @@ Add the following code after the cube indices are defined
 ```javascript
 // Define cube positions
 const cubes = [
-    { position : [0, 0, -2] },
-    { position : [0, 0, -6] }
+  { position : [0, 0, -2] },
+  { position : [0, 0, -6] }
 ];
 const numCubes = cubes.length;
 ```
@@ -580,19 +585,24 @@ Now edit the code used to calculate the model matrix and draw the cubes so that 
 // Draw cubes
 for (let i = 0; i < numCubes; i++) {
 
-    // Calculate the model matrix
-    const angle = 0;
-    const model = new Mat4()
-        .translate(cubes[i].position)
-        .rotate([0, 1, 0], angle)
-        .scale([0.5, 0.5, 0.5]);
+  // Calculate the model matrix
+  const angle = 0;
+  const model = new Mat4()
+    .translate(cubes[i].position)
+    .rotate([0, 1, 0], angle)
+    .scale([0.5, 0.5, 0.5]);
 
-    // Send model matrix to the shader
-    gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+  // Send model matrix to the shader
+  gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
-    // Draw the triangles
-    gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+  // Bind texture
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
+  
+  // Draw the triangles
+  gl.bindVertexArray(vao);
+  gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
 }
 ```
 

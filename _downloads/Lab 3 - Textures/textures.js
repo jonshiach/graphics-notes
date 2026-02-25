@@ -65,6 +65,9 @@ function main() {
     // Clear frame buffers
     gl.clear(gl.COLOR_BUFFER_BIT);
 
+    // Set the shader program
+    gl.useProgram(program);
+
     // Draw the square
     gl.bindVertexArray(vao);
     gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
