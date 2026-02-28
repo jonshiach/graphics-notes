@@ -1,6 +1,6 @@
 // Vector operations
 function printVector(v) {
-  return `[ ${v[0].toFixed(2)}, ${v[1].toFixed(2)}, ${v[2].toFixed(2)} ]`;
+  return `[ ${v[0].toFixed(3)}, ${v[1].toFixed(3)}, ${v[2].toFixed(3)} ]`;
 }
 
 function addVector(a, b) {
@@ -34,6 +34,14 @@ function cross(a, b) {
     a[1] * b[2] - a[2] * b[1], 
     a[2] * b[0] - a[0] * b[2], 
     a[0] * b[1] - a[1] * b[0] 
+  ];
+}
+
+function lerpVector(a, b, t) {
+  return [
+    a[0] + t * (b[0] - a[0]),
+    a[1] + t * (b[1] - a[1]),
+    a[2] + t * (b[2] - a[2])
   ];
 }
 
@@ -261,4 +269,106 @@ class Quaternion {
         0,                  0,                  0,                  1
     ]);
   }
+
+  static slerp(q1, q2, t) {
+
+    // Calculate cos(theta)
+    let cosTheta = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
+
+    // Avoid going long way round the sphere
+    if (cosTheta < 0) {
+      q2.w = -q2.w;
+      q2.x = -q2.x;
+      q2.y = -q2.y;
+      q2.z = -q2.z;
+      cosTheta = -cosTheta;
+    }
+
+    // Use lerp if q1 and q2 are close
+    if (cosTheta > 0.9995) {
+      return new Quaternion(
+        q1.w + t * (q2.w - q1.w),
+        q1.x + t * (q2.x - q1.x),
+        q1.y + t * (q2.y - q1.y),
+        q1.z + t * (q2.z - q1.z)
+      ).normalize();
+    }
+
+    // Calculate slerp
+    const theta = Math.acos(cosTheta);
+    const sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
+    const a = Math.sin((1 - t) * theta) / sinTheta;
+    const b = Math.sin(t * theta) / sinTheta;
+    
+    return new Quaternion(
+      a * q1.w + b * q2.w,
+      a * q1.x + b * q2.x,
+      a * q1.y + b * q2.y,
+      a * q1.z + b * q2.z
+    ).normalize();
+  }
+
+  static fromLookRotation(forward, worldUp = [0, 1, 0]) {
+
+    // Normalize input vectors
+    forward = normalize(forward);
+    worldUp = normalize(worldUp);
+
+    // Compute orthonormal basis
+    const right = normalize(cross(worldUp, forward));
+    const up = cross(forward, right);
+
+     // Rotation matrix (column-major)
+    const m00 = right[0];
+    const m01 = up[0];
+    const m02 = forward[0];
+
+    const m10 = right[1];
+    const m11 = up[1];
+    const m12 = forward[1];
+
+    const m20 = right[2];
+    const m21 = up[2];
+    const m22 = forward[2];
+
+    const trace = m00 + m11 + m22;
+
+    let x, y, z, w;
+
+    if (trace > 0) {
+
+      const s = Math.sqrt(trace + 1.0) * 2;
+      w = 0.25 * s;
+      x = (m21 - m12) / s;
+      y = (m02 - m20) / s;
+      z = (m10 - m01) / s;
+
+    } else if (m00 > m11 && m00 > m22) {
+
+      const s = Math.sqrt(1.0 + m00 - m11 - m22) * 2;
+      w = (m21 - m12) / s;
+      x = 0.25 * s;
+      y = (m01 + m10) / s;
+      z = (m02 + m20) / s;
+
+    } else if (m11 > m22) {
+
+      const s = Math.sqrt(1.0 + m11 - m00 - m22) * 2;
+      w = (m02 - m20) / s;
+      x = (m01 + m10) / s;
+      y = 0.25 * s;
+      z = (m12 + m21) / s;
+
+    } else {
+
+      const s = Math.sqrt(1.0 + m22 - m00 - m11) * 2;
+      w = (m10 - m01) / s;
+      x = (m02 + m20) / s;
+      y = (m12 + m21) / s;
+      z = 0.25 * s;
+    }
+
+    return new Quaternion(w, x, y, z).normalize();
+  }
 }
+

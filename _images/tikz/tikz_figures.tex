@@ -1812,8 +1812,8 @@
 %     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.7) {$x$};
 %     \draw [axis] (0,0) -- (\y:\l) node at (\y:\l+0.2) {$y$};
 %     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
-%     \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
-%     \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{camera}$};
+%     \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{or}$};
+%     \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{or}$};
 %     \draw[line width=1pt,->,rotate around={\x:(\x:1.5)},mygreen] (\x:1.5) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.6,left] {$pitch$};
 % \end{tikzpicture}
 
@@ -1822,9 +1822,9 @@
     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
     \draw [axis] (0,0) -- (\y:\l+0.75) node at (\y:\l+1) {$y$};
     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
-    \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{camera}$};
-    \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{camera}$};
-    \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{camera}$};
+    \draw [vector,red] (0,0) -- (\z:-\vl) node [right] at (\z:-\vl) {$q_{or}$};
+    \draw [vector,mygreen] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch} \, q_{or}$};
+    \draw [vector,blue] (0,0) -- (70:2) node [above,xshift=1cm] at (70:2) {$q_{yaw} \, q_{pitch} \, q_{or}$};
     \draw[line width=1pt,->,rotate around={\y:(\y:2.75)},blue] (\y:2.75) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
 \end{tikzpicture}
 

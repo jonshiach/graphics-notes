@@ -14,9 +14,11 @@ class Camera {
     // Movement settings
     this.speed = 5;
     this.turnSpeed = 0.005;
+    this.smoothing = 10;
 
     // Orientation quaternion
     this.orientation = new Quaternion();
+    this.targetOrientation = new Quaternion();
   }
 
   update(input, dt) {
@@ -27,14 +29,24 @@ class Camera {
     const pitch = -mouse.y * this.turnSpeed;
 
     // Pitch rotation (rotate around local right vector)
-    const localRight = this.orientation.rotateVector([1, 0, 0]);
-    const pitchQ = Quaternion.fromAxisAngle(localRight, pitch);
+    const localRight = this.targetOrientation.rotateVector([1, 0, 0]);
+    const qPitch = Quaternion.fromAxisAngle(localRight, pitch);
 
     // Yaw rotation (rotate around y-axis)
-    const yawQ = Quaternion.fromAxisAngle([0, 1, 0], yaw);
+    const qYaw = Quaternion.fromAxisAngle([0, 1, 0], yaw);
 
-    // Rotate camera orientation
-    this.orientation = yawQ.multiply(pitchQ).multiply(this.orientation).normalize();
+    // Rotate orientation quaternion
+    this.targetOrientation = qYaw
+      .multiply(qPitch)
+      .multiply(this.targetOrientation)
+      .normalize();
+
+    // Apply slerp to smooth camera motion
+    this.orientation = Quaternion.slerp(
+      this.orientation,
+      this.targetOrientation, 
+      1 - Math.exp(-this.smoothing * dt)
+    );
 
     // Calculate front and right vectors
     const front = this.orientation.rotateVector([0, 0, -1]);

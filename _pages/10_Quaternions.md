@@ -949,49 +949,59 @@ q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 
 Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the `update()` method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through $\pm 90^\circ$ to look straight up or down (recall that we needed to limit the $pitch$ angle between $\pm 89^\circ$).
 
-To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space. We rotate the camera quaternion using two rotation quaternions based on changes to the $yaw$ and $pitch$ angles from the mouse input. Once we have the rotated camera quaternion we can use it to rotate vectors pointing along the $x$ and negative $z$ axes to give the $\vec{right}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.
+To implement a quaternion camera we create a quaternion that describes the orientation of the camera in the world space. We rotate the orientation quaternion using two rotation quaternions based on changes to the $yaw$ and $pitch$ angles from the mouse input. Once we have the rotated orientation quaternion we can use it to rotate vectors pointing along the $x$ and negative $z$ axes to give the $\vec{right}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the orientation quaternion to calculate the view matrix.
 
-For example, consider the camera quaternion $q_{camera} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate $q_{camera}$ about the $x$-axis by multiplying by
+For example, consider the orientation quaternion $q_{or} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate $q_{or}$ about the $x$-axis by multiplying by
 
 $$ q_{pitch} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(1, 0, 0)] = [0.924, (0.383, 0, 0)].$$
 
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{pitch} \, q_{camera} &= [0.924, (0.383, 0, 0)] \, [1, (0, 0, 0)] \\
+    q_{pitch} \, q_{or} &= [0.924, (0.383, 0, 0)] \, [1, (0, 0, 0)] \\
     &= [0.924, (0.383, 0, 0)].
 \end{align*} $$
 
 ```{figure} ../_images/10_quaternion_camera_1.svg
 :width: 350
 
-Rotation of the camera quaternion $q_{camera}$ around the $x$-axis by the angle $pitch$.
+Rotation of $q_{or}$ around the $x$-axis by the angle $pitch$.
 ```
 
-Let's say the user also moves the mouse to the left resulting in a $yaw$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the $y$-axis by multiplying $q_{pitch} \, q_{camera}$ by
+Let's say the user also moves the mouse to the left resulting in a $yaw$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the $y$-axis by multiplying $q_{pitch} \, q_{or}$ by
 
 $$ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (0, 0.259, 0)]. $$
 
 Performing the quaternion multiplication we have
 
 $$ \begin{align*}
-    q_{yaw} \, q_{pitch} \, q_{camera} &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
+    q_{yaw} \, q_{pitch} \, q_{or} &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
     &= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} $$
 
-Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch} \, q_{camera}$ means that the $q_{camera}$ is multiplied by $q_{pitch}$ first and then multiplied by $q_{yaw}$.
+Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch} \, q_{or}$ means that the $q_{or}$ is multiplied by $q_{pitch}$ first and then multiplied by $q_{yaw}$.
 
 ```{figure} ../_images/10_quaternion_camera_2.svg
 :width: 350
 
-Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
+Rotation of $q_{pitch} \, q_{or}$ around the $x$-axis by the angle $pitch$.
 ```
 
-Once the camera quaternion has been rotated using the $pitch$ and $yaw$ angles, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. In addition, we can use the inverse of the quaternion matrix form of the camera quaternion to calculate the view matrix using
+Once the orientation quaternion has been rotated using the $pitch$ and $yaw$ angles, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$ 
 
-$$ View = q_{camera}^{-1} \cdot Translate(-\vec{eye}). $$
+$$ \begin{align*}
+  q_{or} \, [0, (0, 0, -1)] \, q_{or}^{-1} &= [0, (-0.354, 0.707, -0.612)], \\
+  q_{or} \, [0, (1, 0, 0)] \, q_{or}^{-1} &= [0, (0.866, 0, -0.5)], \\
+  q_{or} \, [0, (0, 1, 0)] \, q_{or}^{-1} &= [0, (0.354, 0.707, 0.612)],
+\end{align*} $$
 
-The reason we use the inverse camera quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
+so $\vec{front} = (-0.354, 0.707, -0.612)$, $\vec{right} = (0.866, 0, -0.5)$ and $\vec{up} = (0.354, 0.707, 0.612)$. 
+
+We can also use the matrix form of the inverse orientation quaternion to calculate the view matrix
+
+$$ View = q_{or}^{-1} \cdot Translate(-\vec{eye}). $$
+
+The reason we use the inverse orientation quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
 
 :::{admonition} Task
 :class: tip
@@ -1020,8 +1030,11 @@ update(input, dt) {
   // Yaw rotation (rotate around y-axis)
   const yawQ = Quaternion.fromAxisAngle([0, 1, 0], yaw);
 
-  // Rotate camera orientation
-  this.orientation = yawQ.multiply(pitchQ).multiply(this.orientation).normalize();
+  // Rotate orientation quaternion
+  this.orientation = yawQ
+    .multiply(pitchQ)
+    .multiply(this.targetOrientation)
+    .normalize();
 
   // Calculate front and right vectors
   const front = this.orientation.rotateVector([0, 0, -1]);
@@ -1057,7 +1070,7 @@ getViewMatrix() {
 
 :::
 
-Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the camera quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new camera quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the camera quaternion to compute the view matrix.
+Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the orientation quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new orientation quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the orientation quaternion to compute the view matrix.
 
 Load ***index.html*** in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through $\pm 90^\circ$.
 
@@ -1118,9 +1131,9 @@ $$q_t = q_1 + t  (q_2 - q_1).$$
   
 $$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} \, q_1 + \frac{\sin(t\theta)}{\sin(\theta)} \, q_2, $$
 
-where $t =  1 - \exp(-rotation \, speed \times \Delta t)$ for exponential damping.
+where $t =  1 - \exp(-smoothing \times \Delta t)$ for exponential damping and $smoothing$ is a parameter that controls the smoothness of the camera. For example, for a framerate of 60 fps, a value of 10 for the smoothing means $t = 1 - \exp(-10 \times \frac{1}{60}) = 0.154$ so every frame the camera is rotating 15.4% of the way towards the target orientation. This is compounded, so the camera rotates towards the target without actually reaching it.
 
-To implement smoothing in a first-person camera we calculate a target quaternion using the mouse input and then use SLERP to calculate the interpolated quaternion between the current camera quaternion and the target quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the camera quaternion and is used to perform the rotations on the camera vectors.
+To implement smoothing in a first-person camera we add a target orientation quaternion to the Camera class and change the quaternion calculations so that we rotate this quaternion based on the mouse input. We then use SLERP to calculate the interpolated quaternion between the current orientation quaternion and the target orientation quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the new orientation quaternion and is used to perform the rotations on the camera vectors.
 
 ```{figure} ../_images/10_slerped_camera.svg
 :width: 350
