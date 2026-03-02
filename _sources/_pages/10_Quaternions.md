@@ -45,7 +45,7 @@ Finally, create a new file called ***index2.html*** and enter the following
 
 <html lang="en">
   <head>
-    <title>Lab 10 - Quaternions</title>
+    <title>Lab 10 - Quaternion Calculations</title>
   </head>
   <body>
     <div id="console-output" 
@@ -167,33 +167,40 @@ Add the following class definition to the ***maths.js** file
 
 ```javascript
 class Quaternion {
-    constructor(w = 1, x = 0, y = 0, z = 0) {
-        this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
 
-    toString() {
-        const w = this.w.toFixed(3);
-        const x = this.x.toFixed(3);
-        const y = this.y.toFixed(3);
-        const z = this.z.toFixed(3);
-        return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
-    }
+  constructor(w = 1, x = 0, y = 0, z = 0) {
+    this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z
+  }
+
+  toString() {
+    const w = this.w.toFixed(3);
+    const x = this.x.toFixed(3);
+    const y = this.y.toFixed(3);
+    const z = this.z.toFixed(3);
+
+    return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
+  }
+  
+  copy() {
+    return new Quaternion(this.w, this.x, this.y, this.z);
+  }
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const q = new Quaternion(1, 2, 3, 4);
+// Defining quaternions
+let q = new Quaternion(1, 2, 3, 4);
 console.log("q = " + q);
 ```
 
 :::
 
-Here we have defined a Quaternion class that contains a constructor to initialize the quaternion using input parameters for $w$, $x$, $y$ and $z$ components and a method to output a string for printing. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined a Quaternion class that contains a constructor to initialize the quaternion using input parameters for $w$, $x$, $y$ and $z$ components, a method to return a string for console output and a method to make a copy. We have also created a new quaternion object for the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
 q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
@@ -216,18 +223,20 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
-    return Math.sqrt(
-        this.w * this.w +
-        this.x * this.x +
-        this.y * this.y +
-        this.z * this.z
-    );
+  return Math.sqrt(
+    this.w * this.w +
+    this.x * this.x +
+    this.y * this.y +
+    this.z * this.z
+  );
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
+// Length and normalization
+console.log("\nLength and normalization\n------------------------")
 console.log("length(q) = " + q.length());
 ```
 
@@ -236,6 +245,8 @@ console.log("length(q) = " + q.length());
 Here we have added the method `length()` that computes the magnitude of the quaternion object and used it to calculate the magnitude of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
+Length and normalization
+------------------------
 length(q) = 5.477225575051661
 ```
 
@@ -260,23 +271,21 @@ Add the following method to the Quaternion class
 
 ```javascript
 normalize() {
-    const len = this.length();
-    if (len === 0) return new Quaternion(0, 0, 0, 0);
-    const inv = 1 / len;
-    this.w *= inv;
-    this.x *= inv;
-    this.y *= inv;
-    this.z *= inv;
-  
-    return this;
+  const len = 1 / this.length();
+  this.w *= len;
+  this.x *= len;
+  this.y *= len;
+  this.z *= len;
+
+  return this;
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const qHat = new Quaternion(1, 2, 3, 4).normalize();
-console.log("\nqHat = " + qHat);
+const qHat = q.copy().normalize();
+console.log("qHat = " + qHat);
 console.log("length(qHat) = " + qHat.length());
 ```
 
@@ -395,25 +404,26 @@ Add the following method to the Quaternion class
 
 ```javascript
 multiply(q) {
-  const w = this.w, x = this.x, y = this.y, z = this.z;
-
-  this.w = w * q.w - x * q.x - y * q.y - z * q.z;
-  this.x = w * q.x + x * q.w + y * q.z - z * q.y;
-  this.y = w * q.y - x * q.z + y * q.w + z * q.x;
-  this.z = w * q.z + x * q.y - y * q.x + z * q.w;
-
-  return this;
+  return new Quaternion(
+    this.w * q.w - this.x * q.x - this.y * q.y - this.z * q.z,
+    this.w * q.x + this.x * q.w + this.y * q.z - this.z * q.y,
+    this.w * q.y - this.x * q.z + this.y * q.w + this.z * q.x,
+    this.w * q.z + this.x * q.y - this.y * q.x + this.z * q.w
+  );
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const q1 = new Quaternion(1, 2, 3, 4);
-const q2 = new Quaternion(5, 6, 7, 8);
-console.log("\nq1 = " + q1);
-console.log("q2 = " + q2);
-console.log("q1 x q2 = " + q1.multiply(q2));
+// Multiplying quaternions
+console.log("\nMultiplying quaternions\n-----------------------")
+let p = new Quaternion(5, 6, 7, 8);
+
+console.log("q = " + q);
+console.log("p = " + p);
+console.log("qp = " + q.multiply(p));
+console.log("pq = " + p.multiply(q));
 ```
 
 :::
@@ -421,10 +431,15 @@ console.log("q1 x q2 = " + q1.multiply(q2));
 Here we have added the method `multiply()` to the Quaternion class that multiplies the current quaternion object by another quaternion and used it to calculate $[1, (2, 3, 4)][5, (6, 7, 8)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
-q1 = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
-q2 = [ 5.000, ( 6.000, 7.000, 8.000 ) ]
-q1 x q2 = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
+Multiplying quaternions
+-----------------------
+q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
+p = [ 5.000, ( 6.000, 7.000, 8.000 ) ]
+qp = [ -60.000, ( 12.000, 30.000, 24.000 ) ]
+pq = [ -60.000, ( 20.000, 14.000, 32.000 ) ]
 ```
+
+Note that $qp \neq pq$, so the order matters when multiplying quaternions.
 
 ### Quaternion inverse
 
@@ -466,14 +481,14 @@ Add the following method to the Quaternion class
 
 ```javascript
 inverse() {
-    const len2 = this.length() * this.length();
-    if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
-    return new Quaternion(
-        this.w / len2,
-        -this.x / len2,
-        -this.y / len2,
-        -this.z / len2
-    );
+  const len2 = this.length() * this.length();
+  if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
+  return new Quaternion(
+    this.w / len2,
+    -this.x / len2,
+    -this.y / len2,
+    -this.z / len2
+  );
 }
 ```
 
@@ -481,9 +496,10 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 // Quaternion inverse
-const qInv = q.inverse();
-console.log("\nqInv = " + qInv)
-console.log("qInv x q = " + qInv.multiply(q))
+console.log("\nInverse quaternion\n-------------------");
+console.log("qInv = " + q.inverse());
+console.log("qInv q = " + q.multiply(q.inverse()));
+console.log("q qInv = " + q.inverse().multiply(q));
 ```
 
 :::
@@ -491,8 +507,11 @@ console.log("qInv x q = " + qInv.multiply(q))
 Here we have defined the Quaternion class method `inverse()` which calculates the inverse of the current quaternion, and we have used it to calculate the inverse of the quaternion $[1, (2, 3, 4)]$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
+Inverse quaternion
+-------------------
 qInv = [ 0.033, ( -0.067, -0.100, -0.133 ) ]
-qInv x q = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
+qInv q = [ 1.000, ( 0.000, 0.000, -0.000 ) ]
+q qInv = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 ```
 
 ---
@@ -605,49 +624,46 @@ Add the following method to the Quaternion class
 
 ```javascript
 static fromAxisAngle(axis, angle) {
-    axis = normalize(axis);
-    const halfAngle = 0.5 * angle;
-    const s = Math.sin(halfAngle);
+  axis = normalize(axis);
+  const halfAngle = 0.5 * angle;
+  const c = Math.cos(halfAngle);
+  const s = Math.sin(halfAngle);
 
-    return new Quaternion(
-        Math.cos(halfAngle),
-        s * axis[0],
-        s * axis[1],
-        s * axis[2],
-    );
+  return new Quaternion(c, s * axis[0], s * axis[1], s * axis[2]);
 }
 
 rotateVector(v) {
-    const p = new Quaternion(0, v[0], v[1], v[2]);
-    const qInv = this.inverse();
-    const result = this.multiply(p).multiply(qInv);
-    return [result.x, result.y, result.z];
+  const p = new Quaternion(0, v[0], v[1], v[2]);
+  const result = this.multiply(p).multiply(this.inverse());
+
+  return [ result.x, result.y, result.z ];
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-// Quaternion rotation
-const p = [1, 0, 0];
+// Rotations
+console.log("\nRotations\n---------")
 const axis = [0, 1, 0];
 const angle = 90 * Math.PI / 180;
-const qRot = new Quaternion.fromAxisAngle(axis, angle);
-console.log("\nQuaternion rotation\n-------------------");
+p = [1, 0, 0];
+q = Quaternion.fromAxisAngle(axis, angle);
+
+console.log("q = " + q);
 console.log("p = " + printVector(p));
-console.log("qRot = " + qRot);
-console.log("pRotated = " + printVector(qRot.rotateVector(p)));
+console.log("pRotated = " + printVector(q.rotateVector(p)));
 ```
 
 :::
 
-Here we have defined two Quaternion class methods `fromAxisAngle()` using equation {eq}`rotation-quaternion-equation` and `rotateVector()` which calculates the rotation quaternion and rotates a vector using the current quaternion object. We have then used these to rotate the vector $(1, 0, 0)$ about the the vector $(0, 1, 0)$ by $90^\circ$. Refresh your browser, and you should see the following added to the webpage
+Here we have defined two Quaternion class methods `fromAxisAngle()` using equation {eq}`rotation-quaternion-equation` and `rotateVector()` which calculates the rotation quaternion and rotates a vector using the current quaternion object. We have then used these to rotate the vector $(1, 0, 0)$ about the axis $(0, 1, 0)$ by $90^\circ$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
-Quaternion rotation
--------------------
+Rotations
+---------
+q = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
 p = [ 1.00, 0.00, 0.00 ]
-qRot = [ 0.707, ( 0.000, 0.707, 0.000 ) ]
 pRotated = [ 0.00, 0.00, -1.00 ]
 ```
 
@@ -801,28 +817,25 @@ Add the following method to the Quaternion class
 
 ```javascript
 matrix() {
-    const w = this.w, x = this.x, y = this.y, z = this.z;
-    const xx = x * x, yy = y * y, zz = z * z;
-    const wx = w * x, wy = w * y, wz = w * z;
-    const xy = x * y, xz = x * z, yz = y * z;
+  const w = this.w, x = this.x, y = this.y, z = this.z;
+  const xx = x * x, yy = y * y, zz = z * z;
+  const wx = w * x, wy = w * y, wz = w * z;
+  const xy = x * y, xz = x * z, yz = y * z;
 
-    return new Mat4().set([
-        1 - 2 * (yy + zz),  2 * (xy + wz),      2 * (xz - wy),      0,
-        2 * (xy - wz),      1 - 2 * (xx + zz),  2 * (yz + wx),      0,
-        2 * (xz + wy),      2 * (yz - wx),      1 - 2 * (xx + yy),  0,
-        0,                  0,                  0,                  1
-    ]);
+  return new Mat4().set([
+    1 - 2 * (yy + zz),  2 * (xy + wz),      2 * (xz - wy),      0,
+    2 * (xy - wz),      1 - 2 * (xx + zz),  2 * (yz + wx),      0,
+    2 * (xz + wy),      2 * (yz - wx),      1 - 2 * (xx + yy),  0,
+    0,                  0,                  0,                  1
+  ]);
 }
 ```
 
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const quaternionRotation = rotationQuaternion.matrix();
-console.log("\nquaternion rotation matrix =\n" + quaternionRotation);
-
-const rotationMatrix = new Mat4().rotate(axis, angle);
-console.log("\nrotation matrix =\n" + rotationMatrix);
+console.log("\nquaternion rotation matrix =\n" + q.matrix());
+console.log("\nrotation matrix =\n" + new Mat4().rotate(axis, angle));
 ```
 
 :::
@@ -853,82 +866,12 @@ So it makes sense to use the quaternion rotation matrix for our axis-angle rotat
 Edit the `rotate()` Mat4 class method, so that is looks like the following
 
 ```javascript
-rotate(axis, angle) {
-    const rotationQuaternion = new Quaternion.fromAxisAngle(axis, angle);
-    return this.multiply(rotationQuaternion.matrix());
+rotate(axis, angle) {   
+  const q = Quaternion.fromAxisAngle(axis, angle);
+  return this.multiply(q.matrix());
 }
 ```
 :::
-
-<!-- ### Calculating a quaternion from Euler angles
-
-Quaternions can be thought of as an orientation in 3D space. Imagine a camera in the world space that is pointing in a particular direction. The direction in which the camera is pointing can be described with reference to the $x$, $y$ and $z$ axes in terms of the $pitch$, $yaw$ and $roll$ Euler angles. Since multiplying rotation quaternions achieves rotation, then if $q_y$, $q_p$ and $q_r$ are rotation quaternions for rotating about the $yaw$, $pitch$ and $roll$ then the quaternion that gives the camera orientation is calculated using $q_y q_p q_r$ where
-
-$$ \begin{align*}
-  q_y &= [c_y, (s_y, 0, 0)], \\
-  q_p &= [c_p, (0, s_p, 0)], \\
-  q_r &= [c_r, (0, 0, s_r)].
-\end{align*} $$
-
-and
-
-$$ \begin{align*}
-    c_x &= \cos(\tfrac{pitch}{2}), &
-    c_y &= \cos(\tfrac{yaw}{2}), &
-    c_z &= \cos(\tfrac{roll}{2}) \\
-    s_x &= \sin(\tfrac{pitch}{2}), &
-    s_y &= \sin(\tfrac{yaw}{2}), &
-    s_z &= \sin(\tfrac{roll}{2}).
-\end{align*} $$
-
-Therefore,
-
-$$ \begin{align*}
-  q_yq_pq_r &= [c_y, (0, s_y, 0)] \, [c_p, (s_p, 0, 0)] \, [c_r, (0, 0, s_r)] \\
-  &= [c_yc_pc_r + s_ys_ps_r, (c_ys_pc_r + s_yc_ps_r, s_yc_pc_r - c_ys_ps_r, c_yc_ps_r - s_ys_pc_r)]
-\end{align*} $$(euler-to-quaternion-equation)
-
-:::{admonition} Task
-:class: tip
-
-Add the following method to the Quaternion class
-
-```javascript
-fromEuler(yaw, pitch, roll) {
-    const cy = Math.cos(0.5 * yaw);
-    const sy = Math.sin(0.5 * yaw);
-    const cp = Math.cos(0.5 * pitch);
-    const sp = Math.sin(0.5 * pitch);
-    const cr = Math.cos(0.5 * roll);
-    const sr = Math.sin(0.5 * roll);
-
-    return new Quaternion(
-        cy * cp * cr + sy * sp * sr,
-        cy * sp * cr + sy * cp * sr,
-        sy * cp * cr - cy * sp * sr,
-        cy * cp * sr - sy * sp * cr
-    );
-}
-```
-
-And add the following code to the ***quaternion_calculations.js*** file
-
-```javascript
-const yaw = 45 * Math.PI / 180;
-const pitch = 45 * Math.PI / 180;
-const q3 = new Quaternion.fromEuler(yaw, pitch, 0.0);
-console.log("\nq3 = " + q3);
-```
-
-:::
-
-Refresh your browser, and you should see the following added to the webpage
-
-```text
-q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
-```
-
---- -->
 
 ---
 
@@ -936,121 +879,112 @@ q3 = [ 0.854, ( 0.354, 0.354, -0.146 ) ]
 
 Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the `update()` method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through $\pm 90^\circ$ to look straight up or down (recall that we needed to limit the $pitch$ angle between $\pm 89^\circ$).
 
-To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space. We rotate the camera quaternion using two rotation quaternions based on changes to the $yaw$ and $pitch$ angles from the mouse input. Once we have the rotated camera quaternion we can use it to rotate vectors pointing along the $x$ and negative $z$ axes to give the $\vec{right}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.
+To implement a quaternion camera we create a quaternion that describes the orientation of the camera in the world space using the $yaw$ and $pitch$ angles from the mouse input. Once we have the orientation quaternion, we can use it to rotate vectors pointing along the $x$, $y$ and negative $z$ axes to give the $\vec{right}$, $\vec{up}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the orientation quaternion to calculate the view matrix.
 
-For example, consider the camera quaternion $q_{camera} = [1, (0, 0, 0)]$ which represents a camera pointing down the $z$-axis. Let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians) then we need to rotate $q_{camera}$ about the $x$-axis by multiplying by
+For example, let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians), then the quaternion used to rotate the camera up is
 
 $$ q_{pitch} = [\cos(\tfrac{\pi}{8}), \sin(\tfrac{\pi}{8})(1, 0, 0)] = [0.924, (0.383, 0, 0)].$$
-
-Performing the quaternion multiplication we have
-
-$$ \begin{align*}
-    q_{pitch} \, q_{camera} &= [0.924, (0.383, 0, 0)] \, [1, (0, 0, 0)] \\
-    &= [0.924, (0.383, 0, 0)].
-\end{align*} $$
 
 ```{figure} ../_images/10_quaternion_camera_1.svg
 :width: 350
 
-Rotation of the camera quaternion $q_{camera}$ around the $x$-axis by the angle $pitch$.
+Rotation around the $x$-axis by the angle $pitch$.
 ```
 
-Let's say the user also moves the mouse to the left resulting in a $yaw$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians) then we need to rotate about the $y$-axis by multiplying $q_{pitch} \, q_{camera}$ by
+Let's say the user also moves the mouse to the left resulting in a $yaw$ angle of $30^\circ$ (which is $\frac{\pi}{6}$ in radians), then the quaternion used to rotate the camera to the left is
 
 $$ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (0, 0.259, 0)]. $$
 
-Performing the quaternion multiplication we have
+Combining the two quaternions we have
 
 $$ \begin{align*}
-    q_{yaw} \, q_{pitch} \, q_{camera} &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
+    q_{or} &= q_{yaw} \, q_{pitch} \\
+    &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
     &= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} $$
 
-Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch} \, q_{camera}$ means that the $q_{camera}$ is multiplied by $q_{pitch}$ first and then multiplied by $q_{yaw}$.
-
 ```{figure} ../_images/10_quaternion_camera_2.svg
-:width: 300
+:width: 350
 
-Rotation of the camera quaternion $q_{camera}'$ around the $x$-axis by the angle $pitch$.
+Rotation around the $y$-axis by the angle $yaw$.
 ```
 
-Once the camera quaternion has been rotated using the $pitch$ and $yaw$ angles, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the local camera vectors $\vec{front}$, $\vec{right}$ and $\vec{up}$. In addition, we can use the inverse of the quaternion matrix form of the camera quaternion to calculate the view matrix using
+Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch}$ means that we perform the pitch rotation followed by the yaw rotation. Once the orientation quaternion $q_{or}$ has been calculated, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors for movement calculations
 
-$$ View = q_{camera}^{-1} \cdot Translate(-\vec{eye}). $$
+$$ \begin{align*}
+  q_{or} \, [0, (0, 0, -1)] \, q_{or}^{-1} &= [0, (-0.354, 0.707, -0.612)], \\
+  q_{or} \, [0, (1, 0, 0)] \, q_{or}^{-1} &= [0, (0.866, 0, -0.5)], \\
+  q_{or} \, [0, (0, 1, 0)] \, q_{or}^{-1} &= [0, (0.354, 0.707, 0.612)],
+\end{align*} $$
 
-The reason we use the inverse camera quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
+so $\vec{front} = (-0.354, 0.707, -0.612)$, $\vec{right} = (0.866, 0, -0.5)$ and $\vec{up} = (0.354, 0.707, 0.612)$. 
+
+We can also use the matrix form of the inverse orientation quaternion to calculate the view matrix
+
+$$ View = q_{or}^{-1} \cdot Translate(-\vec{eye}). $$
+
+The reason we use the inverse orientation quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
 
 :::{admonition} Task
 :class: tip
 
-In the ***camera.js*** file delete the camera vectors $\vec{worldUp}$, $\vec{front}$, $\vec{right}$ and $\vec{up}$ (but keep the $\vec{eye}$ vector) as well as the $yaw$ and $pitch$ properties from the Camera class constructor (we will no longer need these since the camera vectors are calculated using a quaternion) and add the following quaternion to the constructor
+In the ***camera.js*** file delete the camera vectors $\vec{worldUp}$, $\vec{front}$, $\vec{right}$ and $\vec{up}$ (but keep the $\vec{eye}$ vector) and add the following quaternion to the constructor
 
 ```javascript
-// Rotation quaternion
-this.rotation = new Quaternion();
+// Orientation quaternion
+this.orientation = new Quaternion();
 ```
 
 Change the `update()` method so that is looks like the following
 
 ```javascript
-update(dt) {  
+  update(input, dt) {
 
-    // Pitch rotation (rotate around local right vector)
-    const localRight = this.rotation.rotateVector([1, 0, 0]);
-    const pitchQuat = Quaternion.fromAxisAngle(localRight, this.pitch);
+    // Get yaw and pitch angles from mouse input
+    const mouse = input.consumeMouseDelta();
+    this.yaw   -= mouse.x * this.turnSpeed;
+    this.pitch -= mouse.y * this.turnSpeed;
 
-    // Yaw rotation (rotate around y-axis)
-    const yawQuat = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+    // Orientation quaternion
+    const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
+    const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+    this.orientation = qYaw.multiply(qPitch).normalize();
 
-    // Zero yaw and pitch angles
-    this.yaw = 0;
-    this.pitch = 0;
-
-    // Rotate camera quaternion
-    this.rotation = yawQuat
-        .multiply(pitchQuat)
-        .multiply(this.rotation)
-        .normalize();
-
-    // Calculate front and right camera vectors
-    const front = this.rotation.rotateVector([0, 0, -1]);
-    const right = this.rotation.rotateVector([1, 0, 0]);
+    // Front and right camera vectors
+    const front = this.orientation.rotateVector([0, 0, -1]);
+    const right = this.orientation.rotateVector([1, 0, 0]);
 
     // Camera movement
     let vel = [0, 0, 0];
-    if (this.keys["w"]) vel = addVector(vel, front);
-    if (this.keys["s"]) vel = subtractVector(vel, front);
-    if (this.keys["a"]) vel = subtractVector(vel, right);
-    if (this.keys["d"]) vel = addVector(vel, right);
-    console.log();
+    if (input.isDown("w")) vel = addVector(vel, front);
+    if (input.isDown("s")) vel = subtractVector(vel, front);
+    if (input.isDown("a")) vel = subtractVector(vel, right);
+    if (input.isDown("d")) vel = addVector(vel, right);
 
     if (length(vel) > 0) {
-        vel = normalize(vel);
-        this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
+      vel = normalize(vel);
+      this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
     }
-}
+  }
 ```
-
-In the `mouseMove()` function change the `+=` to `-=` in the command to update the $yaw$ angle and delete the commands that limit the $pitch$ angle. 
 
 Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
-    const rotate = this.rotation.inverse().matrix();
-    const translate = new Mat4().translate([
-        -this.eye[0],
-        -this.eye[1],
-        -this.eye[2]
-    ]);
-
-    return rotate.multiply(translate);
-}
+  const rotateMatrix = this.orientation.inverse().matrix();
+  const translateMatrix = new Mat4().translate([
+    -this.eye[0],
+    -this.eye[1],
+    -this.eye[2]
+  ]);
+  
+  return rotateMatrix.multiply(translateMatrix);
 ```
 
 :::
 
-Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the camera quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new camera quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the camera quaternion to compute the view matrix.
+Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the orientation quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new orientation quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the orientation quaternion to compute the view matrix.
 
 Load ***index.html*** in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through $\pm 90^\circ$.
 
@@ -1111,9 +1045,9 @@ $$q_t = q_1 + t  (q_2 - q_1).$$
   
 $$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} \, q_1 + \frac{\sin(t\theta)}{\sin(\theta)} \, q_2, $$
 
-where $t =  1 - \exp(-rotation \, speed \times \Delta t)$ for exponential damping.
+where $t =  1 - \exp(-smoothing \times \Delta t)$ for exponential damping and $smoothing$ is a parameter that controls the smoothness of the camera. For example, for a framerate of 60 fps, a value of 10 for the smoothing means $t = 1 - \exp(-10 \times \frac{1}{60}) = 0.154$ so every frame the camera is rotating 15.4% of the way towards the target orientation. This is compounded, so the camera rotates towards the target without actually reaching it.
 
-To implement smoothing in a first-person camera we calculate a target quaternion using the mouse input and then use SLERP to calculate the interpolated quaternion between the current camera quaternion and the target quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the camera quaternion and is used to perform the rotations on the camera vectors.
+To implement smoothing in a first-person camera we add a target orientation quaternion to the Camera class and change the quaternion calculations so that we rotate this quaternion based on the mouse input. We then use SLERP to calculate the interpolated quaternion between the current orientation quaternion and the target orientation quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the new orientation quaternion and is used to perform the rotations on the camera vectors.
 
 ```{figure} ../_images/10_slerped_camera.svg
 :width: 350

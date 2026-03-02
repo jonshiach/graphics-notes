@@ -33,44 +33,44 @@ Add the following class to the ***webGLUtils.js*** file
 ```javascript
 class Input {
 
-    constructor() {
-        this.keys = {};
-        this.mouseDelta = { x: 0, y: 0 };
+  constructor(canvas) {
+    this.keys = {};
+    this.mouseDelta = { x: 0, y: 0 };
 
-        window.addEventListener("keydown", e => {
-            this.keys[e.key.toLowerCase()] = true;
-        });
+    window.addEventListener("keydown", e => {
+      this.keys[e.key.toLowerCase()] = true;
+    });
 
-        window.addEventListener("keyup", e => {
-            this.keys[e.key.toLowerCase()] = false;
-        });
+    window.addEventListener("keyup", e => {
+      this.keys[e.key.toLowerCase()] = false;
+    });
 
-        canvas.addEventListener("click", () => 
-            canvas.requestPointerLock()
-        );
+    canvas.addEventListener("click", () => 
+      canvas.requestPointerLock()
+    );
 
-        document.addEventListener("mousemove", e => {
-            if (document.pointerLockElement === canvas) {
-                this.mouseDelta.x += e.movementX;
-                this.mouseDelta.y += e.movementY;
-            }
-        });
-    }
+    document.addEventListener("mousemove", e => {
+      if (document.pointerLockElement === canvas) {
+        this.mouseDelta.x += e.movementX;
+        this.mouseDelta.y += e.movementY;
+      }
+    });
+  }
 
-    isDown(key) {
-        return this.keys[key.toLowerCase()];
-    }
+  isDown(key) {
+    return this.keys[key.toLowerCase()];
+  }
 
-    consumeMouseDelta() {
+  consumeMouseDelta() {
 
-        const dx = this.mouseDelta.x;
-        const dy = this.mouseDelta.y;
+    const dx = this.mouseDelta.x;
+    const dy = this.mouseDelta.y;
 
-        this.mouseDelta.x = 0;
-        this.mouseDelta.y = 0;
+    this.mouseDelta.x = 0;
+    this.mouseDelta.y = 0;
 
-        return { dx, dy };
-    }
+    return { dx, dy };
+  }
 }
 ```
 
@@ -290,7 +290,7 @@ So now we can calculate the front vector from the $yaw$ and $pitch$ Euler angles
 Add the following to the movement settings in the Camera class constructor
 
 ```javascript
-this.turnSpeed = 0.005;  
+this.turnSpeed = 0.002;  
 this.yaw = 0;
 this.pitch = 0;
 ```
@@ -433,7 +433,7 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
     $$jump \, velocity = jump \, velocity - 9.81 \times \Delta t$$
 
-   - $9.81ms^{-2}$ is the acceleration due to gravity on Earth.
+   - $9.81$ms$^{-2}$ is the acceleration due to gravity on Earth.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="60%">

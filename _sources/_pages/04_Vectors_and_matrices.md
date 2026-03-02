@@ -32,14 +32,14 @@ Create another file called ***vectors_and_matrices.js*** and enter the following
 
 ```javascript
 function setupConsoleOutput(elementId) {
-    const output = document.getElementById(elementId);
+  const output = document.getElementById(elementId); 
 
-    function write(args) {
-        const line = document.createElement("div");
-        line.textContent = [...args].join(" ");
-        output.appendChild(line);
-    }
-    console.log = (...args) => write(args);
+  function write(args) {
+    const line = document.createElement("div");
+    line.textContent = [...args].join(" ");
+    output.appendChild(line);
+  }
+  console.log = (...args) => write(args);
 }
 
 setupConsoleOutput("console-output");
@@ -172,11 +172,11 @@ Add the following functions to the ***maths.js*** file
 
 ```javascript
 function addVector(a, b) {
-    return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
+  return [ a[0] + b[0], a[1] + b[1], a[2] + b[2] ];
 }
 
 function subtractVector(a, b) {
-    return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
+  return [ a[0] - b[0], a[1] - b[1], a[2] - b[2] ];
 }
 ```
 
@@ -244,7 +244,7 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function scaleVector(v, k) {
-    return [ k * v[0], k * v[1], k * v[2] ];
+  return [ k * v[0], k * v[1], k * v[2] ];
 }
 ```
 
@@ -299,7 +299,7 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function length(v) {
-    return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+  return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 ```
 
@@ -355,9 +355,9 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function normalize(v) {
-    const len = length(v);
-    if (len === 0) return [0, 0, 0];
-    return scaleVector(v, 1 / len);
+  const len = length(v);
+  if (len === 0) return [0, 0, 0];
+  return scaleVector(v, 1 / len);
 }
 ```
 
@@ -496,11 +496,11 @@ Add the following function to the ***maths.js*** file
 
 ```javascript
 function cross(a, b) {
-    return [
-        a[1] * b[2] - a[2] * b[1],
-        a[2] * b[0] - a[0] * b[2],
-        a[0] * b[1] - a[1] * b[0]
-    ];
+  return [
+    a[1] * b[2] - a[2] * b[1],
+    a[2] * b[0] - a[0] * b[2],
+    a[0] * b[1] - a[1] * b[0]
+  ];
 }
 ```
 
@@ -555,44 +555,44 @@ Add the following class declaration to the ***maths.js*** file.
 ```javascript
 // 4x4 Matrix class
 class Mat4 {
-    constructor() {
-        this.m = new Float32Array(16);
-        this.identity();
-    }
+  constructor() {
+    this.m = new Float32Array(16);
+    this.identity();
+  }
 
-    identity() {
-        const m = this.m;
-        m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
-        m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
-        m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
-        m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
-        return this;
-    }
+  identity() {
+    const m = this.m;
+    m[0] = 1; m[4] = 0; m[8]  = 0; m[12] = 0;
+    m[1] = 0; m[5] = 1; m[9]  = 0; m[13] = 0;
+    m[2] = 0; m[6] = 0; m[10] = 1; m[14] = 0;
+    m[3] = 0; m[7] = 0; m[11] = 0; m[15] = 1;
+    return this;
+  }
 
-    set(values) {
-        this.m.set(values);
-        return this;
-    }
+  set(values) {
+    this.m.set(values);
+    return this;
+  }
 
-    toString() {
-        const m = this.m;
-        let string = "";
-        for (let i = 0; i < 4; i++) {
-            const row = [
-                m[i * 4 + 0].toFixed(2).padStart(8),
-                m[i * 4 + 1].toFixed(2).padStart(8),
-                m[i * 4 + 2].toFixed(2).padStart(8),
-                m[i * 4 + 3].toFixed(2).padStart(8),
-            ];
-            string += "    [" + row.join(" ") + " ]\n";
-        }
-        return string;
+  toString() {
+    const m = this.m;
+    let string = "";
+    for (let i = 0; i < 4; i++) {
+      const row = [
+        m[i * 4 + 0].toFixed(2).padStart(8),
+        m[i * 4 + 1].toFixed(2).padStart(8),
+        m[i * 4 + 2].toFixed(2).padStart(8),
+        m[i * 4 + 3].toFixed(2).padStart(8),
+      ];
+      string += "    [" + row.join(" ") + " ]\n";
     }
+    return string;
+  }
 
-    copy (mat) {
-        this.m.set(mat.m);
-        return this;
-    }
+  copy (mat) {
+    this.m.set(mat.m);
+    return this;
+  }
 }
 ```
 
@@ -602,10 +602,10 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 // Matrices
 console.log("\nMatrices\n--------");
 const A = new Mat4().set([
-     1,  2,  3,  4,
-     5,  6,  7,  8,
-     9, 10, 11, 12,
-    13, 14, 15, 16
+   1,  2,  3,  4,
+   5,  6,  7,  8,
+   9, 10, 11, 12,
+  13, 14, 15, 16
 ]);
 console.log("A =\n" + A);
 ```
@@ -683,15 +683,15 @@ Add the following method definition to the matrix class.
 
 ```javascript
 transpose() {
-    const m = this.m;
-    let tmp;
-    tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
-    tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
-    tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
-    tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
-    tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
-    tmp = m[11]; m[11] = m[14]; m[14] = tmp;
-    return this
+  const m = this.m;
+  let tmp;
+  tmp = m[1];  m[1]  = m[4];  m[4]  = tmp;
+  tmp = m[2];  m[2]  = m[8];  m[8]  = tmp;
+  tmp = m[3];  m[3]  = m[12]; m[12] = tmp;
+  tmp = m[6];  m[6]  = m[9];  m[9]  = tmp;
+  tmp = m[7];  m[7]  = m[13]; m[13] = tmp;
+  tmp = m[11]; m[11] = m[14]; m[14] = tmp;
+  return this
 }
 ```
 
@@ -821,18 +821,18 @@ Add the following method definition to the matrix class.
 
 ```javascript
 multiply(mat) {
-    const result = new Float32Array(16);
-    for (let col = 0; col < 4; col++) {
-        for (let row = 0; row < 4; row++) {
-            let sum = 0;
-            for (let k = 0; k < 4; k++) {
-                sum += this.m[row + k * 4] * mat.m[k + col * 4];
-            }
-            result[row + col * 4] = sum;
-        }
+  const result = new Float32Array(16);
+  for (let col = 0; col < 4; col++) {
+    for (let row = 0; row < 4; row++) {
+      let sum = 0;
+      for (let k = 0; k < 4; k++) {
+          sum += this.m[row + k * 4] * mat.m[k + col * 4];
+      }
+      result[row + col * 4] = sum;
     }
-    this.set(result);
-    return this;
+  }
+  this.set(result);
+  return this;
 }
 ```
 
@@ -1037,58 +1037,58 @@ So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating th
 Add the following method to the Matrix class (you may wish to use copy and paste here).
 
 ```javascript
-inverse() {
-    let m = this.m;
-    const inv = new Float32Array([
-         m[5] * m[10] * m[15] - m[5]  * m[11] * m[14] - m[9]  * m[6] * m[15] +
-         m[9] * m[7]  * m[14] + m[13] * m[6]  * m[11] - m[13] * m[7] * m[10],
-        -m[1] * m[10] * m[15] + m[1]  * m[11] * m[14] + m[9]  * m[2] * m[15] -
-         m[9] * m[3]  * m[14] - m[13] * m[2]  * m[11] + m[13] * m[3] * m[10],
-         m[1] * m[6]  * m[15] - m[1]  * m[7]  * m[14] - m[5]  * m[2] * m[15] +
-         m[5] * m[3]  * m[14] + m[13] * m[2]  * m[7]  - m[13] * m[3] * m[6],
-        -m[1] * m[6]  * m[11] + m[1]  * m[7]  * m[10] + m[5]  * m[2] * m[11] -
-         m[5] * m[3]  * m[10] - m[9]  * m[2]  * m[7]  + m[9]  * m[3] * m[6],
+verse() {
+  let m = this.m;
+  const inv = new Float32Array([
+     m[5] * m[10] * m[15] - m[5]  * m[11] * m[14] - m[9]  * m[6] * m[15] +
+     m[9] * m[7]  * m[14] + m[13] * m[6]  * m[11] - m[13] * m[7] * m[10],
+    -m[1] * m[10] * m[15] + m[1]  * m[11] * m[14] + m[9]  * m[2] * m[15] -
+     m[9] * m[3]  * m[14] - m[13] * m[2]  * m[11] + m[13] * m[3] * m[10],
+     m[1] * m[6]  * m[15] - m[1]  * m[7]  * m[14] - m[5]  * m[2] * m[15] +
+     m[5] * m[3]  * m[14] + m[13] * m[2]  * m[7]  - m[13] * m[3] * m[6],
+    -m[1] * m[6]  * m[11] + m[1]  * m[7]  * m[10] + m[5]  * m[2] * m[11] -
+     m[5] * m[3]  * m[10] - m[9]  * m[2]  * m[7]  + m[9]  * m[3] * m[6],
 
-        -m[4] * m[10] * m[15] + m[4]  * m[11] * m[14] + m[8]  * m[6] * m[15] -
-         m[8] * m[7]  * m[14] - m[12] * m[6]  * m[11] + m[12] * m[7] * m[10],
-         m[0] * m[10] * m[15] - m[0]  * m[11] * m[14] - m[8]  * m[2] * m[15] +
-         m[8] * m[3]  * m[14] + m[12] * m[2]  * m[11] - m[12] * m[3] * m[10],
-        -m[0] * m[6]  * m[15] + m[0]  * m[7]  * m[14] + m[4]  * m[2] * m[15] -
-         m[4] * m[3]  * m[14] - m[12] * m[2]  * m[7]  + m[12] * m[3] * m[6],
-         m[0] * m[6]  * m[11] - m[0]  * m[7]  * m[10] - m[4]  * m[2] * m[11] +
-         m[4] * m[3]  * m[10] + m[8]  * m[2]  * m[7]  - m[8]  * m[3] * m[6],
+    -m[4] * m[10] * m[15] + m[4]  * m[11] * m[14] + m[8]  * m[6] * m[15] -
+     m[8] * m[7]  * m[14] - m[12] * m[6]  * m[11] + m[12] * m[7] * m[10],
+     m[0] * m[10] * m[15] - m[0]  * m[11] * m[14] - m[8]  * m[2] * m[15] +
+     m[8] * m[3]  * m[14] + m[12] * m[2]  * m[11] - m[12] * m[3] * m[10],
+    -m[0] * m[6]  * m[15] + m[0]  * m[7]  * m[14] + m[4]  * m[2] * m[15] -
+     m[4] * m[3]  * m[14] - m[12] * m[2]  * m[7]  + m[12] * m[3] * m[6],
+     m[0] * m[6]  * m[11] - m[0]  * m[7]  * m[10] - m[4]  * m[2] * m[11] +
+     m[4] * m[3]  * m[10] + m[8]  * m[2]  * m[7]  - m[8]  * m[3] * m[6],
 
-         m[4] * m[9] * m[15] - m[4]  * m[11] * m[13] - m[8]  * m[5] * m[15] +
-         m[8] * m[7] * m[13] + m[12] * m[5]  * m[11] - m[12] * m[7] * m[9],
-        -m[0] * m[9] * m[15] + m[0]  * m[11] * m[13] + m[8]  * m[1] * m[15] -
-         m[8] * m[3] * m[13] - m[12] * m[1]  * m[11] + m[12] * m[3] * m[9],
-         m[0] * m[5] * m[15] - m[0]  * m[7]  * m[13] - m[4]  * m[1] * m[15] +
-         m[4] * m[3] * m[13] + m[12] * m[1]  * m[7]  - m[12] * m[3] * m[5],
-        -m[0] * m[5] * m[11] + m[0]  * m[7]  * m[9]  + m[4]  * m[1] * m[11] -
-         m[4] * m[3] * m[9]  - m[8]  * m[1]  * m[7]  + m[8]  * m[3] * m[5],
+     m[4] * m[9] * m[15] - m[4]  * m[11] * m[13] - m[8]  * m[5] * m[15] +
+     m[8] * m[7] * m[13] + m[12] * m[5]  * m[11] - m[12] * m[7] * m[9],
+    -m[0] * m[9] * m[15] + m[0]  * m[11] * m[13] + m[8]  * m[1] * m[15] -
+     m[8] * m[3] * m[13] - m[12] * m[1]  * m[11] + m[12] * m[3] * m[9],
+     m[0] * m[5] * m[15] - m[0]  * m[7]  * m[13] - m[4]  * m[1] * m[15] +
+     m[4] * m[3] * m[13] + m[12] * m[1]  * m[7]  - m[12] * m[3] * m[5],
+    -m[0] * m[5] * m[11] + m[0]  * m[7]  * m[9]  + m[4]  * m[1] * m[11] -
+     m[4] * m[3] * m[9]  - m[8]  * m[1]  * m[7]  + m[8]  * m[3] * m[5],
 
-        -m[4] * m[9] * m[14] + m[4]  * m[10] * m[13] + m[8]  * m[5] * m[14] -
-         m[8] * m[6] * m[13] - m[12] * m[5]  * m[10] + m[12] * m[6] * m[9],
-         m[0] * m[9] * m[14] - m[0]  * m[10] * m[13] - m[8]  * m[1] * m[14] +
-         m[8] * m[2] * m[13] + m[12] * m[1]  * m[10] - m[12] * m[2] * m[9],
-        -m[0] * m[5] * m[14] + m[0]  * m[6]  * m[13] + m[4]  * m[1] * m[14] -
-         m[4] * m[2] * m[13] - m[12] * m[1]  * m[6]  + m[12] * m[2] * m[5],
-         m[0] * m[5] * m[10] - m[0]  * m[6]  * m[9]  - m[4]  * m[1] * m[10] +
-         m[4] * m[2] * m[9]  + m[8]  * m[1]  * m[6]  - m[8]  * m[2] * m[5]
-    ]);
+    -m[4] * m[9] * m[14] + m[4]  * m[10] * m[13] + m[8]  * m[5] * m[14] -
+     m[8] * m[6] * m[13] - m[12] * m[5]  * m[10] + m[12] * m[6] * m[9],
+     m[0] * m[9] * m[14] - m[0]  * m[10] * m[13] - m[8]  * m[1] * m[14] +
+     m[8] * m[2] * m[13] + m[12] * m[1]  * m[10] - m[12] * m[2] * m[9],
+    -m[0] * m[5] * m[14] + m[0]  * m[6]  * m[13] + m[4]  * m[1] * m[14] -
+     m[4] * m[2] * m[13] - m[12] * m[1]  * m[6]  + m[12] * m[2] * m[5],
+     m[0] * m[5] * m[10] - m[0]  * m[6]  * m[9]  - m[4]  * m[1] * m[10] +
+     m[4] * m[2] * m[9]  + m[8]  * m[1]  * m[6]  - m[8]  * m[2] * m[5]
+  ]);
 
-    let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
-    if (det === 0) {
-        console.error("Matrix is singular, no inverse exists");
-        return null;
-    }
+  let det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+  if (det === 0) {
+    console.error("Matrix is singular, no inverse exists");
+    return null;
+  }
 
-    det = 1 / det;
-    for (let i = 0; i < 16; i++) {
-        inv[i] *= det;
-    }
-    this.set(inv);
-    return this;
+  det = 1 / det;
+  for (let i = 0; i < 16; i++) {
+    inv[i] *= det;
+  }
+  this.set(inv);
+  return this;
 }
 ```
 
@@ -1096,10 +1096,10 @@ Now add enter the following code to the ***vectors_and_matrices.js*** file.
 
 ```javascript
 const C = new Mat4().set([
-    1, 3, 2, 1,
-    1, 1, 2, 2,
-    1, 3, 3, 2,
-    3, 1, 3, 2
+  1, 3, 2, 1,
+  1, 1, 2, 2,
+  1, 3, 3, 2,
+  3, 1, 3, 2
 ]);
 const invC = new Mat4().copy(C).inverse();
 

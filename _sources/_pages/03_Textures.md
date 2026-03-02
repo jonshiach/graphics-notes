@@ -43,23 +43,23 @@ Add the following function definition to the ***webGLUtils.js*** file.
 
 ```javascript
 function loadTexture(gl, url) {
-    const texture = gl.createTexture();
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
+  // Temporary 1×1 magenta pixel while image loads
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
+
+  const image = new Image();
+  image.src = url;
+  image.onload = () => {
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  };
 
-    // Temporary 1×1 magenta pixel while image loads
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
-
-    const image = new Image();
-    image.src = url;
-    image.onload = () => {
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    };
-
-    return texture;
+  return texture;
 }
 ```
 
@@ -88,11 +88,11 @@ Edit the `vertices` array so that the $(u,v)$ coordinates are defined for each v
 ```javascript
 // Define vertices
 const vertices = new Float32Array([
-    // x    y    z       R    G    B       u    v                        
-    -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.0, 0.0, // vertex 0  3 -- 2
-     0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1.0, 0.0, // vertex 1  |  / |        
-     0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1.0, 1.0, // vertex 2  | /  | 
-    -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.0, 1.0, // vertex 3  0 -- 1 
+  // x    y    z       R    G    B       u    v                        
+  -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,    0.0, 0.0, // vertex 0  3 -- 2
+   0.5, -0.5, 0.0,    0.0, 1.0, 0.0,    1.0, 0.0, // vertex 1  |  / |        
+   0.5,  0.5, 0.0,    0.0, 0.0, 1.0,    1.0, 1.0, // vertex 2  | /  | 
+  -0.5,  0.5, 0.0,    1.0, 1.0, 1.0,    0.0, 1.0, // vertex 3  0 -- 1 
 ]);
 ```
 
@@ -182,7 +182,7 @@ The last thing we need to do is to bind the texture to the uniform in the JavaSc
 :::{admonition} Task
 :class: tip
 
-Add the following code after the texture has been loaded.
+Add the following code before we draw the rectangle
 
 ```javascript
 // Bind texture
@@ -342,21 +342,21 @@ Then change the onlload function in the `loadTexture()` function to the followin
 
 ```javascript
 image.onload = () => {
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);    
 
-    // Auto-generate mipmaps (requires power-of-2 image)
-    if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-        gl.generateMipmap(gl.TEXTURE_2D);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    } else {
-        // Non power-of-2 textures must be clamped & non-mipmapped
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    }
+  // Auto-generate mipmaps (requires power-of-2 image)
+  if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  } else {
+    // Non power-of-2 textures must be clamped & non-mipmapped
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
 };
 ```
 
@@ -456,13 +456,13 @@ A **texture unit** is a location value used by fragment shader for the texture s
 :::{admonition} Task
 :class: tip
 
-Load a second texture by adding the following code after the first texture is loaded.
+Load a second texture by adding the following code after the first texture is loaded
 
 ```javascript
 const texture2 = loadTexture(gl, "assets/crate.png");
 ```
 
-And add the following code in the `render()` function after we have cleared the frame buffer
+And add the following code in the `render()` function after we bound the Mario texture
 
 ```javascript
 gl.activeTexture(gl.TEXTURE1);

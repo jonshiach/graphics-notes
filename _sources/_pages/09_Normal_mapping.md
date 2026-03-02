@@ -186,66 +186,66 @@ Add the following function to the ***webGLUtils.js*** file.
 
 ```javascript
 function computeTangents(vertices, indices) {
-    const vertexCount = indices.length;
-    const tangents = new Float32Array(3 * vertexCount);
+  const vertexCount = indices.length;
+  const tangents = new Float32Array(3 * vertexCount);
 
-    for (let i = 0; i < vertexCount; i += 3) {
+  for (let i = 0; i < vertexCount; i += 3) {
 
-        // Indices of triangle vertices
-        const i0 = indices[i + 0];
-        const i1 = indices[i + 1];
-        const i2 = indices[i + 2];
+    // Indices of triangle vertices
+    const i0 = indices[i + 0];
+    const i1 = indices[i + 1];
+    const i2 = indices[i + 2];
 
-        // Positions and uvs
-        const p0x  = vertices[i0 * 11 + 0];
-        const p0y  = vertices[i0 * 11 + 1];
-        const p0z  = vertices[i0 * 11 + 2];
-        const p1x  = vertices[i1 * 11 + 0];
-        const p1y  = vertices[i1 * 11 + 1];
-        const p1z  = vertices[i1 * 11 + 2];
-        const p2x  = vertices[i2 * 11 + 0];
-        const p2y  = vertices[i2 * 11 + 1];
-        const p2z  = vertices[i2 * 11 + 2];
+    // Positions and uvs
+    const p0x  = vertices[i0 * 11 + 0];
+    const p0y  = vertices[i0 * 11 + 1];
+    const p0z  = vertices[i0 * 11 + 2];
+    const p1x  = vertices[i1 * 11 + 0];
+    const p1y  = vertices[i1 * 11 + 1];
+    const p1z  = vertices[i1 * 11 + 2];
+    const p2x  = vertices[i2 * 11 + 0];
+    const p2y  = vertices[i2 * 11 + 1];
+    const p2z  = vertices[i2 * 11 + 2];
 
-        const uv0x = vertices[i0 * 11 + 6];
-        const uv0y = vertices[i0 * 11 + 7];
-        const uv1x = vertices[i1 * 11 + 6];
-        const uv1y = vertices[i1 * 11 + 7];
-        const uv2x = vertices[i2 * 11 + 6];
-        const uv2y = vertices[i2 * 11 + 7];
+    const uv0x = vertices[i0 * 11 + 6];
+    const uv0y = vertices[i0 * 11 + 7];
+    const uv1x = vertices[i1 * 11 + 6];
+    const uv1y = vertices[i1 * 11 + 7];
+    const uv2x = vertices[i2 * 11 + 6];
+    const uv2y = vertices[i2 * 11 + 7];
 
-        // Edges
-        const e1x = p1x - p0x;
-        const e1y = p1y - p0y;
-        const e1z = p1z - p0z;
-        const e2x = p2x - p1x;
-        const e2y = p2y - p1y;
-        const e2z = p2z - p1z;
+    // Edges
+    const e1x = p1x - p0x;
+    const e1y = p1y - p0y;
+    const e1z = p1z - p0z;
+    const e2x = p2x - p1x;
+    const e2y = p2y - p1y;
+    const e2z = p2z - p1z;
 
-        // UV deltas
-        const du1 = uv1x - uv0x;
-        const dv1 = uv1y - uv0y;
-        const du2 = uv2x - uv1x;
-        const dv2 = uv2y - uv1y;
+    // UV deltas
+    const du1 = uv1x - uv0x;
+    const dv1 = uv1y - uv0y;
+    const du2 = uv2x - uv1x;
+    const dv2 = uv2y - uv1y;
 
-        // Calculate tangent and bitangent
-        const denom = du1 * dv2 - du2 * dv1;
-        if (denom === 0) continue;
-        const f = 1 / denom;
+    // Calculate tangent and bitangent
+    const denom = du1 * dv2 - du2 * dv1;
+    if (denom === 0) continue;
+    const f = 1 / denom;
 
-        const tx = f * (dv2 * e1x - dv1 * e2x);
-        const ty = f * (dv2 * e1y - dv1 * e2y);
-        const tz = f * (dv2 * e1z - dv1 * e2z);
+    const tx = f * (dv2 * e1x - dv1 * e2x);
+    const ty = f * (dv2 * e1y - dv1 * e2y);
+    const tz = f * (dv2 * e1z - dv1 * e2z);
 
-        // Accumulate tangents
-        for (const idx of [i0, i1, i2]) {
-            tangents[idx * 3 + 0]   += tx;
-            tangents[idx * 3 + 1]   += ty;
-            tangents[idx * 3 + 2]   += tz;
-        }
+    // Accumulate tangents
+    for (const idx of [i0, i1, i2]) {
+      tangents[idx * 3 + 0] += tx;
+      tangents[idx * 3 + 1] += ty;
+      tangents[idx * 3 + 2] += tz;
     }
+  }
 
-    return tangents;
+  return tangents;
 }
 ```
 
@@ -408,17 +408,17 @@ Add the following code after we load the crate textures.
 ```javascript
 // Define floor vertices
 const floorVertices = new Float32Array([
-    // x y   z     R  G  B     u  v     nx  ny  nz
-    -1,  0,  1,    0, 0, 0,    0, 0,    0,  1,  0,
-     1,  0,  1,    0, 0, 0,    8, 0,    0,  1,  0,
-     1,  0, -1,    0, 0, 0,    8, 8,    0,  1,  0,
-    -1,  0, -1,    0, 0, 0,    0, 8,    0,  1,  0,
+  // x y   z     R  G  B     u  v     nx  ny  nz
+  -1,  0,  1,    0, 0, 0,    0, 0,    0,  1,  0,
+   1,  0,  1,    0, 0, 0,    8, 0,    0,  1,  0,
+   1,  0, -1,    0, 0, 0,    8, 8,    0,  1,  0,
+  -1,  0, -1,    0, 0, 0,    0, 8,    0,  1,  0,
 ]);
 
 // Define floor indices
 const floorIndices = new Uint16Array([
-    0,  1,  2,  
-    0,  2,  3,
+  0,  1,  2,  
+  0,  2,  3,
 ]);
 
 // Define floor VAO
@@ -451,8 +451,8 @@ gl.uniform1f(gl.getUniformLocation(program, "uShininess"), 32);
 
 // Calculate the model matrix
 const model = new Mat4()
-    .translate([6, -0.5, -6])
-    .scale([10, 1, 10]);
+  .translate([6, -0.5, -6])
+  .scale([10, 1, 10]);
 gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
 // Draw the triangles
@@ -474,7 +474,7 @@ Note how the mortar between the stones have specular highlights. This isn't very
 :::{admonition} Task
 :class: tip
 
-Download the file [stones_specular.png](../_downloads/Lab%209%20-%20Normal%20Mapping/crate_specular.png) and save it in your ***Lab 9 - Normal Mapping/assets/*** folder.
+Download the file [stones_specular.png](../_downloads/Lab%209%20-%20Normal%20Mapping/stones_specular.png) and save it in your ***Lab 9 - Normal Mapping/assets/*** folder.
 
 Add the following code after we have loaded the floor textures.
 

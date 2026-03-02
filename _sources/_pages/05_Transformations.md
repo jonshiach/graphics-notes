@@ -91,8 +91,6 @@ We can use a trick where we use <a href="https://en.wikipedia.org/wiki/Homogeneo
 So if we choose $w=1$ then we can write the Cartesian coordinates $(x, y, z)$ as the homogeneous coordinates $(x, y, z, 1)$ (remember that 4-element vector with the additional 1 in our [vertex shader](vertex-shader-section)?). So how does that help us with our elusive translation matrix? Well we can now represent translation as a $4 \times 4$ matrix
 
 ```{math}
-
-
 \begin{pmatrix}
     1 & 0 & 0 & t_x \\
     0 & 1 & 0 & t_y \\
@@ -135,8 +133,6 @@ Translate = \begin{pmatrix}
 Let's translate the rectangle $0.4$ to the right and $0.3$ upwards (remember we are dealing with normalised device coordinates, so the window coordinates are between $-1$ and $1$). The transposed transformation matrix to perform this translation is
 
 ```{math}
-
-
 Translate = \begin{pmatrix}
     1 & 0 & 0 & 0 \\
     0 & 1 & 0 & 0 \\
@@ -154,15 +150,15 @@ Add the following method to the Mat4 class in the ***maths.js*** file
 
 ```javascript
 translate(t) {
-    const [x, y, z] = t;
-    const transMatrix = new Mat4().set([
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        x, y, z, 1
-    ]);
+  const [x, y, z] = t;
+  const transMatrix = new Mat4().set([
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      x, y, z, 1
+  ]);
 
-    return this.multiply(transMatrix);
+  return this.multiply(transMatrix);
 }
 ```
 
@@ -279,15 +275,15 @@ Enter the following method to the Mat4 class
 
 ```javascript
 scale(s) {
-    const [x, y, z] = s;
-    const scaleMatrix = new Mat4().set([
-        x, 0, 0, 0,
-        0, y, 0, 0,
-        0, 0, z, 0,
-        0, 0, 0, 1
-    ]);
+  const [x, y, z] = s;
+  const scaleMatrix = new Mat4().set([
+      x, 0, 0, 0,
+      0, y, 0, 0,
+      0, 0, z, 0,
+      0, 0, 0, 1
+  ]);
 
-    return this.multiply(scaleMatrix);
+  return this.multiply(scaleMatrix);
 }
 ```
 
@@ -506,16 +502,16 @@ Add the following method to the Mat4 class
 
 ```javascript
 rotate(angle) {
-    const c = Math.cos(angle);
-    const s = Math.sin(angle);
-    const rotateMatrix = new Mat4().set([
-         c, s, 0, 0,
-        -s, c, 0, 0,
-        0,  0, 1, 0,
-        0,  0, 0, 1
-    ]);
+  const c = Math.cos(angle);
+  const s = Math.sin(angle);
+  const rotateMatrix = new Mat4().set([
+       c, s, 0, 0,
+      -s, c, 0, 0,
+      0,  0, 1, 0,
+      0,  0, 0, 1
+  ]);
 
-    return this.multiply(rotateMatrix);
+  return this.multiply(rotateMatrix);
 }
 ```
 
@@ -755,19 +751,19 @@ Edit the `rotate()` method so that it looks like the following
 
 ```javascript
 rotate(axis, angle) {
-    axis = normalize(axis);
-    const [x, y, z] = axis;
-    const c = Math.cos(angle);
-    const s = Math.sin(angle);
-    const t = 1 - c;
-    const rotateMatrix = new Mat4().set([
-        t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
-        t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
-        t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
-        0, 0, 0, 1
-    ]);
+  axis = normalize(axis);
+  const [x, y, z] = axis;
+  const c = Math.cos(angle);
+  const s = Math.sin(angle);
+  const t = 1 - c;
+  const rotateMatrix = new Mat4().set([
+    t * x * x + c,      t * x * y + s * z,  t * x * z - s * y,  0,
+    t * y * x - s * z,  t * y * y + c,      t * y * z + s * x,  0,
+    t * z * x + s * y,  t * z * y - s * x,  t * z * z + c,      0,
+    0, 0, 0, 1
+  ]);
 
-    return this.multiply(rotateMatrix);
+  return this.multiply(rotateMatrix);
 }
 ```
 
@@ -829,10 +825,11 @@ Let's apply scaling, rotation and translation (in that order) to our rectangle. 
 Edit the code that calculates the model matrix so that it looks like the following
 
 ```javascript
+// Calculate the model matrix
 const model = new Mat4()
-   .translate([0.4, 0.3, 0])
-   .rotate([0, 0, 1], 45 * Math.PI / 180)
-   .scale([0.5, 0.4, 1]);
+  .translate([0.4, 0.3, 0])
+  .rotate([0, 0, 1], 45 * Math.PI / 180)
+  .scale([0.5, 0.4, 1]);
 ```
 
 :::
@@ -874,9 +871,9 @@ Then change the code used to calculate the model matrix to the following
 const rotationsPerSecond = 1/2;
 const angle = rotationsPerSecond * time * 0.001 * 2 * Math.PI;
 const model = new Mat4()
-   .translate([0.4, 0.3, 0])
-   .rotate([0, 0, 1], angle)
-   .scale([0.5, 0.4, 1]);
+  .translate([0.4, 0.3, 0])
+  .rotate([0, 0, 1], angle)
+  .scale([0.5, 0.4, 1]);
 ```
 
 :::
