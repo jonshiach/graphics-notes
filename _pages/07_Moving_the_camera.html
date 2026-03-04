@@ -523,17 +523,17 @@ document.write(`
 <span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">worldUp</span><span class="p">));</span>
 <span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">cross</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">));</span>
 
-<span class="w">  </span><span class="c1">// Camera movement</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// Movement direction</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">length</span><span class="p">(</span><span class="nx">vel</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">vel</span><span class="p">);</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">vel</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">length</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Move camera</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">moveDir</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -542,7 +542,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<p>Here we have made changes the <code class="docutils literal notranslate"><span class="pre">update()</span></code> camera class method to create a velocity vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the velocity vector. If the velocity vector is non-zero, so that a key is being pressed, we normalize it and add it to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
+<p>Here we have made changes the <code class="docutils literal notranslate"><span class="pre">update()</span></code> camera class method to create a movement direction vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the <span class="math notranslate nohighlight">\(\vec{front}\)</span> or <span class="math notranslate nohighlight">\(\vec{right}\)</span> vectors to the movement vector. If the movement vector is non-zero, i.e., we know that a key is being held down, we normalize it and add it to the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector.</p>
 <p>Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.</p>
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
@@ -575,19 +575,20 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>First add the following to the Camera class constructor.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Movement settings</span>
-<span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">maxSpeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Then change the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method declaration so that it takes in the <code class="docutils literal notranslate"><span class="pre">dt</span></code> input.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">update</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span><span class="w"> </span><span class="nx">dt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </pre></div>
 </div>
-<p>Finally, change the calculation of the new <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector to the following.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">vel</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dt</span><span class="p">));</span>
+<p>Now change the code used to move the camera to the following</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Move camera</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">scaleVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">maxSpeed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">dt</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
-<p>So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.</p>
+<p>So here we have set the speed of our camera to 5 units per second and have scaled the movement vector by this speed. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.</p>
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
     <source src="../_static/videos/07_keyboard_2.mp4" type="video/mp4">
@@ -780,12 +781,50 @@ document.write(`
     <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
 </video>
 </center>
-<ol class="arabic simple" start="3">
-<li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is</p>
+<ol class="arabic" start="3">
+<li><p>Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:</p>
+<ul>
+<li><p>Add a velocity vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 0, 0)\)</span>, acceleration factor <span class="math notranslate nohighlight">\( = 5\)</span> and deceleration factor <span class="math notranslate nohighlight">\(= 10\)</span> to the camera class constructor.</p></li>
+<li><p><strong>Acceleration</strong></p>
 <ul class="simple">
-<li><p>Loop through all the cubes</p></li>
-<li><p>Calculate the distance between the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> vector and the centre of the current cube</p></li>
-<li><p>If this distance is less than 1, move the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> away from the centre of the current cube so that the distance is now 1</p></li>
+<li><p>Compute a target horizontal velocity vector: <span class="math notranslate nohighlight">\( \vec{v}_{target} = \textsf{maxSpeed} \times \operatorname{normalize}(\vec{move})\)</span></p></li>
+<li><p>Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the target velocity</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \vec{v} = \vec{v} + t (\vec{v}_{target} - \vec{v}) \]</div>
+<ul class="simple">
+<li><p>Where <span class="math notranslate nohighlight">\(t = \exp(-\textsf{acceleration factor} \times \Delta t)\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Deceleration</strong></p>
+<ul class="simple">
+<li><p>Apply damping to the horizontal velocity</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \vec{v} = t \vec{v}\]</div>
+<ul class="simple">
+<li><p>Where <span class="math notranslate nohighlight">\(t = \exp(-\textsf{deceleration factor} \times \Delta t)\)</span></p></li>
+</ul>
+</li>
+<li><p>Calculate the new camera position</p></li>
+</ul>
+</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ \vec{eye} = \vec{eye} + \vec{v} \, \Delta t\]</div>
+<ol class="arabic simple" start="4">
+<li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is:</p>
+<ul class="simple">
+<li><p>Loop through all the cubes</p>
+<ul>
+<li><p>Calculate a vector from the camera position to the object centre: <span class="math notranslate nohighlight">\(\vec{offset} = \vec{object} - \vec{eye}\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\| \vec{offset} \| &lt; 0\)</span></p>
+<ul>
+<li><p>Move camera away from object: <span class="math notranslate nohighlight">\(\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>

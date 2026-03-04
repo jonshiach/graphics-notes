@@ -127,17 +127,17 @@ update(input) {
   this.right = normalize(cross(this.front, this.worldUp));
   this.up  = normalize(cross(this.right, this.front));
 
-  // Camera movement
-  let vel = [0, 0, 0];
-  if (input.isDown("w")) vel = addVector(vel, this.front);
-  if (input.isDown("s")) vel = subtractVector(vel, this.front);
-  if (input.isDown("a")) vel = subtractVector(vel, this.right);
-  if (input.isDown("d")) vel = addVector(vel, this.right);
+  // Movement direction
+  let moveDir = [0, 0, 0];
+  if (input.isDown("w")) moveDir = addVector(moveDir, this.front);
+  if (input.isDown("s")) moveDir = subtractVector(moveDir, this.front);
+  if (input.isDown("a")) moveDir = subtractVector(moveDir, this.right);
+  if (input.isDown("d")) moveDir = addVector(moveDir, this.right);
 
-  if (length(vel) > 0) {
-      vel = normalize(vel);
-      this.eye = addVector(this.eye, vel);
-  }
+  if (length(moveDir) > 0) moveDir = normalize(moveDir);
+
+  // Move camera
+  this.eye = addVector(this.eye, moveDir);
 }
 ```
 
@@ -149,7 +149,7 @@ camera.update(input);
 
 :::
 
-Here we have made changes the `update()` camera class method to create a velocity vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the $\vec{front}$ or $\vec{right}$ vectors to the velocity vector. If the velocity vector is non-zero, so that a key is being pressed, we normalize it and add it to the $\vec{eye}$ vector.
+Here we have made changes the `update()` camera class method to create a movement direction vector and initialise it to all zeros. We then check whether any of the <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd> and <kbd>D</kbd> keys are depressed, and if so we add the $\vec{front}$ or $\vec{right}$ vectors to the movement vector. If the movement vector is non-zero, i.e., we know that a key is being held down, we normalize it and add it to the $\vec{eye}$ vector.
 
 Now our WebGL application will listen to any keyboard input and move the camera using the WSAD keys. Refresh your browser and have a play with moving the camera around.
 
@@ -197,7 +197,7 @@ First add the following to the Camera class constructor.
 
 ```javascript
 // Movement settings
-this.speed = 5;
+this.maxSpeed = 5;
 ```
 
 Then change the `update()` method declaration so that it takes in the `dt` input.
@@ -206,15 +206,16 @@ Then change the `update()` method declaration so that it takes in the `dt` input
 update(input, dt) {
 ```
 
-Finally, change the calculation of the new $\vec{eye}$ vector to the following.
+Now change the code used to move the camera to the following
 
 ```javascript
-this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
+// Move camera
+this.eye = addVector(this.eye, scaleVector(moveDir, this.maxSpeed * dt));
 ```
 
 :::
 
-So here we have set the speed of our camera to 5 units per second and have scaled the velocity vector by this speed. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.
+So here we have set the speed of our camera to 5 units per second and have scaled the movement vector by this speed. The speed you choose is arbitrary, and we can change this to suit our needs, e.g., simulating a character sprinting. Refresh your browser and have a play with the controls, and you should have a much more satisfying result.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
@@ -441,11 +442,36 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 </video>
 </center>
 
-3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is
+3. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:
+  
+   - Add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $ = 5$ and deceleration factor $= 10$ to the camera class constructor.
+   - **Acceleration**
+     - Compute a target horizontal velocity vector: $ \vec{v}_{target} = \textsf{maxSpeed} \times \operatorname{normalize}(\vec{move})$
 
-    - Loop through all the cubes
-    - Calculate the distance between the $\vec{eye}$ vector and the centre of the current cube
-    - If this distance is less than 1, move the $\vec{eye}$ away from the centre of the current cube so that the distance is now 1
+     - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the target velocity
+
+      $$ \vec{v} = \vec{v} + t (\vec{v}_{target} - \vec{v}) $$
+
+      - Where $t = \exp(-\textsf{acceleration factor} \times \Delta t)$
+
+    - **Deceleration**
+
+      - Apply damping to the horizontal velocity
+
+      $$ \vec{v} = t \vec{v}$$
+
+      - Where $t = \exp(-\textsf{deceleration factor} \times \Delta t)$
+  
+    - Calculate the new camera position
+
+$$ \vec{eye} = \vec{eye} + \vec{v} \, \Delta t$$
+
+4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is:
+
+   - Loop through all the cubes
+     - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
+     - If $\| \vec{offset} \| < 0$
+       - Move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
 
 ---
 
