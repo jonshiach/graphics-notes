@@ -431,11 +431,11 @@ document.write(`
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define cube positions (5x5 grid of cubes)</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">cubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">            </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">j</span><span class="p">],</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">j</span><span class="p">],</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">numCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cubes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
 </pre></div>
@@ -489,14 +489,14 @@ document.write(`
 
 <span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">    </span><span class="c1">// Object colour</span>
-<span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// Object colour</span>
+<span class="w">  </span><span class="kt">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// Ambient light</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKa</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// Ambient light</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKa</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
 
-<span class="w">    </span><span class="c1">// Fragment colour</span>
-<span class="w">    </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// Fragment colour</span>
+<span class="w">  </span><span class="n">fragColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">ambient</span><span class="p">,</span><span class="w"> </span><span class="n">objectColour</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -510,8 +510,8 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Edit the code used to define the cubes so that it looks like the following.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">cubes</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">cubePositions</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
-<span class="w">    </span><span class="nx">ka</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">position</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">cubePositions</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">ka</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -1070,11 +1070,11 @@ document.write(`
 <p>To add more light sources to a scene is simply a matter of calculating the ambient, diffuse and specular lighting for each additional light source and then adding them to the fragment colour. We have seen for a single light source we have to define the light source colours, the position of the light source in the world space and the three attenuation constants. Given that we would like to do this for multiple light sources we need data structure for each light source.</p>
 <p>A data structure in GLSL is defined as follows:</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -1305,10 +1305,10 @@ document.write(`
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Spotlight intensity</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">));</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">));</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1319,8 +1319,8 @@ document.write(`
 </div>
 <p>In the Light class constructor, add an input parameter to define the type of light source</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Light</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">type</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 = point, 1 = spot, 2 = directional</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">type</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 = point, 1 = spot, 2 = directional</span>
 </pre></div>
 </div>
 <p>And add the light source vector and cutoff angle to the constructor</p>
@@ -1366,9 +1366,9 @@ document.write(`
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Spotlight intensity</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">));</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">epsilon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">outerCutoff</span><span class="p">;</span>
-<span class="w">    </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">theta</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">outerCutoff</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">));</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">epsilon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">cutoff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">outerCutoff</span><span class="p">;</span>
+<span class="w">  </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">theta</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">outerCutoff</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1407,8 +1407,8 @@ document.write(`
 <p>Add the following code to the <code class="docutils literal notranslate"><span class="pre">computerLighting()</span></code> fragment shader function before we calculate the ambient light</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Directional light</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="o">-</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
-<span class="w">    </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="o">-</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+<span class="w">  </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>

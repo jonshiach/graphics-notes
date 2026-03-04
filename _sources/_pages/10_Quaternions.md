@@ -59,7 +59,7 @@ Finally, create a new file called ***index2.html*** and enter the following
 
 :::
 
-In this lab we will being by learning how to perform calculations using quaternions the ***quaternion_calculations.js*** file and adding a class to the ***maths.js*** file. Once we know our class performs the correct calculations, we will implement this into the ***quaternions.js*** and ***camera.js*** files. Load ***index2.html*** in a live server and you should see a webpage containing the following
+In this lab we will being by learning how to perform calculations using quaternions with the ***quaternion_calculations.js*** file and adding a class to the ***maths.js*** file. Once we know our class performs the correct calculations, we will implement this into the ***quaternions.js*** and ***camera.js*** files. Load ***index2.html*** in a live server and you should see a webpage containing the following
 
 ```text
 Lab 10 - Quaternions
@@ -146,7 +146,7 @@ This means we can rotate by an arbitrary angle $\theta$ in the complex plane by 
 
 ## Quaternions
 
-A **quaternion** is an extension of a complex number where we add two additional imaginary numbers. The general form of a quaternion is
+A **quaternion** is an extension of a complex number where we add two additional imaginary numbers, $j$ and $k$. The general form of a quaternion is
 
 $$ q = w + xi + yj + zk, $$
 
@@ -873,13 +873,22 @@ rotate(axis, angle) {
 ```
 :::
 
+:::{admonition} Summary
+:class: note
+
+- A quaternion is of the form $[w, (x, y, z)]$
+- Multiplying a quaternion $p$ by the rotation quaternion $q = [\cos(\frac{\theta}{2}), \sin(\frac{\theta}{2}) \hat{\vec{v}}]$ returns a quaternion $pq$ which is $p$ rotated about the axis vector $\hat{\vec{v}}$ by angle $\theta$
+- If $p = [0, \vec{p}]$ then $pq$ returns a quaternion $[0, \vec{p}']$ where $\vec{p}'$ is the vector $\vec{p}$ rotated about $\hat{\vec{v}}$ by the angle $\theta$
+- A quaternion can be expressed as a $4 \times 4$ transformation matrix which performs the rotation on homogeneous co-ordinates.
+:::
+
 ---
 
 ## A Quaternion camera
 
 Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the `update()` method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through $\pm 90^\circ$ to look straight up or down (recall that we needed to limit the $pitch$ angle between $\pm 89^\circ$).
 
-To implement a quaternion camera we create a quaternion that describes the orientation of the camera in the world space using the $yaw$ and $pitch$ angles from the mouse input. Once we have the orientation quaternion, we can use it to rotate vectors pointing along the $x$, $y$ and negative $z$ axes to give the $\vec{right}$, $\vec{up}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the orientation quaternion to calculate the view matrix.
+To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space by the $yaw$ and $pitch$ angles from the mouse input. Once we have the camera quaternion, we can use it to rotate vectors pointing along the $x$, $y$ and negative $z$ axes to give the $\vec{right}$, $\vec{up}$ and $\vec{front}$ vectors for moving the camera. We can also use the matrix form of the camera quaternion to calculate the view matrix.
 
 For example, let's say the user moves the mouse to the upwards resulting in a $pitch$ angle of $45^\circ$ (which is $\frac{\pi}{4}$ in radians), then the quaternion used to rotate the camera up is
 
@@ -895,10 +904,10 @@ Let's say the user also moves the mouse to the left resulting in a $yaw$ angle o
 
 $$ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (0, 0.259, 0)]. $$
 
-Combining the two quaternions we have
+The camera quaternion $q_{cam}$ is calculated by combining the $pitch$ and $yaw$ rotations
 
 $$ \begin{align*}
-    q_{or} &= q_{yaw} \, q_{pitch} \\
+    q_{cam} &= q_{yaw} \, q_{pitch} \\
     &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
     &= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} $$
@@ -909,21 +918,21 @@ $$ \begin{align*}
 Rotation around the $y$-axis by the angle $yaw$.
 ```
 
-Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch}$ means that we perform the pitch rotation followed by the yaw rotation. Once the orientation quaternion $q_{or}$ has been calculated, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors for movement calculations
+Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch}$ means that we perform the pitch rotation followed by the yaw rotation. Once the camera quaternion has been calculated, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors for movement calculations
 
 $$ \begin{align*}
-  q_{or} \, [0, (0, 0, -1)] \, q_{or}^{-1} &= [0, (-0.354, 0.707, -0.612)], \\
-  q_{or} \, [0, (1, 0, 0)] \, q_{or}^{-1} &= [0, (0.866, 0, -0.5)], \\
-  q_{or} \, [0, (0, 1, 0)] \, q_{or}^{-1} &= [0, (0.354, 0.707, 0.612)],
+  q_{cam} \, [0, (0, 0, -1)] \, q_{cam}^{-1} &= [0, (-0.354, 0.707, -0.612)], \\
+  q_{cam} \, [0, (1, 0, 0)] \, q_{cam}^{-1} &= [0, (0.866, 0, -0.5)], \\
+  q_{cam} \, [0, (0, 1, 0)] \, q_{cam}^{-1} &= [0, (0.354, 0.707, 0.612)],
 \end{align*} $$
 
 so $\vec{front} = (-0.354, 0.707, -0.612)$, $\vec{right} = (0.866, 0, -0.5)$ and $\vec{up} = (0.354, 0.707, 0.612)$. 
 
-We can also use the matrix form of the inverse orientation quaternion to calculate the view matrix
+We can also use the matrix form of the inverse camera quaternion to calculate the view matrix
 
-$$ View = q_{or}^{-1} \cdot Translate(-\vec{eye}). $$
+$$ View = q_{cam}^{-1} \cdot Translate(-\vec{eye}). $$
 
-The reason we use the inverse orientation quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
+The reason we use the inverse camera quaternion is that we want to rotate the world space in the opposite direction to the camera rotation, i.e., the world space rotates around the camera so when we move the mouse to the right, the world space rotates to the left.
 
 :::{admonition} Task
 :class: tip
@@ -931,48 +940,48 @@ The reason we use the inverse orientation quaternion is that we want to rotate t
 In the ***camera.js*** file delete the camera vectors $\vec{worldUp}$, $\vec{front}$, $\vec{right}$ and $\vec{up}$ (but keep the $\vec{eye}$ vector) and add the following quaternion to the constructor
 
 ```javascript
-// Orientation quaternion
-this.orientation = new Quaternion();
+// Camera quaternion
+this.rotation = new Quaternion();
 ```
 
 Change the `update()` method so that is looks like the following
 
 ```javascript
-  update(input, dt) {
+update(input, dt) {
 
-    // Get yaw and pitch angles from mouse input
-    const mouse = input.consumeMouseDelta();
-    this.yaw   -= mouse.x * this.turnSpeed;
-    this.pitch -= mouse.y * this.turnSpeed;
+  // Get yaw and pitch angles from mouse input
+  const mouse = input.consumeMouseDelta();
+  this.yaw   -= mouse.x * this.turnSpeed;
+  this.pitch -= mouse.y * this.turnSpeed;
 
-    // Orientation quaternion
-    const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
-    const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-    this.orientation = qYaw.multiply(qPitch).normalize();
+  // Camera quaternion
+  const qPitch  = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
+  const qYaw    = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+  this.rotation = qYaw.multiply(qPitch).normalize();
 
-    // Front and right camera vectors
-    const front = this.orientation.rotateVector([0, 0, -1]);
-    const right = this.orientation.rotateVector([1, 0, 0]);
+  // Front and right camera vectors
+  const front = this.rotation.rotateVector([0, 0, -1]);
+  const right = this.rotation.rotateVector([1, 0, 0]);
 
-    // Camera movement
-    let vel = [0, 0, 0];
-    if (input.isDown("w")) vel = addVector(vel, front);
-    if (input.isDown("s")) vel = subtractVector(vel, front);
-    if (input.isDown("a")) vel = subtractVector(vel, right);
-    if (input.isDown("d")) vel = addVector(vel, right);
+  // Camera movement
+  let velocity = [0, 0, 0];
+  if (input.isDown("w")) velocity = addVector(velocity, front);
+  if (input.isDown("s")) velocity = subtractVector(velocity, front);
+  if (input.isDown("a")) velocity = subtractVector(velocity, right);
+  if (input.isDown("d")) velocity = addVector(velocity, right);
 
-    if (length(vel) > 0) {
-      vel = normalize(vel);
-      this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
-    }
+  if (length(velocity) > 0) {
+    velocity = normalize(velocity);
+    this.eye = addVector(this.eye, scaleVector(velocity, this.speed * dt));
   }
+}
 ```
 
 Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
-  const rotateMatrix = this.orientation.inverse().matrix();
+  const rotateMatrix = this.rotation.inverse().matrix();
   const translateMatrix = new Mat4().translate([
     -this.eye[0],
     -this.eye[1],
@@ -980,11 +989,12 @@ getViewMatrix() {
   ]);
   
   return rotateMatrix.multiply(translateMatrix);
+}
 ```
 
 :::
 
-Here we have made the changes to implement a quaternion camera. In `update()` we use quaternions to rotate the orientation quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the new orientation quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the orientation quaternion to compute the view matrix.
+Here we have made the changes to implement a quaternion camera. In `update()` we calculate the camera quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the camera quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the camera quaternion to compute the view matrix.
 
 Load ***index.html*** in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through $\pm 90^\circ$.
 
@@ -1047,7 +1057,7 @@ $$ q_t = \frac{\sin((1 - t) \theta)}{\sin(\theta)} \, q_1 + \frac{\sin(t\theta)}
 
 where $t =  1 - \exp(-smoothing \times \Delta t)$ for exponential damping and $smoothing$ is a parameter that controls the smoothness of the camera. For example, for a framerate of 60 fps, a value of 10 for the smoothing means $t = 1 - \exp(-10 \times \frac{1}{60}) = 0.154$ so every frame the camera is rotating 15.4% of the way towards the target orientation. This is compounded, so the camera rotates towards the target without actually reaching it.
 
-To implement smoothing in a first-person camera we add a target orientation quaternion to the Camera class and change the quaternion calculations so that we rotate this quaternion based on the mouse input. We then use SLERP to calculate the interpolated quaternion between the current orientation quaternion and the target orientation quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the new orientation quaternion and is used to perform the rotations on the camera vectors.
+To implement smoothing in a first-person camera we add a target camera quaternion to the Camera class and change the quaternion calculations so that we rotate this quaternion based on the mouse input. We then use SLERP to calculate the interpolated quaternion between the current camera quaternion and the target camera quaternion ({numref}`slerped-camera-figure`). This interpolated quaternion becomes the new camera quaternion and is used to perform the rotations on the camera vectors.
 
 ```{figure} ../_images/10_slerped_camera.svg
 :width: 350

@@ -21,11 +21,11 @@ In the ***lighting.js*** file, change the definition of the cubes to the followi
 // Define cube positions (5x5 grid of cubes)
 const cubes = [];
 for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-        cubes.push({
-            position  : [3 * i, 0, -3 * j],
-        });
-    }
+  for (let j = 0; j < 5; j++) {
+      cubes.push({
+        position  : [3 * i, 0, -3 * j],
+      });
+  }
 }
 const numCubes = cubes.length;
 ```
@@ -91,14 +91,14 @@ uniform float uKa;
 
 void main() {
 
-    // Object colour
-    vec4 objectColour = texture(uTexture, vTexCoords);
+  // Object colour
+  vec4 objectColour = texture(uTexture, vTexCoords);
 
-    // Ambient light
-    vec3 ambient = uKa * objectColour.rgb;
+  // Ambient light
+  vec3 ambient = uKa * objectColour.rgb;
 
-    // Fragment colour
-    fragColour = vec4(ambient, objectColour.a);
+  // Fragment colour
+  fragColour = vec4(ambient, objectColour.a);
 }
 ```
 
@@ -119,8 +119,8 @@ Edit the code used to define the cubes so that it looks like the following.
 
 ```javascript
 cubes.push({
-    position  : cubePositions[i],
-    ka        : 0.2,
+  position  : cubePositions[i],
+  ka        : 0.2,
 });
 ```
 
@@ -787,11 +787,11 @@ A data structure in GLSL is defined as follows:
 
 ```glsl
 struct Light {
-    vec3 position;
-    vec3 colour;
-    float constant;
-    float linear;
-    float quadratic;
+  vec3 position;
+  vec3 colour;
+  float constant;
+  float linear;
+  float quadratic;
 };
 ```
 
@@ -1053,10 +1053,10 @@ In the `computLighting()` function, add the following code after the attenuation
 // Spotlight intensity
 float intensity = 1.0;
 if (light.type == 1) {
-    float theta = dot(-L, normalize(light.direction));
-    if (theta < light.cutoff) {
-        intensity = 0.0;
-    }
+  float theta = dot(-L, normalize(light.direction));
+  if (theta < light.cutoff) {
+    intensity = 0.0;
+  }
 }
 ```
 
@@ -1071,8 +1071,8 @@ In the Light class constructor, add an input parameter to define the type of lig
 
 ```javascript
 class Light {
-    constructor(type = 0) {
-        this.type = type; // 0 = point, 1 = spot, 2 = directional
+  constructor(type = 0) {
+      this.type = type; // 0 = point, 1 = spot, 2 = directional
 ```
 
 And add the light source vector and cutoff angle to the constructor
@@ -1133,9 +1133,9 @@ And in the `computLighting()` function, replace the spotlight code with the foll
 // Spotlight intensity
 float intensity = 1.0;
 if (light.type == 1) {
-    float theta = dot(-L, normalize(light.direction));
-    float epsilon = light.cutoff - light.outerCutoff;
-    intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
+  float theta = dot(-L, normalize(light.direction));
+  float epsilon = light.cutoff - light.outerCutoff;
+  intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
 }
 ```
 
@@ -1185,8 +1185,8 @@ Add the following code to the `computerLighting()` fragment shader function befo
 ```glsl
 // Directional light
 if (light.type == 2) {
-    L = normalize(-light.direction);
-    attenuation = 1.0;
+  L = normalize(-light.direction);
+  attenuation = 1.0;
 }
 ```
 

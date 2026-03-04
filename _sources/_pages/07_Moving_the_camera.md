@@ -124,20 +124,20 @@ In the ***camera.js*** file, change the Camera class method `update()` so that i
 ```javascript
 update(input) {  
 
-    this.right = normalize(cross(this.front, this.worldUp));
-    this.up    = normalize(cross(this.right, this.front));
+  this.right = normalize(cross(this.front, this.worldUp));
+  this.up  = normalize(cross(this.right, this.front));
 
-    // Camera movement
-    let vel = [0, 0, 0];
-    if (input.isDown("w")) vel = addVector(vel, this.front);
-    if (input.isDown("s")) vel = subtractVector(vel, this.front);
-    if (input.isDown("a")) vel = subtractVector(vel, this.right);
-    if (input.isDown("d")) vel = addVector(vel, this.right);
+  // Camera movement
+  let vel = [0, 0, 0];
+  if (input.isDown("w")) vel = addVector(vel, this.front);
+  if (input.isDown("s")) vel = subtractVector(vel, this.front);
+  if (input.isDown("a")) vel = subtractVector(vel, this.right);
+  if (input.isDown("d")) vel = addVector(vel, this.right);
 
-    if (length(vel) > 0) {
-        vel = normalize(vel);
-        this.eye = addVector(this.eye, vel);
-    }
+  if (length(vel) > 0) {
+      vel = normalize(vel);
+      this.eye = addVector(this.eye, vel);
+  }
 }
 ```
 

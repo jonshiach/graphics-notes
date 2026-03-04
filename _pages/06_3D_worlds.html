@@ -883,7 +883,7 @@ document.write(`
 <hr class="docutils" />
 <section id="the-depth-test">
 <h2>The depth test<a class="headerlink" href="#the-depth-test" title="Link to this heading">#</a></h2>
-<p>Our rendering of the cube doesn’t look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us (<a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 50</span></a>).</p>
+<p>Our rendering of the cube doesn’t look quite right. The faces of the cube are defined in the order: front, right, back, left, top and bottom (when viewed looking down the <span class="math notranslate nohighlight">\(z\)</span>-axis in the model space). So WebGL renders them in that order. We are looking down on the cube so the bottom face should be obscured by the other faces, but since it was rendered last, the bottom face obscures the other faces which is similar to what is shown in <a class="reference internal" href="#depth-test-1-figure"><span class="std std-numref">Fig. 50</span></a>.</p>
 <figure class="align-default" id="depth-test-1-figure">
 <a class="reference internal image-reference" href="../_images/06_depth_test.svg"><img alt="../_images/06_depth_test.svg" src="../_images/06_depth_test.svg" style="width: 300px;" />
 </a>
@@ -914,7 +914,7 @@ document.write(`
 <hr class="docutils" />
 <section id="perspective-projection">
 <h2>Perspective projection<a class="headerlink" href="#perspective-projection" title="Link to this heading">#</a></h2>
-<p>The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger. To demonstrate this we are going to add another cube to our scene which is placed futher away from the camera.</p>
+<p>The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger. To demonstrate this we are going to add another cube to our scene which is placed further away from the camera.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add the following code after the cube indices are defined</p>
