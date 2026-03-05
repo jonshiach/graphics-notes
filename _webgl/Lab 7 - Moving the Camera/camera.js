@@ -29,8 +29,8 @@ class Camera {
     this.pitch -= dy * this.turnSpeed;
 
     // Limit the pitch angle tod -89 degrees < pitch < 89 degrees
-    // const pitchLimit = 89 * Math.PI / 180;
-    // this.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, this.pitch));
+    const pitchLimit = 89 * Math.PI / 180;
+    this.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, this.pitch));
 
     const cy = Math.cos(this.yaw);
     const cp = Math.cos(this.pitch);
@@ -38,7 +38,7 @@ class Camera {
     const sp = Math.sin(this.pitch);
 
     this.front = [0, 0, -1];
-    // this.front = normalize([cp * sy, sp, -cp * cy]);
+    this.front = normalize([cp * sy, sp, -cp * cy]);
     this.right = normalize(cross(this.front, this.worldUp));
     this.up    = normalize(cross(this.right, this.front));
 

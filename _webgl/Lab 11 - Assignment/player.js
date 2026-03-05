@@ -71,10 +71,7 @@ class Player {
     }
 
     // Update position
-    this.position = addVector(
-      this.position,
-      scaleVector(this.velocity, dt)
-    );
+    this.position = addVector(this.position, scaleVector(this.velocity, dt));
 
     // Yaw rotation towards camera direction
     if (hasInput) {

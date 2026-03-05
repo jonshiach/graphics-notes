@@ -163,7 +163,7 @@ where $w$ is known as the **scalar** part of a quaternion and $(x, y, z)$ is the
 :::{admonition} Task
 :class: tip
 
-Add the following class definition to the ***maths.js** file
+Add the following class definition to the ***maths.js*** file
 
 ```javascript
 class Quaternion {
@@ -878,8 +878,8 @@ rotate(axis, angle) {
 
 - A quaternion is of the form $[w, (x, y, z)]$
 - Multiplying a quaternion $p$ by the rotation quaternion $q = [\cos(\frac{\theta}{2}), \sin(\frac{\theta}{2}) \hat{\vec{v}}]$ returns a quaternion $pq$ which is $p$ rotated about the axis vector $\hat{\vec{v}}$ by angle $\theta$
-- If $p = [0, \vec{p}]$ then $pq$ returns a quaternion $[0, \vec{p}']$ where $\vec{p}'$ is the vector $\vec{p}$ rotated about $\hat{\vec{v}}$ by the angle $\theta$
-- A quaternion can be expressed as a $4 \times 4$ transformation matrix which performs the rotation on homogeneous co-ordinates.
+- If $p = [0, \vec{p}]$ then $qpq^{-1}$ returns a quaternion $[0, \vec{p}']$ where $\vec{p}'$ is the vector $\vec{p}$ rotated about $\hat{\vec{v}}$ by the angle $\theta$
+- A quaternion can be expressed as a $4 \times 4$ transformation matrix which performs the rotation represented by the quaternion when applied to homogeneous co-ordinates.
 :::
 
 ---
@@ -1078,44 +1078,24 @@ The effects of applying SLERP to smooth the camera rotation can be seen in the v
 
 ## Third person camera
 
-The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *Horizon Zero Dawn*, *Assassins Creed* and *Red Dead Redemption* to name a few all using third person camera view.
+The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *The Last of Us*, *Zelda*, *Red Dead Redemption* to name a few all using third person camera view. The implementation of a third person camera may vary but a popular one is for the camera to follow behind and slightly to one side and above the player allowing the user to see both the character and the surrounding environment.
 
-```{figure} ../_images/10_Third_person_camera.svg
-:width: 400
-:name: third-person-camera-figure
+A player object is created that has properties for its position in the world space and a quaternion for the direction that the player is facing. This quaternion is used to calculate forward and right movement vectors that are used to move the position. The camera is defined relative to the player position by adding an $\vec{offset}$ vector to the player position, i.e.,
 
-A third person camera that follows a character.
+$$ \vec{eye} = \vec{player} + \vec{offset}. $$
+
+The $\vec{offset}$ vector is obtained by scaling the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors by the offset distances. For example, if we wanted the camera to be 5 units behind, 1 unit to the right and 2 units above the player then
+
+$$ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}. $$
+
+```{figure} ../_images/10_third_person_camera_1.svg
+:width: 150
 ```
 
-To implement a simple third person camera, we calculate the view matrix as usual and then move the camera back by translating by an $\vec{offset}$ vector {numref}`third-person-camera-figure`.
+The camera is rotated in the usual way using the mouse input to change the $pitch$ and $yaw$ angles and calculate the target rotation quaternion. The camera quaternion is then SLERPed towards the target rotation quaternion. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, and this is then used to calculate the updated forward and right movement vectors. This way the player rotation is slightly delayed giving a more natural feel to the third person camera.
 
-$$ View = Translate(\vec{offset}) \cdot View $$
-
-The result of a third-person camera view can be seen below. Here we are using <a href="https://en.wikipedia.org/wiki/Blender_(software)#Suzanne" target="_blank">Suzanne the Blender mascot</a> to act as our character model, and we can switch from first-person to third-person view using keyboard input.
-
-<center>
-<video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/10_Third_person_camera_1.mp4" type="video/mp4">
-</video>
-</center>
-
-Moving the camera around we see that our character model is always facing in the same direction. To make it face in the same direction as the camera we combine pitch and yaw rotations, and use them in the model matrix calculation for the character model.
-
-$$ Rotate = R_y(yaw) \cdot R_x(pitch).$$
-
-<center>
-<video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/10_Third_person_camera_2.mp4" type="video/mp4">
-</video>
-</center>
-
-Implementations of a third-person camera can vary. For example, you may want the character movement to be independent of the camera movement so that the camera is not always behind the character. To do this we would calculate the view matrix for a third-person camera as seen above, but calculate a different orientation for the character based on a different $yaw$ angle that can be altered using keyboard inputs ({numref}`third-person-camera-figure-2`).
-
-```{figure} ../_images/10_Third_person_camera_2.svg
-:width: 450
-:name: third-person-camera-figure-2
-
-A third person camera that is independent of the character orientation.
+```{figure} ../_images/10_third_person_camera_2.svg
+:width: 150
 ```
 
 ---
