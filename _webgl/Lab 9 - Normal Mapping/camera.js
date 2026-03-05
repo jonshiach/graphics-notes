@@ -17,7 +17,7 @@ class Camera {
 
     // Movement settings
     this.speed = 5;
-    this.turnSpeed = 0.005;  
+    this.turnSpeed = 0.002;  
     this.yaw = 0;
     this.pitch = 0;
   }

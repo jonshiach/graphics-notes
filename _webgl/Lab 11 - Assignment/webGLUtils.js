@@ -140,6 +140,7 @@ class Input {
 
   constructor(canvas) {
     this.keys = {};
+    this.previousKeys = {};
     this.mouseDelta = { x: 0, y: 0 };
 
     window.addEventListener("keydown", e => {
@@ -166,6 +167,11 @@ class Input {
     return this.keys[key.toLowerCase()];
   }
 
+  wasPressed(key) {
+    key = key.toLowerCase();
+    return this.keys[key] && !this.previousKeys[key];
+  }
+
   consumeMouseDelta() {
     const d = { ...this.mouseDelta };
     this.mouseDelta.x = 0;
@@ -175,32 +181,3 @@ class Input {
   }
 }
 
-function create1PixelDiffuseMap(gl, r = 255, g = 255, b = 255, a = 255) {
-    const texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-
-    // 1x1 pixel with RGBA values
-    const pixel = new Uint8Array([r, g, b, a]);
-    gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        1,
-        1,
-        0,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        pixel
-    );
-
-    // Use linear filtering
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
-    // Wrap mode (doesn’t matter for 1x1)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-    gl.bindTexture(gl.TEXTURE_2D, null);
-    return texture;
-}

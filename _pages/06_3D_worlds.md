@@ -523,7 +523,7 @@ Here we have added the two uniforms for the view and projection matrices to the 
 
 ## The depth test
 
-Our rendering of the cube doesn't look quite right. What is happening here is that some parts of the sides of the cube that are further away from where we are viewing it (e.g., the bottom side) have been rendered after the sides that are closer to us ({numref}`depth-test-1-figure`).
+Our rendering of the cube doesn't look quite right. The faces of the cube are defined in the order: front, right, back, left, top and bottom (when viewed looking down the $z$-axis in the model space). So WebGL renders them in that order. We are looking down on the cube so the bottom face should be obscured by the other faces, but since it was rendered last, the bottom face obscures the other faces which is similar to what is shown in {numref}`depth-test-1-figure`.
 
 ```{figure} ../_images/06_depth_test.svg
 :width: 300
@@ -563,7 +563,7 @@ Here we first enabled WebGL's depth test and then we clear the depth buffer at t
 
 ## Perspective projection
 
-The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger. To demonstrate this we are going to add another cube to our scene which is placed futher away from the camera.
+The problem with using orthographic projection is that is does not give us any clues to how far an object is from the viewer. We would expect that objects further away from the camera would appear smaller whereas objects closer to the camera would appear larger. To demonstrate this we are going to add another cube to our scene which is placed further away from the camera.
 
 :::{admonition} Task
 :class: tip

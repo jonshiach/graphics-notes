@@ -54,24 +54,19 @@ console.log("\nquaternion rotation matrix =\n" + q.matrix());
 console.log("\nrotation matrix =\n" + new Mat4().rotate(axis, angle));
 
 // Camera quaternion
-let qOrientation = new Quaternion();
 const qPitch = Quaternion.fromAxisAngle([1, 0, 0], 45 * Math.PI / 180);
 const qYaw = Quaternion.fromAxisAngle([0, 1, 0], 30 * Math.PI / 180);
+const qOrientation = qYaw.multiply(qPitch);
 
 console.log("\nCamera quaternion\n----------------")
-console.log("qOrientation = " + qOrientation);
 console.log("qPitch = " + qPitch);
-
-qOrientation = qPitch.multiply(qOrientation);
-console.log("qPitch qOrientation = " + qOrientation);
-
-qOrientation = qYaw.multiply(qOrientation);
-console.log("qYaw qPitch qOrientation = " + qOrientation);
+console.log("qYaw = " + qYaw);
+console.log("qOrientation = " + qOrientation);
 
 const front = qOrientation.rotateVector([0, 0, -1]);
 const right = qOrientation.rotateVector([1, 0, 0]);
 const up = qOrientation.rotateVector([0, 1, 0]);
 
-console.log("front = " + printVector(front));
+console.log("\nfront = " + printVector(front));
 console.log("right = " + printVector(right));
 console.log("up = " + printVector(up));

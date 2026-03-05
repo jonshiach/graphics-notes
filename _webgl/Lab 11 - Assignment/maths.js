@@ -372,3 +372,10 @@ class Quaternion {
   }
 }
 
+
+function normalizeAngle(angle) {
+  while (angle > Math.PI) angle -= Math.PI * 2;
+  while (angle < -Math.PI) angle += Math.PI * 2;
+  
+  return angle;
+}

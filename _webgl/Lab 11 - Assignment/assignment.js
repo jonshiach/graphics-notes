@@ -61,6 +61,7 @@ uniform float uKs;
 uniform float uShininess;
 uniform vec3 uColour;
 uniform bool uHasDiffuseMap;
+uniform bool uHasSpecularMap;
 
 // Light struct
 struct Light {
@@ -120,7 +121,9 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 H = normalize(L + V);
   float spec = pow(max(dot(N, H), 0.0), uShininess);
   vec3 specular = uKs * spec * light.colour;
-  specular *= texture(uSpecularMap, vTexCoord).rgb;
+  if (uHasSpecularMap) {
+    specular *= texture(uSpecularMap, vTexCoord).rgb;
+  }
 
   // Output fragment colour
   return attenuation * (ambient + intensity * (diffuse + specular));
@@ -229,9 +232,9 @@ async function main() {
   // Create Suzanne object
   const suzanne = await Model.create(gl, "assets/suzanne2.obj");
   suzanne.loadTexture("assets/suzanne_diffuse.png", "diffuse");
+  suzanne.loadTexture("assets/suzanne_normal.png", "normal");
 
   // --- LIGHT SOURCES ---
-
   // Light models
   const whiteLightModel = await Model.create(gl, "assets/cube.obj");
   const yellowLightModel = await Model.create(gl, "assets/cube.obj");
@@ -240,18 +243,21 @@ async function main() {
   // Light sources array
   const lightSources = new LightSources();
 
-  // Add light sources
+  // White point light
+  const lightModel = await Model.create(gl, "assets/cube.obj");
   const whiteLight = new Light();
   whiteLight.position = [6, 2, 0];
   whiteLight.model = whiteLightModel
   lightSources.addLight(whiteLight);
 
+  // Yellow spotlight
   const yellowLight = new Light(1);
   yellowLight.position = [9, 3, -9];
   yellowLight.colour = [1, 1, 0];
   yellowLight.model = yellowLightModel;
   lightSources.addLight(yellowLight);
 
+  // Magenta directional light
   const directionalLight = new Light(2);
   directionalLight.colour = [1, 0, 1];
   directionalLight.direction = [2, -1, -1];
@@ -306,7 +312,7 @@ async function main() {
     // Send light source properties to the shader
     lightSources.toShader(gl, program);
 
-    // Send view and project matrices to the shaders
+    // Send view and projection matrices to the shaders
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uView"), false, view.m);
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uProjection"), false, projection.m);
 
@@ -340,22 +346,7 @@ async function main() {
     floor.draw(program);
 
     // --- DRAW LIGHT SOURCES ---
-    for (let i = 0; i < lightSources.lights.length; i++) {
-
-      // Don't draw directional light source
-      if (lightSources.lights[i].type == 2) continue;
-
-      // Calculate model matrix for light source
-      const model = new Mat4()
-        .translate(lightSources.lights[i].position)
-        .scale([0.1, 0.1, 0.1]);
-
-      // Send model matrix to the shader
-      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
-
-      // Draw light model
-      lightSources.lights[i].model.draw(program);
-    }
+    lightSources.draw(gl, program);
 
     // --- DRAW PLAYER CHARACTER (third perdon camera only) ---
     if (camera instanceof ThirdPersonCamera) {

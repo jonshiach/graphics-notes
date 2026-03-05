@@ -241,6 +241,7 @@ class Model {
       this.normalTexture = texture;
     } else if (type === "specular") {
       this.specularTexture = texture;
+      this.hasSpecularMap = true;
     }
   }
 
@@ -297,29 +298,24 @@ class Model {
     // Colour
     gl.uniform3fv(gl.getUniformLocation(program, "uColour"), this.colour);
 
-    // Diffuse texture
+    // 
     gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), !!this.diffuseTexture);
+    gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), !!this.specularTexture);
     gl.uniform3fv(gl.getUniformLocation(program, "uColour"), this.colour);
 
-    // if (this.diffuseTexture) {
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, this.diffuseTexture || null);
-      gl.uniform1i(gl.getUniformLocation(program, "uDiffuseMap"), 0);
-    // }
+    // Diffuse texture
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, this.diffuseTexture || null);
 
     // Normal texture
-    // if (this.normalTexture) {
-      gl.activeTexture(gl.TEXTURE1);
-      gl.bindTexture(gl.TEXTURE_2D, this.normalTexture || null);
-      gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
-    // }
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, this.normalTexture || null);
+    gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
     // Specular texture
-    // if (this.specularTexture) {
-      gl.activeTexture(gl.TEXTURE2);
-      gl.bindTexture(gl.TEXTURE_2D, this.specularTexture || null);
-      gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
-    // }
+    gl.activeTexture(gl.TEXTURE2);
+    gl.bindTexture(gl.TEXTURE_2D, this.specularTexture || null);
+    gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
 
     // Send lighting properties to the shader
     gl.uniform1f(gl.getUniformLocation(program, "uKa"), this.ka);

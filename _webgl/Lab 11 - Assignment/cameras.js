@@ -1,29 +1,26 @@
 class BaseCamera {
   
   constructor() {
+
+    // Position and rotation
     this.eye = [0, 0, 0];
-
-    // Quaternions
-    this.orientation = new Quaternion();
-    this.targetOrientation = new Quaternion();
-
-    // Angles
-    this.yaw = 0;
-    this.pitch = 0;
-    this.pitchLimit = Math.PI / 2 - 0.1;
-
-    // Movement
-    this.turnSpeed = 0.002;
+    this.rotation = new Quaternion();
 
     // Projection parameters
     this.fov = 45 * Math.PI / 180;
     this.aspect = 800 / 600;
     this.near = 0.1;
     this.far = 1000;
+
+    // Angles
+    this.turnSpeed = 0.002;
+    this.yaw = 0;
+    this.pitch = 0;
+    this.pitchLimit = 85 * Math.PI / 180;
   }
 
   getViewMatrix() {
-    const rotateMatrix = this.orientation.inverse().matrix();
+    const rotateMatrix = this.rotation.inverse().matrix();
     const translateMatrix = new Mat4().translate([
       -this.eye[0],
       -this.eye[1],
@@ -51,23 +48,37 @@ class FirstPersonCamera extends BaseCamera {
 
   constructor() {
     super();
+
+    this.positionSmooth = 20;
+    this.rotationSmooth = 20;
   }
 
   update(input, player, dt) {
     
-    // Get yaw and pitch angles from mouse input
     const mouse = input.consumeMouseDelta();
     this.yaw   -= mouse.x * this.turnSpeed;
     this.pitch -= mouse.y * this.turnSpeed;
 
-    // Rotate Rotation quaternion
-    const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+    // Clamp pitch
+    this.pitch = Math.max(
+      -this.pitchLimit,
+      Math.min(this.pitchLimit, this.pitch)
+    );
+
+    // Rotate camera
+    const qYaw   = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
     const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
+    const targetRotation = qYaw.multiply(qPitch).normalize();
 
-    this.orientation = qYaw.multiply(qPitch).normalize();
+    // Set camera position at player position
+    this.eye = player.position;
 
-    // Move camera to player head
-    this.eye = addVector(player.position, [0, player.height, 0]);
+    // Slerp camera rotation towards target rotation
+    this.rotation = Quaternion.slerp(
+      this.rotation,
+      targetRotation,
+      1 - Math.exp(-this.rotationSmooth)
+    );
   }
 }
 
@@ -77,50 +88,84 @@ class ThirdPersonCamera extends BaseCamera {
     super();
 
     // Orbit settings
-    this.distance = 6;
-    this.height = 2;
-
+    this.distance = 5;
+    this.height = 1;
+    this.shoulderOffset = 0.5;
 
     // Smoothing
-    this.positionSmooth = 8.0;
-    this.rotationSmooth = 10.0;
+    this.positionSmooth = 10;
+    this.rotationSmooth = 20;
+    this.fovSmooth      = 10;
+
+    // Aim FOV
+    this.normalFov = this.fov;
+    this.aimFov = 30 * Math.PI / 180;
+
+    // Toggle timers
+    this.shoulderCoolDown = 0.3;
+    this.shoulderCoolDownTimer = 0;
+
+    // Alignment to player
+    this.alignSpeed = 1;
   }
 
   update(input, player, dt) {
     
-    // Get yaw and pitch angles from mouse input
     const mouse = input.consumeMouseDelta();
     this.yaw   -= mouse.x * this.turnSpeed;
     this.pitch -= mouse.y * this.turnSpeed;
-    this.pitch = Math.max(-this.pitchLimit, Math.min(this.pitchLimit, this.pitch));
-    
-    // Rotate Rotation quaternion
-    const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-    const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
-    this.targetOrientation = qYaw.multiply(qPitch).normalize();
 
-    // Calculate target position
-    const offset = this.targetOrientation.rotateVector([0, 0, this.distance]);
-    const heightOffset = [0, this.height, 0];
-    const targetPosition = addVector(
-      player.position, 
-      addVector(offset, heightOffset)
+    this.pitch = Math.max(
+      -this.pitchLimit,
+      Math.min(this.pitchLimit, this.pitch)
     );
 
-    // Apply lerp to smooth camera position
+    // Rotate camera
+    const qYaw   = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+    const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
+    const targetRotation = qYaw.multiply(qPitch).normalize();
+
+    // Get forward, right and up vectors
+    const forward = targetRotation.rotateVector([0, 0, -1]);
+    const right   = targetRotation.rotateVector([1, 0, 0]);
+    const up      = targetRotation.rotateVector([0, 1, 0]);
+
+    // Shoulder offset
+    if (this.shoulderCoolDownTimer > 0) this.shoulderCoolDownTimer -= dt;
+    if (input.isDown("q") && this.shoulderCoolDownTimer <= 0) {
+      this.shoulderOffset *= -1;
+      this.shoulderCoolDownTimer = this.shoulderCoolDown;
+    }
+
+    // Calculate target position
+    let offset = [0, 0, 0];
+    offset = addVector(offset, scaleVector(up, this.height + player.height));
+    offset = addVector(offset, scaleVector(forward, -this.distance));
+    offset = addVector(offset, scaleVector(right, this.shoulderOffset));
+    const targetPosition = addVector(player.position, offset);
+
+    // Lerp camera position towards target position
     this.eye = lerpVector(
       this.eye, 
       targetPosition, 
       1 - Math.exp(-this.positionSmooth * dt)
     );
 
-    // Apply slerp to smooth camera rotation
-    this.orientation = Quaternion.slerp(
-      this.orientation,
-      this.targetOrientation, 
+    // Slerp camera rotation towards target rotation
+    this.rotation = Quaternion.slerp(
+      this.rotation,
+      targetRotation,
       1 - Math.exp(-this.rotationSmooth * dt)
     );
+
+    // Switch to aim mode if alt key is held down
+    let targetFov = this.normalFov;
+    if (input.isDown("e")) {
+      targetFov = this.aimFov;
+    }
+    this.fov += (targetFov - this.fov) * dt * this.fovSmooth;
   }
+
 }
 
 class FreeFlyCamera extends BaseCamera {
@@ -138,19 +183,19 @@ class FreeFlyCamera extends BaseCamera {
     this.yaw   -= mouse.x * this.turnSpeed;
     this.pitch -= mouse.y * this.turnSpeed;
 
-    // Rotate orientation quaternion
+    // Rotate rotation quaternion
     const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
     const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-    this.orientation = qYaw.multiply(qPitch).normalize();
+    this.rotation = qYaw.multiply(qPitch).normalize();
 
-    // Calculate front and right vectors
-    const front = this.orientation.rotateVector([0, 0, -1]);
-    const right = this.orientation.rotateVector([1, 0, 0]);
+    // Calculate forward and right vectors
+    const forward = this.rotation.rotateVector([0, 0, -1]);
+    const right   = this.rotation.rotateVector([1, 0, 0]);
 
     // Camera movement
     let vel = [0, 0, 0];
-    if (input.isDown("w")) vel = addVector(vel, front);
-    if (input.isDown("s")) vel = subtractVector(vel, front);
+    if (input.isDown("w")) vel = addVector(vel, forward);
+    if (input.isDown("s")) vel = subtractVector(vel, forward);
     if (input.isDown("a")) vel = subtractVector(vel, right);
     if (input.isDown("d")) vel = addVector(vel, right);
 
@@ -182,15 +227,15 @@ class CameraManager {
 
   update(dt) {
     // Switch cameras
-    if (this.input.isDown("c") && !this._switchCooldown) {
+    if (this.input.isDown("c") && !this.switchCooldown) {
       this.activeIndex = (this.activeIndex + 1) % this.cameras.length;
-      this._switchCooldown = 0.3; // seconds to prevent rapid cycling
+      this.switchCooldown = 0.3; // seconds to prevent rapid cycling
     }
 
-    // Countdown cooldown timer
-    if (this._switchCooldown) {
-      this._switchCooldown -= dt;
-      if (this._switchCooldown < 0) this._switchCooldown = 0;
+    // Countdown cool down timer
+    if (this.switchCooldown) {
+      this.switchCooldown -= dt;
+      if (this.switchCooldown < 0) this.switchCooldown = 0;
     }
 
     // Update current camera

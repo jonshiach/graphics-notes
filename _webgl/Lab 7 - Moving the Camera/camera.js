@@ -16,8 +16,9 @@ class Camera {
     this.far    = 1000;
 
     // Movement settings
-    this.speed = 5;
-    this.turnSpeed = 0.005;  
+    this.velocity = [0, 0, 0];
+    this.maxSpeed = 5;
+    this.turnSpeed = 0.002;  
     this.yaw = 0;
     this.pitch = 0;
   }
@@ -27,30 +28,32 @@ class Camera {
     this.yaw += dx * this.turnSpeed;
     this.pitch -= dy * this.turnSpeed;
 
-    // Limit the pitch angle to -89 degrees < pitch < 89 degrees
-    const pitchLimit = 89 * Math.PI / 180;
-    this.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, this.pitch));
+    // Limit the pitch angle tod -89 degrees < pitch < 89 degrees
+    // const pitchLimit = 89 * Math.PI / 180;
+    // this.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, this.pitch));
 
     const cy = Math.cos(this.yaw);
     const cp = Math.cos(this.pitch);
     const sy = Math.sin(this.yaw);
     const sp = Math.sin(this.pitch);
 
-    this.front = normalize([cp * sy, sp, -cp * cy]);
+    this.front = [0, 0, -1];
+    // this.front = normalize([cp * sy, sp, -cp * cy]);
     this.right = normalize(cross(this.front, this.worldUp));
     this.up    = normalize(cross(this.right, this.front));
 
-      // Camera movement
-    let vel = [0, 0, 0];
-    if (input.isDown("w")) vel = addVector(vel, this.front);
-    if (input.isDown("s")) vel = subtractVector(vel, this.front);
-    if (input.isDown("a")) vel = subtractVector(vel, this.right);
-    if (input.isDown("d")) vel = addVector(vel, this.right);
+    // Movement direction
+    let moveDir = [0, 0, 0];
+    if (input.isDown("w")) moveDir = addVector(moveDir, this.front);
+    if (input.isDown("s")) moveDir = subtractVector(moveDir, this.front);
+    if (input.isDown("a")) moveDir = subtractVector(moveDir, this.right);
+    if (input.isDown("d")) moveDir = addVector(moveDir, this.right);
 
-    if (length(vel) > 0) {
-      vel = normalize(vel);
-      this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
-    }
+    if (length(moveDir) > 0) moveDir = normalize(moveDir);
+
+    // Move camera
+    this.eye = addVector(this.eye, scaleVector(moveDir, this.maxSpeed * dt));
+    // this.eye = addVector(this.eye, moveDir);
   }
 
   getViewMatrix() {

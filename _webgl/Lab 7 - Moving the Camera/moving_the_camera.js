@@ -113,10 +113,16 @@ function main() {
   ]);
 
   // Define cube positions
-  const cubes = [
-    { position : [0, 0, -2] },
-    { position : [0, 0, -6] }
-  ];
+  // const cubes = [
+  //   { position : [0, 0, -2] },
+  //   { position : [0, 0, -6] }
+  // ];
+  const cubes = [];
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      cubes.push( { position : [-s6 + 3 * i, 0, -2-3 * j] });
+    }
+  }
   const numCubes = cubes.length;
 
   // Create VAO

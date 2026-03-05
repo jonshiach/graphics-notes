@@ -1,6 +1,6 @@
 class Light {
 
-  constructor(type = 0) {
+  constructor(type) {
     this.type = type; // 0 = point, 1 = spot, 2 = directional
     this.position = [0, 0, 0];
     this.colour = [1, 1, 1];
@@ -42,14 +42,17 @@ class LightSources {
   constructor(maxLights = 16) {
     this.lights = [];
     this.maxLights = maxLights;
+    this.numLights = 0;
   }
 
   addLight(light) {
+
     if (this.lights.length < this.maxLights) {
       this.lights.push(light);
     } else {
       console.warn("Maximum number of lights reached.");
     }
+    this.numLights = this.lights.length;
   }
 
   toShader(gl, program) {
@@ -57,6 +60,28 @@ class LightSources {
 
     for (let i = 0; i < this.lights.length; i++) {
       this.lights[i].toShader(gl, program, i);
+    }
+  }
+
+  draw(gl, program) {
+
+    for (let i = 0; i < this.numLights; i++) {
+
+      const light = this.lights[i];
+
+      // Don't draw directional light source
+      if (light.type == 2) continue;
+
+      // Calculate model matrix for light source
+      const model = new Mat4()
+        .translate(light.position)
+        .scale([0.1, 0.1, 0.1]);
+
+      // Send model matrix to the shader
+      gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
+
+      // Draw light model
+      light.model.draw(program);
     }
   }
 }
