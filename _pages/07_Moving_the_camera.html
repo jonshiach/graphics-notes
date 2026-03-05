@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -787,7 +787,7 @@ document.write(`
 <li><p>Add a velocity vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 0, 0)\)</span>, acceleration factor <span class="math notranslate nohighlight">\( = 5\)</span> and deceleration factor <span class="math notranslate nohighlight">\(= 10\)</span> to the camera class constructor.</p></li>
 <li><p><strong>Acceleration</strong></p>
 <ul class="simple">
-<li><p>Compute a target horizontal velocity vector: <span class="math notranslate nohighlight">\( \vec{v}_{target} = \textsf{maxSpeed} \times \operatorname{normalize}(\vec{move})\)</span></p></li>
+<li><p>Compute a target horizontal velocity vector: <span class="math notranslate nohighlight">\( \vec{v}_{target} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{move})\)</span></p></li>
 <li><p>Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the target velocity</p></li>
 </ul>
 <div class="math notranslate nohighlight">
@@ -813,7 +813,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[ \vec{eye} = \vec{eye} + \vec{v} \, \Delta t\]</div>
 <ol class="arabic simple" start="4">
-<li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is:</p>
+<li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is <a class="footnote-reference brackets" href="#aabb" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
 <ul class="simple">
 <li><p>Loop through all the cubes</p>
 <ul>
@@ -842,6 +842,13 @@ document.write(`
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
 ></iframe>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="aabb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>A better way of handling collision detection is to use Axis-Aligned Bounding Box (AABB) collision.</p>
+</aside>
+</aside>
 </section>
 </section>
 
