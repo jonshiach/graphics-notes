@@ -6,11 +6,7 @@ class Player {
     this.position = position;
     this.rotation = new Quaternion();
 
-    // Look control
-    this.yaw = 0;
-    this.pitch = 0;
-    this.turnSpeed = 0.002;
-    this.pitchLimit = 85 * Math.PI / 180;
+    // Rotations
     this.rotationSmooth = 8;
 
     // Movement
@@ -19,12 +15,10 @@ class Player {
     this.acceleration = 10;
     this.deceleration = 10;
 
-    // Collider
-    this.height = 0.5;
-
     // Player model
     this.model;
     this.scale = [0.4, 0.4, 0.4];
+    this.height = 0.25;
 
     // Physics
     this.jumpForce = 5;
@@ -96,10 +90,10 @@ class Player {
     }
 
     this.velocity[1] += this.gravity * dt;
-    this.position[1] += this.velocity * dt;
+    this.position[1] += this.velocity[1] * dt;
 
     if (this.position[1] <= this.height) {
-      this.position[1] = this.height;
+      this.position[1] = 0;
       this.velocity[1] = 0;
       this.onGround = true;
     }
@@ -108,7 +102,7 @@ class Player {
 
   draw(gl, program) {
 
-    const translation = new Mat4().translate(addVector(this.position, [0, this.height, 0]));
+    const translation = new Mat4().translate(addVector(this.position, [0, 0, 0]));
     const rotation = this.rotation.matrix();
     const scale = new Mat4().scale(this.scale);
     const model =  new Mat4()

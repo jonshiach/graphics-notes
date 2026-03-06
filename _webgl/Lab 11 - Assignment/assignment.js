@@ -198,7 +198,6 @@ async function main() {
     
   // Create WebGL program 
   const program = createProgram(gl, vertexShader, fragmentShader);
-  const lightProgram = createProgram(gl, lightVertexShader, lightFragmentShader);
 
   // Set the shader program
   gl.useProgram(program);
@@ -230,9 +229,10 @@ async function main() {
   floor.setTextureRepeat(8, 8);
 
   // Create Suzanne object
-  const suzanne = await Model.create(gl, "assets/suzanne2.obj");
+  const suzanne = await Model.create(gl, "assets/suzanne.obj");
   suzanne.loadTexture("assets/suzanne_diffuse.png", "diffuse");
   suzanne.loadTexture("assets/suzanne_normal.png", "normal");
+  suzanne.ks = 0.5;
 
   // --- LIGHT SOURCES ---
   // Light models

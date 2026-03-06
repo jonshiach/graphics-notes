@@ -144,7 +144,7 @@ void main() {
   N = normalize(TBN * normalSample);
 
   // Calculate lighting for each light source
-  vec3 lighting;
+  vec3 lighting = vec3(0.0);
   for (int i = 0; i < uNumLights; i++) {
     lighting += computeLighting(uLights[i], N, V, objectColour.rgb);
   }
@@ -181,7 +181,7 @@ void main() {
 }`;
 
 // Main function
-function main() {
+async function main() {
 
   // Setup WebGL
   const canvas = document.getElementById("canvasId");
@@ -252,6 +252,9 @@ function main() {
     30, 31, 32, 33, 34, 35,  // top
   ]);
 
+  // Load teapot model
+  const teapot = await loadOBJ("assets/suzanne.obj");
+
   // Define cube positions (5x5 grid of cubes)
   const cubes = [];
   for (let i = 0; i < 5; i++) {
@@ -269,9 +272,11 @@ function main() {
 
   // Create VAO
   const vao = createVao(gl, program, vertices, indices);
+  const teapotVao = createVao(gl, program, teapot.vertices, teapot.indices);
 
   // Load texture
-  const texture = loadTexture(gl, "assets/crate.png");
+  // const texture = loadTexture(gl, "assets/crate.png");
+  const texture = loadTexture(gl, "assets/blue.bmp");
   const normalMap = loadTexture(gl, "assets/crate_normal.png");
 
   // Define floor vertices
@@ -392,8 +397,9 @@ function main() {
       gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
       // Draw the triangles
-      gl.bindVertexArray(vao);
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+      // gl.bindVertexArray(vao);
+      gl.bindVertexArray(teapotVao);
+      gl.drawElements(gl.TRIANGLES, teapot.indices.length, gl.UNSIGNED_SHORT, 0);
     }
 
     // Draw floor

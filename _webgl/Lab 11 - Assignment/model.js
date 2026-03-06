@@ -298,7 +298,7 @@ class Model {
     // Colour
     gl.uniform3fv(gl.getUniformLocation(program, "uColour"), this.colour);
 
-    // 
+    // Texture map booleans
     gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), !!this.diffuseTexture);
     gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), !!this.specularTexture);
     gl.uniform3fv(gl.getUniformLocation(program, "uColour"), this.colour);

@@ -59,6 +59,9 @@ uniform float uKa;
 uniform float uKd;
 uniform float uKs;
 uniform float uShininess;
+uniform bool uHasDiffuseMap;
+uniform bool uHasNormalMap;
+uniform bool uHasSpecularMap;
 
 // Light struct
 struct Light {
@@ -118,7 +121,11 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 H = normalize(L + V);
   float spec = pow(max(dot(N, H), 0.0), uShininess);
   vec3 specular = uKs * spec * light.colour;
-  specular *= texture(uSpecularMap, vTexCoords).rgb;
+
+  // Apply specular map only if defined
+  if (uHasSpecularMap) {
+    specular *= texture(uSpecularMap, vTexCoords).rgb;
+  }
 
   // Output fragment colour
   return attenuation * (ambient + intensity * (diffuse + specular));
@@ -128,20 +135,25 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
 void main() {
 
   // Object colour
-  vec4 objectColour = texture(uTexture, vTexCoords);
+  vec4 objectColour = vec4(vColour, 1.0);
+  if (uHasDiffuseMap) {
+    objectColour = texture(uTexture, vTexCoords);
+  }
 
   // Lighting vectors
   vec3 N = normalize(vNormal);
   vec3 V = normalize(uCameraPosition - vPosition);
 
-  // Construct tangent space basis
-  vec3 T = normalize(vTangent);
-  vec3 B = cross(N, T);
-  mat3 TBN = mat3(T, B, N);
+  // Apply normal map
+  if (uHasNormalMap) {
+    vec3 T = normalize(vTangent);
+    vec3 B = cross(N, T);
+    mat3 TBN = mat3(T, B, N);
 
-  // Calculate world space normal
-  vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
-  N = normalize(TBN * normalSample);
+    // Calculate world space normal
+    vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
+    N = normalize(TBN * normalSample);
+  }
 
   // Calculate lighting for each light source
   vec3 lighting;
@@ -363,6 +375,20 @@ function main() {
     // Send camera position to the shader
     gl.uniform3fv(gl.getUniformLocation(program, "uCameraPosition"), camera.eye);
 
+    // Bind texture
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
+
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, normalMap);
+    gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
+
+    // Send texture flags to the shader
+    gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), true);
+    gl.uniform1i(gl.getUniformLocation(program, "uHasNormalMap"), true);
+    gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), false);
+
     // Draw cubes
     for (let i = 0; i < numCubes; i++) {
 
@@ -381,15 +407,6 @@ function main() {
       gl.uniform1f(gl.getUniformLocation(program, "uKd"), cubes[i].kd);
       gl.uniform1f(gl.getUniformLocation(program, "uKs"), cubes[i].ks);
       gl.uniform1f(gl.getUniformLocation(program, "uShininess"), cubes[i].shininess);
-
-      // Bind texture
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
-
-      gl.activeTexture(gl.TEXTURE1);
-      gl.bindTexture(gl.TEXTURE_2D, normalMap);
-      gl.uniform1i(gl.getUniformLocation(program, "uNormalMap"), 1);
 
       // Draw the triangles
       gl.bindVertexArray(vao);
@@ -412,11 +429,13 @@ function main() {
     gl.bindTexture(gl.TEXTURE_2D, floorSpecularMap);
     gl.uniform1i(gl.getUniformLocation(program, "uSpecularMap"), 2);
 
+    // Send texture flags to the shader
+    gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), true);
+    gl.uniform1i(gl.getUniformLocation(program, "uHasNormalMap"), true);
+    gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), true);
+
     // Send object light properties to the shader
-    gl.uniform1f(gl.getUniformLocation(program, "uKa"), 0.2);
-    gl.uniform1f(gl.getUniformLocation(program, "uKd"), 0.7);
     gl.uniform1f(gl.getUniformLocation(program, "uKs"), 1.0);
-    gl.uniform1f(gl.getUniformLocation(program, "uShininess"), 32);
 
     // Calculate the model matrix
     const model = new Mat4()

@@ -1084,34 +1084,35 @@ A player object is created that has properties for its position in the world spa
 
 $$ \vec{eye} = \vec{player} + \vec{offset}. $$
 
-The $\vec{offset}$ vector is obtained by scaling the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors by the offset distances. For example, if we wanted the camera to be 5 units behind, 1 unit to the right and 2 units above the player then
-
-$$ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}. $$
-
 ```{figure} ../_images/10_third_person_camera_1.svg
 :width: 150
 ```
 
+The $\vec{offset}$ vector is obtained by scaling the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors by the offset distances. For example, if we wanted the camera to be 5 units behind, 1 unit to the right and 2 units above the player then
+
+$$ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}. $$
+
 The camera is rotated in the usual way using the mouse input to change the $pitch$ and $yaw$ angles and calculate the target rotation quaternion. The camera quaternion is then SLERPed towards the target rotation quaternion. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, and this is then used to calculate the updated forward and right movement vectors. This way the player rotation is slightly delayed giving a more natural feel to the third person camera.
 
 ```{figure} ../_images/10_third_person_camera_2.svg
-:width: 150
+:width: 300
+
+The camera quaternion is rotated using the mouse input. The player quaternion is rotated towards the camera quaternion.
 ```
+
+<center>
+<video autoplay controls muted="true" loop="true" width="500">
+    <source src="../_static/videos/10_third_person_camera.mp4" type="video/mp4">
+</video>
+</center>
 
 ---
 ## Exercises
 
-1. Add the ability for the user to switch between view modes where pressing the 1 key selects first-person camera and pressing the 2 key selects a third person camera. In third-person camera mode the camera should follow the character and point in the same direction as the character is facing.
 
-The Suzanne model and textures can be downloaded from the <a href="https://github.com/jonshiach/Computer-Graphics-Labs/tree/main/assets" target="_blank">GitHub repository</a> (this was only added recently so you might not have it).
-
-2. Add the ability for the user to select a different third-person camera mode by pressing the 3 key. In this mode, the camera should be independent of the character movement where it can rotate around the character based on the camera $yaw$ and $pitch$ angles. The character movement direction should be governed by a character $yaw$ angle that can be altered by the A and D keys.
-
-<center>
-<video autoplay controls muted="true" loop="true" width="500">
-    <source src="../_static/10_Third_person_camera_3.mp4" type="video/mp4">
-</video>
-</center>
+1. Add SLERP to your first person camera and experiment with changing the smoothing parameter.
+  
+2. Add the ability for the user to switch between first person and third person cameras by pressing the <kbd>C</kbd> key. The Suzanne model (the Blender mascot) used in the above example and textures can be downloaded from [suzanne.obj](../_downloads/assets/suzanne.zip) (or you can use the cube model or any other model for the player object).
 
 ---
 

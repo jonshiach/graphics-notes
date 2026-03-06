@@ -48,8 +48,6 @@ class FirstPersonCamera extends BaseCamera {
 
   constructor() {
     super();
-
-    this.positionSmooth = 20;
     this.rotationSmooth = 20;
   }
 
@@ -132,6 +130,7 @@ class ThirdPersonCamera extends BaseCamera {
 
     // Shoulder offset
     if (this.shoulderCoolDownTimer > 0) this.shoulderCoolDownTimer -= dt;
+
     if (input.isDown("q") && this.shoulderCoolDownTimer <= 0) {
       this.shoulderOffset *= -1;
       this.shoulderCoolDownTimer = this.shoulderCoolDown;
@@ -139,7 +138,7 @@ class ThirdPersonCamera extends BaseCamera {
 
     // Calculate target position
     let offset = [0, 0, 0];
-    offset = addVector(offset, scaleVector(up, this.height + player.height));
+    offset = addVector(offset, scaleVector(up, this.height));
     offset = addVector(offset, scaleVector(forward, -this.distance));
     offset = addVector(offset, scaleVector(right, this.shoulderOffset));
     const targetPosition = addVector(player.position, offset);
@@ -170,9 +169,9 @@ class ThirdPersonCamera extends BaseCamera {
 
 class FreeFlyCamera extends BaseCamera {
 
-  constructor() {
+  constructor(position = [0, 0, 0]) {
     super();
-    this.position = [0, 2, 5];
+    this.position = position;
     this.speed = 5;
   }
 
@@ -228,8 +227,16 @@ class CameraManager {
   update(dt) {
     // Switch cameras
     if (this.input.isDown("c") && !this.switchCooldown) {
+
+      const oldCamera = this.activeCamera;
       this.activeIndex = (this.activeIndex + 1) % this.cameras.length;
+      const newCamera = this.activeCamera;
+      this.copyRotation(oldCamera, newCamera);
       this.switchCooldown = 0.3; // seconds to prevent rapid cycling
+
+      if (newCamera instanceof ThirdPersonCamera) {
+        this.player.rotation = newCamera.rotation;
+      }
     }
 
     // Countdown cool down timer
@@ -240,5 +247,11 @@ class CameraManager {
 
     // Update current camera
     this.activeCamera.update(this.input, this.player, dt);
+  }
+
+  copyRotation(fromCam, toCam) {
+    toCam.yaw = fromCam.yaw;
+    toCam.pitch = fromCam.pitch;
+    toCam.rotation = fromCam.rotation;
   }
 }

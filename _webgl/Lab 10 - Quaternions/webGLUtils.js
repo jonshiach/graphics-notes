@@ -237,3 +237,93 @@ function computeTangents(vertices, indices) {
 
   return tangents;
 }
+
+async function loadOBJ(path) {
+
+  const response = await fetch(path);
+  const text = await response.text();
+
+  const tempPos = [];
+  const tempUV = [];
+  const tempNorm = [];
+
+  const vertices = [];
+  const indices = [];
+
+  let index = 0;
+
+  const lines = text.split("\n");
+
+  for (let line of lines) {
+
+    line = line.trim();
+    if (line === "" || line.startsWith("#")) continue;
+
+    const parts = line.split(/\s+/);
+
+    switch (parts[0]) {
+
+      // vertex position
+      case "v":
+        tempPos.push([
+          parseFloat(parts[1]),
+          parseFloat(parts[2]),
+          parseFloat(parts[3])
+        ]);
+        break;
+
+      // texture coordinate
+      case "vt":
+        tempUV.push([
+          parseFloat(parts[1]),
+          parseFloat(parts[2])
+        ]);
+        break;
+
+      // normal
+      case "vn":
+        tempNorm.push([
+          parseFloat(parts[1]),
+          parseFloat(parts[2]),
+          parseFloat(parts[3])
+        ]);
+        break;
+
+      // face
+      case "f":
+
+        const face = parts.slice(1);
+
+        // triangulate polygon
+        for (let i = 1; i < face.length - 1; i++) {
+
+          const triangle = [face[0], face[i], face[i+1]];
+
+          for (let vertex of triangle) {
+
+            const vals = vertex.split("/");
+
+            const v = tempPos[vals[0]-1];
+            const uv = vals[1] ? tempUV[vals[1]-1] : [0,0];
+            const n = vals[2] ? tempNorm[vals[2]-1] : [0,0,0];
+
+            vertices.push(
+              v[0], v[1], v[2],   // position
+              1, 1, 1,            // colour
+              uv[0], uv[1],       // texture
+              n[0], n[1], n[2]    // normal
+            );
+
+            indices.push(index++);
+          }
+        }
+
+        break;
+    }
+  }
+
+  return {
+    vertices: new Float32Array(vertices),
+    indices: new Uint16Array(indices)
+  };
+}
