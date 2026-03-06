@@ -397,8 +397,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavefront-obj-files">Wavefront (OBJ) Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-mtl-files">Material (MTL) files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-models-from-obj-files">Loading models from OBJ files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-obj-files-using-blender">Creating OBJ files using Blender</a></li>
 </ul>
             </nav>
         </div>
@@ -412,10 +412,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="importing-3d-models">
 <h1>Importing 3D Models<a class="headerlink" href="#importing-3d-models" title="Link to this heading">#</a></h1>
+<p>In these notes we defined our objects, namely the unit cube and simple planar objects, by “hard coding” the vertex coordinates in JavaScript. In practice, 3D models are created using specialised modelling software such as Blender. One of the most common formats used to exchange 3D models is the Wavefront OBJ format. OBJ files store the geometric data required to describe a 3D object, including vertex positions, texture coordinates, normals, and face definitions. They are typically accompanied by a material file (.mtl) that defines surface properties such as colours and textures. Here we look at how 3D models can be exported from Blender and imported into our WebGL application using the OBJ format. This allows complex models to be rendered in a scene without having to manually define every vertex in code.</p>
 <section id="wavefront-obj-files">
 <h2>Wavefront (OBJ) Files<a class="headerlink" href="#wavefront-obj-files" title="Link to this heading">#</a></h2>
-<p><strong>Wavefront files</strong> are a simple and widely used format for storing 3D geometry. They were originally development by Wavefront Technologies and are commonly used to exchange models between 3D modelling software such as Blender, Maya etc. and graphics applications.</p>
-<p>The most common Wavefront formate is the <code class="docutils literal notranslate"><span class="pre">.obj</span></code> file, which stores the geometry of a model using plain text making it easy to read and parse into JavaScript.</p>
+<p><strong>Wavefront files</strong> are a simple and widely used format for storing 3D geometry. They were originally development by Wavefront Technologies and are commonly used to exchange models between 3D modelling software such as Blender, Maya etc. and graphics applications. The most common Wavefront format is the <code class="docutils literal notranslate"><span class="pre">.obj</span></code> file, which stores the geometry of a model using plain text making it easy to read and parse into JavaScript.</p>
 <p>An OBJ file describes a 3D model using several types of entries. Each line begins with a keyword that specifies the type of data that follows.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> – vertex position <span class="math notranslate nohighlight">\((x, y, z)\)</span></p></li>
@@ -426,28 +426,26 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">usemtl</span></code> – material to use</p></li>
 </ul>
 <p>For example, the OBJ file for a simple unit cube may look like</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>o cube
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>o Cube
 
-v -1 -1  1
-v -1  1  1
-v -1 -1 -1
-v -1  1 -1
-v  1 -1  1
-v  1  1  1
-v  1 -1 -1
-v  1  1 -1
-
-vn -1  0  0
-vn  0  0 -1
-vn  1  0  0
-vn  0  0  1
-vn  0 -1  0
-vn  0  1  0
-
-vt 1 0
-vt 0 1 
-vt 0 0
-vt 1 1
+v -1.000000 -1.000000 1.000000
+v -1.000000 1.000000 1.000000
+v -1.000000 -1.000000 -1.000000
+v -1.000000 1.000000 -1.000000
+v 1.000000 -1.000000 1.000000
+v 1.000000 1.000000 1.000000
+v 1.000000 -1.000000 -1.000000
+v 1.000000 1.000000 -1.000000
+vn -1.0000 -0.0000 -0.0000
+vn -0.0000 -0.0000 -1.0000
+vn 1.0000 -0.0000 -0.0000
+vn -0.0000 -0.0000 1.0000
+vn -0.0000 -1.0000 -0.0000
+vn -0.0000 1.0000 -0.0000
+vt 1.000000 0.000000
+vt 0.000000 1.000000
+vt 0.000000 0.000000
+vt 1.000000 1.000000
 
 usemtl crate
 
@@ -478,29 +476,166 @@ f 4/1/6 2/4/6 6/2/6
 <p>The second vertex of the first triangle is <code class="docutils literal notranslate"><span class="pre">3/2/1</span></code> so</p>
 <ul class="simple">
 <li><p>vertex coordinate is <span class="math notranslate nohighlight">\((-1, -1, -1)\)</span></p></li>
-<li><p>texture coordiante is <span class="math notranslate nohighlight">\((0, 1)\)</span></p></li>
+<li><p>texture coordinate is <span class="math notranslate nohighlight">\((0, 1)\)</span></p></li>
 <li><p>normal vector is <span class="math notranslate nohighlight">\((-1, 0, 0)\)</span></p></li>
 </ul>
 <p>and so on.</p>
 </section>
-<section id="material-mtl-files">
-<h2>Material (MTL) files<a class="headerlink" href="#material-mtl-files" title="Link to this heading">#</a></h2>
-<p>A material file <code class="docutils literal notranslate"><span class="pre">.mtl</span></code> describes the surface appearance of the model defined in an OBJ file. Like OBJ files, each line of a MTL file begins with a keyword that specifies the type of data that follows</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">newmtl</span></code> – material name</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Ka</span></code> – ambient colour <span class="math notranslate nohighlight">\((R, G, B)\)</span></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Kd</span></code> – diffuse colour <span class="math notranslate nohighlight">\((R, G, B)\)</span></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Ks</span></code> – specular colour <span class="math notranslate nohighlight">\((R, G, B)\)</span></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Ns</span></code> – shininess</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code> – transparency</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">map_kd</span></code> – diffuse texture map</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">map_ks</span></code> – specular map</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">map_bump</span></code> – normal map</p></li>
-</ul>
-</section>
 <section id="loading-models-from-obj-files">
 <h2>Loading models from OBJ files<a class="headerlink" href="#loading-models-from-obj-files" title="Link to this heading">#</a></h2>
-<p>To load a model from an OBJ file so that it can be used with the WebGL programs we have written in these labs you will need to write a function that reads in the data from the OBJ file and writes the vertex coordinates, texture coordinates, normal vectors and vertex indices into the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays. These can then be used to create the VAO for the model.</p>
+<p>To load a model from an OBJ file so that it can be used with the WebGL programs we have written in these labs we need a function that reads in the data from the OBJ file and writes the vertex coordinates, texture coordinates, normal vectors and vertex indices into the <code class="docutils literal notranslate"><span class="pre">vertices</span></code> and <code class="docutils literal notranslate"><span class="pre">indices</span></code> arrays.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">loadOBJ</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">();</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tempPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tempUV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tempNorm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">lines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nx">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">trim</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">line</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">0</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">      </span><span class="c1">// vertex position</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;v&quot;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">tempPos</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">1</span><span class="p">]),</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">2</span><span class="p">]),</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">3</span><span class="p">])</span>
+<span class="w">        </span><span class="p">]);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">      </span><span class="c1">// texture coordinate</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;vt&quot;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">tempUV</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">1</span><span class="p">]),</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">2</span><span class="p">])</span>
+<span class="w">        </span><span class="p">]);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">      </span><span class="c1">// normal</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;vn&quot;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">tempNorm</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">1</span><span class="p">]),</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">2</span><span class="p">]),</span>
+<span class="w">          </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mf">3</span><span class="p">])</span>
+<span class="w">        </span><span class="p">]);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">      </span><span class="c1">// face</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="o">:</span>
+
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parts</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// triangulate polygon</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">face</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">          </span><span class="kd">const</span><span class="w"> </span><span class="nx">triangle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nx">face</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">face</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="w"> </span><span class="nx">face</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mf">1</span><span class="p">]];</span>
+
+<span class="w">          </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">vertex</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">triangle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vertex</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">);</span>
+
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tempPos</span><span class="p">[</span><span class="nx">vals</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="o">-</span><span class="mf">1</span><span class="p">];</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vals</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tempUV</span><span class="p">[</span><span class="nx">vals</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="o">-</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="mf">0</span><span class="p">];</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vals</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tempNorm</span><span class="p">[</span><span class="nx">vals</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="o">-</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="mf">0</span><span class="p">,</span><span class="mf">0</span><span class="p">];</span>
+
+<span class="w">            </span><span class="nx">vertices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+<span class="w">              </span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">],</span><span class="w">   </span><span class="c1">// position</span>
+<span class="w">              </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w">            </span><span class="c1">// colour</span>
+<span class="w">              </span><span class="nx">uv</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">uv</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w">       </span><span class="c1">// texture</span>
+<span class="w">              </span><span class="nx">n</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">n</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">n</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w">    </span><span class="c1">// normal</span>
+<span class="w">            </span><span class="p">);</span>
+
+<span class="w">            </span><span class="nx">indices</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">index</span><span class="o">++</span><span class="p">);</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">vertices</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">indices</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint16Array</span><span class="p">(</span><span class="nx">indices</span><span class="p">)</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This function is an example of an <strong>asynchronous function</strong> which is proceeded by the <code class="docutils literal notranslate"><span class="pre">async</span></code> keyword. An asynchronous function returns a <strong>promise</strong> which is a value that may not be available yet but will be resolved (or rejected) in the future. Promises are a way to hand asynchronous operations like fetching data and reading files. These allow us to use the <code class="docutils literal notranslate"><span class="pre">await</span></code> keyword to pause executing of the program until the promise is resolved. To use the <code class="docutils literal notranslate"><span class="pre">loadObj()</span></code> function we need to change the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function to an asynchronous function and use the <code class="docutils literal notranslate"><span class="pre">await</span></code> keyword when calling it.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="c1">// blah blah</span>
+
+<span class="w">  </span><span class="c1">// Load model</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadOBJ</span><span class="p">(</span><span class="s2">&quot;assets/teapot.obj&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Create VAO</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">modelVao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVao</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">vertices</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">indices</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// more blah blah</span>
+<span class="p">}</span>
+
+<span class="nx">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-obj-files-using-blender">
+<h2>Creating OBJ files using Blender<a class="headerlink" href="#creating-obj-files-using-blender" title="Link to this heading">#</a></h2>
+<p>Blender is a free, open source 3D creation suite used for creating 3D content. It is widely used in computer graphics, animation, games and movies (the movie <a href="https://en.wikipedia.org/wiki/Flow_(2024_film)" target="_blank">Flow</a> won the Best Animated Feature Oscar in 2025 was made using Blender). Blender can be used to create a 3D model, or import one from a variety of file formats, and export the OBJ file.</p>
+<p>For example, to create an OBJ file of Suzanne, the blender mascot do the following</p>
+<ol class="arabic simple">
+<li><p>Open Blender (this is installed on PCs in the Dalton building or can be downloaded from <a href="https://www.blender.org/" target="_blank">https://www.blender.org/</a>)</p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/A_Blender_1.png"><img alt="../_images/A_Blender_1.png" src="../_images/A_Blender_1.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="2">
+<li><p>When Blender loads the default model is a unit cube. Delete this by clicking on the cube, press the <kbd>X</kbd> key and select <strong>Delete</strong></p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/A_Blender_2.png"><img alt="../_images/A_Blender_2.png" src="../_images/A_Blender_2.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="3">
+<li><p>Click on <strong>Add &gt; Mesh &gt; Monkey</strong></p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/A_Blender_3.png"><img alt="../_images/A_Blender_3.png" src="../_images/A_Blender_3.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="4">
+<li><p>Click on <strong>File &gt; Export &gt; Wavefront (.obj)</strong></p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/A_Blender_4.png"><img alt="../_images/A_Blender_4.png" src="../_images/A_Blender_4.png" style="width: 60%;" />
+</a>
+</figure>
+<ol class="arabic simple" start="5">
+<li><p>Select the <strong>Triangulated Mesh</strong>, <strong>Normals</strong> and <strong>UV Coordinates</strong> options, navigate to where you want to save the OBJ file (e.g., your <em><strong>assets/</strong></em> folder) and then click on <strong>Export Wavefront OBJ</strong></p></li>
+</ol>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/A_Blender_5.png"><img alt="../_images/A_Blender_5.png" src="../_images/A_Blender_5.png" style="width: 60%;" />
+</a>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Blender is a powerful 3D creation tool, and here we only cover a very small part of its capabilities. It includes many features for creating 3D models and textures that are beyond the scope of these notes. If you want to learn more about creating models and applying textures, there are many tutorials available online. In particular, YouTube and other websites provide clear, step-by-step guides that can help you create and edit 3D models.</p>
+</div>
 </section>
 </section>
 
@@ -560,8 +695,8 @@ f 4/1/6 2/4/6 6/2/6
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavefront-obj-files">Wavefront (OBJ) Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-mtl-files">Material (MTL) files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-models-from-obj-files">Loading models from OBJ files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-obj-files-using-blender">Creating OBJ files using Blender</a></li>
 </ul>
   </nav></div>
 

@@ -339,7 +339,7 @@ Refresh your web browser and move the camera around to see the effects of the no
 ```{figure} ../_images/09_cubes_specular_1.png
 :width: 80%
 
-The crate specular map applied to the cubes.
+The crate normal map applied to the cubes.
 ```
 
 The lighting properties of our cubes makes the surfaces look shiny. Since these should be wooden, we can reduce the specular coefficient to give a more realistic result.
@@ -360,7 +360,7 @@ Refresh your web browser and you should see that the cubes are now less shiny an
 ```{figure} ../_images/09_cubes_specular_2.png
 :width: 80%
 
-The crate specular map applied to the cubes ($k_s = 0.2$). 
+The crate normal map applied to the cubes ($k_s = 0.2$).
 ```
 
 ---
@@ -511,6 +511,91 @@ Refresh your web browser and position the camera to see the effect of the specul
 :width: 80%
 
 A the floor object with normal and specular mapping.
+```
+
+## Texture Map Flags
+
+A problem we now have is that we hand bound a specular map for the floor object but this has also been applied to the cube objects.
+
+```{figure} ../_images/09_cube_specular.png
+:width: 80%
+
+The floor specular map has been applied to the cube objects.
+```
+
+To overcome this we can use a uniform boolean flag in the fragment shader that tells it whether a texture exists and use these to only apply the texture, normal or specular maps when they do.
+
+:::{admonition} Task
+:class: tip
+
+In the fragment shader, add uniforms for the texture flags
+
+```glsl
+uniform bool uHasDiffuseMap;
+uniform bool uHasNormalMap;
+uniform bool uHasSpecularMap;
+```
+
+In the `main()` function, change the object colour to only use a texture (diffuse) map if it exists
+
+```glsl
+// Object colour
+vec4 objectColour = vec4(vColour, 1.0);
+if (uHasDiffuseMap) {
+  objectColour = texture(uTexture, vTexCoords);
+}
+```
+
+and only apply a normal map if it exists
+
+```glsl
+// Apply normal map
+if (uHasNormalMap) {
+  vec3 T = normalize(vTangent);
+  vec3 B = cross(N, T);
+  mat3 TBN = mat3(T, B, N);
+
+  vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
+  N = normalize(TBN * normalSample);
+}
+```
+
+In the `computeLighting()` function, only apply the specular map if it exists
+
+```glsl
+// Apply specular map only if defined
+if (uHasSpecularMap) {
+  specular *= texture(uSpecularMap, vTexCoords).rgb;
+}
+```
+
+Finally, send the texture flags for the cube objects after we bind their textures
+
+```javascript
+// Send texture flags to the shader
+gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), true);
+gl.uniform1i(gl.getUniformLocation(program, "uHasNormalMap"), true);
+gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), false);
+```
+
+and do the same for the floor object
+
+```javascript
+// Send texture flags to the shader
+gl.uniform1i(gl.getUniformLocation(program, "uHasDiffuseMap"), true);
+gl.uniform1i(gl.getUniformLocation(program, "uHasNormalMap"), true);
+gl.uniform1i(gl.getUniformLocation(program, "uHasSpecularMap"), true);
+```
+
+:::
+
+Here we have set the specular map flag to false for the cube object but true for the floor object. 
+Now when we look closely at the cube objects we no longer see the floor specular map being applied.
+
+```{figure} ../_images/09_cube_no_specular.png
+:width: 80%
+
+The floor specular map is no longer being applied to the cube objects.
 ```
 
 ---

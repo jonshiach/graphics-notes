@@ -582,6 +582,11 @@ const numCubes = cubes.length;
 Now edit the code used to calculate the model matrix and draw the cubes so that it looks like the following
 
 ```javascript
+// Bind texture
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, texture);
+gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
+  
 // Draw cubes
 for (let i = 0; i < numCubes; i++) {
 
@@ -595,11 +600,6 @@ for (let i = 0; i < numCubes; i++) {
   // Send model matrix to the shader
   gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
-  // Bind texture
-  gl.activeTexture(gl.TEXTURE0);
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.uniform1i(gl.getUniformLocation(program, "uTexture"), 0);
-  
   // Draw the triangles
   gl.bindVertexArray(vao);
   gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);

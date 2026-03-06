@@ -403,6 +403,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-map-flags">Texture Map Flags</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
@@ -707,7 +708,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/09_cubes_specular_1.png"><img alt="../_images/09_cubes_specular_1.png" src="../_images/09_cubes_specular_1.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 98 </span><span class="caption-text">The crate specular map applied to the cubes.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 98 </span><span class="caption-text">The crate normal map applied to the cubes.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The lighting properties of our cubes makes the surfaces look shiny. Since these should be wooden, we can reduce the specular coefficient to give a more realistic result.</p>
@@ -723,7 +724,7 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/09_cubes_specular_2.png"><img alt="../_images/09_cubes_specular_2.png" src="../_images/09_cubes_specular_2.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 99 </span><span class="caption-text">The crate specular map applied to the cubes (<span class="math notranslate nohighlight">\(k_s = 0.2\)</span>).</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">The crate normal map applied to the cubes (<span class="math notranslate nohighlight">\(k_s = 0.2\)</span>).</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -858,6 +859,77 @@ document.write(`
 </figcaption>
 </figure>
 </section>
+<section id="texture-map-flags">
+<h2>Texture Map Flags<a class="headerlink" href="#texture-map-flags" title="Link to this heading">#</a></h2>
+<p>A problem we now have is that we hand bound a specular map for the floor object but this has also been applied to the cube objects.</p>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../_images/09_cube_specular.png"><img alt="../_images/09_cube_specular.png" src="../_images/09_cube_specular.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">The floor specular map has been applied to the cube objects.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To overcome this we can use a uniform boolean flag in the fragment shader that tells it whether a texture exists and use these to only apply the texture, normal or specular maps when they do.</p>
+<div class="tip admonition">
+<p class="admonition-title">Task</p>
+<p>In the fragment shader, add uniforms for the texture flags</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">uHasDiffuseMap</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">uHasNormalMap</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">uHasSpecularMap</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, change the object colour to only use a texture (diffuse) map if it exists</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Object colour</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">vColour</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uHasDiffuseMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">objectColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uTexture</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and only apply a normal map if it exists</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Apply normal map</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uHasNormalMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vTangent</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">normalSample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uNormalMap</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">TBN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normalSample</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">computeLighting()</span></code> function, only apply the specular map if it exists</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Apply specular map only if defined</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uHasSpecularMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">specular</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uSpecularMap</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, send the texture flags for the cube objects after we bind their textures</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send texture flags to the shader</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasDiffuseMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasNormalMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasSpecularMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and do the same for the floor object</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send texture flags to the shader</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasDiffuseMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasNormalMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">gl</span><span class="p">.</span><span class="nx">uniform1i</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uHasSpecularMap&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Here we have set the specular map flag to false for the cube object but true for the floor object.
+Now when we look closely at the cube objects we no longer see the floor specular map being applied.</p>
+<figure class="align-default" id="id8">
+<a class="reference internal image-reference" href="../_images/09_cube_no_specular.png"><img alt="../_images/09_cube_no_specular.png" src="../_images/09_cube_no_specular.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">The floor specular map is no longer being applied to the cube objects.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
 <hr class="docutils" />
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
@@ -960,6 +1032,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shaders">Shaders</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specular-maps">Specular maps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#texture-map-flags">Texture Map Flags</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-walkthrough">Video walkthrough</a></li>
 </ul>
