@@ -12,15 +12,14 @@ class Camera {
     this.far    = 1000;
 
     // Movement settings
-    this.speed = 5;
+    this.maxSpeed = 5;
     this.turnSpeed = 0.002;  
     this.yaw = 0;
     this.pitch = 0;
     this.smoothing = 10;
 
-    // Orientation quaternion
-    this.orientation = new Quaternion();
-    this.targetOrientation = new Quaternion();
+    // Camera quaternion
+    this.rotation = new Quaternion();
   }
 
   update(input, dt) {
@@ -30,37 +29,38 @@ class Camera {
     this.yaw   -= mouse.x * this.turnSpeed;
     this.pitch -= mouse.y * this.turnSpeed;
 
-    // Calculate orientation quaternion
+    // Calculate camera rotation quaternion
     const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
     const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
-    this.targetOrientation = qYaw.multiply(qPitch).normalize();
+    const targetQCamera = qYaw.multiply(qPitch).normalize();
+    // this.rotation = qYaw.multiply(qPitch).normalize();
 
     // Apply slerp to smooth camera motion
-    this.orientation = Quaternion.slerp(
-      this.orientation,
-      this.targetOrientation, 
+    this.rotation = Quaternion.slerp(
+      this.rotation,
+      targetQCamera, 
       1 - Math.exp(-this.smoothing * dt)
     );
 
     // Calculate front and right camera vectors
-    const front = this.orientation.rotateVector([0, 0, -1]);
-    const right = this.orientation.rotateVector([1, 0, 0]);
+    const front = this.rotation.rotateVector([0, 0, -1]);
+    const right = this.rotation.rotateVector([1, 0, 0]);
 
-    // Camera movement
-    let vel = [0, 0, 0];
-    if (input.isDown("w")) vel = addVector(vel, front);
-    if (input.isDown("s")) vel = subtractVector(vel, front);
-    if (input.isDown("a")) vel = subtractVector(vel, right);
-    if (input.isDown("d")) vel = addVector(vel, right);
+    // Movement direction
+    let moveDir = [0, 0, 0];
+    if (input.isDown("w")) moveDir = addVector(moveDir, front);
+    if (input.isDown("s")) moveDir = subtractVector(moveDir, front);
+    if (input.isDown("a")) moveDir = subtractVector(moveDir, right);
+    if (input.isDown("d")) moveDir = addVector(moveDir, right);
 
-    if (length(vel) > 0) {
-      vel = normalize(vel);
-      this.eye = addVector(this.eye, scaleVector(vel, this.speed * dt));
-    }
+    if (length(moveDir) > 0) moveDir = normalize(moveDir);
+
+    // Move camera
+    this.eye = addVector(this.eye, scaleVector(moveDir, this.maxSpeed * dt));
   }
 
   getViewMatrix() {
-    const rotateMatrix = this.orientation.inverse().matrix();
+    const rotateMatrix = this.rotation.inverse().matrix();
     const translateMatrix = new Mat4().translate([
       -this.eye[0],
       -this.eye[1],
