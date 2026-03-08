@@ -436,21 +436,23 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
    - $9.81$ms$^{-2}$ is the acceleration due to gravity on Earth.
 
-<center>
+<!-- <center>
 <video autoplay controls muted="true" loop="true" width="60%">
     <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
 </video>
-</center>
+</center> -->
 
 3. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:
   
    - Add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $ = 5$ and deceleration factor $= 10$ to the camera class constructor.
    - **Acceleration**
-     - Compute a target horizontal velocity vector: $ \vec{v}_{target} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{move})$
+     - Compute the horizontal maximal velocity vector
 
-     - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the target velocity
+    $$ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})$$
 
-      $$ \vec{v} = \vec{v} + t (\vec{v}_{target} - \vec{v}) $$
+     - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity
+
+      $$ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) $$
 
       - Where $t = \exp(-\textsf{acceleration factor} \times \Delta t)$
 
@@ -458,13 +460,13 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
       - Apply damping to the horizontal velocity
 
-      $$ \vec{v} = t \vec{v}$$
+      $$ \vec{v} = t \, \vec{v}$$
 
       - Where $t = \exp(-\textsf{deceleration factor} \times \Delta t)$
   
     - Calculate the new camera position
 
-$$ \vec{eye} = \vec{eye} + \vec{v} \, \Delta t$$
+      $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} $$
 
 4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
@@ -473,7 +475,7 @@ $$ \vec{eye} = \vec{eye} + \vec{v} \, \Delta t$$
      - If $\| \vec{offset} \| < 0$
        - Move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
 
-[^aabb]: A better way of handling collision detection is to use Axis-Aligned Bounding Box (AABB) collision.
+[^aabb]: A better way of handling collision detection is to use <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection" target="_blank">Axis-Aligned Bounding Box (AABB)</a> collision.
 
 ---
 
