@@ -884,7 +884,7 @@ rotate(axis, angle) {
 
 ---
 
-## A Quaternion camera
+## A quaternion camera
 
 Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the `update()` method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through $\pm 90^\circ$ to look straight up or down (recall that we needed to limit the $pitch$ angle between $\pm 89^\circ$).
 

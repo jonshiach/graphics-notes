@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -412,7 +412,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-a-quaternion">Matrix representation of a quaternion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">A Quaternion camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">A quaternion camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">SLERP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">Third person camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
@@ -1180,7 +1180,7 @@ rotation matrix =
 </section>
 <hr class="docutils" />
 <section id="a-quaternion-camera">
-<h2>A Quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Link to this heading">#</a></h2>
+<h2>A quaternion camera<a class="headerlink" href="#a-quaternion-camera" title="Link to this heading">#</a></h2>
 <p>Now that we have built a Quaternion class we can now use quaternions to perform calculations in the Camera class to implement a quaternion camera. We are currently using Euler angles rotation to calculate the camera vectors in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method and our camera may suffer from gimbal lock. It also does not allow us to move the camera through <span class="math notranslate nohighlight">\(\pm 90^\circ\)</span> to look straight up or down (recall that we needed to limit the <span class="math notranslate nohighlight">\(pitch\)</span> angle between <span class="math notranslate nohighlight">\(\pm 89^\circ\)</span>).</p>
 <p>To implement a quaternion camera we create a quaternion that describes the rotation of the camera in the world space by the <span class="math notranslate nohighlight">\(yaw\)</span> and <span class="math notranslate nohighlight">\(pitch\)</span> angles from the mouse input. Once we have the camera rotation quaternion, we can use it to rotate vectors pointing along the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and negative <span class="math notranslate nohighlight">\(z\)</span> axes to give the <span class="math notranslate nohighlight">\(\vec{right}\)</span>, <span class="math notranslate nohighlight">\(\vec{up}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> vectors for moving the camera. We can also use the matrix form of the camera rotation quaternion to calculate the view matrix.</p>
 <p>For example, let’s say the user moves the mouse to the upwards resulting in a <span class="math notranslate nohighlight">\(pitch\)</span> angle of <span class="math notranslate nohighlight">\(45^\circ\)</span> (which is <span class="math notranslate nohighlight">\(\frac{\pi}{4}\)</span> in radians), then the quaternion used to rotate the camera up is</p>
@@ -1465,7 +1465,7 @@ rotation matrix =
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-a-quaternion">Matrix representation of a quaternion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">A Quaternion camera</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quaternion-camera">A quaternion camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slerp">SLERP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-person-camera">Third person camera</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>

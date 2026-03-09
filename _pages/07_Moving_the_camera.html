@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -533,15 +533,14 @@ document.write(`
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">front</span><span class="p">);</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">subtractVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">isDown</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">length</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">moveDir</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// Move camera</span>
 <span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addVector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eye</span><span class="p">,</span><span class="w"> </span><span class="nx">moveDir</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the *<strong>moving_the_camera.js</strong>, delete the code that sets the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> camera vectors and change the method call to <code class="docutils literal notranslate"><span class="pre">camera.upate()</span></code> so that it takes the <code class="docutils literal notranslate"><span class="pre">input</span></code> object.</p>
+<p>In the <em><strong>moving_the_camera.js</strong></em> file, delete the code that sets the <span class="math notranslate nohighlight">\(\vec{eye}\)</span> and <span class="math notranslate nohighlight">\(\vec{front}\)</span> camera vectors and change the method call to <code class="docutils literal notranslate"><span class="pre">camera.upate()</span></code> so that it takes the <code class="docutils literal notranslate"><span class="pre">input</span></code> object.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">camera</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -787,13 +786,11 @@ document.write(`
 </center> -->
 <ol class="arabic" start="3">
 <li><p>Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:</p>
-<ul class="simple">
+<ul>
 <li><p>Add a velocity vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 0, 0)\)</span>, acceleration factor <span class="math notranslate nohighlight">\( = 5\)</span> and deceleration factor <span class="math notranslate nohighlight">\(= 10\)</span> to the camera class constructor.</p></li>
 <li><p><strong>Acceleration</strong></p>
-<ul>
+<ul class="simple">
 <li><p>Compute the horizontal maximal velocity vector</p></li>
-</ul>
-</li>
 </ul>
 <div class="math notranslate nohighlight">
 \[ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})\]</div>
@@ -802,8 +799,10 @@ document.write(`
 </ul>
 <div class="math notranslate nohighlight">
 \[ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) \]</div>
-<ul>
+<ul class="simple">
 <li><p>Where <span class="math notranslate nohighlight">\(t = \exp(-\textsf{acceleration factor} \times \Delta t)\)</span></p></li>
+</ul>
+</li>
 <li><p><strong>Deceleration</strong></p>
 <ul class="simple">
 <li><p>Apply damping to the horizontal velocity</p></li>

@@ -133,15 +133,14 @@ update(input) {
   if (input.isDown("s")) moveDir = subtractVector(moveDir, this.front);
   if (input.isDown("a")) moveDir = subtractVector(moveDir, this.right);
   if (input.isDown("d")) moveDir = addVector(moveDir, this.right);
-
-  if (length(moveDir) > 0) moveDir = normalize(moveDir);
+  moveDir = normalize(moveDir);
 
   // Move camera
   this.eye = addVector(this.eye, moveDir);
 }
 ```
 
-In the ***moving_the_camera.js**, delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors and change the method call to `camera.upate()` so that it takes the `input` object.
+In the ***moving_the_camera.js*** file, delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors and change the method call to `camera.upate()` so that it takes the `input` object.
 
 ```javascript
 camera.update(input);
@@ -448,9 +447,9 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
    - **Acceleration**
      - Compute the horizontal maximal velocity vector
 
-    $$ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})$$
+      $$ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})$$
 
-     - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity
+      - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity
 
       $$ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) $$
 
