@@ -7,7 +7,7 @@ In the [Lab 6: 3D Worlds](3D-worlds-section) we saw how we use transformations t
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***Lab 6 - 3D Worlds*** folder, rename it ***Lab 7 - Moving the Camera***, rename the file ***3d_worlds.js*** to ***moving_the_camera.js*** and change ***index.html*** so that the page title is "Lab 7 - Moving the Camera" and it embeds the ***moving_the_camera.js*** file.
+Create a copy of your ***Lab 6 - 3D Worlds*** folder (you will have needed to have completed lab 6 before continuing here), rename it ***Lab 7 - Moving the Camera***, rename the file ***3d_worlds.js*** to ***moving_the_camera.js*** and change ***index.html*** so that the page title is "Lab 7 - Moving the Camera" and it embeds the ***moving_the_camera.js*** file.
 :::
 
 Load ***index.html*** in a live server to check everything is working ok.
@@ -423,56 +423,52 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
 1. Make it so that the camera position always has a $y$ coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
 
-2. Add the ability for the user to perform a jump by pressing the space bar. Hints:
-   - To record when the space bar is pressed you can use `input.isDown(" ")`.
-   - You will need a way of recording when the space bar was first pressed and when the jump has been completed. 
-   - For a jump based on physics the height of the camera can be calculated for each frame using
+2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. 
+   - Add a velocity vector $\vec{v} = (0, 0, 0)$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions ($x$ and $z$)
+
+      $$ \begin{align*}
+        v_x &= v_x + a \Delta t m_x, \\
+        v_z &= v_z + a \Delta t m_z,
+      \end{align*} $$
+
+      where $m_x$ and $m_z$ are the $x$ and $z$ compnents of the movement vector and $a$ is an acceleration factor (typical values 10 to 20). 
+    - Calculate the horizontal speed of the camera using $s = \sqrt{v_x^2 + v_z^2}$. If this is greater than the maximum speed $s_{\max}$, limit it using
+
+    $$ \begin{align*}
+      v_x &= \frac{v_x s_{\max}}{s}, \\
+      v_z &= \frac{v_z s_{\max}}{s}.
+    \end{align*} $$
+
+     - If no button is pressed, you want the speed of the camera to slow to zero. To do this multiply the horizontal velocity by a number less than 1
+
+        $$ \begin{align*}
+          v_x &= d v_x, \\
+          v_z &= d v_z,
+        \end{align*} $$
+
+        where $d$ is a deceleration factor (typical value around 0.9). 
+      
+      - Once you have updated the velocity vector, use it to calculate the new camera position
+
+$$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. $$
+
+3. Add the ability for the user to perform a jump by pressing the space bar.
+     - Add properties for the height of the jump, $H = 1$, gravity, $g = 9.81$, and a boolean flag for whether the camera is on the ground (which is initially set to true) to the Camera class.
+     - Check when the space bar has been pressed (using `input.isDown(" ")`) and the camera is on the ground. If so change the on ground flag to false and the vertical velocity to
+
+        $$ v_y = \sqrt{2 H g}. $$
+
+     - Apply gravity to the vertical velocity
+
+        $$ v_y = v_y - g \Delta t. $$
+
+     - Check if the camera is back on the ground using $\vec{eye}_y < 0$. If so set $\vec{eye}_y = 0$, $v_y = 0$ and the on ground flag to true.
   
-    $$\vec{eye}_y = \vec{eye}_y + jump\, velocity \times \Delta t$$ 
-   - The $jump \, velocity$ is initialised to some value (the larger the value the higher the jump), and is updated at each frame using
-
-    $$jump \, velocity = jump \, velocity - 9.81 \times \Delta t$$
-
-   - $9.81$ms$^{-2}$ is the acceleration due to gravity on Earth.
-
-<!-- <center>
-<video autoplay controls muted="true" loop="true" width="60%">
-    <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
-</video>
-</center> -->
-
-3. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:
-  
-   - Add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $ = 5$ and deceleration factor $= 10$ to the camera class constructor.
-   - **Acceleration**
-     - Compute the horizontal maximal velocity vector
-
-      $$ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})$$
-
-      - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity
-
-      $$ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) $$
-
-      - Where $t = \exp(-\textsf{acceleration factor} \times \Delta t)$
-
-    - **Deceleration**
-
-      - Apply damping to the horizontal velocity
-
-      $$ \vec{v} = t \, \vec{v}$$
-
-      - Where $t = \exp(-\textsf{deceleration factor} \times \Delta t)$
-  
-    - Calculate the new camera position
-
-      $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} $$
-
 4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
    - Loop through all the cubes
      - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
-     - If $\| \vec{offset} \| < 0$
-       - Move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
+     - If $\| \vec{offset} \| < 0$ move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
 
 [^aabb]: A better way of handling collision detection is to use <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection" target="_blank">Axis-Aligned Bounding Box (AABB)</a> collision.
 

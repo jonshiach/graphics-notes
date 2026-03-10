@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -424,7 +424,7 @@ document.write(`
 <p>In the <a class="reference internal" href="06_3D_worlds.html#d-worlds-section"><span class="std std-ref">Lab 6: 3D Worlds</span></a> we saw how we use transformations to build a 3D world, align the world to the camera position and project the view space onto the screen space. We also created a Camera class to contains methods to perform these calculations. The next step is to obtain keyboard and mouse input and modify the Camera class to be able to move and direct the camera around the 3D world.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Create a copy of your <em><strong>Lab 6 - 3D Worlds</strong></em> folder, rename it <em><strong>Lab 7 - Moving the Camera</strong></em>, rename the file <em><strong>3d_worlds.js</strong></em> to <em><strong>moving_the_camera.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 7 - Moving the Camera” and it embeds the <em><strong>moving_the_camera.js</strong></em> file.</p>
+<p>Create a copy of your <em><strong>Lab 6 - 3D Worlds</strong></em> folder (you will have needed to have completed lab 6 before continuing here), rename it <em><strong>Lab 7 - Moving the Camera</strong></em>, rename the file <em><strong>3d_worlds.js</strong></em> to <em><strong>moving_the_camera.js</strong></em> and change <em><strong>index.html</strong></em> so that the page title is “Lab 7 - Moving the Camera” and it embeds the <em><strong>moving_the_camera.js</strong></em> file.</p>
 </div>
 <p>Load <em><strong>index.html</strong></em> in a live server to check everything is working ok.</p>
 <figure class="align-default" id="moving-the-camera-figure">
@@ -761,62 +761,51 @@ document.write(`
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>Make it so that the camera position always has a <span class="math notranslate nohighlight">\(y\)</span> coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.</p></li>
-<li><p>Add the ability for the user to perform a jump by pressing the space bar. Hints:</p>
-<ul class="simple">
-<li><p>To record when the space bar is pressed you can use <code class="docutils literal notranslate"><span class="pre">input.isDown(&quot;</span> <span class="pre">&quot;)</span></code>.</p></li>
-<li><p>You will need a way of recording when the space bar was first pressed and when the jump has been completed.</p></li>
-<li><p>For a jump based on physics the height of the camera can be calculated for each frame using</p></li>
+<li><p>Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement.</p>
+<ul>
+<li><p>Add a velocity vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 0, 0)\)</span> to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{align*}
+        v_x &amp;= v_x + a \Delta t m_x, \\
+        v_z &amp;= v_z + a \Delta t m_z,
+      \end{align*} \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(m_x\)</span> and <span class="math notranslate nohighlight">\(m_z\)</span> are the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span> compnents of the movement vector and <span class="math notranslate nohighlight">\(a\)</span> is an acceleration factor (typical values 10 to 20).</p>
+</li>
+<li><p>Calculate the horizontal speed of the camera using <span class="math notranslate nohighlight">\(s = \sqrt{v_x^2 + v_z^2}\)</span>. If this is greater than the maximum speed <span class="math notranslate nohighlight">\(s_{\max}\)</span>, limit it using</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\vec{eye}_y = \vec{eye}_y + jump\, velocity \times \Delta t\]</div>
-<ul class="simple">
-<li><p>The <span class="math notranslate nohighlight">\(jump \, velocity\)</span> is initialised to some value (the larger the value the higher the jump), and is updated at each frame using</p></li>
-</ul>
+\[\begin{split} \begin{align*}
+      v_x &amp;= \frac{v_x s_{\max}}{s}, \\
+      v_z &amp;= \frac{v_z s_{\max}}{s}.
+    \end{align*} \end{split}\]</div>
+<ul>
+<li><p>If no button is pressed, you want the speed of the camera to slow to zero. To do this multiply the horizontal velocity by a number less than 1</p>
 <div class="math notranslate nohighlight">
-\[jump \, velocity = jump \, velocity - 9.81 \times \Delta t\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(9.81\)</span>ms<span class="math notranslate nohighlight">\(^{-2}\)</span> is the acceleration due to gravity on Earth.</p></li>
+\[\begin{split} \begin{align*}
+          v_x &amp;= d v_x, \\
+          v_z &amp;= d v_z,
+        \end{align*} \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is a deceleration factor (typical value around 0.9).</p>
+</li>
+<li><p>Once you have updated the velocity vector, use it to calculate the new camera position</p></li>
 </ul>
 </li>
 </ol>
-<!-- <center>
-<video autoplay controls muted="true" loop="true" width="60%">
-    <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
-</video>
-</center> -->
+<div class="math notranslate nohighlight">
+\[ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. \]</div>
 <ol class="arabic" start="3">
-<li><p>Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:</p>
+<li><p>Add the ability for the user to perform a jump by pressing the space bar.</p>
 <ul>
-<li><p>Add a velocity vector <span class="math notranslate nohighlight">\(\vec{v} = (0, 0, 0)\)</span>, acceleration factor <span class="math notranslate nohighlight">\( = 5\)</span> and deceleration factor <span class="math notranslate nohighlight">\(= 10\)</span> to the camera class constructor.</p></li>
-<li><p><strong>Acceleration</strong></p>
-<ul class="simple">
-<li><p>Compute the horizontal maximal velocity vector</p></li>
-</ul>
+<li><p>Add properties for the height of the jump, <span class="math notranslate nohighlight">\(H = 1\)</span>, gravity, <span class="math notranslate nohighlight">\(g = 9.81\)</span>, and a boolean flag for whether the camera is on the ground (which is initially set to true) to the Camera class.</p></li>
+<li><p>Check when the space bar has been pressed (using <code class="docutils literal notranslate"><span class="pre">input.isDown(&quot;</span> <span class="pre">&quot;)</span></code>) and the camera is on the ground. If so change the on ground flag to false and the vertical velocity to</p>
 <div class="math notranslate nohighlight">
-\[ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})\]</div>
-<ul class="simple">
-<li><p>Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) \]</div>
-<ul class="simple">
-<li><p>Where <span class="math notranslate nohighlight">\(t = \exp(-\textsf{acceleration factor} \times \Delta t)\)</span></p></li>
-</ul>
+\[ v_y = \sqrt{2 H g}. \]</div>
 </li>
-<li><p><strong>Deceleration</strong></p>
-<ul class="simple">
-<li><p>Apply damping to the horizontal velocity</p></li>
-</ul>
+<li><p>Apply gravity to the vertical velocity</p>
 <div class="math notranslate nohighlight">
-\[ \vec{v} = t \, \vec{v}\]</div>
-<ul class="simple">
-<li><p>Where <span class="math notranslate nohighlight">\(t = \exp(-\textsf{deceleration factor} \times \Delta t)\)</span></p></li>
-</ul>
+\[ v_y = v_y - g \Delta t. \]</div>
 </li>
-<li><p>Calculate the new camera position</p>
-<div class="math notranslate nohighlight">
-\[ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} \]</div>
-</li>
+<li><p>Check if the camera is back on the ground using <span class="math notranslate nohighlight">\(\vec{eye}_y &lt; 0\)</span>. If so set <span class="math notranslate nohighlight">\(\vec{eye}_y = 0\)</span>, <span class="math notranslate nohighlight">\(v_y = 0\)</span> and the on ground flag to true.</p></li>
 </ul>
 </li>
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is <a class="footnote-reference brackets" href="#aabb" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
@@ -824,11 +813,7 @@ document.write(`
 <li><p>Loop through all the cubes</p>
 <ul>
 <li><p>Calculate a vector from the camera position to the object centre: <span class="math notranslate nohighlight">\(\vec{offset} = \vec{object} - \vec{eye}\)</span></p></li>
-<li><p>If <span class="math notranslate nohighlight">\(\| \vec{offset} \| &lt; 0\)</span></p>
-<ul>
-<li><p>Move camera away from object: <span class="math notranslate nohighlight">\(\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}\)</span></p></li>
-</ul>
-</li>
+<li><p>If <span class="math notranslate nohighlight">\(\| \vec{offset} \| &lt; 0\)</span> move camera away from object: <span class="math notranslate nohighlight">\(\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}\)</span></p></li>
 </ul>
 </li>
 </ul>
