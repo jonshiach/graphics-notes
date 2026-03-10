@@ -23,11 +23,11 @@ class Camera {
 
     // Physics
     this.velocity = [0, 0, 0];
-    this.acceleration = 5;
-    this.deceleration = 10;
-    this.grounded = true;
-    this.jumpForce = 5;
-    this.gravity = -9.81;
+    this.acceleration = 10;
+    this.deceleration = 0.9;
+    this.onGround = true;
+    this.jumpHeight = 1;
+    this.gravity = 9.81;
   }
 
   update(input, dt) {
@@ -56,38 +56,50 @@ class Camera {
     if (input.isDown("a")) moveDir = subtractVector(moveDir, this.right);
     if (input.isDown("d")) moveDir = addVector(moveDir, this.right);
     moveDir[1] = 0;
-    const hasInput = length(moveDir) > 0;
+    moveDir = normalize(moveDir);
 
-    // Calculate horizontal acceleration/deceleration
-    if (hasInput) {
-      
-      const targetVelocity = scaleVector(moveDir, this.maxSpeed);
-      const t = 1 - Math.exp(-this.acceleration * dt);
-      this.velocity[0] += t * (targetVelocity[0] - this.velocity[0]);
-      this.velocity[2] += t * (targetVelocity[2] - this.velocity[2]);
+    // Horizontal acceleration/deceleration
+    if (length(moveDir) > 0) {
+      if (this.onGround) {
 
+        // Accelerate horizontal velocity
+        this.velocity[0] += this.acceleration * dt * moveDir[0];
+        this.velocity[2] += this.acceleration * dt * moveDir[2];
+
+        // Limit horizontal velocity to max speed
+        const speed = length([this.velocity[0], 0, this.velocity[2]])
+        if (speed > this.maxSpeed) {
+          console.log("limit")
+          this.velocity[0] = this.velocity[0] / speed * this.maxSpeed;
+          this.velocity[2] = this.velocity[2] / speed * this.maxSpeed;
+        }
+      }
     } else {
 
-      const damping = Math.exp(-this.deceleration * dt);
-      this.velocity[0] *= damping;
-      this.velocity[2] *= damping;
+      if (this.onGround) {
+        this.velocity[0] *= this.deceleration;
+        this.velocity[2] *= this.deceleration;
+      }
     }
 
-    // Perform jump
-    if (input.isDown(" ") && this.grounded) {
-      this.grounded = false;
-      this.velocity[1] = this.jumpForce;
+    // Start jump
+    if (input.isDown(" ") && this.onGround) {
+      this.onGround = false;
+      this.velocity[1] = Math.sqrt(2 * this.jumpHeight * this.gravity);
     }
-    this.velocity[1] += this.gravity * dt ;
-  
+
+    // Apply gravity
+    if (!this.onGround) this.velocity[1] -= this.gravity * dt;
+
+    // Check for ground collision
+    if (this.eye[1] < 0) {
+      this.eye[1] = 0;
+      this.velocity[1] = 0;
+      this.onGround = true;
+    }
+
     // Move camera
     this.eye = addVector(this.eye, scaleVector(this.velocity, dt));
-    
-    // Check for ground collision
-    if (this.eye[1] <= 0) {
-      this.eye[1] = 0;
-      this.grounded = true;
-    }
   }
 
   getViewMatrix() {

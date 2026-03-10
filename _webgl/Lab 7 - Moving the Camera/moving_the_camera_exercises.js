@@ -121,7 +121,7 @@ function main() {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
       cubes.push( { 
-        position : [3 * i, 0, -3 * j],
+        position : [3 * i, 0, -2 -3 * j],
         scale    : [0.5, 0.5, 0.5],
         rotate   : [0, 1, 0],
       });

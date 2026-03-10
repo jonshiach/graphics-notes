@@ -7,7 +7,7 @@ In the [Lab 6: 3D Worlds](3D-worlds-section) we saw how we use transformations t
 :::{admonition} Task
 :class: tip
 
-Create a copy of your ***Lab 6 - 3D Worlds*** folder, rename it ***Lab 7 - Moving the Camera***, rename the file ***3d_worlds.js*** to ***moving_the_camera.js*** and change ***index.html*** so that the page title is "Lab 7 - Moving the Camera" and it embeds the ***moving_the_camera.js*** file.
+Create a copy of your ***Lab 6 - 3D Worlds*** folder (you will have needed to have completed lab 6 before continuing here), rename it ***Lab 7 - Moving the Camera***, rename the file ***3d_worlds.js*** to ***moving_the_camera.js*** and change ***index.html*** so that the page title is "Lab 7 - Moving the Camera" and it embeds the ***moving_the_camera.js*** file.
 :::
 
 Load ***index.html*** in a live server to check everything is working ok.
@@ -133,15 +133,14 @@ update(input) {
   if (input.isDown("s")) moveDir = subtractVector(moveDir, this.front);
   if (input.isDown("a")) moveDir = subtractVector(moveDir, this.right);
   if (input.isDown("d")) moveDir = addVector(moveDir, this.right);
-
-  if (length(moveDir) > 0) moveDir = normalize(moveDir);
+  moveDir = normalize(moveDir);
 
   // Move camera
   this.eye = addVector(this.eye, moveDir);
 }
 ```
 
-In the ***moving_the_camera.js**, delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors and change the method call to `camera.upate()` so that it takes the `input` object.
+In the ***moving_the_camera.js*** file, delete the code that sets the $\vec{eye}$ and $\vec{front}$ camera vectors and change the method call to `camera.upate()` so that it takes the `input` object.
 
 ```javascript
 camera.update(input);
@@ -442,33 +441,32 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 </video>
 </center> -->
 
-3. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. One way which is popular in computer games that ensures smooth motion is:
-  
-   - Add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $ = 5$ and deceleration factor $= 10$ to the camera class constructor.
-   - **Acceleration**
-     - Compute the horizontal maximal velocity vector
+2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. To do this, add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $accelerate = 5$ and deceleration factor $decelerate = 0.9$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions
 
-    $$ \vec{v}_{\max} = \textsf{maxSpeed} \cdot \operatorname{normalize}(\vec{moveDir})$$
+$$ \begin{align*}
+  v_x &= v_x + accelerate \cdot \Delta t \cdot \vec{moveDir}_x, \\
+  v_z &= v_z + accelerate \cdot \Delta t \cdot \vec{moveDir}_z,
+\end{align*} $$
 
-     - Calculate the linear interpolation (known as LERP) between the current horizontal velocity and the maxmimal velocity
+Calculate the horizontal speed of the camera using $speed = \sqrt{v_x^2 + v_z^2}$. If this is greater than $maxSpeed$, limit it using
 
-      $$ \vec{v} = \vec{v} + t (\vec{v}_{\max} - \vec{v}) $$
+$$ \begin{align*}
+  v_x &= \frac{v_x}{speed} \cdot maxSpeed, \\
+  v_z &= \frac{v_z}{speed} \cdot maxSpeed.
+\end{align*} $$
 
-      - Where $t = \exp(-\textsf{acceleration factor} \times \Delta t)$
+If no button is pressed, you want the camera speed to slow to zero. To do this, simply multiply the horizontal velocity by the deceleration factor.
 
-    - **Deceleration**
+$$ \begin{align*}
+  v_x &= decelerate \cdot v_x, \\
+  v_z &= decelerate \cdot v_z.
+\end{align*} $$
 
-      - Apply damping to the horizontal velocity
+Calculate the new camera position
 
-      $$ \vec{v} = t \, \vec{v}$$
+$$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} $$
 
-      - Where $t = \exp(-\textsf{deceleration factor} \times \Delta t)$
-  
-    - Calculate the new camera position
-
-      $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} $$
-
-4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
+3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
    - Loop through all the cubes
      - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
