@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -472,13 +472,13 @@ document.write(`
 </ul>
 <p>The colour intensity of a fragment on the surface is calculated as a sum of these components, i.e.,</p>
 <div class="math notranslate nohighlight">
-\[ \vec{colour} = \vec{ambient} + \vec{diffuse} + \vec{specular},\]</div>
+\[ \textsf{colour} = \textsf{ambient} + \textsf{diffuse} + \textsf{specular},\]</div>
 <p>where theses are 3-element vectors of RGB colour values.</p>
 <section id="ambient-lighting">
 <h3>Ambient lighting<a class="headerlink" href="#ambient-lighting" title="Link to this heading">#</a></h3>
 <p>Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong’s model for ambient lighting is</p>
 <div class="math notranslate nohighlight" id="equation-ambient-lighting-equation">
-<span class="eqno">(22)<a class="headerlink" href="#equation-ambient-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{ambient} = k_a \vec{O}_d \]</div>
+<span class="eqno">(22)<a class="headerlink" href="#equation-ambient-lighting-equation" title="Link to this equation">#</a></span>\[ \textsf{ambient} = k_a \vec{O}_d \]</div>
 <p>where <span class="math notranslate nohighlight">\(k_a\)</span> is known as the <strong>ambient lighting constant</strong> which takes on a value between 0 and 1 and <span class="math notranslate nohighlight">\(\vec{O}_d\)</span> is the object colour. <span class="math notranslate nohighlight">\(k_a\)</span> is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 300 es</span>
 <span class="k">precision</span><span class="w"> </span><span class="k">mediump</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
@@ -575,13 +575,13 @@ document.write(`
 </figure>
 <p>The amount of light that is reflected to the viewer is modelled using the angle <span class="math notranslate nohighlight">\(\theta\)</span> between the light vector <span class="math notranslate nohighlight">\(\vec{L}\)</span> which points from the fragment to the light source and the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span> which points perpendicular to the surface. If <span class="math notranslate nohighlight">\(\theta\)</span> is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if <span class="math notranslate nohighlight">\(\theta\)</span> is close to 90<span class="math notranslate nohighlight">\(^\circ\)</span> then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> the light source is behind the surface so no light is reflected to the viewer. We model this using <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> since <span class="math notranslate nohighlight">\(\cos(0^\circ) = 1\)</span> and <span class="math notranslate nohighlight">\(\cos(90^\circ)=0\)</span>. Diffuse lighting is calculated using</p>
 <div class="math notranslate nohighlight" id="equation-diffuse-lighting-equation">
-<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,\]</div>
+<span class="eqno">(23)<a class="headerlink" href="#equation-diffuse-lighting-equation" title="Link to this equation">#</a></span>\[ \textsf{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(k_d\)</span> is known as the <strong>diffuse lighting constant</strong> which takes a value between 0 and 1, and <span class="math notranslate nohighlight">\(\vec{I}_p\)</span> is the colour intensity of the point light source. Recall that the angle between two vectors is related by <a class="reference internal" href="04_Vectors_and_matrices.html#dot-product-section"><span class="std std-ref">dot product</span></a> so if the <span class="math notranslate nohighlight">\(\vec{L}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span> vectors are unit vectors then <span class="math notranslate nohighlight">\(\cos(\theta) = \vec{L} \cdot \vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta &gt; 90^\circ\)</span> then light source is behind the surface and no light should be reflected to the viewer. When <span class="math notranslate nohighlight">\(\theta\)</span> is between 90<span class="math notranslate nohighlight">\(^\circ\)</span> and 180<span class="math notranslate nohighlight">\(^\circ\)</span>, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is negative so we limit the value of <span class="math notranslate nohighlight">\(\cos(\theta )\)</span> to positive values</p>
 <div class="math notranslate nohighlight">
 \[ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). \]</div>
 <p>So the equation to calculate diffuse lighting is</p>
 <div class="math notranslate nohighlight">
-\[ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
+\[ \textsf{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
 <p>The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
@@ -948,7 +948,7 @@ document.write(`
 \[ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. \]</div>
 <p>The scattering of the reflected light is determined by how far the <span class="math notranslate nohighlight">\(\vec{H}\)</span> vector is from the normal vector <span class="math notranslate nohighlight">\(\vec{n}\)</span>. If <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between <span class="math notranslate nohighlight">\(\vec{H}\)</span> and <span class="math notranslate nohighlight">\(\vec{n}\)</span>, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by <span class="math notranslate nohighlight">\(\cos(\theta)^s\)</span> where <span class="math notranslate nohighlight">\(s\)</span> is known as the <strong>specular exponent</strong> and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product <span class="math notranslate nohighlight">\((\vec{H} \cdot \vec{n})^s\)</span>. The Blinn-Phong model of specular lighting is</p>
 <div class="math notranslate nohighlight" id="equation-specular-lighting-equation">
-<span class="eqno">(24)<a class="headerlink" href="#equation-specular-lighting-equation" title="Link to this equation">#</a></span>\[ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.\]</div>
+<span class="eqno">(24)<a class="headerlink" href="#equation-specular-lighting-equation" title="Link to this equation">#</a></span>\[ \textsf{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.\]</div>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>In the fragment shader, add uniforms for the camera position, specular coefficient and exponent.</p>
@@ -1013,8 +1013,8 @@ document.write(`
 <h3>Attenuation<a class="headerlink" href="#attenuation" title="Link to this heading">#</a></h3>
 <p><strong>Attenuation</strong> is the gradual decrease in light intensity as the distance between the light source and a surface increases. We can use attenuation to model light from low intensity light source, for example, a candle or torch which will only illuminate an area close to the source. Theoretically attenuation should follow the inverse square law where the light intensity is inversely proportional to the square of the distance between the light source and the surface. However, in practice this tends to result in a scene that is too dark so we calculate attenuation using an inverse quadratic function</p>
 <div class="math notranslate nohighlight">
-\[ attenuation = \frac{1}{constant + linear \cdot d + quadratic \cdot d^2}, \]</div>
-<p>where <span class="math notranslate nohighlight">\(d\)</span> is the distance between the light source and the fragment and <span class="math notranslate nohighlight">\(constant\)</span>, <span class="math notranslate nohighlight">\(linear\)</span> and <span class="math notranslate nohighlight">\(quadratic\)</span> are coefficients that determine how quickly the light intensity decreases. The graph in <a class="reference internal" href="#attenuation-figure"><span class="std std-numref">Fig. 83</span></a> shows a typical attenuation profile where the light intensity rapidly decreases when the distance is small levelling off as the distance gets larger.</p>
+\[ \textsf{attenuation} = \frac{1}{\textsf{constant} + \textsf{linear} \cdot d + \textsf{quadratic} \cdot d^2}, \]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the distance between the light source and the fragment and <span class="math notranslate nohighlight">\(\textsf{constant}\)</span>, <span class="math notranslate nohighlight">\(\textsf{linear}\)</span> and <span class="math notranslate nohighlight">\(\textsf{quadratic}\)</span> are coefficients that determine how quickly the light intensity decreases. The graph in <a class="reference internal" href="#attenuation-figure"><span class="std std-numref">Fig. 83</span></a> shows a typical attenuation profile where the light intensity rapidly decreases when the distance is small levelling off as the distance gets larger.</p>
 <figure class="align-default" id="attenuation-figure">
 <a class="reference internal image-reference" href="../_images/08_attenuation.svg"><img alt="../_images/08_attenuation.svg" src="../_images/08_attenuation.svg" style="width: 500px;" />
 </a>
@@ -1176,10 +1176,9 @@ document.write(`
 <li><p>A function <code class="docutils literal notranslate"><span class="pre">computeLighting()</span></code> is defined to perform the lighting calculations for a single light source</p></li>
 <li><p>In the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function a for loop iterates over the active light sources and calls the <code class="docutils literal notranslate"><span class="pre">computeLighting()</span></code> function for each light source to add its contribution to the fragment colour.</p></li>
 </ul>
-<p>Since this fragment shader not uses an array of light source we need to update the <em><strong>more_lights.js</strong></em> file to define multiple light sources using the <code class="docutils literal notranslate"><span class="pre">Light</span></code> data structure and send them to the shader.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
-<p>Edit the fragment shader in the <strong>more_lights.js</strong> file to use the new fragment shader above.</p>
+<p>Edit the fragment shader to so that is uses the new fragment shader given above.</p>
 </div>
 <p>Now that we have made changes to the fragment shader, we also need to update the Light class and create a new class to manage multiple light sources</p>
 <div class="tip admonition">

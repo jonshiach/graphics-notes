@@ -466,9 +466,13 @@ $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. $$
   
 4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
-   - Loop through all the cubes
-     - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
-     - If $\| \vec{offset} \| < 0$ move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
+   - Loop through all the cubes and calculate a vector from the camera position to the object centre
+
+   $$ \vec{offset} = \vec{object} - \vec{eye}. $$
+
+   - If the length of the $\vec{offset}$ vector is less than 1, move camera away from object using
+
+$$ \vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}. $$
 
 [^aabb]: A better way of handling collision detection is to use <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection" target="_blank">Axis-Aligned Bounding Box (AABB)</a> collision.
 

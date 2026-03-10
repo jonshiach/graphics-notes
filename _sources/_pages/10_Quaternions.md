@@ -138,7 +138,7 @@ The complex number $z$ is the real number 1 rotated $\theta$ anti-clockwise in t
 
 Recall that $\cos(\theta) = \dfrac{adjacent}{hypotenuse}$ and $\sin(\theta) = \dfrac{opposite}{hypotenuse}$ and since the hypotenuse is 1 then
 
-$$ z = \cos(\theta) + \sin(\theta)i.$$
+$$ z = \cos(\theta) + \sin(\theta)i.$$(complex-rotation-equation)
 
 This means we can rotate by an arbitrary angle $\theta$ in the complex plane by multiplying by $z$.
 
@@ -184,7 +184,7 @@ class Quaternion {
     return `[ ${w}, ( ${x}, ${y}, ${z} ) ]`;
   }
   
-  copy() {
+  clone() {
     return new Quaternion(this.w, this.x, this.y, this.z);
   }
 }
@@ -284,7 +284,7 @@ normalize() {
 And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
-const qHat = q.copy().normalize();
+const qHat = q.clone().normalize();
 console.log("qHat = " + qHat);
 console.log("length(qHat) = " + qHat.length());
 ```
@@ -537,7 +537,7 @@ $$p' = q p q^{-1},$$(quaternion-rotation-multiplication-equation)
 which returns a quaternion of the form $p' = [0, \vec{p}']$ where $\vec{p}'$ is the rotated vector. You don't need to know why we need to use 2 multiplications in equation {eq}`quaternion-rotation-multiplication-equation` but if you are curious, click on the dropdown below.
 
 ````{dropdown} Derivation of the equation for rotating a vector using quaternions
-Consider the rotation of the vector $\vec{p} = (2, 0, 0)$ by 45$^\circ$ about the vector $\hat{\vec{v}} = (0, 0, 1)$ the points along the $z$-axis. The rotation quaternion for this is
+Consider the rotation of the vector $\vec{p} = (2, 0, 0)$ by 45$^\circ$ about the vector $\hat{\vec{v}} = (0, 0, 1)$ the points along the $z$-axis. If we use the same approach as for rotation using complex numbers (equation {eq}`complex-rotation-equation`) then the rotation quaternion is
 
 $$ q = [\cos(45^\circ), \sin(45^\circ)(0, 0, 1)] =  [0.707, (0, 0, 0.707)]. $$
 

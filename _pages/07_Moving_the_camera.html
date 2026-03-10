@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -810,15 +810,17 @@ document.write(`
 </li>
 <li><p>Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is <a class="footnote-reference brackets" href="#aabb" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
 <ul class="simple">
-<li><p>Loop through all the cubes</p>
-<ul>
-<li><p>Calculate a vector from the camera position to the object centre: <span class="math notranslate nohighlight">\(\vec{offset} = \vec{object} - \vec{eye}\)</span></p></li>
-<li><p>If <span class="math notranslate nohighlight">\(\| \vec{offset} \| &lt; 0\)</span> move camera away from object: <span class="math notranslate nohighlight">\(\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}\)</span></p></li>
+<li><p>Loop through all the cubes and calculate a vector from the camera position to the object centre</p></li>
 </ul>
-</li>
+<div class="math notranslate nohighlight">
+\[ \vec{offset} = \vec{object} - \vec{eye}. \]</div>
+<ul class="simple">
+<li><p>If the length of the <span class="math notranslate nohighlight">\(\vec{offset}\)</span> vector is less than 1, move camera away from object using</p></li>
 </ul>
 </li>
 </ol>
+<div class="math notranslate nohighlight">
+\[ \vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}. \]</div>
 </section>
 <hr class="docutils" />
 <section id="video-walkthrough">
