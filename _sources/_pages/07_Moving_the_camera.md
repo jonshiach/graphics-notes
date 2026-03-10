@@ -312,7 +312,7 @@ this.front = normalize([cp * sy, sp, -cp * cy]);
 
 :::
 
-Here we have added Camera class properties for controlling the turn speed of the camera and storing the $yaw$ and $pitch$ angles. Then we have modified the `update()` Camera class method to get the mouse movement values from the input, use these to update the $yaw$ and $pitch$ angles and calculate the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`. Note that we have subtract `dy * turnSpeed` from the $pitch$ angle because the mouse movement is measured from the top of the canvas.
+Here we have added Camera class properties for controlling the turn speed of the camera and storing the $yaw$ and $pitch$ angles. Then we have modified the `update()` Camera class method to get the mouse movement values from the input, use these to update the $yaw$ and $pitch$ angles and calculate the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`. Note that we have subtract `dy * this.turnSpeed` from the $pitch$ angle because the mouse movement is measured from the top of the canvas.
 
 Refresh your browser and you can now move around our world space and point the camera using the keyboard and mouse.
 
