@@ -23,8 +23,8 @@ class Camera {
 
     // Physics
     this.velocity = [0, 0, 0];
-    this.acceleration = 10;
-    this.deceleration = 0.9;
+    this.acceleration = 20;
+    this.deceleration = 0.8;
     this.onGround = true;
     this.jumpHeight = 1;
     this.gravity = 9.81;

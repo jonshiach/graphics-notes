@@ -423,25 +423,7 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
 1. Make it so that the camera position always has a $y$ coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
 
-2. Add the ability for the user to perform a jump by pressing the space bar. Hints:
-   - To record when the space bar is pressed you can use `input.isDown(" ")`.
-   - You will need a way of recording when the space bar was first pressed and when the jump has been completed. 
-   - For a jump based on physics the height of the camera can be calculated for each frame using
-  
-    $$\vec{eye}_y = \vec{eye}_y + jump\, velocity \times \Delta t$$ 
-   - The $jump \, velocity$ is initialised to some value (the larger the value the higher the jump), and is updated at each frame using
-
-    $$jump \, velocity = jump \, velocity - 9.81 \times \Delta t$$
-
-   - $9.81$ms$^{-2}$ is the acceleration due to gravity on Earth.
-
-<!-- <center>
-<video autoplay controls muted="true" loop="true" width="60%">
-    <source src="../_static/videos/07_Ex2.mp4" type="video/mp4">
-</video>
-</center> -->
-
-2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. To do this, add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $accelerate = 5$ and deceleration factor $decelerate = 0.9$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions
+2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. To do this, add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $accelerate = 10$ and deceleration factor $decelerate = 0.8$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions
 
 $$ \begin{align*}
   v_x &= v_x + accelerate \cdot \Delta t \cdot \vec{moveDir}_x, \\
@@ -455,23 +437,28 @@ $$ \begin{align*}
   v_z &= \frac{v_z}{speed} \cdot maxSpeed.
 \end{align*} $$
 
-If no button is pressed, you want the camera speed to slow to zero. To do this, simply multiply the horizontal velocity by the deceleration factor.
+If no button is pressed, you want the speed of the camera to slow to zero. To do this, simply multiply the horizontal velocity by the deceleration factor.
 
 $$ \begin{align*}
   v_x &= decelerate \cdot v_x, \\
   v_z &= decelerate \cdot v_z.
 \end{align*} $$
 
-Calculate the new camera position
+Once you have updated the velocity vector, use it to calculate the new camera position
 
-$$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v} $$
+$$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. $$
 
-3. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
+3. Add the ability for the user to perform a jump by pressing the space bar.
+     - Add properties for the height of the jump $H = 1$, gravity $g = 9.81$ and a boolean flag for whether the camera is on the ground (which is set to true) to the Camera class.
+     - Check when the space bar has been pressed (using `input.isDown(" ")`) and the camera is on the ground, if so change the vertical velocity to $v_y = \sqrt{2 H g}$ and change the on the ground flag to false.
+     - Apply gravity to the vertical velocity $v_y = v_y - g \cdot \Delta t$.
+     - If $\vec{eye}_y < 0$ then the camera is back on the ground so set $\vec{eye}_y = 0$, $v_y = 0$ and set the on ground flag back to true.
+  
+4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
    - Loop through all the cubes
      - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
-     - If $\| \vec{offset} \| < 0$
-       - Move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
+     - If $\| \vec{offset} \| < 0$ move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
 
 [^aabb]: A better way of handling collision detection is to use <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection" target="_blank">Axis-Aligned Bounding Box (AABB)</a> collision.
 
