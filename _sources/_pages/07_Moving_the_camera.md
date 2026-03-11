@@ -435,8 +435,8 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
     - Calculate the horizontal speed of the camera using $s = \sqrt{v_x^2 + v_z^2}$. If this is greater than the maximum speed $s_{\max}$, limit it using
 
     $$ \begin{align*}
-      v_x &= \frac{v_x s_{\max}}{s}, \\
-      v_z &= \frac{v_z s_{\max}}{s}.
+      v_x &= \frac{s_{\max}}{s}v_x, \\
+      v_z &= \frac{s_{\max}}{s}v_y.
     \end{align*} $$
 
      - If no button is pressed, you want the speed of the camera to slow to zero. To do this multiply the horizontal velocity by a number less than 1
@@ -447,7 +447,7 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
         \end{align*} $$
 
         where $d$ is a deceleration factor (typical value around 0.9). 
-      
+
       - Once you have updated the velocity vector, use it to calculate the new camera position
 
 $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. $$

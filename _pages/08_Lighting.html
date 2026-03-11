@@ -581,7 +581,7 @@ document.write(`
 \[ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). \]</div>
 <p>So the equation to calculate diffuse lighting is</p>
 <div class="math notranslate nohighlight">
-\[ \textsf{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
+\[ \textsf{diffuse} = k_d \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. \]</div>
 <p>The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}

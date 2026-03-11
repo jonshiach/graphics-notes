@@ -189,7 +189,7 @@ $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
 So the equation to calculate diffuse lighting is
 
-$$ \textsf{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
+$$ \textsf{diffuse} = k_d \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
 
 The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation
 
