@@ -23,8 +23,8 @@ class Camera {
 
     // Physics
     this.velocity = [0, 0, 0];
-    this.acceleration = 20;
-    this.deceleration = 0.8;
+    this.acceleration = 10;
+    this.deceleration = 0.9;
     this.onGround = true;
     this.jumpHeight = 1;
     this.gravity = 9.81;
@@ -69,7 +69,6 @@ class Camera {
         // Limit horizontal velocity to max speed
         const speed = length([this.velocity[0], 0, this.velocity[2]])
         if (speed > this.maxSpeed) {
-          console.log("limit")
           this.velocity[0] = this.velocity[0] / speed * this.maxSpeed;
           this.velocity[2] = this.velocity[2] / speed * this.maxSpeed;
         }

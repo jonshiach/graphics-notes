@@ -65,7 +65,7 @@ Phong's lighting model first described by Bui Tuong Phong (1975) is a local illu
 
 The colour intensity of a fragment on the surface is calculated as a sum of these components, i.e.,
 
-$$ \vec{colour} = \vec{ambient} + \vec{diffuse} + \vec{specular},$$
+$$ \textsf{colour} = \textsf{ambient} + \textsf{diffuse} + \textsf{specular},$$
 
 where theses are 3-element vectors of RGB colour values.
 
@@ -73,7 +73,7 @@ where theses are 3-element vectors of RGB colour values.
 
 Ambient lighting is light that is scatters off of all surfaces in a scene. To model this we make the simplifying assumption that all faces of the object is lit equally.Phong's model for ambient lighting is
 
-$$ \vec{ambient} = k_a \vec{O}_d $$(ambient-lighting-equation)
+$$ \textsf{ambient} = k_a \vec{O}_d $$(ambient-lighting-equation)
 
 where $k_a$ is known as the **ambient lighting constant** which takes on a value between 0 and 1 and $\vec{O}_d$ is the object colour. $k_a$ is a property of the object so we specify a value for this for each objects in our scene. The lighting calculations will be performed in the fragment shader and the fragment shader shown below applied ambient lighting to the scene.
 
@@ -181,7 +181,7 @@ Diffuse lighting scatters light equally in all directions.
 
 The amount of light that is reflected to the viewer is modelled using the angle $\theta$ between the light vector $\vec{L}$ which points from the fragment to the light source and the normal vector $\vec{n}$ which points perpendicular to the surface. If $\theta$ is small then the light source is directly in front of the surface so most of the light will be reflected to the viewer. Whereas if $\theta$ is close to 90$^\circ$ then the light source is nearly in line with the surface and little of the light will be reflected to the viewer. When $\theta > 90^\circ$ the light source is behind the surface so no light is reflected to the viewer. We model this using $\cos(\theta)$ since $\cos(0^\circ) = 1$ and $\cos(90^\circ)=0$. Diffuse lighting is calculated using
 
-$$ \vec{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,$$(diffuse-lighting-equation)
+$$ \textsf{diffuse} = k_d \cos(\theta) \vec{I}_p \vec{O}_d  ,$$(diffuse-lighting-equation)
 
 where $k_d$ is known as the **diffuse lighting constant** which takes a value between 0 and 1, and $\vec{I}_p$ is the colour intensity of the point light source. Recall that the angle between two vectors is related by [dot product](dot-product-section) so if the $\vec{L}$ and $\vec{n}$ vectors are unit vectors then $\cos(\theta) = \vec{L} \cdot \vec{n}$. If $\theta > 90^\circ$ then light source is behind the surface and no light should be reflected to the viewer. When $\theta$ is between 90$^\circ$ and 180$^\circ$, $\cos(\theta)$ is negative so we limit the value of $\cos(\theta )$ to positive values
 
@@ -189,7 +189,7 @@ $$ \cos(\theta) = \max(\vec{L} \cdot \vec{n}, 0). $$
 
 So the equation to calculate diffuse lighting is
 
-$$ \vec{diffuse} = k_a \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
+$$ \textsf{diffuse} = k_d \max(\vec{L} \cdot \vec{n}, 0) \vec{I}_p \vec{O}_d. $$
 
 The world space fragment position is calculated by multiplying the vertex position by the model matrix, however the world space normal vector is calculated using the following transformation
 
@@ -415,7 +415,8 @@ class Light {
     this.colour = [1, 1, 1];
   }
 
-    toShader(gl, program) {
+  toShader(gl, program) {
+
     // Light vectors
     gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), this.position);
     gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), this.colour);
@@ -628,7 +629,7 @@ $$ \vec{H} = \frac{\vec{L} + \vec{V}}{\| \vec{L} + \vec{V} \|}. $$
 
 The scattering of the reflected light is determined by how far the $\vec{H}$ vector is from the normal vector $\vec{n}$. If $\theta$ is the angle between $\vec{H}$ and $\vec{n}$, then the smaller its value the more specular light is seen by the viewer. The scattering of the specular light is modelled by $\cos(\theta)^s$ where $s$ is known as the **specular exponent** and determines the shininess of the surface. In a similar way that we used for the diffuse terms, we can calculate the using the dot product $(\vec{H} \cdot \vec{n})^s$. The Blinn-Phong model of specular lighting is
 
-$$ \vec{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-lighting-equation)
+$$ \textsf{specular} = k_s \max(\vec{H} \cdot \vec{n}, 0)^s \vec{I}_p.$$(specular-lighting-equation)
 
 :::{admonition} Task
 :class: tip
@@ -711,9 +712,9 @@ Ambient, diffuse and specular lighting: $k_a = 0.2$, $k_d = 0.7$, $k_s = 1.0$, $
 
 **Attenuation** is the gradual decrease in light intensity as the distance between the light source and a surface increases. We can use attenuation to model light from low intensity light source, for example, a candle or torch which will only illuminate an area close to the source. Theoretically attenuation should follow the inverse square law where the light intensity is inversely proportional to the square of the distance between the light source and the surface. However, in practice this tends to result in a scene that is too dark so we calculate attenuation using an inverse quadratic function
 
-$$ attenuation = \frac{1}{constant + linear \cdot d + quadratic \cdot d^2}, $$
+$$ \textsf{attenuation} = \frac{1}{\textsf{constant} + \textsf{linear} \cdot d + \textsf{quadratic} \cdot d^2}, $$
 
-where $d$ is the distance between the light source and the fragment and $constant$, $linear$ and $quadratic$ are coefficients that determine how quickly the light intensity decreases. The graph in {numref}`attenuation-figure` shows a typical attenuation profile where the light intensity rapidly decreases when the distance is small levelling off as the distance gets larger.
+where $d$ is the distance between the light source and the fragment and $\textsf{constant}$, $\textsf{linear}$ and $\textsf{quadratic}$ are coefficients that determine how quickly the light intensity decreases. The graph in {numref}`attenuation-figure` shows a typical attenuation profile where the light intensity rapidly decreases when the distance is small levelling off as the distance gets larger.
 
 ```{figure} ../_images/08_attenuation.svg
 :width: 500
@@ -859,7 +860,7 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 specular = uKs * spec * light.colour;
 
   // Output fragment colour
-  return attenuation * (ambient + diffuse + specular);
+  return ambient + attenuation * (diffuse + specular);
 }
 
 // Main fragment shader function
@@ -891,12 +892,10 @@ This fragment shader is a little more complex than before but the main changes a
 - A function `computeLighting()` is defined to perform the lighting calculations for a single light source
 - In the `main()` function a for loop iterates over the active light sources and calls the `computeLighting()` function for each light source to add its contribution to the fragment colour.
 
-Since this fragment shader not uses an array of light source we need to update the ***more_lights.js*** file to define multiple light sources using the `Light` data structure and send them to the shader.
-
 :::{admonition} Task
 :class: tip
 
-Edit the fragment shader in the **more_lights.js** file to use the new fragment shader above.
+Edit the fragment shader to so that is uses the new fragment shader given above.
 :::
 
 Now that we have made changes to the fragment shader, we also need to update the Light class and create a new class to manage multiple light sources

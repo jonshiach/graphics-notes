@@ -90,10 +90,10 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   if (light.type == 1) {
     float theta = dot(-L, normalize(light.direction));
     float epsilon = light.cutoff - light.outerCutoff;
-    // intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
-    if (theta < light.cutoff) {
-      intensity = 0.0;
-    }
+    intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
+    // if (theta < light.cutoff) {
+    //   intensity = 0.0;
+    // }
   }
 
   // Directional light
@@ -115,7 +115,15 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 specular = uKs * spec * light.colour;
 
   // Output fragment colour
-  return attenuation * (ambient + intensity * (diffuse + specular));
+  // return ambient + attenuation * intensity * (diffuse + specular);
+
+  // return ambient;
+  // return N;
+  // return diffuse;
+  // return ambient + diffuse;
+  // return specular;
+  // return ambient + diffuse + specular;
+  return ambient + attenuation * intensity * (diffuse + specular);
 }
 
 // Main fragment shader function
@@ -286,7 +294,7 @@ function main() {
   const directionalLight = new Light(2);
   directionalLight.colour = [1, 0, 1];
   directionalLight.direction = [2, -1, -1];
-  // lightSources.addLight(directionalLight);
+  lightSources.addLight(directionalLight);
 
   // Render function
   function render(time) {

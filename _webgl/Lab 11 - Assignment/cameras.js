@@ -212,9 +212,9 @@ class CameraManager {
     this.input = input;
 
     this.cameras = [
-      new FreeFlyCamera(),
       new FirstPersonCamera(),
-      new ThirdPersonCamera()
+      new ThirdPersonCamera(),
+      new FreeFlyCamera(),
     ];
 
     this.activeIndex = 0;

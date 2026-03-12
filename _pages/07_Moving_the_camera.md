@@ -312,9 +312,9 @@ this.front = normalize([cp * sy, sp, -cp * cy]);
 
 :::
 
-Here we have added Camera class properties for controlling the turn speed of the camera and storing the $yaw$ and $pitch$ angles. Then we have modified the `update()` Camera class method to get the mouse movement values from the input, use these to update the $yaw$ and $pitch$ angles and calculate the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`. Note that we have subtract `dy * turnSpeed` from the $pitch$ angle because the mouse movement is measured from the top of the canvas.
+Here we have added Camera class properties for controlling the turn speed of the camera and storing the $yaw$ and $pitch$ angles. Then we have modified the `update()` Camera class method to get the mouse movement values from the input, use these to update the $yaw$ and $pitch$ angles and calculate the $\vec{front}$ vector using equation {eq}`eq-euler-to-vector`. Note that we have subtract `dy * this.turnSpeed` from the $pitch$ angle because the mouse movement is measured from the top of the canvas.
 
-Running the program and we can now move around our world space and point the camera using the mouse.
+Refresh your browser and you can now move around our world space and point the camera using the keyboard and mouse.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
@@ -423,42 +423,56 @@ Refresh your web browser and use the keyboard and mouse to put the camera inside
 
 1. Make it so that the camera position always has a $y$ coordinate of 0, i.e., like a first-person shooter game where the player cannot fly around the world.
 
-2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. To do this, add a velocity vector $\vec{v} = (0, 0, 0)$, acceleration factor $accelerate = 10$ and deceleration factor $decelerate = 0.8$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions
+2. Improve the realism of the camera by applying horizontal acceleration and deceleration to the camera movement. 
+   - Add a velocity vector $\vec{v} = (0, 0, 0)$ to the camera class constructor. Check if one of the movement keys has been pressed and if so, accelerate the velocity vector in the horizontal directions ($x$ and $z$)
 
-$$ \begin{align*}
-  v_x &= v_x + accelerate \cdot \Delta t \cdot \vec{moveDir}_x, \\
-  v_z &= v_z + accelerate \cdot \Delta t \cdot \vec{moveDir}_z,
-\end{align*} $$
+      $$ \begin{align*}
+        v_x &= v_x + a \Delta t m_x, \\
+        v_z &= v_z + a \Delta t m_z,
+      \end{align*} $$
 
-Calculate the horizontal speed of the camera using $speed = \sqrt{v_x^2 + v_z^2}$. If this is greater than $maxSpeed$, limit it using
+      where $m_x$ and $m_z$ are the $x$ and $z$ compnents of the movement vector and $a$ is an acceleration factor (typical values 10 to 20). 
+    - Calculate the horizontal speed of the camera using $s = \sqrt{v_x^2 + v_z^2}$. If this is greater than the maximum speed $s_{\max}$, limit it using
 
-$$ \begin{align*}
-  v_x &= \frac{v_x}{speed} \cdot maxSpeed, \\
-  v_z &= \frac{v_z}{speed} \cdot maxSpeed.
-\end{align*} $$
+    $$ \begin{align*}
+      v_x &= \frac{s_{\max}}{s}v_x, \\
+      v_z &= \frac{s_{\max}}{s}v_y.
+    \end{align*} $$
 
-If no button is pressed, you want the speed of the camera to slow to zero. To do this, simply multiply the horizontal velocity by the deceleration factor.
+     - If no button is pressed, you want the speed of the camera to slow to zero. To do this multiply the horizontal velocity by a number less than 1
 
-$$ \begin{align*}
-  v_x &= decelerate \cdot v_x, \\
-  v_z &= decelerate \cdot v_z.
-\end{align*} $$
+        $$ \begin{align*}
+          v_x &= d v_x, \\
+          v_z &= d v_z,
+        \end{align*} $$
 
-Once you have updated the velocity vector, use it to calculate the new camera position
+        where $d$ is a deceleration factor (typical value around 0.9). 
+
+      - Once you have updated the velocity vector, use it to calculate the new camera position
 
 $$ \vec{eye} = \vec{eye} + \Delta t \, \vec{v}. $$
 
 3. Add the ability for the user to perform a jump by pressing the space bar.
-     - Add properties for the height of the jump $H = 1$, gravity $g = 9.81$ and a boolean flag for whether the camera is on the ground (which is set to true) to the Camera class.
-     - Check when the space bar has been pressed (using `input.isDown(" ")`) and the camera is on the ground, if so change the vertical velocity to $v_y = \sqrt{2 H g}$ and change the on the ground flag to false.
-     - Apply gravity to the vertical velocity $v_y = v_y - g \cdot \Delta t$.
-     - If $\vec{eye}_y < 0$ then the camera is back on the ground so set $\vec{eye}_y = 0$, $v_y = 0$ and set the on ground flag back to true.
+     - Add properties for the height of the jump, $H = 1$, gravity, $g = 9.81$, and a boolean flag for whether the camera is on the ground (which is initially set to true) to the Camera class.
+     - Check when the space bar has been pressed (using `input.isDown(" ")`) and the camera is on the ground. If so change the on ground flag to false and the vertical velocity to
+
+        $$ v_y = \sqrt{2 H g}. $$
+
+     - Apply gravity to the vertical velocity
+
+        $$ v_y = v_y - g \Delta t. $$
+
+     - Check if the camera is back on the ground using $\vec{eye}_y < 0$. If so set $\vec{eye}_y = 0$, $v_y = 0$ and the on ground flag to true.
   
 4. Add collision detection so that the camera cannot pass through the cube objects. A simple (but crude) way of doing this is [^aabb]:
 
-   - Loop through all the cubes
-     - Calculate a vector from the camera position to the object centre: $\vec{offset} = \vec{object} - \vec{eye}$
-     - If $\| \vec{offset} \| < 0$ move camera away from object: $\vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}$
+   - Loop through all the cubes and calculate a vector from the camera position to the object centre
+
+   $$ \vec{offset} = \vec{object} - \vec{eye}. $$
+
+   - If the length of the $\vec{offset}$ vector is less than 1, move camera away from object using
+
+$$ \vec{eye} = \vec{eye} + \| \vec{offset} \| \, \vec{offset}. $$
 
 [^aabb]: A better way of handling collision detection is to use <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection" target="_blank">Axis-Aligned Bounding Box (AABB)</a> collision.
 

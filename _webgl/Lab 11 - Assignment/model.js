@@ -30,6 +30,9 @@ class Model {
 
     // Model colour
     this.colour = [1, 1, 1];
+
+    // Bounding box
+    this.box = {xMin, xMax, yMin, yMax, zMin, zMax};
   }
 
   // Async factory method

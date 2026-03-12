@@ -10,10 +10,9 @@ class Player {
     this.rotationSmooth = 8;
 
     // Movement
-    this.velocity = [0, 0, 0];
     this.maxSpeed = 5;
-    this.acceleration = 10;
-    this.deceleration = 10;
+    this.acceleration = 20;
+    this.deceleration = 0.8;
 
     // Player model
     this.model;
@@ -21,8 +20,9 @@ class Player {
     this.height = 0.25;
 
     // Physics
-    this.jumpForce = 5;
-    this.gravity = -9.81;
+    this.velocity = [0, 0, 0];
+    this.jumpHeight = 1;
+    this.gravity = 9.81;
     this.onGround = true;
   }
 
@@ -46,22 +46,40 @@ class Player {
     const hasInput = length(moveDir) > 0;
     if (hasInput) normalize(moveDir);
     
-    // Calculate velocity using dampened acceleration/deceleration
-    const targetVelocity = scaleVector(moveDir, this.maxSpeed);
-
+    // Calculate horizontal velocity
     if (hasInput) {
 
-      // Lerp velocity to target velocity
-      this.velocity = lerpVector(
-        this.velocity,
-        targetVelocity,
-        1 - Math.exp(-this.acceleration * dt)
-      );
+      this.velocity[0] += this.acceleration * dt * moveDir[0];
+      this.velocity[2] += this.acceleration * dt * moveDir[2];
 
-    } else {
+      // Limit horizontal speed to max speed
+      const speed = length([this.velocity[0], 0, this.velocity[2]]);
+      const speedRatio = this.maxSpeed / speed;
+      if (speedRatio < 1) {
+        this.velocity[0] *= speedRatio;
+        this.velocity[2] *= speedRatio;
+      }
 
-      const damping = Math.exp(-this.deceleration * dt);
-      this.velocity = scaleVector(this.velocity, damping);
+    } else if (this.onGround) {
+
+      this.velocity[0] *= this.deceleration;
+      this.velocity[2] *= this.deceleration;
+    }
+
+    // Jump player
+    if (input.isDown(" ") && this.onGround) {
+      this.velocity[1] = Math.sqrt(2 * this.jumpHeight * this.gravity);
+      this.onGround = false;
+    }
+
+    // Apply gravity
+    this.velocity[1] -= this.gravity * dt;
+
+    // Check for ground collision
+    if (this.position[1] < this.height) {
+      this.position[1] = this.height;
+      this.velocity[1] = 0;
+      this.onGround = true;
     }
 
     // Update position
@@ -78,26 +96,6 @@ class Player {
         1 - Math.exp(-this.rotationSmooth * dt)
       ).normalize();
     }
-
-    this.jump(input, dt);
-  }
-
-  jump(input, dt) {
-
-    if (input.isDown(" ") && this.onGround) {
-      this.onGround = false;
-      this.velocity[1] = this.jumpForce;
-    }
-
-    this.velocity[1] += this.gravity * dt;
-    this.position[1] += this.velocity[1] * dt;
-
-    if (this.position[1] <= this.height) {
-      this.position[1] = 0;
-      this.velocity[1] = 0;
-      this.onGround = true;
-    }
-
   }
 
   draw(gl, program) {
@@ -113,5 +111,13 @@ class Player {
     gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
 
     this.model.draw(program);
+  }
+
+  aabbInBox(box) {
+    return (
+      this.position[0] > box.xMin && this.position[0] < box.xMax &&
+      this.position[1] > box.yMin && this.position[1] < box.yMax &&
+      this.position[2] > box.zMin && this.position[2] < box.zMax
+    );
   }
 }

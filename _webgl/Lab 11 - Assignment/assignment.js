@@ -126,7 +126,7 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   }
 
   // Output fragment colour
-  return attenuation * (ambient + intensity * (diffuse + specular));
+  return ambient + attenuation * intensity * (diffuse + specular);
 }
 
 // Main fragment shader function
@@ -208,6 +208,7 @@ async function main() {
     for (let j = 0; j < 5; j++) {
       cubes.push({
         position  : [3 * i, 0, -3 * j],
+        scale     : [0.5, 0.5, 0.5],
       });
     }
   }
@@ -233,6 +234,9 @@ async function main() {
   suzanne.loadTexture("assets/suzanne_diffuse.png", "diffuse");
   suzanne.loadTexture("assets/suzanne_normal.png", "normal");
   suzanne.ks = 0.5;
+
+  // Calculate bounding boxes
+  
 
   // --- LIGHT SOURCES ---
   // Light models
@@ -265,13 +269,13 @@ async function main() {
 
   // --- PLAYER AND CAMERA OBJECTS ---
 
+  // Keyboard and mouse inputs
+  const input = new Input(canvas);
+
   // Create player object
   const player = new Player();
   player.model = suzanne;
   player.position = [-1, 0, 1];
-
-  // Keyboard and mouse inputs
-  const input = new Input(canvas);
 
   // Create camera manager
   const cameraManager = new CameraManager(player, input);
@@ -327,7 +331,7 @@ async function main() {
       const model = new Mat4()
         .translate(cubes[i].position)
         .rotate([0, 1, 0], angle)
-        .scale([0.5, 0.5, 0.5]);
+        .scale(cubes[i].scale);
 
       // Send model matrix to the shader
       gl.uniformMatrix4fv(gl.getUniformLocation(program, "uModel"), false, model.m);
