@@ -251,7 +251,7 @@ function main() {
     for (let j = 0; j < 5; j++) {
       cubes.push({
         position  : [3 * i, 0, -3 * j],
-        ka        : 0.2,
+        ka        : 0.4,
         kd        : 0.7,
         ks        : 1.0,
         shininess : 32,
