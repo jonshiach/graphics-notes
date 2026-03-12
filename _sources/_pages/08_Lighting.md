@@ -415,7 +415,8 @@ class Light {
     this.colour = [1, 1, 1];
   }
 
-    toShader(gl, program) {
+  toShader(gl, program) {
+
     // Light vectors
     gl.uniform3fv(gl.getUniformLocation(program, "uLightPosition"), this.position);
     gl.uniform3fv(gl.getUniformLocation(program, "uLightColour"), this.colour);
@@ -859,7 +860,7 @@ vec3 computeLighting(Light light, vec3 N, vec3 V, vec3 objectColour){
   vec3 specular = uKs * spec * light.colour;
 
   // Output fragment colour
-  return attenuation * (ambient + diffuse + specular);
+  return ambient + attenuation * (diffuse + specular);
 }
 
 // Main fragment shader function

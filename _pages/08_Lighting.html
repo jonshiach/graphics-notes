@@ -774,7 +774,8 @@ document.write(`
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nx">toShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">toShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">,</span><span class="w"> </span><span class="nx">program</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
 <span class="w">    </span><span class="c1">// Light vectors</span>
 <span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightPosition&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">position</span><span class="p">);</span>
 <span class="w">    </span><span class="nx">gl</span><span class="p">.</span><span class="nx">uniform3fv</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">getUniformLocation</span><span class="p">(</span><span class="nx">program</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uLightColour&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">colour</span><span class="p">);</span>
@@ -1144,7 +1145,7 @@ document.write(`
 <span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uKs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">colour</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Output fragment colour</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Main fragment shader function</span>
