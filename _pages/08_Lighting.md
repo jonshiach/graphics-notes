@@ -1243,6 +1243,8 @@ Cubes lit using a point light, spotlight and directional light.
 
 The video below walks you through these lab materials.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/r2sAcGlZAC4?si=z5MsYUbM78vvRQNq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ---
 
 ## References

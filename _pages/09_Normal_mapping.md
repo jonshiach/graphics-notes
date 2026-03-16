@@ -186,62 +186,87 @@ Add the following function to the ***webGLUtils.js*** file.
 
 ```javascript
 function computeTangents(vertices, indices) {
-  const vertexCount = indices.length;
-  const tangents = new Float32Array(3 * vertexCount);
 
-  for (let i = 0; i < vertexCount; i += 3) {
+  const stride = 11; // number of floats per vertex
+  const vertexCount = vertices.length / stride;
+  const tangents = new Float32Array(vertexCount * 3);
 
-    // Indices of triangle vertices
-    const i0 = indices[i + 0];
+  for (let i = 0; i < indices.length; i += 3) {
+
+    const i0 = indices[i];
     const i1 = indices[i + 1];
     const i2 = indices[i + 2];
+    const v0 = i0 * stride;
+    const v1 = i1 * stride;
+    const v2 = i2 * stride;
 
-    // Positions and uvs
-    const p0x  = vertices[i0 * 11 + 0];
-    const p0y  = vertices[i0 * 11 + 1];
-    const p0z  = vertices[i0 * 11 + 2];
-    const p1x  = vertices[i1 * 11 + 0];
-    const p1y  = vertices[i1 * 11 + 1];
-    const p1z  = vertices[i1 * 11 + 2];
-    const p2x  = vertices[i2 * 11 + 0];
-    const p2y  = vertices[i2 * 11 + 1];
-    const p2z  = vertices[i2 * 11 + 2];
+    // Positions
+    const p0x = vertices[v0 + 0];
+    const p0y = vertices[v0 + 1];
+    const p0z = vertices[v0 + 2];
+    const p1x = vertices[v1 + 0];
+    const p1y = vertices[v1 + 1];
+    const p1z = vertices[v1 + 2];
+    const p2x = vertices[v2 + 0];
+    const p2y = vertices[v2 + 1];
+    const p2z = vertices[v2 + 2];
 
-    const uv0x = vertices[i0 * 11 + 6];
-    const uv0y = vertices[i0 * 11 + 7];
-    const uv1x = vertices[i1 * 11 + 6];
-    const uv1y = vertices[i1 * 11 + 7];
-    const uv2x = vertices[i2 * 11 + 6];
-    const uv2y = vertices[i2 * 11 + 7];
+    // UV coordinates
+    const uv0x = vertices[v0 + 6];
+    const uv0y = vertices[v0 + 7];
+    const uv1x = vertices[v1 + 6];
+    const uv1y = vertices[v1 + 7];
+    const uv2x = vertices[v2 + 6];
+    const uv2y = vertices[v2 + 7];
 
-    // Edges
+    // Edge vectors
     const e1x = p1x - p0x;
     const e1y = p1y - p0y;
     const e1z = p1z - p0z;
-    const e2x = p2x - p1x;
-    const e2y = p2y - p1y;
-    const e2z = p2z - p1z;
+    const e2x = p2x - p0x;
+    const e2y = p2y - p0y;
+    const e2z = p2z - p0z;
 
     // UV deltas
     const du1 = uv1x - uv0x;
     const dv1 = uv1y - uv0y;
-    const du2 = uv2x - uv1x;
-    const dv2 = uv2y - uv1y;
+    const du2 = uv2x - uv0x;
+    const dv2 = uv2y - uv0y;
 
-    // Calculate tangent and bitangent
     const denom = du1 * dv2 - du2 * dv1;
-    if (denom === 0) continue;
-    const f = 1 / denom;
+    if (Math.abs(denom) < 1e-6) continue;
 
+    const f = 1.0 / denom;
     const tx = f * (dv2 * e1x - dv1 * e2x);
     const ty = f * (dv2 * e1y - dv1 * e2y);
     const tz = f * (dv2 * e1z - dv1 * e2z);
 
-    // Accumulate tangents
-    for (const idx of [i0, i1, i2]) {
-      tangents[idx * 3 + 0] += tx;
-      tangents[idx * 3 + 1] += ty;
-      tangents[idx * 3 + 2] += tz;
+    // Accumulate tangent
+    tangents[i0 * 3 + 0] += tx;
+    tangents[i0 * 3 + 1] += ty;
+    tangents[i0 * 3 + 2] += tz;
+
+    tangents[i1 * 3 + 0] += tx;
+    tangents[i1 * 3 + 1] += ty;
+    tangents[i1 * 3 + 2] += tz;
+
+    tangents[i2 * 3 + 0] += tx;
+    tangents[i2 * 3 + 1] += ty;
+    tangents[i2 * 3 + 2] += tz;
+  }
+
+  // Normalize tangents
+  for (let i = 0; i < vertexCount; i++) {
+
+    const tx = tangents[i * 3 + 0];
+    const ty = tangents[i * 3 + 1];
+    const tz = tangents[i * 3 + 2];
+
+    const length = Math.sqrt(tx * tx + ty * ty + tz * tz);
+    if (length > 0.0) {
+      tangents[i * 3 + 0] /= length;
+      tangents[i * 3 + 1] /= length;
+      tangents[i * 3 + 2] /= length;
     }
   }
 
@@ -602,23 +627,44 @@ The floor specular map is no longer being applied to the cube objects.
 
 ## Exercises
 
-1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at $(0, 4, -5)$, scale it up by a factor of 5 in the $x$ and $z$ directions and rotate it $90^\circ$ about the $x$-axis. Apply the diffuse map **assets/bricks_diffuse.png**.
+1. (a) Change the diffuse texture of the floor object to that is uses a plain grey texture map based on the file [grey.png](../_downloads/assets/grey.png).
 
-```{figure} ../_images/09_ex1.png
-:width: 500
+```{figure} ../_images/09_Ex1a.png
+:width: 60%
 ```
 
-2. Apply the normal map **assets/bricks_normal.png** to the wall object.
+&emsp; (b) Change the normal map of the floor object to a diamond plate normal map based on the file [diamond_normal.png](../_downloads/assets/diamond_normal.png). Set the texture co-ordinates of the floor object so that the textures are repeated four times in both $(u, v)$ directions.
 
-```{figure} ../_images/09_ex2.png
-:width: 500
+```{figure} ../_images/09_Ex1b.png
+:width: 60%
 ```
 
-3. Apply the specular map **assets/bricks_specular.png** to the wall object.
+2. Add a brick wall object to your scene by doing the following:
+   
+&emsp; (a)  Add another cube object that is scaled up using the scaling vector $\vec{s} = (1, 4, 10)$ and translated by $\vec{t} = (11, 3.5, -6)$.
 
-```{figure} ../_images/09_ex3.png
-:width: 500
+```{figure} ../_images/09_Ex2a.png
+:width: 60%
 ```
+
+&emsp; (b) Change the texture of this cube object to one based on the file [bricks_diffuse.png](../_downloads/assets/bricks_diffuse.png) and turn off the flags for normal and specular textures.
+
+```{figure} ../_images/09_Ex2b.png
+:width: 60%
+```
+
+&emsp; (c) Add a normal map to the wall object based on the file [bricks_normal.png](../_downloads/assets/bricks_normal.png).
+
+```{figure} ../_images/09_Ex2c.png
+:width: 60%
+```
+
+&emsp; (d) Add a specular map to the wall object based on the file [bricks_specular.png](../_downloads/assets/bricks_specular.png).
+
+```{figure} ../_images/09_Ex2d.png
+:width: 60%
+```
+
 ---
 
 ## Video walkthrough
