@@ -633,7 +633,7 @@ The floor specular map is no longer being applied to the cube objects.
 :width: 60%
 ```
 
-&emsp; (b) Change the normal map of the floor object to a diamond plate normal map based on the file [diamond_normal.png](../_downloads/assets/diamond_normal.png). See the texture co-ordinates of the floor object so that the textures are repeated four times in both $(u, v)$ directions.
+&emsp; (b) Change the normal map of the floor object to a diamond plate normal map based on the file [diamond_normal.png](../_downloads/assets/diamond_normal.png). Set the texture co-ordinates of the floor object so that the textures are repeated four times in both $(u, v)$ directions.
 
 ```{figure} ../_images/09_Ex1b.png
 :width: 60%
