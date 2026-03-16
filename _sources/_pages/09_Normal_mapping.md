@@ -602,23 +602,44 @@ The floor specular map is no longer being applied to the cube objects.
 
 ## Exercises
 
-1. Add another object using the .obj model **../assets/wall.obj** to your scene and position it at $(0, 4, -5)$, scale it up by a factor of 5 in the $x$ and $z$ directions and rotate it $90^\circ$ about the $x$-axis. Apply the diffuse map **assets/bricks_diffuse.png**.
+1. (a) Change the diffuse texture of the floor object to that is uses a plain grey texture map based on the file [grey.png](../downloads/assets/grey.png).
 
-```{figure} ../_images/09_ex1.png
-:width: 500
+```{figure} ../_images/09_Ex1a.png
+:width: 60%
 ```
 
-2. Apply the normal map **assets/bricks_normal.png** to the wall object.
+&emsp; (b) Change the normal map of the floor object to a diamond plate normal map based on the file [diamond_normal.png](../downloads/assets/diamond_normal.png). See the texture co-ordinates of the floor object so that the textures are repeated four times in both $(u, v)$ directions.
 
-```{figure} ../_images/09_ex2.png
-:width: 500
+```{figure} ../_images/09_Ex1b.png
+:width: 60%
 ```
 
-3. Apply the specular map **assets/bricks_specular.png** to the wall object.
+2. Add a brick wall object to your scene by doing the following:
+   
+&emsp; (a)  Add another cube object that is scaled up using the scaling vector $\vec{s} = (1, 4, 10)$ and translated by $\vec{t} = (11, 3.5, -6)$.
 
-```{figure} ../_images/09_ex3.png
-:width: 500
+```{figure} ../_images/09_Ex2a.png
+:width: 60%
 ```
+
+&emsp; (b) Change the texture of this cube object to one based on the file [bricks_diffuse.png](../_downloads/assets/bricks_diffuse.png) and turn off the flags for normal and specular textures.
+
+```{figure} ../_images/09_Ex2b.png
+:width: 60%
+```
+
+&emsp; (c) Add a normal map to the wall object based on the file [bricks_normal.png](../_downloads/assets/bricks_normal.png).
+
+```{figure} ../_images/09_Ex2c.png
+:width: 60%
+```
+
+&emsp; (d) Add a specular map to the wall object based on the file [bricks_specular.png](../_downloads/assets/bricks_specular.png).
+
+```{figure} ../_images/09_Ex2d.png
+:width: 60%
+```
+
 ---
 
 ## Video walkthrough
