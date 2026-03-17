@@ -119,7 +119,7 @@ Edit the code used to define the cubes so that it looks like the following.
 
 ```javascript
 cubes.push({
-  position  : cubePositions[i],
+  position  : [3 * i, 0, -3 * j],
   ka        : 0.2,
 });
 ```
