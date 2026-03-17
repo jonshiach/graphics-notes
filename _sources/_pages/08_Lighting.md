@@ -1183,7 +1183,7 @@ Add the following code to the `computerLighting()` fragment shader function befo
 
 ```glsl
 // Directional light
-if (light.type == 2) {
+if (light.type === 2) {
   L = normalize(-light.direction);
   attenuation = 1.0;
 }
