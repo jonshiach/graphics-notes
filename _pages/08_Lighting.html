@@ -740,7 +740,7 @@ document.write(`
 <span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vNormal</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function calculate the world space normal preserving orthogonality with the face.</p>
+<p>And in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function of the vertex shader calculate the world space normal preserving orthogonality with the face.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space normal vectors</span>
 <span class="n">vNormal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="kt">mat3</span><span class="p">(</span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">uModel</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aNormal</span><span class="p">);</span>
 </pre></div>

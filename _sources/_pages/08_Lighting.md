@@ -369,7 +369,7 @@ in vec3 aNormal;
 out vec3 vNormal;
 ```
 
-And in the `main()` function calculate the world space normal preserving orthogonality with the face.
+And in the `main()` function of the vertex shader calculate the world space normal preserving orthogonality with the face.
 
 ```glsl
 // Output world space normal vectors
