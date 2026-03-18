@@ -1179,11 +1179,11 @@ The lighting calculations are the same as for the other light sources seen above
 :::{admonition} Task
 :class: tip
 
-Add the following code to the `computerLighting()` fragment shader function before we calculate the ambient light
+Add the following code to the `computeLighting()` fragment shader function before we calculate the ambient light
 
 ```glsl
 // Directional light
-if (light.type === 2) {
+if (light.type == 2) {
   L = normalize(-light.direction);
   attenuation = 1.0;
 }
@@ -1203,7 +1203,7 @@ Finally, add the following code at the start of the for loop used to draw the li
 
 ```javascript
 // Don't draw directional light source
-if (lightSources.lights[i].type == 2) continue;
+if (lightSources.lights[i].type === 2) continue;
 ```
 
 :::

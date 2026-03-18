@@ -24,9 +24,11 @@ Then create a new file called ***quaternion_calculations.js*** and enter the fol
 
 ```javascript
 function setupConsoleOutput(elementId) {
+
   const output = document.getElementById(elementId);
 
   function write(args) {
+
     const line = document.createElement("div");
     line.textContent = [...args].join(" ");
     output.appendChild(line);
@@ -82,7 +84,7 @@ $$ \begin{align*}
     x &= \sqrt{-1}.
 \end{align*} $$
 
-Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the **imaginary number** that is defined by $i = \sqrt{-1}$ so the solution to the equation above is $x = i$.
+Here we have a problem since the square of a negative number always returns a positive value, e.g., $(-1) \times (-1) = 1$, so there does not exist a real number to satisfy the solution to this equation. Not being satisfied with this, mathematicians invented another type of number called the **imaginary number** that is defined by $i = \sqrt{-1}$, so the solution to the equation above is $x = i$.
 
 ```{note}
 Some students find the concept of an imaginary number difficult to grasp. However, you have been using negative numbers for a while now and these are similar to the imaginary number since they do not represent a physical quantity, e.g., you can show me 5 coins but you cannot show me negative 5 coins. We developed negative numbers to help us solve problems, as we have also done with the imaginary number.
@@ -169,13 +171,15 @@ Add the following class definition to the ***maths.js*** file
 class Quaternion {
 
   constructor(w = 1, x = 0, y = 0, z = 0) {
+
     this.w = w;
     this.x = x;
     this.y = y;
-    this.z = z
+    this.z = z;
   }
 
   toString() {
+
     const w = this.w.toFixed(3);
     const x = this.x.toFixed(3);
     const y = this.y.toFixed(3);
@@ -208,7 +212,7 @@ q = [ 1.000, ( 2.000, 3.000, 4.000 ) ]
 
 ### Quaternion magnitude
 
-The **magnitude**, or length, of a quaternion $q$ is denoted by $| q |$ and calculated in a similar way to how we calculate [vector magnitude](vector-magnitude-section)
+The **magnitude**, or length, of a quaternion $q$ is denoted by $| q |$ and calculated similarly to how we calculate [vector magnitude](vector-magnitude-section)
 
 $$ |q| = \sqrt{w^2 + x^2 + y^2 + z^2}. $$
 
@@ -223,6 +227,7 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
+
   return Math.sqrt(
     this.w * this.w +
     this.x * this.x +
@@ -236,7 +241,7 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 // Length and normalization
-console.log("\nLength and normalization\n------------------------")
+console.log("\nLength and normalization\n------------------------");
 console.log("length(q) = " + q.length());
 ```
 
@@ -271,6 +276,7 @@ Add the following method to the Quaternion class
 
 ```javascript
 normalize() {
+
   const len = 1 / this.length();
   this.w *= len;
   this.x *= len;
@@ -300,25 +306,16 @@ length(qHat) = 0.9999999999999999
 
 ### Multiplying quaternions
 
-The multiplication of two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$ results in the quaternion $q_1 \, q_2 = [w, (x, y, z)]$ where
-
-$$ \begin{align*}
-  w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
-  x &= w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2, \\
-  y &= w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2, \\
-  z &= w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2.
-\end{align*}$$(quaternion-product-equation-1)
-
 If $q_1 = [w_1, \vec{a}]$ and $q_2 = [w_2, \vec{b}]$ then we can write quaternion multiplication as
 
 $$ \begin{align*}
-  q_1 \, q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
-\end{align*} $$(quaternion-product-equation-2)
+  q_1  q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{a} + w_2 \vec{b} + \vec{a} \times \vec{b}].
+\end{align*} $$(quaternion-product-equation)
 
-You don't need to know where equations {eq}`quaternion-product-equation-1` and {eq}`quaternion-product-equation-2` come from but if you are curious, click on the dropdown below.
+You don't need to know where equations {eq}`quaternion-product-equation` comes from but if you are curious, click on the dropdown below.
 
 ```{dropdown} Derivation of quaternion multiplication equation
-Let $q_1 = x_1i + y_1j + z_1k + w_1$ and $q_2 = x_2i + y_2j + z_2k + w_2$ be two quaternions then multiplying them gives
+Let $q_1 = w_1 + x_1i + y_1j + z_1k$ and $q_2 = w_2 + x_2i + y_2j + z_2k$ be two quaternions then multiplying them gives
 
 $$ \begin{align*}
     q_1 \, q_2 &= (w_1 + x_1i + y_1j + z_1k)(w_2 + x_2i + y_2j + z_2k) \\
@@ -386,13 +383,49 @@ Let $\vec{a} = (x_1, y_1, z_1)$ and $\vec{b} = (x_2, y_2, z_2)$ such that $q_1 =
 $$ q_1 \, q_2 = [w_1w_2 - \vec{a} \cdot \vec{b}, w_1 \vec{b} + w_2 \vec{a} + \vec{a} \times \vec{b}].$$
 ```
 
+Applying equation {eqref}`quaternion-product-equation` to multiplication of the two quaternions $q_1 = [w_1, (x_1, y_1, z_1)]$ and $q_2 = [w_2, (x_2, y_2, z_2)]$
+
+$$ \begin{align*}
+  q_1 \, q_2 &= [w_1, (x_1, y_1, z_1)] \, [w_2, (x_2, y_2, z_2)] \\
+  &= [w_1w_2 - (x_1, y_1, z_1) \cdot (x_2, y_2, z_2), w_1(x_2, y_2, z_2) + w_2 (x_1, y_1, z_1) \\
+  & \qquad + (x_1, y_1, z_1) \times (x_2, y_2, z_2)].
+\end{align*} $$
+
+Since 
+
+$$ \begin{align*}
+  (x_1, y_1, z_1) \cdot (x_2, y_2, z_2) &=  x_1x_2 + y_1y_2 + z_1z_2, \\
+  (x_1, y_1, z_1) \times (x_2, y_2, z_2) &= (y_1z_2 - y_2z_1, x_2z_1 - x_1z_2, x_1y_2 - x_2y_1)
+\end{align*} $$
+
+then
+
+$$ \begin{align*}
+  q_1 \, q_2 &= [w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
+  &\qquad (w_1x_2, w_1y_2, w_1z_2) + (w_2x_1, w_2y_1, w_2z_1) \\
+  &\qquad + (y_1z_2 - y_2z_1, x_2z_1 - x_1z_2, x_1y_2 - x_2y_1)] \\
+  &= [ w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
+  & \qquad (w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1, \\
+  & \qquad w_1y_2 + w_2y_1 - x_1z_2 + x_2z_1, \\
+  & \qquad w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1) ].
+\end{align*} $$
+
+So $q_1 \, q_2 = [w, (x, y, z)]$ where
+
+$$ \begin{align*}
+  w &= w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2, \\
+  x &= w_1x_2 + w_2x_1 + y_1z_2 - y_2z_1, \\
+  y &= w_1y_2 + w_2y_1 - x_1z_2 + x_2z_1, \\
+  z &= w_1z_2 + w_2z_1 + x_1y_2 - x_2y_1.
+\end{align*}$$
+
 For example, given the quaternions $q_1 = [1, (2, 3, 4)]$ and $q_2 = [5, (6, 7, 8)]$ then
 
 $$ \begin{align*}
-  w &= 1 \times 5 - 2 \times 6 - 3 \times 7 - 4 \times 8 = -60, \\
-  x &= 1 \times 6 + 2 \times 5 + 3 \times 8 - 4 \times 7 = 12, \\
-  y &= 1 \times 7 - 2 \times 8 + 3 \times 5 + 4 \times 6 = 30, \\
-  z &= 1 \times 8 + 2 \times 7 - 3 \times 6 + 4 \times 5 = 24,
+  w &= 1 \cdot 5 - 2 \cdot 6 - 3 \cdot 7 - 4 \cdot 8 = -60, \\
+  x &= 1 \cdot 6 + 5 \cdot 2 + 3 \cdot 8 - 7 \cdot 4 = 12, \\
+  y &= 1 \cdot 7 + 5 \cdot 3 - 2 \cdot 8 + 6 \cdot 4 = 30, \\
+  z &= 1 \cdot 8 + 5 \cdot 4 + 2 \cdot 7 - 6 \cdot 3 = 24,
 \end{align*} $$
 
 so $q_1 \, q_2 = [-60, (12, 30, 24)]$.
@@ -404,11 +437,12 @@ Add the following method to the Quaternion class
 
 ```javascript
 multiply(q) {
+
   return new Quaternion(
     this.w * q.w - this.x * q.x - this.y * q.y - this.z * q.z,
     this.w * q.x + this.x * q.w + this.y * q.z - this.z * q.y,
-    this.w * q.y - this.x * q.z + this.y * q.w + this.z * q.x,
-    this.w * q.z + this.x * q.y - this.y * q.x + this.z * q.w
+    this.w * q.y + this.y * q.w - this.x * q.z + this.z * q.x,
+    this.w * q.z + this.z * q.w + this.x * q.y - this.y * q.x
   );
 }
 ```
@@ -428,7 +462,7 @@ console.log("pq = " + p.multiply(q));
 
 :::
 
-Here we have added the method `multiply()` to the Quaternion class that multiplies the current quaternion object by another quaternion and used it to calculate $[1, (2, 3, 4)][5, (6, 7, 8)]$. Refresh your browser, and you should see the following added to the webpage
+Here we have added the method `multiply()` to the Quaternion class that multiplies the current quaternion object by another quaternion $p$ and used it to calculate $q  p$ and $p  q$. Refresh your browser, and you should see the following added to the webpage
 
 ```text
 Multiplying quaternions
@@ -445,7 +479,7 @@ Note that $qp \neq pq$, so the order matters when multiplying quaternions.
 
 The **inverse** of a quaternion $q$ is denoted by $q^{-1}$ and is defined by
 
-$$ q  q^{-1} = q^{-1} \, q = 1. $$(quaternion-inverse-definition)
+$$ q  q^{-1} = q^{-1}  q = 1. $$(quaternion-inverse-definition)
 
 To calculate the inverse or the quaternion $q = [w, (x, y, z)]$, we need to consider its **conjugate** of which is denoted by $q^*$ and is defined by
 
@@ -453,15 +487,15 @@ $$ \begin{align*}
     q^* = [w, (-x, -y, -z)],
 \end{align*} $$
 
-i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate results in $q q^*=q^* \, q = |q|^2$ so multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
+i.e., the sign of the vector part is negated. Note that multiplying $q$ by its conjugate results in $q q^*=q^*  q = |q|^2$ so multiplying both sides of equation {eq}`quaternion-inverse-definition` by $q^*$
 
 $$ \begin{align*}
-  q^* \, q q^{-1} &= q^* \\
+  q^*  q q^{-1} &= q^* \\
   |q|^2 q^{-1} &= q^* \\
   q^{-1} &= \frac{q^*}{|q|^2}.
 \end{align*} $$
 
-If $q$ is a unit quaternion then $|q|=1$ and $q^{-1} = q^*$. For example, given the quaternion $q = [1, (2, 3, 4)]$, then since $|q| = \sqrt{30}$ then
+If $q$ is a unit quaternion then $|q|=1$ and $q^{-1} = q^*$. For example, given the quaternion $q = [1, (2, 3, 4)]$, then since $|q| = \sqrt{30}$
 
 $$ \begin{align*}
   q^{-1} &= \frac{[1, (-2, -3, -4)]}{30} = [0.033, (-0.067, -0.1, -0.133)].
@@ -481,8 +515,10 @@ Add the following method to the Quaternion class
 
 ```javascript
 inverse() {
+
   const len2 = this.length() * this.length();
   if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
+
   return new Quaternion(
     this.w / len2,
     -this.x / len2,
@@ -559,7 +595,7 @@ $$ \begin{align*}
     q = [\cos(45^\circ), \sin(45^\circ)(0.707, 0, 0.707)] = [0.707,(0.5, 0, 0.5)]
 \end{align*} $$
 
-Calculating $q \, p$
+Calculating $q  p$
 
 $$ \begin{align*}
     p' = q p &= [0.707,(0.5, 0, 0.5)] [0, (2, 0, 0)] = [-1, (1.414, 1, 0)].
@@ -624,6 +660,7 @@ Add the following method to the Quaternion class
 
 ```javascript
 static fromAxisAngle(axis, angle) {
+
   axis = normalize(axis);
   const halfAngle = 0.5 * angle;
   const c = Math.cos(halfAngle);
@@ -633,6 +670,7 @@ static fromAxisAngle(axis, angle) {
 }
 
 rotateVector(v) {
+
   const p = new Quaternion(0, v[0], v[1], v[2]);
   const result = this.multiply(p).multiply(this.inverse());
 
@@ -817,6 +855,7 @@ Add the following method to the Quaternion class
 
 ```javascript
 matrix() {
+
   const w = this.w, x = this.x, y = this.y, z = this.z;
   const xx = x * x, yy = y * y, zz = z * z;
   const wx = w * x, wy = w * y, wz = w * z;
@@ -866,8 +905,10 @@ So it makes sense to use the quaternion rotation matrix for our axis-angle rotat
 Edit the `rotate()` Mat4 class method, so that is looks like the following
 
 ```javascript
-rotate(axis, angle) {   
+rotate(axis, angle) {
+
   const q = Quaternion.fromAxisAngle(axis, angle);
+
   return this.multiply(q.matrix());
 }
 ```
@@ -907,7 +948,7 @@ $$ q_{yaw} = [\cos(\tfrac{\pi}{12}), \sin(\tfrac{\pi}{12})(0, 1, 0)] = [0.966, (
 The camera rotation quaternion $q_{cam}$ is calculated by combining the $pitch$ and $yaw$ rotations
 
 $$ \begin{align*}
-    q_{cam} &= q_{yaw} \, q_{pitch} \\
+    q_{cam} &= q_{yaw}  q_{pitch} \\
     &= [0.966, (0, 0.259, 0)] \, [0.924, (0.383, 0, 0)] \\
     &= [0.892, (0.370, 0.239, -0.099)].
 \end{align*} $$
@@ -918,7 +959,7 @@ $$ \begin{align*}
 Rotation around the $y$-axis by the angle $yaw$.
 ```
 
-Note that quaternion multiplication is applied right-to-left so $q_{yaw} \, q_{pitch}$ means that we perform the pitch rotation followed by the yaw rotation. Once the camera rotation quaternion has been calculated, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors for movement calculations
+Note that quaternion multiplication is applied right-to-left so $q_{yaw}  q_{pitch}$ means that we perform the pitch rotation followed by the yaw rotation. Once the camera rotation quaternion has been calculated, we can use equation {eq}`quaternion-rotation-multiplication-equation` to rotate the vectors $(0, 0, -1)$, $(1, 0, 0)$ and $(0, 1, 0)$ to determine the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors for movement calculations
 
 $$ \begin{align*}
   q_{cam} \, [0, (0, 0, -1)] \, q_{cam}^{-1} &= [0, (-0.354, 0.707, -0.612)], \\
@@ -981,6 +1022,7 @@ Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
+
   const rotateMatrix = this.rotation.inverse().matrix();
   const translateMatrix = new Mat4().translate([
     -this.eye[0],
@@ -996,7 +1038,7 @@ getViewMatrix() {
 
 Here we have made the changes to implement a quaternion camera. In `update()` we calculate the camera rotation quaternion based on the $yaw$ and $pitch$ angles from the mouse input. We then use the camera rotation quaternion to rotate the vectors $(0, 0, -1)$ and $(1, 0, 0)$ to give the $\vec{front}$ and $\vec{right}$ camera vectors. We have also changed the `getViewMatrix()` function so that it uses the camera rotation quaternion to compute the view matrix.
 
-Load ***index.html*** in a live server and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock and we can also move the camera through $\pm 90^\circ$.
+Open ***index.html*** in a web browser, and you should see that nothing much has changed, you can still move the camera around using the keyboard and mouse. However, now we have a quaternion camera which does not suffer from gimbal lock, and we can also move the camera through $\pm 90^\circ$.
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
