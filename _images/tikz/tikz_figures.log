@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.30)  11 MAR 2026 11:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.30)  17 MAR 2026 15:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/55093290/Library/CloudStorage/Dropbox/Work/graphics-notes/_images/tikz/tikz_figures
-(/Users/55093290/Library/CloudStorage/Dropbox/Work/graphics-notes/_images/tikz/tikz_figures.tex
+**"/Users/55093290/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/graphics-notes/_images/tikz/tikz_figures"
+(/Users/55093290/Library/CloudStorage/Dropbox/Work/2025_2026/Computer Graphics/graphics-notes/_images/tikz/tikz_figures.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (/usr/local/texlive/2023/texmf-dist/tex/latex/standalone/standalone.cls
 Document Class: standalone 2022/10/10 v1.3b Class to compile TeX sub-files standalone
@@ -441,27 +441,36 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Missing character: There is no ; in font nullfont!
-<lightbulb.pdf, id=4, 97.89372pt x 108.0316pt>
-File: lightbulb.pdf Graphic file (type pdf)
-<use lightbulb.pdf>
-Package pdftex.def Info: lightbulb.pdf  used on input line 1421.
-(pdftex.def)             Requested size: 22.76228pt x 25.11873pt.
+<player.jpg, id=4, 491.8375pt x 294.09875pt>
+File: player.jpg Graphic file (type jpg)
+<use player.jpg>
+Package pdftex.def Info: player.jpg  used on input line 1958.
+(pdftex.def)             Requested size: 56.9055pt x 34.02483pt.
+<camera.pdf, id=5, 81.8227pt x 53.36938pt>
+File: camera.pdf Graphic file (type pdf)
+<use camera.pdf>
+Package pdftex.def Info: camera.pdf  used on input line 1959.
+(pdftex.def)             Requested size: 42.67912pt x 27.83774pt.
+File: camera.pdf Graphic file (type pdf)
+<use camera.pdf>
+Package pdftex.def Info: camera.pdf  used on input line 1963.
+(pdftex.def)             Requested size: 42.67912pt x 27.83774pt.
 [1
 
-{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./lightbulb.pdf>] (./tikz_figures.aux) ) 
+{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./player.jpg> <./camera.pdf>] (./tikz_figures.aux) ) 
 Here is how much of TeX's memory you used:
- 17683 strings out of 476025
- 394171 string characters out of 5790017
- 1854388 words of memory out of 5000000
- 37807 multiletter control sequences out of 15000+600000
+ 17682 strings out of 476025
+ 394174 string characters out of 5790017
+ 1856388 words of memory out of 5000000
+ 37805 multiletter control sequences out of 15000+600000
  515192 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,7n,118p,491b,697s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-Output written on tikz_figures.pdf (1 page, 20585 bytes).
+ 117i,7n,118p,521b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
+Output written on tikz_figures.pdf (1 page, 62286 bytes).
 PDF statistics:
- 23 PDF objects out of 1000 (max. 8388607)
- 14 compressed objects within 1 object stream
+ 29 PDF objects out of 1000 (max. 8388607)
+ 17 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

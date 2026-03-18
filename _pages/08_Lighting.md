@@ -119,7 +119,7 @@ Edit the code used to define the cubes so that it looks like the following.
 
 ```javascript
 cubes.push({
-  position  : cubePositions[i],
+  position  : [3 * i, 0, -3 * j],
   ka        : 0.2,
 });
 ```
@@ -369,7 +369,7 @@ in vec3 aNormal;
 out vec3 vNormal;
 ```
 
-And in the `main()` function calculate the world space normal preserving orthogonality with the face.
+And in the `main()` function of the vertex shader calculate the world space normal preserving orthogonality with the face.
 
 ```glsl
 // Output world space normal vectors
@@ -1183,7 +1183,7 @@ Add the following code to the `computerLighting()` fragment shader function befo
 
 ```glsl
 // Directional light
-if (light.type == 2) {
+if (light.type === 2) {
   L = normalize(-light.direction);
   attenuation = 1.0;
 }
