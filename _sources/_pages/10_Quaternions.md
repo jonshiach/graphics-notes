@@ -172,7 +172,7 @@ class Quaternion {
     this.w = w;
     this.x = x;
     this.y = y;
-    this.z = z
+    this.z = z;
   }
 
   toString() {
@@ -236,7 +236,7 @@ And add the following code to the ***quaternion_calculations.js*** file
 
 ```javascript
 // Length and normalization
-console.log("\nLength and normalization\n------------------------")
+console.log("\nLength and normalization\n------------------------");
 console.log("length(q) = " + q.length());
 ```
 
