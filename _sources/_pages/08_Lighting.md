@@ -1203,7 +1203,7 @@ Finally, add the following code at the start of the for loop used to draw the li
 
 ```javascript
 // Don't draw directional light source
-if (lightSources.lights[i].type == 2) continue;
+if (lightSources.lights[i].type === 2) continue;
 ```
 
 :::
