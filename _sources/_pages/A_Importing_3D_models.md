@@ -171,7 +171,7 @@ async function loadOBJ(path) {
 }
 ```
 
-This function is an example of an **asynchronous function** which is proceeded by the `async` keyword. An asynchronous function returns a **promise** which is a value that may not be available yet but will be resolved (or rejected) in the future. Promises are a way to hand asynchronous operations like fetching data and reading files. These allow us to use the `await` keyword to pause executing of the program until the promise is resolved. To use the `loadObj()` function we need to change the `main()` function to an asynchronous function and use the `await` keyword when calling it.
+This function is an example of an **asynchronous function** which is proceeded by the `async` keyword. An asynchronous function returns a **promise** which is a value that may not be available yet but will be resolved (or rejected) in the future. Promises are a way to handle asynchronous operations like fetching data and reading files. These allow us to use the `await` keyword to pause executing of the program until the promise is resolved. To use the `loadObj()` function we need to change the `main()` function to an asynchronous function and use the `await` keyword when calling it.
 
 ```javascript
 async function main() {
