@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -518,7 +518,7 @@ document.write(`
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Calculating the tangent and bitangent vectors</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 97</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vectors <span class="math notranslate nohighlight">\(\vec{T}\)</span> and <span class="math notranslate nohighlight">\(\vec{B}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\vec{e}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{e}_2\)</span> can be calculated using</p>
+<p class="sd-card-text">Consider <a class="reference internal" href="#uv-deltas-figure"><span class="std std-numref">Fig. 97</span></a> where a triangle is mapped onto the normal map using texture coordinates <span class="math notranslate nohighlight">\((u_0,v_0)\)</span>, <span class="math notranslate nohighlight">\((u_1,v_1)\)</span> and <span class="math notranslate nohighlight">\((u_2,v_2)\)</span>. If the vector <span class="math notranslate nohighlight">\(\vec{T}\)</span> and <span class="math notranslate nohighlight">\(\vec{B}\)</span> point in the <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> co-ordinate directions then the tangent space coordinates of points along the triangle edges <span class="math notranslate nohighlight">\(\vec{e}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{e}_2\)</span> can be calculated using</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
     \vec{e}_1 &amp;= \Delta u_1 \cdot \vec{T} + \Delta v_1 \cdot \vec{B}, \\
@@ -550,7 +550,7 @@ document.write(`
     \end{pmatrix}
     \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix}.
 \end{align*} \end{split}\]</div>
-<p class="sd-card-text">Writing the out for the <span class="math notranslate nohighlight">\(\vec{T}\)</span> vector we have</p>
+<p class="sd-card-text">Writing this out for the <span class="math notranslate nohighlight">\(\vec{T}\)</span> vector we have</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align*}
     \vec{T} &amp;= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
@@ -683,7 +683,7 @@ document.write(`
 <hr class="docutils" />
 <section id="shaders">
 <h2>Shaders<a class="headerlink" href="#shaders" title="Link to this heading">#</a></h2>
-<p>In the vertex shader we need to calculate the world space tangent vector for the vertex and output this to the fragment shader.</p>
+<p>In the vertex shader we need to calculate the world space tangent and bitangent vectors for the vertex and output this to the fragment shader.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Add input and output declarations to the vertex shader in the <em><strong>normal_mapping.js</strong></em> file.</p>
@@ -691,18 +691,20 @@ document.write(`
 
 
 <span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vTangent</span><span class="p">;</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vBitangent</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Then add the following to the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space tangent vector</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Output world space tangent and bitangent vectors</span>
 <span class="n">vTangent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="kt">mat3</span><span class="p">(</span><span class="n">uModel</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aTangent</span><span class="p">);</span>
+<span class="n">vBitangent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">vNormal</span><span class="p">,</span><span class="w"> </span><span class="n">vTangent</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
-<p>Here we transform the tangent to the world space using the model matrix and output it to the fragment shader. Now we need to edit the fragment shader to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix using equation <a class="reference internal" href="#equation-eq-tbn-matrix">(26)</a> and use it to transform the normal vectors from the normal map from the tangent space to the world space.</p>
-<p>The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a normal vector we use the following</p>
+<p>Here we transform the tangent to the world space using the model matrix and calculate the bitangent vector using the cross product between the normal and tangent vectors. Now we need to edit the fragment shader to calculate the <span class="math notranslate nohighlight">\(TBN\)</span> matrix using equation <a class="reference internal" href="#equation-eq-tbn-matrix">(26)</a> and use it to transform the normal vectors from the normal map from the tangent space to the world space.</p>
+<p>The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a tangent space normal vector we use the following</p>
 <div class="math notranslate nohighlight">
-\[ \vec{n}_{tangent} = 2 \times \vec{n}_{map} - 1. \]</div>
+\[ \vec{n}_{tangent} = 2 \cdot \vec{n}_{map} - 1. \]</div>
 <p>which is then transformed to the world space using</p>
 <div class="math notranslate nohighlight">
 \[ \vec{n}_{world} = TBN \cdot \vec{n}_{tangent}. \]</div>
@@ -710,6 +712,7 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Add the following input declaration to the fragment shader.</p>
 <div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vTangent</span><span class="p">;</span>
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">vBitangent</span>
 </pre></div>
 </div>
 <p>And add the uniform for the normal map.</p>
@@ -717,10 +720,8 @@ document.write(`
 </pre></div>
 </div>
 <p>Then in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, add the following before we calculate the lighting for each light source</p>
-<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Construct tangent space basis</span>
-<span class="kt">vec3</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vTangent</span><span class="p">);</span>
-<span class="kt">vec3</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">);</span>
-<span class="kt">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate TBN matrix</span>
+<span class="kt">mat3</span><span class="w"> </span><span class="n">TBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">mat3</span><span class="p">(</span><span class="n">normalize</span><span class="p">(</span><span class="n">vTangent</span><span class="p">),</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">vBitangent</span><span class="p">),</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
 
 <span class="c1">// Calculate world space normal</span>
 <span class="kt">vec3</span><span class="w"> </span><span class="n">normalSample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">uNormalMap</span><span class="p">,</span><span class="w"> </span><span class="n">vTexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
@@ -752,18 +753,26 @@ document.write(`
 <p><span class="caption-number">Fig. 99 </span><span class="caption-text">The crate normal map applied to the cubes (<span class="math notranslate nohighlight">\(k_s = 0.2\)</span>).</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<p>Compare this to the non-normal mapped cubes and you can see the difference that normal mapping has made.</p>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/09_cubes_no_normal_map.png"><img alt="../_images/09_cubes_no_normal_map.png" src="../_images/09_cubes_no_normal_map.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">Non-normal mapped cubes.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <hr class="docutils" />
 <section id="specular-maps">
 <h2>Specular maps<a class="headerlink" href="#specular-maps" title="Link to this heading">#</a></h2>
-<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 100</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 101</span></a> so that the stones are lit by the light sources.</p>
+<p>In addition to diffuse (texture) and normal maps we can also apply a <strong>specular map</strong> which can be used to control the specular highlights across a surface. Lets say we want to add a stone floor to our scene. We can add a horizontal polygon object for the floor and use a texture map <a class="reference internal" href="#stones-diffuse-map-figure"><span class="std std-numref">Fig. 101</span></a> to give the impression of stones and a normal map <a class="reference internal" href="#stones-normal-map-figure"><span class="std std-numref">Fig. 102</span></a> so that the stones are lit by the light sources.</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row docutils">
 <div class="sd-col sd-d-flex-column docutils">
 <figure class="align-default" id="stones-diffuse-map-figure">
 <img alt="../_images/09_stones_diffuse.png" src="../_images/09_stones_diffuse.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 100 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Diffuse map</span><a class="headerlink" href="#stones-diffuse-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -771,7 +780,7 @@ document.write(`
 <figure class="align-default" id="stones-normal-map-figure">
 <img alt="../_images/09_stones_normal.png" src="../_images/09_stones_normal.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Normal map</span><a class="headerlink" href="#stones-normal-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -779,7 +788,7 @@ document.write(`
 <figure class="align-default" id="stones-specular-map-figure">
 <img alt="../_images/09_stones_specular.png" src="../_images/09_stones_specular.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Specular map</span><a class="headerlink" href="#stones-specular-map-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -844,14 +853,14 @@ document.write(`
 </div>
 </div>
 <p>Here we have added another object ot our scene that consists of a simple flat plane which has been scaled up and translated so that it forms a floor underneath the cubes. All of the this code is similar to what we have done previously. Refresh your web browser and move the camera around to see the effect of normal mapping on the stone floor.</p>
-<figure class="align-default" id="id5">
+<figure class="align-default" id="id6">
 <a class="reference internal image-reference" href="../_images/09_floor_no_specular.png"><img alt="../_images/09_floor_no_specular.png" src="../_images/09_floor_no_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 103 </span><span class="caption-text">A the floor object with normal mapping.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">A the floor object with normal mapping.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Note how the mortar between the stones have specular highlights. This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map (<a class="reference internal" href="#stones-specular-map-figure"><span class="std std-numref">Fig. 102</span></a>) to switch off the specular highlights for certain fragments.</p>
+<p>Note how the mortar between the stones have specular highlights. This isn’t very realistic as in real life mortar is rough and does not appear shiny. To overcome this we can apply a specular map (<a class="reference internal" href="#stones-specular-map-figure"><span class="std std-numref">Fig. 103</span></a>) to switch off the specular highlights for certain fragments.</p>
 <div class="tip admonition">
 <p class="admonition-title">Task</p>
 <p>Download the file <a class="reference download internal" download="" href="../_downloads/a6f948a4d493067c970b0f863248ca0b/stones_specular.png"><span class="xref download myst">stones_specular.png</span></a> and save it in your <em><strong>Lab 9 - Normal Mapping/assets/</strong></em> folder.</p>
@@ -876,22 +885,22 @@ document.write(`
 </div>
 </div>
 <p>Refresh your web browser and position the camera to see the effect of the specular map. Note how the mortar between the stones no longer appears to be shiny.</p>
-<figure class="align-default" id="id6">
+<figure class="align-default" id="id7">
 <a class="reference internal image-reference" href="../_images/09_floor_specular.png"><img alt="../_images/09_floor_specular.png" src="../_images/09_floor_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 104 </span><span class="caption-text">A the floor object with normal and specular mapping.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">A the floor object with normal and specular mapping.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="texture-map-flags">
 <h2>Texture Map Flags<a class="headerlink" href="#texture-map-flags" title="Link to this heading">#</a></h2>
 <p>A problem we now have is that we hand bound a specular map for the floor object but this has also been applied to the cube objects.</p>
-<figure class="align-default" id="id7">
+<figure class="align-default" id="id8">
 <a class="reference internal image-reference" href="../_images/09_cube_specular.png"><img alt="../_images/09_cube_specular.png" src="../_images/09_cube_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 105 </span><span class="caption-text">The floor specular map has been applied to the cube objects.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">The floor specular map has been applied to the cube objects.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>To overcome this we can use a uniform boolean flag in the fragment shader that tells it whether a texture exists and use these to only apply the texture, normal or specular maps when they do.</p>
@@ -947,11 +956,11 @@ document.write(`
 </div>
 <p>Here we have set the specular map flag to false for the cube object but true for the floor object.
 Now when we look closely at the cube objects we no longer see the floor specular map being applied.</p>
-<figure class="align-default" id="id8">
+<figure class="align-default" id="id9">
 <a class="reference internal image-reference" href="../_images/09_cube_no_specular.png"><img alt="../_images/09_cube_no_specular.png" src="../_images/09_cube_no_specular.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 106 </span><span class="caption-text">The floor specular map is no longer being applied to the cube objects.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 107 </span><span class="caption-text">The floor specular map is no longer being applied to the cube objects.</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>

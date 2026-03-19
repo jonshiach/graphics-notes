@@ -118,7 +118,7 @@ To see the derivation of these equations click on the dropdown below.
 
 ````{dropdown} Calculating the tangent and bitangent vectors
 
-Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vectors $\vec{T}$ and $\vec{B}$ point in the $u$ and $v$ co-ordinate directions then the tangent space coordinates of points along the triangle edges $\vec{e}_1$ and $\vec{e}_2$ can be calculated using
+Consider {numref}`UV-deltas-figure` where a triangle is mapped onto the normal map using texture coordinates $(u_0,v_0)$, $(u_1,v_1)$ and $(u_2,v_2)$. If the vector $\vec{T}$ and $\vec{B}$ point in the $u$ and $v$ co-ordinate directions then the tangent space coordinates of points along the triangle edges $\vec{e}_1$ and $\vec{e}_2$ can be calculated using
 
 $$\begin{align*}
     \vec{e}_1 &= \Delta u_1 \cdot \vec{T} + \Delta v_1 \cdot \vec{B}, \\
@@ -153,7 +153,7 @@ $$ \begin{align*}
     \begin{pmatrix} \vec{e}_1 \\ \vec{e}_2 \end{pmatrix}.
 \end{align*} $$
 
-Writing the out for the $\vec{T}$ vector we have
+Writing this out for the $\vec{T}$ vector we have
 
 $$ \begin{align*}
     \vec{T} &= \frac{\Delta v_2 \cdot \vec{e}_1 - \Delta v_1 \cdot \vec{e}_2}{\Delta u_1\Delta v_2 - \Delta u_2\Delta v_1}.
@@ -296,7 +296,7 @@ Here we have written a function to compute the tangent vectors in the model spac
 
 ## Shaders
 
-In the vertex shader we need to calculate the world space tangent vector for the vertex and output this to the fragment shader.
+In the vertex shader we need to calculate the world space tangent and bitangent vectors for the vertex and output this to the fragment shader.
 
 :::{admonition} Task
 :class: tip
@@ -308,22 +308,24 @@ in vec3 aTangent;
 
 
 out vec3 vTangent;
+out vec3 vBitangent;
 ```
 
 Then add the following to the `main()` function
 
 ```glsl
-// Output world space tangent vector
+// Output world space tangent and bitangent vectors
 vTangent = normalize(mat3(uModel) * aTangent);
+vBitangent = normalize(cross(vNormal, vTangent));
 ```
 
 :::
 
-Here we transform the tangent to the world space using the model matrix and output it to the fragment shader. Now we need to edit the fragment shader to calculate the $TBN$ matrix using equation {eq}`eq-TBN-matrix` and use it to transform the normal vectors from the normal map from the tangent space to the world space.
+Here we transform the tangent to the world space using the model matrix and calculate the bitangent vector using the cross product between the normal and tangent vectors. Now we need to edit the fragment shader to calculate the $TBN$ matrix using equation {eq}`eq-TBN-matrix` and use it to transform the normal vectors from the normal map from the tangent space to the world space.
 
-The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a normal vector we use the following
+The values in a texture are between 0 and 1, and we need the values of a normal vector to be between -1 and 1. So to convert the normal map colours to a tangent space normal vector we use the following
 
-$$ \vec{n}_{tangent} = 2 \times \vec{n}_{map} - 1. $$
+$$ \vec{n}_{tangent} = 2 \cdot \vec{n}_{map} - 1. $$
 
 which is then transformed to the world space using
 
@@ -336,6 +338,7 @@ Add the following input declaration to the fragment shader.
 
 ```glsl
 in vec3 vTangent;
+in vec3 vBitangent
 ```
 
 And add the uniform for the normal map.
@@ -347,10 +350,8 @@ uniform sampler2D uNormalMap;
 Then in the `main()` function, add the following before we calculate the lighting for each light source
 
 ```glsl
-// Construct tangent space basis
-vec3 T = normalize(vTangent);
-vec3 B = cross(N, T);
-mat3 TBN = mat3(T, B, N);
+// Calculate TBN matrix
+mat3 TBN = mat3(normalize(vTangent), normalize(vBitangent), N);
 
 // Calculate world space normal
 vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
@@ -386,6 +387,14 @@ Refresh your web browser and you should see that the cubes are now less shiny an
 :width: 80%
 
 The crate normal map applied to the cubes ($k_s = 0.2$).
+```
+
+Compare this to the non-normal mapped cubes and you can see the difference that normal mapping has made.
+
+```{figure} ../_images/09_cubes_no_normal_map.png
+:width: 80%
+
+Non-normal mapped cubes.
 ```
 
 ---
