@@ -14,6 +14,7 @@ out vec2 vTexCoords;
 out vec3 vNormal;
 out vec3 vPosition;
 out vec3 vTangent;
+out vec3 vBitangent;
 
 uniform mat4 uModel;
 uniform mat4 uView;
@@ -34,8 +35,9 @@ void main() {
   // Output world space vertex position
   vPosition = vec3(uModel * vec4(aPosition, 1.0));
 
-  // Output world space tangent vector
+  // Output world space tangent and bitangent vectors
   vTangent = normalize(mat3(uModel) * aTangent);
+  vBitangent = normalize(cross(vNormal, vTangent));
 }`;
 
 // Define fragment shader
@@ -48,6 +50,7 @@ in vec2 vTexCoords;
 in vec3 vNormal;
 in vec3 vPosition;
 in vec3 vTangent;
+in vec3 vBitangent;
 
 out vec4 fragColour;
 
@@ -146,9 +149,9 @@ void main() {
 
   // Apply normal map
   if (uHasNormalMap) {
-    vec3 T = normalize(vTangent);
-    vec3 B = cross(N, T);
-    mat3 TBN = mat3(T, B, N);
+
+    // Calculate TBN matrix
+    mat3 TBN = mat3(normalize(vTangent), normalize(vBitangent), N);
 
     // Calculate world space normal
     vec3 normalSample = texture(uNormalMap, vTexCoords).rgb * 2.0 - 1.0;
