@@ -53,7 +53,7 @@ In the ***normal_mapping.js*** file, add the following just after we have loaded
 const normalMap = loadTexture(gl, "assets/crate_normal.png");
 ```
 
-And add the following asfter we bind the crate texture in the `render()` function.
+And add the following after we bind the crate texture in the `render()` function.
 
 ```javascript
 // Bind normal map
