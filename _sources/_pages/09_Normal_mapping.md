@@ -679,3 +679,13 @@ The floor specular map is no longer being applied to the cube objects.
 ## Video walkthrough
 
 The video below walks you through these lab materials.
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/mLvZSQuKips?si=mML3aPIE1p41LV52" title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
