@@ -989,20 +989,22 @@ Change the `update()` method so that is looks like the following
 
 ```javascript
 update(input, dt) {
-
   // Get yaw and pitch angles from mouse input
   const mouse = input.consumeMouseDelta();
   this.yaw   -= mouse.x * this.turnSpeed;
   this.pitch -= mouse.y * this.turnSpeed;
 
   // Calculate camera rotation quaternion
-  const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
-  const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+  const xAxis = [1, 0, 0];
+  const yAxis = [0, 1, 0];
+  const qPitch = Quaternion.fromAxisAngle(xAxis, this.pitch);
+  const qYaw   = Quaternion.fromAxisAngle(yAxis, this.yaw);
   this.rotation = qYaw.multiply(qPitch).normalize();
 
   // Calculate front and right camera vectors
-  const front = this.rotation.rotateVector([0, 0, -1]);
-  const right = this.rotation.rotateVector([1, 0, 0]);
+  const zAxis = [0, 0, -1];
+  const front = this.rotation.rotateVector(zAxis);
+  const right = this.rotation.rotateVector(xAxis);
 
   // Movement direction
   let moveDir = [0, 0, 0];
@@ -1022,7 +1024,6 @@ Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
-
   const rotateMatrix = this.rotation.inverse().matrix();
   const translateMatrix = new Mat4().translate([
     -this.eye[0],
