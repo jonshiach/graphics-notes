@@ -272,7 +272,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 normalize() {
-
   const len = 1 / this.length();
   this.w *= len;
   this.x *= len;
