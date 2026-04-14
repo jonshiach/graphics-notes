@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -566,7 +566,6 @@ document.write(`
 <p class="admonition-title">Task</p>
 <p>Add the following class definition to the <em><strong>maths.js</strong></em> file</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nx">Quaternion</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="p">;</span>
@@ -576,7 +575,6 @@ document.write(`
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="nx">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
@@ -859,7 +857,6 @@ pq = [ -60.000, ( 20.000, 14.000, 32.000 ) ]
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Quaternion class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">inverse</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">len2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">len2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;Cannot invert a zero quaternion&quot;</span><span class="p">);</span>
 
@@ -980,7 +977,6 @@ q qInv = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Quaternion class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">normalize</span><span class="p">(</span><span class="nx">axis</span><span class="p">);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">halfAngle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">angle</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">halfAngle</span><span class="p">);</span>
@@ -990,7 +986,6 @@ q qInv = [ 1.000, ( 0.000, 0.000, 0.000 ) ]
 <span class="p">}</span>
 
 <span class="nx">rotateVector</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span><span class="w"> </span><span class="nx">v</span><span class="p">[</span><span class="mf">2</span><span class="p">]);</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">multiply</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">inverse</span><span class="p">());</span>
 
@@ -1156,7 +1151,6 @@ pRotated = [ 0.00, 0.00, -1.00 ]
 <p class="admonition-title">Task</p>
 <p>Add the following method to the Quaternion class</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">matrix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">z</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">xx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">zz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">wx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">wy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">wz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span><span class="p">;</span>
@@ -1197,9 +1191,7 @@ rotation matrix =
 <p class="admonition-title">Task</p>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> Mat4 class method, so that is looks like the following</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Quaternion</span><span class="p">.</span><span class="nx">fromAxisAngle</span><span class="p">(</span><span class="nx">axis</span><span class="p">,</span><span class="w"> </span><span class="nx">angle</span><span class="p">);</span>
-
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">matrix</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
@@ -1271,8 +1263,8 @@ rotation matrix =
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">update</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span><span class="w"> </span><span class="nx">dt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Get yaw and pitch angles from mouse input</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">mouse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">input</span><span class="p">.</span><span class="nx">consumeMouseDelta</span><span class="p">();</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="w">   </span><span class="o">-=</span><span class="w"> </span><span class="nx">mouse</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
-<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">mouse</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">yaw</span><span class="w">   </span><span class="o">-=</span><span class="w"> </span><span class="nx">mouse</span><span class="p">.</span><span class="nx">dx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">pitch</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">mouse</span><span class="p">.</span><span class="nx">dy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">turnSpeed</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Calculate camera rotation quaternion</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span>
@@ -1399,7 +1391,7 @@ rotation matrix =
 \[ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}. \]</div>
 <p>The camera is rotated in the usual way using the mouse input to change the <span class="math notranslate nohighlight">\(pitch\)</span> and <span class="math notranslate nohighlight">\(yaw\)</span> angles and calculate the target rotation quaternion. The camera rotation quaternion is then SLERPed towards the target rotation quaternion. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, and this is then used to calculate the updated forward and right movement vectors. This way the player rotation is slightly delayed giving a more natural feel to the third person camera.</p>
 <figure class="align-default" id="id4">
-<a class="reference internal image-reference" href="../_images/10_third_person_camera_2.svg"><img alt="../_images/10_third_person_camera_2.svg" src="../_images/10_third_person_camera_2.svg" style="width: 300px;" />
+<a class="reference internal image-reference" href="../_images/10_third_person_camera_diagram2.svg"><img alt="../_images/10_third_person_camera_diagram2.svg" src="../_images/10_third_person_camera_diagram2.svg" style="width: 300px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 117 </span><span class="caption-text">The camera rotation quaternion is rotated using the mouse input. The player quaternion is rotated towards the camera rotation quaternion.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
