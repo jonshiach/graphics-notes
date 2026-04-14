@@ -170,7 +170,6 @@ Add the following class definition to the ***maths.js*** file
 ```javascript
 class Quaternion {
   constructor(w = 1, x = 0, y = 0, z = 0) {
-
     this.w = w;
     this.x = x;
     this.y = y;
@@ -225,7 +224,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
-
   return Math.sqrt(
     this.w * this.w +
     this.x * this.x +
