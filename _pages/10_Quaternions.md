@@ -169,9 +169,7 @@ Add the following class definition to the ***maths.js*** file
 
 ```javascript
 class Quaternion {
-
   constructor(w = 1, x = 0, y = 0, z = 0) {
-
     this.w = w;
     this.x = x;
     this.y = y;
@@ -179,7 +177,6 @@ class Quaternion {
   }
 
   toString() {
-
     const w = this.w.toFixed(3);
     const x = this.x.toFixed(3);
     const y = this.y.toFixed(3);
@@ -227,7 +224,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 length() {
-
   return Math.sqrt(
     this.w * this.w +
     this.x * this.x +
@@ -515,7 +511,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 inverse() {
-
   const len2 = this.length() * this.length();
   if (len2 === 0) throw new Error("Cannot invert a zero quaternion");
 
@@ -660,7 +655,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 static fromAxisAngle(axis, angle) {
-
   axis = normalize(axis);
   const halfAngle = 0.5 * angle;
   const c = Math.cos(halfAngle);
@@ -670,7 +664,6 @@ static fromAxisAngle(axis, angle) {
 }
 
 rotateVector(v) {
-
   const p = new Quaternion(0, v[0], v[1], v[2]);
   const result = this.multiply(p).multiply(this.inverse());
 
@@ -855,7 +848,6 @@ Add the following method to the Quaternion class
 
 ```javascript
 matrix() {
-
   const w = this.w, x = this.x, y = this.y, z = this.z;
   const xx = x * x, yy = y * y, zz = z * z;
   const wx = w * x, wy = w * y, wz = w * z;
@@ -906,9 +898,7 @@ Edit the `rotate()` Mat4 class method, so that is looks like the following
 
 ```javascript
 rotate(axis, angle) {
-
   const q = Quaternion.fromAxisAngle(axis, angle);
-
   return this.multiply(q.matrix());
 }
 ```
@@ -989,20 +979,22 @@ Change the `update()` method so that is looks like the following
 
 ```javascript
 update(input, dt) {
-
   // Get yaw and pitch angles from mouse input
   const mouse = input.consumeMouseDelta();
-  this.yaw   -= mouse.x * this.turnSpeed;
-  this.pitch -= mouse.y * this.turnSpeed;
+  this.yaw   -= mouse.dx * this.turnSpeed;
+  this.pitch -= mouse.dy * this.turnSpeed;
 
   // Calculate camera rotation quaternion
-  const qPitch = Quaternion.fromAxisAngle([1, 0, 0], this.pitch);
-  const qYaw = Quaternion.fromAxisAngle([0, 1, 0], this.yaw);
+  const xAxis = [1, 0, 0];
+  const yAxis = [0, 1, 0];
+  const qPitch = Quaternion.fromAxisAngle(xAxis, this.pitch);
+  const qYaw   = Quaternion.fromAxisAngle(yAxis, this.yaw);
   this.rotation = qYaw.multiply(qPitch).normalize();
 
   // Calculate front and right camera vectors
-  const front = this.rotation.rotateVector([0, 0, -1]);
-  const right = this.rotation.rotateVector([1, 0, 0]);
+  const zAxis = [0, 0, -1];
+  const front = this.rotation.rotateVector(zAxis);
+  const right = this.rotation.rotateVector(xAxis);
 
   // Movement direction
   let moveDir = [0, 0, 0];
@@ -1022,7 +1014,6 @@ Then replace the `getViewMatrix()` function with the following
 
 ```javascript
 getViewMatrix() {
-
   const rotateMatrix = this.rotation.inverse().matrix();
   const translateMatrix = new Mat4().translate([
     -this.eye[0],
@@ -1136,7 +1127,7 @@ $$ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}
 
 The camera is rotated in the usual way using the mouse input to change the $pitch$ and $yaw$ angles and calculate the target rotation quaternion. The camera rotation quaternion is then SLERPed towards the target rotation quaternion. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, and this is then used to calculate the updated forward and right movement vectors. This way the player rotation is slightly delayed giving a more natural feel to the third person camera.
 
-```{figure} ../_images/10_third_person_camera_2.svg
+```{figure} ../_images/10_third_person_camera_diagram2.svg
 :width: 300
 
 The camera rotation quaternion is rotated using the mouse input. The player quaternion is rotated towards the camera rotation quaternion.
