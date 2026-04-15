@@ -912,7 +912,7 @@ rotate(axis, angle) {
 - A quaternion can be expressed as a $4 \times 4$ transformation matrix which performs the rotation represented by the quaternion when applied to homogeneous co-ordinates.
 :::
 
-### Video walkthrough
+## Video walkthrough
 
 The video below walks you through this first part of these lab materials.
 
