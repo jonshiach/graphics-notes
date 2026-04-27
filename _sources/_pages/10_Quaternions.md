@@ -1124,27 +1124,34 @@ The effects of applying SLERP to smooth the camera rotation can be seen in the v
 
 ## Third person camera
 
-The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *The Last of Us*, *Zelda*, *Red Dead Redemption* to name a few all using third person camera view. The implementation of a third person camera may vary but a popular one is for the camera to follow behind and slightly to one side and above the player allowing the user to see both the character and the surrounding environment.
+The use of quaternions allows game developers to implement third person camera view in 3D games where the camera follows the character that the player is controlling. This was first done for the Playstation game *Tomb Raider* released by Core Design in 1996 and has become popular with game developers with game franchises such as *God of War*, *The Last of Us*, *Zelda*, *Red Dead Redemption* to name a few all using third person camera view. The implementation of a third person camera may vary, but a popular one is for the camera to follow behind and slightly to one side and above the player allowing the user to see both the character and the surrounding environment.
 
-A player object is created that has properties for its position in the world space and a quaternion for the direction that the player is facing. This quaternion is used to calculate forward and right movement vectors that are used to move the position. The camera is defined relative to the player position by adding an $\vec{offset}$ vector to the player position, i.e.,
+To implement a third-person camera, we add a player object to the Camera class that has a vector to store its position in the world space and a quaternion to store the direction it is facing. $\vec{front}$ and $\vec{right}$ movement vectors are calculated using the player quaternion and used to move the player position based on keyboard inputs (we move the player, not the camera).
 
-$$ \vec{eye} = \vec{player} + \vec{offset}. $$
+The camera position is defined relative to the player position by adding an $\vec{offset}$ vector to the player position, i.e.,
 
-```{figure} ../_images/10_third_person_camera_1.svg
+$$ \vec{eye} = \vec{player} + \vec{offset}.$$(offset-equation)
+
+```{figure} ../_images/10_third_person_camera_diagram_1.svg
 :width: 150
+
+The third-person camera position is defined relative to the player position.
 ```
 
-The $\vec{offset}$ vector is obtained by scaling the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors by the offset distances. For example, if we wanted the camera to be 5 units behind, 1 unit to the right and 2 units above the player then
+The $\vec{offset}$ vector is obtained by calculating the $\vec{front}$, $\vec{right}$ and $\vec{up}$ camera vectors using the camera quaternion and scaling them by the distance along the three axes we want the camera to be relative to the player. For example, if we wanted the camera to be 5 units behind, 1 unit to the right and 2 units above the player then
 
-$$ \vec{offset} = -5 \cdot \vec{front} + 1 \cdot \vec{right} + 2 \cdot  \vec{up}. $$
+$$ \vec{offset} = 1 \times \vec{right} + 2 \times \vec{up} - 5 \times \vec{front}. $$
 
-The camera is rotated in the usual way using the mouse input to change the $pitch$ and $yaw$ angles and calculate the target rotation quaternion. The camera rotation quaternion is then SLERPed towards the target rotation quaternion. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, and this is then used to calculate the updated forward and right movement vectors. This way the player rotation is slightly delayed giving a more natural feel to the third person camera.
+The camera is rotated using the mouse input to change the $pitch$ and $yaw$ angles and calculate the target rotation quaternion and the camera rotation quaternion is then SLERPed towards this target rotation. The player rotation quaternion is then SLERPed towards the new camera rotation quaternion, so when the player moves forward it does so towards the direction of the camera.
 
-```{figure} ../_images/10_third_person_camera_diagram2.svg
-:width: 300
+Since the $\vec{offset}$ vector is calculated using the camera vectors, when the camera is rotated, the camera position orbits around the player. An additional enhancement we can make is to use LERP to calculate the $\vec{eye}$ vector in equation {eq}`offset-equation` to smooth the orbit of the camera.
 
-The camera rotation quaternion is rotated using the mouse input. The player quaternion is rotated towards the camera rotation quaternion.
+```{figure} ../_images/10_third_person_camera_diagram_2.svg
+:width: 350
+
+The camera quaternion is used to calculate the player quaternion and also calculate the $\vec{offset}$ vector so the camera orbits the player.
 ```
+
 
 <center>
 <video autoplay controls muted="true" loop="true" width="500">
