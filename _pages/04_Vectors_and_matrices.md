@@ -1037,7 +1037,7 @@ So this shows that $C^{-1}$ is the correct inverse matrix of $C$. Calculating th
 Add the following method to the Matrix class (you may wish to use copy and paste here).
 
 ```javascript
-verse() {
+inverse() {
   let m = this.m;
   const inv = new Float32Array([
      m[5] * m[10] * m[15] - m[5]  * m[11] * m[14] - m[9]  * m[6] * m[15] +

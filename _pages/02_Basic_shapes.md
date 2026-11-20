@@ -454,7 +454,6 @@ Looking at our `main()` function we see that the code to compile and link the sh
 Create a new JavaScript files called ***webGLUtils.js*** within the ***Lab 2 Basic Shapes*** folder, and copy and paste the following code into it
 
 ```javascript
-/teProgram(gl, vertexSource, fragmentSource) {
 // Initialize WebGL context
 function initWebGL(canvas) {
   const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");

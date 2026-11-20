@@ -1825,12 +1825,22 @@
 % Quaternion camera rotation
 % \begin{tikzpicture}
 %     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
-%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.7) {$x$};
+%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
 %     \draw [axis] (0,0) -- (\y:\l) node at (\y:\l+0.2) {$y$};
 %     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
 %     \draw [vector,gray] (0,0) -- (\z:-\vl);
 %     \draw [vector,blue] (0,0) -- (50:2.2) node [right] at (50:2.2) {$q_{pitch}$};
 %     \draw[line width=1pt,->,rotate around={\x:(\x:1.5)},blue] (\x:1.5) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.6,left] {$pitch$};
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \tikzmath{\x=-20;\y=90;\z=180-\x;\l=2.5;\vl=2;}
+%     \draw [axis] (0,0) -- (\x:\l) node at (\x:\l+0.2) {$x$};
+%     \draw [axis] (0,0) -- (\y:\l) node at (\y:\l+0.2) {$y$};
+%     \draw [axis] (0,0) -- (\z:\l) node at (\z:\l+0.2) {$z$};
+%     \draw [vector,gray] (0,0) -- (\z:-\vl);
+%     \draw [vector,red] (0,0) -- (50:1.5) node [right] at (50:1.5) {$q_{yaw}$};
+%     \draw[line width=1pt,->,rotate around={\y:(\y:2)},red] (\y:2) [partial ellipse=20:340:0.33cm and 0.67cm] node [pos=0.75,right] {$yaw$};
 % \end{tikzpicture}
 
 % \begin{tikzpicture}
@@ -1848,19 +1858,19 @@
 % Quaternion rotation of a vector
 \tdplotsetmaincoords{60}{120}
 \tdplotsetrotatedcoords{0}{90}{90}
-% \begin{tikzpicture}[scale=2,tdplot_rotated_coords]
-%     \tikzmath{\xl=2.5;\yl=1.5;\zl=2;};
-%     \fill [gray!20] (-0.67,-0.5,0) -- ++(1.33,0,0) -- ++(0,1,0) -- ++(-1.33,0,0);
-%     \draw [axis] (0,0,0) -- (\xl,0,0) node at (\xl+0.15,0,0) {$x$};
-%     \draw [axis] (0,0,0) -- (0,\yl,0) node at (0,\yl+0.15,0) {$y$};
-%     \draw [axis] (0,0,0) -- (0,0,\zl) node at (0,0,\zl+0.15) {$z$};
-%     \fill [gray!50] (0,0,0) -- (0.6,0,0) arc (0:45:0.6);
-%     \draw [->,line width=1pt] (0.6,0,0) arc (0:45:0.6) node [pos=0.5,xshift=-0.3cm] {$45^\circ$};
-%     \draw [gray] (-0.67,0,0) -- (0,0,0);
-%     \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$\vec{p} = (2, 0 ,0)$};
-%     \draw [vector,mygreen] (0,0,0) -- (0,0,1) node [below right] {$\vec{v} = (0, 0, 1)$};
-%     \draw [vector,red] (0,0,0) -- (1.414, 1.414, 0) node [above] {$qp = [0,(1.414, 1.414, 0)]$};
-% \end{tikzpicture}
+\begin{tikzpicture}[scale=2,tdplot_rotated_coords]
+    \tikzmath{\xl=2.5;\yl=1.5;\zl=2;};
+    \fill [gray!20] (-0.67,-0.5,0) -- ++(1.33,0,0) -- ++(0,1,0) -- ++(-1.33,0,0);
+    \draw [axis] (0,0,0) -- (\xl,0,0) node at (\xl+0.15,0,0) {$x$};
+    \draw [axis] (0,0,0) -- (0,\yl,0) node at (0,\yl+0.15,0) {$y$};
+    \draw [axis] (0,0,0) -- (0,0,\zl) node at (0,0,\zl+0.15) {$z$};
+    \fill [gray!50] (0,0,0) -- (0.6,0,0) arc (0:45:0.6);
+    \draw [->,line width=1pt] (0.6,0,0) arc (0:45:0.6) node [pos=0.5,xshift=-0.3cm] {$45^\circ$};
+    \draw [gray] (-0.67,0,0) -- (0,0,0);
+    \draw [vector,blue] (0,0,0) -- (2,0,0) node [above right] {$\vec{p} = (2, 0 ,0)$};
+    \draw [vector,mygreen] (0,0,0) -- (0,0,1) node [below right] {$\vec{v} = (0, 0, 1)$};
+    \draw [vector,red] (0,0,0) -- (1.414, 1.414, 0) node [above] {$qp = [0,(1.414, 1.414, 0)]$};
+\end{tikzpicture}
 
 % \begin{tikzpicture}[scale=2,tdplot_rotated_coords]
 %     \tikzmath{\xl=2.5;\yl=1.5;\zl=2;};
@@ -1945,28 +1955,33 @@
 
 % % Third person camera
 % \begin{tikzpicture}[auto]
-%     \tikzmath{\cam=90;\offsetX=1.5;\offsetY=-3;};
+%     \tikzmath{\cam=90;\offsetX=2;\offsetY=-4;\qlen=3;};
 %     \node at (0,0) (player) {\includegraphics[width=2cm]{player.jpg}};
 %     \node [rotate=\cam] at (\offsetX,\offsetY) (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
-%     \draw [vector,red] (player) -- ++(90:3) node [above] {$q_{player}$};
-%     \draw [vector,blue] (camera) -- ++(90:3) node [above] {$q_{cam}$};
+%     \draw [vector,red] (player) -- ++(90:\qlen) node [above] {$q_{player}$};
+%     \draw [vector,blue] (camera) -- ++(90:\qlen) node [above] {$q_{cam}$};
 %     \draw [vector] (player) -- (camera) node [pos=0.5,below left] {$\vec{offset}$};
 % \end{tikzpicture}
 
-\begin{tikzpicture}
-    \tikzmath{\cam1=90;\cam2=45;\player=0.5*\cam1+0.5*\cam2;\offsetX=1.5;\offsetY=-3;};
-    \node [rotate=\player-90] at (0,0) (player) {\includegraphics[width=2cm]{player.jpg}};
-    \node [rotate=\cam1,opacity=0.5] at (\offsetX,\offsetY) (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
-    \draw [vector,red,opacity=0.25] (player) -- ++(90:3) node [left] {$q_{player}$};
-    \draw [vector,opacity=0.25,blue] (camera) -- ++(90:3) node [above] {$q_{cam}$};
-    \draw [vector] (player) -- (camera) node [pos=0.5,below left] {$\vec{offset}$};
-    \node [rotate=\cam2] at (\offsetX,\offsetY) (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
-    \draw [vector,blue] (camera) -- ++(\cam2:3) node [above] {$q_{cam}$};
-    \draw [vector,blue] (player) -- ++(\cam2:3) node [right] {$q_{cam}$};
-    \draw [vector,red] (player) -- ++(\player:3) node [above] {$q_{player}$};
-    \draw [->,thick,shorten >= 2pt, shorten <= 2pt] ($(camera)+(\cam1:1.5)$) arc (\cam1:\cam2:1.5);
-    \draw [->,thick,shorten >= 2pt, shorten <= 2pt] ($(player)+(\cam1:1.5)$) arc (\cam1:\player:1.5);
-\end{tikzpicture}
+% \begin{tikzpicture}
+%     \tikzmath{\cam1=90;\cam2=30;\player=0.5*\cam1+0.5*\cam2;\offsetX=2;\offsetY=-4;\qlen=3;};
+%     \node [rotate=\player-90] at (0,0) (player) {\includegraphics[width=2cm]{player.jpg}};
+%     \node [rotate=\cam2,opacity=0.5] at (\offsetX,\offsetY) (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
+%     \node [rotate=\cam2] at (\offsetX-4,\offsetY) (offset camera) {\includegraphics[width=1.5cm]{camera.pdf}};
+%     % \node [rotate=\cam1,opacity=0.5] at (\offsetX,\offsetY) (camera) {\includegraphics[width=1.5cm]{camera.pdf}};
+%     \draw [vector,opacity=0.25,blue] (camera) -- ++(90:\qlen) node [above] {$old \, q_{cam}$};
+%     \draw [vector] (player) -- (offset camera) node [pos=0.5,left] {$\vec{offset}$};
+%     \draw [vector,blue] (camera) -- ++(\cam2:\qlen) node [above right] {$q_{cam}$}; 
+%     \draw [vector,blue] (offset camera) -- ++(\cam2:\qlen) node [above] {$q_{cam}$};
+%     \draw [vector,blue] (player) -- ++(\cam2:\qlen) node [right] {$q_{cam}$};    
+%     \draw [vector,red,opacity=0.25] (player) -- ++(90:\qlen) node [left] {$old \, q_{player}$};
+%     \draw [vector,red] (player) -- ++(\player:\qlen) node [above] {$q_{player}$};
+%     \draw [->,thick,shorten >= 2pt, shorten <= 2pt] ($(camera)+(\cam1:1.5)$) arc (\cam1:\cam2:1.5);
+%     \draw [->,thick,shorten >= 2pt, shorten <= 2pt] ($(player)+(\cam1:1.5)$) arc (\cam1:\player:1.5);
+%     \draw [vector,mygreen] (camera) -- ++(\cam2:2) node [pos=0.5,below right] {$\vec{front}$};
+%     \draw [vector,mygreen] (camera) -- ++({\cam2-90}:2) node [pos=0.5,below left] {$\vec{right}$};
+%     \draw [->,bend left=20,thick] (camera) to (offset camera);
+% \end{tikzpicture}
 
 
 \end{document}
